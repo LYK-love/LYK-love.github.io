@@ -102,6 +102,7 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
+  branch: master
   repo:
     github: git@github.com:LYK-love/LYK-love.github.io.git
 # 搜索
