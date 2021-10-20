@@ -1,7 +1,7 @@
 ---
 title: OS Introduction
 tags: Modern  Operating Systems
-categories: OS
+categories: 
 date: 2021-10-05 20:28:21
 ---
 
@@ -11,8 +11,6 @@ ref：《Modern  Operating Systems 》
 <!--more-->
 
 # Intro
-
-
 
 * appearances can be deceiving.
   * The program that users interact with, usually called the **shell** when it is text based and the GUI when it uses icons, is actually not part of the operating system, although it uses the operating system to get its work done
