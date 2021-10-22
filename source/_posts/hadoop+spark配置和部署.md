@@ -10,7 +10,7 @@ categories: Software Engineering
 
 Outline：
 
-* spark集群部署（这部分由191250071撰写，感谢这位同学）
+* spark + hadoop（这部分由191250071撰写，感谢这位同学）
 * For Manjaro用户
 
 <!--more-->

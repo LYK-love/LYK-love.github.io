@@ -234,8 +234,8 @@ was designed by the English mathematician **Charles Babbage** (1792–1871)
 
 * 最顶层是寄存器，和CPU一样快，因此访问它们没有延迟
 * cache，有L1和L2，差别是timing 。访问L1没有延迟，访问L2有1-2个时钟周期的延迟
-* 主存，也被称为RAM
-* ROM
+* 主存， the work house of memory system,也被称为RAM
+* ROM: 也是random-access memory，但是是只读的，不属于main memory
 * EEPROM和flash也是非易失性，但有写入次数限制
 * CMOs：记录了时间日期。还记录了一些配置参数，比如该从哪个盘启动。CMOs里自带一个小电池，因此虽然是易失性的，短了点也能工作。
 
@@ -266,7 +266,7 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
   * device的接口相当简单，便于标准化。因此any SATA disk controller可以处理any SATA disk. 
 
     * **SATA** stands for Serial ATA and AT A in turn stands for AT Attachment. In case you are curious what AT stands for, this was IBM’s second generation ‘‘Personal Computer Advanced Technology’’ built around the then-extremely-potent 6-MHz 80286 processor that the company introduced in 1984.
-    * SATA是目前许多电脑的标准磁盘。由于实际的device interface隐藏在controller interface后， OS只能看到后者，也就无需处理前者的细节
+    * SATA是目前许多电脑的磁盘标准。由于实际的device interface隐藏在controller interface后， OS只能看到后者，也就无需处理前者的细节
 ##### disk driver
   * 由于controller各不相同，需要软件来控制，每个软件控制一个controller，称为**disk driver**
 
@@ -328,11 +328,11 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
   * PCI使用**parallel bus architecture**，即将每个数据字分多条线传输。 比如32-bit数据需要32根并行的线
   * PCIe使用**serial bus architecture**，把数据包装成一个message， 点对点传输（一次连接称为一个**lane**）。也支持并行，如可以并行地传32个**lane**
 
-* **hub processor**被用来连接PCI设备
 
-* the CPU talks to memory over a fast **DDR3** bus, to an external graphics device over PCIe and to all other devices via a **hub** over a **DMI** (Direct Media Interface) bus. The hub in turn connects all the other devices, using the Universal Serial Bus to talk to Moreover, each of the cores has a dedicated cache and a much larger cache that is shared between them. Each of these caches introduces another bus. devices, the SATA bus to interact with hard disks and DVD drives, and PCIe to transfer Ethernet frames.
-
-* 每个core有一个专用cache，所有core共享一个更大的cache，每个cache拥有自己的总线
+* the CPU talks to memory over a fast **DDR3** bus, to an external graphics device over PCIe and to all other devices via a **hub** over a **DMI** (Direct Media Interface) bus. The hub in turn connects all the other devices, using the Universal Serial Bus to talk to  USB devices, the SATA bus to interact with hard disks and DVD drives, and PCIe to transfer Ethernet frames.
+	* PCI接口的设备另外放在一个hub processor 内
+* Moreover, each of the cores has a dedicated cache and a much larger cache that is shared between them. Each of these caches introduces another bus. 
+每个core有一个专用cache，所有core共享一个更大的cache，每个cache拥有自己的总线
 
 * The **USB** (Universal Serial Bus) was invented to attach all the slow I/O devices, such as the keyboard and mouse, to the computer.
 
@@ -360,7 +360,7 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
 5. OS问询BIOS，得到配置信息，对每个设备，OS检查自己是否有对应驱动，若没有，则通知用户去下载。
 6. 当所有设备驱动都齐备时，OS将它们加载进kernel. 并初始化分区表，启动各种程序....(如登陆程序和GUI)
 
-  # The OS Zoo
+# The OS Zoo
 
 ## Mainframe Operating Systems
 
