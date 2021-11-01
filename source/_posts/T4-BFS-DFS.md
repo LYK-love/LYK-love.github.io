@@ -1,7 +1,7 @@
 ---
 title: T4 BFS/DFS
 tags: Algorithm design and analysis
-categories: Algorithms
+categories: Algorithm
 mathjax: true
 date: 2021-08-23 09:51:20
 ---

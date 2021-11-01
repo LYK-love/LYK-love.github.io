@@ -1,7 +1,7 @@
 ---
 title: L13 Undirected Graph
 tags: Algorithm design and analysis
-categories: Algorithms
+categories: Algorithm
 mathjax: true
 date: 2021-08-23 12:01:35
 ---
