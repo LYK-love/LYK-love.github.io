@@ -1,6 +1,6 @@
 ---
-title: 汇编指南
-tags: Assembly
+title: OS lab1
+tags: OS lab
 categories: Language
 date: 2021-10-20 13:37:22
 ---
