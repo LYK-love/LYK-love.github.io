@@ -378,7 +378,37 @@ BPB:: BPB(FILE* fat12 )
     
 
   ```C++
-  void Fat12FileSystemTree::mountFiles(int startClusterNum, DirNode *parent) {//    parent->createDefaultNodes();    //数据区起始地址，即第一个簇（2号簇）的偏移字节    int baseAddressOfDataArea = BytsPerSec * (RsvdSecCnt + FATSz * NumFATs + (RootEntCnt * 32 + BytsPerSec - 1) / BytsPerSec);    int fatValue = 0; //fat表项的值，代表文件的下一个簇号    int currentClusterNum = startClusterNum;    while( fatValue < 0xFF8 )    {        fatValue = getNextClusterNum( currentClusterNum );//查FAT表获取下一个簇号        if( fatValue == 0xFF7 )        {            myPrint("ERR 读取了坏簇\n");            break;        }        int baseAddressForCurrentCluster = baseAddressOfDataArea + (currentClusterNum - 2)*SecPerClus*BytsPerSec;//当前簇的起始地址        int bytesOfThisCluster = SecPerClus * BytsPerSec; //当前簇的长度        for( int  baseAddressForDirEntry = baseAddressForCurrentCluster ;  baseAddressForDirEntry < baseAddressForCurrentCluster + bytesOfThisCluster ; baseAddressForDirEntry+=32 ) //baseAddressForDirEntry = 当前目录项的起始地址，不能超过该簇        {            mountNode( dirEntry, baseAddressForDirEntry,parent );        }        currentClusterNum = fatValue;//根据fat项更新簇号    }    return; //该目录节点递归完毕}
+  void Fat12FileSystemTree::mountFiles(int startClusterNum, DirNode *parent) {
+  
+  //    parent->createDefaultNodes();
+  
+      //数据区起始地址，即第一个簇（2号簇）的偏移字节
+      int baseAddressOfDataArea = BytsPerSec * (RsvdSecCnt + FATSz * NumFATs + (RootEntCnt * 32 + BytsPerSec - 1) / BytsPerSec);
+      int fatValue = 0; //fat表项的值，代表文件的下一个簇号
+      int currentClusterNum = startClusterNum;
+  
+      while( fatValue < 0xFF8 )
+      {
+          fatValue = getNextClusterNum( currentClusterNum );//查FAT表获取下一个簇号
+  
+          if( fatValue == 0xFF7 )
+          {
+              myPrint("ERR 读取了坏簇\n");
+              break;
+          }
+  
+          int baseAddressForCurrentCluster = baseAddressOfDataArea + (currentClusterNum - 2)*SecPerClus*BytsPerSec;//当前簇的起始地址
+          int bytesOfThisCluster = SecPerClus * BytsPerSec; //当前簇的长度
+  
+  
+          for( int  baseAddressForDirEntry = baseAddressForCurrentCluster ;  baseAddressForDirEntry < baseAddressForCurrentCluster + bytesOfThisCluster ; baseAddressForDirEntry+=32 ) //baseAddressForDirEntry = 当前目录项的起始地址，不能超过该簇
+          {
+              mountNode( dirEntry, baseAddressForDirEntry,parent );
+          }
+          currentClusterNum = fatValue;//根据fat项更新簇号
+      }
+      return; //该目录节点递归完毕
+  }
   ```
 
   
@@ -386,9 +416,50 @@ BPB:: BPB(FILE* fat12 )
 * 从软盘中读取目录项，并创建节点
 
   ```C++
-  //将baseAddr起始的数据加载进当前目录项（ currentEntry ），再通过当前目录项创建节点void  Fat12FileSystemTree:: mountNode( DirEntry* currentEntry, int baseAddr, DirNode *parent) {    if (fseek(fat12, baseAddr, SEEK_SET) == -1)        myPrint("fseek in mountFiles failed!\n");    if (fread(currentEntry, 1, 32, fat12) != 32)        myPrint("fread in mountFiles failed!\n");    string dirEntryName(&(currentEntry->DIR_Name[0]), &(currentEntry->DIR_Name[Dir_Name_Length]));///起始位置 结束长度位置 +1    if (!isValidNodeName(dirEntryName)) {        return;//目录项名字不合法，不挂载    }    else    {        string realName;        if (dirEntry->DIR_Attr == 0x10) // directory node        {            realName = getDirNodeName(dirEntryName);            DirNode *child = new DirNode(realName, parent->AbsolutePath + realName + "/",                                         currentEntry->DIR_FileSize);   //新建该目录的节点            parent->children.push_back(child);            if(child->isDefaultNode())// . 和 ..不递归            {                ;            }            else            {                parent->dir_count++;                mountFiles(currentEntry->DIR_FstClus, child);            }        } else// file node        {            realName = getFileNodeName(dirEntryName);            FileNode *child = new FileNode(realName, parent->AbsolutePath + realName + "/",                                           currentEntry->DIR_FileSize);   //新建该文件的节点            parent->children.push_back(child);            parent->file_count++;            loadContent(currentEntry->DIR_FstClus, child);//读取文件的内容        }    }}
+  void  Fat12FileSystemTree:: mountNode( DirEntry* currentEntry, int baseAddr, DirNode *parent) {
+      if (fseek(fat12, baseAddr, SEEK_SET) == -1)
+          myPrint("fseek in mountFiles failed!\n");
+      if (fread(currentEntry, 1, 32, fat12) != 32)
+          myPrint("fread in mountFiles failed!\n");
+  
+      string dirEntryName(&(currentEntry->DIR_Name[0]), &(currentEntry->DIR_Name[Dir_Name_Length]));///起始位置 结束长度位置 +1
+      if (!isValidNodeName(dirEntryName)) {
+          return;//目录项名字不合法，不挂载
+      }
+  
+      else
+      {
+          string realName;
+          if (dirEntry->DIR_Attr == 0x10) // directory node
+          {
+              realName = getDirNodeName(dirEntryName);
+              DirNode *child = new DirNode(realName, parent->AbsolutePath + realName + "/",
+                                           currentEntry->DIR_FileSize);   //新建该目录的节点
+              parent->children.push_back(child);
+              if(child->isDefaultNode())// . 和 ..不递归
+              {
+                  ;
+              }
+              else
+              {
+                  parent->dir_count++;
+                  mountFiles(currentEntry->DIR_FstClus, child);
+              }
+  
+          } else// file node
+          {
+              realName = getFileNodeName(dirEntryName);
+              FileNode *child = new FileNode(realName, parent->AbsolutePath + realName + "/",
+                                             currentEntry->DIR_FileSize);   //新建该文件的节点
+              parent->children.push_back(child);
+              parent->file_count++;
+              loadContent(currentEntry->DIR_FstClus, child);//读取文件的内容
+          }
+  
+      }
+  }
   ```
-
+  
   
 
 ## 如何获得指定文件的内容,即如何获得数据区的内容(比如使用指针等)
@@ -398,9 +469,46 @@ BPB:: BPB(FILE* fat12 )
 * 对文件节点而言：（ 与 ` mountNode`的逻辑相同，只是懒得重构了）
 
   ```C++
-  //获取文件内容void Fat12FileSystemTree :: loadContent( int startClus, FileNode  *fileNode){    int dataBase = BytsPerSec * (RsvdSecCnt + FATSz * NumFATs + (RootEntCnt * 32 + BytsPerSec - 1) / BytsPerSec);    int currentClus = startClus;    int value = 0;		//这里用value来进行不同簇的读取（超过512字节）    char *p = fileNode -> content;    if (startClus == 0) {        return;    }    while (value < 0xFF8) {        value = getNextClusterNum( currentClus);//获取下一个簇        if (value == 0xFF7                ) {            myPrint("坏簇，读取失败!\n");            break;        }        char* str = (char*)malloc(SecPerClus*BytsPerSec);	//暂存从簇中读出的数据        char *content = str;        int startByte = dataBase + (currentClus - 2)*SecPerClus*BytsPerSec;        int check;        check = fseek(fat12, startByte, SEEK_SET);        if (check == -1)            myPrint("fseek in loadContent failed!");        check = fread(content, 1, SecPerClus*BytsPerSec, fat12);//提取数据        if (check != SecPerClus * BytsPerSec)            myPrint("fread in loadContent failed!");        int count = SecPerClus * BytsPerSec; //簇的字节数        int loop = 0;        for (int i = 0; i < count; i++) {//读取赋值            *p = content[i];            p++;        }        free(str);        currentClus = value;    }}
+  void Fat12FileSystemTree :: loadContent( int startClus, FileNode  *fileNode)
+  {
+      int dataBase = BytsPerSec * (RsvdSecCnt + FATSz * NumFATs + (RootEntCnt * 32 + BytsPerSec - 1) / BytsPerSec);
+      int currentClus = startClus;
+      int value = 0;		//这里用value来进行不同簇的读取（超过512字节）
+      char *p = fileNode -> content;
+      if (startClus == 0) {
+          return;
+      }
+      while (value < 0xFF8) {
+          value = getNextClusterNum( currentClus);//获取下一个簇
+          if (value == 0xFF7
+                  ) {
+              myPrint("坏簇，读取失败!\n");
+              break;
+          }
+          char* str = (char*)malloc(SecPerClus*BytsPerSec);	//暂存从簇中读出的数据
+          char *content = str;
+          int startByte = dataBase + (currentClus - 2)*SecPerClus*BytsPerSec;
+          int check;
+          check = fseek(fat12, startByte, SEEK_SET);
+          if (check == -1)
+              myPrint("fseek in loadContent failed!");
+  
+          check = fread(content, 1, SecPerClus*BytsPerSec, fat12);//提取数据
+          if (check != SecPerClus * BytsPerSec)
+              myPrint("fread in loadContent failed!");
+  
+          int count = SecPerClus * BytsPerSec; //簇的字节数
+          int loop = 0;
+          for (int i = 0; i < count; i++) {//读取赋值
+              *p = content[i];
+              p++;
+          }
+          free(str);
+          currentClus = value;
+      }
+  }
   ```
-
+  
   
 
 ## 如何进行C代码和汇编之间的参数传递和返回值传递
@@ -408,14 +516,28 @@ BPB:: BPB(FILE* fat12 )
 * 64位linux, 参数传递使用`rdi`, `rsi`
 
   ```C++
-  extern "C" {void asm_print(const char *, const int);}void myPrint(const char *p){    asm_print(p, strlen(p));}
+  extern "C" {
+      void asm_print(const char *, const int);
+  }
+  
+  void myPrint(const char *p){    
+      asm_print(p, strlen(p));
+  }
   ```
-
+  
   
 
 ## 汇编代码中对I/O的处理方式,说明指定寄存器所存值的含义
 
 ```asm
-global	asm_print	section .textasm_print:        mov    rdx,rsi    ;message length        mov    rcx,rdi    ;message to write        mov    rbx,1   ;file descriptor (stdout)        mov    rax,4   ;system call number (sys_write)        int    0x80;call kernel        ret
+global	asm_print	
+section .textasm_print:        
+	mov    rdx,rsi    ;message length        
+	mov    rcx,rdi    ;message to write        
+	mov    rbx,1   ;file descriptor (stdout)        
+	mov    rax,4   ;system call number (sys_write)        
+	int    
+	x80;call kernel        
+	ret
 ```
 
