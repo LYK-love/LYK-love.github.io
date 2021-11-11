@@ -1,7 +1,7 @@
 ---
 title: OS lab2
 tags: OS lab
-categories: Language
+categories: OS
 date: 2021-11-11 19:42:50
 ---
 
