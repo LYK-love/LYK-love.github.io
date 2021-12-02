@@ -5,8 +5,13 @@ categories:
 date: 2021-10-05 20:28:21
 ---
 
+ref：
 
-ref：《Modern  Operating Systems 》
+《Modern  Operating Systems 》
+
+《Operating Systems Three Easy pieces 》
+
+
 
 <!--more-->
 
@@ -584,7 +589,9 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
 
 * 将multiprogramming和extended machine with a more convenient interface解耦
 * 使用VM monitor（又称为hypervisor），它运行在硬件上，向上提供虚拟机。
-* 虚拟机不是extened machine，而是**硬件**， 没有任何抽象
+* 虚拟机提供的不是extened machine，而是**硬件**， 没有任何抽象
+  * 其实虚拟机是将机器硬件抽象成了虚拟硬件提供给宿主机，实现了物理硬件的虚拟化。但是虚拟机不会给宿主机提供任何抽象API，它提供的还是硬件资源（尽管是虚拟的）。
+  *  这部分详见“OS VMM”，我的另一篇文章
 * 由于每个虚拟机对应一块真实的硬件，所以每个虚拟机能运行独立的OS，比如OS/360, CMS( Conversational Monitor System )等
 * 当一个CMS程序发起系统调用，系统会内陷到CMS( 而不是VM/370 ), 而CMS会发起普通的硬件指令调用， 这将会内陷到VM/370， 后者执行这些指令
 

@@ -246,6 +246,8 @@ private:
 
 ## 主程序
 
+* 注意，如果使用clion,因为clion的工作目录是上一级，那么镜像文件的路径是`../a.img`,但是用makefile的话，工作目录是当前目录，因此路径该改为`./a.img`
+
 ```c++
 int main() {
 
@@ -515,13 +517,17 @@ BPB:: BPB(FILE* fat12 )
 
 * 64位linux, 参数传递使用`rdi`, `rsi`
 
+* 注意，x64的系统调用和x32不一样，前者使用`syscall`而不是`int 0x80`，并且`syscall`的打印函数的寄存器要求也与`int 0x80`不同
+
+  
+  
   ```C++
   extern "C" {
-      void asm_print(const char *, const int);
+  void _print(const char *, const int);
   }
-  
-  void myPrint(const char *p){    
-      asm_print(p, strlen(p));
+  void myPrint(const char *p)
+  {
+      _print(p, strlen(p));
   }
   ```
   
@@ -530,14 +536,50 @@ BPB:: BPB(FILE* fat12 )
 ## 汇编代码中对I/O的处理方式,说明指定寄存器所存值的含义
 
 ```asm
-global	asm_print	
-section .textasm_print:        
-	mov    rdx,rsi    ;message length        
-	mov    rcx,rdi    ;message to write        
-	mov    rbx,1   ;file descriptor (stdout)        
-	mov    rax,4   ;system call number (sys_write)        
-	int    
-	x80;call kernel        
-	ret
+global _print
+
+
+
+section .text
+
+
+; 传参顺序: rdi，rsi，rdx，rcx，r8，r9
+; void print(char* s, int lenl);
+_print:
+
+
+    ;x64的打印函数
+    ; ; write(1, message, 13) 
+    ; mov     rax, 1                  ; 1 号系统调用是写操作 
+    ; mov     rdi, 1                  ; 1 号文件系统调用是标准输出 
+    ; mov     rsi, message            ; rsi存放输出字符串的地址 
+    ; mov     rdx, 13                 ; rdx存放字符串的长度 
+    ; syscall                         ; 调用系统执行写操作 
+
+    ; 如果是x32,则打印函数为：
+	; push rax, 4
+    ; push rbx, 1
+    ; push rcx, rdi; 可以看到，存放字符串地址和长度的寄存器是rcx, rdx,与x64不同
+    ; push rdx, rsi
+    ; int 80h
+    ; ret
+    ; push rdx
+    ; push rdi
+    
+    push rdx
+    push rdi
+
+    mov rdx, rsi
+    mov rsi, rdi
+
+
+    mov     rax, 1                  ; 1 号系统调用是写操作 
+    mov     rdi, 1                  ; 1 号文件系统调用是标准输出 
+
+    syscall                         ; 调用系统执行写操作 
+
+    pop rdi
+    pop rdx
+    ret
 ```
 
