@@ -1,5 +1,5 @@
 ---
-ctitle: C++ 泛型算法
+title: C++ 泛型算法
 categories: Language
 tags: C++
 ---
