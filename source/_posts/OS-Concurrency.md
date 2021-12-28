@@ -1,8 +1,11 @@
 ---
 title: OS Concurrency
-tags: Operating Systems Three Easy pieces 
+tags: Operating Systems Three Easy pieces
 categories: OS
+mathjax: true
+date: 2021-12-20 00:58:36
 ---
+
 
 
 Outline:
@@ -257,47 +260,7 @@ void unlock(lock_t *lk);//释放锁的独占空间
 
 * 现代处理器load/store可能在执行时被乱序
 
-```C
-void critical_section(){
-    while(1)
-        if(!locked){
-            locked = 1;
-            break;
-        }
-        //进入临界区
-        locked = 0;
 
-}
-```
-
-*   实现互斥只需**同时完成**
-*   `time ./hello.out  `：查看程序运行所需时间
-
-*   `xchg` : OS提供的syscall， 保证原子性，实现互斥
-
-## 实现互斥：自旋锁
-
-```c
-int table =KEY;
-void lock()
-{
-    while(1)
-    {
-        int got = xchg(&table,NOTE)
-        if(got == KEY) break;
-
-
-    }
-}
-
-void unlock()
-{
-    xchg(&table,KEY)
-
-}
-```
-
-## 
 
 # 并发与状态机
 
@@ -1900,7 +1863,7 @@ unlock(prevention);
   * 如果`L2`没抢到，那么会释放`L1`
 * 会导致活锁（ `livelock`）
   * 两个线程可能一直重复这一序列，又同时都抢锁失败
-    * 假如线程1持有`lock1`，等待`lock2`( 因此该线程一直try - fail)， 而线程二持有`lock2`，等待`lock1`,（同样， 一直try -fail），说实话，这是循环依赖关系，不是任何手段可以解决的
+    * 假如线程1持有`lock1`，等待`lock2`( 因此该线程一直try - fail)， 而线程二持有`lock2`，等待`lock1`,线程1在试图获得`lock2`时被中断，线程2获得`lock2`，试图获得`lock1`，此时发生活锁
 
 ### 互斥
 
