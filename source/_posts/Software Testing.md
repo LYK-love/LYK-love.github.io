@@ -1,6 +1,6 @@
 ---
-title: 软件测试
-tags: 软件测试
+title:  Software Testing
+tags: Software Testing
 categories: Software Engineering
 date: 2021-06-17 15:14:10
 ---
@@ -9,11 +9,13 @@ date: 2021-06-17 15:14:10
 * Are you building it “right”?
 * Are you building the “right” thing?
 
+You can find more detailed information in  *Automated Testing* if you want to apply these technologies in read-world development
+
 <!--more-->
 
 # 软件测试的目的
 
-* 向开发者和用户展示软件满足了需求， 表明软件产品是一个合格的产品
+* 向开发者和用户展示软件满足了**需求**， 表明软件产品是一个合格的产品
   * 有效性测试
 * 找出软件中的缺陷和不足
   * 缺陷测试
