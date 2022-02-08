@@ -4,7 +4,9 @@ tags: Operating Systems Three Easy pieces
 categories: OS
 ---
 
-## I/O Devicecs
+# I/O Devicecs
+
+![image-20220107045837925](/home/lyk/snap/typora/46/.config/Typora/typora-user-images/image-20220107045837925.png)
 
 ## RAID
 
@@ -12,7 +14,7 @@ categories: OS
 
 * 进程是虚拟化的CPU, 地址空间是虚拟化的内存， 而文件和目录就是虚拟化的外部存储设备
 * 文件：线性字节数组，每个文件都有一个低级名称：`inode number`
-* 目录：其内容为`（用户可读名字， 低级名字）`对的列表。 目录也有低级名称`inode number`. 
+* 目录：其内容为`（用户可读名字， 低级名称）`对的列表。 目录本身也有低级名称`inode number`. 
   * 目录的每个对，即每个条目`entry`，都指向文件或其他目录
   * 目录层次结构从根目录`/`开始
 
@@ -32,6 +34,24 @@ int main()
 ```
 
 * `open`返回`file discriptor`,这是一个thread local的整数，在UNIX中用于访问文件。 也可以将它作为指向文件对象的指针
+
+* 打开文件过程：
+  1. 检索目录,把它的外存索引节点复制到活动索引节点表。
+  2. 根据参数`mode`核对权限,如果非法,则这次打开失败。
+  3. 当“打开”合法时,为文件分配用户打开文件表项和系统打开文件表项,并为表项设置初值。通过指针建立这些表项与活动索引节点间的联系。把`fd`,即用户打开文件表中相应文件表项的序号返回给调用者。
+
+* 关闭文件过程：
+  1. 根据`fd`找到用户打开文件表项,再找到系统打开文件表项。释放用户打开文件表项。
+  2. 把对应系统打开文件表项中的`f_count--`如果非“0”,说明还有进程共享这一表项,不用释放直接返回;否则释放表项
+  3. 把活动索引节点中的`i_count --`,若不为“0”,表明还有用户进程正在使用该文件,不用释放而直接返回,否则在把该活动索引节点中的内容复制回文件卷上的相应索引节点中后,释放该活动索引节点。
+
+* f_count和i_count分别反映进程动态地共享一个文件的两种方式,
+  * `f_count`反映不同进程通过同一个系统打开文件表项共享
+    一个文件的情况;
+  * `i_count`反映不同进程通过不同系统打开文件表项共享一
+    个文件的情况。
+  * 通过两种方式,进程之间既可用相同的位移指针f_offset,
+    也可用不同位移指针f_offset共享同一个文件。
 
 ## 读写文件
 
@@ -67,9 +87,9 @@ close(3)                                = 0
 省略了一些输出
 
 * `cat`先打开文件准备读取
-  * 每个进程已经打开了三个文件： `std iput`, `std output`, `std err`,其文件描述符分别为`0`，`1`，`2`。 因此`open`返回`3`
+  * 每个进程已经打开了三个文件： `std input`, `std output`, `std err`,其文件描述符分别为`0`，`1`，`2`。 因此`open`返回`3`
 
-* 打开后，`cat`使用`read()`system call, 
+* 打开后，`cat`使用`read()` system call, 
 
   ```c
   ssize_t read(int fd, void * buf, size_t count);
@@ -101,10 +121,14 @@ off_t lseek(int fildes, off_t offset, int whence);
 ## 强制写入
 
 ```c
-int fsync(int fd);
+#include <unistd.h>
+
+int fsync(int fildes);
 ```
 
 一般来说， 程序执行`write（）`系统调用时，文件系统会将写入在内存中缓冲一段时间。 要立即写入，需要`fsync（）`
+
+* 强制写回脏数据
 
 ## 文件改名
 
@@ -188,6 +212,7 @@ ln far far2
 * 事实上，文件名都只是对`inode`的链接
 * 创建文件时，实际上是先创建`inode`，然后将人类可读的名称链接到该文件，并将这个键值对存入目录
 * 不能创建目录的硬链接，因为会在目录树中成环
+* `inode  number`在不同文件系统中不唯一，因此不能硬链接到其他磁盘分区中的文件
 
 ```c
 > ls -i                                                                       
@@ -195,6 +220,8 @@ ln far far2
 2536724 far  2536724 far2  //inode number一样
 
 ```
+
+
 
 ## 软链接
 
@@ -207,6 +234,9 @@ ln -s  far far3
 * 符号链接是一个**不同类型的文件**,
   * `ls`显示，类型为`l`
 * 链接指向的内容是指向文件的路径名
+  * OS将截获对符号链接文件的访问，,依据符号链接中的路径名去读真正的目标文件
+  * 优点： 可链接目录， 可跨文件系统链接
+  * 缺点:**搜索文件路径**开销大,需要额外的空间查找存储路径
 
 ```shell
 > ls -al
@@ -217,6 +247,8 @@ drwxr-xr-x 4 lyk lyk  4096 11月 26 22:00 ..
 lrwxrwxrwx 1 lyk lyk     3 11月 26 22:14 far3 -> far  //软链接，内容为目标文件名“far”，是三字节
 
 ```
+
+
 
 ## 创建并挂载文件系统
 
@@ -231,14 +263,14 @@ mount()
 
 ## 整体组织
 
-我们实现极简版的VSFS
+我们实现极简版的VSFS（ `Very Simple File System` ）
 
 * 磁盘分块（block），文件系统由一系列块组成
 
   * 假定有64块，每块4KB. 数据块为最后56个，inode表占5个，两种位图各占一个，超级块占一个
 
   *  `superblock`：位于第一块， 记录关于该文件系统的信息。 包括`inode`和数据块数量，inode表的起始地址。 和一些标识文件系统类型的`magic number`
-  * 位图（bitmap：记录inode或是否已分配的数据结构，有`inode bitmap`和`data bitmap`
+  * 位图（bitmap：记录inode或数据块是否已分配的数据结构，有`inode bitmap`和`data bitmap`
   * `inode`表： `inode`数组
 
   | 超级块 | inode bit map | data bitmap | inode table | datablock |
@@ -263,19 +295,19 @@ mount()
 * 过程：
 
   1. 先得到inode表的起始地址：`12KB`
-  2. 再加上此`inode`在表内的偏移量：`32 * 256B = 8192B`， `32KB + 8192B= 20KB`
-
+  
+  2. 再加上此`inode`在表内的偏移量：`32 * 256B = 8192B`， `12KB + 8192B= 20KB`
+  
   3.  由于磁盘不是字节可寻址的，而是由可寻址扇区组成（512B），因此为了获取`inumber=32`的`inode`块，文件系统将请求物理节点号`40`（ `20KB / 512B= 40` ）,获得期望的`inode`块
-
+  
      ```python
      #通用算法： inumber -> sector number
      blk = ( inumber + sizeof(inode_t) )/ blockSize;
      sector = ((blk*blockSize)+ inodeStartAddr)/ sectorSize;
      ```
 
-     
+### 多级索引
 
-     
 
 ## Locality and FFS
 
