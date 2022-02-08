@@ -1,7 +1,6 @@
 ---
 title: Commands
-categories: 小技巧
-tags: commands
+categories: Toolkit
 date: 2021-05-10 21:14:35
 ---
 

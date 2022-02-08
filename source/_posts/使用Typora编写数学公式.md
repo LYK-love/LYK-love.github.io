@@ -1,7 +1,6 @@
 ---
-title: 使用Typora编写数学公式
-tags: markdown
-categories: 小技巧
+title: Typora && Latex
+categories: Toolkit
 mathjax: true
 date: 2021-07-23 15:39:08
 ---

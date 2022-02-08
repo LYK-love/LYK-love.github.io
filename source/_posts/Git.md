@@ -1,20 +1,16 @@
 ---
-title: Git学习
-categories: Technology
+title: Git
 tag: Git
+categories: Toolkit
 ---
 
+Adapted from: https://www.liaoxuefeng.com/wiki/896043488029600
 
+## Intro 
 
-## Git简介
-
-Git是Linus用**C**写的分布式版本管理系统.
-
-
-
-集中式:版本库存放在中央服务器,必须联网(Problem)
-
-分布式:每个人电脑上都是完整的版本库,因此比集中式**安全性高**
+* Git是Linus用**C**写的分布式版本管理系统
+  * 集中式:版本库存放在中央服务器,必须联网(Problem)
+  * 分布式:每个人电脑上都是完整的版本库,因此比集中式**安全性高**
 
 > 集中式:
 >

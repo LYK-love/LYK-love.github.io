@@ -1,7 +1,7 @@
 ---
 title: MySQL
-categories: Technology
-tags: Data Base
+categories: MySQL
+tags: Database
 
 ---
 
