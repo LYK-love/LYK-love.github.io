@@ -19,3 +19,9 @@ mathjax: true
 
 * 图$H = <V_H,E_H>$是$G=<V_G,E_G>$的
   * 生成子图
+
+
+
+$G$不连通， $\overline G$一定连通
+
+* 因此自补图是连通的
