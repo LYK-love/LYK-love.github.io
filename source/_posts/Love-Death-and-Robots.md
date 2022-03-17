@@ -1,7 +1,7 @@
 ---
 title: 'Love, Death and Robots'
 tags: Movie
-categories: 影评
+categories: Movie
 ---
 
 Sorted by episode

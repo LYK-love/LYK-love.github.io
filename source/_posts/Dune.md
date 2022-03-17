@@ -1,7 +1,7 @@
 ---
-title: 沙丘
+title: Dune
 tags: Movie
-categories: 影评
+categories: Movie
 date: 2021-11-03 00:18:39
 ---
 

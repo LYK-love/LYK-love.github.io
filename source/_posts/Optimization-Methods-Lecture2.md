@@ -202,29 +202,28 @@ $$
     z^Tx \leq ||x|| ||z||_* \\
      \because z^T \frac{x}{||x||} \leq \sup \{ z^Tx \mid ||x|| \leq 1 \} = ||z||_* \\
     \therefore z^Tx=z^T \frac {x}{||x||}\cdot||x|| \leq ||z||_*||x|| 
-    
     $$
-
+    
   * The dual of Euclidean norm 二范数互为对偶
     $$
     \sup \{z^Tx \mid ||x||_2 \leq 1 \} = ||z||_2
     $$
-
+  
   * The dual norm of the $l_{\infty}$ norm 无穷范数的对偶是一范数， 反之亦然
     $$
     \sup \{z^Tx \mid ||x||_{\infty} \leq 1 \} = ||z||_1
     $$
-
+  
   * The  dual norm of  the dual norm 对偶范数的对偶范数是其本身
     $$
     ||\cdot||_{*_{*}} = ||\cdot||
     $$
-
+  
   * The dual norm of $l_p$ - norm is the $l_q$ - norm such that
     $$
     \frac {1}{p} + \frac {1}{q} = 1
     $$
-
+  
   * The dual of the $l_2$ - norm on $R^{m \times n}$​ is the **nuclear norm**( 核范数 )
     $$
     ||Z||_{2*} = \sup \{\tr(Z^TX) \mid ||Z|| \leq 1\} \\
@@ -341,10 +340,46 @@ $$
   \nabla f(x)_i=\frac{ \partial f(x) }{\partial x_i}, i=1,\dots,n
   $$
   
-
 * The **first-order approximation** of $f$​​​​ at a point $x \in \mathrm {\ {int \mathrm {\ {dom  \ x}}}} $ can be expressed as ( the affine function of $z$​ )
   $$
   f(x) + \nabla f(x)^T(z-x)
   $$
   
 
+
+
+##    常见凸函数
+
+$$
+
+$$
+
+## 常见凹函数
+
+* $log$
+
+## 随机变量的期望
+
+概率密度函数pdf概率质量函数pmf
+
+## 高斯分布/正态分布
+
+$$
+x ~ N(\miu, \sigma^2)
+$$
+
+## 混合高斯分布
+
+GMM
+
+样本X的每个维度$X_i$服从一个高斯分布， 假设各个维度间独立同分布
+
+那么我们有混合高斯分布$Z = {Z_1, Z_2, \dots, Z_n}$， 每次从中属性中选择一个维度，计算其高斯分布， 最后计算出所有高斯分布，线性组合起来
+
+
+
+两步法：
+
+## 推荐阅读
+
+《Convex optimization》

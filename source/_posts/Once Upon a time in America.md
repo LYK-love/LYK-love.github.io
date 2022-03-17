@@ -1,7 +1,7 @@
 ---
-title: 美国往事
+title: Once Upon a time in America
 tags: Movie
-categories: 影评
+categories: Movie
 date: 2021-08-07 20:31:22
 ---
 

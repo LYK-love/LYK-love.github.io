@@ -1,12 +1,13 @@
 ---
 title: OS 程序和进程
-tags: jyyOS
+tags: OS Basic
 categories: OS
 date: 2021-10-18 18:25:53
 ---
 
-
 程序 == 进程
+
+ref: jyy OS
 
 <!--more-->
 

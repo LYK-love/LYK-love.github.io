@@ -1,6 +1,6 @@
 ---
 title: OS PROCESSES AND THREADS
-tags: Modern Operation Systems
+tags: OS Basic
 categories: OS
 date: 2021-10-22 17:13:42
 ---
@@ -14,6 +14,8 @@ Outline:
 * Scheduling
 * Classical IPC problems
 * Summary
+
+ref: Modern Operation Systems
 
  <!--more-->
 

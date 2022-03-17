@@ -1,12 +1,10 @@
 ---
 title: OS Concurrency
-tags: Operating Systems Three Easy pieces
+tags: OS Basic
 categories: OS
 mathjax: true
 date: 2021-12-20 00:58:36
 ---
-
-
 
 Outline:
 

@@ -26,7 +26,102 @@ Spring Boot会发现你的配置,随后降低自动配置的优先级,以你的�
 
 
 
-## 通过属性文件外置配置
+## 禁用模版缓存
+
+* 禁用模版缓存：
+
+  ```yml
+  spring:
+  	thymeleaf:
+  		cache: false
+  ```
+
+  或者用环境变量：
+
+  ```shell
+   export spring_thymeleaf_cache=false
+  ```
+
+  
+
+* 让服务器监听不同的端口：
+
+  ```shell
+  server:
+  port: 8000
+  ```
+
+* 使用https：
+
+  1. 使用JDK的keytool工具来创建一个密钥存储(keystore)
+
+     ```yaml
+     keytool -keystore mykeys.jks -genkey -alias tomcat -keyalg RSA
+     ```
+
+  2. 配置文件如下：
+
+     ```shell
+     server:
+     	port: 8443
+     	ssl:
+     		key-store:file:///path/to/mykeys.jks
+     		key-store-password: letmein
+     		key-password: letmein
+     ```
+
+     
+
+    server.ssl.key-store 属性指向密钥存储文件的存放路径。这里用了一个file://开头的URL,
+    从文件系统里加载该文件。你也可以把它打包在应用程序的JAR文件里,用classpath: URL来
+    引用它。server.ssl.key-store-password和server.ssl.key-password设置为创建该文
+    件时给定的密码。
+
+# 通过属性文件外置配置
+
+事实上,Spring Boot自动配置的Bean提供了300多个用于微调的属性。当你调整设置时,只
+要在环境变量、Java系统属性、JNDI(Java Naming and Directory Interface)、命令行参数或者属
+性文件里进行指定就好了。
+要了解这些属性,让我们来看个非常简单的例子。你也许已经注意到了,在命令行里运行阅
+读列表应用程序时,Spring Boot有一个ascii-art Banner。如果你想禁用这个Banner,可以将
+spring.main.show-banner属性设置为false。有几种实现方式,其中之一就是在运行应用程
+序的命令行参数里指定:
+$ java -jar readinglist-0.0.1-SNAPSHOT.jar --spring.main.show-banner=false
+另一种方式是创建一个名为application.properties的文件,包含如下内容:
+spring.main.show-banner=false
+或者,如果你喜欢的话,也可以创建名为application.yml的YAML文件,内容如下:
+spring:
+main:
+show-banner: false
+还可以将属性设置为环境变量。举例来说,如果你用的是bash或者zsh,可以用export命令:
+$ export spring_main_show_banner=false
+请注意,这里用的是下划线而不是点和横杠,这是对环境变量名称的要求。
+实际上,Spring Boot应用程序有多种设置途径。Spring Boot能从多种属性源获得属性,包括
+如下几处。
+(1) 命令行参数
+(2) java:comp/env里的JNDI属性
+(3) JVM系统属性
+(4) 操作系统环境变量
+
+(5) 随机生成的带random.*前缀的属性(在设置其他属性时,可以引用它们,比如${random.
+long})
+(6) 应用程序以外的application.properties或者appliaction.yml文件
+(7) 打包在应用程序内的application.properties或者appliaction.yml文件
+(8) 通过@PropertySource标注的属性源
+(9) 默认属性
+这个列表按照优先级排序,也就是说,任何在高优先级属性源里设置的属性都会覆盖低优先
+级的相同属性。例如,命令行参数会覆盖其他属性源里的属性。
+application.properties和application.yml文件能放在以下四个位置。
+(1) 外置,在相对于应用程序运行目录的/config子目录里。
+(2) 外置,在应用程序运行的目录里。
+(3) 内置,在config包内。
+(4) 内置,在Classpath根目录。
+同样,这个列表按照优先级排序。也就是说,/config子目录里的application.properties会覆盖
+应用程序Classpath里的application.properties中的相同属性。
+此外,如果你在同一优先级位置同时有application.properties和application.yml,那么application.
+yml里的属性会覆盖application.properties里的属性。
+禁用ascii-art Banner只是使用属性的一个小例子。让我们再看几个例子,看看如何通过常用
+途径微调自动配置的Bean。
 
 ## 配置嵌入式服务器
 
@@ -264,9 +359,217 @@ spring:
 方法并不局限于Spring Boot配置的Bean。让我们看看如何使用这种属性配置机制来微调自己的应
 用程序组件。
 
+###  配置多数据源
+
+如果你新增的数据库数据源和目前的数据库不同，记得引入新数据库的驱动依赖，比如 MySQL 和 PGSQL。
+
+```javascript
+<dependency>
+ <groupId>mysql</groupId>
+ <artifactId>mysql-connector-java</artifactId>
+ <scope>runtime</scope>
+</dependency>
+
+<dependency>
+    <groupId>org.postgresql</groupId>
+    <artifactId>postgresql</artifactId>
+    <version>42.2.7</version>
+</dependency>
+```
 
 
 
+
+
+连接配置：
+
+既然有多个数据源，因为数据库用户名密码可能不相同，所以是需要配置多个数据源信息的，直接在 `properties/yml` 中配置即可。这里要注意根据配置的属性名进行区分，同时因为数据源要有一个默认使用的数据源，最好在名称上有所区分（这里使用 **primary** 作为主数据源标识）。
+
+```javascript
+########################## 主数据源 ##################################
+spring.datasource.primary.jdbc-url=jdbc:mysql://127.0.0.1:3306/demo1?characterEncoding=utf-8&serverTimezone=GMT%2B8
+spring.datasource.primary.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.primary.username=root
+spring.datasource.primary.password=
+
+########################## 第二个数据源 ###############################
+spring.datasource.datasource2.jdbc-url=jdbc:mysql://127.0.0.1:3306/demo2?characterEncoding=utf-8&serverTimezone=GMT%2B8
+spring.datasource.datasource2.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.datasource2.username=root
+spring.datasource.datasource2.password=
+
+# mybatis
+mybatis.mapper-locations=classpath:mapper/*.xml
+mybatis.type-aliases-package=com.wdbyte.domain
+```
+
+注意，配置中的数据源连接 url 末尾使用的是 `jdbc-url`.
+
+因为使用了 Mybatis 框架，所以 Mybatis 框架的配置信息也是少不了的，指定扫描目录 `mapper` 下的`mapper xml` 配置文件。
+
+
+
+### **多数据源配置**
+
+上面你应该看到了，到目前为止和 Mybatis 单数据源写法唯一的区别就是 Mapper 接口使用不同的目录分开了，那么这个不同点一定会在数据源配置中体现。
+
+#### **主数据源**
+
+开始配置两个数据源信息，先配置主数据源，配置扫描的 `MapperScan` 目录为 `com.wdbyte.mapper.primary`
+
+```javascript
+/**
+ * 主数据源配置
+ *
+ * @author niujinpeng
+ * @website: https://www.wdbyte.com
+ * @date 2020/12/19
+ */
+@Configuration
+@MapperScan(basePackages = {"com.wdbyte.mapper.primary"}, sqlSessionFactoryRef = "sqlSessionFactory")
+public class PrimaryDataSourceConfig {
+
+    @Bean(name = "dataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.primary")
+    @Primary
+    public DataSource dataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "sqlSessionFactory")
+    @Primary
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setDataSource(dataSource);
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
+        return bean.getObject();
+    }
+
+    @Bean(name = "transactionManager")
+    @Primary
+    public DataSourceTransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean(name = "sqlSessionTemplate")
+    @Primary
+    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("sqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+        return new SqlSessionTemplate(sqlSessionFactory);
+    }
+}
+```
+
+和单数据源不同的是这里把
+
+- `dataSource`
+- `sqlSessionFactory`
+- `transactionManager`
+- `sqlSessionTemplate`
+
+都单独进行了配置，简单的 bean 创建，下面是用到的一些注解说明。
+
+- `@ConfigurationProperties(prefix = "spring.datasource.primary")`：使用spring.datasource.primary 开头的配置。
+- `@Primary` ：声明这是一个主数据源（默认数据源），多数据源配置时**必不可少**。
+- `@Qualifier`：显式选择传入的 Bean。
+
+#### **第二个数据源**
+
+第二个数据源和主数据源唯一不同的只是 `MapperScan` 扫描路径和创建的 Bean 名称，同时没有 `@Primary` 主数据源的注解。
+
+```javascript
+/**
+ * 第二个数据源配置
+ * 
+ * @author niujinpeng
+ * @website: https://www.wdbyte.com
+ * @date 2020/12/19
+ */
+@Configuration
+@MapperScan(basePackages = {"com.wdbyte.mapper.datasource2"}, sqlSessionFactoryRef = "sqlSessionFactory2")
+public class SecondDataSourceConfig {
+
+    @Bean(name = "dataSource2")
+    @ConfigurationProperties(prefix = "spring.datasource.datasource2")
+    public DataSource dataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "sqlSessionFactory2")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("dataSource2") DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setDataSource(dataSource);
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
+        return bean.getObject();
+    }
+
+    @Bean(name = "transactionManager2")
+    public DataSourceTransactionManager transactionManager(@Qualifier("dataSource2") DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean(name = "sqlSessionTemplate2")
+    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("sqlSessionFactory2") SqlSessionFactory sqlSessionFactory) {
+        return new SqlSessionTemplate(sqlSessionFactory);
+    }
+}
+```
+
+注意：因为已经在两个数据源中分别配置了扫描的 Mapper 路径，如果你之前在 SpringBoot 启动类中也使用了 Mapper 扫描注解，**需要删掉**。
+
+#### **连接池**
+
+其实在多数据源改造中，我们一般情况下都不会使用默认的 JDBC 连接方式，往往都需要引入连接池进行连接优化，不然你可能会经常遇到数据源连接被断开等报错日志。其实数据源切换连接池数据源也是十分简单的，直接引入连接池依赖，然后把创建 dataSource 的部分换成连接池数据源创建即可。
+
+下面以阿里的 Druid 为例，先引入连接池数据源依赖。
+
+```javascript
+<dependency>
+   <groupId>com.alibaba</groupId>
+   <artifactId>druid</artifactId>
+</dependency>
+```
+
+添加 Druid 的一些配置。
+
+```javascript
+spring.datasource.datasource2.initialSize=3 # 根据自己情况设置
+spring.datasource.datasource2.minIdle=3
+spring.datasource.datasource2.maxActive=20
+```
+
+改写 dataSource Bean 的创建代码部分。
+
+```javascript
+@Value("${spring.datasource.datasource2.jdbc-url}")
+private String url;
+@Value("${spring.datasource.datasource2.driver-class-name}")
+private String driverClassName;
+@Value("${spring.datasource.datasource2.username}")
+private String username;
+@Value("${spring.datasource.datasource2.password}")
+private String password;
+@Value("${spring.datasource.datasource2.initialSize}")
+private int initialSize;
+@Value("${spring.datasource.datasource2.minIdle}")
+private int minIdle;
+@Value("${spring.datasource.datasource2.maxActive}")
+private int maxActive;
+
+@Bean(name = "dataSource2")
+public DataSource dataSource() {
+    DruidDataSource dataSource = new DruidDataSource();
+    dataSource.setUrl(url);
+    dataSource.setDriverClassName(driverClassName);
+    dataSource.setUsername(username);
+    dataSource.setPassword(password);
+    dataSource.setInitialSize(initialSize);
+    dataSource.setMinIdle(minIdle);
+    dataSource.setMaxActive(maxActive);
+    return dataSource;
+}
+```
+
+这里只是简单的提一下使用连接池的重要性，Druid 的详细用法还请参考官方文档
 
 ## 应用程序Bean的配置外置
 

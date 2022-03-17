@@ -1,10 +1,7 @@
 ---
-title:  西方音乐通论
-categories: 西方音乐史
+title:  History of Western Music History
 tags: Music
 ---
-
-
 
 Ref:
 

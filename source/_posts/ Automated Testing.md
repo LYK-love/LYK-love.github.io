@@ -1,6 +1,6 @@
 ---
 title: Automated Testing
-tags:  Automated Testing
+tags:  Software Testing
 categories: Software Engineering
 mathjax: true
 ---

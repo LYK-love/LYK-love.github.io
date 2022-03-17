@@ -1,6 +1,6 @@
 ---
 title: OS VMM
-tags: Operating Systems Three Easy pieces
+tags: OS Basic
 categories: OS
 date: 2021-11-26 21:12:17
 ---
@@ -11,6 +11,8 @@ Outline:
 * 虚拟化CPU
 * 虚拟化内存
 * 总结
+
+ref: Operating Systems Three Easy pieces
 
 <!--more-->
 

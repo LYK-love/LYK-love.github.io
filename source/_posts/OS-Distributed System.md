@@ -1,6 +1,6 @@
 ---
-title: OS 分布式系统
-tags: Operating Systems Three Easy pieces
+title: OS Distributed System
+tags: OS Basic
 categories: OS
 date: 2021-12-06 21:27:15
 ---
@@ -11,6 +11,8 @@ Outline:
 * 通信
 * NFS
 * AFS
+
+ref: Operating Systems Three Easy pieces
 
 <!--more-->
 

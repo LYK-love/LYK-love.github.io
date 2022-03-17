@@ -1,9 +1,13 @@
 ---
 title: OS Introduction
-tags: Modern  Operating Systems
+tags: OS Basic
 categories: 
 date: 2021-10-05 20:28:21
 ---
+
+A history and overview of OS zoo
+
+
 
 ref：
 
@@ -242,7 +246,7 @@ was designed by the English mathematician **Charles Babbage** (1792–1871)
 * 主存， the work house of memory system,也被称为RAM
 * ROM: 也是random-access memory，但是是只读的，不属于main memory
 * EEPROM和flash也是非易失性，但有写入次数限制
-* CMOs：记录了时间日期。还记录了一些配置参数，比如该从哪个盘启动。CMOs里自带一个小电池，因此虽然是易失性的，短了点也能工作。
+* CMOS：记录了时间日期。还记录了一些配置参数，比如该从哪个盘启动。CMOS里自带一个小电池，因此虽然是易失性的，断了电也能工作。
 
 ## Disks
 
@@ -351,6 +355,14 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
 
 ## Booting the Computer
 
+计算机启动时，**首先加载**硬件驱动程序，硬件驱动程序有BIOS和UEFI， 这里简要介绍BIOS, 这二者的详细信息参见我的《Linux Hardware Basic》
+
+
+
+BIOS对应的磁盘分区格式是MBR
+
+
+
 * **BIOS**（Basic Input Output System）：PC主板上的一个程序
   * The BIOS contains low-level I/O software, including procedures to read the keyboard, write to the screen, and do disk I/O, among other things. 
   * Nowadays, it is held in a **flash RAM**, which is nonvolatile but which can be updated by the operating system when bugs are found in the BIOS.
@@ -358,11 +370,11 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
 1. 计算机开机时，BIOS启动，它会检查RAM和键盘等基础外设的连接和响应情况
    * It starts out by scanning the PCIe and PCI buses to detect all the devices attached to them. 
    * 如果设备和上次启动时不一样，新的设备将被配置
-2. 通过CMOS中的启动设备列表，BIOS找到启动设备，后者的第一个扇区将被读进内存并执行，该扇区有一个检查partition table的程序。 
-   * partition table位于该扇区末尾，决定哪个扇区是active partition
-3. 一个secondary boot loader被从active partition读入。
-4. 该loader从active partition读入OS并启动
-5. OS问询BIOS，得到配置信息，对每个设备，OS检查自己是否有对应驱动，若没有，则通知用户去下载。
+2. 通过CMOS中的启动设备列表，BIOS找到启动设备，后者的第一个扇区将被读进内存并执行，检查该扇区是否是MBR扇区，是的话会加载其中的boot loader
+3. 一段boot loader程序被从MBR扇区读入， boot loader是OS提供的，因此能够读取OS的核心文件
+4. boot loader读取核心文件
+5. 核心文件会加载OS
+6. OS问询BIOS，得到配置信息，对每个设备，OS检查自己是否有对应驱动，若没有，则通知用户去下载。
 6. 当所有设备驱动都齐备时，OS将它们加载进kernel. 并初始化分区表，启动各种程序....(如登陆程序和GUI)
 
 # The OS Zoo

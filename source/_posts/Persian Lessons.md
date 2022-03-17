@@ -1,7 +1,7 @@
 ---
-title: 波斯语课
+title: Persian Lessons
 tags: Movie
-categories: 影评
+categories: Movie
 date: 2021-07-28 15:51:04
 ---
 

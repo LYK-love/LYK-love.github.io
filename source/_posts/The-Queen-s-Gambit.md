@@ -1,7 +1,7 @@
 ---
 title: The Queen's Gambit
 tags: Movie
-categories: 影评
+categories: Movie
 date: 2021-08-12 13:04:47
 ---
 
