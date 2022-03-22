@@ -114,6 +114,8 @@ title: Linux File
 
 ## File Permission
 
+原理详见《OS Persistence》
+
 ### chmod
 
 `chmod`: There are two ways to use chmod — the symbolic mode and the absolute mode.
@@ -188,12 +190,13 @@ Following example helps you understand the concept −
 
 ```
 $ chgrp special testfile
-$
 ```
 
 Changes the group of the given file to **special** group.
 
-#### SUID and SGID File Permission
+#### SUID && SGID && SBIT
+
+
 
 >  Linux系统中,所有账号的密码都记录在 `/etc/shadow` ，它的权限为:『---------- 1 root root』,即仅有 root 可读可写。 然而我们使用`passwd`命令可以查询看和修改自己的密码，这是因为`passwd`设定了SUID使用户可以以root权限执行该程序
 
@@ -208,6 +211,7 @@ Additional permissions are given to programs via a mechanism known as the **Set 
 * 执行者将继承该程序拥有者 (owner) 的权限
   * 执行者如果执行没有SUID/SGID bit的程序， 他只拥有自己的权限
   * 对SGID也如此，普通程序只能以用户的group权限执行， SGIG程序会以group owner权限执行
+* examples: `su`, `sudo`
 
 
 
@@ -222,13 +226,12 @@ Additional permissions are given to programs via a mechanism known as the **Set 
   ```
   $ ls -l /usr/bin/passwd
   -r-sr-xr-x  1   root   bin  19031 Feb 7 13:47  /usr/bin/passwd*
-  $
   ```
-
-  Shows that the SUID bit is set and that the command is owned by the root. 
-
   
-
+  Shows that the SUID bit is set and that the command is owned by the root. 
+  
+  
+  
 * If the sticky bit is enabled on the directory, files can only be removed if you are one of the following users −
 
   - The owner of the sticky directory
@@ -256,30 +259,16 @@ Additional permissions are given to programs via a mechanism known as the **Set 
 
 
 
-换句话说:当甲这个用户于 A 目录是具有群组或其他人的身份,并且拥有该目录 w 的权限, 这表
-示『甲用户对该目录内任何人建立的目录或文件均可进行 "删除/更名/搬移" 等动作。』 不过,如果
-将 A 目录加上了 SBIT 的权限项目时, 则甲只能够针对自己建立的文件或目录进行删除/更名/移动
-等动作,而无法删除他人的文件。
+换句话说:当甲这个用户于 A 目录是具有群组或其他人的身份,并且拥有该目录 w 的权限, 这表示『甲用户对该目录内任何人建立的目录或文件均可进行 "删除/更名/搬移" 等动作。』 不过,如果将 A 目录加上了 SBIT 的权限项目时, 则甲只能够针对自己建立的文件或目录进行删除/更名/移动等动作,而无法删除他人的文件。
+
 举例来说,我们的 /tmp 本身的权限是『drwxrwxrwt』, 在这样的权限内容下,任何人都可以在 /tmp
 内新增、修改文件,但仅有该文件/目录建立者与 root 能够删除自己的目录或文件
 
-## umask
+### umask
 
-`umask` 是目前用户在建立文件或目录时候需要减掉的权限
+`umask -S `: Display the current mask in symbolic (human-readable) mode:
 
-* `-S`： 以符号形式显示
-
-
-
-```shell
-❯ umask //表明group和others没有2（写）权限
-022
-
-//或者
-❯ umask -S 
-u=rwx,g=rx,o=rx
-
-```
+## 
 
 ## chattr
 

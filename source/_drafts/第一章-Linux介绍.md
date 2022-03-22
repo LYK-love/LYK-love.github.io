@@ -64,3 +64,27 @@ categories: Linux
 
 # Red Hat Linux系统概述
 
+
+
+
+
+## modules
+
+
+
+inux采用单内核结构，同时支持模块特性。模块的全称为动态可加载内核模块，是一种目标对象文件，一般由一组函数或数据结构组成，运行于内核空间，不能被交换出内存。模块没有经过链接，不能独立运行，但是其代码可以在运行时链接到系统中作为内核的一部分运行，动态扩充内核的功能，也可以从内核中卸载。模块一旦被插入到内核，就获得和内核同等的地位，代码与内核代码完全等价。采用[模块机制](https://www.zhihu.com/search?q=模块机制&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"323228598"})之后，更改内核特性时不再需要重新编译内核，可以把内核编译的很小，只包括一些最常用的功能，而把大部分功能作为模块编译，需要时再动态插入内核，利用模块来实现系统的可扩展性，使得内核结构更加紧凑灵活，这是Linux内核模块的重要作用。
+
+但，操作系统采用内核模块也有不足之处，模块装入内核之后即作为内核一部分运行，获得和内核完全等同的权限，可以访问内核的任意部分，如果模块出了问题，可能会影响到整个操作系统的稳定性，严重时甚至导致内核崩溃。内核中维护了一张符号表，包含了内核中所有[全局变量](https://www.zhihu.com/search?q=全局变量&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"323228598"})和函数地址，当模块插入到内核时，会所自身的全局变量和函数插入到内核符号表中，当模块卸载时，需要把相应的标识符从[内核符号](https://www.zhihu.com/search?q=内核符号&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"article"%2C"sourceId"%3A"323228598"})表中删去，这些都产生了系统运行的开销。某些需要插入到内核中的模块，其运行可能依赖于早先插入的模块，因此内核还需要维护模块之间的依赖关系，这些也会造成一定开销。可以用模块机制来实现文件系统、驱动程序等功能，但是操作系统最基础最核心的部分不能使用模块机制，如进程调试、内存管理等功能。
+
+Linux系统包含对内核操作的实用工具软件，如modutils，其包含以下几个程序：
+
+\1.     insmod：将编译好的模块插入到内核当中。insmod运行时会自动调用模块中的Init_module()。只有超级用户才有使用insmod的权限。
+
+\2.     rmmod：用来把插入到内核中的模块卸载掉。rmmod运行时会自动调用模块中的cleanup_module()。只有超级用户才有使用rmmod的权限。
+
+
+
+作者：信盈达赵老师
+链接：https://zhuanlan.zhihu.com/p/323228598
+来源：知乎
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
