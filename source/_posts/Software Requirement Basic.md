@@ -1,12 +1,12 @@
 ---
-title: 软件需求基础
-tags: 软件工程方法论
+title: Software Requirement Basic
+tags: Software Engineering Methodology 
 categories: Software Engineering
 date: 2021-06-28 00:05:48
 ---
 
 
-Outline
+Outline:
 
 * 需求⼯程
 * 需求基础 

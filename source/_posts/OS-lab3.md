@@ -1,13 +1,13 @@
 ---
 title: OS lab3
-tags: OS lab
-categories: OS
+tags: OS Basic
+categories: Computer Science
 date: 2021-12-02 23:45:12
 ---
 
-* Outline
-  * 问答
-  * 代码实现
+Outline
+* 问答
+* 代码实现
 
 <!--more-->
 

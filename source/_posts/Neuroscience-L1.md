@@ -1,8 +1,10 @@
 ---
-title: Chapter1 神经科学的基本概念
-tags: 神经科学导论
-categories: Neuroscience
+title: Neuroscience L1
+tags: Neuroscience
+categories: Natural Science
+date: 2022-03-22 20:42:25
 ---
+
 
 Ref:
 

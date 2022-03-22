@@ -1,9 +1,19 @@
 ---
-title: 项目管理基础
-tags: 软件工程方法论
+title: Project Management Basic
+tags: Software Engineering Methodology 
 categories: Software Engineering
 date: 2021-06-27 23:26:27
 ---
+
+Outline:
+
+* 项目和项目管理
+* 团队组织与管理
+* 软件指令保障
+* 软件配置管理
+
+<!--more-->
+
 
 
 # 项⽬和项⽬管理 

@@ -1,7 +1,7 @@
 ---
 title: OS Concurrency
 tags: OS Basic
-categories: OS
+categories: Computer Science
 mathjax: true
 date: 2021-12-20 00:58:36
 ---

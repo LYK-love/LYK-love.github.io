@@ -1,7 +1,7 @@
 ---
 title: Persian Lessons
 tags: Movie
-categories: Movie
+categories: Art
 date: 2021-07-28 15:51:04
 ---
 

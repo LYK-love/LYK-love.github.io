@@ -1,9 +1,10 @@
 ---
-title: 神经科学导论：L2
-tags: 神经科学导论
-categories: Neuroscience
+title: Neuroscience L2
+tags: Neuroscience
+categories: Natural Science
 date: 2021-09-16 16:26:40
 ---
+
 
 
 * 电信号: 感受器电位. 突触电位, 动作电位

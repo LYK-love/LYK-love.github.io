@@ -1,19 +1,18 @@
 ---
 title: OS Introduction
 tags: OS Basic
-categories: 
+categories: Computer Science
 date: 2021-10-05 20:28:21
 ---
 
-A history and overview of OS zoo
+**A History and Overview of OS zoo**
 
 
 
 ref：
 
-《Modern  Operating Systems 》
-
-《Operating Systems Three Easy pieces 》
+* *Modern  Operating Systems* 
+* *Operating Systems Three Easy pieces* 
 
 
 
@@ -505,6 +504,23 @@ BIOS对应的磁盘分区格式是MBR
      * system call也可以阻塞caller，比如在等待用户输入时。 此时OS会去执行其它进程
   10. library procedure以通常的procedure call返回的方式返回user program
   11. user program像对待任何library procedure一样，清除栈顶
+
+## System Calls & Library Functions 
+
+ 系统调用和库函数都以C函数的形式出现 
+
+系统调用：
+
+* Linux内核的对外接口;
+* 用户程序和内核之间唯一的接口;
+* 提供最小接口 
+
+
+
+库函数：
+
+* 依赖于系统调用; 提供较复杂功能 
+  * 例：标准I/O库
 
 ## System Calls for Process Management
 

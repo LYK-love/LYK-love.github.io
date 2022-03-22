@@ -1,7 +1,7 @@
 ---
 title: Data Link Layer
-tags: 计算机网络
-categories: Computer Networking
+tags: Computer Networking
+categories: Computer Science
 date: 2021-06-29 11:25:11
 ---
 

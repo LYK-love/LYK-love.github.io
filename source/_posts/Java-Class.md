@@ -1,7 +1,7 @@
 ---
 title: Java Class
-tags: java
-categories: language
+tags: Java
+categories: Language
 date: 2022-02-23 21:37:07
 ---
 

@@ -4,6 +4,15 @@ tags: C++
 categories: Language
 ---
 
+Outline:
+
+* 对象移动
+* //TODO
+
+<!--more-->
+
+
+
 # 对象移动
 
 ## 右值引用

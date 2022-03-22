@@ -1,6 +1,6 @@
 ---
-title: 软件开发过程模型
-tags: 软件工程方法论
+title: Software Development Procedure Model
+tags: Software Engineering Methodology 
 categories: Software Engineering
 date: 2021-06-28 15:45:40
 ---

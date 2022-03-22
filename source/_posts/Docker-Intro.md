@@ -1,7 +1,7 @@
 ---
 title: Docker Intro
 tags: Docker
-categories: Container
+categories: Technology
 date: 2022-02-13 16:08:27
 ---
 

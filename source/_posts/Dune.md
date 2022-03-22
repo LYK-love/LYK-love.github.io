@@ -1,7 +1,7 @@
 ---
 title: Dune
 tags: Movie
-categories: Movie
+categories: Art
 date: 2021-11-03 00:18:39
 ---
 

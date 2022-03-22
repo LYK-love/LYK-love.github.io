@@ -1,7 +1,7 @@
 ---
 title: Linux Hardware Basic
 tags: Linux
-categories: OS
+categories: Computer Science
 date: 2022-02-18 18:47:11
 ---
 

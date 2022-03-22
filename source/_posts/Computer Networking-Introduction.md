@@ -1,15 +1,17 @@
 ---
 title: Computer Networking Introduction
-tags: 计算机网络
-categories: Computer Networking
+tags: Computer Networking
+categories: Computer Science
 date: 2021-12-08 16:56:56
 ---
 
 
 Outline ：
 
-* 计网性能指标
-* 计网架构
+* 互联网的组成
+* 计算机网络的提及结构
+* 计算机网络的性能指标
+* 计算机网络基本工具
 
 <!--more-->
 

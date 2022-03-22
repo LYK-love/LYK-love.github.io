@@ -1,6 +1,6 @@
 ---
-title: 面向对象的模块化
-tags: 模块化与信息隐藏
+title: Modularity in OO
+tags: Software Engineering Methodology
 categories: Software Engineering
 date: 2021-06-27 11:09:16
 ---

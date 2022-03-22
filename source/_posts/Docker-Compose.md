@@ -1,7 +1,7 @@
 ---
 title: Docker Compose
 tags: Docker
-categories: Container
+categories: Technology
 date: 2022-02-15 15:11:52
 ---
 

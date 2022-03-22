@@ -1,7 +1,7 @@
 ---
-title: 'Love, Death and Robots'
+title: Love, Death and Robots
 tags: Movie
-categories: Movie
+categories: Art
 ---
 
 Sorted by episode

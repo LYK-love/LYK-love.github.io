@@ -1,6 +1,6 @@
 ---
 title: 'The Story of Art: Chapter 26,27'
-tags: The Story of Art
+tags: Art Theory
 categories: Art
 ---
 

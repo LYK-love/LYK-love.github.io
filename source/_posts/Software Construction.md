@@ -5,6 +5,13 @@ categories: Software Engineering
 date: 2021-06-17 15:14:00
 ---
 
+Outline:
+
+* Intro
+* 软件构造活动
+* Ideas
+
+<!--more-->
 
 # Intro
 

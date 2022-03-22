@@ -1,6 +1,6 @@
 ---
-title: 软件工程基础
-tags: 软件工程方法论
+title: Software Engineering Intro
+tags: Software Engineering Methodology 
 categories: Software Engineering
 date: 2021-06-27 22:42:08
 ---

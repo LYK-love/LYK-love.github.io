@@ -1,12 +1,12 @@
 ---
-title: 需求分析方法
-tags: 软件工程方法论
+title: Software Requirement Analysis Method
+tags: Software Engineering Methodology 
 categories: Software Engineering
 date: 2021-06-28 00:09:55
 ---
 
 
-Outline
+Outline:
 
 * 需求分析基础 
 * ⾯向对象分析 

@@ -1,7 +1,7 @@
 ---
 title: Application Layer
-tags: 计算机网络
-categories: Computer Networking
+tags: Computer Networking
+categories: Computer Science
 mathjax: true
 ---
 

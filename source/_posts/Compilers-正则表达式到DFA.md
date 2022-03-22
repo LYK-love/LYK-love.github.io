@@ -1,7 +1,7 @@
 ---
-title: Compilers 正则表达式到DFA
-tags: Compilers Principles, Techniques, and Tools
-categories: Compilers 
+title: Compilers REGEX to DFA
+tags: Compilers
+categories: Computer Science
 mathjax: true
 ---
 

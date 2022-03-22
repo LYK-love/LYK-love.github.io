@@ -1,14 +1,13 @@
 ---
 title: OS lab2
-tags: OS lab
-categories: OS
+tags: OS Basic
+categories: Computer Science
 date: 2021-11-11 19:42:50
 ---
 
-
-* Outline:
-  * PPT内容
-  * 实验内容（ 附我的部分代码 ）
+Outline:
+* PPT内容
+* 实验内容（ 附我的部分代码 ）
 
 <!--more-->
 

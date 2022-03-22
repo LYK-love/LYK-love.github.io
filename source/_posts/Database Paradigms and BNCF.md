@@ -1,11 +1,18 @@
 ---
-title: 三大范式与BNCF
-tags: Data Base
+title: Database Paradigms and BNCF
+tags: Database
 categories: Technology
 date: 2021-05-14 18:37:20
 ---
 
+Outline:
 
+* 第一范式
+* 第二范式
+* 第三范式
+* 部分依赖、完全依赖、传递依赖
+
+<!--more-->
 
 
 ## 一、第一范式
@@ -125,4 +132,4 @@ date: 2021-05-14 18:37:20
   那么就说C完全依赖AB.
 
 * 传递函数依赖：设X,Y,Z是关系R中互不相同的属性集合，存在X→Y(Y !→X),Y→Z，则称Z传递函数依赖于X。
-  比如说：B可以通过A得到，C可以通过B得到，那么就称C传递依赖A。
+  比如说：B可以通过A得到，C可以通过B得到，那么就称C传递依

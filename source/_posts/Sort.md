@@ -1,6 +1,5 @@
 ---
 title: Sort
-tags: Sort
 categories: Algorithm
 date: 2021-06-27 11:33:08
 ---

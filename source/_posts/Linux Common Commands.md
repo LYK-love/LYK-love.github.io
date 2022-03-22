@@ -1,7 +1,7 @@
 ---
 title: Linux Common Commands
 tags: Linux
-categories: OS
+categories: Toolkit
 date: 2022-02-19 14:04:37
 ---
 
@@ -357,7 +357,28 @@ plugins=(git zsh-syntax-highlighting zsh-autosuggestions autojump)
   typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION=
   ```
 
-  
+
+
+
+## Changing your default shell
+
+After installing one of the above shells, you can execute that shell inside of your current shell, by just running its executable. If you want to be served that shell when you login however, you will need to change your default shell.
+
+To list all installed shells, run:
+
+```shell
+chsh -l
+```
+
+And to set one as default for your user do:
+
+```shell
+chsh -s full-path-to-shell
+```
+
+where *full-path-to-shell* is the full path as given by `chsh -l`.
+
+
 
 # Editor
 
@@ -544,6 +565,24 @@ sudo systemctl enable mongodb
 
 
 
+# DEV
+
+## maven
+
+maven配置文件位置： `～/.m2/settings.xml`
+
+加入阿里云仓库：
+
+```xml
+        <!-- 阿里云仓库 -->
+        <mirror>
+            <id>alimaven</id>
+            <mirrorOf>central</mirrorOf>
+            <name>aliyun maven</name>
+            <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
+        </mirror>
+```
+
 
 
 ### 设置开机自启
@@ -551,4 +590,28 @@ sudo systemctl enable mongodb
 ```sql
 system enable mongodb
 ```
+
+# 基本命令
+
+## clear
+
+清屏：
+
+```
+clear
+```
+
+
+
+## 切换tty
+
+1. CTRL + ALT + Fn
+
+2. ```shell
+   sudo chvt N # N: tty number, 1 represents the main tty
+   ```
+
+
+
+
 

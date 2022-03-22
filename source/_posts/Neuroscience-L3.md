@@ -1,9 +1,10 @@
 ---
-title: Chapter3 Voltage-Dependent Membrane Permeability
-tags: 神经科学导论
-categories: Neuroscience
+title: Neuroscience L3
+tags: Neuroscience
+categories: Natural Science
 date: 2021-09-07 19:17:18
 ---
+
 
 
 * The action potential reflects changes in **membrane permeability** to specific ions.

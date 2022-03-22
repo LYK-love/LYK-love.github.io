@@ -1,7 +1,7 @@
 ---
 title: Platoon
 tags: Movie
-categories: Movie
+categories: Art
 date: 2021-08-17 18:58:45
 ---
 

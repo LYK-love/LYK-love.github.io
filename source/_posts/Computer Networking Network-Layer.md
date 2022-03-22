@@ -1,13 +1,9 @@
 ---
 title: Network Layer
-tags: 计算机网络
-categories: Computer Networking
+tags: Computer Networking
+categories: Computer Science
 date: 2022-02-21 00:33:00
 ---
-
-
-
-
 
 
 Outline:
@@ -18,21 +14,14 @@ Outline:
 * 网际协议IP
 * ICMP
 * 路由选择算法
-  * LS
-  * DV
 * 因特网中的路由选择
-  * 自治系统内
-    * RIP
-    * OSPF
-  * 自治系统间
-    * BGP
 * 广播和多播路由选择
 * VPN, NAT
 * MPLS
 
 
 
-ref:  《计算机网络》 --谢希仁； 《计算机网络自顶而下》
+ref:  *《计算机网络》 --谢希仁； 《计算机网络自顶而下》*
 
 <!--more-->
 

@@ -1,6 +1,6 @@
 ---
-title: 模块化与信息隐藏（面向过程）
-tags: 模块化与信息隐藏
+title: Modularity and Information Hiding
+tags: Software Engineering Methodology
 categories: Software Engineering
 date: 2021-06-27 11:14:38
 ---

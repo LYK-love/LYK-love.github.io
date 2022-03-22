@@ -1,7 +1,7 @@
 ---
 title: Optimization Methods- Lecture1
 tags: Optimization Methods
-categories: Optimization Methods
+categories: Mathematics
 mathjax: true
 date: 2021-09-07 21:47:40
 ---

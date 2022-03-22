@@ -1,7 +1,7 @@
 ---
 title: OS Distributed System
 tags: OS Basic
-categories: OS
+categories: Computer Science
 date: 2021-12-06 21:27:15
 ---
 
@@ -12,7 +12,7 @@ Outline:
 * NFS
 * AFS
 
-ref: Operating Systems Three Easy pieces
+ref: *Operating Systems Three Easy pieces*
 
 <!--more-->
 

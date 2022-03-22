@@ -1,9 +1,19 @@
 ---
-i的title: MySQL
-categories: MySQL
+title: MySQL Basic
 tags: Database
-
+categories: Technology
 ---
+
+Outline:
+
+* MYSQL Management
+* Managing  Databases
+* Managing Tables
+* MYSQL Data Manipulation
+
+
+
+<!--more-->
 
 # MySQL管理
 
@@ -358,7 +368,7 @@ mysqladmin   -u root -p 123456 password 123
 
 
 
-# MySQL数据库基本操作
+# MANAGING DATABASES
 
 ### MySQL创建数据库
 
@@ -375,6 +385,8 @@ drop 命令格式：
 ```sql
 drop database <数据库名>;
 ```
+
+# MANAGING TABLES
 
 ### MySQL创建数据表
 
@@ -1396,9 +1408,9 @@ SQL
 
 
 
-# MANAGING DATABASES
+# 
 
-# MANAGING TABLES
+# 
 
 # CONSTRAINTS
 

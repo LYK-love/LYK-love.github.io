@@ -1,7 +1,7 @@
 ---
-title: 求候选键
+title: Database Candidate Key
 categories: Technology
-tags: Data Base
+tags: Database
 date: 2021-05-14 14:53:56
 ---
 
