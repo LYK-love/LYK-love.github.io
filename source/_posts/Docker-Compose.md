@@ -13,7 +13,12 @@ Outline:
 * Compose文件示例
 * 热部署
 
-Docker Compose能够在Docker节点上，以单引擎模式（ Single-Engine Mode ）进行多容器应用的部署和管理
+
+
+Docker Compose是Docker Stack的简化版. 能够在Docker节点上以单引擎模式（ Single-Engine Mode ）进行简化版多服务应用的部署和管理
+
+* 真正的多服务应用中, 服务是若干容器的集合, 作为一个整体进行统一管理. 例如Docker Stack
+* Docker Compose中的一个服务就只有一个容器,因此是"简化版多服务应用"
 
 本节使用示例：[here](git@github.com:LYK-love/counter-app.git)
 
@@ -42,11 +47,13 @@ Docker Compose能够在Docker节点上，以单引擎模式（ Single-Engine Mod
   2. 将其交给`docker-compose`  命令， 
   3. 该工具会基于docker api完成应用的部署（ 即与docker daemon通信 ）
 
-# 部署要点
+# Basic Idea
 
 * 通过Compose文件定义的多容器应用称为Compose应用
 
 
+
+* 
 
 * `docker-compose`构建应用时也会利用构建缓存，对于已有的镜像、网络、卷，不会再重新创建
 
@@ -63,7 +70,7 @@ Docker Compose能够在Docker节点上，以单引擎模式（ Single-Engine Mod
 
 # Commands
 
-启动Compose应用
+## 启动Compose应用
 
 ```shell
 docker-compose up [ -f [compose_file_name] ]   -d
@@ -74,9 +81,9 @@ docker-compose up [ -f [compose_file_name] ]   -d
 * `-d`: daemon模式，在后台启用应用
   * 也可以使用` &`， 但是这样不会重定向输入输出流
 
----
 
-查看Compose应用：
+
+## 列出Compose应用：
 
 ```shell
 docker-copmpose ps
@@ -86,7 +93,9 @@ docker-copmpose ps
 
 ---
 
-停止Compose应用,   并删除资源（类似`docker container rm  -f`）：
+## 停止Compose应用
+
+  停止Compose应用, 并删除资源（类似`docker container rm  -f`）：
 
 ```shell
 docker-compose down
@@ -94,7 +103,9 @@ docker-compose down
 
 *  该命令会停止并关闭容器，删除网络（卷和镜像不会被删除）
 
----
+
+
+
 
 停止Compose应用,不删除资源：
 
@@ -104,7 +115,9 @@ docker-compose stop
 
 相当于` docker compose stop`
 
----
+
+
+
 
 对于停止的Compose应用,删除其资源：
 
@@ -115,6 +128,8 @@ docker-compose rm
 类似` docker compose rm`， 会删除容器和网络
 
 
+
+## 重启Compose应用
 
 ---
 
@@ -127,6 +142,8 @@ docker-compose restart
 类似` docker compose restart`
 
 ----
+
+## 查看Compose应用运行情况
 
 查看Compose应用运行情况：
 
@@ -157,7 +174,7 @@ app.py  docker-compose.yml  Dockerfile  README.md  requirements.txt
 
 ## 文件格式
 
-查看示例的`donker-compose.yml`:
+查看示例的`docker-compose.yml`:
 
 ```yaml
 ❯ cat ./docker-compose.yml
@@ -204,7 +221,7 @@ volumes:
   * `image: <image>`: 指定Docker基于镜像启动容器
   * `command: [executable]`: 指定Docker容器中运行的主程序
   * `ports：- target: [target_port] published: [source_port]`: 指定端口映射， 将主机的`published`端口映射到容器的`target`端口
-  * `networks：`: 指定容器连接到的网络， 该网络要么已经存在，要么在`networks`**一级**key中指定
+  * `networks：`: 指定容器连接到的网络， 该网络要么已经存在，要么在`networks`**一级**key中指定, 后者会让Docker创建该网络
   * `volumes`:  指定Docker将` [source]`卷挂到容器的` [target]` 卷, 该网络要么已经存在，要么在``volumes`:`**一级**key中指定
 
 ## 解释

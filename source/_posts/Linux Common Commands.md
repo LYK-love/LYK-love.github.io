@@ -49,9 +49,9 @@ total 20
 
 服务器上配置ssh免密登陆：
 
-将本地 id_rsa.pub 文件的内容拷贝至远程服务器的 ~/.ssh/authorized_keys
-
-* 如果服务器没有`~/.ssh`，则需要自己创建
+* 将本地 id_rsa.pub 文件的内容拷贝至远程服务器的 ~/.ssh/authorized_keys
+  * 如果服务器没有`~/.ssh`，则需要自己创建
+* 也可以`ssh-copy-id user@host `
 
 
 
@@ -405,7 +405,9 @@ where *full-path-to-shell* is the full path as given by `chsh -l`.
   1. 使用 sudo -E nvim ... 打开文件 （最快速的方法，不过每次都需要加上 -E, 有点麻烦）
   2. 修改 sudo 的配置文件: /etc/sudoers(如果用nvim打开是空文件的话，可以试一下用vim 或者 visudo打开，后面就不细说了，超纲了)
 
-# pacman
+# 包管理工具
+
+## pacman
 
 同步存储库数据库，并且更新系统的所有软件包，但不包括不在软件库中的“本地安装的”包：
 
@@ -417,7 +419,7 @@ pacman -Syu
 - `y` 代表更新本地存储库
 - `u` 代表系统更新
 
-# conda
+## conda
 
  推荐`miniconda`， 直接去NJU MIRROR下载：
 
@@ -472,18 +474,111 @@ conda换源建议用nju源  （清华源早就不行了，建议别用）， [�
 
 4. 运行 `conda create -n myenv numpy` 测试一下吧
 
-# docker
+## pip3
 
-参加《Docker Intro》
+python2: pip
 
-1. ``sudo apt install docker`
+python3: pip3
 
 
+
+在 pip 命令中使用 **-i** 参数来指定镜像地址
+
+```
+pip3 install numpy -i https://mirrors.aliyun.com/pypi/simple/
+```
+
+
+
+如果需要全局修改，则需要修改配置文件:
+
+Linux/Mac os 环境中，配置文件在 ~/.pip/pip.conf（如不存在创建该目录和文件）：
+
+```text
+mkdir ~/.pip
+```
+
+打开配置文件 **~/.pip/pip.conf**，修改如下：
+
+```text
+[global]
+index-url = https://mirrors.aliyun.com/pypi/simple/
+[install]
+trusted-host = https://mirrors.aliyun.com
+```
+
+
+
+查看镜像地址：
+
+```text
+$ pip3 config list  
+```
+
+# 用户软件安装
+
+这部分不仅是给主机，也是给容器的，尤其是容器，可能连ping这样的基本命令都没有，需要手动安装
+
+
+
+如果OS是Ubuntu（ 云服务器或容器 ）， 需要先：
+
+```shell
+apt-get update
+```
+
+## docker
+
+参见《Docker Intro》
+
+
+
+1. ````shell
+   sudo apt install docker
+   # Ubuntu则为 sudo apt install docker.io
+   ````
+
+   
 
 2. 最好使用非root用户来使用Docker,此时需要添加非root用户到本地Docker Unix组：`sudo usermod -aG docker [user_name]`
    * 如果当前登陆用户就是要添加进组的用户的话，需要重新登陆才能生效
 
-# dababase
+
+
+3. 换源阿里云：
+
+   ```shell
+   sudo mkdir -p /etc/docker
+   sudo tee /etc/docker/daemon.json <<-'EOF'
+   {
+     "registry-mirrors": ["https://zz1b9pta.mirror.aliyuncs.com"] # 这个url需要去阿里云“容器镜像服务” --> “镜像加速器” 生成
+   }
+   EOF
+   sudo systemctl daemon-reload
+   sudo systemctl restart docker
+   ```
+
+   
+
+## ping  & traceroute
+
+ping:
+
+```shell
+apt-get install iputils-ping
+```
+
+
+
+traceroute:
+
+```shell
+apt-get install traceroute
+```
+
+
+
+# Dababase
 
 ## mongodb
 

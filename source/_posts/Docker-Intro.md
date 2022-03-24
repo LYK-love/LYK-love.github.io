@@ -108,6 +108,77 @@ The Open Container Initiative, OCI:    旨在管理容器标准的委员会， �
 
 2. 安装新版本Docker：同上
 
+## Docker配置
+
+查看docker配置文件位置：
+
+```docker
+systemctl status docker
+```
+
+默认是`/usr/lib/systemd/system/docker.service`， 但是该文件还引用了别的文件，很不好管理，因此docker又使用`/etc/docker/daemon.json`来进行统一的配置：
+
+```json
+// 这里配置日志级别，并配置源为阿里云
+{
+        
+        "debug": true,
+        "log-level": "debug",
+        "registry-mirrors": ["https://zz1b9pta.mirror.aliyuncs.com"]
+}
+```
+
+* 该文件不存在就创建
+* 可能还会有`~/.docker/daemon/json`, 亲测这个配置文件不起作用
+
+更新配置：
+
+```shell
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+
+
+
+查看配置信息：
+
+```shell
+docker info
+```
+
+### 
+
+### 换阿里源
+
+如上， 编辑`daemon.json`,  然后更新配置就行了
+
+### alpine linux 换源
+
+许多容器是alpine的，在其中使用apk命令可能会很慢， 可以进入容器，在容器内换源：
+
+
+
+Alpine 的源文件为：
+
+```
+/etc/apk/repositories
+```
+
+这里面的默认配置例如：
+
+```
+http://dl-cdn.alpinelinux.org/alpine/v3.11/main
+http://dl-cdn.alpinelinux.org/alpine/v3.11/community
+```
+
+可以使用以下命令来进行源的切换（阿里云源）：
+
+```
+sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+```
+
+
+
 ## Docker存储驱动的选择
 
 每个Docker容器都有一个本地存储空间，用于保存层叠的镜像层（Image Layer）和挂载的容器文件系统，默认情况下容器的所有读写操作都发生在其镜像层或者挂载的文件系统中。
@@ -116,19 +187,7 @@ The Open Container Initiative, OCI:    旨在管理容器标准的委员会， �
 
 尽管存储空间是容器级别，存储驱动是**节点**级别的，即每个Docker host只能选择一种存储驱动，而不能为每个容器选择不同的存储驱动
 
----
-
-查看docker配置文件位置：
-
-```docker
-systemctl status docker
-```
-
-默认是`/usr/lib/systemd/system/docker.service`， 但是该文件还引用了别的文件，很不好管理，因此docker又使用`/etc/docker/daemon.json`来进行统一的配置（存储引擎也在这里配置）：
-
-
-
-下面将存储驱动设置为`overlay2`：
+下面将存储驱动设置为`overlay2`：(  `daemon.json` )
 
 ```shell
 {
@@ -175,6 +234,8 @@ Storage Driver: overlay2
  
 
 镜像是未运行的容器，二者是类和对象的关系。 
+
+也可以把容器理解为**命名空间的有组织集合**, 详见下文Security -> Linux -> Namespace
 
 # docker engine
 
@@ -297,7 +358,7 @@ docker image prune
 * Image Repository包含多个镜像
   * Docker Hub分为官方和非官方仓库，官方仓库名(`<repository>`) 一般在命名空间顶层，比如 `ubuntu`， 而个人仓库一般是次级命名空间，比如`user_name/ubuntu`
 
-## 镜像标识（ \<image> ）
+## 镜像标识（\<image>）
 
 镜像标识方法：
 
@@ -472,6 +533,8 @@ alpine       latest    sha256:21a3deaa0d32a8057914f36584b5288d2e5ecc984380bc0118
 
 ----
 
+### 启动容器
+
 
 
 运行容器：`docker client`会用API与`docker daemon`通信，后者**先查询本地有无该镜像，如果没有，就从（默认）docker hub pull到本地**
@@ -491,34 +554,6 @@ docker container run [options] <image> <app>
 
  ` <Ctrl PQ>`： detach容器
 
-----
-
-
-
-在运行的容器中启动新进程：
-
-```shell
-docker  container exec [options] <container> <app>
-```
-
-* `docker container exec -it <container> bash`: 将终端重新连接到容器
-  * `exec`在容器中创建了新的bash，输入`ps`可看到两个bash进程。 这意味着在当前shell输入`exit`并不会导致容器终止，因为主进程还在运行中
-
-----
-
-
-
-查看所有的容器， options和image的一样
-
-```shell
-docker container ls
-```
-
-* `-a`: 显示所有容器(默认只显示运行的)
-* `--quiet, -q` :只显示数字ID
-
-----
-
 
 
 
@@ -533,6 +568,36 @@ docker container start
 
 ----
 
+### 在容器中启动新进程
+
+在运行的容器中启动新进程：
+
+```shell
+docker  container exec [options] <container> <app>
+```
+
+* `docker container exec -it <container> bash`: 将终端重新连接到容器
+  * `exec`在容器中创建了新的bash，输入`ps`可看到两个bash进程。 这意味着在当前shell输入`exit`并不会导致容器终止，因为主进程还在运行中
+
+----
+
+### 列出容器
+
+列出所有运行的容器， options和image的一样
+
+```shell
+docker container ls
+```
+
+* `-a`: 显示所有容器(默认只显示运行的)
+* `--quiet, -q` :只显示数字ID
+
+
+
+
+
+### 停止容器
+
 
 
 停止容器运行：
@@ -545,7 +610,7 @@ docker container stop
 
 ----
 
-
+### 删除容器
 
 删除容器：
 
@@ -557,27 +622,27 @@ docker container rm
 
 
 
-查看容器信息：
+批量删除容器：
 
 ```shell
-docker  container  inspect
+docker container rm -f $(docker container ls -aq | cut -d " " -f 1) 
 ```
 
-----
+* 先列出所有容器信息(包括id): `docker container ls -aq`
+* 选中指定列, 一般是第一列,这是容器的id: `cut -d " " -f 1`
+* 将容器的id传给`rm`: `docker container rm -f`
 
 
 
-关闭主机上的所有容器：
+### 查看容器信息：
 
 ```shell
-docker container rm $(docker container ls -aq) -f
+docker  container  inspect <container>
 ```
 
-即将容器名（数字ID形式）传给`rm`
-
-----
 
 
+### 查看容器网络
 
 查看容器网络：
 
@@ -585,9 +650,7 @@ docker container rm $(docker container ls -aq) -f
 docker network ls
 ```
 
-
-
-----
+### 查看容器卷
 
 查看容器的卷：
 
@@ -664,6 +727,204 @@ docker volume ls
    docker container ls -a
    # 输出略
    ```
+
+# Docker Security
+
+本章内容涉及Docker Swarm
+
+
+
+Docker使用了大量Linux的安全技术
+
+![Docker Security with Linux](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20%20Intro/Docker%20Security%20with%20Linux.png)
+
+## Linux Security
+
+### Namespace
+
+Linux Namespace允许对OS进行拆分,
+
+* 例如, 不同的name space可以被分配不同的ip, 这样同一台主机就可以允许多个web服务, 还不存在端口冲突( 因为ip不同 )
+
+
+
+**Docker容器本质是命名空间的有组织集合**
+
+* 每个容器都由自己的PID, NET, MNT, IPC, UTS构成, 还可能包括USER
+* 这些命名空间的组合就是容器
+
+
+
+Linux Docker使用了如下的内核namesoace:
+
+* 进程ID( PID ): 每个容器互相独立, 拥有自己的进程树, 每个容器都有自己的PID为1的进程. PID空间也意味着容器不能看到其他容器或所在主机的进程树
+* 网络 ( NET ): 每个容器有互相隔离的网络栈. 例如每个容器都有自己的`eth0`接口, 独立的ip和端口地址
+* 文件系统/挂载( MNT ): 每个容器都有互相隔离的根目录, 这也意味着容器不能访问其他容器或宿主机的目录
+* 进程内通信(  IPC ): IPC为容器提供共享内存, 这在不同容器间也是独立的
+* 用户( USER ): Docker允许用户使用USER命名空间来将容器内用户映射到宿主机的不同用户, 比如将容器内的root映射到宿主机的非root用户
+* UTS: 每个容器都有自己的主机名称
+
+
+
+### Control  Group
+
+通过控制组来限制资源分配
+
+### Capability
+
+允许拆分用户权限, 即选择容器允许所需的root用户权限
+
+### MAC
+
+Docker Linux采用主流的Linux Mac 技术, 如 SELinux
+
+### Seccomp
+
+Docker使用过滤模式下的Seccomp来限制容器对宿主机内核发起的系统调用
+
+## Docker Original Security
+
+Docker很大一部分安全技术都基于Swarm模式, 详见*Docker Swarm*
+
+此外, 还有Docker安全扫描, 内容信任, Docker Secret等
+
+### 安全扫描
+
+就是对Docker镜像进行二进制代码级别的扫描, 对其中的软件根据已知的缺陷数据库( CVE数据库 )进行检查, 并生成报告
+
+* Docker Hub已经支持安全扫描了
+
+
+
+###  内容信任
+
+内容信任允许开发者对push到Image Registry的镜像进行签名, 当镜像被pull的时候确认签名状态, 这可以确保只pull经过验证的镜像
+
+
+
+### Docker Secret
+
+提供了`docker secret`系列命令
+
+密钥的存储和传输都是加密的. 使用时被临时挂载到<u>内存文件系统</u>( 只针对Linux, 因为windows没有内存文件系统 )
+
+* 密钥被存在集群存储里,并且加密. 每个Manager都有权访问集群存储
+* 密钥只对已经被授权了的服务开放访问
+
+
+
+
+
+可以在容器/服务创建时指定使用某密钥, 后续该服务的多个示例都会持有该密钥
+
+* 一旦容器/服务的任务完成, 内存文件系统关闭,密钥也随之删除
+* 假设指定服务B使用密钥secret1, 在worker2, worker3运行, 则密钥被传输到worker3的B实例时, 传输是加密的
+* 服务A不能访问该密钥, 因为没有授权
+
+
+
+![Docker Secret example](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20%20Intro/Docker%20Secret%20example.png)
+
+# Docker Logs
+
+Docker网络, 集群出现故障, 就需要查日志
+
+日志分为daemon日志和容器日志
+
+## Commands
+
+
+
+ 查看daemon日志( 仅限于使用`systemd`的系统)： 
+
+````shell
+journalctl -u docker.service
+````
+
+ 
+
+查看容器日志：
+
+```shell
+docker container logs <container-name>
+docker service logs <service-name> # 针对Swarm服务
+```
+
+
+
+## daemon日志
+
+daemon日志： 如果OS用`Systemd`， 日志会存储在`Journald`
+
+
+
+### 查看daemon日志
+
+*  查看日志： `journalctl -u docker.service `
+
+### 设置日志详细程度
+
+通过编辑`daemon.json`：
+
+1. 设置`debug`为true
+
+2. 设置log-level:
+
+   * debug: 最详细
+   * info： 默认值， 次详细
+   * warn： 第三详细
+   * error
+   * fatal
+
+   ```json
+   {
+   	<Snip>
+   	"debug": true,
+   	"log-level": "debug",
+   	<Snip>
+   }
+   ```
+
+   
+
+   
+
+## 容器日志
+
+每个docker容器或服务都可以配置自己的日志驱动：
+
+* json-file: 默认
+* journald: 只在运行`systemd`的linux主机有效
+* syslog
+* ...
+
+### 查看容器日志
+
+```shell
+docker container logs <container-name>
+docker service logs <service-name> # 针对Swarm服务
+```
+
+* json-file和journald日志均可通过这两种命令查看
+* 其他驱动的日志需要用第三方平台提供的原生工具查看
+* `--follow`: 跟踪日志
+* `--tail`: 查看日志尾部
+* `--details`: 额外的详细信息
+
+### 指定容器日志驱动
+
+配置docker主机的提供的默认日志驱动：
+
+```json
+//daemon.json
+{
+	"log-driver": "syslog"
+}
+```
+
+可以在容器启动时通过`--log-driver`和`-log-opts`指定特定的日志驱动，这会覆盖掉主机的配置
+
+
 
 # docker management
 

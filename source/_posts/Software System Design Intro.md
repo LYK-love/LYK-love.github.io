@@ -735,9 +735,13 @@ public class Composite extends Component
 
 
 
+client把receiver传给command， 然后把这个command传给invoker， client只要调用invoker的invoke（）
+
+
+
 ![image-20220308152816123](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/command%20pattern.png)
 
- 模式结构
+ ### 模式结构
 
 * 命令模式包含如下角色:
 * Command: 抽象命令类
@@ -745,6 +749,129 @@ public class Composite extends Component
 * Invoker:  调用者
 * Receiver:  接收者
 * Client: 客户类
+
+### code
+
+通用Receiver类：
+
+```java
+public abstract class Receiver { 
+    //抽象接收者，定义每个接收者都必须完成的业务 
+    public abstract void doSomething(); 
+}
+
+```
+
+
+
+具体的Receiver类ConcreteReciver1、ConcreteReciver2：
+
+```java
+public class ConcreteReciver1 extends Receiver{ 
+    //每个接收者都必须处理一定的业务逻辑 
+    public void doSomething(){ 
+    } 
+}
+public class ConcreteReciver2 extends Receiver{ 
+    //每个接收者都必须处理一定的业务逻辑 
+    public void doSomething(){ 
+    } 
+```
+
+
+
+
+}抽象的Command类：
+
+```java
+public abstract class Command { 
+    //每个命令类都必须有一个执行命令的方法
+    public abstract void execute(); 
+}
+
+```
+
+
+
+
+调用者Invoker类：
+
+```java
+public class Invoker { 
+    private Command command; 
+    //受气包，接受命令 
+    public void setCommand(Command _command){ 
+        this.command = _command; 
+    }
+    //执行命令 
+    public void action(){ 
+        this.command.execute(); 
+    }
+}
+```
+
+
+
+具体的Command类ConcreteCommand1、ConcreteCommand2：
+
+```java
+public class ConcreteCommand1 extends Command { 
+    //对哪个Receiver类进行命令处理 
+    private Receiver receiver; 
+    //构造函数传递接收者 
+    public ConcreteCommand1(Receiver _receiver){ 
+        this.receiver = _receiver; 
+    }
+    //必须实现一个命令 
+    public void execute() { 
+        //业务处理 
+        this.receiver.doSomething(); 
+    } 
+}
+public class ConcreteCommand2 extends Command { 
+    //哪个Receiver类进行命令处理 
+    private Receiver receiver; 
+    //构造函数传递接收者 
+    public ConcreteCommand2(Receiver _receiver){ 
+        this.receiver = _receiver; 
+    }
+    //必须实现一个命令 
+    public void execute() { 
+        //业务处理 
+        this.receiver.doSomething(); 
+    } 
+}
+```
+
+
+
+
+
+
+
+场景类Client：
+
+```java
+public class Client { 
+    public static void main(String[] args) { 
+        //首先声明调用者Invoker 
+        Invoker invoker = new Invoker(); 
+        //定义接收者 
+        Receiver receiver = new ConcreteReciver1(); 
+        //定义一个发送给接收者的命令 
+        Command command = new ConcreteCommand1(receiver); 
+        //把命令交给调用者去执行 
+        invoker.setCommand(command); 
+        invoker.action(); 
+    } 
+}
+```
+
+
+
+
+
+
 
 ## State
 
