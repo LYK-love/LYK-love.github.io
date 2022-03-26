@@ -1,3 +1,6 @@
 [submodule "themes/hexo"]
 	path = themes/hexo
 	url = git@github.com:LYK-love/hexo.git
+[submodule "themes/next"]
+	path = themes/next
+	url = git@github.com:LYK-love/hexo.git
