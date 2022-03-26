@@ -8,10 +8,13 @@ date: 2022-02-13 16:08:27
 
 Outline:
 
-* docker specification
-* docker  engine
-* docker image
-* docker container
+* Docker Specification
+* Docker  Engine
+* Docker Image
+* Docker Container
+* Docker Security
+* Docker Logs
+* Docker Management
 
 介绍了docker的基本概念和命令
 
@@ -19,7 +22,7 @@ Outline:
 
 
 
-# docker specification
+# Docker Specification
 
 ## Docker运行时与编排引擎
 
@@ -237,7 +240,7 @@ Storage Driver: overlay2
 
 也可以把容器理解为**命名空间的有组织集合**, 详见下文Security -> Linux -> Namespace
 
-# docker engine
+# Docker Engine
 
 docker server就是docker引擎，而引擎架构如下：
 
@@ -257,7 +260,7 @@ docker server就是docker引擎，而引擎架构如下：
 
 在这个架构下，容器的启动和管理实现了和`daemon`的解耦。 即容器运行时和`daemon`解耦，称为“无守护进程的容器” `daemonless container`。 因此，对`daemon`的维护「升级等**不会影响到运行中的容器**
 
-# docker image
+# Docker Image
 
 ## commands
 
@@ -525,7 +528,7 @@ alpine       latest    sha256:21a3deaa0d32a8057914f36584b5288d2e5ecc984380bc0118
 
 
 
-# docker container
+# Docker Container
 
 ## commands
 
@@ -926,7 +929,11 @@ docker service logs <service-name> # 针对Swarm服务
 
 
 
-# docker management
+# Docker Management
+
+命令行docker管理工具: lazydocker
+
+
 
 ## 查看配置文件
 

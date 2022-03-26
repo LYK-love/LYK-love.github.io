@@ -5,7 +5,21 @@ tags: C++
 
 ---
 
-# 面向对象
+
+
+Outline:
+
+* Basic Idea
+* 成员初始化表
+* 析构函数
+* Const成员
+* 静态成员
+* 继承
+* 虚函数
+
+<!--more-->
+
+# Basic Idea 
 
 面向对象的优势是可以`设计`出`可复用性`和`可维护性`更强的代码. OO和PO能做的事其实是一样的,OO甚至会更慢,因为多态必然造成性能的下降.
 
@@ -14,7 +28,7 @@ tags: C++
 1. 弱耦合性: 代码更容易复用
 2. 容易维护,主要是因为继承和多态,不点的接口,多种行为,类的内部可以自由修改(只要不改接口)
 
-<!--more-->
+
 
 例子:
 
@@ -138,7 +152,7 @@ C++ 成员函数都有一个隐含的`T *const this`,指向本对象( 也就是�
 
 * `getter`和`setter` 可以在类定义时定义,这样它们就成为`隐式内联函数`
 
-## 成员初始化表
+# 成员初始化表
 
 * 构造函数的补充
 * 执行
@@ -184,7 +198,7 @@ CString(int x): size(x), p(new char[size]) {}
 
 错了! 因为p初始化的时候,`size`还没有初始化! 应该把`size`声明提前
 
-## 析构函数
+# 析构函数
 
 * `~<类名>()`
 * 对象消亡时,系统自动调用( 释放对象持有的非内存资源和不属于这个对象的内存 )
@@ -195,9 +209,7 @@ CString(int x): size(x), p(new char[size]) {}
 * `public`
   * 可定义为`private`
 
-
-
-### `Const`成员
+# `Const`成员
 
 * `const`成员
 
@@ -219,7 +231,7 @@ CString(int x): size(x), p(new char[size]) {}
   * `const`成员的初始化放在构造函数的**初始化表**中进行
   * `static const`: 类静态常量,这个常量放在`静态区`,只能在类定义外部初始化(而不是在构造函数内, 因为它不从属于某个对象)
 
-### 静态成员
+# 静态成员
 
 * 问题:同一个类的不同对象如何共享变量
 
@@ -471,55 +483,7 @@ Base1::Base1(int n){
     * 把事物(概念)以层次结构表示出来,有利于描述和解决问题
   * 增量开发
 
-## 单继承
-
-```C++
-
-class Base
-{
-public:
-  //对于C++类中定义的任何类型的函数，名字覆盖的规则都是一样的。
-  virtual void func1(int x){cout << "func1(int) in Base ..." << endl;}
-  void func2(){cout << "func2() in Base ..." << endl;}
-  virtual void func3() = 0;
-};
- 
-class Derived : public Base
-{
-public:
-  void func1() {cout << "func1() in Derived..." << endl;}
-  void func2(int x) {cout << "func2(int) in Derived..." << endl;}
-  void func3() {cout << "func3() in Derived..." << endl;}
-  void func3(int ) {cout << "func3() in Derived..." << endl;}
-};
- 
-int main()
-{
-  Derived d;
-  d.func1(3); //调用失败。编译器在Derived的作用域中找到了该函数名字，但是发现调用不匹配，不能通过编译
-  d.func2();
-  return 0;
-
-
-```
-
-
-
-* 派生类只能通过基类的类来访问基类的`protecteed` 成员,而不能通过基类的对象来访问.
-
-* 当你在派生类中定义一个基类函数的重载版本后,基类中所有的重载函数在子类中不可见. 这是因为**编译器在面对函数调用时，首先是在作用域范围内查找该函数名（由内之外）， 如果找到了该函数名之后，编译器便停止查找，开始检查形参与实参的匹配是否合法， 如果不合法，不能通过编译**。( 因此,编译器在子类中找到了这个函数名,但是发现调用不匹配,于是不能通过编译 ).
-
-  解决方法: 使用`using <基类>:: <成员名称>` 来将基类中的属性或者函数成员名称引入到子类中来, 也就是让基类中的函数名字在"编译器查找子类"作用域是可见的.
-
-* 构造函数和析构函数不能被继承
-
-
-
-派生类友元函数可以通过派生类对象访问基类的`protected` 成员, 但是不能通过基类对象访问基类的` protected` 成员. **友元不可传递!**
-
-
-
-### 构造函数
+## 构造函数
 
 * 派生类对象的初始化
   * 由基类和派生类共同完成
@@ -596,13 +560,266 @@ int main()
 **（1）**如果派生类的函数与基类的函数同名，但是参数不同。那么此时，不论有无virtual关键字，基类的函数将被隐藏（注意别与重载混淆）。
 **（2）**如果派生类的函数与基类的函数同名，并且参数也相同，但是基类函数没有virtual关键字。那么此时，基类的函数被隐藏（注意别与覆盖混淆）。(编译器在当前类作用域内找到了找到了匹配的函数,于是不再去找基类的; 如果是虚函数,那么会查虚函数表 )
 
-### 虚函数
+## 单继承
+
+```C++
+
+class Base
+{
+public:
+  //对于C++类中定义的任何类型的函数，名字覆盖的规则都是一样的。
+  virtual void func1(int x){cout << "func1(int) in Base ..." << endl;}
+  void func2(){cout << "func2() in Base ..." << endl;}
+  virtual void func3() = 0;
+};
+ 
+class Derived : public Base
+{
+public:
+  void func1() {cout << "func1() in Derived..." << endl;}
+  void func2(int x) {cout << "func2(int) in Derived..." << endl;}
+  void func3() {cout << "func3() in Derived..." << endl;}
+  void func3(int ) {cout << "func3() in Derived..." << endl;}
+};
+ 
+int main()
+{
+  Derived d;
+  d.func1(3); //调用失败。编译器在Derived的作用域中找到了该函数名字，但是发现调用不匹配，不能通过编译
+  d.func2();
+  return 0;
+
+
+```
+
+
+
+* 派生类只能通过基类的类来访问基类的`protecteed` 成员,而不能通过基类的对象来访问.
+
+* 当你在派生类中定义一个基类函数的重载版本后,基类中所有的重载函数在子类中不可见. 这是因为**编译器在面对函数调用时，首先是在作用域范围内查找该函数名（由内之外）， 如果找到了该函数名之后，编译器便停止查找，开始检查形参与实参的匹配是否合法， 如果不合法，不能通过编译**。( 因此,编译器在子类中找到了这个函数名,但是发现调用不匹配,于是不能通过编译 ).
+
+  解决方法: 使用`using <基类>:: <成员名称>` 来将基类中的属性或者函数成员名称引入到子类中来, 也就是让基类中的函数名字在"编译器查找子类"作用域是可见的.
+
+* 构造函数和析构函数不能被继承
+
+
+
+派生类友元函数可以通过派生类对象访问基类的`protected` 成员, 但是不能通过基类对象访问基类的` protected` 成员. **友元不可传递!**
+
+## 私有继承
+
+在声明一个派生类时将基类的继承方式指定为private的，称为私有继承，用私有继承方式建立的派生类称为私有派生类(private derived class )， 其基类称为私有基类(private base class )。
+
+私有基类的公用成员和保护成员在派生类中的访问属性相当于派生类中的私有成员，即派生类的成员函数能访问它们，而在派生类外不能访问它们。私有基类的私有成员在派生类中成为不可访问的成员，只有基类的成员函数可以引用它们。一个基类成员在基类中的访问属性和在派生类中的访问属性可能是不同的。私有基类的成员在私有派生类中的访问属性见表
+
+* 虽然在派生类外不能通过派生类对象调用私有基类的公用成员函数，但在派生类外可以通过派生类的公共成员函数调用私有基类的公用成员函数(此时它是派生类中的私有成员函数，可以被派生类的任何成员函数调用)。这就是一种**委托**
+
+| 私有基类中的成员 | 在私有派生类中的访问属性 |
+| ---------------- | ------------------------ |
+| 私有成员         | 不可访问                 |
+| 公用成员         | 私有                     |
+| 保护成员         | 私有                     |
+
+* 私有继承类和基类的**接口不一样**,它们不是`is-a`关系,而是`has-a`关系
+* 因此,私有继承不存在类型兼容和类型转换, 也就是不能用父类指向子类. 
+
+```C++
+class CHumanBeing
+{
+    ...
+};
+class CStudent: private CHumanBeing
+{
+    ...
+};
+
+CHumanBeing a; CStudent b;
+eat(a);
+eat(b); //Error
+```
+
+## 多继承
+
+* 继承方式及访问控制的规定同单继承
+* 派生类拥有所有基类的所有成员
+* 多继承定义的时候是一个权限名对应一个基类，`class derived:public base1, public base2`.  不能是`class derived:public base1,base2`
+* 基类的声明次序决定：
+  * 对基类构造函数/析构函数的调用次序
+  * 对基类数据成员的存储安排
+* 名冲突
+  * <基类名>：：<基类名称名>
+* 虚基类
+  * 如果直接基类有公共的基类，则该公共基类中的成员变量在多继承的派生类中有多个副本
+
+```C++
+class A
+{
+	int x;
+	...
+};
+class B: A;
+class C: A;
+Class D: B,C;
+```
+
+* 类D拥有两个成员`B:: x` 和`C:: x`
+
+  * D调用B和C, B调用A, C调用A. 所以A的构造函数会被调用两次. 实际上A的成员会被拷贝给B和C, 拷贝到不同子类的基类成员之间是**无关联**的
+
+* 虚基类
+
+  * 合并
+
+    ```C++
+    class A;
+    Class B: virtual public A;
+    class C: virtual public A;
+    class D: B,C;
+    ```
+
+  
+
+  1. 设定为虚基类后，系统知道base1和base2都是由base派生出的，所以它就统一先构造base，调用base的构造函数。
+  2. 再按照顺序调用base1和base2的构造函数，只不过在此时，大家在构造时操作的都是同一个成员
+
+* 注意
+
+  * 虚基类的构造函数由最新派生出的类的构造函数调用
+  * **虚基类的构造函数优先非虚基类的构造函数执行**
+    * 解释: 设B,C虚继承A, D继承B,C, 则D的构造函数会先执行虚基类A的构造函数,再执行B和C的构造函数; 而在普通多继承中,D会调用B,C,它们再分别调用A. 二者是不同的.
+  * 多继承形式下析构函数的执行顺序和构造函数的执行顺序相反。
+
+### 多继承下的构造函数
+
+多继承形式下的构造函数和单继承形式基本相同，只是要在派生类的构造函数中调用多个基类的构造函数。以上面的 A、B、C、D 类为例，D 类构造函数的写法为：
+
+```c++
+D(形参列表): A(实参列表), B(实参列表), C(实参列表){
+  //其他操作
+}
+```
+
+
+
+基类构造函数的调用顺序和和它们在派生类构造函数中出现的顺序无关，而是**和声明派生类时基类出现的顺序相同**。仍然以上面的 A、B、C、D 类为例，即使将 D 类构造函数写作下面的形式：
+
+```c++
+D(形参列表): B(实参列表), C(实参列表), A(实参列表){
+  //其他操作
+}
+
+```
+
+
+
+是先调用 A 类的构造函数，再调用 B 类构造函数，最后调用 C 类构造函数。
+
+从运行结果中还可以发现，
+
+
+
+### 命名冲突
+
+当两个或多个基类中有同名的成员时，如果直接访问该成员，就会产生命名冲突，编译器不知道使用哪个基类的成员。这个时候需要在成员名字前面加上类名和域解析符`::`，以显式地指明到底使用哪个类的成员，消除二义性。
+
+修改上面的代码，为 `BaseA` 和 `BaseB` 类添加 show() 函数，并将 Derived 类的 show() 函数更名为 display()：
+
+```c++
+#include <iostream>
+using namespace std;
+//基类
+class BaseA
+{
+ public:    
+ BaseA(int a, int b);    
+ ~BaseA();public:    
+ void show();
+ protected:    
+ int m_a;    
+    int m_b;
+};
+
+BaseA::BaseA(int a, int b): m_a(a), m_b(b)
+{    
+    cout<<"BaseA constructor"<<endl;
+}
+BaseA::~BaseA()
+{    
+    cout<<"BaseA destructor"<<endl;
+}
+void BaseA::show()
+{    
+    cout<<"m_a = "<<m_a<<endl;    
+    cout<<"m_b = "<<m_b<<endl;
+}//基类
+class BaseB
+{
+    public:    
+    BaseB(int c, int d);    
+    ~BaseB();    
+    void show();
+    protected:    
+    int m_c;    
+    int m_d;};
+BaseB::BaseB(int c, int d): m_c(c), m_d(d)
+{    
+    cout<<"BaseB constructor"<<endl;
+}
+BaseB::~BaseB()
+{    
+    cout<<"BaseB destructor"<<endl;
+}
+void BaseB::show()
+{    
+    cout<<"m_c = "<<m_c<<endl;    
+    cout<<"m_d = "<<m_d<<endl;
+}//派生类
+class Derived: public BaseA, public BaseB
+{
+ public:    
+ Derived(int a, int b, int c, int d, int e);    ~Derived();
+ public:    
+ void display();
+ private:    
+ int m_e;
+};
+
+Derived::Derived(int a, int b, int c, int d, int e): BaseA(a, b), BaseB(c, d), m_e(e)
+{    
+    cout<<"Derived constructor"<<endl;
+}
+Derived::~Derived()
+{    
+    cout<<"Derived destructor"<<endl;
+}
+void Derived::display()
+{    
+    BaseA::show();  //调用BaseA类的show()函数
+    BaseB::show();  //调用BaseB类的show()函数
+    cout<<"m_e = "<<m_e<<endl;
+}
+    
+    int main()
+    {    
+        Derived obj(1, 2, 3, 4, 5);    
+        obj.display();    
+        return 0;
+    }
+```
+
+显式地指明了要调用哪个基类的 show() 函数
+
+
+
+
+
+# 虚函数
 
 c++语言中，基类必须将它的两种成员函数区分开来：一种是基类希望其派生类进行覆盖的函数，另一种是基类希望派生类直接继承而不要改变的函数。对于前者，基类通常将其定义为虚函数（virtual）。当我们使用指针或者引用调用虚函数时，该调用将被动态绑定。根据引用或者指针所绑定的对象类型不同，该调用可能执行基类的版本也可能执行某个派生类的版本。在某些时候基类希望它的派生类有权访问该成员，同时禁止其他用户访问。我们用受保护的（protected）访问运算符来说明这样的成员。
 
 基类通过在其成员函数声明语句之前加上关键字virtual使得改函数执行动态绑定。任何构造函数之外的非静态函数都可以是虚函数。关键字virtual只能出现在类内部声明语句之前而不能用于类外部的函数定义。如果基类把一个函数声明成虚函数，则该函数在派生类中隐式地也是虚函数。
 
-#### 虚函数的访问控制
+## 虚函数的访问控制
 
 * **编译器根据对象的静态类型来决定访问控制权限，并且进行形参的默认参数的赋值**
 
@@ -717,7 +934,7 @@ int main(void)
 
 如果基类中的虚方法没有在派生类中重写，那么派生类将继承基类中的虚方法，而且派生类中虚函数表将保存基类中未被重写的虚函数的地址，但如果派生类中定义了新的虚方法，则该虚函数的地址也将被添加到派生类虚函数表中
 
-#### final，override
+## final，override
 
 **1. override 重载**
 
@@ -810,9 +1027,7 @@ struct D: B //默认的继承访问权限。struct是public继承的
 
 
 
-
-
-#### 纯虚函数和抽象类
+## 纯虚函数和抽象类
 
 * 纯虚函数
   * 声明时在函数原型后面加上`= 0`
@@ -898,7 +1113,7 @@ struct D: B //默认的继承访问权限。struct是public继承的
 
   
 
-#### 三种函数
+## 三种函数
 
 * 纯虚函数
 
@@ -920,9 +1135,7 @@ struct D: B //默认的继承访问权限。struct是public继承的
 
   * **必须**同时继承接口和实现代码
 
-
-
-##### 纯虚析构函数
+## 纯虚析构函数
 
 [原文](https://blog.csdn.net/yby4769250/article/details/7294733)
 
@@ -960,205 +1173,4 @@ A *p =new B();
 1. 父类如**A**的析构函数不是虚函数，这种情况下，将只会调用**A**的析构函数而不会调用子类的析构函数，前面的文章中有提到过，非虚函数是通过类型来寻址的，这样的析构将会导致析构畸形
 2. 父类如**A**的析构函数是普通的虚函数，这种情况下，会很正常，从子类一直析构到基类，最后完成析构
 3. 父类如**A**的析构函数是纯虚析构函数，如本文所提，正是重点，在这种情况之下，由于析构函数首先是虚函数，所以会按**2**的方法从子类一直析构到父类，但是，又由于父类的析构函数是纯虚函数，没有实现体，所以，当析构到父类时，由于没有实现体，所以导致父类无法析构，最终也导致了析构畸形，因此，特殊的地方就在于这里，纯虚析构函数需要提供一个实现体，以完成对象的析构
-
-### 私有继承
-
-在声明一个派生类时将基类的继承方式指定为private的，称为私有继承，用私有继承方式建立的派生类称为私有派生类(private derived class )， 其基类称为私有基类(private base class )。
-
-私有基类的公用成员和保护成员在派生类中的访问属性相当于派生类中的私有成员，即派生类的成员函数能访问它们，而在派生类外不能访问它们。私有基类的私有成员在派生类中成为不可访问的成员，只有基类的成员函数可以引用它们。一个基类成员在基类中的访问属性和在派生类中的访问属性可能是不同的。私有基类的成员在私有派生类中的访问属性见表
-
-* 虽然在派生类外不能通过派生类对象调用私有基类的公用成员函数，但在派生类外可以通过派生类的公共成员函数调用私有基类的公用成员函数(此时它是派生类中的私有成员函数，可以被派生类的任何成员函数调用)。这就是一种**委托**
-
-| 私有基类中的成员 | 在私有派生类中的访问属性 |
-| ---------------- | ------------------------ |
-| 私有成员         | 不可访问                 |
-| 公用成员         | 私有                     |
-| 保护成员         | 私有                     |
-
-* 私有继承类和基类的**接口不一样**,它们不是`is-a`关系,而是`has-a`关系
-* 因此,私有继承不存在类型兼容和类型转换, 也就是不能用父类指向子类. 
-
-```C++
-class CHumanBeing
-{
-    ...
-};
-class CStudent: private CHumanBeing
-{
-    ...
-};
-
-CHumanBeing a; CStudent b;
-eat(a);
-eat(b); //Error
-```
-
-### 多继承
-
-* 继承方式及访问控制的规定同单继承
-* 派生类拥有所有基类的所有成员
-* 多继承定义的时候是一个权限名对应一个基类，`class derived:public base1, public base2`.  不能是`class derived:public base1,base2`
-* 基类的声明次序决定：
-  * 对基类构造函数/析构函数的调用次序
-  * 对基类数据成员的存储安排
-* 名冲突
-  * <基类名>：：<基类名称名>
-* 虚基类
-  * 如果直接基类有公共的基类，则该公共基类中的成员变量在多继承的派生类中有多个副本
-
-```C++
-class A
-{
-	int x;
-	...
-};
-class B: A;
-class C: A;
-Class D: B,C;
-```
-
-* 类D拥有两个成员`B:: x` 和`C:: x`
-
-  * D调用B和C, B调用A, C调用A. 所以A的构造函数会被调用两次. 实际上A的成员会被拷贝给B和C, 拷贝到不同子类的基类成员之间是**无关联**的
-
-* 虚基类
-
-  * 合并
-
-    ```C++
-    class A;
-    Class B: virtual public A;
-    class C: virtual public A;
-    class D: B,C;
-    ```
-
-  
-
-  1. 设定为虚基类后，系统知道base1和base2都是由base派生出的，所以它就统一先构造base，调用base的构造函数。
-  2. 再按照顺序调用base1和base2的构造函数，只不过在此时，大家在构造时操作的都是同一个成员
-
-* 注意
-
-  * 虚基类的构造函数由最新派生出的类的构造函数调用
-  * **虚基类的构造函数优先非虚基类的构造函数执行**
-    * 解释: 设B,C虚继承A, D继承B,C, 则D的构造函数会先执行虚基类A的构造函数,再执行B和C的构造函数; 而在普通多继承中,D会调用B,C,它们再分别调用A. 二者是不同的.
-  * 多继承形式下析构函数的执行顺序和构造函数的执行顺序相反。
-
-#### 多继承下的构造函数
-
-多继承形式下的构造函数和单继承形式基本相同，只是要在派生类的构造函数中调用多个基类的构造函数。以上面的 A、B、C、D 类为例，D 类构造函数的写法为：
-
-```c++
-D(形参列表): A(实参列表), B(实参列表), C(实参列表){
-  //其他操作
-}
-```
-
-
-
-基类构造函数的调用顺序和和它们在派生类构造函数中出现的顺序无关，而是**和声明派生类时基类出现的顺序相同**。仍然以上面的 A、B、C、D 类为例，即使将 D 类构造函数写作下面的形式：
-
-```c++
-D(形参列表): B(实参列表), C(实参列表), A(实参列表){
-  //其他操作
-}
-
-```
-
-
-
-是先调用 A 类的构造函数，再调用 B 类构造函数，最后调用 C 类构造函数。
-
-从运行结果中还可以发现，
-
-#### 命名冲突
-
-当两个或多个基类中有同名的成员时，如果直接访问该成员，就会产生命名冲突，编译器不知道使用哪个基类的成员。这个时候需要在成员名字前面加上类名和域解析符`::`，以显式地指明到底使用哪个类的成员，消除二义性。
-
-修改上面的代码，为 `BaseA` 和 `BaseB` 类添加 show() 函数，并将 Derived 类的 show() 函数更名为 display()：
-
-```c++
-#include <iostream>
-using namespace std;
-//基类
-class BaseA
-{
- public:    
- BaseA(int a, int b);    
- ~BaseA();public:    
- void show();
- protected:    
- int m_a;    
-    int m_b;
-};
-
-BaseA::BaseA(int a, int b): m_a(a), m_b(b)
-{    
-    cout<<"BaseA constructor"<<endl;
-}
-BaseA::~BaseA()
-{    
-    cout<<"BaseA destructor"<<endl;
-}
-void BaseA::show()
-{    
-    cout<<"m_a = "<<m_a<<endl;    
-    cout<<"m_b = "<<m_b<<endl;
-}//基类
-class BaseB
-{
-    public:    
-    BaseB(int c, int d);    
-    ~BaseB();    
-    void show();
-    protected:    
-    int m_c;    
-    int m_d;};
-BaseB::BaseB(int c, int d): m_c(c), m_d(d)
-{    
-    cout<<"BaseB constructor"<<endl;
-}
-BaseB::~BaseB()
-{    
-    cout<<"BaseB destructor"<<endl;
-}
-void BaseB::show()
-{    
-    cout<<"m_c = "<<m_c<<endl;    
-    cout<<"m_d = "<<m_d<<endl;
-}//派生类
-class Derived: public BaseA, public BaseB
-{
- public:    
- Derived(int a, int b, int c, int d, int e);    ~Derived();
- public:    
- void display();
- private:    
- int m_e;
-};
-
-Derived::Derived(int a, int b, int c, int d, int e): BaseA(a, b), BaseB(c, d), m_e(e)
-{    
-    cout<<"Derived constructor"<<endl;
-}
-Derived::~Derived()
-{    
-    cout<<"Derived destructor"<<endl;
-}
-void Derived::display()
-{    
-    BaseA::show();  //调用BaseA类的show()函数
-    BaseB::show();  //调用BaseB类的show()函数
-    cout<<"m_e = "<<m_e<<endl;
-}
-    
-    int main()
-    {    
-        Derived obj(1, 2, 3, 4, 5);    
-        obj.display();    
-        return 0;
-    }
-```
-
-显式地指明了要调用哪个基类的 show() 函数。
 

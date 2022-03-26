@@ -12,7 +12,6 @@ Outline:
 * Commands
 * Swarm Service
 * Swarm Lock
-* Swarm Logs
 
 <!--more-->
 
@@ -526,5 +525,4 @@ error response from daemon: Swarm is encrypted and needs to be unlocked before i
  docker swarm unlock
  # 然后会要求你输入解锁码
 ```
-
 

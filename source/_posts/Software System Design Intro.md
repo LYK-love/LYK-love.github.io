@@ -17,6 +17,8 @@ Outline:
 
 ref： 软件系统设计 --- 潘敏学， [Design Pattern Turotial](https://refactoring.guru/design-patterns/creational-patterns)
 
+<!--more-->
+
 #  类之间的关系
 
 ref: https://www.jianshu.com/p/d1d45efcfac1

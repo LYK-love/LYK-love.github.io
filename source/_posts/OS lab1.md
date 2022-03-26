@@ -12,9 +12,9 @@ Outline：
 * 调用约束
 * 汇编避坑
 
-[NASM tutorial][https://cee.github.io/NASM-Tutorial/]
+[NASM tutorial](https://cee.github.io/NASM-Tutorial/)
 
-[NASM教程][http://www.bytekits.com/nasm/find-address-and-move.html]
+[NASM教程](http://www.bytekits.com/nasm/find-address-and-move.html)
 
 <!--more-->
 

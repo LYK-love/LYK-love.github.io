@@ -90,7 +90,7 @@ Docker Stack根据Stack文件部署应用, 也就是`docker-stack.yml`
 
 
 
-
+[项目地址](https://github.com/dockersamples/atsea-sample-shop-apps)
 
 ```yaml
 version: "3.2"

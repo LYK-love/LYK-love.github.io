@@ -9,7 +9,7 @@ date: 2021-06-17 15:14:10
 * Are you building it “right”?
 * Are you building the “right” thing?
 
-You can find more detailed information in  *Automated Testing* if you want to apply these technologies in read-world development
+For more information, please read *Automatic Testing*
 
 <!--more-->
 

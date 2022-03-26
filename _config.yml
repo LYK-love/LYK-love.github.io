@@ -105,6 +105,7 @@ deploy:
   ##branch: master
   repo:
     github: git@github.com:LYK-love/LYK-love.github.io.git
+  branch: master
 # 搜索
 search:
   path: search.xml

@@ -5,12 +5,16 @@ categories: Software Engineering
 date: 2021-06-27 11:09:16
 ---
 
+Outline:
 
-# 面向对象中的访问与耦合
-
-**Structural methods vs OO methods in Coupling**
+* Structural methods vs OO methods in Coupling
+*  访问耦合
+* 继承耦合
+* 耦合和内聚的度量
 
 <!--more-->
+
+# Structural methods vs OO methods in Coupling
 
 * Coupling 
 

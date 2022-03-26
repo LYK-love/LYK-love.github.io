@@ -1,9 +1,19 @@
 ---
-title: Python基础
+title: Python Basic
 categories: Language
 tags: Python
 
 ---
+
+
+
+介绍了Python编程的基础知识
+
+
+
+ref: [廖雪峰的教程](https://www.liaoxuefeng.com/wiki/1016959663602400)
+
+<!--more-->
 
 # Python基础
 

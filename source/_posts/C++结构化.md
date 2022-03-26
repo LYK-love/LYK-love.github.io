@@ -4,17 +4,21 @@ categories: "Language"
 tags: "C++"
 ---
 
-# Ref
+Outline:
 
-* Language:
-  * C++ Primer
-  * Effective C++
-  * More Effective C++
-  * Effective Modern C++
+* Preface
+* Prigramming
+  * Data Type
+  * Variable
+  * ...
 
-* Design:
-  * Design Patterns
-  * Pattern-oriented Software Architecture
+
+
+ref: *C++ Primer*, *Effective C++*, *More Effective C++*, *Effective Modern C++*
+
+<!--more-->
+
+# Preface
 
 **G = ( VN , VT , P , Z )**
 
@@ -26,9 +30,7 @@ P:规则
 
 Z：target，目标
 
-高级程序设计语言都是有理论保障的，不然不能保证我们得到正确的结果。
-
-<!--more-->
+高级程序设计语言都是有理论保障的，否则不能保证得到正确结果。
 
 # Programming 
 
@@ -179,7 +181,7 @@ Programming Paradigm
         const int tmp = dval; //tmp是临时量
         const int &r1 = tmp
     ```
-  
+
 
 #### 顶层、底层const
 

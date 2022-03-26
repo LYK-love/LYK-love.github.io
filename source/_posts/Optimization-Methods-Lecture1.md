@@ -6,7 +6,7 @@ mathjax: true
 date: 2021-09-07 21:47:40
 ---
 
-ref: [Optimization Methods][http://www.lamda.nju.edu.cn/chengq/course/opt2021/opt2021.html]
+ref: [Optimization Methods](http://www.lamda.nju.edu.cn/chengq/course/opt2021/opt2021.html)
 
 Outline:
 

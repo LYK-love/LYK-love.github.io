@@ -4,7 +4,15 @@ tag: Git
 categories: Toolkit
 ---
 
-Adapted from: https://www.liaoxuefeng.com/wiki/896043488029600
+
+
+
+
+全面介绍了Git的原理和使用
+
+ref:  [廖雪峰的教程](https://www.liaoxuefeng.com/wiki/896043488029600)
+
+<!-- more-->
 
 ## Intro 
 
@@ -20,12 +28,10 @@ Adapted from: https://www.liaoxuefeng.com/wiki/896043488029600
 
 > 分布式:
 >
-> * Git,别的都是臭鱼烂虾
+> * Git
 
 [^1]: Concurrent Versions System
 [^2]:Apache Subversion
-
-<!--more-->
 
 #### 创建版本库
 

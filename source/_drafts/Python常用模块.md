@@ -9,10 +9,6 @@ tags: Python
 
 ## datetime
 
-#### datetime
-
-阅读: 38136373
-
 ------
 
 datetime是Python处理日期和时间的标准库。
