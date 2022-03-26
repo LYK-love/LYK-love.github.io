@@ -1,0 +1,3 @@
+[submodule "themes/hexo"]
+	path = themes/hexo
+	url = git@github.com:LYK-love/hexo.git
