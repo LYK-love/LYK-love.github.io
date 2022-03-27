@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://www.liaoxuefeng.com/files/attachments/919023031831104/0">
 <meta property="og:image" content="https://www.liaoxuefeng.com/files/attachments/919023225142304/0">
 <meta property="article:published_time" content="2022-03-26T12:14:21.000Z">
-<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-03-27T09:27:42.114Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
@@ -226,6 +226,13 @@
 
               <time title="Created: 2022-03-26 12:14:21" itemprop="dateCreated datePublished" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-27 09:27:42" itemprop="dateModified" datetime="2022-03-27T09:27:42Z">2022-03-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -251,11 +258,7 @@
 <p>ref:  <a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/896043488029600">廖雪峰的教程</a></p>
 <span id="more"></span>
 <h2 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h2><ul>
-<li>Git是Linus用<strong>C</strong>写的分布式版本管理系统<ul>
-<li>集中式:版本库存放在中央服务器,必须联网(Problem)</li>
-<li>分布式:每个人电脑上都是完整的版本库,因此比集中式<strong>安全性高</strong></li>
-</ul>
-</li>
+<li>Git是Linus用<strong>C</strong>写的分布式版本管理系统</li>
 </ul>
 <blockquote>
 <p>集中式:</p>
@@ -426,7 +429,38 @@
 </li>
 </ol>
 <p><code>rm</code>是DOS命令,在各个shell都可以用. 用在git仓库中,是删除工作区的文件,用 <code>git restore readme.txt</code>可以还原. 而<code>git rm readme.txt</code>是删除工作区和暂存区的文件, <strong>由于<code>git restore</code>的原理是将工作复原为暂存区中的版本</strong>,而暂存区中该文件也被删除了,所以恢复不了, 分支里还有这个文件,所以用版本回退<code>git reset --hard HEAD^</code></p>
-<h2 id="修改commit信息"><a href="#修改commit信息" class="headerlink" title="修改commit信息"></a>修改commit信息</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Muscleape/article/details/105637401">https://blog.csdn.net/Muscleape/article/details/105637401</a></p>
+<h3 id="关联分支"><a href="#关联分支" class="headerlink" title="关联分支"></a>关联分支</h3><p>将本地分支与远程同名分支相关联</p>
+<p>pull和push同</p>
+<figure class="highlight plaintext"><figcaption><span>l</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git push --set-upstream origin &lt;本地分支名&gt;</span><br><span class="line"></span><br><span class="line"># 简写方式： </span><br><span class="line"># git push -u origin &lt;本地分支名&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a>git pull</h3><p>1、将远程指定分支 拉取到 本地指定分支上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin &lt;远程分支名&gt;:&lt;本地分支名&gt;</span><br></pre></td></tr></table></figure>
+<p>2、将远程指定分支 拉取到 本地当前分支上：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin &lt;远程分支名&gt;</span><br></pre></td></tr></table></figure>
+<p>3、将与本地当前分支同名的远程分支 拉取到 本地当前分支上(需先关联远程分支，方法见文章末尾)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
+<p>在克隆远程项目的时候，本地分支会自动与远程仓库建立追踪关系，可以使用默认的origin来替代远程仓库名</p>
+<h4 id="pull强制覆盖本地文件"><a href="#pull强制覆盖本地文件" class="headerlink" title="pull强制覆盖本地文件"></a>pull强制覆盖本地文件</h4><p>ref： <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1ac2e1f99166">https://www.jianshu.com/p/1ac2e1f99166</a></p>
+<blockquote>
+<p><strong>重要提示：如果您有任何本地更改，将会丢失。无论是否有—hard选项，任何未被推送的本地提交都将丢失。</strong><br> 如果您有任何未被Git跟踪的文件(例如上传的用户内容)，这些文件将不会受到影响。<br> 下面是正确的方法：</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch --all</span><br></pre></td></tr></table></figure>
+<p>然后，你有两个选择：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard origin/master</span><br></pre></td></tr></table></figure>
+<p>或者如果你在其他分支上：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard origin/&lt;branch_name&gt;</span><br></pre></td></tr></table></figure>
+<p>说明：</p>
+<p><code>git fetch</code>从远程下载最新的，而不尝试合并或rebase任何东西。</p>
+<p>然后<code>git reset</code>将主分支重置为您刚刚获取的内容。 <code>--hard</code>选项更改工作树中的所有文件以匹配<code>origin/master</code>中的文件</p>
+<p>在重置之前可以通过从master创建一个分支来维护当前的本地提交：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br><span class="line">git branch <span class="keyword">new</span>-branch-to-save-current-commits</span><br><span class="line">git fetch --all</span><br><span class="line">git reset --hard origin/master</span><br></pre></td></tr></table></figure>
+<p>在此之后，所有旧的提交都将保存在new-branch-to-save-current-commits中。然而，没有提交的更改(即使staged)将会丢失。确保存储和提交任何你需要的东西。</p>
+<h3 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a>git push</h3><p>1、将本地当前分支 推送到 <strong>远程指定分支上</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin &lt;本地分支名&gt;:&lt;远程分支名&gt;</span><br></pre></td></tr></table></figure>
+<p>2、将本地当前分支 推送到 <strong>与本地当前分支同名的远程分支</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin &lt;本地分支名&gt;</span><br></pre></td></tr></table></figure>
+<p>3、将本地当前分支 推送到 与本地当前分支同名的远程分支上(需先关联远程分支])</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push</span><br></pre></td></tr></table></figure>
+<h3 id="修改commit信息"><a href="#修改commit信息" class="headerlink" title="修改commit信息"></a>修改commit信息</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Muscleape/article/details/105637401">https://blog.csdn.net/Muscleape/article/details/105637401</a></p>
 <h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><h3 id="添加远程库"><a href="#添加远程库" class="headerlink" title="添加远程库"></a>添加远程库</h3><p>把已有的本地仓库与一个git仓库相关联( 建立绑定关系 ):</p>
 <p><code>$ git remote add origin https://github.com/LYK-love/Learning</code>, 添加后,远程库的名字就是<code>origin</code>,这是Git默认的叫法,也可以改名,但没必要.</p>
 <p>下一步,就可以把本地库的内容push到远程库上:</p>
@@ -627,7 +661,6 @@
 <li>bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；</li>
 <li>feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。</li>
 </ul>
-<h4 id=""><a href="#" class="headerlink" title=" "></a> </h4><p>多人协作：</p>
 <ol>
 <li>首先，可以试图用<code>git push origin &lt;branch-name&gt;</code>推送自己的修改；</li>
 <li>如果推送失败，则因为远程分支比你的本地更新，需要先用<code>git pull</code>试图合并；</li>
@@ -847,7 +880,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%89%88%E6%9C%AC%E5%BA%93"><span class="nav-text">创建版本库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%8A%E6%96%87%E4%BB%B6%E6%B7%BB%E5%8A%A0%E5%88%B0%E7%89%88%E6%9C%AC%E5%BA%93"><span class="nav-text">把文件添加到版本库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E5%92%8C%E6%9F%A5%E7%9C%8B%E4%BF%AE%E6%94%B9"><span class="nav-text">提交和查看修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80"><span class="nav-text">版本回退</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%92%8C%E6%9A%82%E5%AD%98%E5%8C%BA"><span class="nav-text">工作区和暂存区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%A4%E9%94%80%E4%BF%AE%E6%94%B9"><span class="nav-text">撤销修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="nav-text">删除文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9commit%E4%BF%A1%E6%81%AF"><span class="nav-text">修改commit信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-text">远程仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8B%E5%BA%93"><span class="nav-text">添加远程库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%BF%9C%E7%A8%8B%E5%BA%93"><span class="nav-text">删除远程库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E8%BF%9C%E7%A8%8B%E5%BA%93clone"><span class="nav-text">从远程库clone</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="nav-text">分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF"><span class="nav-text">创建与合并分支</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF"><span class="nav-text">查看远程分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81"><span class="nav-text">解决冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5"><span class="nav-text">分支管理策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bug%E5%88%86%E6%94%AF"><span class="nav-text">Bug分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feature%E5%88%86%E6%94%AF"><span class="nav-text">Feature分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C"><span class="nav-text">多人协作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-text"> </span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rebase"><span class="nav-text">Rebase</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86"><span class="nav-text">标签管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%87%E7%AD%BE"><span class="nav-text">创建标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%A0%87%E7%AD%BE"><span class="nav-text">操作标签</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Git"><span class="nav-text">自定义Git</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%BD%E7%95%A5%E7%89%B9%E6%AE%8A%E6%96%87%E4%BB%B6"><span class="nav-text">忽略特殊文件</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%89%88%E6%9C%AC%E5%BA%93"><span class="nav-text">创建版本库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%8A%E6%96%87%E4%BB%B6%E6%B7%BB%E5%8A%A0%E5%88%B0%E7%89%88%E6%9C%AC%E5%BA%93"><span class="nav-text">把文件添加到版本库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-text">基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E5%92%8C%E6%9F%A5%E7%9C%8B%E4%BF%AE%E6%94%B9"><span class="nav-text">提交和查看修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E5%9B%9E%E9%80%80"><span class="nav-text">版本回退</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8C%BA%E5%92%8C%E6%9A%82%E5%AD%98%E5%8C%BA"><span class="nav-text">工作区和暂存区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%92%A4%E9%94%80%E4%BF%AE%E6%94%B9"><span class="nav-text">撤销修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="nav-text">删除文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E5%88%86%E6%94%AF"><span class="nav-text">关联分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-pull"><span class="nav-text">git pull</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pull%E5%BC%BA%E5%88%B6%E8%A6%86%E7%9B%96%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6"><span class="nav-text">pull强制覆盖本地文件</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-push"><span class="nav-text">git push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9commit%E4%BF%A1%E6%81%AF"><span class="nav-text">修改commit信息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-text">远程仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E8%BF%9C%E7%A8%8B%E5%BA%93"><span class="nav-text">添加远程库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%BF%9C%E7%A8%8B%E5%BA%93"><span class="nav-text">删除远程库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E8%BF%9C%E7%A8%8B%E5%BA%93clone"><span class="nav-text">从远程库clone</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86"><span class="nav-text">分支管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%8E%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF"><span class="nav-text">创建与合并分支</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF"><span class="nav-text">查看远程分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81"><span class="nav-text">解决冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5"><span class="nav-text">分支管理策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bug%E5%88%86%E6%94%AF"><span class="nav-text">Bug分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Feature%E5%88%86%E6%94%AF"><span class="nav-text">Feature分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C"><span class="nav-text">多人协作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rebase"><span class="nav-text">Rebase</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E7%AD%BE%E7%AE%A1%E7%90%86"><span class="nav-text">标签管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%87%E7%AD%BE"><span class="nav-text">创建标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E6%A0%87%E7%AD%BE"><span class="nav-text">操作标签</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Git"><span class="nav-text">自定义Git</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%BD%E7%95%A5%E7%89%B9%E6%AE%8A%E6%96%87%E4%BB%B6"><span class="nav-text">忽略特殊文件</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -863,7 +896,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-count">127</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
