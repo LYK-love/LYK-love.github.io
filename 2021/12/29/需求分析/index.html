@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline:  流程 面向对象建模 顺序图 状态图 OCL CRC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="需求分析">
+<meta property="og:url" content="http://lyk-love.cn/2021/12/29/%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  流程 面向对象建模 顺序图 状态图 OCL CRC">
+<meta property="og:locale">
+<meta property="og:image" content="https://box.nju.edu.cn/f/36ac57c95fc2426dbfd1/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/a63df9aa2dbc4c0fb74b/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/e3c57151c510429a8548/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/41bb457ba755404597b8/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/1eb8ccf133ca4101b427/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/8f5a5107a6484b8f92bd/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/0a0ebf6823e649999154/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/caa040cba7fb48b89a12/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/949e122b1a714fa4be84/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/c77c0ec287254621942a/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/24a8f8baf35745b480f6/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/9bf03c7a04aa46a4b3dc/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/ee4b4d9e8a2e46fa952b/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/566d6697d0844bedae8f/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/68b6dc280fac4b4b8cd4/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/6d9aac09aa574be384b4/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/138cd559eb31466bb0e1/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/88565b7887974fc6801d/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/ef1467f1f062428a86dc/?dl=1">
+<meta property="og:image" content="https://box.nju.edu.cn/f/20bba339259544969486/?dl=1">
+<meta property="article:published_time" content="2021-12-29T21:44:50.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="需求与商业模式创新">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://box.nju.edu.cn/f/36ac57c95fc2426dbfd1/?dl=1">
+
+<link rel="canonical" href="http://lyk-love.cn/2021/12/29/%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>需求分析 | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/12/29/%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          需求分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-29 21:44:50" itemprop="dateCreated datePublished" datetime="2021-12-29T21:44:50Z">2021-12-29</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Business/" itemprop="url" rel="index"><span itemprop="name">Business</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<ul>
+<li>流程</li>
+<li>面向对象建模<ul>
+<li>顺序图</li>
+<li>状态图</li>
+<li>OCL</li>
+<li>CRC</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><!--![}(../assets/需求与商业模式设计/需求分析/需求分析 流程.png)-->
+<p><img src="https://box.nju.edu.cn/f/36ac57c95fc2426dbfd1/?dl=1" alt="流程"></p>
+<h2 id="需求细化"><a href="#需求细化" class="headerlink" title="需求细化"></a>需求细化</h2><h3 id="用例图"><a href="#用例图" class="headerlink" title="用例图"></a>用例图</h3><!--![用例图](../assets/需求与商业模式设计/需求分析/需求细化 用例图.png)-->
+<p><img src="https://box.nju.edu.cn/f/a63df9aa2dbc4c0fb74b/?dl=1" alt="用例图"></p>
+<h3 id="解决方案细节"><a href="#解决方案细节" class="headerlink" title="解决方案细节"></a>解决方案细节</h3><!--![解决方案细节](../assets/需求与商业模式设计/需求分析/需求细化 解决方案细节.png)-->
+<p><img src="https://box.nju.edu.cn/f/e3c57151c510429a8548/?dl=1" alt="image-20210114124015315"></p>
+<h2 id="需求优先级"><a href="#需求优先级" class="headerlink" title="需求优先级"></a>需求优先级</h2><!-- ![需求优先级](../assets/需求与商业模式设计/需求分析/ 需求优先级.png)-->
+<p><img src="https://box.nju.edu.cn/f/41bb457ba755404597b8/?dl=1" alt="需求优先级"></p>
+<h2 id="需求协商"><a href="#需求协商" class="headerlink" title="需求协商"></a>需求协商</h2><!--![需求协商](..x/assets/需求与商业模式设计/需求分析/需求协商.png)-->
+<p><img src="https://box.nju.edu.cn/f/1eb8ccf133ca4101b427/?dl=1" alt="需求协商"></p>
+<h2 id="建立分析模型"><a href="#建立分析模型" class="headerlink" title="建立分析模型"></a>建立分析模型</h2><ul>
+<li>结构化建模（没写）</li>
+<li>面向对象建模</li>
+</ul>
+<h1 id="面向对象建模"><a href="#面向对象建模" class="headerlink" title="面向对象建模"></a>面向对象建模</h1><h3 id="顺序图"><a href="#顺序图" class="headerlink" title="顺序图"></a>顺序图</h3><!--![顺序图](../assets/需求与商业模式设计/需求分析/顺序图/顺序图.png)-->
+<p><img src="https://box.nju.edu.cn/f/8f5a5107a6484b8f92bd/?dl=1" alt="顺序图"></p>
+<h4 id="组合"><a href="#组合" class="headerlink" title="组合"></a>组合</h4><ul>
+<li>alt：选择</li>
+<li>opt：条件执行</li>
+<li>loop：循环</li>
+<li>break：跳出循环</li>
+<li>par：并行</li>
+<li>critical：原子操作，不可被打断</li>
+<li>strict：顺序执行</li>
+<li>seq：不同生命线的可以并发执行（google和bing或yahoo可以并发，bing和yahoo必须顺序）</li>
+</ul>
+<!--![组合](../assets/需求与商业模式设计/需求分析/顺序图/组合.png)-->
+<p><img src="https://box.nju.edu.cn/f/0a0ebf6823e649999154/?dl=1" alt="组合"></p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><!--![示例](../assets/需求与商业模式设计/需求分析/顺序图/实例.png)-->
+<p><img src="https://box.nju.edu.cn/f/caa040cba7fb48b89a12/?dl=1" alt="示例"></p>
+<h3 id="状态图"><a href="#状态图" class="headerlink" title="状态图"></a>状态图</h3><h4 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h4><!--![状态图](../assets/需求与商业模式设计/需求分析/状态图/状态图.png)-->
+<p><img src="https://box.nju.edu.cn/f/949e122b1a714fa4be84/?dl=1" alt="状态图"></p>
+<h4 id="组合-1"><a href="#组合-1" class="headerlink" title="组合"></a>组合</h4><!--![组合](../assets/需求与商业模式设计/需求分析/状态图/组合.png)-->
+<p><img src="https://box.nju.edu.cn/f/c77c0ec287254621942a/?dl=1" alt="状态图"></p>
+<h4 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h4><!--![并发](../assets/需求与商业模式设计/需求分析/状态图/并发.png)-->
+<p><img src="https://box.nju.edu.cn/f/24a8f8baf35745b480f6/?dl=1" alt="并发"></p>
+<h4 id="入口与出口"><a href="#入口与出口" class="headerlink" title="入口与出口"></a>入口与出口</h4><!--![入口与出口](../assets/需求与商业模式设计/需求分析/状态图/入口与出口.png)-->
+<p><img src="https://box.nju.edu.cn/f/9bf03c7a04aa46a4b3dc/?dl=1" alt="入口与出口"></p>
+<h4 id="决策"><a href="#决策" class="headerlink" title="决策"></a>决策</h4><!--![决策](../assets/需求与商业模式设计/需求分析/状态图/决策.png)-->
+<p><img src="https://box.nju.edu.cn/f/ee4b4d9e8a2e46fa952b/?dl=1" alt="决策"></p>
+<h4 id="汇集点"><a href="#汇集点" class="headerlink" title="汇集点"></a>汇集点</h4><!--![汇集点](../assets/需求与商业模式设计/需求分析/状态图/汇集点.png)-->
+<p><img src="https://box.nju.edu.cn/f/566d6697d0844bedae8f/?dl=1" alt="汇集点"></p>
+<h4 id="终止与历史状态"><a href="#终止与历史状态" class="headerlink" title="终止与历史状态"></a>终止与历史状态</h4><!--![终止与历史状态](../assets/需求与商业模式设计/需求分析/状态图/终止与历史状态.png)-->
+<p><img src="https://box.nju.edu.cn/f/68b6dc280fac4b4b8cd4/?dl=1" alt="终止与历史状态"></p>
+<h3 id="对象约束语言OCL"><a href="#对象约束语言OCL" class="headerlink" title="对象约束语言OCL"></a>对象约束语言OCL</h3><h4 id="不变量"><a href="#不变量" class="headerlink" title="不变量"></a>不变量</h4><ul>
+<li>类元需要保持它的表达式取值在指定的时间范围内或者指定的条件下始终为“真”</li>
+<li>最常见的是用来约束类的属性或者类的方法 </li>
+</ul>
+<!--![OCL](../assets/需求与商业模式设计/需求分析/OCL/OCL.png)-->
+<p><img src="https://box.nju.edu.cn/f/6d9aac09aa574be384b4/?dl=1" alt="OCL"></p>
+<h4 id="前置条件与后置条件"><a href="#前置条件与后置条件" class="headerlink" title="前置条件与后置条件"></a>前置条件与后置条件</h4><ul>
+<li>前置条件要求类元在执行操作之前必须保证前置条件的表达式为真</li>
+<li>后置条件要求类元在操作执行完成之后必须保证后置条件的表达式为真 </li>
+</ul>
+<!--![前置条件与后置条件](../assets/需求与商业模式设计/需求分析/OCL/前置条件与后置条件.png)-->
+<p><img src="https://box.nju.edu.cn/f/138cd559eb31466bb0e1/?dl=1" alt="前置条件与后置条件"></p>
+<h4 id="监护条件"><a href="#监护条件" class="headerlink" title="监护条件"></a>监护条件</h4><ul>
+<li>在状态机到达转移点时，监护条件的表达式需要根据实际状态进行评估，并只有在表达式实际取值为“真”的情况下才进行转移</li>
+</ul>
+<!--![监护条件](../assets/需求与商业模式设计/需求分析/OCL/监护条件.png)-->
+<p><img src="https://box.nju.edu.cn/f/88565b7887974fc6801d/?dl=1" alt="监护条件"></p>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><!--![示例](../assets/需求与商业模式设计/需求分析/OCL/示例.png)-->
+<p><img src="https://box.nju.edu.cn/f/ef1467f1f062428a86dc/?dl=1" alt="示例"></p>
+<h3 id="CRC"><a href="#CRC" class="headerlink" title="CRC"></a>CRC</h3><ul>
+<li><p>Candidates、 Responsibilities和 Collaborators三者的缩写</p>
+</li>
+<li><p>基于CRC可以建立一种索引卡片，被称为CRC卡，每个卡片代表了一个被发现的候选对象</p>
+</li>
+</ul>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><!--![CRC示例](../assets/需求与商业模式设计/需求分析/CRC/CRC示例.png)-->
+<p><img src="https://box.nju.edu.cn/f/20bba339259544969486/?dl=1" alt="CRC示例"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9C%80%E6%B1%82%E4%B8%8E%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F%E5%88%9B%E6%96%B0/" rel="tag"># 需求与商业模式创新</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/29/%E9%9C%80%E6%B1%82%E4%B8%8E%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F-readme/" rel="prev" title="需求与商业模式创新  readme">
+      <i class="fa fa-chevron-left"></i> 需求与商业模式创新  readme
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/03/Blindness/" rel="next" title="Blindness">
+      Blindness <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%81%E7%A8%8B"><span class="nav-text">流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E7%BB%86%E5%8C%96"><span class="nav-text">需求细化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E4%BE%8B%E5%9B%BE"><span class="nav-text">用例图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E7%BB%86%E8%8A%82"><span class="nav-text">解决方案细节</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-text">需求优先级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%8D%8F%E5%95%86"><span class="nav-text">需求协商</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E5%88%86%E6%9E%90%E6%A8%A1%E5%9E%8B"><span class="nav-text">建立分析模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%BB%BA%E6%A8%A1"><span class="nav-text">面向对象建模</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%BA%E5%BA%8F%E5%9B%BE"><span class="nav-text">顺序图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E5%90%88"><span class="nav-text">组合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E5%9B%BE"><span class="nav-text">状态图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="nav-text">简单示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%84%E5%90%88-1"><span class="nav-text">组合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91"><span class="nav-text">并发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3%E4%B8%8E%E5%87%BA%E5%8F%A3"><span class="nav-text">入口与出口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%B3%E7%AD%96"><span class="nav-text">决策</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%87%E9%9B%86%E7%82%B9"><span class="nav-text">汇集点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BB%88%E6%AD%A2%E4%B8%8E%E5%8E%86%E5%8F%B2%E7%8A%B6%E6%80%81"><span class="nav-text">终止与历史状态</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%BA%A6%E6%9D%9F%E8%AF%AD%E8%A8%80OCL"><span class="nav-text">对象约束语言OCL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%8F%98%E9%87%8F"><span class="nav-text">不变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E6%9D%A1%E4%BB%B6%E4%B8%8E%E5%90%8E%E7%BD%AE%E6%9D%A1%E4%BB%B6"><span class="nav-text">前置条件与后置条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%91%E6%8A%A4%E6%9D%A1%E4%BB%B6"><span class="nav-text">监护条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CRC"><span class="nav-text">CRC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

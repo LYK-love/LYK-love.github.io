@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline: 介绍了一些shell的常识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Shell">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/26/Using%20Shell/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline: 介绍了一些shell的常识">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/03/26/Using%20Shell/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Using Shell | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/26/Using%20Shell/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Using Shell
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-26 12:14:21" itemprop="dateCreated datePublished" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<p>介绍了一些shell的常识</p>
+<span id="more"></span>
+<h1 id="Linux-shell"><a href="#Linux-shell" class="headerlink" title="Linux shell"></a>Linux shell</h1><p>When you launch your terminal, you will see a <em>prompt</em> that often looks a little like this:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">missing:~$ </span><br></pre></td></tr></table></figure>
+<ul>
+<li>主机名: <code>missing</code> </li>
+<li>当前工作目录: <code>~</code> (short for “home”). </li>
+<li>The <code>$</code> tells you that you are not the root user \</li>
+</ul>
+<p>The most basic command is to execute a program with arguments:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo hello</span><br></pre></td></tr></table></figure>
+<ul>
+<li>shell对命令的解析:<ul>
+<li>按空格分隔</li>
+<li>第一个单词是命令名字,以后的每个单词都是命令的参数</li>
+<li>If you want to provide an argument that contains spaces or other special characters (e.g., a directory named “My Photos”), you can either quote the argument with <code>&#39;</code> or <code>&quot;</code> (<code>&quot;My Photos&quot;</code>), or escape just the relevant characters with <code>\</code> (<code>My\ Photos</code>)</li>
+</ul>
+</li>
+</ul>
+<h2 id="PATH"><a href="#PATH" class="headerlink" title="PATH"></a>PATH</h2><p>shell变量分为用户变量和环境变量。 <code>$PATH</code>是特殊的环境变量， 当shell执行一条和其所有关键字都不匹配的命令时,它会查询 <code>$PATH</code> , 它列出了所有shell在查询命令时应查找的目录( 以 <code>:</code>分割 )</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">missing:~$ echo $PATH</span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">missing:~$ which echo</span><br><span class="line">/bin/echo</span><br><span class="line">missing:~$ /bin/echo $PATH</span><br><span class="line">/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br></pre></td></tr></table></figure>
+<ul>
+<li>We can also bypass <code>$PATH</code> entirely by giving the <em>path</em> to the file we want to execute.</li>
+</ul>
+<h2 id="Navigating-in-the-shell"><a href="#Navigating-in-the-shell" class="headerlink" title="Navigating in the shell"></a>Navigating in the shell</h2><ul>
+<li>根目录:  <code>/</code> is the “root” of the file system</li>
+<li><p>A path that starts with <code>/</code> is called an <em>absolute</em> path. Any other path is a <em>relative</em> path.</p>
+<ul>
+<li><p>Relative paths are relative to the current working directory, which we can see with the <code>pwd</code> command</p>
+</li>
+<li><p>In a path, <code>.</code> refers to the current directory, and <code>..</code> to its parent directory:</p>
+</li>
+</ul>
+</li>
+<li>Most commands accept flags and options (flags with values) that start with <code>-</code> to modify their behavior</li>
+<li>文件权限： File的权限与人们的直觉相符， 而对于Directory:<ul>
+<li>To enter a directory, a user must have “search” (represented by “execute”: <code>x</code>) </li>
+<li>To list its contents, a user must have read (<code>r</code>) permissions on that directory. </li>
+</ul>
+</li>
+</ul>
+<h2 id="Connecting-programs"><a href="#Connecting-programs" class="headerlink" title="Connecting programs"></a>Connecting programs</h2><ul>
+<li><code>&lt;</code>, <code>&gt;</code>重定向（覆盖原文件内容）</li>
+<li><code>&lt;&lt;</code>, <code>&gt;&gt;</code> append模式</li>
+</ul>
+<h2 id="root"><a href="#root" class="headerlink" title="root"></a>root</h2><p><code>su</code>： 切换到root</p>
+<p><code>sudo CMD</code>： 以root权限执行CMD, 注意只有第一条CMD具有root权限</p>
+<p>One thing you need to be root in order to do is writing to the <code>sysfs</code> file system mounted under <code>/sys</code>. <code>sysfs</code> exposes a number of kernel parameters as files, so that you can easily reconfigure the kernel on the fly without specialized tools. <strong>Note that sysfs does not exist on Windows or macOS.</strong></p>
+<p>For example, the brightness of your laptop’s screen is exposed through a file called <code>brightness</code> under</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/sys/class/backlight</span><br></pre></td></tr></table></figure>
+<p>By writing a value into that file, we can change the screen brightness. Your first instinct might be to do something like:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo find -L /sys/class/backlight -maxdepth 2 -name &#x27;*brightness*&#x27;</span><br><span class="line">/sys/class/backlight/thinkpad_screen/brightness</span><br><span class="line">$ cd /sys/class/backlight/thinkpad_screen</span><br><span class="line">$ sudo echo 3 &gt; brightness</span><br><span class="line">An error occurred while redirecting file &#x27;brightness&#x27;</span><br><span class="line">open: Permission denied</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>注意</strong>：<code>|</code>, <code>&gt;</code>, and <code>&lt;</code> 这些操作符是由shell提供的，  <code>echo</code>这些程序只接受输入、进行输出， 不知道这些操作符的存在， 因此shell首先用root权限运行<code>echo 3</code>， 再用默认权限（即shell的创建者）的权限打开<code>brightness</code>文件尝试写入， 而这需要root权限， 因此fail</p>
+<p>Using this knowledge, we can work around this:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 3 | sudo tee brightness</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Windows-shell"><a href="#Windows-shell" class="headerlink" title="Windows shell"></a>Windows shell</h1><p>windows中：命令和文件名(包括文件类型)不区分大小写. 即 cd 和 CD 一样， dir 和 DIR 一样。 Desktop 和 desktop 一样, <em>.pdf  和 </em>.PDF 一样</p>
+<p>TAB键： 自动补完。 不区分大小写</p>
+<p><code>cd</code> ： change directory 改变目录</p>
+<p> <code>cd ..</code> : go back to upper directory 回到上一级目录， 注意cd 和 .. 中间也可以没有空格</p>
+<p> <code>cd ../..</code> :  回到上两级目录</p>
+<p> <code>cd \</code> : 回到根目录</p>
+<p> <code>exit</code>: 退出</p>
+<!--more-->
+<p> <code>dir</code> ： list the contents of current directory 浏览当前目录（结果按字母顺序排序）.  文件有<DIR>代表它也是个目录</p>
+<p><code>dir Desktop\SE</code> 查看SE的内容， 不会改变当前目录</p>
+<p> <code>dir Desktop\SE\*.pdf</code>   遍历并列出SE中以.pdf结尾的文件</p>
+<p>注意文件名是区分空格的，所以<code>dir Desktop \SE</code> 或 <code>dir Desktop\ SE</code>  找不到东西</p>
+<p><code>dir /a</code>: show hidden directories as well 注意dir 和 /a 中间也可以没有空格</p>
+<p> <code>cls</code>： clear your screen</p>
+<p> <code>↑</code>键 ：access your command history</p>
+<p><code>/?</code> : to access help and options menu</p>
+<p> <code>mkdir</code>   制作目录</p>
+<p> <code>rmdir</code> 删除一个空的目录</p>
+<p> <code>rmdir *** /s</code> 删除一个有内容的目录</p>
+<p><code>Home</code>键： bring u to  to the beginning of the command</p>
+<p><code>End</code>键：反之</p>
+<p><code>Ctrl+left</code> : 一次左移一个词</p>
+<p>——————————————————————————————————</p>
+<ul>
+<li><code>echo not sweet &gt; apple.txt</code>  向 apple.txt中添加not sweet（这会覆盖txt的原内容）</li>
+<li>如果不想覆盖，只想append， 那就用<code>echo not sweet &gt;&gt; apple.txt</code> </li>
+<li><p><code>Desktop\test&gt; dir &gt; apple.txt</code>    向apple.txt中添加test的目录</p>
+</li>
+<li><p>总之 <code>Desktop\test&gt; *** &gt; apple.txt</code> 星号部分是向apple.txt中添加的内容，可以是文字，可以是命令， 说到命令，当然·<code>ttrib</code>也可以，<code>cls</code>也可以。不过把cls append进去很蠢，啥都不会发生。</p>
+</li>
+</ul>
+<p>—————————————————————————————————</p>
+<p> <code>type 文件名</code> ： 在CMD中打印该文件的内容</p>
+<p> <code>remove 被移动的 移动到的</code> ： 顾名思义，当然，连空文件和空目录也会移动</p>
+<p> <code>rename 原名 新名字</code> ： 注意文件类型也在名字里，所以一个 XX.txt如果更名为YY(不带.txt)，那么XX会从一个文本文档变成一个文件夹</p>
+<p>—————————————————————————————————</p>
+<p><code>copy</code> 要被复制的 复制到的 ： 文件复制  </p>
+<p> <code>xcopy</code>: 也是复制，但比copy更好（功能更多） 。 xcopy默认只会复制source中的文件，而不包括目录（copy也是如此）。 通过/S 可以让xcopy复制目录和子目录，不包括空目录。， 但copy没有/S的功能，也就是说copy无法复制目录。</p>
+<p>要打开应用程序，要么转到对应的目录，然后 <code>start ** .exe</code>, 要么直接用双引号括住绝对路径</p>
+<p><code>C:\Users\color 0B</code>   数字是背景颜色，字母是foreground or text</p>
+<p> <code>wmic logicaldisk get name</code> : see all the available command drives</p>
+<p><code>tree</code>关键字： 以树状列出目录及其内部目录…</p>
+<p>D: 转到D盘根路径</p>
+<h1 id="Browser"><a href="#Browser" class="headerlink" title="Browser"></a>Browser</h1><ul>
+<li>F5刷新网页，重新显示当前页面内容；</li>
+<li>Ctrl+F5博客的系统使用了数据缓存技术。这虽然可以加快网页的打开速度，但却经常出错。比如留言成功再重新打开网页却可能看不到刚才的的留言内容，其原因就是IE会读取本机缓存区而不是从网络服务器中更新数据。这时可以按CTRL+F5的组合键来清除IE缓存，强行刷新网页，这样就可以看到当前网页的最新内容了；</li>
+<li>Shift+F5全部刷新，刷新当前打开的所有网页。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/26/hadoop+spark%E9%85%8D%E7%BD%AE%E5%92%8C%E9%83%A8%E7%BD%B2/" rel="prev" title="hadoop+spark配置和部署">
+      <i class="fa fa-chevron-left"></i> hadoop+spark配置和部署
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/26/The-Story-of-Art-19-20%E4%B8%96%E7%BA%AA/" rel="next" title="The Story of Art: Chapter 26,27">
+      The Story of Art: Chapter 26,27 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-shell"><span class="nav-text">Linux shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PATH"><span class="nav-text">PATH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Navigating-in-the-shell"><span class="nav-text">Navigating in the shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connecting-programs"><span class="nav-text">Connecting programs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root"><span class="nav-text">root</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-shell"><span class="nav-text">Windows shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browser"><span class="nav-text">Browser</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

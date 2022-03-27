@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="There is no whiz, bang effect That’s made up of 1s and 0s That takes a special talent">
+<meta property="og:type" content="article">
+<meta property="og:title" content="L1 Model of Computation">
+<meta property="og:url" content="http://lyk-love.cn/2021/07/13/L1-Model-of-Computation/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="There is no whiz, bang effect That’s made up of 1s and 0s That takes a special talent">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-07-13T07:19:53.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Algorithm design and analysis">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2021/07/13/L1-Model-of-Computation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>L1 Model of Computation | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/07/13/L1-Model-of-Computation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          L1 Model of Computation
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-13 07:19:53" itemprop="dateCreated datePublished" datetime="2021-07-13T07:19:53Z">2021-07-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><i>There is no whiz, bang effect</i></p>
+<p><i>That’s made up of 1s and 0s</i></p>
+<p><i>That takes a special talent</i></p>
+<span id="more"></span>
+<h1 id="Computer-and-Computing"><a href="#Computer-and-Computing" class="headerlink" title="Computer and Computing"></a>Computer and Computing</h1><ul>
+<li>Computing: 计算机“无所不能”的核心在于<code>01编解码</code>,这是<u>使能技术</u><ul>
+<li>Encoding everything into <code>0</code>s and <code>1</code>s  </li>
+<li>Operations over <code>1</code>s and <code>0</code>s</li>
+<li>Decoding the <code>1</code>s and <code>0</code> s</li>
+</ul>
+</li>
+<li>Turing machine <ul>
+<li>An abstract/logical computer </li>
+</ul>
+</li>
+<li>“<strong>计算</strong>“就是对<code>01编码</code>的信息的操作</li>
+</ul>
+<h1 id="Algorithm"><a href="#Algorithm" class="headerlink" title="Algorithm"></a>Algorithm</h1><ul>
+<li><p>Algorithm is the spirit of computing</p>
+<ul>
+<li>To solve a specific problem( so called an <code>algorithmic problem</code> ) </li>
+<li>Combination of basic operations 指挥一个机器做事情,把机器的操作组合好<ul>
+<li>in a precise and elegant way 要清晰,优美</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Essential issues</p>
+<ul>
+<li><p>Model of computation</p>
+</li>
+<li><p>Algorithm design</p>
+</li>
+<li>Algorithm analysis</li>
+</ul>
+</li>
+</ul>
+<h1 id="Model-of-Computation"><a href="#Model-of-Computation" class="headerlink" title="Model of Computation"></a>Model of Computation</h1><ul>
+<li>Problems<ul>
+<li>Why the algorithms we learn can run  almost everywhere?</li>
+<li>Why the algorithms we learn can be implemented any language?</li>
+</ul>
+</li>
+<li>Machine- and language- independent algorithms, running on an <strong>abstract</strong> machine   算法是抽象概念,与机器\语言无关. 抽象的算法依赖于抽象的机器,这就是<strong>计算模型</strong>. 经典计算模型:<ul>
+<li>Turing machine: over-qualify</li>
+<li>RAM model: simple but power </li>
+</ul>
+</li>
+</ul>
+<h2 id="The-Ram-Model-of-Computation"><a href="#The-Ram-Model-of-Computation" class="headerlink" title="The Ram Model of Computation"></a>The Ram Model of Computation</h2><ul>
+<li>Each <i>simple operation</i> takes one time step<ul>
+<li>E.g., key comparison, +/-, memory access</li>
+</ul>
+</li>
+<li>Non_simple operation should be decomposed<ul>
+<li>Loop</li>
+<li>Subroutine(子过程还可以递归 )</li>
+</ul>
+</li>
+<li>Memory<ul>
+<li>Memory access is a simple operation 对存储器某个位置的访问和读写被认为是简单操作</li>
+<li>Unlimited memory 我们认为RAM的内存是无限的</li>
+</ul>
+</li>
+<li>由于建模的本质是把不重要的细节抽象掉,把精髓留下来. 所以模型建得越精细,就越难用, 建得越粗糙,丢失的信息越多,就越好用,二者有一个Trade-off. 对于本科阶段,Ram模型够用了</li>
+</ul>
+<h1 id="To-Create-an-Algorithm"><a href="#To-Create-an-Algorithm" class="headerlink" title="To Create an Algorithm"></a>To Create an Algorithm</h1><ul>
+<li>Algorithm design<ul>
+<li>Composition of simple operations, to solve an algorithm problems</li>
+</ul>
+</li>
+<li><p>Algorithm analysis</p>
+<ul>
+<li>Amount of work done / memory used<ul>
+<li>In the worst/ average cases</li>
+</ul>
+</li>
+<li>Advanced issues<ul>
+<li>Optimality, approximation ratio, …</li>
+</ul>
+</li>
+</ul>
+<h1 id="Algorithm-Analysis"><a href="#Algorithm-Analysis" class="headerlink" title="Algorithm Analysis"></a>Algorithm Analysis</h1></li>
+<li><p>How to measure</p>
+<ul>
+<li><p>Not too general 不能太粗糙</p>
+<ul>
+<li>Given essential indication in comparison  of algorithms</li>
+</ul>
+</li>
+<li><p>Not too precise 不用那么精确</p>
+<ul>
+<li>Machine independent</li>
+<li>Language independent</li>
+<li>Programing paradigm independent</li>
+<li>implementation independent</li>
+</ul>
+</li>
+<li><p>Criteria</p>
+<ul>
+<li>Critical operation</li>
+<li>How many critical operation are conducted 数关键操作个数!</li>
+<li>算法性能好坏由关键操作决定,辅助性操作与关键操作大致是线性关系. 所以只要关注关键操作</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>| Algorithm problem                              | Critical operation  |<br>| ——————————————————————— | —————————- |<br>| Sorting, selection, searching, String matching | Comparison(of keys) |<br>| Graph traversal                                | Processing a node   |<br>| Matrix multiplication                          | Multiplication      |</p>
+</li>
+</ul>
+<ul>
+<li><p>Amount of work done</p>
+<ul>
+<li>usually depends on <i>size of the input</i> 输入规模</li>
+<li>usually does not depends on size of the input only</li>
+</ul>
+</li>
+<li><p>Worst -case  Complexity</p>
+</li>
+<li>Average-case Complexity</li>
+<li>Advanced topics<ul>
+<li>Lower bound(Selection)</li>
+<li>Optionality(Greedy , DP)</li>
+<li>Computation complexity</li>
+<li>Approximate/ online / randomized algothms</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm-design-and-analysis/" rel="tag"># Algorithm design and analysis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/04/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%8F%8D%E5%BA%94%E6%97%B6%E9%97%B4/" rel="prev" title="第四章-反应时间">
+      <i class="fa fa-chevron-left"></i> 第四章-反应时间
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/13/L2-Asymptotics/" rel="next" title="L2 Asymptotics">
+      L2 Asymptotics <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Computer-and-Computing"><span class="nav-text">Computer and Computing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm"><span class="nav-text">Algorithm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Model-of-Computation"><span class="nav-text">Model of Computation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Ram-Model-of-Computation"><span class="nav-text">The Ram Model of Computation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#To-Create-an-Algorithm"><span class="nav-text">To Create an Algorithm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm-Analysis"><span class="nav-text">Algorithm Analysis</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

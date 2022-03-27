@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline:  Structural methods vs OO methods in Coupling 访问耦合 继承耦合 耦合和内聚的度量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Modularity in OO">
+<meta property="og:url" content="http://lyk-love.cn/2021/06/27/Modularity%20in%20OO/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Structural methods vs OO methods in Coupling 访问耦合 继承耦合 耦合和内聚的度量">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-06-27T11:09:16.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Software Engineering Methodology">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2021/06/27/Modularity%20in%20OO/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Modularity in OO | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/06/27/Modularity%20in%20OO/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Modularity in OO
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-06-27 11:09:16" itemprop="dateCreated datePublished" datetime="2021-06-27T11:09:16Z">2021-06-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Software-Engineering/" itemprop="url" rel="index"><span itemprop="name">Software Engineering</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<ul>
+<li>Structural methods vs OO methods in Coupling</li>
+<li>访问耦合</li>
+<li>继承耦合</li>
+<li>耦合和内聚的度量</li>
+</ul>
+<span id="more"></span>
+<h1 id="Structural-methods-vs-OO-methods-in-Coupling"><a href="#Structural-methods-vs-OO-methods-in-Coupling" class="headerlink" title="Structural methods vs OO methods in Coupling"></a>Structural methods vs OO methods in Coupling</h1><ul>
+<li><p>Coupling </p>
+<ul>
+<li>Coupling is the measure of the strength of association established by a connection from one module to another <code>耦合</code>是对模块间练习的度量</li>
+</ul>
+</li>
+<li><p>Structural methods  结构化. 耦合`是对某个标签或者地址的引用</p>
+<ul>
+<li>A connection is a reference to some label or address defined elsewhere </li>
+</ul>
+</li>
+<li><p>OO methods 面向对象</p>
+<ul>
+<li>Component coupling （访问耦合） </li>
+<li>Inheritance coupling （继承耦合）</li>
+</ul>
+</li>
+<li><p>降低耦合的设计原则</p>
+</li>
+</ul>
+<h1 id="访问耦合"><a href="#访问耦合" class="headerlink" title="访问耦合"></a>访问耦合</h1><h2 id="Principles-of-Component-Coupling"><a href="#Principles-of-Component-Coupling" class="headerlink" title="Principles of Component Coupling"></a>Principles of Component Coupling</h2><p>降低访问耦合的设计原则</p>
+<h3 id="Global-Variables-Consider-Harmful"><a href="#Global-Variables-Consider-Harmful" class="headerlink" title="Global Variables Consider Harmful"></a>Global Variables Consider Harmful</h3><h3 id="To-be-Explicit"><a href="#To-be-Explicit" class="headerlink" title="To be Explicit"></a>To be Explicit</h3><h3 id="Don’t-repeat"><a href="#Don’t-repeat" class="headerlink" title="Don’t repeat"></a>Don’t repeat</h3><h3 id="Programming-to-Interface"><a href="#Programming-to-Interface" class="headerlink" title="Programming to Interface"></a>Programming to Interface</h3><ul>
+<li>Programming to Required Interface, not only Suffered Interface</li>
+<li><strong>Design by Contract</strong> <ul>
+<li>Contract of Module/ Class <ul>
+<li>Required methods / Provided methods</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Contract of Methods<ul>
+<li><code>PreCondition</code> , <code>PostCondition</code>, <code>Invariant</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="Interface-Segregation-Principle-ISP"><a href="#Interface-Segregation-Principle-ISP" class="headerlink" title="Interface Segregation Principle(ISP)"></a>Interface Segregation Principle(ISP)</h3><p>接口分离原则</p>
+<p><strong>Principles of Component Coupling</strong></p>
+<ul>
+<li>Programming to Simpler Interface</li>
+<li>Many client-specific interfaces are better than one general purpose interface 把接口变小</li>
+</ul>
+<h3 id="The-Law-of-Demeter"><a href="#The-Law-of-Demeter" class="headerlink" title="The Law of Demeter"></a>The Law of Demeter</h3><ul>
+<li>You can play with yourself. </li>
+<li>You can play with your own toys, but you can’t take them apart </li>
+<li>You can play with toys that were given to you. </li>
+<li>You can play with toys you’ve made yourself.</li>
+</ul>
+<h1 id="继承耦合"><a href="#继承耦合" class="headerlink" title="继承耦合"></a>继承耦合</h1><h2 id="Principles-of-Inherit-Coupling"><a href="#Principles-of-Inherit-Coupling" class="headerlink" title="Principles of Inherit Coupling"></a>Principles of Inherit Coupling</h2><h3 id="Liskov-Substitution-Principle-LSP"><a href="#Liskov-Substitution-Principle-LSP" class="headerlink" title="Liskov Substitution Principle (LSP)"></a>Liskov Substitution Principle (LSP)</h3><p>“All derived classes must be substitutable for their base class” — <em>Barbara Liskov, 1988</em><br>“Functions that use pointers or references to base classes must<br>be able to use objects of derived classes without knowing it.” — <em>R. Martin, 1996</em></p>
+<ul>
+<li>LSP is about Semantics and Replacement <ul>
+<li>Understand before you design<ul>
+<li>The meaning and purpose of every method and class must be clearly documented</li>
+<li>Lack of user understanding will induce de facto violations of LSP</li>
+</ul>
+</li>
+<li>Replaceability is crucial <ul>
+<li>Whenever any class is referenced by any code in any system, </li>
+<li>any future or existing subclasses of that class must be 100% replaceable</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="LSP-Summary"><a href="#LSP-Summary" class="headerlink" title="LSP Summary"></a>LSP Summary</h3><ul>
+<li><p>Design by Contract </p>
+</li>
+<li><p>Advertised Behavior of an object: </p>
+<ul>
+<li><p>advertised Requirements (Preconditions) </p>
+</li>
+<li><p>advertised Promises (Postconditions)</p>
+</li>
+</ul>
+</li>
+<li><p>Derived class services should <strong>require no more and promise no less</strong></p>
+</li>
+</ul>
+<h3 id="Favor-Composition-Over-Inheritance"><a href="#Favor-Composition-Over-Inheritance" class="headerlink" title="Favor Composition Over Inheritance"></a>Favor Composition Over Inheritance</h3><ul>
+<li>Favor Composition Over Inheritance </li>
+<li>Use inherit for polymorphism </li>
+<li>Use delegate not inherit to reuse code!</li>
+</ul>
+<p><strong>Coad’s Rules of Using Inheritance</strong></p>
+<ul>
+<li>Use inheritance only when all of the following criteria are satisfied: <ul>
+<li>A subclass expresses “is a special kind of” and not “is a role played by a”</li>
+<li>An instance of a subclass never needs to become an object of another class</li>
+<li><strong>A subclass extends, rather than overrides or nullifies, the responsibilities of its superclass</strong></li>
+<li>A subclass does not extend the capabilities of what is merely an utility class</li>
+</ul>
+</li>
+</ul>
+<h2 id="内聚"><a href="#内聚" class="headerlink" title="内聚"></a>内聚</h2><h3 id="Single-Responsibility-Principle-SRP"><a href="#Single-Responsibility-Principle-SRP" class="headerlink" title="Single Responsibility Principle( SRP )"></a>Single Responsibility Principle( SRP )</h3><p>“A class should have only one reason to change”  — Robert Martin</p>
+<ul>
+<li><p>Class should have only one reason to change </p>
+<ul>
+<li>Cohesion of its functions/responsibilities</li>
+</ul>
+</li>
+<li><p>Several responsibilities </p>
+<ul>
+<li>mean several reasons for changes → more frequent changes 一个类职责越多，就越更改频繁。</li>
+</ul>
+</li>
+<li>Sounds simple enough <ul>
+<li>Not so easy in real life </li>
+<li>Tradeoffs with complexity, repetition, opacity（不透明性）</li>
+</ul>
+</li>
+</ul>
+<h1 id="耦合和内聚的度量"><a href="#耦合和内聚的度量" class="headerlink" title="耦合和内聚的度量"></a>耦合和内聚的度量</h1><h2 id="Coupling-Metrics-between-classes"><a href="#Coupling-Metrics-between-classes" class="headerlink" title="Coupling Metrics between classes"></a>Coupling Metrics between classes</h2><p>耦合性度量</p>
+<h3 id="Coupling-between-object-classes-CBO"><a href="#Coupling-between-object-classes-CBO" class="headerlink" title="Coupling between object classes (CBO)"></a>Coupling between object classes (CBO)</h3><p>对象类之间的耦合</p>
+<ul>
+<li><p>一个类合作（即相关）的数量。当CBO增大时，不仅降低了可重用性，而且使其修改和修改后的测试变得复杂。所以，每个类的CBO值应当保持合理。这与在传统软件中减少耦合的一般原则是一致的。</p>
+</li>
+<li><p>A count of the number of other classes: 访问本类或者含有被本类访问的方法或变量的其他类. ( 不包括继承 )</p>
+<ul>
+<li>which access a method or variable in this class, or </li>
+<li>contain a method or variable accessed by this class </li>
+<li>Not including Inheritance </li>
+</ul>
+</li>
+<li>Want to keep this low</li>
+</ul>
+<h3 id="Data-abstraction-coupling-DAC"><a href="#Data-abstraction-coupling-DAC" class="headerlink" title="Data abstraction coupling (DAC)"></a>Data abstraction coupling (DAC)</h3><p>数据抽象耦合</p>
+<ul>
+<li><p>The number of attribute having an ADT type dependent on the definitions of other classes 拥有<u>依赖于其他类的ADT</u>的属性的数量</p>
+</li>
+<li><p>Want to keep this low</p>
+</li>
+</ul>
+<h3 id="Ce-and-Ca-efferent-and-afferent-coupling"><a href="#Ce-and-Ca-efferent-and-afferent-coupling" class="headerlink" title="Ce and Ca (efferent and afferent coupling)"></a>Ce and Ca (efferent and afferent coupling)</h3><p>传出耦合和传入耦合</p>
+<ul>
+<li><p>Ca: 传入耦合</p>
+<ul>
+<li>The number of classes outside this category that depend upon classes within this category. 外部的依赖于这个category内部的类的类的数量</li>
+</ul>
+</li>
+<li><p>Ce: 传出耦合</p>
+<ul>
+<li>The number of classes inside this category that depend upon classes outside this category 这个category内部的依赖于外部类的类的数量</li>
+</ul>
+</li>
+<li>Want to keep these low </li>
+</ul>
+<h3 id="Depth-of-the-Inheritance-tree-DIT"><a href="#Depth-of-the-Inheritance-tree-DIT" class="headerlink" title="Depth of the Inheritance tree (DIT)"></a>Depth of the Inheritance tree (DIT)</h3><p>继承树深度</p>
+<ul>
+<li><p>the maximum length from the node to the root of the tree 这个类的节点到继承树根节点的最大距离</p>
+</li>
+<li><p>as <code>DIT</code> grows, it becomes difficult to predict behavior of a class because of the high degree of inheritance DIT越大,这个类离根节点越远,类的行为就难以预测</p>
+</li>
+<li><p>Positively, large DIT values imply that many methods may be reused</p>
+<p>好消息是, DIT越大, 意味着越多可重用的方法</p>
+</li>
+</ul>
+<h3 id="Number-of-children-NOC"><a href="#Number-of-children-NOC" class="headerlink" title="Number of children (NOC)"></a>Number of children (NOC)</h3><p>子女数</p>
+<ul>
+<li>count of the subclasses immediately subordinate to a class  就是直接隶属于该节点的节点数</li>
+<li>as NOC grows, reuse increases <code>NOC</code>越大,重用越频繁</li>
+<li>as NOC grows, abstraction can become diluted <code>NOC</code>越大, 抽象性就越被稀释</li>
+<li>increase in NOC means the amount of testing will increase <code>NOC</code>增大意味着更多的测试</li>
+</ul>
+<h2 id="Measure-class-cohesion"><a href="#Measure-class-cohesion" class="headerlink" title="Measure class cohesion"></a>Measure class cohesion</h2><p>内聚性度量</p>
+<h3 id="Lack-of-cohesion-in-methods-LCOM"><a href="#Lack-of-cohesion-in-methods-LCOM" class="headerlink" title="Lack of cohesion in methods (LCOM)"></a>Lack of cohesion in methods (LCOM)</h3><ul>
+<li>Definition:</li>
+</ul>
+<p>一个类内的每种方法访问一个或多个属性（也称实例变量）。LCOM是访问一个或多个相同属性方法的数量。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Class Ck with n methods M1,…Mn</span><br><span class="line"></span><br><span class="line">Ij is the set of instance variables used by Mj</span><br><span class="line"></span><br><span class="line">There are n such sets I1 ,…, In</span><br><span class="line"></span><br><span class="line">P = &#123;(Ii, Ij) | (Ii ∩ Ij ) =  ∅&#125; //P是访问一个类中不同属性的方法的度量, P越大, 内聚性越差</span><br><span class="line"></span><br><span class="line">Q = &#123;(Ii, Ij) | (Ii ∩ Ij ) ≠  ∅&#125; //Q是访问一个类中相同属性的方法的度量,Q越大, 说明类中这样的方法越多, 内聚性越好</span><br><span class="line"></span><br><span class="line">If all n sets Ii are ∅ then P = ∅</span><br><span class="line"></span><br><span class="line">LCOM = |P| – |Q|, if |P| &gt; |Q|</span><br><span class="line"></span><br><span class="line">LCOM = 0 otherwise</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Want to keep this low </li>
+<li>Many other versions of LCOM have been defined</li>
+<li>If <code>LCOM</code>&gt;=1, then the class should be separated</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Software-Engineering-Methodology/" rel="tag"># Software Engineering Methodology</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/17/C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-Part3/" rel="prev" title="C++面向对象-Part3">
+      <i class="fa fa-chevron-left"></i> C++面向对象-Part3
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/27/Information%20Hiding%20in%20OO/" rel="next" title="Information Hiding in OO">
+      Information Hiding in OO <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Structural-methods-vs-OO-methods-in-Coupling"><span class="nav-text">Structural methods vs OO methods in Coupling</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E8%80%A6%E5%90%88"><span class="nav-text">访问耦合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Principles-of-Component-Coupling"><span class="nav-text">Principles of Component Coupling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Global-Variables-Consider-Harmful"><span class="nav-text">Global Variables Consider Harmful</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#To-be-Explicit"><span class="nav-text">To be Explicit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Don%E2%80%99t-repeat"><span class="nav-text">Don’t repeat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Programming-to-Interface"><span class="nav-text">Programming to Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Interface-Segregation-Principle-ISP"><span class="nav-text">Interface Segregation Principle(ISP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Law-of-Demeter"><span class="nav-text">The Law of Demeter</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E8%80%A6%E5%90%88"><span class="nav-text">继承耦合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Principles-of-Inherit-Coupling"><span class="nav-text">Principles of Inherit Coupling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Liskov-Substitution-Principle-LSP"><span class="nav-text">Liskov Substitution Principle (LSP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LSP-Summary"><span class="nav-text">LSP Summary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Favor-Composition-Over-Inheritance"><span class="nav-text">Favor Composition Over Inheritance</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E8%81%9A"><span class="nav-text">内聚</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Single-Responsibility-Principle-SRP"><span class="nav-text">Single Responsibility Principle( SRP )</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%80%A6%E5%90%88%E5%92%8C%E5%86%85%E8%81%9A%E7%9A%84%E5%BA%A6%E9%87%8F"><span class="nav-text">耦合和内聚的度量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Coupling-Metrics-between-classes"><span class="nav-text">Coupling Metrics between classes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Coupling-between-object-classes-CBO"><span class="nav-text">Coupling between object classes (CBO)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-abstraction-coupling-DAC"><span class="nav-text">Data abstraction coupling (DAC)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ce-and-Ca-efferent-and-afferent-coupling"><span class="nav-text">Ce and Ca (efferent and afferent coupling)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Depth-of-the-Inheritance-tree-DIT"><span class="nav-text">Depth of the Inheritance tree (DIT)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Number-of-children-NOC"><span class="nav-text">Number of children (NOC)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Measure-class-cohesion"><span class="nav-text">Measure class cohesion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lack-of-cohesion-in-methods-LCOM"><span class="nav-text">Lack of cohesion in methods (LCOM)</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

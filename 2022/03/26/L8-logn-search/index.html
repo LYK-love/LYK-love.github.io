@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Binary Search GeneralizedOutline：  Red-Black Tree">
+<meta property="og:type" content="article">
+<meta property="og:title" content="L8 logn search">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/26/L8-logn-search/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Binary Search GeneralizedOutline：  Red-Black Tree">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Algorithm design and analysis">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/03/26/L8-logn-search/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>L8 logn search | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/26/L8-logn-search/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          L8 logn search
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-26 12:14:21" itemprop="dateCreated datePublished" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Binary-Search-Generalized"><a href="#Binary-Search-Generalized" class="headerlink" title="Binary Search Generalized"></a>Binary Search Generalized</h1><p>Outline：</p>
+<ul>
+<li>Red-Black Tree</li>
+</ul>
+<span id="more"></span>
+<h1 id="Balanced-Binary-Search-Tree"><a href="#Balanced-Binary-Search-Tree" class="headerlink" title="Balanced Binary Search Tree"></a>Balanced Binary Search Tree</h1><h2 id="binary-search-tree"><a href="#binary-search-tree" class="headerlink" title="binary search tree"></a>binary search tree</h2><ul>
+<li>Def<ul>
+<li>2-Tree</li>
+<li>左子树的所有值比根节点小，右子树的所有值比根节点大（如果properly drawn的话，会很清楚 ）</li>
+</ul>
+</li>
+</ul>
+<h2 id="Red-Black-Tree"><a href="#Red-Black-Tree" class="headerlink" title="Red-Black Tree"></a>Red-Black Tree</h2><ul>
+<li>Def (基于二叉搜索树，附加一些性质)<ul>
+<li>If T is a <strong>binary search tree</strong> in which each node has a color, red or black, and  all external nodes are black, then T is a <strong>red-black tree</strong> if and only if:<ul>
+<li>[Color constraint] No red node has a red child</li>
+<li>[Black height constraint] The <strong>black length</strong> of all external paths from a given node <em>u</em> is the same(the black height of <em>u</em>)</li>
+<li>The root is black</li>
+</ul>
+</li>
+<li><strong>Almost</strong>-red-black tree(ARB tree)<ul>
+<li>Root is red, satisfying the other constraints</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Recursive-Definition-of-RBT"><a href="#Recursive-Definition-of-RBT" class="headerlink" title="Recursive Definition of RBT"></a>Recursive Definition of RBT</h3><p>(a red black tree of black height  <em>h</em> is denoted as $RB_h$</p>
+<ul>
+<li>Def:<ul>
+<li>An external node is an $RB_0$​ tree, and the node is black.</li>
+<li>A binary tree is an $ARB_h$( $h \ge 1$ )tree if:<ul>
+<li>Its root is red,and</li>
+<li>Its left and right subtrees are each an $RB_{h-1}$ tree.</li>
+</ul>
+</li>
+<li>A binary tree is an $RB_h$ tree if:<ul>
+<li>Its root is black, and</li>
+<li>Its left and right subtrees are each either an $RB<em>{h-1}$​ tree or an $ARB</em>{h}$​ tree.​</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Properties-of-Red-Black-Tree"><a href="#Properties-of-Red-Black-Tree" class="headerlink" title="Properties of Red-Black Tree"></a>Properties of Red-Black Tree</h3><ul>
+<li>The <strong>black height</strong> of any $RB_h$ tree or $ARB_h$ is well-defined and is <em>h</em>.</li>
+<li>Let <em>T</em> be an $RB_h$ tree, then:<ul>
+<li><em>T</em> has at most $2^h-1$ internal black nodes.</li>
+<li><em>T</em> has at most $4^h-1$ in internal nodes.</li>
+<li>The depth of any black node is at most twice its black depth.</li>
+</ul>
+</li>
+<li>Let A be an $ARB_h$ tree, then:<ul>
+<li><em>A</em> has at least $2^h-2$ internal black nodes.</li>
+<li><em>A</em> has at most $\frac{4^h}{2}-1$ internal nodes.</li>
+<li>The depth of any black node is at most twice its black depth.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Bound-on-Depth-of-Node-in-RBT"><a href="#Bound-on-Depth-of-Node-in-RBT" class="headerlink" title="Bound on Depth of Node in RBT"></a>Bound on Depth of Node in RBT</h3><ul>
+<li>Let <em>T</em> be a red-black tree with <em>n</em> internal nodes. Then no node has black depth greater than $log(n+1)$, which means that the height of <em>T</em> in the usual sense is at most $2log(n+1)$​.<ul>
+<li>Proof:</li>
+<li>Let <em>h</em> be the black height of <em>T</em>. The number of internal nodes, <em>n</em>, is at least the number of internal black nodes, which is at least $2^h-1$​, so $h \le log(n+1)$​​. The node with greatest depth is some external node. All external nodes are with black depth <em>h</em>. So, the depth is at most $2h$​.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Deletion"><a href="#Deletion" class="headerlink" title="Deletion"></a>Deletion</h2><ul>
+<li>Logical: 删除节点的内容</li>
+<li>Structural：删除节点，整棵树做修复</li>
+</ul>
+<h3 id="Complexity-of-Operations-on-RBT"><a href="#Complexity-of-Operations-on-RBT" class="headerlink" title="Complexity of Operations on RBT"></a>Complexity of Operations on RBT</h3><ul>
+<li>With reasonable implementation<ul>
+<li>A new node can be inserted correctly in a red-black tree with <em>n</em> nodes in $\Theta(logn)$​ time in the worst-case</li>
+<li>Repairs for deletion do $O(1)$ structural changes, but may do $O(logn)$color changes</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm-design-and-analysis/" rel="tag"># Algorithm design and analysis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/26/Love-Death-and-Robots/" rel="prev" title="Love, Death and Robots">
+      <i class="fa fa-chevron-left"></i> Love, Death and Robots
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/26/History%20of%20Western%20Music%20History/" rel="next" title="History of Western Music History">
+      History of Western Music History <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Binary-Search-Generalized"><span class="nav-text">Binary Search Generalized</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Balanced-Binary-Search-Tree"><span class="nav-text">Balanced Binary Search Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#binary-search-tree"><span class="nav-text">binary search tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Red-Black-Tree"><span class="nav-text">Red-Black Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Recursive-Definition-of-RBT"><span class="nav-text">Recursive Definition of RBT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Properties-of-Red-Black-Tree"><span class="nav-text">Properties of Red-Black Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bound-on-Depth-of-Node-in-RBT"><span class="nav-text">Bound on Depth of Node in RBT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deletion"><span class="nav-text">Deletion</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Complexity-of-Operations-on-RBT"><span class="nav-text">Complexity of Operations on RBT</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="云计算第一次作业 Outline：  spark + hadoop（这部分由191250071撰写，感谢这位同学） For Manjaro用户">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hadoop+spark配置和部署">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/26/hadoop+spark%E9%85%8D%E7%BD%AE%E5%92%8C%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="云计算第一次作业 Outline：  spark + hadoop（这部分由191250071撰写，感谢这位同学） For Manjaro用户">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Cloud Computation">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/03/26/hadoop+spark%E9%85%8D%E7%BD%AE%E5%92%8C%E9%83%A8%E7%BD%B2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>hadoop+spark配置和部署 | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/26/hadoop+spark%E9%85%8D%E7%BD%AE%E5%92%8C%E9%83%A8%E7%BD%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hadoop+spark配置和部署
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-26 12:14:21" itemprop="dateCreated datePublished" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Software-Engineering/" itemprop="url" rel="index"><span itemprop="name">Software Engineering</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>云计算第一次作业</p>
+<p>Outline：</p>
+<ul>
+<li>spark + hadoop（这部分由191250071撰写，感谢这位同学）</li>
+<li>For Manjaro用户</li>
+</ul>
+<span id="more"></span>
+<h1 id="spark-hadoop"><a href="#spark-hadoop" class="headerlink" title="spark + hadoop"></a>spark + hadoop</h1><h2 id="spark集群部署"><a href="#spark集群部署" class="headerlink" title="spark集群部署"></a>spark集群部署</h2><p>华为云服务器配置如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>规格名称</th>
+<th>vCPUs \</th>
+<th>内存</th>
+<th>CPU</th>
+<th>基准/最大带宽</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c6s.large.2</td>
+<td>2vCPUs \</td>
+<td>4 GiB</td>
+<td>Intel Cascade Lake 2.6GHz</td>
+<td>1 / 1 Gbit/s</td>
+</tr>
+<tr>
+<td><strong>操作系统</strong></td>
+<td><strong>操作系统版本</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>CentOS</td>
+<td>CentOS 8.2 64bit(40GB)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>所有服务器都使用root账户</p>
+<h2 id="更改主机名称，添加hosts配置"><a href="#更改主机名称，添加hosts配置" class="headerlink" title="更改主机名称，添加hosts配置"></a>更改主机名称，添加hosts配置</h2><ol>
+<li>使用vim更改主机名称为master、slave01、slave02、slave03</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/hostname</span><br></pre></td></tr></table></figure>
+<p>重启服务器确认名称已经改变</p>
+<ol>
+<li>添加hosts配置</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/hosts</span><br></pre></td></tr></table></figure>
+<p>master中加入如下配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">172.0.0.1 localhost //如果本来就有这条就不用加了</span><br><span class="line">&lt;master的内网ip&gt; master</span><br><span class="line">&lt;slave01的公网ip&gt; slave01</span><br><span class="line">&lt;slave02的公网ip&gt; slave02</span><br><span class="line">&lt;slave03的公网ip&gt; slave03</span><br></pre></td></tr></table></figure>
+<p>slave中加入如下配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">172.0.0.1 localhost //如果本来就有这条就不用加了</span><br><span class="line">&lt;master的公网ip&gt; master</span><br><span class="line">&lt;slave01的公网ip&gt; slave01</span><br><span class="line">&lt;slave02的公网ip&gt; slave02</span><br><span class="line">&lt;slave03的公网ip&gt; slave03</span><br></pre></td></tr></table></figure>
+<h2 id="配置无密码登录本机和访问集群机器"><a href="#配置无密码登录本机和访问集群机器" class="headerlink" title="配置无密码登录本机和访问集群机器"></a>配置无密码登录本机和访问集群机器</h2><h2 id="安装openssh-server，并生成ssh公钥"><a href="#安装openssh-server，并生成ssh公钥" class="headerlink" title="安装openssh-server，并生成ssh公钥"></a>安装openssh-server，并生成ssh公钥</h2><ol>
+<li>运行如下命令安装openssh-server</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install openssh-server</span><br></pre></td></tr></table></figure>
+<ol>
+<li>运行如下命令生成密钥</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ssh-keygen -t rsa -P &quot;&quot;</span><br></pre></td></tr></table></figure>
+<p>一路回车指导成功生成密钥即可。</p>
+<ol>
+<li>运行如下命令将密钥放进<code>authorized_keys</code>中</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cat /root/.ssh/id_rsa.pub &gt;&gt; /root/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<ol>
+<li>尝试如下命令</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ssh localhost</span><br></pre></td></tr></table></figure>
+<p>第一次登陆可能会让你确认，输入<code>yes</code>后回车即可，如果出现如下信息则说明登录成功：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">        Welcome to Huawei Cloud Service</span><br><span class="line"></span><br><span class="line">Last login: Fri Oct 15 14:02:37 2021 from 122.9.164.198</span><br></pre></td></tr></table></figure>
+<ol>
+<li>(仅master)通过如下命令将<code>id_sra.pub</code>发送给slave</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># scp ~/.ssh/id_rsa.pub root@slave01:/</span><br><span class="line"># scp ~/.ssh/id_rsa.pub root@slave02:/</span><br><span class="line"># scp ~/.ssh/id_rsa.pub root@slave03:/</span><br></pre></td></tr></table></figure>
+<h2 id="实现无密码登录slave"><a href="#实现无密码登录slave" class="headerlink" title="实现无密码登录slave"></a>实现无密码登录slave</h2><ol>
+<li>使用如下命令将密钥添加进slave的<code>authorized_keys</code>中</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cat /id_rsa.pub &gt;&gt; /root/.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<h2 id="安装JDK"><a href="#安装JDK" class="headerlink" title="安装JDK"></a>安装JDK</h2><ol>
+<li>将<code>jdk-8u301-linux-x64.tar.gz</code>保存在==根目录==</li>
+<li>运行如下命令</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># mkdir /usr/local/java</span><br><span class="line"># tar -zxvf /jdk-8u301-linux-x64.tar.gz -C /usr/local/java</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用如下命令添加环境变量</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /etc/profile</span><br></pre></td></tr></table></figure>
+<p>​        将下面的内容添加至末尾</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_301</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=./:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$PATH:$&#123;JAVA_HOME&#125;/bin</span><br></pre></td></tr></table></figure>
+<ol>
+<li>退出vim，运行如下命令来使得配置生效</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># source /etc/profile</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用如下命令来确认是否已经安装完成</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># java -version</span><br></pre></td></tr></table></figure>
+<p>​    应该看到下面的输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java version &quot;1.8.0_301&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_301-b09)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.301-b09, mixed mode)</span><br></pre></td></tr></table></figure>
+<h2 id="安装和配置Hadoop"><a href="#安装和配置Hadoop" class="headerlink" title="安装和配置Hadoop"></a>安装和配置Hadoop</h2><p><strong>安装：</strong></p>
+<ol>
+<li>将hadoop-3.2.2.tar.gz拷贝到==master的根目录==下</li>
+<li>使用如下命令在==master==上安装hadoop</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># tar -zxvf /hadoop-3.2.2.tar.gz -C /usr/local</span><br><span class="line"># mv ./hadoop-3.2.2 ./hadoop #修改文件夹名称为hadoop</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用如下命令添加环境变量</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /root/.bashrc</span><br></pre></td></tr></table></figure>
+<p>将以下内容添加到末尾</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export HADOOP_HOME=/usr/local/hadoop</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>配置（master）：</strong></p>
+<p>所有配置文件都位于目录<code>/usr/local/hadoop/etc/hadoop/</code>中</p>
+<ol>
+<li>修改workers</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">slave01</span><br><span class="line">slave02</span><br><span class="line">slave03</span><br></pre></td></tr></table></figure>
+<ol>
+<li>修改core-site.xml</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">     &lt;property&gt;</span><br><span class="line">         &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;file:/usr/local/hadoop/tmp&lt;/value&gt;</span><br><span class="line">         &lt;description&gt;Abase for other temporary directories.&lt;/description&gt;</span><br><span class="line">     &lt;/property&gt;</span><br><span class="line">     &lt;property&gt;</span><br><span class="line">         &lt;name&gt;fs.defaultFS&lt;/name&gt;</span><br><span class="line">         &lt;value&gt;hdfs://master:9000&lt;/value&gt;</span><br><span class="line">     &lt;/property&gt;</span><br><span class="line"> &lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<p>请注意属性<code>hadoop.tmp.dir</code>的值。</p>
+<ol>
+<li>修改<code>hdfs-site.xml</code></li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--添加下面这个属性是因为我在部署过程中遇到了一个问题导致namenode无法部署--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/usr/local/hadoop/tmp/dfs/name<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">description</span>&gt;</span>Determines where on the local filesystem the DFS name node</span><br><span class="line">      should store the name table(fsimage).  If this is a comma-delimited list</span><br><span class="line">      of directories then the name table is replicated in all of the</span><br><span class="line">      directories, for redundancy. <span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>修改<code>mapred-site.xml</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</span><br><span class="line">        &lt;value&gt;yarn&lt;/value&gt;</span><br><span class="line">    &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>修改<code>yarn-site.xml</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- Site specific YARN configuration properties --&gt;</span><br><span class="line">&lt;property&gt;</span><br><span class="line">          &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</span><br><span class="line">          &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</span><br><span class="line">      &lt;/property&gt;</span><br><span class="line">      &lt;property&gt;</span><br><span class="line">          &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;</span><br><span class="line">          &lt;value&gt;master&lt;/value&gt;</span><br><span class="line">      &lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>添加下面这一步是因为我在部署的过程中遇到了无法找到<code>JAVA_HOME</code>环境变量的问题</p>
+<ol>
+<li>在<code>hadoop-env.sh</code>中配置<code>JAVA_HOME</code></li>
+</ol>
+<p>添加如下内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/local/java/jdk1.8.0_301</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用如下命令将配置好的hadoop打包</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cd usr/local/# rm -rf ./hadoop/tmp# rm -rf ./hadoop/logs/*# tar -zcvf /hadoop.master.tar.gz ./hadoop</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用如下命令将打包好的hdoop发送给slave</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># scp /hadoop.master.tar.gz slave01:/# scp /hadoop.master.tar.gz slave02:/# scp /hadoop.master.tar.gz slave03:/</span><br></pre></td></tr></table></figure>
+<ol>
+<li>其它master上的环境变量</li>
+</ol>
+<p>在<code>/etc/profile</code>的末尾添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HDFS_NAMENODE_USER=rootexport HDFS_DATANODE_USER=rootexport HDFS_SECONDARYNAMENODE_USER=rootexport YARN_RESOURCEMANAGER_USER=rootexport YARN_NODEMANAGER_USER=root</span><br></pre></td></tr></table></figure>
+<p>这是因为我在部署中遇到了和用户名相关的报错</p>
+<p><strong>安装（slave）：</strong></p>
+<ol>
+<li>运行如下命令删除原有的hadoop根目录并将新的压缩包解压</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># rm -rf /usr/local/hadoop# tar -zxvf /hadoop.master.tar.gz  -C /usr/local</span><br></pre></td></tr></table></figure>
+<p><strong>启动Hadoop：</strong></p>
+<ol>
+<li>在master上输入以下命令启动Hadoop</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cd /usr/local/hadoop# sbin/start-all.sh</span><br></pre></td></tr></table></figure>
+<ol>
+<li>检验hadoop是否已经启动</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># jps</span><br></pre></td></tr></table></figure>
+<p>在master上输入jps应该有类似于如下输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1879 NameNode2169 SecondaryNameNode873 WrapperSimpleApp5530 Jps2427 ResourceManager</span><br></pre></td></tr></table></figure>
+<p>主要关注<code>NameNode</code>、<code>ResourceManager</code>、<code>SecondaryNameNode</code>这三条是否存在，如果不存在则应该去<code>/usr/local/hadoop/logs/</code>目录下寻找相应地日志查看错误信息。</p>
+<p>在slave上输入jps应该有类似于如下输出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4406 Jps1914 NodeManager1787 DataNode</span><br></pre></td></tr></table></figure>
+<p>主要关注<code>NodeManager</code>、<code>DataNode</code>这两条是否存在，如果不存在同样去<code>/usr/local/hadoop/logs/</code>目录下寻找相应地日志查看错误信息。</p>
+<h2 id="安装配置和启动Spark"><a href="#安装配置和启动Spark" class="headerlink" title="安装配置和启动Spark"></a>安装配置和启动Spark</h2><p><strong>安装（master）：</strong></p>
+<ol>
+<li>将<code>spark-3.1.2-bin-without-hadoop.tgz</code>拷贝到master的根目录</li>
+<li>输入如下命令安装</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># tar -zxvf /spark-3.1.2-bin-without-hadoop.tgz -C /usr/local/# cd /usr/local# mv ./spark-3.1.2-bin-without-hadoop/ ./spark</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用如下命令配置环境变量</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vim /root/.bashrc </span><br></pre></td></tr></table></figure>
+<p>将下面的内容加入到<code>.bashrc</code>之中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export SPARK_HOME=/usr/local/sparkexport PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin</span><br></pre></td></tr></table></figure>
+<p><strong>配置（master）</strong></p>
+<ol>
+<li>使用如下命令将workers.template拷贝到同目录的workers文件中</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cd /usr/local/spark/# cp ./conf/workers.template ./conf/workers</span><br></pre></td></tr></table></figure>
+<ol>
+<li>修改刚刚拷贝的workers文件的内容：</li>
+</ol>
+<p>将原来的内容替换成：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">masterslave01slave02slave03</span><br></pre></td></tr></table></figure>
+<ol>
+<li>使用如下命令将spark-env.sh.template拷贝到spar-env.sh中</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cp ./conf/spark-env.sh.template ./conf/spark-env.sh</span><br></pre></td></tr></table></figure>
+<ol>
+<li>在spark-env.sh的末尾添加如下内容</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoop classpath)export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop# export SCALA_HOME=/usr/lib/scala/scala-2.13.3 export HADOOP_HOME=/usr/local/hadoopexport SPARK_MASTER_IP=&lt;master的公网ip&gt; #指定 Spark 集群 Master 节点的 IP 地址； export SPARK_MASTER_PORT=7077export SPARK_MASTER_HOST=masterexport SPARK_EXECUTOR_MEMORY=4096m #大小看虚拟机内存export SPARK_LOCAL_IP=localhostexport JAVA_HOME=/usr/local/java/jdk1.8.0_301</span><br></pre></td></tr></table></figure>
+<p>注意，由于我并没有安装scala所以不添加SCALA_HOME，而是添加JAVA_HOME。此外，由于出现了类似于如下的worker日志报错，我添加了<code>SPARK_LOCAL_IP</code></p>
+<ol>
+<li>使用如下命令将配置好的spark打包发送给slave</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cd /usr/local/# tar -zcvf /spark.master.tar.gz ./spark# scp /spark.master.tar.gz slave01:/# scp /spark.master.tar.gz slave02:/# scp /spark.master.tar.gz slave03:/</span><br></pre></td></tr></table></figure>
+<p><strong>安装（slave）：</strong></p>
+<ol>
+<li>使用如下命令在slave上安装spark</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># rm -rf /usr/local/spark/# tar -zxvf /spark.master.tar.gz -C /usr/local</span><br></pre></td></tr></table></figure>
+<p><strong>启动spark</strong></p>
+<p>==在启动之前先修改master的spark-env.sh文件，将其中的<code>SPARK_LOCAL</code>注释掉，不然就只能从服务器内网的localhost来访问spark的webui了（我也不知道为啥。。。）==</p>
+<ol>
+<li>先按照之前的步骤启动Hadoop</li>
+<li>启动spark</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># cd /usr/local/spark/# sbin/start-all.sh</span><br></pre></td></tr></table></figure>
+<h1 id="For-Manjaro用户"><a href="#For-Manjaro用户" class="headerlink" title="For Manjaro用户"></a>For Manjaro用户</h1><p>这里演示一下Manjaro/arch用户安装hadoop的流程，只开个头。剩余的hadoop配置和spark安装及配置也大同小异。主要是对于manjaro/arch用户来说，安装这类软件会有一些小坑</p>
+<ul>
+<li><p><code>sudo pacman -Syu</code></p>
+</li>
+<li><p>安装jdk：<code>yay -S jdk</code></p>
+</li>
+<li><p>安装openssh：<code>yay -S openssh</code></p>
+<ul>
+<li>manjaro默认不安装openssh</li>
+</ul>
+</li>
+<li><p>创建hadooop用户并且更改hadoop用户密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//创建hadoop用户</span><br><span class="line">sudo adduser hadoop</span><br><span class="line"></span><br><span class="line">//更改hadoop用户密码</span><br><span class="line">sudo passwd hadoop</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>manjaro默认不安装<code>adduser</code>命令，要使用<code>useradd</code></strong></li>
+<li>如果<code>yay -S adduser</code>,这个安装的命令默认是在/etc内创建用户，而不是（如centos中自带的<code>adduser</code>）在root目录下，因此路径会不一样，在配置环境变量时需要注意。</li>
+</ul>
+</li>
+<li><p>以上的配置完成之后，使用hadoop用户</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su - hadoop</span><br></pre></td></tr></table></figure>
+<p>切换成hadoop之后，设置ssh免密登录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa </span><br><span class="line"></span><br><span class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys </span><br><span class="line"></span><br><span class="line">chmod 640 ~/.ssh/authorized_keys </span><br></pre></td></tr></table></figure>
+<p>然后试试<code>ssh localhost</code>，查看是否能够免密登录</p>
+<blockquote>
+<p>如果遇到22端口被拒绝的情况，很有可能是ssh服务并没有开启。<br>切换成exit退出当前用户，使用主用户<br>输入<code>sudo service ssh start</code>进行服务的开启。如果显示没有该服务，那么可以确定系统并没有安装openssh, 去安装。</p>
+</blockquote>
+</li>
+<li><p>Archlinux或者manjaro开启ssh服务命令:</p>
+<p><code>systemctl enable sshd.service</code>     开机启动</p>
+<p><code>systemctl start sshd.service</code>      立即启动</p>
+<p><code>systemctl restart sshd.service</code>    立即重启</p>
+</li>
+<li><p>用户hadoop使用<code>su</code>可能会报错：</p>
+<p><code>hadoop is not in the sudoers file.  This incident will be reported.</code>，需要在/etc/sudoers文件里给该用户添加权限 （<a target="_blank" rel="noopener" href="https://www.cnblogs.com/MakeView660/p/12395542.html">ref</a>）</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Cloud-Computation/" rel="tag"># Cloud Computation</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/26/%E5%AF%BC%E8%AE%BA-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="prev" title="AI Intro">
+      <i class="fa fa-chevron-left"></i> AI Intro
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/26/Using%20Shell/" rel="next" title="Using Shell">
+      Using Shell <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#spark-hadoop"><span class="nav-text">spark + hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#spark%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="nav-text">spark集群部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D%E7%A7%B0%EF%BC%8C%E6%B7%BB%E5%8A%A0hosts%E9%85%8D%E7%BD%AE"><span class="nav-text">更改主机名称，添加hosts配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%97%A0%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E6%9C%AC%E6%9C%BA%E5%92%8C%E8%AE%BF%E9%97%AE%E9%9B%86%E7%BE%A4%E6%9C%BA%E5%99%A8"><span class="nav-text">配置无密码登录本机和访问集群机器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85openssh-server%EF%BC%8C%E5%B9%B6%E7%94%9F%E6%88%90ssh%E5%85%AC%E9%92%A5"><span class="nav-text">安装openssh-server，并生成ssh公钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E6%97%A0%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95slave"><span class="nav-text">实现无密码登录slave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85JDK"><span class="nav-text">安装JDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%92%8C%E9%85%8D%E7%BD%AEHadoop"><span class="nav-text">安装和配置Hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E5%92%8C%E5%90%AF%E5%8A%A8Spark"><span class="nav-text">安装配置和启动Spark</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#For-Manjaro%E7%94%A8%E6%88%B7"><span class="nav-text">For Manjaro用户</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

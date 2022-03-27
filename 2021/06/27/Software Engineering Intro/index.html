@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="软件软件以程序代码为核心， 由三个部分组成：  程序， 机器指令的集合 文档， 描述程序操作与使用的文档 数据， 程序运行时需要使用的信息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Software Engineering Intro">
+<meta property="og:url" content="http://lyk-love.cn/2021/06/27/Software%20Engineering%20Intro/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="软件软件以程序代码为核心， 由三个部分组成：  程序， 机器指令的集合 文档， 描述程序操作与使用的文档 数据， 程序运行时需要使用的信息">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-06-27T22:42:08.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Software Engineering Methodology">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2021/06/27/Software%20Engineering%20Intro/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Software Engineering Intro | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/06/27/Software%20Engineering%20Intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Software Engineering Intro
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-06-27 22:42:08" itemprop="dateCreated datePublished" datetime="2021-06-27T22:42:08Z">2021-06-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Software-Engineering/" itemprop="url" rel="index"><span itemprop="name">Software Engineering</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="软件"><a href="#软件" class="headerlink" title="软件"></a>软件</h1><p>软件以程序代码为核心， 由三个部分组成：</p>
+<ol>
+<li>程序， 机器指令的集合</li>
+<li>文档， 描述程序操作与使用的文档</li>
+<li>数据， 程序运行时需要使用的信息</li>
+</ol>
+<span id="more"></span>
+<ul>
+<li>Software is independent of hardware </li>
+<li>Software is a tool </li>
+<li>Software = programs + documents + data + knowledge •</li>
+<li>Software development is much more complicated than programming</li>
+<li>Application software originate from the reality, and reversely improve the reality</li>
+</ul>
+<h1 id="软件工程"><a href="#软件工程" class="headerlink" title="软件工程"></a>软件工程</h1><h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><ul>
+<li><code>[IEEE610.12-1990]</code><ul>
+<li>（1）The application of a systematic, disciplined, quantifiable approach to the development, operation, and maintenance of software; that is, the application of engineering to software. 应用<strong>系统</strong>的， <strong>规范</strong>的， <strong>可量化</strong>的方法来开发， 运行和维护软件， 即<strong>将工程应用到软件</strong></li>
+<li>（2）The study of approaches as in （1）  对（1）中各种方法的研究</li>
+</ul>
+</li>
+</ul>
+<h2 id="Engineering"><a href="#Engineering" class="headerlink" title="Engineering"></a>Engineering</h2><ul>
+<li>软件工程是一种工程活动, 它具备所有工程活动共同的特性. <code>[Shaw1990]</code>认为所有工程学科共同的特性有5点:<ul>
+<li>具有解决实际问题的动机： <ul>
+<li>⼯程学解决实际问题，⽽这些问题来源于⼯程领域之外的⼈——消费者。</li>
+</ul>
+</li>
+<li>应⽤<strong>科学知识</strong>指导⼯程活动：<ul>
+<li>⼯程学不依赖于个⼈的技能，⽽是强调以科学知识为指导，按照特定⽅法与技术，进⾏规律性的设计、分析等活动，实现⼯程活动 的可学习性和可重复性。</li>
+</ul>
+</li>
+<li>以成本效益⽐有效为基本条件： <ul>
+<li>⼯程学不单单只是解决问题，它要有效利⽤所有资源，⾄少成本要低于效益，即成本效益⽐有效。</li>
+</ul>
+</li>
+<li>构建机器或事物： <ul>
+<li>⼯程学强调构建实物⼯具，例如机器、事物等，并利⽤实物⼯具来解决问题。</li>
+</ul>
+</li>
+<li>以服务⼈类为最终⽬的： <ul>
+<li>⼯程学考虑的不是单个客户的需要，⽽是要运⽤技术和经验实现全社会的进步。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><code>[CCSE2004]</code>对工程师的要求: <ul>
+<li>⼯程师通过⼀系列的讨论决策，仔细评估项⽬的可选活动，并在每个决策点选择⼀种在当前环境中适合当前任务的⽅法进⾏⼯作。可以通过对成本和收益进⾏折衷分析调整相应策略。</li>
+<li>⼯程师需要对某些对象进⾏<strong>度量</strong>，有时需要定量的⼯作；他们要校准和确认度量⽅法，并根据经验和实验数据进⾏估算。</li>
+<li>软件⼯程师强调项⽬设计过程的<strong>纪律性</strong>，这是团队⾼效⼯作的条件。 </li>
+<li>⼯程师可胜任研究、开发、设计、⽣产、测试、构造、操作、管理，以及销售、咨询和培训等多种⻆⾊。 </li>
+<li>⼯程师们需要在某些过程中使⽤⼯具，选择和使⽤合适的⼯具是⼯程的关键要素。 </li>
+<li>⼯程师们通过专业协会发展和确认原理、标准和最佳实践⽅法，并提⾼个⼈能⼒。 </li>
+<li>⼯程师们能够重⽤设计和设计制品。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Understanding-of-Software-Engineering"><a href="#Understanding-of-Software-Engineering" class="headerlink" title="Understanding of Software Engineering"></a>Understanding of Software Engineering</h2><ul>
+<li>软件⼯程是⼀种⼯程活动 </li>
+<li>软件⼯程的动机是解决实际问题 </li>
+<li>软件⼯程是科学性、实践性和⼯艺性并重的 </li>
+<li>软件⼯程追求⾜够好，不是最好 </li>
+<li>软件⼯程真正的产品是基于虚拟计算机的软件⽅案 </li>
+<li>软件⼯程的最终⽬的是要促进整个社会的进步</li>
+</ul>
+<h1 id="软件工程概览"><a href="#软件工程概览" class="headerlink" title="软件工程概览"></a>软件工程概览</h1><h2 id="知识域"><a href="#知识域" class="headerlink" title="知识域"></a>知识域</h2><p>太多了,不表</p>
+<h2 id="软件开发活动"><a href="#软件开发活动" class="headerlink" title="软件开发活动"></a>软件开发活动</h2><ul>
+<li>软件开发是软件工程的主要任务, 包括<code>需求开发</code>, <code>软件设计</code>, <code>软件构造(construction)</code>, <code>软件测试</code>, <code>软件交付与维护</code>等具体活动</li>
+</ul>
+<h3 id="需求开发"><a href="#需求开发" class="headerlink" title="需求开发"></a>需求开发</h3><ul>
+<li>从空白开始, 主要目的是建立<code>软件解决方案</code>, 具体任务包括:<ol>
+<li>探索并明确描述现实世界信息</li>
+<li>探索并定义问题</li>
+<li>建立软件系统的解决方案,  使得将软件系统应用到现实世界之后能解决问题</li>
+</ol>
+</li>
+<li><code>软件解决方案</code>也称为<code>软件产品设计方案</code>. 产品设计方案是从用户视角和与外界互动的方式描述产品.</li>
+<li>需求开发产生的主要制品是<code>软件需求规格说明( Software Requirement Specification , SRS)文档</code> 和 <code>需求分析模型</code>, <code>软件需求规格说明文档</code>详细描述了软件解决方案的内容, <code>需求分析模型</code>重点描述了软件解决方案中的复杂技术方案</li>
+</ul>
+<h3 id="软件设计"><a href="#软件设计" class="headerlink" title="软件设计"></a>软件设计</h3><ul>
+<li>软件设计在需求开发之后进行, 它以<code>软件需求规格说明</code>为基础, 主要目的是建立<code>软件系统的构建方案</code>, 具体任务包括:<ol>
+<li><code>软件体系结构设计</code>, 确定系统的高层结构</li>
+<li><code>详细设计</code>, 将高层结构的部件设计为更详细的的模块与类, 定义模块与类的功能以及它们的接口</li>
+<li><code>人机交互设计</code>, 设计软件系统与外界的有效交互方案, 包括设计用户界面</li>
+</ol>
+</li>
+<li><code>软件构建方案</code>又称为<code>软件工程设计方案</code>, 是由抽象软件实体组成的复杂概念结构. 工程方案是从生产者的角度和产品内部结构的方式描述产品.</li>
+<li>软件设计产生的主要制品是<code>软件设计描述(Software Design Description, SDD)文档</code> 和 <code>软件设计模型</code>, <code>SDD文档</code>详细描述了软件构建方案的内容,  <code>软件设计模型</code>重点描述了软件构建方案的复杂细节</li>
+</ul>
+<h3 id="软件构造"><a href="#软件构造" class="headerlink" title="软件构造"></a>软件构造</h3><ul>
+<li><p>软件构造在软件设计之后进行, 它以<code>软件构建方案</code>为基础, 主要目的是使用编程语言实现软件构建方案.具体任务包括:</p>
+<ol>
+<li>程序设计, 以”数据结构+算法”的方式继续细化和深化<code>软件构建方案</code>基本单位(模块或者类)的设计</li>
+<li>编程</li>
+<li>调试</li>
+</ol>
+</li>
+<li><p>主要制品是程序源代码和编译后的可执行程序</p>
+</li>
+</ul>
+<h3 id="软件测试"><a href="#软件测试" class="headerlink" title="软件测试"></a>软件测试</h3><ul>
+<li>主要目的是验证和确认软件产品的质量, 它包含两重含义:<ol>
+<li>从技术上保证产品的质量是合格的</li>
+<li>保证产品质量是<strong>符合需求规格</strong>的</li>
+</ol>
+</li>
+<li>主要制品是<code>测试报告</code>, 它描述了测试中发现的错误和故障</li>
+</ul>
+<h3 id="软件交付与维护"><a href="#软件交付与维护" class="headerlink" title="软件交付与维护"></a>软件交付与维护</h3><ul>
+<li><code>软件交付</code>在软件产品通过所有测试之后进行, 主要目的是将软件产品交付给用户使用. 主要任务包括:<ol>
+<li>安装与部署软件系统</li>
+<li><strong>培训用户</strong>使用软件并提供文档支持</li>
+</ol>
+</li>
+<li>主要制品是<code>用户使用手册</code></li>
+<li><code>软件维护</code>又称为<code>软件演化</code>, 在软件交付给用户之后进行, 直到软件产品消亡才结束.</li>
+</ul>
+<h2 id="角色分工"><a href="#角色分工" class="headerlink" title="角色分工"></a>角色分工</h2><ul>
+<li>需求⼯程师，⼜被称为需求分析师：<ul>
+<li>承担需求开发任务。软件产品的需求开发⼯作通常由多个需求⼯程师来完成，他们共同组成⼀个需 求⼯程师⼩组，在⾸席需求⼯程师的领导下开展⼯作。通常⼀个团队只有⼀个需求⼯程师⼩组。</li>
+</ul>
+</li>
+<li>软件体系结构师：<ul>
+<li>承担软件体系结构设计任务。通常也是由多⼈组成⼀个⼩组，并在⾸席软件体系结构师的领导下开 展⼯作。通常⼀个团队只有⼀个软件体系结构师⼩组。</li>
+</ul>
+</li>
+<li>软件设计师：<ul>
+<li>承担详细设计任务。在软件体系结构设计完成之后，可以将其部件分配给不同的开发⼩组。开发⼩ 组中负责所分配部件详细设计⼯作的⼈员就是软件设计师。⼀个团队可能有⼀个或多个开发⼩组。 ⼀个⼩组可能有⼀个或多个软件设计师。</li>
+</ul>
+</li>
+<li>程序员： <ul>
+<li>承担软件构造任务。程序员与软件设计师通常是同⼀批⼈，也是根据其所分配到的任务开展⼯作。</li>
+</ul>
+</li>
+<li>⼈机交互设计师：<ul>
+<li>承担⼈机交互设计任务。⼈机交互设计师与软件设计师可以是同⼀批⼈，也可以是不同⼈员。在有 多个⼩组的软件⼯程团队中，可以有⼀个单独的⼈机交互设计师⼩组，也可以将⼈机交互设计师分 配到各个⼩组。</li>
+</ul>
+</li>
+<li>软件测试⼈员：<ul>
+<li>承担软件测试任务。软件测试⼈员通常需要独⽴于其他的开发⼈员⻆⾊。⼀个团队可能有⼀个或多 个测试⼩组。⼀个⼩组可能有⼀个或多个软件测试⼈员。</li>
+</ul>
+</li>
+<li>项⽬管理⼈员：<ul>
+<li>负责计划、组织、领导、协调和控制软件开发的各项⼯作。相⽐于传统意义上的管理者，他们不完全是监控者和控制者，更多得是协调者。通常⼀个 团队只有⼀个项⽬管理⼈员。</li>
+</ul>
+</li>
+<li>软件配置管理⼈员： <ul>
+<li>管理软件开发中产⽣的各种制品，具体⼯作是对重要制品进⾏标识、变更控制、状态报告等。通常⼀个团队只有⼀个软件配置管理⼈员。</li>
+</ul>
+</li>
+<li>质量保障⼈员： <ul>
+<li>在⽣产过程中监督和控制软件产品质量的⼈员。通常⼀个团队有⼀个质量保障⼩组，由⼀个或多个⼈员组成。</li>
+</ul>
+</li>
+<li>培训和⽀持⼈员： <ul>
+<li>负责软件移交与维护任务。他们可以是其他开发⼈员的⼀部分，也可以是独⽴的⼈员。</li>
+</ul>
+</li>
+<li>⽂档编写⼈员：<ul>
+<li>专⻔负责写作软件开发各种⽂档的⼈员。他们的存在是为了充分利⽤部分宝贵的⼈⼒资源（例如需求⼯程师和软件体系结构师），让这些⼈⼒资源从 繁杂的⽂档化⼯作中解放出来。</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Software-Engineering-Methodology/" rel="tag"># Software Engineering Methodology</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/27/Sort/" rel="prev" title="Sort">
+      <i class="fa fa-chevron-left"></i> Sort
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/27/Project%20Management%20Basic/" rel="next" title="Project Management Basic">
+      Project Management Basic <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6"><span class="nav-text">软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B"><span class="nav-text">软件工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Definition"><span class="nav-text">Definition</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Engineering"><span class="nav-text">Engineering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Understanding-of-Software-Engineering"><span class="nav-text">Understanding of Software Engineering</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%A6%82%E8%A7%88"><span class="nav-text">软件工程概览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E5%9F%9F"><span class="nav-text">知识域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E6%B4%BB%E5%8A%A8"><span class="nav-text">软件开发活动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%BC%80%E5%8F%91"><span class="nav-text">需求开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1"><span class="nav-text">软件设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0"><span class="nav-text">软件构造</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95"><span class="nav-text">软件测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E4%BA%A4%E4%BB%98%E4%B8%8E%E7%BB%B4%E6%8A%A4"><span class="nav-text">软件交付与维护</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%92%E8%89%B2%E5%88%86%E5%B7%A5"><span class="nav-text">角色分工</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

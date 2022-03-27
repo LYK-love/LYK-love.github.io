@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Are you building it “right”? Are you building the “right” thing?  For more information, please read Automatic Testing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Software Testing">
+<meta property="og:url" content="http://lyk-love.cn/2021/06/17/Software%20Testing/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Are you building it “right”? Are you building the “right” thing?  For more information, please read Automatic Testing">
+<meta property="og:locale">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/image-20220125170602076.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/image-20220125170614394.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/image-20220125172134640.png">
+<meta property="article:published_time" content="2021-06-17T15:14:10.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Software Testing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/image-20220125170602076.png">
+
+<link rel="canonical" href="http://lyk-love.cn/2021/06/17/Software%20Testing/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Software Testing | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/06/17/Software%20Testing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Software Testing
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-06-17 15:14:10" itemprop="dateCreated datePublished" datetime="2021-06-17T15:14:10Z">2021-06-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Software-Engineering/" itemprop="url" rel="index"><span itemprop="name">Software Engineering</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>Are you building it “right”?</li>
+<li>Are you building the “right” thing?</li>
+</ul>
+<p>For more information, please read <em>Automatic Testing</em></p>
+<span id="more"></span>
+<h1 id="软件测试的目的"><a href="#软件测试的目的" class="headerlink" title="软件测试的目的"></a>软件测试的目的</h1><ul>
+<li>向开发者和用户展示软件满足了<strong>需求</strong>， 表明软件产品是一个合格的产品<ul>
+<li>有效性测试</li>
+</ul>
+</li>
+<li>找出软件中的缺陷和不足<ul>
+<li>缺陷测试</li>
+</ul>
+</li>
+</ul>
+<h1 id="桩程序和驱动程序"><a href="#桩程序和驱动程序" class="headerlink" title="桩程序和驱动程序"></a>桩程序和驱动程序</h1><ul>
+<li><p>桩程序是被测试部件的交互环境,它扮演被测试部件需要调用的其他系统部件。桩程序对其他系统部件的扮演仅限于规格相同，内部代码要简单地多,通常是直接返回固定数据或者按照固定规则返回数据。</p>
+</li>
+<li><p>驱动程序负责创建被测试部件的执行环境,并驱动和监控被测试部件执行测试用例的过程,判定测试用例的执行结果。</p>
+</li>
+</ul>
+<h1 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h1><p>略</p>
+<h1 id="集成测试"><a href="#集成测试" class="headerlink" title="集成测试"></a>集成测试</h1><ul>
+<li><p>自顶而下集成测试</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/image-20220125170602076.png" alt="自顶而下集成测试"></p>
+</li>
+<li><p>自底向上集成测试</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/image-20220125170614394.png" alt="自底向上集成测试"></p>
+</li>
+</ul>
+<h1 id="系统测试"><a href="#系统测试" class="headerlink" title="系统测试"></a>系统测试</h1><ul>
+<li><p>单元测试、集成测试更加关注<strong>技术</strong>上的正确性,重在发现设计缺陷和代码缺陷。</p>
+</li>
+<li><p>系统测试则不同,它更关注不符合<strong>需求</strong>的缺陷和需求自身的内在缺陷。</p>
+<ul>
+<li>系统测试关注整个系统的行为,所以不依赖于桩程序和驱动程序。但是，使用一些测试工具可以让系统测试过程更加自动化。</li>
+<li>系统测试的功能测试计划以需求规格说明文档或用例文档为基础,主要使用随机测试和基于规格的测试技术设计功能测试用例。在测试非功能性需求时需要使用针对非功能需求的特定测试技术进行测试计划和测试用例设计。</li>
+</ul>
+</li>
+<li><p>根据测试目标的不同,有很多不同类型的系统测试:功能测试、非功能性测试、验收测试、安装测试等等。但是发生在软件测试阶段,完全由软件测试人员控制和执行的主要是功能测试和非功能性测试。</p>
+</li>
+</ul>
+<h1 id="测试技术"><a href="#测试技术" class="headerlink" title="测试技术"></a>测试技术</h1><ul>
+<li>测试用例的选择</li>
+<li>随机测试</li>
+<li>基于规格的技术-黑盒测试方法</li>
+<li>基于代码的技术-白盒测试方法</li>
+<li>特定测试技术</li>
+</ul>
+<h2 id="测试用例的选择"><a href="#测试用例的选择" class="headerlink" title="测试用例的选择"></a>测试用例的选择</h2><ul>
+<li>测试的目标是发现尽可能多的缺陷,并不绝对要求所有缺陷。</li>
+<li>因为测试是有代价的,不仅要耗费桩程序、驱动人力等成本,更重要的是随着测试用例数量增多， 成本会直线上升</li>
+<li>所以,软件测试人员需要仔细地选择用例在代价尽可能小的情况下发现足够多的缺陷[Zhu 1997 ]。</li>
+<li>测试技术就是帮助软件人员设计和选择用例的。</li>
+</ul>
+<h2 id="随机测试"><a href="#随机测试" class="headerlink" title="随机测试"></a>随机测试</h2><ul>
+<li>随机测试( 随机测试 <code>Ad hoc Testing</code> )是一种基于软件工程师直觉和经验的技术, 也许是实践中使用最为广泛的测试技术[SWEBOK2004].</li>
+<li>随机测试根据软件工程师的技能， 直觉和对类似程序的经验[MyersI979] ,从所有可能的输入值中选择输入子集,建立测试用例。</li>
+</ul>
+<h2 id="黑盒测试方法"><a href="#黑盒测试方法" class="headerlink" title="黑盒测试方法"></a>黑盒测试方法</h2><ul>
+<li><p>等价类划分</p>
+<ul>
+<li><p>有效等价类:是指对于程序的规格说明 合理、有意义的输入的数据构成的集合。利用有效等价类可检验程序是否实现了规格说明中所定的功能和性能。</p>
+</li>
+<li><p>例子：</p>
+<p>| ID                                               | 输入                     | 预期输出     |<br>| ———————————————————————— | ———————————— | —————— |<br>| 1                                                | payment = 100; Total=50; | 50           |<br>| 2                                                | payment = 100; Total=20; | 输入数据无效 |<br>| 3                                                | payment = 50; Total=100; | 输入数据无效 |<br>| 如图的规格说明，可以将输入数据划分为三个等价类： |                          |              |</p>
+<ul>
+<li>有效数据</li>
+<li>无效数据 payment&lt;=0</li>
+<li>无效数据 payment&lt;total</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>边界值分析</p>
+</li>
+<li><p>决策表</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/image-20220125172134640.png" alt="决策表"></p>
+</li>
+<li><p>状态转换</p>
+<ul>
+<li>为对象建立<code>状态图</code>,描述测试对象的状态集合，输入集合和输入导致的状态转换集合。</li>
+<li>以<code>状态图</code>为基础,可建立测试对象的<code>转换表</code>. 状态转换表每一行都应该被设计为测试用例</li>
+</ul>
+</li>
+</ul>
+<h2 id="白盒测试方法"><a href="#白盒测试方法" class="headerlink" title="白盒测试方法"></a>白盒测试方法</h2><ul>
+<li>语句覆盖<ul>
+<li>语句覆盖设计测试用例的标准是确保被测试对象的每一行程序代码都至少执行一次</li>
+</ul>
+</li>
+<li>条件覆盖<ul>
+<li>条件覆盖设计测试用例的标准是确保程序中每个判断的每个结果都至少满足一次</li>
+</ul>
+</li>
+<li>路径覆盖<ul>
+<li>路径覆盖测试用例的标准是确保程序中每条独立执行路径都<br>至少执行一次</li>
+</ul>
+</li>
+</ul>
+<h2 id="特定测试技术"><a href="#特定测试技术" class="headerlink" title="特定测试技术"></a>特定测试技术</h2><h3 id="面向对象测试技术"><a href="#面向对象测试技术" class="headerlink" title="面向对象测试技术"></a>面向对象测试技术</h3><ul>
+<li>给予状态图设计类的单元测试用例</li>
+<li>基于协作设计类之间的集成测试用例</li>
+</ul>
+<h1 id="测试活动"><a href="#测试活动" class="headerlink" title="测试活动"></a>测试活动</h1><h2 id="测试计划"><a href="#测试计划" class="headerlink" title="测试计划"></a>测试计划</h2><h2 id="测试设计"><a href="#测试设计" class="headerlink" title="测试设计"></a>测试设计</h2><h2 id="测试执行"><a href="#测试执行" class="headerlink" title="测试执行"></a>测试执行</h2><h2 id="测试评价"><a href="#测试评价" class="headerlink" title="测试评价"></a>测试评价</h2><ul>
+<li>测试用例日志</li>
+<li>缺陷报告</li>
+<li>测试度量<ul>
+<li>缺陷数据</li>
+<li>测试覆盖率<ul>
+<li>需求覆盖率</li>
+<li>模块覆盖率</li>
+<li>代码覆盖率</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>缺陷度量</p>
+<ul>
+<li>根据引入缺陷的阶段<ul>
+<li>系统需求缺陷、设计缺陷和编码缺陷</li>
+</ul>
+</li>
+<li>根据缺陷的影响力<ul>
+<li>严重、一般和无影响</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>覆盖率</p>
+<ul>
+<li>需求覆盖率=被测试的需求数量/需求<br>总数;</li>
+<li>模块覆盖率=被测试的模块数量/模块<br>总数;</li>
+<li>代码覆盖率=被测试的代码行/代码行<br>数总数。</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Software-Testing/" rel="tag"># Software Testing</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/06/17/Software%20Construction/" rel="prev" title="Software Construction">
+      <i class="fa fa-chevron-left"></i> Software Construction
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/06/17/Code%20Design/" rel="next" title="Code Design">
+      Code Design <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="nav-text">软件测试的目的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A1%A9%E7%A8%8B%E5%BA%8F%E5%92%8C%E9%A9%B1%E5%8A%A8%E7%A8%8B%E5%BA%8F"><span class="nav-text">桩程序和驱动程序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95"><span class="nav-text">单元测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95"><span class="nav-text">集成测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95"><span class="nav-text">系统测试</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%8A%80%E6%9C%AF"><span class="nav-text">测试技术</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-text">测试用例的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E6%B5%8B%E8%AF%95"><span class="nav-text">随机测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="nav-text">黑盒测试方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BD%E7%9B%92%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="nav-text">白盒测试方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%AE%9A%E6%B5%8B%E8%AF%95%E6%8A%80%E6%9C%AF"><span class="nav-text">特定测试技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%B5%8B%E8%AF%95%E6%8A%80%E6%9C%AF"><span class="nav-text">面向对象测试技术</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%B4%BB%E5%8A%A8"><span class="nav-text">测试活动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%AE%A1%E5%88%92"><span class="nav-text">测试计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%AE%BE%E8%AE%A1"><span class="nav-text">测试设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E6%89%A7%E8%A1%8C"><span class="nav-text">测试执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%AF%84%E4%BB%B7"><span class="nav-text">测试评价</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

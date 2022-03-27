@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline:  Variable String Array Quoting Mechanism Control Flow I&#x2F;O redirection Function …..  ref:  shell tutorial">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell Script">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/17/Shell-Script/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Variable String Array Quoting Mechanism Control Flow I&#x2F;O redirection Function …..  ref:  shell tutorial">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-03-17T17:06:52.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/03/17/Shell-Script/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Shell Script | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/17/Shell-Script/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Shell Script
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-17 17:06:52" itemprop="dateCreated datePublished" datetime="2022-03-17T17:06:52Z">2022-03-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<ul>
+<li>Variable</li>
+<li>String</li>
+<li>Array</li>
+<li>Quoting Mechanism</li>
+<li>Control Flow</li>
+<li>I/O redirection</li>
+<li>Function</li>
+<li>…..</li>
+</ul>
+<p>ref:  <a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/unix/unix-shell-functions.htm">shell tutorial</a></p>
+ <span id="more"></span>
+<h1 id="Shell-Script"><a href="#Shell-Script" class="headerlink" title="Shell Script"></a>Shell Script</h1><h2 id="Variable"><a href="#Variable" class="headerlink" title="Variable"></a>Variable</h2><ul>
+<li>assign variables in bash:  <code>foo=bar</code> <ul>
+<li>Note that <code>foo = bar</code> will not work since it is interpreted as calling the <code>foo</code> program with arguments <code>=</code> and <code>bar</code>. In general, in shell scripts the space character will perform argument splitting</li>
+</ul>
+</li>
+<li>access the value of the variable:  <code>$foo</code><ul>
+<li>等价于 <code>$&#123;foo&#125;</code>， 花括号可以精确地界定变量名称的范围。</li>
+</ul>
+</li>
+</ul>
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><ul>
+<li><p>Strings in bash can be defined with <code>&#39;</code> and <code>&quot;</code> delimiters, but they are not equivalent. </p>
+</li>
+<li><p>Strings delimited with <code>&#39;</code> are <strong>literal string</strong>s and will not substitute variable values whereas <code>&quot;</code> delimited strings will.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">foo=bar</span><br><span class="line">echo &quot;$foo&quot;</span><br><span class="line"><span class="meta"># </span><span class="language-bash">prints bar</span></span><br><span class="line">echo &#x27;$foo&#x27;</span><br><span class="line"><span class="meta"># </span><span class="language-bash">prints <span class="variable">$foo</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><ul>
+<li><p>array initialization −</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array_name=(value1 ... valuen)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>assign</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array_name[index]=value</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>access Array Values</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="language-bash">&#123;array_name[index]&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Quoting-Mechanism"><a href="#Quoting-Mechanism" class="headerlink" title="Quoting Mechanism"></a>Quoting Mechanism</h2><h3 id="metacharacters"><a href="#metacharacters" class="headerlink" title="metacharacters"></a>metacharacters</h3><p>Unix Shell provides various metacharacters which have special meaning while using them in any Shell Script and causes termination of a word unless quoted.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* ? [ ] &#x27; &quot; \ $ ; &amp; ( ) | ^ &lt; &gt; new-line space tab</span><br></pre></td></tr></table></figure>
+<h3 id="quoting"><a href="#quoting" class="headerlink" title="quoting"></a>quoting</h3><p>The following table lists the four forms of quoting −</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Sr.No.</th>
+<th style="text-align:center">Quoting &amp; Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><strong>Single quote</strong><br/>All special characters between these quotes lose their special meaning.</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center"><strong>Double quote</strong><br/>Most special characters between these quotes lose their special meaning with these exceptions −$`$\’\”\</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center"><strong>Backslash</strong><br/>Any character immediately following the backslash loses its special meaning.</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center"><strong>Back quote</strong> (aka <strong>backtick</strong>)<br>Everything you type between backticks is evaluated (executed) by the shell before the main command, and the <em>output</em> of that execution is used by that command,</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>The Single Quotes: 其内容不转义, 相当于在每个字符前加 backslash</p>
+</li>
+<li><p>The Double Quotes： 其内容转义 </p>
+</li>
+<li><p>The Backslash: 取消其后面的一个字符的转义</p>
+</li>
+<li><p>The Backquotes：将其内容视作 command 并执行， 与后文的CMD substitution类似</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var=`command`</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">DATE=`date`</span><br><span class="line"></span><br><span class="line">echo $DATE</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">等价于后文的CMD substitution</span></span><br><span class="line">echo $(DATE)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Control-Flow"><a href="#Control-Flow" class="headerlink" title="Control Flow"></a>Control Flow</h2><ul>
+<li>As with most programming languages, bash supports control flow techniques including <code>if</code>, <code>case</code>, <code>while</code> and <code>for</code>. </li>
+</ul>
+<h3 id="if-else"><a href="#if-else" class="headerlink" title="if else"></a>if else</h3><p>syntax:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if [ expression ] </span><br><span class="line">then </span><br><span class="line">   Statement(s) to be executed if expression is true </span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">if [ expression 1 ]</span><br><span class="line">then</span><br><span class="line">   Statement(s) to be executed if expression 1 is true</span><br><span class="line">elif [ expression 2 ]</span><br><span class="line">then</span><br><span class="line">   Statement(s) to be executed if expression 2 is true</span><br><span class="line">elif [ expression 3 ]</span><br><span class="line">then</span><br><span class="line">   Statement(s) to be executed if expression 3 is true</span><br><span class="line">else</span><br><span class="line">   Statement(s) to be executed if no expression is true</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><p>syntax：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for var in word1 word2 ... wordN</span><br><span class="line">do</span><br><span class="line">   Statement(s) to be executed for every word.</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>example:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for FILE in $HOME/.bash*</span><br><span class="line">do</span><br><span class="line">   echo $FILE</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h3 id="switch-case"><a href="#switch-case" class="headerlink" title="switch case"></a>switch case</h3><p>syntax:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">case word in</span><br><span class="line">   pattern1)</span><br><span class="line">      Statement(s) to be executed if pattern1 matches</span><br><span class="line">      ;;</span><br><span class="line">   pattern2)</span><br><span class="line">      Statement(s) to be executed if pattern2 matches</span><br><span class="line">      ;;</span><br><span class="line">   pattern3)</span><br><span class="line">      Statement(s) to be executed if pattern3 matches</span><br><span class="line">      ;;</span><br><span class="line">   *)</span><br><span class="line">     Default condition to be executed</span><br><span class="line">     ;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+<p>​    </p>
+<p>example:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line"></span><br><span class="line">option=&quot;$&#123;1&#125;&quot; </span><br><span class="line">case $&#123;option&#125; in </span><br><span class="line">   -f) FILE=&quot;$&#123;2&#125;&quot; </span><br><span class="line">      echo &quot;File name is $FILE&quot;</span><br><span class="line">      ;; </span><br><span class="line">   -d) DIR=&quot;$&#123;2&#125;&quot; </span><br><span class="line">      echo &quot;Dir name is $DIR&quot;</span><br><span class="line">      ;; </span><br><span class="line">   *)  </span><br><span class="line">      echo &quot;`basename $&#123;0&#125;`:usage: [-f file] | [-d directory]&quot; </span><br><span class="line">      exit 1 # Command to come out of the program with status 1</span><br><span class="line">      ;; </span><br><span class="line">esac </span><br></pre></td></tr></table></figure>
+<h3 id="select-in-amp-amp-case-in"><a href="#select-in-amp-amp-case-in" class="headerlink" title="select in &amp;&amp; case in"></a>select in &amp;&amp; case in</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select variable in value_list</span><br><span class="line">do</span><br><span class="line">  statements</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<ul>
+<li>variable: 表示变量</li>
+<li>value_list:  取值列表</li>
+<li>in:  Shell关键字</li>
+</ul>
+<p>select in 通常和 <a target="_blank" rel="noopener" href="http://c.biancheng.net/view/2767.html">case in</a> 一起使用，在用户输入不同的编号时可以做出不同的反应。</p>
+<p>修改上面的代码，加入 case in 语句：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line">clear</span><br><span class="line">select item in Continue Finish</span><br><span class="line">do</span><br><span class="line">case “$item” in</span><br><span class="line">	Continue) ;;</span><br><span class="line">	Finish) break ;;</span><br><span class="line">	*) echo “Wrong choice! Please select again!” ;;</span><br><span class="line">esac</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>用户只有输入正确的编号才会结束循环，如果输入错误，会要求重新输入。</p>
+<h2 id="I-O-redirection"><a href="#I-O-redirection" class="headerlink" title="I/O redirection"></a>I/O redirection</h2><ul>
+<li><p>Discard the output</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">command</span> &gt; /dev/null</span></span><br></pre></td></tr></table></figure>
+<p>The file <strong>/dev/null</strong> is a special file that automatically discards all its input.</p>
+</li>
+<li><p>Discard both output of a command and its error output,</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$ </span><span class="language-bash"><span class="built_in">command</span> &gt; /dev/null 2&gt;&amp;1</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>a command normally writes its output to <strong>STDOUT</strong></li>
+<li>use standard redirection to redirect <strong>STDERR</strong> to <strong>STDOUT</strong> </li>
+</ul>
+</li>
+<li><p>file descriptor:</p>
+<ul>
+<li><strong>0</strong> : STDIN</li>
+<li><strong>1</strong>: STDOUT</li>
+<li><strong>2</strong>: STDERR</li>
+</ul>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Sr.No.</th>
+<th style="text-align:center">Command &amp; Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center"><strong>pgm &gt; file</strong><br>Output of pgm is redirected to file<br>会覆盖目标文件中原有的数据</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center"><strong>pgm &lt; file</strong><br>Program pgm reads its input from file</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center"><strong>pgm &gt;&gt; file</strong><br>Output of pgm is appended to file</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center"><strong>n &gt; file</strong><br>Output from stream with descriptor <strong>n</strong> redirected to file</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center"><strong>n &gt;&gt; file</strong><br/>Output from stream with descriptor <strong>n</strong> appended to file</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center"><strong>n &gt;&amp; m</strong><br/>Merges output from stream <strong>n</strong> with stream <strong>m</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center"><strong>n &lt;&amp; m</strong><br/>Merges input from stream <strong>n</strong> with stream <strong>m</strong></td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:center"><strong>&lt;&lt; tag</strong><br/>Standard input comes from here through next tag at the start of line</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:center">**\</td>
+<td>**<br/>Takes output from one program, or process, and sends it to another</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h2><p>syntax</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function_name()&#123;</span><br><span class="line">	list of commands</span><br><span class="line">	[ return value ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>example:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mcd () &#123;</span><br><span class="line">    mkdir -p &quot;$1&quot;</span><br><span class="line">    cd &quot;$1&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="parameter"><a href="#parameter" class="headerlink" title="parameter"></a>parameter</h3><ul>
+<li><code>$0</code> - Name of the script</li>
+<li><code>$1</code> to <code>$9</code> - Arguments to the script. <code>$1</code> is the first argument and so on.<ul>
+<li>当<code>n&gt;=10</code>时，需要使用$<code>&#123;n&#125;</code>来获取参数</li>
+</ul>
+</li>
+<li><code>$@</code> - All the arguments</li>
+<li><code>$#</code> - Number of arguments</li>
+<li><code>$?</code> - Return code of the previous command</li>
+<li>$$$$ - Process identification number (PID) for the current script</li>
+<li><code>!!</code> - <strong>Entire last command</strong>, including arguments. A common pattern is to execute a command only for it to fail due to missing permissions; you can quickly re-execute the command with sudo by doing <code>sudo !!</code></li>
+<li><code>$_</code> - Last argument from the last command. If you are in an interactive shell, you can also quickly get this value by typing <code>Esc</code> followed by <code>.</code> or <code>Alt+.</code></li>
+</ul>
+<h3 id="return-code"><a href="#return-code" class="headerlink" title="return code"></a>return code</h3><ul>
+<li><code>exit</code>: 不仅会退出函数，还会退出执行该函数的shell</li>
+<li><code>return code</code>:仅仅退出函数。和command的return code同</li>
+</ul>
+<h3 id="Function-Call-from-Prompt"><a href="#Function-Call-from-Prompt" class="headerlink" title="Function Call from Prompt"></a>Function Call from Prompt</h3><ul>
+<li><p>令shell加载函数定义：</p>
+<ul>
+<li>可以将函数定义在主目录下的<code>.profile</code>，这样每次登陆后，在命令提示符后面输入函数名字就可以立即调用</li>
+<li>将函数定义写在一个文件( say <code>test.sh</code> ), 然后执行它</li>
+</ul>
+</li>
+<li><p>令shell删除函数定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unset -f function_name</span><br></pre></td></tr></table></figure>
+<ul>
+<li>该命令也可用来令shell删除变量定义</li>
+</ul>
+</li>
+</ul>
+<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><ul>
+<li>Commands will often return output using <code>STDOUT</code>, errors through <code>STDERR</code></li>
+</ul>
+<h2 id="return-code-1"><a href="#return-code-1" class="headerlink" title="return code"></a>return code</h2><ul>
+<li>Commands have <strong>Return Code</strong> to report errors in a more script-friendly manner. <ul>
+<li><strong>0 usually means everything went OK</strong>; anything different from 0 means an error occurred.</li>
+<li><code>return code</code>， 你可以指定返回任何值</li>
+</ul>
+</li>
+</ul>
+<h2 id="return-code-as-bool-value"><a href="#return-code-as-bool-value" class="headerlink" title="return code as bool value"></a>return code as bool value</h2><ul>
+<li><p>Return codes can be used to conditionally execute commands using <code>&amp;&amp;</code> (and operator) and <code>||</code> (or operator) . </p>
+</li>
+<li><p>Commands can also be separated within the same line using a semicolon <code>;</code>. </p>
+</li>
+<li><p>The <code>true</code> program will always have a <strong>0</strong> return code and the <code>false</code> command will always have a 1 return code. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">false || echo &quot;Oops, fail&quot;</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Oops, fail</span></span><br><span class="line"></span><br><span class="line">true || echo &quot;Will not be printed&quot;</span><br><span class="line"><span class="meta">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"></span></span><br><span class="line">true &amp;&amp; echo &quot;Things went well&quot;</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Things went well</span></span><br><span class="line"></span><br><span class="line">false &amp;&amp; echo &quot;Will not be printed&quot;</span><br><span class="line"><span class="meta">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"></span></span><br><span class="line">true ; echo &quot;This will always run&quot;</span><br><span class="line"><span class="meta"># </span><span class="language-bash">This will always run</span></span><br><span class="line"></span><br><span class="line">false ; echo &quot;This will always run&quot;</span><br><span class="line"><span class="meta"># </span><span class="language-bash">This will always run</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="CMD-substitution"><a href="#CMD-substitution" class="headerlink" title="CMD substitution"></a>CMD substitution</h2><ul>
+<li><p>命令替换: <code>$(CMD)</code>执行命令，并将其输出作为一个变量 </p>
+<ul>
+<li>For example, if you do <code>for file in $(ls)</code>, the shell will first call <code>ls</code> and then iterate over those values. </li>
+</ul>
+</li>
+</ul>
+<h2 id="variable-substitution"><a href="#variable-substitution" class="headerlink" title="variable substitution"></a>variable substitution</h2><p>变量替换可以根据变量的状态（是否为空、是否定义等）来改变它的值</p>
+<p>可以使用的变量替换形式：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>形式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>${var}</td>
+<td>变量本来的值</td>
+</tr>
+<tr>
+<td>${var:-word}</td>
+<td>如果变量 var 为空或已被删除(unset)，那么返回 word，但不改变 var 的值。</td>
+</tr>
+<tr>
+<td>${var:=word}</td>
+<td>如果变量 var 为空或已被删除(unset)，那么返回 word，并将 var 的值设置为 word。</td>
+</tr>
+<tr>
+<td>${var:?message}</td>
+<td>如果变量 var 为空或已被删除(unset)，那么将消息 message 送到标准错误输出，可以用来检测变量 var 是否可以被正常赋值。 若此替换出现在Shell脚本中，那么脚本将停止运行。</td>
+</tr>
+<tr>
+<td>${var:+word}</td>
+<td>如果变量 var 被定义，那么返回 word，但不改变 var 的值。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line"></span><br><span class="line">echo $&#123;var:-&quot;Variable is not set&quot;&#125;</span><br><span class="line">echo &quot;1 - Value of var is $&#123;var&#125;&quot;</span><br><span class="line"></span><br><span class="line">echo $&#123;var:=&quot;Variable is not set&quot;&#125;</span><br><span class="line">echo &quot;2 - Value of var is $&#123;var&#125;&quot;</span><br><span class="line"></span><br><span class="line">unset var</span><br><span class="line">echo $&#123;var:+&quot;This is default value&quot;&#125;</span><br><span class="line">echo &quot;3 - Value of var is $var&quot;</span><br><span class="line"></span><br><span class="line">var=&quot;Prefix&quot;</span><br><span class="line">echo $&#123;var:+&quot;This is default value&quot;&#125;</span><br><span class="line">echo &quot;4 - Value of var is $var&quot;</span><br><span class="line"></span><br><span class="line">echo $&#123;var:?&quot;Print this message&quot;&#125;</span><br><span class="line">echo &quot;5 - Value of var is $&#123;var&#125;&quot;</span><br></pre></td></tr></table></figure>
+<p>result:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Variable is not set</span><br><span class="line">1 - Value of var is</span><br><span class="line">Variable is not set</span><br><span class="line">2 - Value of var is Variable is not set</span><br><span class="line"></span><br><span class="line">3 - Value of var is</span><br><span class="line">This is default value</span><br><span class="line">4 - Value of var is Prefix</span><br><span class="line">Prefix</span><br><span class="line">5 - Value of var is Prefix</span><br></pre></td></tr></table></figure>
+<h2 id="process-substitution"><a href="#process-substitution" class="headerlink" title="process substitution"></a>process substitution</h2><ul>
+<li><p><code>&lt;( CMD )</code> ： 执行 <code>CMD</code> 并将其输出重定向到一个临时文件， 用这个临时文件的名字替换 <code>&lt;()</code></p>
+<ul>
+<li><p>This is useful when commands expect values to be passed by file instead of by STDIN. </p>
+</li>
+<li><p>For example, <code>diff &lt;(ls foo) &lt;(ls bar)</code> will show differences between files in dirs <code>foo</code> and <code>bar</code>.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="operator"><a href="#operator" class="headerlink" title="operator"></a>operator</h2><p>Bourne shell didn’t originally have any mechanism to perform simple arithmetic operations but it uses external programs, either <strong>awk</strong> or <strong>expr</strong>.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line"></span><br><span class="line">val=`expr 2 + 2`</span><br><span class="line">echo &quot;Total value : $val&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>There must be spaces between operators and expressions. <ul>
+<li><code>2+2</code> ： wrong</li>
+<li><code>2 + 2</code> ： right</li>
+</ul>
+</li>
+<li>all the conditional expressions should be inside square braces with spaces around them<ul>
+<li><code>[$a==$b]</code> or <code>[$a &lt;= $b]</code>: wrong</li>
+<li><code>[ $a == $b ]</code> or <code>[ $a &lt;= $b ]</code>: right</li>
+</ul>
+</li>
+<li>When performing <strong>comparison</strong>s in bash, try to use double brackets <code>[[ ]]</code> in favor of simple brackets <code>[ ]</code></li>
+<li>因为表达式要先执行，因此它必须被包裹在backquote内</li>
+</ul>
+<h3 id="Arithmetic-Operators"><a href="#Arithmetic-Operators" class="headerlink" title="Arithmetic Operators"></a>Arithmetic Operators</h3><p>Assume variable <strong>a</strong> holds 10 and variable <strong>b</strong> holds 20 then −</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Operator</th>
+<th style="text-align:center">Description</th>
+<th style="text-align:center">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">+ (Addition)</td>
+<td style="text-align:center">Adds values on either side of the operator</td>
+<td style="text-align:center"><code>expr $a + $b</code> will give 30</td>
+</tr>
+<tr>
+<td style="text-align:center">- (Subtraction)</td>
+<td style="text-align:center">Subtracts right hand operand from left hand operand</td>
+<td style="text-align:center"><code>expr $a - $b</code> will give -10</td>
+</tr>
+<tr>
+<td style="text-align:center">* (Multiplication)</td>
+<td style="text-align:center">Multiplies values on either side of the operator</td>
+<td style="text-align:center"><code>expr $a \* $b</code> will give 200</td>
+</tr>
+<tr>
+<td style="text-align:center">/ (Division)</td>
+<td style="text-align:center">Divides left hand operand by right hand operand</td>
+<td style="text-align:center"><code>expr $b / $a</code> will give 2</td>
+</tr>
+<tr>
+<td style="text-align:center">% (Modulus)</td>
+<td style="text-align:center">Divides left hand operand by right hand operand and returns remainder</td>
+<td style="text-align:center"><code>expr $b % $a</code> will give 0</td>
+</tr>
+<tr>
+<td style="text-align:center">= (Assignment)</td>
+<td style="text-align:center">Assigns right operand in left operand</td>
+<td style="text-align:center">a = $b would assign value of b into a</td>
+</tr>
+<tr>
+<td style="text-align:center">== (Equality)</td>
+<td style="text-align:center">Compares two numbers, if both are same then returns true.</td>
+<td style="text-align:center">[ $a == $b ] would return false.</td>
+</tr>
+<tr>
+<td style="text-align:center">!= (Not Equality)</td>
+<td style="text-align:center">Compares two numbers, if both are different then returns true.</td>
+<td style="text-align:center">[ $a != $b ] would return true.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>All the arithmetical calculations are done using long <strong>integers</strong>.</li>
+</ul>
+<h3 id="Relational-Operators"><a href="#Relational-Operators" class="headerlink" title="Relational Operators"></a>Relational Operators</h3><p>These operators do not work for <strong>string</strong> values <strong>unless their value is numeric</strong>.</p>
+<ul>
+<li>For example, following operators will work to check a relation between 10 and 20 as well as in between “10” and “20” but not in between “ten” and “twenty”.</li>
+</ul>
+<p>Assume variable <strong>a</strong> holds 10 and variable <strong>b</strong> holds 20 then −</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Operator</th>
+<th style="text-align:center">Description</th>
+<th style="text-align:center">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>-eq</strong></td>
+<td style="text-align:center">Checks if the value of two operands are equal or not; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ $a -eq $b ] is not true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-ne</strong></td>
+<td style="text-align:center">Checks if the value of two operands are equal or not; if values are not equal, then the condition becomes true.</td>
+<td style="text-align:center">[ $a -ne $b ] is true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-gt</strong></td>
+<td style="text-align:center">Checks if the value of left operand is greater than the value of right operand; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ $a -gt $b ] is not true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-lt</strong></td>
+<td style="text-align:center">Checks if the value of left operand is less than the value of right operand; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ $a -lt $b ] is true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-ge</strong></td>
+<td style="text-align:center">Checks if the value of left operand is greater than or equal to the value of right operand; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ $a -ge $b ] is not true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-le</strong></td>
+<td style="text-align:center">Checks if the value of left operand is less than or equal to the value of right operand; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ $a -le $b ] is true.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Boolean-Operators"><a href="#Boolean-Operators" class="headerlink" title="Boolean Operators"></a>Boolean Operators</h3><p>The following Boolean operators are supported by the Bourne Shell.</p>
+<p>Assume variable <strong>a</strong> holds 10 and variable <strong>b</strong> holds 20 then −</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Operator</th>
+<th style="text-align:center">Description</th>
+<th style="text-align:center">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>!</strong></td>
+<td style="text-align:center">This is logical negation. This inverts a true condition into false and vice versa.</td>
+<td style="text-align:center">[ ! false ] is true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-o</strong></td>
+<td style="text-align:center">This is logical <strong>OR</strong>. If one of the operands is true, then the condition becomes true.</td>
+<td style="text-align:center">[ $a -lt 20 -o $b -gt 100 ] is true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-a</strong></td>
+<td style="text-align:center">This is logical <strong>AND</strong>. If both the operands are true, then the condition becomes true otherwise false.</td>
+<td style="text-align:center">[ $a -lt 20 -a $b -gt 100 ] is false.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="String-Operators"><a href="#String-Operators" class="headerlink" title="String Operators"></a>String Operators</h3><p>The following string operators are supported by Bourne Shell.</p>
+<p>Assume variable <strong>a</strong> holds “abc” and variable <strong>b</strong> holds “efg” then −</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Operator</th>
+<th style="text-align:center">Description</th>
+<th style="text-align:center">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>=</strong></td>
+<td style="text-align:center">Checks if the value of two operands are equal or not; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ $a = $b ] is not true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>!=</strong></td>
+<td style="text-align:center">Checks if the value of two operands are equal or not; if values are not equal then the condition becomes true.</td>
+<td style="text-align:center">[ $a != $b ] is true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-z</strong></td>
+<td style="text-align:center">Checks if the given string operand size is zero; if it is zero length, then it returns true.</td>
+<td style="text-align:center">[ -z $a ] is not true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-n</strong></td>
+<td style="text-align:center">Checks if the given string operand size is non-zero; if it is nonzero length, then it returns true.</td>
+<td style="text-align:center">[ -n $a ] is not false.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>str</strong></td>
+<td style="text-align:center">Checks if <strong>str</strong> is not the empty string; if it is empty, then it returns false.</td>
+<td style="text-align:center">[ $a ] is not false.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="File-Test-Operators"><a href="#File-Test-Operators" class="headerlink" title="File Test Operators"></a>File Test Operators</h3><p>We have a few operators that can be used to test various properties associated with a Unix file.</p>
+<p>Assume a variable <strong>file</strong> holds an existing file name “test” the size of which is 100 bytes and has <strong>read</strong>, <strong>write</strong> and <strong>execute</strong> permission on −</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Operator</th>
+<th style="text-align:center">Description</th>
+<th style="text-align:center">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>-b file</strong></td>
+<td style="text-align:center">Checks if file is a block special file; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -b $file ] is false.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-c file</strong></td>
+<td style="text-align:center">Checks if file is a character special file; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -c $file ] is false.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-d file</strong></td>
+<td style="text-align:center">Checks if file is a directory; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -d $file ] is not true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-f file</strong></td>
+<td style="text-align:center">Checks if file is an ordinary file as opposed to a directory or special file; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -f $file ] is true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-g file</strong></td>
+<td style="text-align:center">Checks if file has its set group ID (SGID) bit set; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -g $file ] is false.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-k file</strong></td>
+<td style="text-align:center">Checks if file has its sticky bit set; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -k $file ] is false.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-p file</strong></td>
+<td style="text-align:center">Checks if file is a named pipe; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -p $file ] is false.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-t file</strong></td>
+<td style="text-align:center">Checks if file descriptor is open and associated with a terminal; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -t $file ] is false.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-u file</strong></td>
+<td style="text-align:center">Checks if file has its Set User ID (SUID) bit set; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -u $file ] is false.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-r file</strong></td>
+<td style="text-align:center">Checks if file is readable; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -r $file ] is true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-w file</strong></td>
+<td style="text-align:center">Checks if file is writable; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -w $file ] is true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-x file</strong></td>
+<td style="text-align:center">Checks if file is executable; if yes, then the condition becomes true.</td>
+<td style="text-align:center">[ -x $file ] is true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-s file</strong></td>
+<td style="text-align:center">Checks if file has size greater than 0; if yes, then condition becomes true.</td>
+<td style="text-align:center">[ -s $file ] is true.</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>-e file</strong></td>
+<td style="text-align:center">Checks if file exists; is true even if file is a directory but exists.</td>
+<td style="text-align:center">[ -e $file ] is true.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="test"><a href="#test" class="headerlink" title="test"></a>test</h2><ul>
+<li><code>[</code> (aka <code>test</code>) command the and <code>[[ ... ]]</code> test construct are used to evaluate expressions</li>
+<li><p><code>[</code>是一条命令， 与<code>test</code>等价，大多数shell都支持。在现代的大多数sh实现中，<code>[</code>与<code>test</code>是builtin命令</p>
+<ul>
+<li><code>[]</code>将其operand直接当作argument</li>
+</ul>
+</li>
+<li><p><code>[[</code>，是关键字，许多shell(如ash bsh)并不支持这种方式</p>
+<ul>
+<li><code>[[]]</code>将其operand进行参数引用，算术扩展和CMD substitution， 不需要手动转义等</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;Starting program at $(date)&quot; # Date will be substituted</span><br><span class="line"></span><br><span class="line">echo &quot;Running program $0 with $# arguments with pid $$&quot;</span><br><span class="line"></span><br><span class="line">for file in &quot;$@&quot;; do</span><br><span class="line">    grep foobar &quot;$file&quot; &gt; /dev/null 2&gt; /dev/null</span><br><span class="line">    # When pattern is not found, grep has exit status 1</span><br><span class="line">    # We redirect STDOUT and STDERR to a null register since we do not care about them</span><br><span class="line">    if [[ $? -ne 0 ]]; then</span><br><span class="line">        echo &quot;File $file does not have any foobar, adding one&quot;</span><br><span class="line">        echo &quot;# foobar&quot; &gt;&gt; &quot;$file&quot;</span><br><span class="line">    fi</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h2 id="shell-globbing"><a href="#shell-globbing" class="headerlink" title="shell globbing"></a>shell globbing</h2><ul>
+<li><p>一些正则操作，用于文件名扩展</p>
+<ul>
+<li><p>Wildcards: </p>
+<ul>
+<li><code>?</code>: match <strong>one</strong> character</li>
+<li><p><code>*</code>:  match <strong>any</strong> amount of characters  </p>
+</li>
+<li><p>For instance, given files <code>foo</code>, <code>foo1</code>, <code>foo2</code>, <code>foo10</code> and <code>bar</code>, the command <code>rm foo?</code> will delete <code>foo1</code> and <code>foo2</code> whereas <code>rm foo*</code> will delete all but <code>bar</code>.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Curly braces <code>&#123;&#125;</code> -  相当于笛卡尔积：  <code>a.&#123;py,cpp,java&#125;</code>等价于 <code>a.py a.cpp a.java</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">convert image.&#123;png,jpg&#125;</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Will <span class="built_in">expand</span> to</span></span><br><span class="line">convert image.png image.jpg</span><br><span class="line"></span><br><span class="line">cp /path/to/project/&#123;foo,bar,baz&#125;.sh /newpath</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Will <span class="built_in">expand</span> to</span></span><br><span class="line">cp /path/to/project/foo.sh /path/to/project/bar.sh /path/to/project/baz.sh /newpath</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">Globbing techniques can also be combined</span></span><br><span class="line">mv *&#123;.py,.sh&#125; folder</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Will move all *.py and *.sh files</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mkdir foo bar</span><br><span class="line"><span class="meta"># </span><span class="language-bash">This creates files foo/a, foo/b, ... foo/h, bar/a, bar/b, ... bar/h</span></span><br><span class="line">touch &#123;foo,bar&#125;/&#123;a..h&#125;</span><br><span class="line">touch foo/x bar/y</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Show differences between files <span class="keyword">in</span> foo and bar</span></span><br><span class="line">diff &lt;(ls foo) &lt;(ls bar)</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Outputs</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">&lt; x</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">---</span></span><br><span class="line"><span class="meta"># </span><span class="language-bash">&gt; y</span></span><br></pre></td></tr></table></figure>
+<h2 id="env-virable"><a href="#env-virable" class="headerlink" title="env virable"></a>env virable</h2><p><code>$PATH</code> 是由多个路径所组成的，并且用冒号进行了分隔</p>
+<p>使用 export 设置的变量就成为了环境变量，而没有使用 export 设置的则是自定义变量</p>
+<p>环境变量可以在其进程的子进程中继续有效，而自定义变量则无效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="language-bash">我们在当前Shell进程中指定了var1变量</span></span><br><span class="line">[roc@roclinux ~]$ var1=&quot;hello&quot;</span><br><span class="line">[roc@roclinux ~]$ echo $var1</span><br><span class="line">hello</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">我们在当前Shell进程中又指定了var2变量</span></span><br><span class="line">[roc@roclinux ~]$ var2=&quot;world&quot;</span><br><span class="line">[roc@roclinux ~]$ echo $var2</span><br><span class="line">world</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">我们通过<span class="built_in">export</span>发布var1</span></span><br><span class="line">[roc@roclinux ~]$ export var1</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">我们进入到一个bash子进程中</span></span><br><span class="line">[roc@roclinux ~]$ bash</span><br><span class="line"><span class="meta"> </span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">var1变量仍然有效, 而var2变量已经无效了</span></span><br><span class="line">[roc@roclinux ~]$ echo $var1 # 输出变量的值</span><br><span class="line">hello</span><br><span class="line">[roc@roclinux ~]$ echo $var2  # 什么也没有输出</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export PATH=$PATH:/home/to/operation_tools</span><br></pre></td></tr></table></figure>
+<ul>
+<li>声明环境变量PATH, 值为之前的<code>PATH</code>的值（采用<code>$</code>进行赋值）， 再append <code>:/home/to/operation_tools</code>， 这里要append冒号，因为环境变量之间通过冒号隔开</li>
+</ul>
+<h2 id="scripts"><a href="#scripts" class="headerlink" title="scripts"></a>scripts</h2><h3 id="shebang"><a href="#shebang" class="headerlink" title="shebang"></a>shebang</h3><p>Note that scripts need not necessarily be written in bash to be called from the terminal. For instance, here’s a simple Python script that outputs its arguments in reversed order:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="language-bash">!/usr/local/bin/python</span></span><br><span class="line">import sys</span><br><span class="line">for arg in reversed(sys.argv[1:]):</span><br><span class="line">    print(arg)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>shebang: the character sequence consisting of <code>#!</code> at the beginning of a script in   a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unix-like">Unix-like</a> operating system</p>
+<ul>
+<li>shell会将shebang中<code>#!</code>之后的内容作为一个程序的路径，打开该程序， 将本script的路径当作参数传入（ 即，将整个script当作input传入shebang所指定的程序 ）</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>For example, if a script is named with the path <em>path/to/script</em>, and it starts with the following line, <code>#!/bin/sh</code>, then the program loader is instructed to run the program <em>/bin/sh</em>, passing <em>path/to/script</em> as the first argument. In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linux">Linux</a>, this behavior is the result of both kernel and user-space code.<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shebang_(Unix">[9]</a>#cite_note-9)</p>
+</li>
+<li><p>The shebang line is usually ignored by the interpreter, because the “#” character is a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Comment_(computer_programming">comment</a>) marker in many scripting languages; some language interpreters that do not use the hash mark to begin comments still may ignore the shebang line in recognition of its purpose.</p>
+</li>
+</ul>
+<h3 id="shebang-with-env"><a href="#shebang-with-env" class="headerlink" title="shebang with env"></a>shebang with env</h3><p>The shebang expects a full path to the interpreter to use so the following syntax would be incorrect:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!python</span></span><br></pre></td></tr></table></figure>
+<p>Setting a full path like this might work:</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python</span></span><br></pre></td></tr></table></figure>
+<p>but would be non portable as python might be installed in <code>/bin</code>, <code>/opt/python/bin</code>, or wherever other location.</p>
+<p>Using <code>env</code></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br></pre></td></tr></table></figure>
+<p>is a method allowing a portable way to specify to the OS a full path equivalent to the one where <code>python</code> is first located in the <code>PATH</code>.</p>
+<h3 id="scripts-vs-shell-functions"><a href="#scripts-vs-shell-functions" class="headerlink" title="scripts vs shell functions"></a>scripts vs shell functions</h3><p>Some differences between shell functions and scripts that you should keep in mind are:</p>
+<ul>
+<li>Functions have to be in the same language as the shell, while scripts can be written in any language. This is why including a shebang for scripts is important.</li>
+<li>Functions are loaded once when their definition is read. Scripts are loaded every time they are executed. This makes functions slightly faster to load, but whenever you change them you will have to reload their definition.</li>
+<li>Functions are executed <strong>in the current shell environment</strong>( 可以简单理解为， function的所在路径是当前路径 ) whereas scripts execute in their own process. Thus, functions can modify environment variables, e.g. change your current directory, whereas scripts can’t. Scripts will be passed by value environment variables that have been exported using <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/export.1p.html"><code>export</code></a></li>
+<li>As with any programming language, functions are a powerful construct to achieve modularity, code reuse, and clarity of shell code. Often shell scripts will include their own function definitions.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/23/Java-Class/" rel="prev" title="Java Class">
+      <i class="fa fa-chevron-left"></i> Java Class
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/18/Dockerizing/" rel="next" title="Dockerizing">
+      Dockerizing <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-Script"><span class="nav-text">Shell Script</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Variable"><span class="nav-text">Variable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String"><span class="nav-text">String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array"><span class="nav-text">Array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quoting-Mechanism"><span class="nav-text">Quoting Mechanism</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#metacharacters"><span class="nav-text">metacharacters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quoting"><span class="nav-text">quoting</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Control-Flow"><span class="nav-text">Control Flow</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if-else"><span class="nav-text">if else</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#for"><span class="nav-text">for</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#switch-case"><span class="nav-text">switch case</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select-in-amp-amp-case-in"><span class="nav-text">select in &amp;&amp; case in</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-redirection"><span class="nav-text">I&#x2F;O redirection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function"><span class="nav-text">Function</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#parameter"><span class="nav-text">parameter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#return-code"><span class="nav-text">return code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-Call-from-Prompt"><span class="nav-text">Function Call from Prompt</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#output"><span class="nav-text">output</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#return-code-1"><span class="nav-text">return code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#return-code-as-bool-value"><span class="nav-text">return code as bool value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD-substitution"><span class="nav-text">CMD substitution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#variable-substitution"><span class="nav-text">variable substitution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#process-substitution"><span class="nav-text">process substitution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#operator"><span class="nav-text">operator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Arithmetic-Operators"><span class="nav-text">Arithmetic Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Relational-Operators"><span class="nav-text">Relational Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean-Operators"><span class="nav-text">Boolean Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String-Operators"><span class="nav-text">String Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Test-Operators"><span class="nav-text">File Test Operators</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#test"><span class="nav-text">test</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-globbing"><span class="nav-text">shell globbing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#env-virable"><span class="nav-text">env virable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scripts"><span class="nav-text">scripts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shebang"><span class="nav-text">shebang</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shebang-with-env"><span class="nav-text">shebang with env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scripts-vs-shell-functions"><span class="nav-text">scripts vs shell functions</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

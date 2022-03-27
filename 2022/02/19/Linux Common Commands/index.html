@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Linux主机的常用命令，可以用来快速进行linux服务器的配置 OS可以是各种LINUX发行版，因此你可以看到各种包管理工具（yay,apt,yum…）, 选自己用的就好">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Common Commands">
+<meta property="og:url" content="http://lyk-love.cn/2022/02/19/Linux%20Common%20Commands/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Linux主机的常用命令，可以用来快速进行linux服务器的配置 OS可以是各种LINUX发行版，因此你可以看到各种包管理工具（yay,apt,yum…）, 选自己用的就好">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-02-19T14:04:37.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/02/19/Linux%20Common%20Commands/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Linux Common Commands | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/02/19/Linux%20Common%20Commands/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Linux Common Commands
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-19 14:04:37" itemprop="dateCreated datePublished" datetime="2022-02-19T14:04:37Z">2022-02-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Linux主机的常用命令，可以用来快速进行linux服务器的配置</p>
+<p>OS可以是各种LINUX发行版，因此你可以看到各种包管理工具（yay,apt,yum…）, 选自己用的就好</p>
+<span id="more"></span>
+<h1 id="配置ssh免密登陆"><a href="#配置ssh免密登陆" class="headerlink" title="配置ssh免密登陆"></a>配置ssh免密登陆</h1><p>主机上生成 ssh key：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<p>查看<code>~/.ssh</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">❯ ls -l ~/.ssh</span><br><span class="line">total 20</span><br><span class="line">-rw-r--r-- 1 lyk lyk   27  2月 10 15:44 config</span><br><span class="line">-rw------- 1 lyk lyk 2602  2月  9 17:18 id_rsa</span><br><span class="line">-rw-r--r-- 1 lyk lyk  571  2月  9 17:18 id_rsa.pub</span><br><span class="line">-rw------- 1 lyk lyk 3926  2月 19 12:58 known_hosts</span><br><span class="line">-rw------- 1 lyk lyk 3182  2月 19 12:41 known_hosts.old</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>authorized_keys: 存放远程免密登录的公钥,主要通过这个文件记录多台机器的公钥。</p>
+</li>
+<li><p>id_rsa: 生成的私钥文件</p>
+</li>
+<li><p>id_rsa.pub: 生成的公钥文件</p>
+</li>
+<li><p>known_hosts: 已知的主机公钥清单</p>
+</li>
+</ul>
+<p>服务器上配置ssh免密登陆：</p>
+<ul>
+<li>将本地 id_rsa.pub 文件的内容拷贝至远程服务器的 ~/.ssh/authorized_keys<ul>
+<li>如果服务器没有<code>~/.ssh</code>，则需要自己创建</li>
+</ul>
+</li>
+<li>也可以<code>ssh-copy-id user@host</code></li>
+</ul>
+<h1 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h1><h2 id="创建新用户"><a href="#创建新用户" class="headerlink" title="创建新用户"></a>创建新用户</h2><p><code>sudo adduser username</code></p>
+<h2 id="赋予新用户sudo权限"><a href="#赋予新用户sudo权限" class="headerlink" title="赋予新用户sudo权限"></a>赋予新用户sudo权限</h2><p>用adduser创建后的新用户是不能使用sudo的，因为还没有赋予相关root权限，执行以下代码赋予权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -a -G adm username</span><br><span class="line">sudo usermod -a -G sudo username</span><br></pre></td></tr></table></figure>
+<p>或者将用户加到sudoers文件中:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="language-bash">添加sudo文件的写权限,命令是:</span></span><br><span class="line">chmod u+w /etc/sudoers</span><br><span class="line"><span class="meta">#</span><span class="language-bash">编辑sudoers文件</span></span><br><span class="line">vim /etc/sudoers</span><br><span class="line"><span class="meta">#</span><span class="language-bash">在 root ALL=(ALL) ALL,下面添加lyk ALL=(ALL) ALL</span> </span><br><span class="line">lyk ALL=(ALL) ALL</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">最后删除sudo文件的写权限</span></span><br><span class="line">chmod u-w /etc/sudoers</span><br></pre></td></tr></table></figure>
+<h2 id="修改用户密码"><a href="#修改用户密码" class="headerlink" title="修改用户密码"></a>修改用户密码</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd user</span><br></pre></td></tr></table></figure>
+<h2 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h2><p><code>sudo userdel username</code>: 仅仅删除用户，不删除用户的home目录文件</p>
+<ul>
+<li><code>-r</code>: 删除用户的home目录文件</li>
+</ul>
+<p>当需要删除用户时可以使用以下指令</p>
+<h2 id="查看用户组"><a href="#查看用户组" class="headerlink" title="查看用户组"></a>查看用户组</h2><p><code>cat /etc/group</code></p>
+<h1 id="磁盘挂载"><a href="#磁盘挂载" class="headerlink" title="磁盘挂载"></a>磁盘挂载</h1><p><code>fdisk</code>：查看磁盘信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fdisk -l</span><br></pre></td></tr></table></figure>
+<p>卸载分区</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="language-bash">sudo umount  [磁盘路径]</span></span><br><span class="line">sudo umount /dev/nvme0n1p11</span><br></pre></td></tr></table></figure>
+<p>将分区格式化为ext4类型</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="language-bash">（这里分区为/dev/nvme0n1p11）</span></span><br><span class="line">sudo mkfs.ext4  /dev/sdb1</span><br></pre></td></tr></table></figure>
+<h2 id="挂载分区（临时）"><a href="#挂载分区（临时）" class="headerlink" title="挂载分区（临时）"></a>挂载分区（临时）</h2><p>挂载分区（ 这里挂载到到<code>/data</code>目录下 ）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#sudo mount  /dev/sdb1  /[目录名] （目录当然是已存在的）</span><br><span class="line">sudo mount /dev/sdb1 /data</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这个挂载是临时的，重新开机就会丢失。 如果要开机自动启动挂载， 需要编辑<code>/etc/fstab</code></li>
+</ul>
+<p>查看硬盘和挂载分区等信息</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df  -h</span><br></pre></td></tr></table></figure>
+<p>这样就成功添加了一块硬盘并挂载到<code>/data</code>目录下了，</p>
+<h2 id="设置开机自动挂载"><a href="#设置开机自动挂载" class="headerlink" title="设置开机自动挂载"></a>设置开机自动挂载</h2><ol>
+<li>查询UUID</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ls -al /dev/disk/by-uuid</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">输出为：</span></span><br><span class="line">...</span><br><span class="line">... 88e7c2eb-82e6-48c2-a3d8-829c32468f1f -&gt; ../../nvme0n1p11</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>可以查到对应分区<code>nvme0n1p11</code>的uuid为<code>88e7c2eb-82e6-48c2-a3d8-829c32468f1f</code></p>
+<ol>
+<li>编辑<code>/etc/fstab</code>(用来存放文件系统的静态信息的文件)</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/fstab</span><br></pre></td></tr></table></figure>
+<p>末尾加上UUID=刚刚复制的UUID /data ext defaults 0 0</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UUID=刚刚复制的UUID /data ext4 defaults 0 0</span><br></pre></td></tr></table></figure>
+<h1 id="Shell"><a href="#Shell" class="headerlink" title="Shell"></a>Shell</h1><p>检查当前可用的shell:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/shells</span><br></pre></td></tr></table></figure>
+<p>查看当前使用的shell:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo $SHELL</span><br></pre></td></tr></table></figure>
+<h2 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h2><p>安装zsh shell</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install zsh</span><br></pre></td></tr></table></figure>
+<p>切换shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+<h2 id="ohmyzsh"><a href="#ohmyzsh" class="headerlink" title="ohmyzsh"></a>ohmyzsh</h2><ol>
+<li><p>clone mirror:</p>
+<p>github安装oh-my-zsh（很慢）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>   gitee安装oh-my-zsh: (国内用这个 )</p>
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>执行<code>install.sh</code></p>
+</li>
+<li><p>如果发现install很慢，可以修改为gitee：<br><code>vim install.sh</code><br>找到以下部分：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">Default settings</span></span><br><span class="line">ZSH=$&#123;ZSH:-~/.oh-my-zsh&#125;</span><br><span class="line">REPO=$&#123;REPO:-ohmyzsh/ohmyzsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://github.com/$&#123;REPO&#125;.git&#125;</span><br><span class="line">BRANCH=$&#123;BRANCH:-master&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>   将中间两行改为：</p>
+   <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">REPO=$&#123;REPO:-mirrors/oh-my-zsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://gitee.com/$&#123;REPO&#125;.git&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a>plugins</h2><p>把插件仓库克隆到<code>$ZSH_CUSTOM/plugins</code> (默认位置是 <code>~/.oh-my-zsh/custom/plugins</code>)</p>
+<p>clone完毕后，编辑<code>~/.zshrc</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=( [plugins...] zsh-syntax-highlighting)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>安装<code>autosuggestion</code>s：( github非常慢，改用gitee ) (这里直接用环境变量+重定向，不需要在指定目录下clone了)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://gitee.com/phpxxo/zsh-autosuggestions.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>安装<code>syntax-highlighting</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>安装<code>autojump</code>:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S autojump</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>最后<code>vim ~/.zshrc</code>：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plugins=(git zsh-syntax-highlighting zsh-autosuggestions autojump)</span><br></pre></td></tr></table></figure>
+<h2 id="theme"><a href="#theme" class="headerlink" title="theme"></a>theme</h2><p>目前用<a target="_blank" rel="noopener" href="https://github.com/romkatv/powerlevel10k/blob/master/README.md">powlevel10k</a>， 主页上给了中国大陆的下载方式, oh-my-zsh下：</p>
+<ol>
+<li><p>Clone the repository:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git $&#123;ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom&#125;/themes/powerlevel10k</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li>Set <code>ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</code> in <code>~/.zshrc</code></li>
+<li>source一下配置文件</li>
+<li>开启主题配置：<code>p10k configure</code></li>
+<li>后续可以继续用<code>p10k configure</code>重新开始配置， 或者手动更改配置文件：<code>~/.p10k.zsh</code></li>
+</ol>
+<ul>
+<li><p>默认配置不开启username@hostname 的显示，可以将这行注释掉：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">Don<span class="string">&#x27;t show context unless running with privileges or in SSH.</span></span></span><br><span class="line">typeset -g POWERLEVEL9K_CONTEXT_&#123;DEFAULT,SUDO&#125;_&#123;CONTENT,VISUAL_IDENTIFIER&#125;_EXPANSION=</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Changing-your-default-shell"><a href="#Changing-your-default-shell" class="headerlink" title="Changing your default shell"></a>Changing your default shell</h2><p>After installing one of the above shells, you can execute that shell inside of your current shell, by just running its executable. If you want to be served that shell when you login however, you will need to change your default shell.</p>
+<p>To list all installed shells, run:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -l</span><br></pre></td></tr></table></figure>
+<p>And to set one as default for your user do:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chsh -s full-path-to-shell</span><br></pre></td></tr></table></figure>
+<p>where <em>full-path-to-shell</em> is the full path as given by <code>chsh -l</code>.</p>
+<h1 id="Editor"><a href="#Editor" class="headerlink" title="Editor"></a>Editor</h1><p>其实大多数OS预装的vim都够用了，nvim就图一乐</p>
+<h2 id="nvim"><a href="#nvim" class="headerlink" title="nvim"></a>nvim</h2><ul>
+<li><p>Neovim设置全局配置文件,需要在<code>/etc/profile</code>添加：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export VIM=/usr/share/nvim</span><br><span class="line">export PATH=&quot;$PATH:$VIM/sysinit.vim&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>有可能会出现这种情况：</p>
+<blockquote>
+<p>直接使用 nvim … 打开文件时一切正常，配置也生效;<br>但当你使用 sudo nvim … 打开文件时，配置文件并没有生效</p>
+</blockquote>
+<p>出现这种情况的原因是：当你使用 sudo命令的时候，用户的身份切换了（默认是root）,此时你的环境变量也被重置了，系统当然就找不到你的配置文件。</p>
+<p>解决的方案大致有2种：</p>
+<ol>
+<li>使用 sudo -E nvim … 打开文件 （最快速的方法，不过每次都需要加上 -E, 有点麻烦）</li>
+<li>修改 sudo 的配置文件: /etc/sudoers(如果用nvim打开是空文件的话，可以试一下用vim 或者 visudo打开，后面就不细说了，超纲了)</li>
+</ol>
+</li>
+</ul>
+<h1 id="包管理工具"><a href="#包管理工具" class="headerlink" title="包管理工具"></a>包管理工具</h1><h2 id="pacman"><a href="#pacman" class="headerlink" title="pacman"></a>pacman</h2><p>同步存储库数据库，并且更新系统的所有软件包，但不包括不在软件库中的“本地安装的”包：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -Syu</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>S</code> 代表同步</li>
+<li><code>y</code> 代表更新本地存储库</li>
+<li><code>u</code> 代表系统更新</li>
+</ul>
+<h2 id="conda"><a href="#conda" class="headerlink" title="conda"></a>conda</h2><p> 推荐<code>miniconda</code>， 直接去NJU MIRROR下载：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>清华源</li>
+</ul>
+<p>然后安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash /path/to/miniconda</span><br></pre></td></tr></table></figure>
+<p>重启终端，检查安装是否成功：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda -V</span><br></pre></td></tr></table></figure>
+<h2 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h2><p>conda换源建议用nju源  （清华源早就不行了，建议别用）， <a target="_blank" rel="noopener" href="https://mirrors.nju.edu.cn/help/anaconda">具体指导</a></p>
+<ol>
+<li><p>先执行 <code>conda config --set show_channel_urls yes</code> 生成用户目录下的 <code>.condarc</code> 文件</p>
+</li>
+<li><p>编辑该文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br></pre></td></tr></table></figure>
+<p>即可添加 Anaconda Python 免费仓库。</p>
+</li>
+<li><p>运行 <code>conda clean -i</code> 清除索引缓存，保证用的是镜像站提供的索引。</p>
+</li>
+<li><p>运行 <code>conda create -n myenv numpy</code> 测试一下吧</p>
+</li>
+</ol>
+<h2 id="pip3"><a href="#pip3" class="headerlink" title="pip3"></a>pip3</h2><p>python2: pip</p>
+<p>python3: pip3</p>
+<p>在 pip 命令中使用 <strong>-i</strong> 参数来指定镜像地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install numpy -i https://mirrors.aliyun.com/pypi/simple/</span><br></pre></td></tr></table></figure>
+<p>如果需要全局修改，则需要修改配置文件:</p>
+<p>Linux/Mac os 环境中，配置文件在 ~/.pip/pip.conf（如不存在创建该目录和文件）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~/.pip</span><br></pre></td></tr></table></figure>
+<p>打开配置文件 <strong>~/.pip/pip.conf</strong>，修改如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">[install]</span><br><span class="line">trusted-host = https://mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+<p>查看镜像地址：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 config list  </span><br></pre></td></tr></table></figure>
+<h1 id="用户软件安装"><a href="#用户软件安装" class="headerlink" title="用户软件安装"></a>用户软件安装</h1><p>这部分不仅是给主机，也是给容器的，尤其是容器，可能连ping这样的基本命令都没有，需要手动安装</p>
+<p>如果OS是Ubuntu（ 云服务器或容器 ）， 需要先：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+<h2 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h2><p>参见《Docker Intro》</p>
+<ol>
+<li><pre><code class="lang-shell">sudo apt install docker
+# Ubuntu则为 sudo apt install docker.io
+</code></pre>
+</li>
+</ol>
+<ol>
+<li>最好使用非root用户来使用Docker,此时需要添加非root用户到本地Docker Unix组：<code>sudo usermod -aG docker [user_name]</code><ul>
+<li>如果当前登陆用户就是要添加进组的用户的话，需要重新登陆才能生效</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p>换源阿里云：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://zz1b9pta.mirror.aliyuncs.com&quot;] # 这个url需要去阿里云“容器镜像服务” --&gt; “镜像加速器” 生成</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="ping-amp-traceroute"><a href="#ping-amp-traceroute" class="headerlink" title="ping  &amp; traceroute"></a>ping  &amp; traceroute</h2><p>ping:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install iputils-ping</span><br></pre></td></tr></table></figure>
+<p>traceroute:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install traceroute</span><br></pre></td></tr></table></figure>
+<h1 id="Dababase"><a href="#Dababase" class="headerlink" title="Dababase"></a>Dababase</h1><h2 id="mongodb"><a href="#mongodb" class="headerlink" title="mongodb"></a>mongodb</h2><p>由于 MongoDB 修改了软件授权协议，  官方仓库已经删除了此软件包。请注意从代码编译 mongodb 需要 ~160GB 磁盘空间，需要花费几个小时时间。因此我们最好安装<code>-bin</code>版本</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S mongodb</span><br></pre></td></tr></table></figure>
+<p>注意： 只有先启动<code>mongod</code>， 才能正确启动<code>mongo</code></p>
+<h3 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h3><p>可能有报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; mongo</span><br><span class="line">connecting to: mongodb://127.0.0.1:27017</span><br><span class="line">2018-09-27T21:11:14.779+0800 W NETWORK  [main] Failed to connect to 127.0.0.1:27017, reason: Connection refused</span><br><span class="line">2018-09-27T21:11:14.780+0800 E QUERY    [main] Error: couldn&#x27;t connect to server 127.0.0.1:27017, connection attempt failed :</span><br><span class="line">connect@src/mongo/shell/mongo.js:234:13</span><br><span class="line">@(connect):1:6</span><br><span class="line">exception: connect failed</span><br></pre></td></tr></table></figure>
+<p>出现以上原因，可能是data目录下的mongod.lock文件的问题。可以使用命令修复：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">root@localhost mongodb</span>]<span class="meta"># ./bin/mongod --repair</span></span><br></pre></td></tr></table></figure>
+<p> 然后重新打开一个窗口，启动mongodb</p>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><p>配置文件路径： <code>\etc\mongodb.conf</code>. </p>
+<ul>
+<li>其中<code>dbpath</code>为数据库的路径</li>
+</ul>
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><p>启动</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ </span>systemctl start mongodb.service</span><br></pre></td></tr></table></figure>
+<p>查看状态:</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">status</span> mongodb</span><br></pre></td></tr></table></figure>
+<p>重启:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart mongodb</span><br></pre></td></tr></table></figure>
+<p>停止:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl stop mongodb</span><br></pre></td></tr></table></figure>
+<p>重载服务:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl daemon-reload</span><br></pre></td></tr></table></figure>
+<p>开机启动:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl enable mongodb</span><br></pre></td></tr></table></figure>
+<h1 id="DEV"><a href="#DEV" class="headerlink" title="DEV"></a>DEV</h1><h2 id="maven"><a href="#maven" class="headerlink" title="maven"></a>maven</h2><p>maven配置文件位置： <code>～/.m2/settings.xml</code></p>
+<p>加入阿里云仓库：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 阿里云仓库 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>&gt;</span>alimaven<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>aliyun maven<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/repositories/central/<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="设置开机自启"><a href="#设置开机自启" class="headerlink" title="设置开机自启"></a>设置开机自启</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">system</span> enable mongodb</span><br></pre></td></tr></table></figure>
+<h1 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h1><h2 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h2><p>清屏：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">clear</span><br></pre></td></tr></table></figure>
+<h2 id="切换tty"><a href="#切换tty" class="headerlink" title="切换tty"></a>切换tty</h2><ol>
+<li><p>CTRL + ALT + Fn</p>
+</li>
+<li><pre><code class="lang-shell">sudo chvt N # N: tty number, 1 represents the main tty
+</code></pre>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/18/Linux-Hardware-Basic/" rel="prev" title="Linux Hardware Basic">
+      <i class="fa fa-chevron-left"></i> Linux Hardware Basic
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/20/Computer%20Networking%20Network-Layer/" rel="next" title="Network Layer">
+      Network Layer <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86"><span class="nav-text">配置ssh免密登陆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%88%B7"><span class="nav-text">用户</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7"><span class="nav-text">创建新用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%8B%E4%BA%88%E6%96%B0%E7%94%A8%E6%88%B7sudo%E6%9D%83%E9%99%90"><span class="nav-text">赋予新用户sudo权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81"><span class="nav-text">修改用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7"><span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-text">查看用户组</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD"><span class="nav-text">磁盘挂载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E5%88%86%E5%8C%BA%EF%BC%88%E4%B8%B4%E6%97%B6%EF%BC%89"><span class="nav-text">挂载分区（临时）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD"><span class="nav-text">设置开机自动挂载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell"><span class="nav-text">Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zsh"><span class="nav-text">zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ohmyzsh"><span class="nav-text">ohmyzsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plugins"><span class="nav-text">plugins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#theme"><span class="nav-text">theme</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Changing-your-default-shell"><span class="nav-text">Changing your default shell</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Editor"><span class="nav-text">Editor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nvim"><span class="nav-text">nvim</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-text">包管理工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pacman"><span class="nav-text">pacman</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conda"><span class="nav-text">conda</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%A2%E6%BA%90"><span class="nav-text">换源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pip3"><span class="nav-text">pip3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-text">用户软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker"><span class="nav-text">docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ping-amp-traceroute"><span class="nav-text">ping  &amp; traceroute</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dababase"><span class="nav-text">Dababase</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mongodb"><span class="nav-text">mongodb</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E9%94%99"><span class="nav-text">报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="nav-text">启动服务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DEV"><span class="nav-text">DEV</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#maven"><span class="nav-text">maven</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="nav-text">设置开机自启</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#clear"><span class="nav-text">clear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E6%8D%A2tty"><span class="nav-text">切换tty</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline:  Single-source shortest paths( SSSP )  Dijkstra algorithm by example Priority queue-based implementation Proof of correctness   All-pairs shortest paths( APSP )  Shortest path and transitive">
+<meta property="og:type" content="article">
+<meta property="og:title" content="L15 Path in Graph">
+<meta property="og:url" content="http://lyk-love.cn/2021/08/11/L15-Path-in-Graph/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Single-source shortest paths( SSSP )  Dijkstra algorithm by example Priority queue-based implementation Proof of correctness   All-pairs shortest paths( APSP )  Shortest path and transitive">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-08-11T14:42:00.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Algorithm design and analysis">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2021/08/11/L15-Path-in-Graph/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>L15 Path in Graph | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/08/11/L15-Path-in-Graph/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          L15 Path in Graph
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-11 14:42:00" itemprop="dateCreated datePublished" datetime="2021-08-11T14:42:00Z">2021-08-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<ul>
+<li><p>Single-source shortest paths( SSSP )</p>
+<ul>
+<li>Dijkstra algorithm by example</li>
+<li>Priority queue-based implementation</li>
+<li>Proof of correctness</li>
+</ul>
+</li>
+<li><p>All-pairs shortest paths( APSP )</p>
+<ul>
+<li>Shortest path and transitive closure</li>
+<li>Warshall algorithm for <strong>transitive closure</strong><ul>
+<li>BF1, BF2, BF3 =&gt; Warshall algorithm</li>
+<li>Floyd algorithm for shortest paths</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+</li>
+</ul>
+<h1 id="Single-source-shortest-paths"><a href="#Single-source-shortest-paths" class="headerlink" title="Single-source shortest paths"></a>Single-source shortest paths</h1><h2 id="Dijkstra-algorithm"><a href="#Dijkstra-algorithm" class="headerlink" title="Dijkstra algorithm"></a>Dijkstra algorithm</h2><ul>
+<li>懂得都懂</li>
+<li>不能有负权边</li>
+</ul>
+<h2 id="Priority-queue-based-implementation"><a href="#Priority-queue-based-implementation" class="headerlink" title="Priority queue-based implementation"></a>Priority queue-based implementation</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">shortestPaths</span><span class="params">( EdgeList[] adjinfo, <span class="type">int</span> n, <span class="type">int</span> s, <span class="type">int</span>[] parent, <span class="type">float</span>[] fringeWgt )</span></span></span><br><span class="line"><span class="function">    <span class="type">int</span>[] status </span>= <span class="keyword">new</span> <span class="type">int</span>[n+<span class="number">1</span>];</span><br><span class="line">	MinPQ pq = <span class="built_in">create</span>( n, status, parent, fringeWgt );</span><br><span class="line"></span><br><span class="line">	<span class="built_in">insert</span>( pq, s, <span class="number">-1</span>, <span class="number">0</span> );</span><br><span class="line">	<span class="keyword">while</span>( <span class="built_in">isEmpty</span>(pq) == <span class="literal">false</span> )</span><br><span class="line">        <span class="type">int</span> v = <span class="built_in">getMin</span>(pq);</span><br><span class="line">		<span class="built_in">deleteMin</span>(pq);</span><br><span class="line">		<span class="built_in">updateFringe</span>( pq, adjinfo[v], v );</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">updateFringe</span><span class="params">( MinPQ pq, EdgeList adjinfoOfV, <span class="type">int</span> v )</span></span></span><br><span class="line"><span class="function">    <span class="type">float</span> myDist </span>= pq.fringeWgt[v];</span><br><span class="line">	EdgeList remAdj;</span><br><span class="line">	remAdj = adjInfoOfV;</span><br><span class="line">	<span class="keyword">while</span>( remAdj != nil )</span><br><span class="line">		EdgeInfo wInfo = <span class="built_in">first</span>( remAdj );</span><br><span class="line">		<span class="type">int</span> w = wInfo.to;</span><br><span class="line">		<span class="type">float</span> newDist = myDist + wInfo.weight;</span><br><span class="line">		<span class="keyword">if</span>( pq.status[w] == unseen )</span><br><span class="line">            <span class="built_in">insert</span>( pq, w, v, newDist );</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>( pq.status[w] = fringe )</span><br><span class="line">            <span class="keyword">if</span>( newDist &lt; <span class="built_in">getPriority</span>( pq, w ) )</span><br><span class="line">                <span class="built_in">decreaseKey</span>( pq. w. v. newDist );</span><br><span class="line">		remAdj = <span class="built_in">rest</span>(remAdj);</span><br><span class="line"><span class="keyword">return</span>;</span><br><span class="line">            </span><br></pre></td></tr></table></figure>
+<h2 id="correctness"><a href="#correctness" class="headerlink" title="correctness"></a>correctness</h2><ul>
+<li>归纳法 + 反证</li>
+</ul>
+<h2 id="The-Dijkstra-Skeleton"><a href="#The-Dijkstra-Skeleton" class="headerlink" title="The  Dijkstra Skeleton"></a>The  Dijkstra Skeleton</h2><ul>
+<li>Single-source shortest path( SSSP )</li>
+<li>SSSP  + node weight constraint<ul>
+<li>E.g. in routing</li>
+</ul>
+</li>
+<li>SSSP + capacity constraint<ul>
+<li>The “pipe problem”</li>
+<li>The “electric vehicle problem”</li>
+</ul>
+</li>
+</ul>
+<h1 id="All-pairs-shortest-paths"><a href="#All-pairs-shortest-paths" class="headerlink" title="All-pairs shortest paths"></a>All-pairs shortest paths</h1><ul>
+<li>For <strong>all</strong> pairs of vertices in a graph, say, <em>u</em>, <em>v</em>:<ul>
+<li>Is there a path from <em>u</em> to <em>v</em>?</li>
+<li>What is the shortest path from <em>u</em> to <em>v</em>?</li>
+</ul>
+</li>
+<li>Reachability as a (reflexive) transitive closure of the adjacency relation<ul>
+<li>Which can be represented as a bit matrix</li>
+</ul>
+</li>
+</ul>
+<h2 id="Warshall-algorithm-for-transitive-closure"><a href="#Warshall-algorithm-for-transitive-closure" class="headerlink" title="Warshall algorithm for transitive closure"></a>Warshall algorithm for transitive closure</h2><h3 id="Warshall-algorithm"><a href="#Warshall-algorithm" class="headerlink" title="Warshall algorithm"></a>Warshall algorithm</h3><ul>
+<li><p>BF0:  对每个点用Dijkstra</p>
+</li>
+<li><p>BF1： Shortcut Algorithm $O(n^4)$​</p>
+</li>
+<li><p>BF2:  Emurate all edges (x,v) $O(n^2m)$</p>
+<ul>
+<li>v as the destination</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">While any entry of R changed</span><br><span class="line">	for every edge(x,v)</span><br><span class="line">		r_uv = r_uv ∪ ( r_ux  ∩ r_xv )</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>BF3: Length of the Path  $O(n^4)$​</p>
+<ul>
+<li>Recursion<ul>
+<li>Reachable via at most k edges</li>
+</ul>
+</li>
+<li>Enumeration<ul>
+<li>Enumerate all path length</li>
+<li>Enumerate all sources and destinations</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for k=1 to n-1</span><br><span class="line">	for all vertices u</span><br><span class="line">		for all vertices v</span><br><span class="line">			for all vertices x pointing to v</span><br><span class="line">				r_&#123;uv&#125;^k = r_&#123;uv&#125;^&#123;k-1&#125; ∪ ( r_&#123;ux&#125;^&#123;k-1&#125; ∩ r_&#123;xv&#125; )</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>Warshall Algorithm</p>
+<ul>
+<li>$O(n^3)$</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">simplTransitiveClosure</span><span class="params">( boolean[][] A, <span class="type">int</span> n, boolean[][] R )</span></span></span><br><span class="line"><span class="function">    <span class="type">int</span> i,j,k</span>;</span><br><span class="line">	Copy A to R;</span><br><span class="line">	Set all main diagonal entries, r_&#123;ii&#125;, to <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">while</span>( any entry of R changed during one complete pass )</span><br><span class="line">        <span class="keyword">for</span>( k=<span class="number">1</span>; k &lt;= n ; k++ )</span><br><span class="line">            <span class="keyword">for</span>(i=<span class="number">1</span>; i&lt;=n; i++)</span><br><span class="line">                <span class="keyword">for</span>(j=<span class="number">1</span>; j&lt;=n;j++)</span><br><span class="line">                    r_&#123;ij&#125; = r_&#123;ij&#125; ∪ ( r_&#123;ik&#125;∩ r_&#123;kj&#125; )</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Correctness-of-the-Warshall-Algorithm"><a href="#Correctness-of-the-Warshall-Algorithm" class="headerlink" title="Correctness of the Warshall Algorithm"></a>Correctness of the Warshall Algorithm</h4><ul>
+<li>归纳法</li>
+</ul>
+<h2 id="Floyd-algorithm-for-shortest-paths"><a href="#Floyd-algorithm-for-shortest-paths" class="headerlink" title="Floyd algorithm for shortest paths"></a>Floyd algorithm for shortest paths</h2><ul>
+<li>和求可达性一模一样</li>
+<li>Basic formula:</li>
+</ul>
+<script type="math/tex; mode=display">
+D^{(0)}[i][j] = w_{ij} \\
+D^{(k)}[i][j]= min( D^{(k-1)}[i][j], D^{(k-1)}[i][k] + D^{(k-1)}[k][j] )</script><ul>
+<li><p>Floyd algorithm是一个框架，不只是一个算法</p>
+</li>
+<li><p>不能有<strong>负权环</strong></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm-design-and-analysis/" rel="tag"># Algorithm design and analysis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/10/L14-MST/" rel="prev" title="L14 MST">
+      <i class="fa fa-chevron-left"></i> L14 MST
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/11/L17-L18-DP/" rel="next" title="L17&L18 DP">
+      L17&L18 DP <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Single-source-shortest-paths"><span class="nav-text">Single-source shortest paths</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dijkstra-algorithm"><span class="nav-text">Dijkstra algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Priority-queue-based-implementation"><span class="nav-text">Priority queue-based implementation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#correctness"><span class="nav-text">correctness</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Dijkstra-Skeleton"><span class="nav-text">The  Dijkstra Skeleton</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#All-pairs-shortest-paths"><span class="nav-text">All-pairs shortest paths</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Warshall-algorithm-for-transitive-closure"><span class="nav-text">Warshall algorithm for transitive closure</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Warshall-algorithm"><span class="nav-text">Warshall algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Correctness-of-the-Warshall-Algorithm"><span class="nav-text">Correctness of the Warshall Algorithm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Floyd-algorithm-for-shortest-paths"><span class="nav-text">Floyd algorithm for shortest paths</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

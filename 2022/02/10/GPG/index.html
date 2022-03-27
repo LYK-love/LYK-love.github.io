@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="useful encryption tool ref: 阮一峰的教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPG">
+<meta property="og:url" content="http://lyk-love.cn/2022/02/10/GPG/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="useful encryption tool ref: 阮一峰的教程">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-02-10T14:57:00.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/02/10/GPG/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>GPG | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/02/10/GPG/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GPG
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-10 14:57:00" itemprop="dateCreated datePublished" datetime="2022-02-10T14:57:00Z">2022-02-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>useful encryption tool</p>
+<p>ref: <a target="_blank" rel="noopener" href="https://ruanyifeng.com/blog/2013/07/gpg.html">阮一峰的教程</a></p>
+<span id="more"></span>
+<h1 id="history"><a href="#history" class="headerlink" title="history"></a>history</h1><p>1991年，程序员<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Phil_Zimmermann">Phil Zimmermann</a>为了避开政府监视，开发了加密软件PGP。这个软件非常好用，迅速流传开来，成了许多程序员的必备工具。但是，它是商业软件，不能自由使用。所以，自由软件基金会决定，开发一个PGP的替代品，取名为GnuPG。这就是GPG的由来</p>
+<h1 id="install"><a href="#install" class="headerlink" title="install"></a>install</h1><ul>
+<li>输入<code>gpg --help</code>可以查看你是否已经安装</li>
+</ul>
+<h1 id="generate-GPG-key"><a href="#generate-GPG-key" class="headerlink" title="generate GPG key"></a>generate GPG key</h1><ul>
+<li><code>gpg --full-generate-key</code></li>
+<li>按照提示输入信息，密钥类型使用默认的<code>RSA and RSA</code>即可。密钥长度推荐使用4096,</li>
+<li>然后输入你的个人信息，这样密钥就会绑定到你的邮箱，要使用和 Git 提交相同的邮箱地址。</li>
+<li>最后输入<strong>私钥的密码</strong>，用来提取这个密钥。这样一个 GPG 密钥就生成好了</li>
+</ul>
+<h1 id="generate-revocation-certificate"><a href="#generate-revocation-certificate" class="headerlink" title="generate revocation certificate"></a>generate revocation certificate</h1><ul>
+<li><code>gpg --gen-revoke [用户ID]</code>:生成一张”撤销证书”，以备以后密钥作废时，可以请求外部的公钥服务器撤销你的公钥</li>
+</ul>
+<h1 id="key-management"><a href="#key-management" class="headerlink" title="key management"></a>key management</h1><h2 id="list-keys"><a href="#list-keys" class="headerlink" title="list  keys"></a>list  keys</h2><h3 id="public-key"><a href="#public-key" class="headerlink" title="public key"></a>public key</h3><ul>
+<li><p><code>--list-keys</code>: 列出系统中已有的公钥</p>
+<p>显示如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/home/lyk/.gnupg/pubring.kbx</span><br><span class="line">----------------------------</span><br><span class="line">pub   rsa4096 2022-02-10 [SC]</span><br><span class="line">      DFD9A8D9CF0BD747BE1BDBD839AD95E8DF842459</span><br><span class="line">uid           [ultimate] LYK-love (gpg for lyk) &lt;your_email&gt;</span><br><span class="line">sub   rsa4096 2022-02-10 [E]</span><br></pre></td></tr></table></figure>
+<p>第一行： <strong>公钥</strong>文件名（<code>pubring.kbx</code>）</p>
+<p>第二行： 公钥特征（4096位，Hash字符串和生成时间）</p>
+<p>第三行： 密钥保质期，用户id， comment, email</p>
+<p>第四行： 私钥特征</p>
+</li>
+</ul>
+<h3 id="private-key"><a href="#private-key" class="headerlink" title="private key"></a>private key</h3><ul>
+<li><p><code>--list-secret-keys --keyid-format LONG &lt;your_email&gt;</code>： 列出私钥</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">这里以别人的为例</span></span><br><span class="line">sec   rsa4096/39AD95E8DF842459 2022-02-10 [SC]</span><br><span class="line">      DFD9A8D9CF0BD747BE1BDBD839AD95E8DF842459</span><br><span class="line">uid                 [ultimate] LYK-love (gpg for lyk) &lt;your_email&gt;</span><br><span class="line">ssb   rsa4096/051FBEBE8BDED88B 2022-02-10 [E]</span><br></pre></td></tr></table></figure>
+<p><code>39AD95E8DF842459</code>就是用户ID的hash, 等价于用户ID（<code>LYK-love</code>  or <code>&lt;your_email&gt;</code>）</p>
+</li>
+</ul>
+<h2 id="export-keys"><a href="#export-keys" class="headerlink" title="export keys"></a>export keys</h2><ul>
+<li><p><code>gpg --armor --output public-key.txt  --export pub [用户ID]</code>： 导出该用户ID的公钥</p>
+<ul>
+<li><p>公钥文件（<code>pubring.kbx</code>）以二进制形式储存，<code>-armor</code>可以将其转换为ASCII码显示</p>
+</li>
+<li><p><code>--output outputfile_name</code>:  指定输出位置</p>
+</li>
+<li><p><code>export-secret-keys</code>：导出私钥：</p>
+<p><code>gpg --armor --output private-key.txt --export-secret-keys</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="upload-public-key"><a href="#upload-public-key" class="headerlink" title="upload public key"></a>upload public key</h2><p>公钥服务器是网络上专门储存用户公钥的服务器</p>
+<ul>
+<li><code>gpg --send-keys [用户ID] --keyserver hkp://subkeys.pgp.net</code>：将公钥传到服务器<code>subkeys.pgp.net</code>，通过交换机制，所有的公钥服务器最终都会包含该公钥</li>
+</ul>
+<ul>
+<li><code>gpg --fingerprint [用户ID]</code>：生成公钥指纹<ul>
+<li>由于公钥服务器没有检查机制，任何人都可以用你的名义上传公钥，所以没有办法保证服务器上的公钥的可靠性。通常，因此需要公布一个公钥指纹，让其他人核对下载到的公钥是否为真</li>
+</ul>
+</li>
+</ul>
+<h2 id="import-public-key"><a href="#import-public-key" class="headerlink" title="import public key"></a>import public key</h2><ul>
+<li><p>除了生成自己的密钥，还需要将他人的公钥或者你的其他密钥输入系统</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --import [密钥文件]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>为了获得他人的公钥，可以让对方直接发给你，或者到公钥服务器上寻找</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg --keyserver hkp://subkeys.pgp.net --search-keys [用户ID]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>正如前面提到的，我们无法保证服务器上的公钥是否可靠，下载后还需要用其他机制验证</p>
+<h1 id="encrypt-amp-amp-decrypt"><a href="#encrypt-amp-amp-decrypt" class="headerlink" title="encrypt &amp;&amp; decrypt"></a>encrypt &amp;&amp; decrypt</h1><h2 id="encrypt"><a href="#encrypt" class="headerlink" title="encrypt"></a>encrypt</h2><p>假定有一个文本文件demo.txt，对它加密:</p>
+<ul>
+<li><code>gpg --recipient [用户ID] --output demo.en.txt --encrypt demo.txt</code><ul>
+<li><code>--encrypt</code>: 指定加密源文件</li>
+<li><code>--recipient</code>：指定<strong>接收者</strong>的公钥</li>
+<li><code>--output</code>： 指定加密后的文件名</li>
+</ul>
+</li>
+</ul>
+<h2 id="decrypt"><a href="#decrypt" class="headerlink" title="decrypt"></a>decrypt</h2><p>对方收到加密文件以后，就用自己的私钥解密。</p>
+<ul>
+<li><code>gpg --decrypt demo.en.txt --output demo.de.txt</code><ul>
+<li><code>--decrypt</code>： 指定需要解密的文件</li>
+<li><code>--output</code>“： 指定解密后生成的文件</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>GPG允许省略decrypt的参数:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpg demo.en.txt</span><br></pre></td></tr></table></figure>
+<p>运行上面的命令以后，解密后的文件内容直接显示在STDOUT</p>
+</li>
+</ul>
+<h1 id="signiture"><a href="#signiture" class="headerlink" title="signiture"></a>signiture</h1><h2 id="file-signiture"><a href="#file-signiture" class="headerlink" title="file signiture"></a>file signiture</h2><p>有时，我们不需要加密文件，只需要对文件签名，表示这个文件确实是我本人发出的</p>
+<ul>
+<li><p><code>gpg --sign demo.txt</code>:  在当前目录下生成<code>demo.txt.gpg</code>文件，这就是签名后的文件,默认采用二进制储存</p>
+<ul>
+<li><code>--clearsign</code>: 生成ASCII码的签名文件（ <code>demo.txt.asc</code>， 后缀名asc表示该文件是ASCII码形式 ）</li>
+</ul>
+</li>
+<li><p><code>gpg --detach-sign demo.txt</code>： 生成单独的签名文件，与文件内容分开存放</p>
+<p> 运行上面的命令后，当前目录下生成一个单独的签名文件demo.txt.sig。该文件是二进制形式的，如果想采用ASCII码形式，要加上armor参数。</p>
+<p><code>gpg --armor --detach-sign demo.txt</code></p>
+</li>
+</ul>
+<h2 id="verify-signiture"><a href="#verify-signiture" class="headerlink" title="verify signiture"></a>verify signiture</h2><p>我们收到别人签名后的文件，需要用对方的公钥验证签名是否为真,<code>--verify</code>用来验证</p>
+<p><code>gpg --verify demo.txt.asc demo.txt</code></p>
+<p>举例来说，<a target="_blank" rel="noopener" href="https://openvpn.net/index.php/open-source/downloads.html">openvpn</a>网站就提供每一个下载包的gpg签名文件。你可以根据它的<a target="_blank" rel="noopener" href="https://openvpn.net/index.php/open-source/documentation/sig.html">说明</a>，验证这些下载包是否为真</p>
+<h1 id="signiture-encryption"><a href="#signiture-encryption" class="headerlink" title="signiture + encryption"></a>signiture + encryption</h1><p>如果想同时签名和加密，可以使用下面的命令：</p>
+<p><code>gpg --local-user [发信者ID] --recipient [接收者ID] --armor --sign --encrypt demo.txt</code></p>
+<ul>
+<li>—<code>local-user</code>： 用发信者的名字作为私钥签名，该option必须放在前面。 该option是可选的，默认采用<code>default- key</code></li>
+<li><code>--recipient</code>： 指定用接收者的公钥加密</li>
+<li>—<code>armor</code>： 采用ASCII码形式显示</li>
+<li><code>--sign</code>： 表示需要签名</li>
+<li><code>--encrypt</code>： 指定源文件</li>
+</ul>
+<h1 id="将-GPG-密钥与-Git-关联"><a href="#将-GPG-密钥与-Git-关联" class="headerlink" title="将 GPG 密钥与 Git 关联"></a><strong>将 GPG 密钥与 Git 关联</strong></h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.signingkey 66DD4800155F7A2B</span><br><span class="line"><span class="meta"># </span><span class="language-bash">或者</span></span><br><span class="line">git config user.signingkey 66DD4800155F7A2B</span><br></pre></td></tr></table></figure>
+<h2 id="Git-提交启用签名"><a href="#Git-提交启用签名" class="headerlink" title="Git 提交启用签名"></a>Git 提交启用签名</h2><ul>
+<li><p>在提交时启用签名很简单，只要在<code>git commimt</code>命令中加上<code>-S</code>选项即可。</p>
+</li>
+<li><p>1Git 提交时，使用 -S 标记进行 GPG 签名：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -S -m “commit message&quot;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>Git 可以设置默认使用 GPG 签名提交：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global commit.gpgsign true</span><br><span class="line"><span class="meta"># </span><span class="language-bash">或者</span></span><br><span class="line">git config commit.gpgsign true</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="解决“error-gpg-数据签名失败”"><a href="#解决“error-gpg-数据签名失败”" class="headerlink" title="解决“error: gpg 数据签名失败”"></a>解决“error: gpg 数据签名失败”</h2><ul>
+<li><p>commit报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">error: gpg 数据签名失败</span><br><span class="line">fatal: 写提交对象失败</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>solution：</p>
+<ol>
+<li><p>在<code>.zshrc</code>里面加入一行代码 <code>export GPG_TTY=$(tty)</code></p>
+</li>
+<li><p>重启 gpg-agent: 第一次配置，必须重启，否则签名会失败:</p>
+<p><code>gpgconf –kill gpg-agent</code></p>
+</li>
+<li><p>重启终端（或者新开一个终端标签）</p>
+</li>
+</ol>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/09/debtap/" rel="prev" title="debtap">
+      <i class="fa fa-chevron-left"></i> debtap
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/10/Command-line-Environment/" rel="next" title="Command-line Environment">
+      Command-line Environment <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#history"><span class="nav-text">history</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#install"><span class="nav-text">install</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#generate-GPG-key"><span class="nav-text">generate GPG key</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#generate-revocation-certificate"><span class="nav-text">generate revocation certificate</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#key-management"><span class="nav-text">key management</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#list-keys"><span class="nav-text">list  keys</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#public-key"><span class="nav-text">public key</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#private-key"><span class="nav-text">private key</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#export-keys"><span class="nav-text">export keys</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#upload-public-key"><span class="nav-text">upload public key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#import-public-key"><span class="nav-text">import public key</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#encrypt-amp-amp-decrypt"><span class="nav-text">encrypt &amp;&amp; decrypt</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#encrypt"><span class="nav-text">encrypt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decrypt"><span class="nav-text">decrypt</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#signiture"><span class="nav-text">signiture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#file-signiture"><span class="nav-text">file signiture</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#verify-signiture"><span class="nav-text">verify signiture</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#signiture-encryption"><span class="nav-text">signiture + encryption</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86-GPG-%E5%AF%86%E9%92%A5%E4%B8%8E-Git-%E5%85%B3%E8%81%94"><span class="nav-text">将 GPG 密钥与 Git 关联</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-%E6%8F%90%E4%BA%A4%E5%90%AF%E7%94%A8%E7%AD%BE%E5%90%8D"><span class="nav-text">Git 提交启用签名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E2%80%9Cerror-gpg-%E6%95%B0%E6%8D%AE%E7%AD%BE%E5%90%8D%E5%A4%B1%E8%B4%A5%E2%80%9D"><span class="nav-text">解决“error: gpg 数据签名失败”</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

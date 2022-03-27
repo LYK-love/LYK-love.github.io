@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="A History and Overview of OS zoo ref：  Modern  Operating Systems  Operating Systems Three Easy pieces">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS Introduction">
+<meta property="og:url" content="http://lyk-love.cn/2021/10/05/OS-Introduction/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="A History and Overview of OS zoo ref：  Modern  Operating Systems  Operating Systems Three Easy pieces">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-10-05T20:28:21.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2021/10/05/OS-Introduction/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>OS Introduction | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/10/05/OS-Introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS Introduction
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-10-05 20:28:21" itemprop="dateCreated datePublished" datetime="2021-10-05T20:28:21Z">2021-10-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>A History and Overview of OS zoo</strong></p>
+<p>ref：</p>
+<ul>
+<li><em>Modern  Operating Systems</em> </li>
+<li><em>Operating Systems Three Easy pieces</em> </li>
+</ul>
+<span id="more"></span>
+<h1 id="Intro"><a href="#Intro" class="headerlink" title="Intro"></a>Intro</h1><ul>
+<li>appearances can be deceiving.<ul>
+<li>The program that users interact with, usually called the <strong>shell</strong> when it is text based and the GUI when it uses icons, is actually not part of the operating system, although it uses the operating system to get its work done</li>
+</ul>
+</li>
+</ul>
+<h2 id="Main-Components"><a href="#Main-Components" class="headerlink" title="Main Components"></a>Main Components</h2><h3 id="Hardware"><a href="#Hardware" class="headerlink" title="Hardware"></a>Hardware</h3><p>The hardware consists of chips, boards, disks, a keyboard, a monitor, and similar physical objects.</p>
+<h3 id="Software"><a href="#Software" class="headerlink" title="Software"></a>Software</h3><p>On top of the hardware is the software. Most computers have two modes of operation: <strong>kernel mode</strong> and <strong>user mode</strong>.</p>
+<ul>
+<li>OS runs on the bare hardware and provides the base for all the other software</li>
+</ul>
+<h4 id="kernel-mode"><a href="#kernel-mode" class="headerlink" title="kernel mode"></a><strong>kernel mode</strong></h4><ul>
+<li>the most fundamental piece of software, runs in <strong>kernel mode</strong> (also called supervisor mode). In this mode it has <u>complete access</u> to all the hardware and can execute any instruction the machine is capable of executing. </li>
+</ul>
+<h4 id="user-mode"><a href="#user-mode" class="headerlink" title="user mode"></a>user mode</h4><ul>
+<li><p>The rest of the software runs in <strong>user mode</strong>, in which <u>only a subset of the machine instructions is available</u>.</p>
+<ul>
+<li>In particular, those instructions that affect control of the machine or do I/O )Input/Output” are forbidden to user-mode programs</li>
+</ul>
+</li>
+<li><p>The user interface program, <strong>shell</strong> or <strong>GUI</strong>, is the <u>lowest level of user-mode software</u>, and allows the user to start other programs</p>
+</li>
+<li><p>user mode 和 kernel mode 的区别并不严格</p>
+<ul>
+<li>in embedded systems (which<br>may not have kernel mode) or interpreted systems (such as Java-based systems that use interpretation, not hardware, to separate the components).</li>
+<li><p>Also, in many systems there are programs that run in user mode but help the operating system or perform privileged functions</p>
+</li>
+<li><p>总之， Everything running in <strong>kernel mode</strong> is clearly part of the <strong>operating system</strong>, but some programs running outside it are arguably also part of it, or at least closely associated with it</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="WHAT-IS-OPERATING-SYSTEM"><a href="#WHAT-IS-OPERATING-SYSTEM" class="headerlink" title="WHAT IS OPERATING SYSTEM"></a>WHAT IS OPERATING SYSTEM</h1><h2 id="The-OS-as-an-Extended-Machine"><a href="#The-OS-as-an-Extended-Machine" class="headerlink" title="The OS as an Extended Machine"></a>The OS as an Extended Machine</h2><ul>
+<li><strong>top-down view: operating system as primarily providing abstractions to application programs</strong><ul>
+<li>The architecture (instruction set, memory organization, I/O, and bus structure) of most computers at the machine-language level is primitive and awkward to program, especially for input/output.即： 计算机的底层是丑陋和复杂的， 需要<strong>抽象</strong>出中间层才能方便使用</li>
+</ul>
+</li>
+<li><strong>This abstraction is the key to managing all this complexity（圣经！）</strong>. Good abstractions turn a nearly impossible task into two manageable ones. The first is defining and implementing the abstractions. The second is using these abstractions to solve the problem at hand</li>
+<li><strong>The job of the operating system is to create good abstractions and then implement and manage the abstract objects thus created</strong></li>
+<li>OS的真正用户是APP(和APP开发者)， 而end users使用的是UI（shell or GUI）提供的抽象。<ul>
+<li>While the abstractions at the user interface may be <strong>similar</strong> to the ones provided by the operating system, this is not always the case.<ul>
+<li>如Windows Desktop和command prompt采用了Windows提供的相同的system abstractions。 Linux的Gnome、KDE和X Window System看起来差别很大，实际上也采用了相同的system abstractions</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="The-OS-as-a-Resource-Manager"><a href="#The-OS-as-a-Resource-Manager" class="headerlink" title="The OS as a Resource Manager"></a>The OS as a Resource Manager</h2><ul>
+<li><p><strong>bottom-up view: the operating system is there to manage all the pieces of a complex system</strong></p>
+</li>
+<li><p>Resource management includes <strong>multiplexing</strong> (sharing) resources in two different ways: in time and in space</p>
+</li>
+</ul>
+<h1 id="HISTORY-OF-OPERATING-SYSTEMS"><a href="#HISTORY-OF-OPERATING-SYSTEMS" class="headerlink" title="HISTORY OF OPERATING SYSTEMS"></a>HISTORY OF OPERATING SYSTEMS</h1><h2 id="The-first-true-digital-computer"><a href="#The-first-true-digital-computer" class="headerlink" title="The first true digital computer"></a>The first true digital computer</h2><p>was designed by the English mathematician <strong>Charles Babbage</strong> (1792–1871)</p>
+<ul>
+<li>Babbage realized that he would need software for his analytical engine, so he hired a young woman named <strong>Ada Lovelace</strong></li>
+</ul>
+<p>《信息简史》里讲了他们的故事，向他们致敬！</p>
+<h2 id="The-First-Generation-1945–55-Vacuum-Tubes"><a href="#The-First-Generation-1945–55-Vacuum-Tubes" class="headerlink" title="The First Generation (1945–55): Vacuum Tubes"></a>The First Generation (1945–55): Vacuum Tubes</h2><ul>
+<li><p>用插板（后来是穿孔卡片）</p>
+<h2 id="The-Second-Generation-1955–65-Transistors-and-Batch-Systems"><a href="#The-Second-Generation-1955–65-Transistors-and-Batch-Systems" class="headerlink" title="The Second Generation (1955–65): Transistors and Batch Systems"></a>The Second Generation (1955–65): Transistors and Batch Systems</h2></li>
+<li><p><strong>Batch Systems：</strong> The idea behind it was to collect a tray full of jobs in the input room and then read them onto a magnetic tape using a small (relatively) inexpensive computer, such as the <strong>IBM 1401</strong>, which was quite good at reading cards, copying tapes, and printing output, but not at all good at numerical calculations. Other, much more expensive machines, such as the <strong>IBM 7094</strong>, were used for the real computing</p>
+</li>
+<li>用IBM 140把卡片翻译成磁带， 用7094处理磁带，把结果打印到磁带上， 再将结果磁带交给1401<strong>离线</strong>打印（不需要7094了）</li>
+<li>典型：FMS（ the Fortran Monitor System ）和 IBSYS( IBM’s system for the 7094 ). 主要用于科学计算</li>
+</ul>
+<h2 id="The-Third-Generation-1965–1980-ICs-and-Multiprogramming"><a href="#The-Third-Generation-1965–1980-ICs-and-Multiprogramming" class="headerlink" title="The Third Generation (1965–1980): ICs and Multiprogramming"></a>The Third Generation (1965–1980): ICs and Multiprogramming</h2><ul>
+<li><p>By the early 1960s, most computer manufacturers had two distinct, incompatible, product lines：</p>
+<ol>
+<li>大型机（类似7094），用于科学、工业上的数值计算</li>
+<li>商业机， 用于银行、保险公司等的磁带排序和印刷</li>
+</ol>
+</li>
+<li><p>System/360</p>
+<ul>
+<li><p>IBM推出的一系列software-compatible machines,拥有同样的架构和指令集，彼此只有价格、性能不同。</p>
+<ul>
+<li><p>IBM 360 was the first major computer line to use (small-scale) ICs, 带来了价格和性能上的巨大提升</p>
+</li>
+<li><p>360还有很多后继，如370, 4300, 3080,  3090， zSeries之类</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>OS/360: 360的操作系统</p>
+<ul>
+<li>360的”a family of compatible computers”迅速流行。但是，这对软件（尤其是OS）的编写产生了巨大困难。<ul>
+<li>The original intention was that all software, including the operating system, OS/360, had to work on all models。</li>
+<li>OS/360项目开发到最后,就如同“a herd of prehistoric beasts stuck in a tar pit”</li>
+</ul>
+</li>
+<li>OS/360引入了许多新技术，包括<ul>
+<li><strong>multiprogramming</strong>：  内存分区， 可以多任务, 避免单任务阻塞使得CPU idle </li>
+<li><strong>spooling</strong> (from Simultaneous Peripheral Operation On Line)： 直接将任务从卡片读到磁盘上，输出反之。 再也不需要磁带了 ）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CTSS(Compatible Time Sharing System)</p>
+<ul>
+<li><p>developed at M.I.T. on a specially modified 7094</p>
+</li>
+<li><p><strong>timesharing</strong>, a variant of multiprogramming, in which each user has an online terminal。 即多用户。提高开发速度。</p>
+</li>
+<li>由于缺乏必要的protection hardware。 CTSS没有流行</li>
+</ul>
+</li>
+<li><p>MULTICS (MULTiplexed Information and Computing Service)</p>
+<ul>
+<li><p>M.I.T., Bell Labs, and General Electric研发（最后只有MIT坚持）， 目的是设计一款“computer utility”。 类似国家电力系统，支持同时间许多人的timesharing，MULTICS被设想为房子那样大的计算设施。</p>
+</li>
+<li><p>由于采用PL/I语言和太过有野心，MULTICS没有预期的那样成功</p>
+</li>
+<li>MULTICS的概念就是当今的<strong>云计算</strong></li>
+</ul>
+</li>
+<li><p>minicomputers</p>
+<ul>
+<li>starting with the DEC PDP-1 in 1961</li>
+<li>culminating in the PDP-11</li>
+</ul>
+</li>
+<li><p>UNIX</p>
+<ul>
+<li>Ken Thompson，one of the computer scientists at Bell Labs who had worked on the MULTICS project, subsequently found a small PDP-7 minicomputer that no one was using and set out to write a stripped-down, one-user version of MULTICS. This work later developed into the UNIX operating system</li>
+<li>Two major versions developed:<ul>
+<li>System V, from AT&amp;T</li>
+<li>BSD (Berkeley Software Distribution) from the University of California at Berkeley</li>
+<li>POSIX<ul>
+<li>为了让程序能运行在所有UNIX系统，IEEE定义了一个UNIX标准，称为POSIX.</li>
+<li>POSIX defines a minimal system-call interface that conformant UNIX systems must support. </li>
+<li>很多其他的OS也支持OS</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>MINIX</p>
+<ul>
+<li>in 1987, the author released a small clone of UNIX, called MINIX, for educational purposes.</li>
+<li>相当稳定</li>
+</ul>
+</li>
+<li><p>Linux</p>
+<ul>
+<li>Linus Torvalds为了得到一个完全免费的MINIX,在其基础上开发了LINUX</li>
+</ul>
+<h2 id="The-Fourth-Generation-1980–Present-Personal-Computers"><a href="#The-Fourth-Generation-1980–Present-Personal-Computers" class="headerlink" title="The Fourth Generation (1980–Present): Personal Computers"></a>The Fourth Generation (1980–Present): Personal Computers</h2></li>
+</ul>
+<p>由于LSI (Large Scale Integration) circuits的发展，个人计算机成为了可能，它和minicomputer的差距主要是价格上的</p>
+<ul>
+<li>CP/M (Control Program for Microcomputers)<ul>
+<li>a disk-based OS for 8080, the first general-purpose 8-bit CPU invented by Intel</li>
+<li>由于Intel不认为CP/M有什么未来，就允许作者Kildall拿着专利自立门户，后者成立了Digital Research。</li>
+<li>DOS (Disk Operating System)</li>
+</ul>
+</li>
+<li>In the early 1980s, IBM designed the <strong>IBM PC</strong> and looked around for software to run on it. People from IBM contacted <strong>Bill Gates</strong> to license his BASIC interpreter. They also asked him if he knew of an operating system to run on the PC. Gates suggested that IBM contact Digital Research, then the world’s dominant operating systems company。 Kildall拒绝了， 盖茨就找了Seattle Computer Products， 购买了DOS，将其与BASIC捆绑卖给IBM, 后者想要一些修改，盖茨就雇了其DOS的作者Tim Paterson作为他的新公司MS的雇员。</li>
+<li>The revised system was renamed MS-DOS (MicroSoft Disk Operating System) and quickly came to dominate the IBM PC market.</li>
+<li>By the time the successor to the IBM PC, the IBM PC/AT, came out in 1983 with the Intel 80286 CPU, MS-DOS was firmly entrenched and CP/M was on its last legs. MS-DOS was later widely used on the 80386 and 80486.<ul>
+<li>GUI</li>
+</ul>
+</li>
+<li>早期的微电脑的OS，包括CP/M, MS-DOS等都基于用户从键盘输入命令。</li>
+<li><strong>Engelbart</strong> 发明了GUI  ( Doug Engelbart at Stanford Research Institute in the 1960s ), complete with windows, icons, menus, and mouse. </li>
+<li>These ideas were adopted by researchers at <strong>Xerox PARC</strong> and incorporated into machines they built.</li>
+</ul>
+<ul>
+<li>MAC<ul>
+<li>Jobs拜访PARC的时候看到了GUI，回去后开始开发带GUI的Apple，第一代”Lisa”失败了， 第二代“Mac”成功了</li>
+</ul>
+</li>
+<li>MAC OS X<ul>
+<li>1999,Apple采用了新内核，它CMU研发的微内核，而后者被最初设计用来替代BSD UNIX的内核</li>
+<li>因此， MAC OS X是个UNIX操作系统</li>
+</ul>
+</li>
+<li>Windows<ul>
+<li>微软开发的MS-DOS的后继， 深受Mac成功的影响，因此带有GUI。事实上它更像是运行在MS-DOS上的shell</li>
+</ul>
+</li>
+<li>Windows 95<ul>
+<li>有十年时间， 1985-1995，Windows 只是一个MS-DOS上的图形环境</li>
+<li>Win95是95年发行的独立版本，拥有更多的操作系统的特性， 只将MS-DOS用于启动和运行旧的MS-DOS程序</li>
+<li>However, starting in 1995 a freestanding version, <strong>Windows 95</strong>, was released that incorporated many operating system features into it, using the underlying MS-DOS system only for booting and running old MS-DOS programs.</li>
+</ul>
+</li>
+<li>Windows 98 <ul>
+<li>98年发行的Win95的轻微修改版。 这两个版本都还含有大量的Intel16位汇编代码</li>
+</ul>
+</li>
+<li>Windows NT(where the NT stands for New Technology)<ul>
+<li>和Windows 95兼容， 但是是a full 32-bit system</li>
+<li>采用了很多VAX VMS的思想（ 因为主设计者也是后者的设计者之一 ）</li>
+<li>Version 5 of Windows NT was renamed <strong>Windows 2000</strong> in early 1999. It was intended to be the successor to both Windows 98 and Windows NT 4.0</li>
+<li>由于Win2000也没有足够成功， MS发行了Windows Me (Millennium Edition)</li>
+</ul>
+</li>
+<li>Windows XP<ul>
+<li>发行于2001</li>
+<li>a slightly upgraded version of Windows 2000</li>
+<li>基本取代了之前所有版本</li>
+</ul>
+</li>
+<li>service packs<ul>
+<li>Windows 2000之后，MS将Windos系列分成客户-服务器两台产品线。前者基于XP和其后继， 后者包含了Server 2003 and Windows 2008。 嵌入式的产品线后来也出现了。</li>
+<li>All of these versions of Windows forked off their variations in the form of service packs.</li>
+</ul>
+</li>
+<li>Vista<ul>
+<li>Then in January 2007, Microsoft finally released the successor to Windows<br>XP, called Vista</li>
+</ul>
+</li>
+<li>Windows 7<ul>
+<li>相比Vista没有很多新特性，但是更稳定更不吃资源</li>
+</ul>
+</li>
+<li>Windows 8<ul>
+<li>Win7的后继，2012发行。</li>
+</ul>
+</li>
+</ul>
+<h1 id="COMPUTER-HARDWARE-REVIEW"><a href="#COMPUTER-HARDWARE-REVIEW" class="headerlink" title="COMPUTER HARDWARE REVIEW"></a>COMPUTER HARDWARE REVIEW</h1><h2 id="PROCESSORS"><a href="#PROCESSORS" class="headerlink" title="PROCESSORS"></a>PROCESSORS</h2><ul>
+<li>basic cycle of CPU: 取指、译指、执行</li>
+<li>每个CPU都有自己特殊的指令集。ARM处理器不能执行x86程序</li>
+<li>由于对内存的存取所花的时间比执行一条指令还要长，CPU内部会有寄存器。</li>
+<li>许多寄存器对有用出现<strong>可见</strong><ul>
+<li>PC</li>
+<li>栈指针，指向内存中的栈顶。栈含有每个程序的帧。栈帧含有： 输入的参数、局部变量、没有保存进寄存器的临时变量</li>
+<li>PSW(Program Status Word): 包含状态码位。 用户程序通常能读整个PSW，但仅仅只能写其中的一部分</li>
+</ul>
+</li>
+<li>为了提供性能，CPU通常有流水线和超标量。<ul>
+<li>流水线会把底层的复杂度暴露给上层，令人头疼</li>
+<li>超标量： 多个指令同时被取指和译指，然后放到一个Holding buffer里，每当一个执行单元空闲时，就去Holding buffer中找它能处理的指令。该设计的一个后果是：指令不一定按顺序执行。而执行结果能不能和顺序实现的CPU相同，取决于硬件。</li>
+</ul>
+</li>
+<li>除了嵌入式系统中的少数，CPU都有 user mode和kernel mode. 当运行在kernel mode， CPU可以执行指令集提供的每一条指令和硬件提供的所有特性。 在<ul>
+<li>桌面机和服务器上，OS都运行在kernel mode.</li>
+<li>在大部分嵌入式系统中，OS一部分运行在kernel mode, 剩余部分运行在 user mode</li>
+<li>用户程序永远运行在 user mode，只能执行一小部分指令和一小部分硬件特性。  “设置PSW的mode bit以进入 kernel mode”也是被禁止的</li>
+</ul>
+</li>
+<li>为了获得OS的服务，用户程序会发起system call,即陷入kernel并启动OS<ul>
+<li>the  TRAP  instruction switched from user mode to kernel mode and starts the OS.执行结束后，控制会返还到TRAP的下一条指令</li>
+<li>计算机的trap不仅有用于执行system call的指令，还有别的</li>
+</ul>
+</li>
+</ul>
+<h3 id="Multithread-and-Multicore-Chips"><a href="#Multithread-and-Multicore-Chips" class="headerlink" title="Multithread and Multicore Chips"></a>Multithread and Multicore Chips</h3><ul>
+<li>multithreading: 允许CPU拥有两个线程并且在<strong>纳秒</strong>级的时间里切换。 <strong>多线程并不是并行</strong>，因为同一时间还是只有一个程序在CPU上运行<ul>
+<li>如果一个程序要读取内存（花的时间比较长），那么多线程的CPU可以切换到另一个程序</li>
+<li>多线程带来的问题是：每一个线程都会被OS视为独立的CPU. 考虑一个双CPU的系统，每个CPU有两个线程。当有两个线程的任务时，OS可能会把它们全部交给同一个CPU上的两个线程，而这是很浪费的</li>
+</ul>
+</li>
+<li>许多CPU芯片上还有多个(几十个)processors or <strong>cores</strong>  使用多核芯片需要一个多处理器的OS</li>
+<li>GPU拥有上千个core, 适用于许多并行执行的小规模计算， 在顺序计算上并不突出。</li>
+</ul>
+<h2 id="MEMORY"><a href="#MEMORY" class="headerlink" title="MEMORY"></a>MEMORY</h2><p>内存是分层的</p>
+<ul>
+<li>最顶层是寄存器，和CPU一样快，因此访问它们没有延迟</li>
+<li>cache，有L1和L2，差别是timing 。访问L1没有延迟，访问L2有1-2个时钟周期的延迟</li>
+<li>主存， the work house of memory system,也被称为RAM</li>
+<li>ROM: 也是random-access memory，但是是只读的，不属于main memory</li>
+<li>EEPROM和flash也是非易失性，但有写入次数限制</li>
+<li>CMOS：记录了时间日期。还记录了一些配置参数，比如该从哪个盘启动。CMOS里自带一个小电池，因此虽然是易失性的，断了电也能工作。</li>
+</ul>
+<h2 id="Disks"><a href="#Disks" class="headerlink" title="Disks"></a>Disks</h2><p>普通磁盘就不介绍了</p>
+<ul>
+<li>SSD(Solid State Disks): 没有移动的磁头，也没有盘片，事实上它使用flash存储数据。它们和磁盘唯一的相似处就是，他们都是非易失的。 <strong>SSD不是磁盘</strong></li>
+<li><strong>虚拟内存</strong>即内存映射，这由CPU的一部分，称为<strong>MMU</strong>( Memory Management Unit )完成</li>
+</ul>
+<h2 id="I-O-Devices"><a href="#I-O-Devices" class="headerlink" title="I/O Devices"></a>I/O Devices</h2><h4 id="controller-and-devices"><a href="#controller-and-devices" class="headerlink" title="controller and devices"></a>controller and devices</h4><h5 id="controller"><a href="#controller" class="headerlink" title="controller"></a>controller</h5><p>OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由两部分组成：控制器和设备本身。</p>
+<ul>
+<li><p><strong>controller</strong>是一个或一组芯片，位于南桥，向OS提供一个更“简单”（相对直接控制设备而言）的接口</p>
+<ul>
+<li>比如，OS可能命令“read sector 11,206 from disk 2”。controller需要将将线性的扇区号映射为实际的cylinder, sector, and head，考虑到外侧柱面比内侧多、坏的删区要被重映射为其它山区等等，这个映射会很复杂。</li>
+<li>然后controller要决定磁臂停在哪个扇区。 It has to wait until the proper sector has rotated under the head and then start reading and storing the bits as they come off the drive, removing the preamble and computing the checksum. Finally, it has to assemble the incoming bits into words and store them in memory. </li>
+<li>To do all this work, controllers often contain small embedded computers that are programmed to do their work.<h5 id="device"><a href="#device" class="headerlink" title="device"></a>device</h5></li>
+</ul>
+</li>
+<li><p>device的接口相当简单，便于标准化。因此any SATA disk controller可以处理any SATA disk. </p>
+<ul>
+<li><strong>SATA</strong> stands for Serial ATA and AT A in turn stands for AT Attachment. In case you are curious what AT stands for, this was IBM’s second generation ‘‘Personal Computer Advanced Technology’’ built around the then-extremely-potent 6-MHz 80286 processor that the company introduced in 1984.</li>
+<li>SATA是目前许多电脑的磁盘标准。由于实际的device interface隐藏在controller interface后， OS只能看到后者，也就无需处理前者的细节<h5 id="disk-driver"><a href="#disk-driver" class="headerlink" title="disk driver"></a>disk driver</h5></li>
+</ul>
+</li>
+<li><p>由于controller各不相同，需要软件来控制，每个软件控制一个controller，称为<strong>disk driver</strong></p>
+<ul>
+<li><p>driver talks to a controller, giving it commands and accepting responses</p>
+</li>
+<li><p>每个controller厂商需要为每个操作系统提供一个driver</p>
+</li>
+<li><p>driver需要被置入OS中，在kernel mode工作。 事实上它能在kernel外工作，windows和linux都对此提供了支持，但大多数driver还是在kernel内。</p>
+<ul>
+<li>only very few current systems, such as MINIX 3, run all drivers in user space. Drivers in user space must be allowed to access the device in a controlled way, which is not straightforward</li>
+<li>有三种把driver放入OS的方法：<ul>
+<li>使内核和新driver重新连接，然后重启。Many older UNIX systems work like this. </li>
+<li>进入OS文件，告诉它它需要那个driver，然后重启。在启动时，OS找到那个driver然后加载它。 Windows works this way.</li>
+<li>许多操作系统都支持在运行时接受新驱动并安装，不需要重启。 热插拔的设备，如USB and IEEE 1394 devices, 需要这种方式<h5 id="device-register"><a href="#device-register" class="headerlink" title="device register"></a>device register</h5></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>controller事实上与它的寄存器们（称为<strong>device register</strong>）直接交互. driver从OS得到命令，将其翻译后写入device registers。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>For example, a minimal disk controller might have registers for specifying the disk address, memory address, sector count, and direction (read or write). </p>
+</li>
+<li><p>To activate the controller, the driver gets a command from the operating system, then translates it into the appropriate values to write into the device registers. The collection of all the device registers forms the <strong>I/O port</strong> space, a subject we will come back to in Chap. 5.</p>
+</li>
+<li><p>device registers会被映射到OS的地址空间或者一个特殊的I/O port space</p>
+<ul>
+<li>前者不需要特殊的I/O instructions，可以被像普通内存数据一样读写，但是消耗了地址空间（  device registers的地址无法被其他程序使用，因此是安全的 ） </li>
+<li>后者不消耗地址空间（每个寄存器被映射为一个port address）但需要额外的instructions</li>
+</ul>
+</li>
+</ul>
+<h4 id="I-O"><a href="#I-O" class="headerlink" title="I/O"></a>I/O</h4><ul>
+<li><p>IO有三种方式：</p>
+<ol>
+<li><strong>busy waiting</strong>：用户程序发起system call,  kernel将其转换为procedure call交给相应的driver. Driver启动IO设备并且对设备轮询。IO结束后，driver将数据（如果有的话）返回，OS将控制返还给调用者<ul>
+<li>占用了CPU的全部时间</li>
+</ul>
+</li>
+<li><strong>interrupt</strong>：driver开启设备，要求它在完成时发出中断. At that point the driver returns. The operating system then blocks the caller if need be and looks for other work to do.</li>
+<li><strong>DMA</strong>(Direct Memory Access): DMA芯片可以在避免CPU持续干预的情况下控制内存和一些controller之间的数据传输<ul>
+<li>CPU启动DMA芯片，告诉它how many bytes to transfer, the device and memory addresses involved, and the direction, and lets it go. 当DMA芯片工作结束时，会发出中断（和方法二一样）</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>中断的过程：</p>
+<ol>
+<li>driver通过向contoller的device  registers写入来告诉controller要做什么。controller然后便启动device</li>
+<li>When the controller has finished reading or writing the number of bytes it has been told to transfer, it signals the interrupt controller chip <strong>using certain bus lines</strong></li>
+<li>如果中断控制器准备好接受新中断（ 如果它在处理一个更高优先级的中断，就不会ready ）,it asserts a pin on the CPU chip telling it</li>
+<li>中断控制器把<strong>device number</strong>放在总线上，CPU就可以read并且知道是哪个设备刚刚finished<ul>
+<li>一旦CPU决定接受中断, PC和PSW会被压栈，CPU会切换到内核态</li>
+<li>The device number may be used as an index into part of memory to find the address of the interrupt handler for this device. This part of memory is called the <strong>interrupt vector</strong></li>
+<li>一旦 interrupt handler启动，它就将PC和PSW出栈并保存，并向设备询问。当所有的handeller结束后，就退回到终端前执行的程序</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>中断可能会在其它interrupt handler运行时发生。 因此CPU可以disable interrupts and then reenable them later。当CPU disable interrupts时，设备依然持续发出中断信号，但CPU不会接受。 </p>
+</li>
+<li><p>由于多个中断可能同时发生，每个设备都有（通常是静态的）中断优先级来决定在disable结束后，哪个中断先被接受。</p>
+</li>
+</ul>
+<h2 id="Buses"><a href="#Buses" class="headerlink" title="Buses"></a>Buses</h2><ul>
+<li>单总线架构用于original IBM PC,  为了更快的IO速度和CPU-to-memory traffic，额外的总线被引入。 形成了现代的x86系统</li>
+<li><p>This system has many buses (e.g., cache, memory, PCIe, PCI, USB, SATA, and DMI), each with a different transfer rate and function. The operating system must be aware of all of them for configuration and management. </p>
+</li>
+<li><p>The main bus is the <strong>PCIe</strong> (Peripheral Component Interconnect Express) bus.</p>
+<ul>
+<li>The PCIe bus was invented by Intel as a successor to the older PCI bus, which in turn was a replacement for the original ISA (Industry Standard Architecture) bus. </li>
+<li>2004年PCIe刚发明时，流行<strong>shared bus architecture</strong>，许多设备用一条线传输数据，因此需要一个arbiter</li>
+<li>PCI使用<strong>parallel bus architecture</strong>，即将每个数据字分多条线传输。 比如32-bit数据需要32根并行的线</li>
+<li>PCIe使用<strong>serial bus architecture</strong>，把数据包装成一个message， 点对点传输（一次连接称为一个<strong>lane</strong>）。也支持并行，如可以并行地传32个<strong>lane</strong></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>the CPU talks to memory over a fast <strong>DDR3</strong> bus, to an external graphics device over PCIe and to all other devices via a <strong>hub</strong> over a <strong>DMI</strong> (Direct Media Interface) bus. The hub in turn connects all the other devices, using the Universal Serial Bus to talk to  USB devices, the SATA bus to interact with hard disks and DVD drives, and PCIe to transfer Ethernet frames.<ul>
+<li>PCI接口的设备另外放在一个hub processor 内</li>
+</ul>
+</li>
+<li><p>Moreover, each of the cores has a dedicated cache and a much larger cache that is shared between them. Each of these caches introduces another bus.<br>每个core有一个专用cache，所有core共享一个更大的cache，每个cache拥有自己的总线</p>
+</li>
+<li><p>The <strong>USB</strong> (Universal Serial Bus) was invented to attach all the slow I/O devices, such as the keyboard and mouse, to the computer.</p>
+</li>
+<li><p><strong>SCSI</strong> (Small Computer System Interface) bus 用于需要高带宽的设备，如服务器和工作站</p>
+</li>
+<li><p>is a high-performance bus intended for fast disks, scanners, and other devices needing considerable bandwidth. Nowadays, we find them mostly in servers and workstations</p>
+</li>
+<li><p>Intel 和 MS设计了<strong>plug and play</strong>系统，可以自动收集IO设备信息，集中分配中断优先级和I/O（设备的）寄存器地址</p>
+<ul>
+<li>在此之前，这些都要手动分配</li>
+</ul>
+</li>
+</ul>
+<h2 id="Booting-the-Computer"><a href="#Booting-the-Computer" class="headerlink" title="Booting the Computer"></a>Booting the Computer</h2><p>计算机启动时，<strong>首先加载</strong>硬件驱动程序，硬件驱动程序有BIOS和UEFI， 这里简要介绍BIOS, 这二者的详细信息参见我的《Linux Hardware Basic》</p>
+<p>BIOS对应的磁盘分区格式是MBR</p>
+<ul>
+<li><strong>BIOS</strong>（Basic Input Output System）：PC主板上的一个程序<ul>
+<li>The BIOS contains low-level I/O software, including procedures to read the keyboard, write to the screen, and do disk I/O, among other things. </li>
+<li>Nowadays, it is held in a <strong>flash RAM</strong>, which is nonvolatile but which can be updated by the operating system when bugs are found in the BIOS.</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>计算机开机时，BIOS启动，它会检查RAM和键盘等基础外设的连接和响应情况<ul>
+<li>It starts out by scanning the PCIe and PCI buses to detect all the devices attached to them. </li>
+<li>如果设备和上次启动时不一样，新的设备将被配置</li>
+</ul>
+</li>
+<li>通过CMOS中的启动设备列表，BIOS找到启动设备，后者的第一个扇区将被读进内存并执行，检查该扇区是否是MBR扇区，是的话会加载其中的boot loader</li>
+<li>一段boot loader程序被从MBR扇区读入， boot loader是OS提供的，因此能够读取OS的核心文件</li>
+<li>boot loader读取核心文件</li>
+<li>核心文件会加载OS</li>
+<li>OS问询BIOS，得到配置信息，对每个设备，OS检查自己是否有对应驱动，若没有，则通知用户去下载。</li>
+<li>当所有设备驱动都齐备时，OS将它们加载进kernel. 并初始化分区表，启动各种程序….(如登陆程序和GUI)</li>
+</ol>
+<h1 id="The-OS-Zoo"><a href="#The-OS-Zoo" class="headerlink" title="The OS Zoo"></a>The OS Zoo</h1><h2 id="Mainframe-Operating-Systems"><a href="#Mainframe-Operating-Systems" class="headerlink" title="Mainframe Operating Systems"></a>Mainframe Operating Systems</h2><ul>
+<li>mainframes：体型巨大，高I\O capacity</li>
+<li>用途：<ul>
+<li>batch： 不需要用户在场交互，即可处理程序</li>
+<li>transaction processing,</li>
+<li>and timesharing</li>
+</ul>
+</li>
+<li><strong>Timesharing</strong> systems，允许许多远程用户同时登陆一台主机处理任务, such as querying a big database.</li>
+<li>正被UNIX的各种变体（如LINUX）取代</li>
+</ul>
+<h2 id="Server-Operating-Systems"><a href="#Server-Operating-Systems" class="headerlink" title="Server Operating Systems"></a>Server Operating Systems</h2><ul>
+<li><p>They serve multiple users at once over a network and allow the users to share hardware and software resources.</p>
+</li>
+<li><p>Typical server operating systems are Solaris, FreeBSD, Linux and Windows Server 201x.</p>
+</li>
+</ul>
+<h2 id="Multiprocessor-Operating-Systems"><a href="#Multiprocessor-Operating-Systems" class="headerlink" title="Multiprocessor Operating Systems"></a>Multiprocessor Operating Systems</h2><ul>
+<li>把多个CPU连接称为一个系统。属于server OS的变体，增加了通信、连通性等功能</li>
+<li>Many popular operating systems, including Windows and Linux, run on multiprocessors</li>
+</ul>
+<h2 id="Personal-Computer-Operating-Systems"><a href="#Personal-Computer-Operating-Systems" class="headerlink" title="Personal Computer Operating Systems"></a>Personal Computer Operating Systems</h2><ul>
+<li>无需多言</li>
+</ul>
+<h2 id="Handheld-Computer-Operating-Systems"><a href="#Handheld-Computer-Operating-Systems" class="headerlink" title="Handheld Computer Operating Systems"></a>Handheld Computer Operating Systems</h2><ul>
+<li>A handheld computer，又称<strong>PDA</strong>(Personal Digital Assistant),是一个可以边手持边操作的小型计算机</li>
+<li>Google’s Android and Apple’s iOS</li>
+</ul>
+<h2 id="Embedded-Operating-Systems"><a href="#Embedded-Operating-Systems" class="headerlink" title="Embedded Operating Systems"></a>Embedded Operating Systems</h2><ul>
+<li>和Handheld Computer OS区别在于：嵌入式OS中无法自主安装软件 —— 软件都写在ROM里，这也意味着不需要提供app之间的保护</li>
+</ul>
+<h2 id="Sensor-Node-Operating-Systems"><a href="#Sensor-Node-Operating-Systems" class="headerlink" title="Sensor-Node Operating Systems"></a>Sensor-Node Operating Systems</h2><ul>
+<li><p>每个节点都是个小型计算机，通过一个基站进行无线通信</p>
+</li>
+<li><p>Each sensor node is a real computer, with a CPU, RAM, ROM, and one or more environmental sensors. It runs a small, but real operating system, usually one that is event driven, responding to external events or making measurements periodically based on an internal clock.</p>
+</li>
+<li>所有程序写在ROM里</li>
+</ul>
+<h2 id="Real-Time-Operating-Systems"><a href="#Real-Time-Operating-Systems" class="headerlink" title="Real-Time Operating Systems"></a>Real-Time Operating Systems</h2><ul>
+<li><p><strong>hard real-time system</strong>: actions absolutely <strong>must</strong> occur at a certain moment (or within a certain range)</p>
+<ul>
+<li>如工业、航空、军事</li>
+</ul>
+</li>
+<li><p><strong>soft real-time system</strong>: ddl没那么死</p>
+</li>
+<li>The categories of handhelds, embedded systems, and real-time systems overlap considerably</li>
+</ul>
+<h2 id="Smart-Card-Operating-Systems"><a href="#Smart-Card-Operating-Systems" class="headerlink" title="Smart Card Operating Systems"></a>Smart Card Operating Systems</h2><ul>
+<li>没想到吧，smart card也有一个OS!<ul>
+<li>有小型CPU和ROM</li>
+</ul>
+</li>
+<li>Some smart cards are Java oriented</li>
+</ul>
+<h1 id="OS-Concepts"><a href="#OS-Concepts" class="headerlink" title="OS Concepts"></a>OS Concepts</h1><h2 id="Processes"><a href="#Processes" class="headerlink" title="Processes"></a>Processes</h2><ul>
+<li>A process is fundamentally a container that holds all the information needed to run a program</li>
+<li><strong>address space</strong>: 进程可操作的一块内存。 包括了可执行的程序、程序的数据和栈指针</li>
+<li><strong>process table</strong>: an array of structures, one for each process currently in existence<ul>
+<li>大多数OS都有，储存了每个进程的所有信息,不只是地址空间</li>
+</ul>
+</li>
+<li><strong>core image</strong>:    address space of  a ( suspended ) process</li>
+<li><strong>ID</strong>:<ul>
+<li><strong>UID</strong>: each  person authorized to used a system is assigned a UID by the system administrator<ul>
+<li>每个进程都拥有其创建者的UID， 子进程的UID就是父进程的UID</li>
+</ul>
+</li>
+<li><strong>GID</strong>： users can be members of groups</li>
+</ul>
+</li>
+</ul>
+<h2 id="Address-Space"><a href="#Address-Space" class="headerlink" title="Address Space"></a>Address Space</h2><ul>
+<li>每个进程都拥有其可操作的地址空间，而<strong>address space</strong>是和物理内存<strong>解耦</strong>（借助虚拟内存）的</li>
+<li>虽然避免内存中的进程互相干扰是硬件需要提供的机制，但该机制在软件层需要由OS控制</li>
+</ul>
+<h2 id="File"><a href="#File" class="headerlink" title="File"></a>File</h2><ul>
+<li><strong>File &amp; Directory</strong>: OS把底层千奇百怪的存储设备抽象成文件系统，并使用<strong>directory</strong>概念来管理<ul>
+<li>对文件和目录的许多操作都需要<code>syscall</code></li>
+</ul>
+</li>
+<li><strong>pathname</strong>: 文件在 directory hierarchy 中有<strong>pathname</strong>, 后者最顶层是<strong>root directory</strong>, 由<code>/</code>表示。 从根目录开始的路径叫做<strong>绝对路径</strong>。 而每个进程又有自己当时的<strong>working directory</strong>， 其中的路径名不需要从根目录开始,例如对于绝对路径<code>C:\Docs\sub\javac</code>, 当前工作目录是<code>C:\Docs</code><ul>
+<li>绝对路径：<code>C:\Docs\sub\javac</code></li>
+<li>相对路径：<code>sub\javac</code> ; 也可写成：<code>.\sub\javac</code></li>
+<li><code>.</code>表示当前目录，<code>..</code>表示上级目录</li>
+</ul>
+</li>
+<li><p><strong>file descriptor</strong>在文件被读写前，它首先要被打开，此时需要检验许可，若许可成功，则系统返回一个<strong>file descriptor</strong>用于后续操作； 否则返回一个error code</p>
+</li>
+<li><p><strong>mount</strong>: 将CD-ROM上的file system挂载到root file system.</p>
+<ul>
+<li>此时原有节点的数据不能被访问，因为这个节点已经被挂载了。由于挂在节点一般是空节点，这一般不会造成影响</li>
+</ul>
+</li>
+<li><p><strong>special file</strong>：OS将I/O设备抽象为special file ，使得它可以用处理普通文件的<code>syscall</code>来处理这类设备，special file分两种，都挂载到<code>/dev</code>目录下</p>
+<ul>
+<li>block special file：用于由随机寻址块组成的设备 .i.e 磁盘</li>
+<li>character special file: 用于输入\输出字符流的设备 .i.e 键盘</li>
+</ul>
+</li>
+<li><p><strong>pipe</strong>： 用于进程间通信的伪文件，通过它，UNIX进程间通信就像是普通的文件读写</p>
+<ul>
+<li>pipe的实现很像文件的实现，一个进程要想知道其输出文件是一个真实的文件还是一个pipe，只能使用<code>syscall</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Protection"><a href="#Protection" class="headerlink" title="Protection"></a>Protection</h2><ul>
+<li><p>protection code: each file in UNIX are protected by assigning each one a 9-bit binary protection code, which consists of three 3-bit fields, one for the owner, one for the owner’s group, one for everyone else. </p>
+<ul>
+<li>例如<code>rwxr-x--x</code>意味着拥有者可读可写可执行， 群组可读可执行，其他人可执行</li>
+</ul>
+</li>
+</ul>
+<h1 id="Ontogeny-Recapitulates-Phylogeny"><a href="#Ontogeny-Recapitulates-Phylogeny" class="headerlink" title="Ontogeny Recapitulates Phylogeny"></a>Ontogeny Recapitulates Phylogeny</h1><ul>
+<li>达尔文有个理论，“胚胎的成长会浮现其种族的演化”，这在计算机领域是很形象的。一个思想可能会因为技术创新而变得火热，然后湮没无闻，可思想本身是不死的。因此新技术的发展，其内核几乎总是一些“老旧”的思想。一项技术的发展所要经历的不同阶段，几乎也总是计算机发展史上的不同思想的重现</li>
+<li>因此，不要歧视所谓的“obsolete idea”</li>
+</ul>
+<h1 id="System-Calls"><a href="#System-Calls" class="headerlink" title="System Calls"></a>System Calls</h1><ul>
+<li>对<code>syscall</code>的调用一般是高度依赖于机器的，并且是汇编语言，但会提供一个<strong>procedure library</strong>来允许在高级语言中调用<code>syscall</code></li>
+<li><p>每个单CPU的计算机同时只能处理一条指令， 如果一个user mode的程序需要system service， 它就会执行a trap instruction 来将控制权交给OS, 后者完成任务后再将控制权交还</p>
+<ul>
+<li>因此<code>syscall</code>和普通的procedure call没什么区别，只是前者会陷入kernel mode</li>
+</ul>
+</li>
+<li><p>System call执行步骤：</p>
+<ol>
+<li>参数压栈</li>
+<li>参数压栈</li>
+<li>参数压栈</li>
+<li>使用普通的procedure call调用library procedure, </li>
+<li>library procedure将 system-call number放入OS所期望的地方（通常是个寄存器）</li>
+<li>library procedure执行<code>TRAP</code>, 陷入kernel mode。 并从内核层的固定地址开始执行<ul>
+<li>TRAP指令和 procedure call的区别在于能陷入内核层，并且TRAP不能跳转到任意位置，只能跳转到固定位置，或者跳转到其参数中给定的位置</li>
+</ul>
+</li>
+<li>内核层检查system-call number, 并分发给对应的handler</li>
+<li>handler执行</li>
+<li>handler执行完毕后，控制<em>可能会</em>交还给user space的library procedure<ul>
+<li>system call也可以阻塞caller，比如在等待用户输入时。 此时OS会去执行其它进程</li>
+</ul>
+</li>
+<li>library procedure以通常的procedure call返回的方式返回user program</li>
+<li>user program像对待任何library procedure一样，清除栈顶</li>
+</ol>
+</li>
+</ul>
+<h2 id="System-Calls-amp-Library-Functions"><a href="#System-Calls-amp-Library-Functions" class="headerlink" title="System Calls &amp; Library Functions"></a>System Calls &amp; Library Functions</h2><p> 系统调用和库函数都以C函数的形式出现 </p>
+<p>系统调用：</p>
+<ul>
+<li>Linux内核的对外接口;</li>
+<li>用户程序和内核之间唯一的接口;</li>
+<li>提供最小接口 </li>
+</ul>
+<p>库函数：</p>
+<ul>
+<li>依赖于系统调用; 提供较复杂功能 <ul>
+<li>例：标准I/O库</li>
+</ul>
+</li>
+</ul>
+<h2 id="System-Calls-for-Process-Management"><a href="#System-Calls-for-Process-Management" class="headerlink" title="System Calls for Process Management"></a>System Calls for Process Management</h2><ul>
+<li><p><code>fork</code>是POSIX中唯一的创建新进程的方法，它会创建一个和父进程完全相同的子进程，并返回子进程在父进程中的<strong>PID</strong>( PID在子进程中为0 )</p>
+</li>
+<li><p>当一条指令被输入时。shell会fork出一个新的子进程，这个子进程必须执行这条用户指令，它首先会调用<code>exec</code> system call( 实际上该system call名字不一定叫<code>exec</code> )</p>
+<ul>
+<li><code>exec(command,parameters,0)</code></li>
+<li>其参数分别为：要执行的文件名； 参数数组的指针； 环境数组的指针</li>
+<li>执行<code>exec</code>会导致该子进程的整个<strong>core image</strong>被<code>exec</code>第一个参数（即文件名）所指向的文件所替换</li>
+</ul>
+</li>
+<li><p>例子：执行<code>cp file1 file2</code></p>
+<ol>
+<li><p>shell <code>fork</code>出子进程,子进程执行<code>cp</code>这个文件，将源和目的文件的名字传给它</p>
+<ul>
+<li>程序就是文件，<code>cp</code>既是程序，当然也是个文件</li>
+</ul>
+</li>
+<li><p><code>cp</code>的内容是:</p>
+<p><code>main( argc, argv, envp )</code></p>
+<ul>
+<li><code>argc</code>: 参数数量，包括程序名在内，这里是3</li>
+<li><code>argc</code>：参数名（都是字符串）指针. <code>argv[0]</code>指向string “cp” </li>
+<li><code>envp</code>: 环境指针， 一个string的键值对数组，这里没有环境要传递，因此是0</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><p>UNIX进程在内存中分三段：</p>
+<ul>
+<li><strong>text segment</strong>: i.e., the program code  </li>
+<li><strong>data segment</strong>: i.e., the variables 向上增长</li>
+<li><strong>stack segment</strong>： 向下增长</li>
+</ul>
+</li>
+</ul>
+<h2 id="System-Calls-for-Directory-Management"><a href="#System-Calls-for-Directory-Management" class="headerlink" title="System Calls for Directory Management"></a>System Calls for Directory Management</h2><ul>
+<li><code>mkdir</code>, <code>rmdir</code>: create and remove empty directories</li>
+<li><code>link</code>: allow the same file to appear under 2 or more names<ul>
+<li>UNIX系统有一个i-node组成的表，每个i-node记录了这个文件的一些信息， 而UNIX File都有一个File number，是i-node的索引。 一个directory就是一个（ i-number, ASCII name ）pair的集合. <code>link</code>做的就是创建一个新的directory,它只有一个pair，其ASCII name可能不同，但i-number 是已有的文件的</li>
+</ul>
+</li>
+</ul>
+<h2 id="Miscellaneous-System-Calls"><a href="#Miscellaneous-System-Calls" class="headerlink" title="Miscellaneous System Calls"></a>Miscellaneous System Calls</h2><ul>
+<li><code>chmod</code>: 改变文件的九位protection code</li>
+<li><code>chdir</code>: 改变文件的工作目录</li>
+<li><code>kill</code></li>
+</ul>
+<h2 id="The-Windows-Win32-API"><a href="#The-Windows-Win32-API" class="headerlink" title="The Windows Win32 API"></a>The Windows Win32 API</h2><ul>
+<li>UNIX的system call和library几乎是一一对应的， 但是Windows把它们解耦了，开发者们面对的是<strong>WIn32 API</strong></li>
+<li><strong>WIn32 API</strong>极其庞大和复杂，因此很难区分哪个调用了system call哪个没有</li>
+</ul>
+<h1 id="OS-Structure"><a href="#OS-Structure" class="headerlink" title="OS Structure"></a>OS Structure</h1><h2 id="Monolithic-Systems"><a href="#Monolithic-Systems" class="headerlink" title="Monolithic Systems"></a>Monolithic Systems</h2><ul>
+<li>整个OS作为一个单一程序运行在kernel mode</li>
+<li>OS是一个procedures的集合， 每一个procedure都可以自由调用其它任何procedure，完全没有信息隐藏</li>
+<li>当计算机启动时，不仅OS会被加载， 许多OS还支持loadable extensions,比如I/O驱动和文件系统。 它们在UNIX中称为 share libraries, 在Windows中称为DLLs</li>
+</ul>
+<h2 id="Layered-Systems"><a href="#Layered-Systems" class="headerlink" title="Layered Systems"></a>Layered Systems</h2><ul>
+<li>OS由层级结构组成，每一层使用下一层的服务</li>
+<li>最早是THE system,由Dijkstra研发<ul>
+<li>Layered system只是个设计目标，由于每个层最终都链接到一起，实际上整个OS是一个单一的程序</li>
+</ul>
+</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>The operator (用户操作进程 )</td>
+</tr>
+<tr>
+<td>4</td>
+<td>User programs</td>
+</tr>
+<tr>
+<td>3</td>
+<td>I/O management  3层以上不用处理IO细节</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Operator-process communication</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Memory management</td>
+</tr>
+<tr>
+<td>0</td>
+<td>processor allocation and multiprogramming</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>Layered system的理念后来在MULTICS体现。 后者是由一系列同心环组成，内环拥有更大的权限，外环若要使用内环的服务，需要系统调用</li>
+</ul>
+<h2 id="Microkernels"><a href="#Microkernels" class="headerlink" title="Microkernels"></a>Microkernels</h2><ul>
+<li>Layered system的设计者可以划分kernel-user的界限，传统的Layered system全部运行在kernel，而这是不必要的。microkernel的理念是将OS分离为不同模块，其中只有一个 —- 称作microkernel 运行在内核层，其余的运行在用户层，以实现高可靠性</li>
+<li>除了OS X( based on Mach microkernel ), 通常的桌面OS都不用microkernel</li>
+<li>著名的有塞班和MINIX 3</li>
+<li>MINIX 3的结构：<ul>
+<li>内核层： system call handler和时钟的驱动（ 因为调度器经常要与时钟交互 ）</li>
+<li>用户层（从下到上）：<ol>
+<li>Drivers：各种设备驱动，由于不在内核层，因此无法直接对I/O port sapce操作，也无法直接发起I/O commands,只能构造一个structure发给内核</li>
+<li>servers：为上层提供各种服务，其中有个<strong>reincarnation server</strong> 工作是检查其它server和driver的工作情况，若不正常，就自动替换，不需要任何用户干预。 </li>
+<li>User programs</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>也可将微内核的理念看作  “<em>mechanism</em>和<em>policy</em>分离”。 mechanism指的是机器自动执行的那部分， policy指的是需要用户指定的那部分， 内核层只需要管理mechanism</li>
+</ul>
+<h2 id="Client-Server-Model"><a href="#Client-Server-Model" class="headerlink" title="Client-Server Model"></a>Client-Server Model</h2><p>不解释了</p>
+<h2 id="Virtual-Machines"><a href="#Virtual-Machines" class="headerlink" title="Virtual Machines"></a>Virtual Machines</h2><h2 id="VM-370"><a href="#VM-370" class="headerlink" title="VM/370"></a>VM/370</h2><ul>
+<li>将multiprogramming和extended machine with a more convenient interface解耦</li>
+<li>使用VM monitor（又称为hypervisor），它运行在硬件上，向上提供虚拟机。</li>
+<li>虚拟机提供的不是extened machine，而是<strong>硬件</strong>， 没有任何抽象<ul>
+<li>其实虚拟机是将机器硬件抽象成了虚拟硬件提供给宿主机，实现了物理硬件的虚拟化。但是虚拟机不会给宿主机提供任何抽象API，它提供的还是硬件资源（尽管是虚拟的）。</li>
+<li>这部分详见“OS VMM”，我的另一篇文章</li>
+</ul>
+</li>
+<li>由于每个虚拟机对应一块真实的硬件，所以每个虚拟机能运行独立的OS，比如OS/360, CMS( Conversational Monitor System )等</li>
+<li>当一个CMS程序发起系统调用，系统会内陷到CMS( 而不是VM/370 ), 而CMS会发起普通的硬件指令调用， 这将会内陷到VM/370， 后者执行这些指令</li>
+</ul>
+<h2 id="Virtual-Machine-Rediscovered"><a href="#Virtual-Machine-Rediscovered" class="headerlink" title="Virtual Machine Rediscovered"></a>Virtual Machine Rediscovered</h2><ul>
+<li>虚拟化的前提是CPU支持虚拟化，而许多研究使得不支持虚拟化的CPU也能虚拟化（比如x86）</li>
+<li>Bochs: 解释器，使得CPU“能够”虚拟化，很慢。 后来有许多改进，这类软件称为machine simulator</li>
+<li>type2 hypervisor：建立在type1 hypervisor之上，即建立在一个宿主机OS之上。而type1 hypervisor建立在纯粹的硬件上</li>
+</ul>
+<h2 id="Exokernels"><a href="#Exokernels" class="headerlink" title="Exokernels"></a>Exokernels</h2><ul>
+<li>与传统的虚拟机不同的地方在于，exokernels为每个虚拟机分配资源，虚拟机知道自己被分配了多少资源。<ul>
+<li>这就避免了建立映射的损耗。传统的虚拟机都认为自己拥有整个硬件，因此得为它们建立映射层</li>
+</ul>
+</li>
+</ul>
+<h1 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h1><p>计算机科学的发展日新月异，只有刻苦坚持，才能走在别人前面</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/10/02/%E6%88%91%E5%92%8C%E6%88%91%E7%9A%84%E7%88%B6%E8%BE%88/" rel="prev" title="我和我的父辈">
+      <i class="fa fa-chevron-left"></i> 我和我的父辈
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/10/19/%E5%9B%BD%E5%8F%B2%E5%A4%A7%E7%BA%B2/" rel="next" title="国史大纲">
+      国史大纲 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Main-Components"><span class="nav-text">Main Components</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hardware"><span class="nav-text">Hardware</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Software"><span class="nav-text">Software</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#kernel-mode"><span class="nav-text">kernel mode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#user-mode"><span class="nav-text">user mode</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WHAT-IS-OPERATING-SYSTEM"><span class="nav-text">WHAT IS OPERATING SYSTEM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-OS-as-an-Extended-Machine"><span class="nav-text">The OS as an Extended Machine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-OS-as-a-Resource-Manager"><span class="nav-text">The OS as a Resource Manager</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HISTORY-OF-OPERATING-SYSTEMS"><span class="nav-text">HISTORY OF OPERATING SYSTEMS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-first-true-digital-computer"><span class="nav-text">The first true digital computer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-First-Generation-1945%E2%80%9355-Vacuum-Tubes"><span class="nav-text">The First Generation (1945–55): Vacuum Tubes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Second-Generation-1955%E2%80%9365-Transistors-and-Batch-Systems"><span class="nav-text">The Second Generation (1955–65): Transistors and Batch Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Third-Generation-1965%E2%80%931980-ICs-and-Multiprogramming"><span class="nav-text">The Third Generation (1965–1980): ICs and Multiprogramming</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Fourth-Generation-1980%E2%80%93Present-Personal-Computers"><span class="nav-text">The Fourth Generation (1980–Present): Personal Computers</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#COMPUTER-HARDWARE-REVIEW"><span class="nav-text">COMPUTER HARDWARE REVIEW</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PROCESSORS"><span class="nav-text">PROCESSORS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Multithread-and-Multicore-Chips"><span class="nav-text">Multithread and Multicore Chips</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MEMORY"><span class="nav-text">MEMORY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disks"><span class="nav-text">Disks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-Devices"><span class="nav-text">I&#x2F;O Devices</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#controller-and-devices"><span class="nav-text">controller and devices</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#controller"><span class="nav-text">controller</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#device"><span class="nav-text">device</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#disk-driver"><span class="nav-text">disk driver</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#device-register"><span class="nav-text">device register</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#I-O"><span class="nav-text">I&#x2F;O</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Buses"><span class="nav-text">Buses</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Booting-the-Computer"><span class="nav-text">Booting the Computer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-OS-Zoo"><span class="nav-text">The OS Zoo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mainframe-Operating-Systems"><span class="nav-text">Mainframe Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-Operating-Systems"><span class="nav-text">Server Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiprocessor-Operating-Systems"><span class="nav-text">Multiprocessor Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Personal-Computer-Operating-Systems"><span class="nav-text">Personal Computer Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handheld-Computer-Operating-Systems"><span class="nav-text">Handheld Computer Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Embedded-Operating-Systems"><span class="nav-text">Embedded Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sensor-Node-Operating-Systems"><span class="nav-text">Sensor-Node Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Real-Time-Operating-Systems"><span class="nav-text">Real-Time Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Smart-Card-Operating-Systems"><span class="nav-text">Smart Card Operating Systems</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OS-Concepts"><span class="nav-text">OS Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Processes"><span class="nav-text">Processes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Address-Space"><span class="nav-text">Address Space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File"><span class="nav-text">File</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Protection"><span class="nav-text">Protection</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ontogeny-Recapitulates-Phylogeny"><span class="nav-text">Ontogeny Recapitulates Phylogeny</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#System-Calls"><span class="nav-text">System Calls</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Calls-amp-Library-Functions"><span class="nav-text">System Calls &amp; Library Functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Calls-for-Process-Management"><span class="nav-text">System Calls for Process Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Calls-for-Directory-Management"><span class="nav-text">System Calls for Directory Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Miscellaneous-System-Calls"><span class="nav-text">Miscellaneous System Calls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Windows-Win32-API"><span class="nav-text">The Windows Win32 API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OS-Structure"><span class="nav-text">OS Structure</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Monolithic-Systems"><span class="nav-text">Monolithic Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layered-Systems"><span class="nav-text">Layered Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Microkernels"><span class="nav-text">Microkernels</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client-Server-Model"><span class="nav-text">Client-Server Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-Machines"><span class="nav-text">Virtual Machines</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VM-370"><span class="nav-text">VM&#x2F;370</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-Machine-Rediscovered"><span class="nav-text">Virtual Machine Rediscovered</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exokernels"><span class="nav-text">Exokernels</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Summary"><span class="nav-text">Summary</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

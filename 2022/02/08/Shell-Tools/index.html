@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="介绍了一些常用的命令行工具，和它们的现代替代 ref: MIT  lesson, Unix命令的现代替代">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell Tools">
+<meta property="og:url" content="http://lyk-love.cn/2022/02/08/Shell-Tools/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="介绍了一些常用的命令行工具，和它们的现代替代 ref: MIT  lesson, Unix命令的现代替代">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.beekka.com/blogimg/asset/202201/bg2022012706.webp">
+<meta property="og:image" content="https://cdn.beekka.com/blogimg/asset/202201/bg2022012707.webp">
+<meta property="og:image" content="https://cdn.beekka.com/blogimg/asset/202201/bg2022012804.jpg">
+<meta property="article:published_time" content="2022-02-08T18:17:19.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.beekka.com/blogimg/asset/202201/bg2022012706.webp">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/02/08/Shell-Tools/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Shell Tools | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/02/08/Shell-Tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Shell Tools
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-08 18:17:19" itemprop="dateCreated datePublished" datetime="2022-02-08T18:17:19Z">2022-02-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>介绍了一些常用的命令行工具，和它们的现代替代</p>
+<p>ref: <a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/shell-tools/">MIT  lesson</a>, <a target="_blank" rel="noopener" href="https://github.com/ibraheemdev/modern-unix">Unix命令的现代替代</a></p>
+<span id="more"></span>
+<h1 id="Shell-Tools"><a href="#Shell-Tools" class="headerlink" title="Shell Tools"></a>Shell Tools</h1><p>介绍一些常用的命令行工具</p>
+<h2 id="目录浏览"><a href="#目录浏览" class="headerlink" title="目录浏览"></a>目录浏览</h2><h3 id="exa"><a href="#exa" class="headerlink" title="exa"></a>exa</h3><p><code>exa</code>是<code>ls</code>命令的替代品，可以彩色输出目录内容，更容易辨识。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exa --long --git</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数<code>--git</code>表示输出文件的 Git 状态。<ul>
+<li><code>N</code>：新文件</li>
+<li><code>M</code>：文件有变动</li>
+<li><code>I</code>：该文件被忽略</li>
+</ul>
+</li>
+</ul>
+<p>除了平铺显示，<code>exa</code>还支持目录的树状显示。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exa --tree --level=2</span><br></pre></td></tr></table></figure>
+<h2 id="Directory-Navigation"><a href="#Directory-Navigation" class="headerlink" title="Directory Navigation"></a>Directory Navigation</h2><h3 id="fasd-amp-autojump"><a href="#fasd-amp-autojump" class="headerlink" title="fasd &amp; autojump"></a>fasd &amp; autojump</h3><p>Fasd ranks files and directories by <a target="_blank" rel="noopener" href="https://web.archive.org/web/20210421120120/https://developer.mozilla.org/en-US/docs/Mozilla/Tech/Places/Frecency_algorithm"><em>frecency</em></a>, that is, by both <em>frequency</em> and <em>recency</em>. By default, <code>fasd</code> adds a <code>z</code> command that you can use to quickly <code>cd</code> using a substring of a <em>frecent</em> directory. For example, if you often go to  <code>/home/user/files/cool_project</code> you can simply use <code>z cool</code> to jump there. Using autojump, this same change of directory could be accomplished using <code>j cool</code>.</p>
+<h3 id="broot"><a href="#broot" class="headerlink" title="broot"></a>broot</h3><p>类似ranger的终端文件管理器， 不支持vim语法，但是能浏览媒体文件</p>
+<p>列出当前目录的文件信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">br -sdph</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-s</code>：显示文件体积</li>
+<li><code>-d</code>：显示文件时间</li>
+<li><code>-p</code>：显示文件权限</li>
+<li><code>-h</code>：显示隐藏文件</li>
+</ul>
+<p>在broot界面中，可以完成各种文件操作：</p>
+<ul>
+<li>搜索：输入搜索词</li>
+<li>复制：输入<code>:cp &lt;复制后的文件名&gt;</code></li>
+<li>删除：输入<code>:rm</code></li>
+<li>改名：输入<code>:mv &lt;新文件名&gt;</code></li>
+<li>退出：输入<code>:q</code></li>
+</ul>
+<p>还可以预览文件：</p>
+<ul>
+<li>打开外部关联程序： 通过上下箭头选中文件，然后按下右箭头<code>→</code></li>
+<li>在当前窗口预览文件： <code>ctrl + →</code></li>
+</ul>
+<h2 id="文件内容查看"><a href="#文件内容查看" class="headerlink" title="文件内容查看"></a>文件内容查看</h2><h3 id="bat-amp-fx-amp-hexyl"><a href="#bat-amp-fx-amp-hexyl" class="headerlink" title="bat &amp; fx &amp; hexyl"></a>bat &amp; fx &amp; hexyl</h3><p><a target="_blank" rel="noopener" href="https://github.com/sharkdp/bat">bat</a> 是<code>cat</code>命令的替代品，输出文本文件的内容，并且带有<code>cat</code>所没有的代码高亮和行号。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bat README.md</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>如果浏览的是 JSON 文件，还可以使用 <a target="_blank" rel="noopener" href="https://github.com/antonmedv/fx">fx</a> 或者 <a target="_blank" rel="noopener" href="https://github.com/stedolan/jq">jq</a>。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ fx data.json</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>如果浏览的是二进制文件，使用 <a target="_blank" rel="noopener" href="https://github.com/sharkdp/hexyl">hexyl</a>。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexyl example.jpg</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="文件内容比对"><a href="#文件内容比对" class="headerlink" title="文件内容比对"></a>文件内容比对</h2><h3 id="diff-so-fancy"><a href="#diff-so-fancy" class="headerlink" title="diff-so-fancy"></a>diff-so-fancy</h3><p><a target="_blank" rel="noopener" href="https://github.com/so-fancy/diff-so-fancy">diff-so-fancy</a> 是 git diff 的替代品，使得命令行的 diff 操作具有类似 GitHub 的页面效果。</p>
+<p>安装后，参考官方文档，将它配置为 Git 的默认 diff 工具就可以了。以后每次执行<code>git diff</code>，就会输出它的执行结果。</p>
+<h2 id="Finding-files"><a href="#Finding-files" class="headerlink" title="Finding files"></a>Finding files</h2><p>One of the most common repetitive tasks that every programmer faces is finding files or directories. All UNIX-like systems come packaged with <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/find.1.html"><code>find</code></a>, a great shell tool to find files. <code>find</code> will recursively search for files matching some criteria. Some examples:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">Find all directories named src</span></span><br><span class="line">find . -name src -type d</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Find all python files that have a folder named <span class="built_in">test</span> <span class="keyword">in</span> their path</span></span><br><span class="line">find . -path &#x27;*/test/*.py&#x27; -type f</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Find all files modified <span class="keyword">in</span> the last day</span></span><br><span class="line">find . -mtime -1</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Find all zip files with size <span class="keyword">in</span> range 500k to 10M</span></span><br><span class="line">find . -size +500k -size -10M -name &#x27;*.tar.gz&#x27;</span><br></pre></td></tr></table></figure>
+<p>Beyond listing files, find can also perform actions over files that match your query. This property can be incredibly helpful to simplify what could be fairly monotonous tasks.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">Delete all files with .tmp extension</span></span><br><span class="line">find . -name &#x27;*.tmp&#x27; -exec rm &#123;&#125; \;</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Find all PNG files and convert them to JPG</span></span><br><span class="line">find . -name &#x27;*.png&#x27; -exec convert &#123;&#125; &#123;&#125;.jpg \;</span><br></pre></td></tr></table></figure>
+<p>Despite <code>find</code>’s ubiquitousness, its syntax can sometimes be tricky to remember. For instance, to simply find files that match some pattern <code>PATTERN</code> you have to execute <code>find -name &#39;*PATTERN*&#39;</code> (or <code>-iname</code> if you want the pattern matching to be case insensitive). You could start building aliases for those scenarios, but part of the shell philosophy is that it is good to explore alternatives. Remember, one of the best properties of the shell is that you are just calling programs, so you can find (or even write yourself) replacements for some. For instance, <a target="_blank" rel="noopener" href="https://github.com/sharkdp/fd"><code>fd</code></a> is a simple, fast, and user-friendly alternative to <code>find</code>. It offers some nice defaults like colorized output, default regex matching, and Unicode support. It also has, in my opinion, a more intuitive syntax. For example, the syntax to find a pattern <code>PATTERN</code> is <code>fd PATTERN</code>.</p>
+<p>Most would agree that <code>find</code> and <code>fd</code> are good, but some of you might be wondering about the efficiency of looking for files every time versus compiling some sort of index or database for quickly searching. That is what <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/locate.1.html"><code>locate</code></a> is for. <code>locate</code> uses a database that is updated using <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/updatedb.1.html"><code>updatedb</code></a>. In most systems, <code>updatedb</code> is updated daily via <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man8/cron.8.html"><code>cron</code></a>. Therefore one trade-off between the two is speed vs freshness. Moreover <code>find</code> and similar tools can also find files using attributes such as file size, modification time, or file permissions, while <code>locate</code> just uses the file name. A more in-depth comparison can be found <a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/60205/locate-vs-find-usage-pros-and-cons-of-each-other">here</a>.</p>
+<h3 id="fd"><a href="#fd" class="headerlink" title="fd"></a>fd</h3><h2 id="Finding-code"><a href="#Finding-code" class="headerlink" title="Finding code"></a>Finding code</h2><h3 id="grep-amp-ripgrep"><a href="#grep-amp-ripgrep" class="headerlink" title="grep &amp; ripgrep"></a>grep &amp; ripgrep</h3><p>For now, know that <code>grep</code> has many flags that make it a very versatile tool. Some I frequently use are <code>-C</code> for getting <strong>C</strong>ontext around the matching line and <code>-v</code> for in<strong>v</strong>erting the match, i.e. print all lines that do <strong>not</strong> match the pattern. For example, <code>grep -C 5</code> will print 5 lines before and after the match. When it comes to quickly searching through many files, you want to use <code>-R</code> since it will <strong>R</strong>ecursively go into directories and look for files for the matching string.</p>
+<p>But <code>grep -R</code> can be improved in many ways, such as ignoring <code>.git</code> folders, using multi CPU support, &amp;c. Many <code>grep</code> alternatives have been developed, including <a target="_blank" rel="noopener" href="https://beyondgrep.com/">ack</a>, <a target="_blank" rel="noopener" href="https://github.com/ggreer/the_silver_searcher">ag</a> and <a target="_blank" rel="noopener" href="https://github.com/BurntSushi/ripgrep">rg</a>. All of them are fantastic and pretty much provide the same functionality. For now I am sticking with ripgrep (<code>rg</code>), given how fast and intuitive it is. Some examples:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">Find all python files <span class="built_in">where</span> I used the requests library</span></span><br><span class="line">rg -t py &#x27;import requests&#x27;</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Find all files (including hidden files) without a shebang line</span></span><br><span class="line">rg -u --files-without-match &quot;^#!&quot;</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Find all matches of foo and <span class="built_in">print</span> the following 5 lines</span></span><br><span class="line">rg foo -A 5</span><br><span class="line"><span class="meta"># </span><span class="language-bash">Print statistics of matches (<span class="comment"># of matched lines and files )</span></span></span><br><span class="line">rg --stats PATTERN</span><br></pre></td></tr></table></figure>
+<p>Note that as with <code>find</code>/<code>fd</code>, it is important that you know that these problems can be quickly solved using one of these tools, while the specific tools you use are not as important.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/BurntSushi/ripgrep">ripgrep</a> 是<code>grep</code>命令的替代品，用来搜索文件内容。</p>
+<p>它跟<code>grep</code>的用法类似。下面例子是搜索当前目录里面，所有内容包含字符串<code>foo</code>的 Markdown 文件。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># grep 的写法</span></span><br><span class="line">$ grep foo *.md</span><br><span class="line"></span><br><span class="line"><span class="comment"># ripgrep 的写法</span></span><br><span class="line">$ rg foo *.md</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><code>ripgrep</code>的主要优势在于，默认带有行号和搜索词高亮，速度也更快。</p>
+<p><img src="https://cdn.beekka.com/blogimg/asset/202201/bg2022012706.webp" alt="img"></p>
+<h2 id="Finding-shell-commands"><a href="#Finding-shell-commands" class="headerlink" title="Finding shell commands"></a>Finding shell commands</h2><h3 id="fzf"><a href="#fzf" class="headerlink" title="fzf"></a>fzf</h3><p>The <code>history</code> command will let you access your shell history programmatically. It will print your shell history to the standard output. If we want to search there we can pipe that output to <code>grep</code> and search for patterns. <code>history | grep find</code> will print commands that contain the substring “find”.</p>
+<p>In most shells, you can make use of <code>Ctrl+R</code> to perform backwards search through your history. After pressing <code>Ctrl+R</code>, you can type a substring you want to match for commands in your history. As you keep pressing it, you will cycle through the matches in your history. This can also be enabled with the UP/DOWN arrows in <a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-history-substring-search">zsh</a>. A nice addition on top of <code>Ctrl+R</code> comes with using <a target="_blank" rel="noopener" href="https://github.com/junegunn/fzf/wiki/Configuring-shell-key-bindings#ctrl-r">fzf</a> bindings. <code>fzf</code> is a general-purpose fuzzy finder that can be used with many commands. Here it is used to fuzzily match through your history and present results in a convenient and visually pleasing manner.</p>
+<h3 id="mcfly"><a href="#mcfly" class="headerlink" title="mcfly"></a>mcfly</h3><p><a target="_blank" rel="noopener" href="https://github.com/cantino/mcfly">McFly</a> 是<code>ctrl-r</code>的替代品，用来搜索 Shell 的操作历史。</p>
+<p>安装以后，只要按下<code>ctrl-r</code>，就会出现一个更好用的搜索界面。</p>
+<h2 id="文本处理"><a href="#文本处理" class="headerlink" title="文本处理"></a>文本处理</h2><h3 id="choose"><a href="#choose" class="headerlink" title="choose"></a>choose</h3><p><a target="_blank" rel="noopener" href="https://github.com/theryangeary/choose">choose</a> 是<code>cut</code>命令的替代品，用来选中指定的栏位。</p>
+<p>它的优势主要是语法更简单，比如输出文件的第一列。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cut 的写法</span></span><br><span class="line">$ <span class="built_in">cat</span> data.txt | <span class="built_in">cut</span> -d <span class="string">&quot; &quot;</span> -f 1</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ <span class="built_in">cut</span> -d <span class="string">&quot; &quot;</span> -f 1 data.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># choose 的写法</span></span><br><span class="line">$ <span class="built_in">cat</span> data.txt | choose 0</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ choose 0 -i data.txt</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="text-editing"><a href="#text-editing" class="headerlink" title="text editing"></a>text editing</h2><p><code>jq</code>: <code>sed</code> for JSON data.</p>
+<h2 id="Resource-Monitoring"><a href="#Resource-Monitoring" class="headerlink" title="Resource Monitoring"></a>Resource Monitoring</h2><h3 id="General-Monitoring"><a href="#General-Monitoring" class="headerlink" title="General Monitoring"></a><strong>General Monitoring</strong></h3><h4 id="htop"><a href="#htop" class="headerlink" title="htop"></a>htop</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://htop.dev/"><code>htop</code></a>:  <code>htop</code> has a myriad of options and keybinds, some useful ones are: <code>&lt;F6&gt;</code> to sort processes, <code>t</code> to show tree hierarchy and <code>h</code> to toggle threads. </li>
+<li>See also <a target="_blank" rel="noopener" href="https://nicolargo.github.io/glances/"><code>glances</code></a> for similar implementation with a great UI.</li>
+<li>For getting aggregate measures across all processes, <a target="_blank" rel="noopener" href="http://dag.wiee.rs/home-made/dstat/"><code>dstat</code></a> is another nifty tool that computes real-time resource metrics for lots of different subsystems like I/O, networking, CPU utilization, context switches, &amp;c.</li>
+</ul>
+<h4 id="bottom"><a href="#bottom" class="headerlink" title="bottom"></a>bottom</h4><p><a target="_blank" rel="noopener" href="https://github.com/ClementTsang/bottom"><code>bottom</code></a>: Yet another cross-platform graphical process/system monitor.</p>
+<p>Usage:</p>
+<p>You can run bottom using <code>btm</code>.</p>
+<ul>
+<li>For help on flags, use <code>btm -h</code> for a quick overview or <code>btm --help</code> for more details.</li>
+<li>For info on key and mouse bindings, press <code>?</code> inside bottom or refer to the <a target="_blank" rel="noopener" href="https://clementtsang.github.io/bottom/nightly/">documentation</a>.</li>
+</ul>
+<h3 id="I-O-operations"><a href="#I-O-operations" class="headerlink" title="I/O operations"></a>I/O operations</h3><p> <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man8/iotop.8.html"><code>iotop</code></a> displays live I/O usage information and is handy to check if a process is doing heavy I/O disk operations</p>
+<h3 id="process-information"><a href="#process-information" class="headerlink" title="process  information"></a><strong>process  information</strong></h3><ul>
+<li><code>ps</code>： 显示进程信息<ul>
+<li><code>procs</code>:  <code>ps</code>的现代替代</li>
+</ul>
+</li>
+</ul>
+<h3 id="Disk-Usage"><a href="#Disk-Usage" class="headerlink" title="Disk Usage -"></a><strong>Disk Usage</strong> -</h3><ul>
+<li><p><code>df</code> : 显示磁盘占用情况</p>
+<ul>
+<li><code>duf</code>： <code>df</code>的现代替代</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://man7.org/linux/man-pages/man1/du.1.html"><code>du</code></a> 显示当前目录下每个文件占用的磁盘空间</p>
+<ul>
+<li><p><code>-h</code> ： print with <strong>h</strong>uman readable format.</p>
+</li>
+<li><p><code>ncdu</code>： <code>du</code>的现代替代</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Memory-Usage"><a href="#Memory-Usage" class="headerlink" title="Memory Usage -"></a><strong>Memory Usage</strong> -</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/free.1.html"><code>free</code></a> displays the total amount of free and used memory in the system. Memory is also displayed in tools like <code>htop</code>.</li>
+</ul>
+<h3 id="Open-Files"><a href="#Open-Files" class="headerlink" title="Open Files -"></a><strong>Open Files</strong> -</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man8/lsof.8.html"><code>lsof</code></a> lists file information about files opened by processes. It can be quite useful for checking which process has opened a specific file.</li>
+</ul>
+<h3 id="Network-Connections-and-Config"><a href="#Network-Connections-and-Config" class="headerlink" title="Network Connections and Config"></a><strong>Network Connections and Config</strong></h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man8/ss.8.html"><code>ss</code></a> lets you monitor incoming and outgoing network packets statistics as well as interface statistics. A common use case of <code>ss</code> is figuring out what process is using a given port in a machine. </li>
+<li>For displaying routing, network devices and interfaces you can use <a target="_blank" rel="noopener" href="http://man7.org/linux/man-pages/man8/ip.8.html"><code>ip</code></a>. Note that <code>netstat</code> and <code>ifconfig</code> have been deprecated in favor of the former tools respectively.</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/orf/gping"><code>gping</code></a>: <code>ping</code>, but with a graph.</li>
+</ul>
+<ul>
+<li><strong>Network Usage</strong> - <a target="_blank" rel="noopener" href="https://github.com/raboof/nethogs"><code>nethogs</code></a> and <a target="_blank" rel="noopener" href="http://www.ex-parrot.com/pdw/iftop/"><code>iftop</code></a> are good interactive CLI tools for monitoring network usage.</li>
+</ul>
+<p>If you want to test these tools you can also artificially impose loads on the machine using the <a target="_blank" rel="noopener" href="https://linux.die.net/man/1/stress"><code>stress</code></a> command.</p>
+<h4 id="httpie"><a href="#httpie" class="headerlink" title="httpie"></a>httpie</h4><p><a target="_blank" rel="noopener" href="https://github.com/httpie/httpie">httpie</a> 是 curl 的替代品，用来发出 HTTP 请求。</p>
+<p>它的特点是语法更简单，并且服务器的返回内容会格式化高亮显示。</p>
+<p><img src="https://cdn.beekka.com/blogimg/asset/202201/bg2022012707.webp" alt="img"></p>
+<p>下面是发出 PUT 请求的例子。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># curl 的写法</span></span><br><span class="line">$ curl -X PUT -d hello=world example.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># httpie 的写法</span></span><br><span class="line">$ http PUT example.com hello=world </span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>同类项目还有 <a target="_blank" rel="noopener" href="https://github.com/rs/curlie">curlie</a>、<a target="_blank" rel="noopener" href="https://github.com/ducaale/xh">xh</a>。</p>
+<p><a target="_blank" rel="noopener" href="https://dns.lookup.dog/">dog</a> 是<code>dig</code>命令的替代品，用来发出 DNS 查询。它的用法比<code>dig</code>简单多了。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认查询 A 记录</span></span><br><span class="line">$ dog example.net</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查询多个记录</span></span><br><span class="line">$ dog example.net A NS MX</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><img src="https://cdn.beekka.com/blogimg/asset/202201/bg2022012804.jpg" alt="img"></p>
+<h2 id="Benchmarking"><a href="#Benchmarking" class="headerlink" title="Benchmarking"></a>Benchmarking</h2><h3 id="hyperfine"><a href="#hyperfine" class="headerlink" title="hyperfine"></a>hyperfine</h3><p><a target="_blank" rel="noopener" href="https://github.com/sharkdp/hyperfine"><code>hyperfine</code></a></p>
+<p>A command-line benchmarking tool.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/08/Data-Wrangling/" rel="prev" title="Data Wrangling">
+      <i class="fa fa-chevron-left"></i> Data Wrangling
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/09/debtap/" rel="next" title="debtap">
+      debtap <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-Tools"><span class="nav-text">Shell Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E6%B5%8F%E8%A7%88"><span class="nav-text">目录浏览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#exa"><span class="nav-text">exa</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Directory-Navigation"><span class="nav-text">Directory Navigation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fasd-amp-autojump"><span class="nav-text">fasd &amp; autojump</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#broot"><span class="nav-text">broot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E6%9F%A5%E7%9C%8B"><span class="nav-text">文件内容查看</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bat-amp-fx-amp-hexyl"><span class="nav-text">bat &amp; fx &amp; hexyl</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E6%AF%94%E5%AF%B9"><span class="nav-text">文件内容比对</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#diff-so-fancy"><span class="nav-text">diff-so-fancy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-files"><span class="nav-text">Finding files</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fd"><span class="nav-text">fd</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-code"><span class="nav-text">Finding code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#grep-amp-ripgrep"><span class="nav-text">grep &amp; ripgrep</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-shell-commands"><span class="nav-text">Finding shell commands</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fzf"><span class="nav-text">fzf</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mcfly"><span class="nav-text">mcfly</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%A4%84%E7%90%86"><span class="nav-text">文本处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#choose"><span class="nav-text">choose</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#text-editing"><span class="nav-text">text editing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Resource-Monitoring"><span class="nav-text">Resource Monitoring</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#General-Monitoring"><span class="nav-text">General Monitoring</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#htop"><span class="nav-text">htop</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bottom"><span class="nav-text">bottom</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O-operations"><span class="nav-text">I&#x2F;O operations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#process-information"><span class="nav-text">process  information</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Disk-Usage"><span class="nav-text">Disk Usage -</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Memory-Usage"><span class="nav-text">Memory Usage -</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Open-Files"><span class="nav-text">Open Files -</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Network-Connections-and-Config"><span class="nav-text">Network Connections and Config</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#httpie"><span class="nav-text">httpie</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Benchmarking"><span class="nav-text">Benchmarking</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hyperfine"><span class="nav-text">hyperfine</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

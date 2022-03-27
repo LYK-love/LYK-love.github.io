@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Author: 有多远滚多远">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Typora &amp;&amp; Latex">
+<meta property="og:url" content="http://lyk-love.cn/2021/07/23/%E4%BD%BF%E7%94%A8Typora%E7%BC%96%E5%86%99%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Author: 有多远滚多远">
+<meta property="og:locale">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-49cc7a8cc50fcfd344b14168743a80ca_720w.jpg">
+<meta property="article:published_time" content="2021-07-23T15:39:08.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic3.zhimg.com/80/v2-49cc7a8cc50fcfd344b14168743a80ca_720w.jpg">
+
+<link rel="canonical" href="http://lyk-love.cn/2021/07/23/%E4%BD%BF%E7%94%A8Typora%E7%BC%96%E5%86%99%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Typora && Latex | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/07/23/%E4%BD%BF%E7%94%A8Typora%E7%BC%96%E5%86%99%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Typora && Latex
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-07-23 15:39:08" itemprop="dateCreated datePublished" datetime="2021-07-23T15:39:08Z">2021-07-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li>Author: 有多远滚多远</li>
+</ul>
+<span id="more"></span>
+<h1 id="How"><a href="#How" class="headerlink" title="How"></a>How</h1><p>在Typora中：</p>
+<ul>
+<li>按住<code>ctrl + shift + m</code></li>
+<li>或者输入$$$$</li>
+</ul>
+<h1 id="Latex-syntax"><a href="#Latex-syntax" class="headerlink" title="Latex syntax"></a>Latex syntax</h1><h2 id="上下标"><a href="#上下标" class="headerlink" title="上下标"></a>上下标</h2><ul>
+<li><p>上标</p>
+<ul>
+<li>只有一个: <code>a^2</code></li>
+<li>多个: <code>a^&#123;1224&#125;</code></li>
+</ul>
+</li>
+<li><p>下标</p>
+<ul>
+<li>跟上标类似，只需要把^换成_</li>
+</ul>
+</li>
+<li><p>如果有多重下标或上标，必须用{ }进行准确的分割</p>
+<ul>
+<li><code>A_&#123;bb_&#123;cc&#125;&#125;</code></li>
+</ul>
+<script type="math/tex; mode=display">
+A_{bb_{cc}}</script></li>
+</ul>
+<h2 id="插入水平线"><a href="#插入水平线" class="headerlink" title="插入水平线"></a>插入水平线</h2><ul>
+<li><code>\overline</code>和<code>\underline</code><ul>
+<li><code>\overline&#123;a+b+c&#125; = \underline&#123;a+b+c&#125;</code></li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+\overline{a+b+c} = \underline{a+b+c}</script><h2 id="平方根"><a href="#平方根" class="headerlink" title="平方根"></a>平方根</h2><ul>
+<li><p>语法为<code>\sqrt[n]</code> 未给出n则默认为2</p>
+<ul>
+<li><code>\sqrt[5]&#123; a &#125;</code></li>
+</ul>
+<script type="math/tex; mode=display">
+\sqrt[5]{ a }</script></li>
+</ul>
+<h2 id="插入水平大括号"><a href="#插入水平大括号" class="headerlink" title="插入水平大括号"></a>插入水平大括号</h2><ul>
+<li>语法为<code>\overbrace</code> 和<code>\underbrace</code><ul>
+<li><code>\overbrace&#123;2,3,4,\cdots,100&#125;^&#123;99&#125;</code></li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+\overbrace{2,3,4,\cdots,100}^{99}</script><h2 id="分式"><a href="#分式" class="headerlink" title="分式"></a>分式</h2><ul>
+<li>语法为<code>\frac&#123;&#125;&#123;&#125;</code><ul>
+<li><code>\frac&#123;abc&#125;&#123;defg&#125;</code></li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+\frac{abc}{defg}</script><ul>
+<li>连续分式 <code>\cfrac&#123;&#125;&#123;&#125;</code><ul>
+<li><code>\cfrac&#123;1&#125; &#123; a + \cfrac&#123;1&#125;b&#125;</code></li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+\cfrac{1} { a + \cfrac{1}b}</script><h2 id="导数"><a href="#导数" class="headerlink" title="导数"></a>导数</h2><ul>
+<li><code>x&#39;</code></li>
+</ul>
+<script type="math/tex; mode=display">
+x'</script><h2 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h2><ul>
+<li>语法为<code>\int</code><ul>
+<li><code>\int_&#123;a&#125;^&#123;b&#125;&#123;f(x)&#125; = x^2</code></li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+\int_{a}^{b}{f(x)} = x^2</script><h2 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h2><ul>
+<li>单符号可以用<code>\vec</code></li>
+<li>多符号可以用<code>\overrightarrow</code> 和<code>\overleftarrow</code><ul>
+<li><code>\vec a = \overrightarrow&#123;AB&#125; = \overleftarrow&#123;BA&#125;</code></li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+\vec a = \overrightarrow{AB} = \overleftarrow{BA}</script><h2 id="乘积"><a href="#乘积" class="headerlink" title="乘积"></a>乘积</h2><ul>
+<li><code>\prod</code><ul>
+<li><code>\prod_&#123;i=1&#125;^&#123;n&#125;&#123;(1/i)&#125;</code></li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+\prod_{i=1}^{n}{(1/i)}</script><h2 id="箭头"><a href="#箭头" class="headerlink" title="箭头"></a>箭头</h2><ul>
+<li><code>\larr</code> <code>\rarr</code></li>
+</ul>
+<script type="math/tex; mode=display">
+\larr  \rarr</script><h2 id="微积分符号"><a href="#微积分符号" class="headerlink" title="微积分符号"></a>微积分符号</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>latex</th>
+<th>显示效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\partial</code></td>
+<td>$\partial$</td>
+</tr>
+<tr>
+<td><code>\nabla</code></td>
+<td>$\nabla$</td>
+</tr>
+<tr>
+<td><code>\infty</code></td>
+<td>$\infty$</td>
+</tr>
+<tr>
+<td><code>\int</code></td>
+<td>$\int$</td>
+</tr>
+<tr>
+<td><code>\iint</code></td>
+<td>$\iint$</td>
+</tr>
+<tr>
+<td>\iiint`</td>
+<td>$\iiint$</td>
+</tr>
+<tr>
+<td><code>\oint</code></td>
+<td>$\oint$</td>
+</tr>
+<tr>
+<td><code>\triangle</code></td>
+<td>$\triangle$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h2><p>Ref: <a target="_blank" rel="noopener" href="https://blog.csdn.net/seaskying/article/details/51316607">https://blog.csdn.net/seaskying/article/details/51316607</a></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>描述</th>
+<th>latex</th>
+<th>显示效果</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>两个quad空格</td>
+<td><code>a \qquad b</code></td>
+<td>$a \qquad  b$</td>
+<td>两个<em>m</em>的宽度</td>
+</tr>
+<tr>
+<td>quad空格</td>
+<td><code>a \quad b</code></td>
+<td>$a \quad b$</td>
+<td>一个<em>m</em>的宽度</td>
+</tr>
+<tr>
+<td>大空格</td>
+<td><code>a\ b</code></td>
+<td>$a\ b$</td>
+<td>1/3<em>m</em>宽度</td>
+</tr>
+<tr>
+<td>中等空格</td>
+<td><code>a\; b</code></td>
+<td>$a\;b$</td>
+<td>2/7<em>m</em>宽度</td>
+</tr>
+<tr>
+<td>小空格</td>
+<td><code>a\, b</code></td>
+<td>$a\,b$</td>
+<td>1/6 <em>m</em>宽度</td>
+</tr>
+<tr>
+<td>没有空格</td>
+<td><code>ab</code></td>
+<td>$ab$</td>
+<td></td>
+</tr>
+<tr>
+<td>紧贴</td>
+<td><code>a\!b</code></td>
+<td>$a!b$</td>
+<td>缩进1/6<em>m</em>宽度</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>\quad、1em、em、m代表当前字体下接近字符‘M’的宽度。</li>
+</ul>
+<h2 id="关系符与运算符"><a href="#关系符与运算符" class="headerlink" title="关系符与运算符"></a>关系符与运算符</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>关系符与运算符</th>
+<th>latex</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不等号</td>
+<td><code>\ne</code></td>
+</tr>
+<tr>
+<td>大于等于号</td>
+<td><code>\ge</code></td>
+</tr>
+<tr>
+<td>小于等于号</td>
+<td><code>\le</code></td>
+</tr>
+<tr>
+<td>约等号</td>
+<td><code>\approx</code></td>
+</tr>
+<tr>
+<td>等价</td>
+<td><code>\equiv</code></td>
+</tr>
+<tr>
+<td>乘号</td>
+<td><code>\times</code></td>
+</tr>
+<tr>
+<td>除号</td>
+<td><code>\div</code></td>
+</tr>
+<tr>
+<td>点乘</td>
+<td><code>\cdot</code></td>
+</tr>
+<tr>
+<td>加减号</td>
+<td><code>\pm</code></td>
+</tr>
+<tr>
+<td>三角函数</td>
+<td><code>\sin(a)  \cos(a)</code></td>
+</tr>
+<tr>
+<td>求和号</td>
+<td><code>\sum</code>( 需要加<code>\limits</code> )</td>
+</tr>
+<tr>
+<td>积分号</td>
+<td><code>\int</code></td>
+</tr>
+<tr>
+<td>极限</td>
+<td><code>\lim</code></td>
+</tr>
+<tr>
+<td>对数log</td>
+<td><code>log</code></td>
+</tr>
+<tr>
+<td>对数lg</td>
+<td><code>lg</code></td>
+</tr>
+<tr>
+<td>对数ln</td>
+<td><code>ln</code></td>
+</tr>
+<tr>
+<td>向下和向上取整</td>
+<td><code>\lfloor x \rfloor</code>和<code>\lceil x \rceil</code></td>
+</tr>
+<tr>
+<td>全等于</td>
+<td><code>\equiv</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>e.g. <code>f(1) = \lim_&#123;x - &gt; 1 &#125;&#123;f(x)&#125; = \sin (log_&#123;2&#125;1)</code></li>
+</ul>
+<script type="math/tex; mode=display">
+f(1) = \lim_{x - > 1 }{f(x)} = \sin (log_{2}1)</script><ul>
+<li><code>y = a\cdot x^2 + b\cdot x + c</code></li>
+</ul>
+<script type="math/tex; mode=display">
+y = a\cdot x^2 + b\cdot x + c</script><h2 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特殊符号</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>省略号</td>
+<td><code>\dots</code></td>
+</tr>
+<tr>
+<td>右箭头</td>
+<td><code>\rightarrow</code> 或 <code>to</code></td>
+</tr>
+<tr>
+<td>左箭头</td>
+<td><code>\leftarrow</code> 或 <code>gets</code></td>
+</tr>
+<tr>
+<td>花括号</td>
+<td><code>\&#123;a\&#125;</code></td>
+</tr>
+<tr>
+<td>插入文字</td>
+<td><code>\text&#123;apple&#125;</code></td>
+</tr>
+<tr>
+<td>空格</td>
+<td><code>\quad</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>e.g. <code>\&#123;cddc\&#125; = \text&#123;addple &#125;\dots</code></li>
+</ul>
+<script type="math/tex; mode=display">
+\{cddc\} = \text{addple }\dots</script><h2 id="集合运算符"><a href="#集合运算符" class="headerlink" title="集合运算符"></a>集合运算符</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>集合运算符</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>属于</td>
+<td><code>\in</code></td>
+<td>$\in$</td>
+</tr>
+<tr>
+<td>不属于</td>
+<td><code>\not\in</code></td>
+<td>$\not\in$</td>
+</tr>
+<tr>
+<td>包含于</td>
+<td><code>\subset</code>或<code>\subseteq</code></td>
+<td>$\subset$ 或 $\subseteq$</td>
+</tr>
+<tr>
+<td>真包含于</td>
+<td><code>\subsetneqq</code></td>
+<td>$\subsetneqq$</td>
+</tr>
+<tr>
+<td>不包含于</td>
+<td><code>\not\subset</code></td>
+<td>$\not\subset$</td>
+</tr>
+<tr>
+<td>交</td>
+<td><code>\cap</code></td>
+<td>$\cap$</td>
+</tr>
+<tr>
+<td>并</td>
+<td><code>\cup</code></td>
+<td>$\cup$</td>
+</tr>
+<tr>
+<td>闭包</td>
+<td><code>\overline</code></td>
+<td>$\overline A$</td>
+</tr>
+<tr>
+<td>差</td>
+<td><code>\setminus</code></td>
+<td>$A\setminus B$</td>
+</tr>
+<tr>
+<td>实数集合</td>
+<td><code>\mathbb&#123;R&#125;</code></td>
+<td>$\mathbb{R}$</td>
+</tr>
+<tr>
+<td>空集</td>
+<td><code>\emptyset</code></td>
+<td>$\emptyset$</td>
+</tr>
+<tr>
+<td>集合中的`</td>
+<td>`</td>
+<td><code>\mid</code></td>
+<td>$\mid$</td>
+</tr>
+<tr>
+<td>包含</td>
+<td><code>\supset</code></td>
+<td>$\supset$</td>
+</tr>
+<tr>
+<td>真包含</td>
+<td><code>\supsetneqq</code></td>
+<td>$\supsetneqq$</td>
+</tr>
+<tr>
+<td>不包含</td>
+<td><code>\not\supset</code></td>
+<td>$\not\supset$</td>
+</tr>
+<tr>
+<td>补集</td>
+<td><code>\complement</code></td>
+<td>$\complement$</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="逻辑符号"><a href="#逻辑符号" class="headerlink" title="逻辑符号"></a>逻辑符号</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\forall</code>$ \forall$​​</td>
+<td><code>\exists</code>  $\exists$​</td>
+<td><code>\therefore</code>  $\therefore$​</td>
+<td><code>\implies</code>  $\implies$</td>
+</tr>
+<tr>
+<td></td>
+<td><code>\nexists</code> $\nexists$​</td>
+<td>`\exist \exist$​</td>
+<td><code>\because</code>  $\therefore$​</td>
+<td><code>\impliedby</code>  $\impliedby$​​</td>
+<td></td>
+</tr>
+<tr>
+<td><code>\land</code> $\land$</td>
+<td><code>\lor</code> $\lor$</td>
+<td><code>\to</code>  $\to$</td>
+<td><code>\gets</code>  $\gets$</td>
+</tr>
+<tr>
+<td><code>\iff</code>  $\iff$</td>
+<td><code>\ni</code>  $\ni$</td>
+<td><code>\not\ni</code>  $\not\ni$</td>
+<td><code>\neg</code>  $\neg$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="希腊字母"><a href="#希腊字母" class="headerlink" title="希腊字母"></a>希腊字母</h2><p><img src="https://pic3.zhimg.com/80/v2-49cc7a8cc50fcfd344b14168743a80ca_720w.jpg" alt="img"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/22/L6-MergeSort/" rel="prev" title="L6 MergeSort">
+      <i class="fa fa-chevron-left"></i> L6 MergeSort
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/23/L7-Selection/" rel="next" title="L7 Selection">
+      L7 Selection <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#How"><span class="nav-text">How</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Latex-syntax"><span class="nav-text">Latex syntax</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%B8%8B%E6%A0%87"><span class="nav-text">上下标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%B0%B4%E5%B9%B3%E7%BA%BF"><span class="nav-text">插入水平线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E6%96%B9%E6%A0%B9"><span class="nav-text">平方根</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E6%B0%B4%E5%B9%B3%E5%A4%A7%E6%8B%AC%E5%8F%B7"><span class="nav-text">插入水平大括号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%BC%8F"><span class="nav-text">分式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E6%95%B0"><span class="nav-text">导数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%AF%E5%88%86"><span class="nav-text">积分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%91%E9%87%8F"><span class="nav-text">向量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%98%E7%A7%AF"><span class="nav-text">乘积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%AD%E5%A4%B4"><span class="nav-text">箭头</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E7%A7%AF%E5%88%86%E7%AC%A6%E5%8F%B7"><span class="nav-text">微积分符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E6%A0%BC"><span class="nav-text">空格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E7%B3%BB%E7%AC%A6%E4%B8%8E%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">关系符与运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7"><span class="nav-text">特殊符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E5%90%88%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">集合运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E7%AC%A6%E5%8F%B7"><span class="nav-text">逻辑符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%8C%E8%85%8A%E5%AD%97%E6%AF%8D"><span class="nav-text">希腊字母</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

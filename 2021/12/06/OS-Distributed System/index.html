@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline:  通信 NFS AFS  ref: Operating Systems Three Easy pieces">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS Distributed System">
+<meta property="og:url" content="http://lyk-love.cn/2021/12/06/OS-Distributed%20System/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  通信 NFS AFS  ref: Operating Systems Three Easy pieces">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-12-06T21:27:15.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2021/12/06/OS-Distributed%20System/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>OS Distributed System | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/12/06/OS-Distributed%20System/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS Distributed System
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-12-06 21:27:15" itemprop="dateCreated datePublished" datetime="2021-12-06T21:27:15Z">2021-12-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<ul>
+<li>通信</li>
+<li>NFS</li>
+<li>AFS</li>
+</ul>
+<p>ref: <em>Operating Systems Three Easy pieces</em></p>
+<span id="more"></span>
+<h1 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h1><ul>
+<li>现代网络核心原则： <strong>通信是不可靠的</strong></li>
+<li>有可靠的传输出协议进行消息传递</li>
+<li>接下来的问题是： 使用什么样的抽象进行通信</li>
+</ul>
+<h2 id="通信抽象"><a href="#通信抽象" class="headerlink" title="通信抽象"></a>通信抽象</h2><h3 id="DSM"><a href="#DSM" class="headerlink" title="DSM"></a>DSM</h3><ul>
+<li>分布式共享内存（ <code>Distributed Shared Memory</code>  ）:   使不同机器上的同一个进程可以共享一个大的地址空间<ul>
+<li>用户访问页面时，要么页面在本机，要么发生页错误，页错误处理程序请求其他计算机，获取页面</li>
+<li>属于操作系统抽象，给分布式系统提供内存抽象</li>
+</ul>
+</li>
+<li>DSM很少被采用<ul>
+<li>不够 Robunt：假如一台机器出现故障，整个地址空间就不可用了（ 比如一个链表的一个节点消失 ）</li>
+<li>性能：跨计算机访问资源开销很大，DSM系统的设计者必须小心地组织计算，以便几乎不发生任何通信， 而这与DSM的初衷（跨计算机通信）违背* </li>
+</ul>
+</li>
+</ul>
+<h3 id="RPC"><a href="#RPC" class="headerlink" title="RPC"></a>RPC</h3><ul>
+<li>DSM的失败表明： <strong>OS抽象对分布式系统来说是个糟糕的选择</strong></li>
+<li><strong>PL抽象更有意义</strong><ul>
+<li>最主要的抽象是远程过程调用（<code>Remote Procedure Call</code>）</li>
+</ul>
+</li>
+<li>RPC的目标： 使在远程机器上执行代码的过程像调用本地函数那样直接<ul>
+<li>client： 进行过程调用</li>
+<li>server： 只是定义了一些希望导出的例程。 其余的由RPC系统处理</li>
+</ul>
+</li>
+<li>RPC系统：<ul>
+<li>存根生成器(<code>stub generator</code>), 也称为协议编译器（ <code>protocol compiler</code> ）</li>
+<li>运行时库（ <code>run-time library</code> ）</li>
+</ul>
+</li>
+</ul>
+<h4 id="Stub-Generator"><a href="#Stub-Generator" class="headerlink" title="Stub Generator"></a>Stub Generator</h4><ul>
+<li><code>Stub Generator</code>  作为中介，与client和server交互</li>
+<li><p>目的：消除将函数和参数打包成消息的复杂度</p>
+</li>
+<li><p>协议编译器的输入：server希望导出给client的一组调用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">interface&#123;</span><br><span class="line">	<span class="type">int</span> <span class="title function_">func1</span><span class="params">(<span class="type">int</span> arg1)</span>;</span><br><span class="line">	<span class="type">int</span> <span class="title function_">func2</span><span class="params">(<span class="type">int</span> arg1, <span class="type">int</span> arg2)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>stub generator</code>接受这样的接口，并对 client 和 server 生成一些不同的代码片段（ <code>stub</code> ）</p>
+</li>
+<li><p><code>client stub</code>: client链接此<code>client stub</code>，调用它进行RPC,，客户端只能看到函数调用，在<code>stub</code>内部有如下操作：</p>
+<ul>
+<li>创建 <code>message  buffer</code> ： 一个字节数组</li>
+<li>将所需信息打包到 <code>message  buffer</code>， 也称为消息的序列化（<code>serialization</code>）</li>
+<li>将消息发送到目标RPC server<ul>
+<li>与RPC server的通信，以及使其运行所需的细节都由RPC运行时库处理</li>
+</ul>
+</li>
+<li>等待回复</li>
+<li>解包返回代码和其他参数（反序列化）</li>
+</ul>
+</li>
+<li><p><code>server stub</code>:</p>
+<ul>
+<li>解包消息，即反序列化</li>
+<li>调用实际函数</li>
+<li>打包结果，放入一个回复缓冲区</li>
+<li>发送回复</li>
+</ul>
+</li>
+<li><p>问题：</p>
+<ul>
+<li>一个包如何发送复杂的数据结构：比如，如何解释一个指针<ul>
+<li>通过众所周知的类型（<code>int</code>之类）</li>
+<li>使用更多信息注释数据结构</li>
+</ul>
+</li>
+<li>并发性服务器组织方式：<ul>
+<li>线程池</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Run-time-Library"><a href="#Run-time-Library" class="headerlink" title="Run-time Library"></a>Run-time Library</h4><p>运行时库处理RPC系统中大部分工作，这里讨论构建它时的一些困难</p>
+<ul>
+<li>命名问题： 如何找到远程服务<ul>
+<li>采用现有的命名系统（  <code>ip + port</code> ）</li>
+</ul>
+</li>
+<li>RPC传输协议的构建<ul>
+<li>为了效率，很多rpc采用UDP</li>
+<li>如果建立在不可靠的传输层上，RPC需要提供可靠性，比如提供超时/重试</li>
+</ul>
+</li>
+<li>字节序：<ul>
+<li>RPC包在其消息格式中指定字节序</li>
+</ul>
+</li>
+<li>是否向client暴露通信的异步性质，实现性能优化</li>
+</ul>
+<h1 id="NFS"><a href="#NFS" class="headerlink" title="NFS"></a>NFS</h1><ul>
+<li><p>分布式文件系统</p>
+<ul>
+<li>由客户端文件系统 + 文件服务器组成</li>
+<li>提供对文件的透明访问</li>
+</ul>
+</li>
+<li><p>Sun的NFS只是一个协议，允许不同的实现，这里讨论NFS v2</p>
+</li>
+<li>目的是“<strong>简单快速的服务器崩溃恢复</strong>”</li>
+</ul>
+<h2 id="无状态协议"><a href="#无状态协议" class="headerlink" title="无状态协议"></a>无状态协议</h2><ul>
+<li>NFS采用“<strong>无状态</strong>”协议: 每个client操作都包含完成请求所需的全部信息<ul>
+<li>有状态协议会在client和server间共享状态。 比如文件描述符，如果服务器发生错误，收到客户端第二次读取时将不知道<code>fd</code>指的是哪个文件</li>
+<li>有状态协议很难处理客户端崩溃情况，如果client在崩溃前用掉了一个<code>fd</code>， server将无法知道什么之后收回该<code>fd</code></li>
+</ul>
+</li>
+<li><strong>重试请求</strong>：解决服务器没有及时回复的问题</li>
+<li><strong>幂等</strong>（<code>idempotent</code>）   操作： NFS的操作是幂等的，这就确保了它能简单地重试请求<ul>
+<li>除了<code>READ</code>, <code>LOOKUP</code>, 就连<code>WRITE</code>也是幂等的<ul>
+<li><code>WRITE</code>包含写入数据的偏移量，实现了其幂等性</li>
+</ul>
+</li>
+<li>但是，有些操作无法幂等，比如<code>mkdir</code>，这也是NFS的bug</li>
+</ul>
+</li>
+</ul>
+<h2 id="客户端缓存"><a href="#客户端缓存" class="headerlink" title="客户端缓存"></a>客户端缓存</h2><p>客户端缓存可以提升性能，但会导致<strong>缓存一致性问题</strong>（ <code>cache consistency problem</code> ）</p>
+<ul>
+<li>假设有客户端<code>C1</code>, <code>C2</code>, <code>C3</code>, 服务器<code>S</code>。 <code>C1</code>从<code>S</code>读取了文件<code>F</code>，并将副本存在本地缓存中， 而<code>C2</code>覆盖文件<code>F</code>，从未而改变其内容<ul>
+<li>问题一： <code>C2</code>将它的写入缓存一段时间再发送，而这之前如果<code>C3</code>访问<code>F</code>，得到的还是未改变的<code>F</code>，这称为<code>update visibility</code><ul>
+<li>client实现<strong>关闭时刷新</strong><code>flush-on-close</code>（即<code>close-to-open</code>）: 当一个client写入文件并关闭文件时，将其所有更新刷新到服务器，这样<code>C3</code>从服务器你拿到的确保是最新的版本</li>
+</ul>
+</li>
+<li>问题二： 即使<code>C2</code>立即发送其写入，<code>C1</code>的缓存依然是陈旧的（ <code>stale cache</code> ）, 此时<code>C1</code>上的程序只能读取陈旧的缓存<ul>
+<li>CLIENT在打开文件时，会先发送<code>GETATTR</code>请求到服务器，检查其是否被更改，如果是，则删除缓存并重新请求<ul>
+<li><code>GETATTR</code>返回文件信息，其中包括服务器上次修改文件的信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可以想见，<code>GETATTR</code>请求会非常频繁，为此NFS设计了“属性缓存”，允许文件属性缓存在本地，3s后超时。 但这就使得NFS无法知道文件的确切版本，“陈旧缓存”问题无法彻底解决</li>
+</ul>
+<h2 id="写缓冲"><a href="#写缓冲" class="headerlink" title="写缓冲"></a>写缓冲</h2><ul>
+<li>为了确保服务器写入正确， 服务I其必须在完成写入后，才通知客户端写入成功</li>
+<li>带来写入性能的瓶颈</li>
+</ul>
+<h1 id="AFS"><a href="#AFS" class="headerlink" title="AFS"></a>AFS</h1><ul>
+<li><p>原则： 在<strong>client的本地磁盘</strong>进行<strong>全文件缓存</strong></p>
+<ul>
+<li>后续<code>read()</code>, <code>write()</code>操作是严格本地的，被重定向到本地磁盘上</li>
+<li>当然，客户端每次操作前，会发送<code>TestAuth</code>给server, 查看文件是否被修改，这类似NFS的<code>GETATTR</code><ul>
+<li><code>AFS v2</code>引入<strong>回调</strong>， server向client承诺，当client缓存的文件被修改时， 会通知client. 这减少了网络通信</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>AFS也采用关闭时刷新</li>
+<li>最后关闭者胜出<code>last closer win</code>: 最后一个更新该文件的client的内容会被接受<ul>
+<li>AFS是基于文件的，而NFS是基于块的。 对后者而言，如果每个客户端都更新文件，会将不同的块的写入刷新到服务器，这样的文件内容没什么意义</li>
+</ul>
+</li>
+</ul>
+<h2 id="崩溃恢复"><a href="#崩溃恢复" class="headerlink" title="崩溃恢复"></a>崩溃恢复</h2><ul>
+<li>回调可能会丢失，比如该client缓存的文件被另一个client改变，服务器发送回调时，前者还在重启。 <ul>
+<li>此时前者必须发送<code>TestAuth</code>来验证缓存正确性。 </li>
+</ul>
+</li>
+<li>崩溃后的服务器恢复也更复杂。 因为回调被保存在server内存中。 因此server重启后，不知道server的情况。<ul>
+<li>因此，server重启后，每个client都必须意识到server已崩溃。 比如，server重启后向每个client发送消息“不要信任你的缓存！”</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/12/02/OS-lab3/" rel="prev" title="OS lab3">
+      <i class="fa fa-chevron-left"></i> OS lab3
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/12/08/Computer%20Networking-Introduction/" rel="next" title="Computer Networking Introduction">
+      Computer Networking Introduction <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1"><span class="nav-text">通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E6%8A%BD%E8%B1%A1"><span class="nav-text">通信抽象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DSM"><span class="nav-text">DSM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC"><span class="nav-text">RPC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Stub-Generator"><span class="nav-text">Stub Generator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Run-time-Library"><span class="nav-text">Run-time Library</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NFS"><span class="nav-text">NFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E7%8A%B6%E6%80%81%E5%8D%8F%E8%AE%AE"><span class="nav-text">无状态协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%93%E5%AD%98"><span class="nav-text">客户端缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E7%BC%93%E5%86%B2"><span class="nav-text">写缓冲</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AFS"><span class="nav-text">AFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B4%A9%E6%BA%83%E6%81%A2%E5%A4%8D"><span class="nav-text">崩溃恢复</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline:  The searching problem The ambition of hashing   Hashing Brute force table: direct addressing Basic idea of hashing   Collision Handling for Hashing Closed address hashing Open address hashin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="L9 Hashing">
+<meta property="og:url" content="http://lyk-love.cn/2021/08/02/L9-Hashing/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  The searching problem The ambition of hashing   Hashing Brute force table: direct addressing Basic idea of hashing   Collision Handling for Hashing Closed address hashing Open address hashin">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-08-02T08:47:15.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Algorithm design and analysis">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2021/08/02/L9-Hashing/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>L9 Hashing | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/08/02/L9-Hashing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          L9 Hashing
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-02 08:47:15" itemprop="dateCreated datePublished" datetime="2021-08-02T08:47:15Z">2021-08-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<ul>
+<li>The searching problem<ul>
+<li>The ambition of hashing</li>
+</ul>
+</li>
+<li>Hashing<ul>
+<li>Brute force table: direct addressing</li>
+<li>Basic idea of hashing</li>
+</ul>
+</li>
+<li>Collision Handling for Hashing<ul>
+<li>Closed address hashing</li>
+<li>Open address hashing</li>
+</ul>
+</li>
+<li>Amortized Analysis<ul>
+<li>Array doubling</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<h1 id="The-searching-problem"><a href="#The-searching-problem" class="headerlink" title="The searching problem"></a>The searching problem</h1><h2 id="Cost-for-Searching"><a href="#Cost-for-Searching" class="headerlink" title="Cost for Searching"></a>Cost for Searching</h2><ul>
+<li>Brute force<ul>
+<li>$O(n)$</li>
+</ul>
+</li>
+<li>Balanced BST<ul>
+<li>$O(logn)$</li>
+</ul>
+</li>
+<li><strong>Hashing —- almost constant time</strong><ul>
+<li>$O( 1 + \alpha)$</li>
+</ul>
+</li>
+<li>“Mission impossible”<ul>
+<li>$O(1)$​</li>
+</ul>
+</li>
+</ul>
+<h1 id="Hashing"><a href="#Hashing" class="headerlink" title="Hashing"></a>Hashing</h1><ul>
+<li>universe of keys: 所有可能的键</li>
+<li>actual keys：实际的键</li>
+</ul>
+<h2 id="Brute-force-table-direct-addressing"><a href="#Brute-force-table-direct-addressing" class="headerlink" title="Brute force table: direct addressing"></a>Brute force table: direct addressing</h2><ul>
+<li>给所有 universe keys 都分配一个位置。 用超多的空间</li>
+</ul>
+<h2 id="Basic-idea-of-hashing"><a href="#Basic-idea-of-hashing" class="headerlink" title="Basic idea of hashing"></a>Basic idea of hashing</h2><ul>
+<li>Index distribution<ul>
+<li>Hash Function $H(x) = k$</li>
+</ul>
+</li>
+<li>Collision handling</li>
+</ul>
+<h1 id="Collision-Handling-for-Hashing"><a href="#Collision-Handling-for-Hashing" class="headerlink" title="Collision Handling for Hashing"></a>Collision Handling for Hashing</h1><ul>
+<li>规定<em>m</em>为哈希表大小， <em>n</em>为表中元素个数</li>
+</ul>
+<h2 id="Closed-address-hashing"><a href="#Closed-address-hashing" class="headerlink" title="Closed address hashing"></a>Closed address hashing</h2><ul>
+<li><p>也称为Chaining</p>
+<ul>
+<li>Each address is a <strong>linked list</strong></li>
+<li>Insert to the head of the list( 链表不是常数时间寻址 )</li>
+</ul>
+</li>
+<li><p>Assumption - simple uniform hashing</p>
+<ul>
+<li>For $j=0,1,2,\dots, m-1$​​, the average length of the list at $E[j]$​​​ is <em>n/m</em></li>
+</ul>
+</li>
+</ul>
+<h3 id="Unsuccessful-Search"><a href="#Unsuccessful-Search" class="headerlink" title="Unsuccessful Search"></a>Unsuccessful Search</h3><ul>
+<li><p>The average cost for an unsuccessful search</p>
+<ul>
+<li><p>Any key that is not in the table is equally likely to hash to any of the <em>m</em> address</p>
+</li>
+<li><p>Total cost $\Theta(1+n/m)$​</p>
+<ul>
+<li><p>The average cost to determine that the key is not in the $E[h(k)]$ is the cost to search to the end of the list, which is <em>n/m</em></p>
+</li>
+<li><p><em>1</em>是算哈希， <em>n/m</em>是链表平均长度</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Successful-Search"><a href="#Successful-Search" class="headerlink" title="Successful Search"></a>Successful Search</h3><ul>
+<li><p>For successful search( assuming that $x_i$ is the $i^{th}$  element inserted into the table, $i=1,2,\dots,n$ )</p>
+<ul>
+<li><p>For each <em>i</em>, the probability of that $x_i$​ is searched is <em>1/n</em></p>
+</li>
+<li><p>For a specific $x_i$​​, the number of elements examined in a successful search is <em>t+1</em>, where <em>t</em> is the number of elements inserted into the same list as $x_i$, <strong>after</strong> $x_i$​​​​​​ has been inserted(即链表里在该元素之前的元素的个数). </p>
+<script type="math/tex; mode=display">
+1 + \frac 1 n \sum\limits_{i=1}^{n}{(1+t)}</script></li>
+<li><p>And for any <em>j</em>, the probability of that $x_j$ is inserted into the same list of $x_i$ is <em>1/m</em>. So, the cost is:</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>$$
+1 + \frac 1 n \sum\limits_&#123;j=i+1&#125;^&#123;n&#125;&#123;\frac 1 m&#125;
+$$
+</code></pre><ul>
+<li><p>The average cost of a successful search:</p>
+<ul>
+<li>Define $\alpha = n/m$ as <em>load factor</em>, The average cost of a successful search is:<script type="math/tex; mode=display">
+\frac 1 n { ( 1 + \sum\limits_{j = i + 1}^n {\frac 1 m} )} = 1 + \frac 1 {nm} {\sum\limits_{i = 1}^n {(n-i)}} = 1 + \frac 1 {nm} \sum_{i=1}^{n-1}i = 1 + \frac {n-1} {2m} = 1 + \frac \alpha 2 - \frac \alpha {2n} = \Theta( 1 + \alpha )</script></li>
+</ul>
+</li>
+</ul>
+<h2 id="Open-address-hashing"><a href="#Open-address-hashing" class="headerlink" title="Open address hashing"></a>Open address hashing</h2><ul>
+<li>All elements  are stored in the  hash table<ul>
+<li>No linked list is used</li>
+<li>The <em>load factor</em> $\alpha$ can’t be larger than 1</li>
+</ul>
+</li>
+<li>Collision is settled by “rehashing”<ul>
+<li>A function is used to get a new hashing address for each collided address<ul>
+<li>The hash table slots are <em>probed</em> successively, until a valid location is found.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Th probe sequence can be seen as a permutation of $(0,1,2,\dots,m-1)$</li>
+</ul>
+<h3 id="Commonly-Used-Probing"><a href="#Commonly-Used-Probing" class="headerlink" title="Commonly Used Probing"></a>Commonly Used Probing</h3><ul>
+<li><p>Linear probing:</p>
+<ul>
+<li>Given an ordinary hash function <em>h’</em>, which is called an auxiliary hash function, the hash function is:( clustering may occur )<script type="math/tex; mode=display">
+h(k,i) = (h'(k)+i)\quad mod \quad m \quad ( i = 0,1, \dots, m-1 )</script></li>
+</ul>
+</li>
+<li><p>Quadratic Probing:</p>
+<ul>
+<li>Given auxiliary function <em>h’</em> and nonzero auxiliary constant $c_1$ and $c_2$​, the hash function is: (secondary clustering may occur)<script type="math/tex; mode=display">
+h(k,i) = (h'(k)+c_1 i + c_2 i^2)\quad mod \quad m \quad ( i = 0,1, \dots, m-1</script></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>Double hashing:</p>
+<ul>
+<li>Given auxiliary functions <em>h_1</em> and <em>h_2</em>, the hash function is:<script type="math/tex; mode=display">
+h(k,i) = (h_1(k)+i h_2(k))\quad mod \quad m \quad ( i = 0,1, \dots, m-1</script></li>
+</ul>
+</li>
+</ul>
+<h4 id="Equally-Likely-Permutations"><a href="#Equally-Likely-Permutations" class="headerlink" title="Equally Likely Permutations"></a>Equally Likely Permutations</h4><ul>
+<li>Assumption<ul>
+<li>Each key is equally likely to have any of the <em>m!</em> permutations of $(1,2,\dots,m)$​ as​ its probe sequence</li>
+</ul>
+</li>
+<li>Note<ul>
+<li>Both linear and quadratic probing have only <em>m</em> distinct probe sequence, as determined by the first probe.(m个格子的合法排列)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Unsuccessful-Search-1"><a href="#Unsuccessful-Search-1" class="headerlink" title="Unsuccessful Search"></a>Unsuccessful Search</h3><ul>
+<li><p>The average number of probes in an unsuccessful search is at most $1/(1-\alpha )$​ $(\alpha = n/m &lt; 1)$</p>
+<ul>
+<li><p>Assuming uniform hashing</p>
+<p>The probability of  the first probed position being  occupied is <em>n/m</em>, and that of the $j^{th}(j&gt;1)$ position occupied is $\frac {n-j+1}{m-j+1}$​​. So the probability of the number of probed no less than <em>i</em> will be:(概率论知识)</p>
+<script type="math/tex; mode=display">
+\frac n m \cdot \frac {n-1} {m-1} \cdot {n-1} {m-2} \cdots \cdot \frac {n-i+2} {m-i+2} \le { (\frac n m )}^{i-1} = \alpha ^{i-1}</script></li>
+</ul>
+</li>
+</ul>
+<pre><code>The average number of probe is: $\sum\limits _&#123;i=1&#125; ^ \infty &#123;\alpha ^ &#123;i - 1&#125;&#125; = \sum\limits _&#123;i=0&#125; ^ \infty &#123;\alpha ^ &#123;i &#125;&#125; = \frac &#123;1&#125; &#123;1-\alpha&#125;$​ （其实上界是m，因为一共m个格子。 这里做了放大，但这个放大得到的上界还是比较 tight的）
+</code></pre><h3 id="Successful-Search-1"><a href="#Successful-Search-1" class="headerlink" title="Successful Search"></a>Successful Search</h3><ul>
+<li><p>The average number of probes in an successful search is at most $\frac  1 \alpha ln \frac 1 {1-\alpha}$ ($\alpha = n /m &lt;1$​)​</p>
+<ul>
+<li><p>Assuming uniform hashing</p>
+<p>To search for the $(i+1)^{th}$ inserted element in the table, the cost is the same as that for inserting it when there are just <em>i</em> elements in the table. At that time, $\alpha = \frac i m$. So the cost is( 用 unsuccessful的结论 )  $\frac 1 {1- \frac i m}$ = $\frac m {m-i}$​,</p>
+<script type="math/tex; mode=display">
+\frac 1 n \sum\limits_{i=0}^{n-1} \frac m {m-i} = \frac m n \sum\limits _{i=0}^{n-1} \frac 1 {m-i} = \frac 1 \alpha \sum\limits _{i=m-n+1}^{m} \frac 1 i \le \frac 1 \alpha \int _{m-n} ^m {\frac {dx} x} = \frac 1 \alpha ln \frac m {m-n} = \frac 1 \alpha ln \frac 1 {1-\alpha}</script></li>
+</ul>
+</li>
+</ul>
+<h1 id="Amortized-Analysis"><a href="#Amortized-Analysis" class="headerlink" title="Amortized Analysis"></a>Amortized Analysis</h1><h2 id="Array-doubling"><a href="#Array-doubling" class="headerlink" title="Array doubling"></a>Array doubling</h2><ul>
+<li>顾名思义</li>
+</ul>
+<h3 id="Worst-case-Analysis"><a href="#Worst-case-Analysis" class="headerlink" title="Worst-case Analysis"></a>Worst-case Analysis</h3><ul>
+<li><p>For <em>n</em> execution of insertion operations</p>
+<ul>
+<li>Note that the expansion is required during the $i^{th}$​ operation only if $i = 2^{th}$​, and the cost of the $i^{th}$​ operation $ c_i = i $​( if <em>i - 1</em> is exactly the power of 2 ) or $c_i = 1 $ ​(otherwise)​</li>
+</ul>
+<p>So the total cost is: $\sum\limits <em>{i=1} ^n c</em>{i} \le n + \sum\limits _{j=0} ^{\lfloor logn \rfloor} 2^j &lt; n + 2n = 3n$</p>
+</li>
+</ul>
+<h3 id="Amortized-Analysis-Why"><a href="#Amortized-Analysis-Why" class="headerlink" title="Amortized Analysis- Why?"></a>Amortized Analysis- Why?</h3><ul>
+<li>Unusually expensive operations</li>
+<li>Relation between expensive and usual operations<ul>
+<li>Each piece of the doubling cost corresponds to some previous insert</li>
+</ul>
+</li>
+</ul>
+<h3 id="Amortized-Analysis-How"><a href="#Amortized-Analysis-How" class="headerlink" title="Amortized Analysis- How?"></a>Amortized Analysis- How?</h3><ul>
+<li><p><strong>Amortized equation:</strong></p>
+<p><em>amortized cost = actual cost + accounting cost</em></p>
+</li>
+<li><p>Design goals for accounting cost</p>
+<ul>
+<li>In <strong>any</strong> legal sequence of operations, the sum of the accounting costs is <strong>nonnegative</strong></li>
+<li>The amortized cost of each operation is fairly regular, in spite of the wide fluctuate possible for the actual cost of individual operations</li>
+</ul>
+</li>
+<li><p>Examples:</p>
+<ol>
+<li>Multi-pop Stacks</li>
+</ol>
+<p>|           | Amortized | Actual | Accounting |<br>| ————- | ————- | ——— | ————— |<br>| Push      | 2         | 1      | 1          |<br>| Multi-pop | 0         | k      | -k         |</p>
+<ul>
+<li>相当于每个元素在出生的时候就要记下它死亡的时候的代价</li>
+</ul>
+<ol>
+<li>Binary Counter</li>
+</ol>
+<p>|       | Amortized | Actual | Account |<br>| ——- | ————- | ——— | ———- |<br>| Set 1 | 2         | 1      | 1       |<br>| Set 0 | 0         | 1      | -1      |</p>
+</li>
+</ul>
+<h3 id="Amortized-Analysis-Array-Doubling"><a href="#Amortized-Analysis-Array-Doubling" class="headerlink" title="Amortized Analysis - Array Doubling"></a>Amortized Analysis - Array Doubling</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Amortized</th>
+<th>Actual</th>
+<th>Account</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Insert ( normal )</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Insert ( doubling )</td>
+<td>3</td>
+<td>k+1</td>
+<td>-k + 2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><em>k</em> is the number of elements upon doubling</li>
+<li><em>-k+2</em>: 清除前k个元素的代价, 新插入的元素要付出2的代价 </li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm-design-and-analysis/" rel="tag"># Algorithm design and analysis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/07/31/L10-Union-Find/" rel="prev" title="L10 Union Find">
+      <i class="fa fa-chevron-left"></i> L10 Union Find
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/03/L11-Graph-Traversal/" rel="next" title="L11 Graph Traversal">
+      L11 Graph Traversal <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-searching-problem"><span class="nav-text">The searching problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cost-for-Searching"><span class="nav-text">Cost for Searching</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hashing"><span class="nav-text">Hashing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Brute-force-table-direct-addressing"><span class="nav-text">Brute force table: direct addressing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-idea-of-hashing"><span class="nav-text">Basic idea of hashing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Collision-Handling-for-Hashing"><span class="nav-text">Collision Handling for Hashing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Closed-address-hashing"><span class="nav-text">Closed address hashing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Unsuccessful-Search"><span class="nav-text">Unsuccessful Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Successful-Search"><span class="nav-text">Successful Search</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Open-address-hashing"><span class="nav-text">Open address hashing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Commonly-Used-Probing"><span class="nav-text">Commonly Used Probing</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Equally-Likely-Permutations"><span class="nav-text">Equally Likely Permutations</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unsuccessful-Search-1"><span class="nav-text">Unsuccessful Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Successful-Search-1"><span class="nav-text">Successful Search</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Amortized-Analysis"><span class="nav-text">Amortized Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-doubling"><span class="nav-text">Array doubling</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Worst-case-Analysis"><span class="nav-text">Worst-case Analysis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Amortized-Analysis-Why"><span class="nav-text">Amortized Analysis- Why?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Amortized-Analysis-How"><span class="nav-text">Amortized Analysis- How?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Amortized-Analysis-Array-Doubling"><span class="nav-text">Amortized Analysis - Array Doubling</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

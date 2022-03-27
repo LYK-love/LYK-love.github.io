@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="依序介绍Reg、NFA、DFA及其转化  Thompson 构造法：正则表达式 RegExp -&gt; 不确定有限状态机 NFA 子集构造法：不确定有限状态机 NFA -&gt; 确定有限状态机 DFA 最小化：最小化确定有限状态机 DFA 验证：DFA 转换为的等价正则表达式并验证等价">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Compilers REGEX to DFA">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/26/Compilers-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%88%B0DFA/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="依序介绍Reg、NFA、DFA及其转化  Thompson 构造法：正则表达式 RegExp -&gt; 不确定有限状态机 NFA 子集构造法：不确定有限状态机 NFA -&gt; 确定有限状态机 DFA 最小化：最小化确定有限状态机 DFA 验证：DFA 转换为的等价正则表达式并验证等价">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Compilers">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/03/26/Compilers-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%88%B0DFA/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Compilers REGEX to DFA | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/26/Compilers-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%88%B0DFA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Compilers REGEX to DFA
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-26 12:14:21" itemprop="dateCreated datePublished" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>依序介绍Reg、NFA、DFA及其转化</p>
+<ol>
+<li>Thompson 构造法：正则表达式 RegExp -&gt; 不确定有限状态机 NFA</li>
+<li>子集构造法：不确定有限状态机 NFA -&gt; 确定有限状态机 DFA</li>
+<li>最小化：最小化确定有限状态机 DFA</li>
+<li>验证：DFA 转换为的等价正则表达式并验证等价</li>
+</ol>
+<span id="more"></span>
+<h1 id="Def"><a href="#Def" class="headerlink" title="Def"></a>Def</h1><h2 id="正则"><a href="#正则" class="headerlink" title="正则"></a>正则</h2><p>给定字母表 Σ, Σ 上的正则表达式由且仅由以下规则定义:</p>
+<ol>
+<li>ε 是正则表达式;</li>
+<li>∀a ∈ Σ, a 是正则表达式;</li>
+<li>如果 s 是正则表达式, 则 (s) 是正则表达式;</li>
+<li>如果 s 与 t 是正则表达式, 则 s|t, st, s∗ 也是正则表达式。</li>
+</ol>
+<h2 id="NFA"><a href="#NFA" class="headerlink" title="NFA"></a>NFA</h2><p>NFA 是一个五元组 A = (Σ, $S$, $s_0$ , δ, F ):</p>
+<ol>
+<li><p>字母表  Σ (ε $\notin$ Σ)</p>
+</li>
+<li><p>有穷的状态集合 S</p>
+</li>
+<li><p>唯一的初始状态 $s_0 \in S$ </p>
+</li>
+<li>状态转移函数 δ<ul>
+<li>$δ : S × (Σ ∪ {ε}) → 2^S$</li>
+<li>这里$2^S$定义为$S$的幂集</li>
+</ul>
+</li>
+<li>接受状态集合 F ⊆ S</li>
+</ol>
+<h2 id="DFA"><a href="#DFA" class="headerlink" title="DFA"></a>DFA</h2><p>DFA是一个五元组 A = (Σ, $S$, $s_0$ , δ, F ):</p>
+<ol>
+<li>字母表 Σ (ε $\notin$ Σ)</li>
+<li>有穷的状态集合 S</li>
+<li>唯一的初始状态 $s_0 \in S$ </li>
+<li>状态转移函数 δ</li>
+<li>接受状态集合 F ⊆ $S$</li>
+</ol>
+<ul>
+<li>约定: 所有没有对应出边的字符默认指向一个不存在的 <code>dead state</code></li>
+</ul>
+<h1 id="Thompson-构造法"><a href="#Thompson-构造法" class="headerlink" title="Thompson 构造法"></a>Thompson 构造法</h1><p>[引用][<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44691608/article/details/110195743">https://blog.csdn.net/weixin_44691608/article/details/110195743</a>]</p>
+<ul>
+<li><p>Thompson 构造法的基本思想: <strong>按结构归纳</strong></p>
+</li>
+<li><p>Thompson 构造法: <strong>按结构归纳</strong></p>
+<ul>
+<li>对正则定义的每个规则，分别建立一个图的映射，因此所有正则表达式都可以表现为这些子图的组合</li>
+</ul>
+</li>
+</ul>
+<h1 id="子集构造法"><a href="#子集构造法" class="headerlink" title="子集构造法"></a>子集构造法</h1><p>[引用][<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44691608/article/details/110213913">https://blog.csdn.net/weixin_44691608/article/details/110213913</a>]</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Subset-Construction(NFA)</span><br><span class="line">    let Dtran be a table</span><br><span class="line">    DFA_States = &#123;ε-closure(NFA.s0)&#125;  # DFA 状态集合的初始状态为 NFA 初始状态的闭包，并且未标记</span><br><span class="line">    <span class="keyword">while</span> (exist T in DFA_States not marked) &#123; # 存在未标记的 DFA 状态</span><br><span class="line">        mark T  # 标记 T，表示查过 T 状态的所有后续状态了</span><br><span class="line">        <span class="keyword">for</span> (a in Σ) &#123; </span><br><span class="line">            Tc = ε-closure(move(T, a)) # 找到所有输入字符对应的下一个状态</span><br><span class="line">            <span class="keyword">if</span> (Tc not in DFA_States) &#123; # 将状态加入到 DFA_States</span><br><span class="line">                push Tc in DFA_States &amp; unmarked Tc</span><br><span class="line">            &#125;# 如果新状态已经在Dtran中，那么不会添加新状态，只会添加[T, a]</span><br><span class="line">            Dtran[T, a] = Tc</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Dtran</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>简言之，根据连通性不断添加新状态，直到所有状态成为闭包</p>
+<h1 id="最小化DFA"><a href="#最小化DFA" class="headerlink" title="最小化DFA"></a>最小化DFA</h1><p>[引用][<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44691608/article/details/110440659">https://blog.csdn.net/weixin_44691608/article/details/110440659</a>]</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Min-DFA(Dtran)</span><br><span class="line">    let U = &#123;S\F, F&#125; # 初始的等价类有两个组，分别是非终止状态和终止状态</span><br><span class="line">    <span class="keyword">for</span> (G in U) &#123; # 对等价类中每个组做划分</span><br><span class="line">        <span class="keyword">while</span> (G can be divided) &#123;</span><br><span class="line">            g1, g2, g3, ... = divide(G)</span><br><span class="line">            remove G from U</span><br><span class="line">            add g1, g2, g3, ... into U</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol>
+<li>首先将上面的 DFA 分为非终止状态和终止状态两组，然后对每一组进行检查是否能够再做划分，若可则对划分后的组再划分，直到不可再划分</li>
+<li>最后根据划分后的组重建 Dtran 表并重绘 DFA 图</li>
+</ol>
+<ul>
+<li><p><code>不可划分</code>：</p>
+<p>若对于组内所有状态，对于所有输入都有相同的输出状态，则称该组<code>不可再被划分</code>。</p>
+</li>
+</ul>
+<h1 id="验证DFA"><a href="#验证DFA" class="headerlink" title="验证DFA"></a>验证DFA</h1><p>[引用][<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44691608/article/details/110440659">https://blog.csdn.net/weixin_44691608/article/details/110440659</a>]</p>
+<p>验证DFA与原来的正则是否等价，使用Kleene闭包</p>
+<ul>
+<li><p>符号归约：</p>
+<p>假设有向图中节点编号为 $0$(初始状态)到 $n − 1$</p>
+<ul>
+<li>$R_{ij}^k$ : 从节点 i 到节点 j、且中间节点编号不大于k的所有路径</li>
+<li>$R_{ij}^{-1}$: 从节点 i 到节点 j、且不经过中间节点的所有路径</li>
+<li>$\empty$: 路径不可达， 我们有 $\empty$ r = r $\empty$= $\empty$ 和 $\empty$|r = r</li>
+<li>$\epsilon$: 空路径，即状态不发生变化的边（回到同一状态）</li>
+</ul>
+</li>
+<li><p>Kleene闭包： $R<em>{ij}^{k} = R</em>{ij}^{k-1} (R<em>{ij}^{k})^* R</em>{ij}^{k-1} | R_{ij}^{k-1} $ ( 就是Floyd算法 )</p>
+</li>
+<li><p>步骤：</p>
+<ul>
+<li>动态规划思想，从$k=-1$开始不断迭代，直到有$R_{ij}^{n-1}$，其中 $i$ 和 $j$ 是起点和终点</li>
+<li>验证结果是否与原来的正则等价</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Compilers/" rel="tag"># Compilers</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/26/Computer%20Networking-Application%20Layer/" rel="prev" title="Application Layer">
+      <i class="fa fa-chevron-left"></i> Application Layer
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/26/C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="next" title="C++面向对象">
+      C++面向对象 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Def"><span class="nav-text">Def</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A3%E5%88%99"><span class="nav-text">正则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NFA"><span class="nav-text">NFA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DFA"><span class="nav-text">DFA</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Thompson-%E6%9E%84%E9%80%A0%E6%B3%95"><span class="nav-text">Thompson 构造法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%90%E9%9B%86%E6%9E%84%E9%80%A0%E6%B3%95"><span class="nav-text">子集构造法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E5%8C%96DFA"><span class="nav-text">最小化DFA</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81DFA"><span class="nav-text">验证DFA</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">126</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
