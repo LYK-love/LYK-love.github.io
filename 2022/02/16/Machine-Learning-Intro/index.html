@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline  基本术语 模型评估和选择">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning Intro">
+<meta property="og:url" content="http://lyk-love.cn/2022/02/16/Machine-Learning-Intro/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline  基本术语 模型评估和选择">
+<meta property="og:locale">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/%E6%95%B0%E6%8D%AE%E9%9B%86.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/confusion%20matrix.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/P-R%20curve.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/AUC%20curve.png">
+<meta property="article:published_time" content="2022-02-15T21:27:44.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/%E6%95%B0%E6%8D%AE%E9%9B%86.png">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/02/16/Machine-Learning-Intro/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Machine Learning Intro | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/02/16/Machine-Learning-Intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Machine Learning Intro
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-15 21:27:44" itemprop="dateCreated datePublished" datetime="2022-02-15T21:27:44Z">2022-02-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Artificial-Intelligence/" itemprop="url" rel="index"><span itemprop="name">Artificial Intelligence</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline</p>
+<ul>
+<li>基本术语</li>
+<li>模型评估和选择</li>
+</ul>
+<span id="more"></span>
+<h1 id="Basic-Term"><a href="#Basic-Term" class="headerlink" title="Basic Term"></a>Basic Term</h1><h2 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h2><p>令$D = { x<em>1,x_2,..,x_m }$表示包含m个示例的数据集，每个示例由d个属性描述，则每个示例$x_i={ x</em>{i1}, x<em>{i2}, \dots, x</em>{id} }$是d维样本空间中的一个向量，$x<em>i \in \chi$, 其中$x</em>{ij}$是样本$x_i$在第j个属性的取值</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/%E6%95%B0%E6%8D%AE%E9%9B%86.png" alt="data set"></p>
+<ul>
+<li>上面的每条record就是一个<strong>示例</strong>（instance）或<strong>样本</strong>（ sample ）</li>
+<li>上面的每个field称为一个<strong>属性</strong>（ attribute ）或<strong>特征</strong>（ feature ）,属性的取值就是属性值</li>
+<li><strong>属性空间</strong>（attribute value）、<strong>样本空间</strong>( sample  space )、<strong>输入空间</strong>： 属性张成的空间，记为$\chi$</li>
+<li><strong>标记空间</strong>、<strong>输出空间</strong>： 标记张成的空间，记为 $\gamma $ </li>
+<li>如果把属性作为坐标轴，每个示例都对应特征空间的一个点，称为<strong>特征向量</strong>（  feature  vector ）， 属性个数就是样本维度</li>
+<li><p>样例（  Example ）:  示例+标记, 用$(x_i,y_i)$表示第i个样例，其中$y_i \in \gamma$是示例$x_i$的标记， $\gamma $ 是所有标记的集合，也就是输出空间</p>
+<ul>
+<li>如果把标记看作对象本身的一部分，那么示例也可以看作样本</li>
+</ul>
+</li>
+<li><p>训练集: 一组训练样例</p>
+</li>
+<li>测试集: 一组测试样例</li>
+</ul>
+<h2 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h2><p>根据标记的取值情况</p>
+<ul>
+<li>分类任务:标记为离散值<ul>
+<li>二分类:例如(好瓜,坏瓜)(正类,反类)(+1,-1)</li>
+<li>多分类:例如(冬瓜,南瓜,西瓜)</li>
+</ul>
+</li>
+<li>回归任务:标记为连续值<ul>
+<li>例如,瓜的成熟度S</li>
+</ul>
+</li>
+<li>聚类任务:标记为空值,对示例进行自动分组( 即，要分的组也不知道)<ul>
+<li>例如,本地瓜,外地瓜</li>
+</ul>
+</li>
+</ul>
+<p>建立一个从输入空间 $\chi$到输出空间$\gamma$的映射：$f : \ x \rightarrow y$, 对二分类任务，通常令$\gamma = {-1,+1}$  或${0,1}$；对多分类任务，   $|\gamma|=2$; 对回归任务， $\gamma = R$</p>
+<p>根据标记的完整情况</p>
+<ul>
+<li>(有)监督学习:所有示例都有标记<ul>
+<li>分类、回归</li>
+</ul>
+</li>
+<li>无监督学习:所有示例都没有标记<ul>
+<li>聚类</li>
+</ul>
+</li>
+<li>半监督学习:少量示例有标记,大量示例没标记</li>
+<li>噪音标记学习:标记有,但是不完全准确</li>
+</ul>
+<h2 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h2><p>机器学习技术的根本目标就是泛化能力</p>
+<p>最理想的机器学习技术是学习到<strong>概念</strong>(人类学习,可理解的)</p>
+<ul>
+<li>比如，“好瓜是某种色泽，某种根蒂，某种敲声的瓜“这样的<strong>概念</strong>，但是，未来是不确定的，你可能遇到没见过的瓜</li>
+</ul>
+<p>但是现实中很困难,因此很多时候机器学习采用的是黑盒模型</p>
+<h2 id="假设空间"><a href="#假设空间" class="headerlink" title="假设空间"></a>假设空间</h2><ul>
+<li><p>假设空间( hypothesis space )：所有假设组成的空间。</p>
+<ul>
+<li>学习就是在假设空间中搜索的过程，搜索目标是找到与训练集匹配的假设</li>
+</ul>
+</li>
+<li><p>版本空间（ version space ）： 假设空间的子集，与训练集一致的假设集合</p>
+</li>
+<li>归纳偏好：学习过程中对某种类型假设的偏好称作归纳偏好<ul>
+<li>”到底从版本空间中选择哪一个假设“</li>
+<li>可以认为是假设空间（事实上是版本空间）中对假设进行选择的启发式方法</li>
+<li>真实假设可以不在版本空间中，因为版本空间只是符合了训练集的假设</li>
+</ul>
+</li>
+</ul>
+<h2 id="NFL定理"><a href="#NFL定理" class="headerlink" title="NFL定理"></a>NFL定理</h2><p>No Free Lunch： 因为未来数据是不知道的,总有一种未来数据的分布让你失败</p>
+<h1 id="模型评估与选择"><a href="#模型评估与选择" class="headerlink" title="模型评估与选择"></a>模型评估与选择</h1><h2 id="误差"><a href="#误差" class="headerlink" title="误差"></a>误差</h2><p>“错误率”： 分类错误的样本数占样本总数的比例</p>
+<p>精度： ，1 - 错误率</p>
+<p>误差： 学习器的实际预测输出与样本的真实输出之间的差异</p>
+<p>训练误差或<strong>经验误差</strong>： 学习器在训练集上的误差</p>
+<p>测试误差或<strong>泛化误差</strong>： 学习器在新样本上的误差</p>
+<h2 id="过拟合-amp-欠拟合"><a href="#过拟合-amp-欠拟合" class="headerlink" title="过拟合&amp; 欠拟合"></a>过拟合&amp; 欠拟合</h2><ul>
+<li>过拟合： 模型把训练样本学得“太好”时，把训练样本自身的一些特点当作了所有潜在样本都会具有的一般性质。这样会致使泛化性能的下降</li>
+</ul>
+<ul>
+<li>欠拟合：对训练样本的一般性质尚未学好。</li>
+</ul>
+<h2 id="评估方法"><a href="#评估方法" class="headerlink" title="评估方法"></a>评估方法</h2><p>我们可以通过实验测试来对学习器的泛化误差进行评估并进而做出选择。 为此要选出测试集，然后以测试集上的“测试误差”来作为泛化误差的近似。 测试集要尽可能与训练集互斥</p>
+<p>数据集规模有限，要分为训练集和测试集，有如下划分方法：</p>
+<ul>
+<li><p>留出法： 直接将数据集划分为两个互斥集合</p>
+<ul>
+<li>测试/训练集要尽可能保持数据分布的一致性</li>
+</ul>
+</li>
+<li><p>交叉验证法</p>
+</li>
+<li>自助法</li>
+</ul>
+<h2 id="性能度量"><a href="#性能度量" class="headerlink" title="性能度量"></a>性能度量</h2><p>性能度量是衡量模型泛化能力的评价标准，反映了任务需求</p>
+<p>回归任务： </p>
+<ul>
+<li>均方误差</li>
+</ul>
+<p>分类任务：</p>
+<ul>
+<li>错误率，精度</li>
+<li>查准率，查全率</li>
+</ul>
+<p>下面主要介绍回归任务的性能度量</p>
+<h3 id="错误率和精度"><a href="#错误率和精度" class="headerlink" title="错误率和精度"></a>错误率和精度</h3><ul>
+<li>错误率是分类错误的样本数占样本总数的比例， 精度相反</li>
+</ul>
+<h3 id="查准率，查全率和F1"><a href="#查准率，查全率和F1" class="headerlink" title="查准率，查全率和F1"></a>查准率，查全率和F1</h3><p>查准率：预测出来的正例中正确的比率（分母是被认为为真的样例数）</p>
+<p>查全率：正例被预测出来的比率（ 分母是确实为真的样例数 ） </p>
+<p> 混淆矩阵：真实标记和预测结果的组合：</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/confusion%20matrix.png" alt="confusion matrix"></p>
+<p>注意FP被认为是正例，实际是反例</p>
+<p>可以根据学习器的预测结果对样例进行排序，并逐个把样本作为正例进行预测，则可以得到查准率-查全率曲线，简称“P-R”曲线</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/P-R%20curve.png" alt="P-R curve"></p>
+<p>如果一个学习器的P-R曲线被另一个的完全包住，我们可以认为前者的性能小于后者，但有时会发生曲线交叉的情况，此时需要设计综合考虑P,R的度量，比如“平衡点”</p>
+<p>平衡点（Break-Even Point）是曲线上“查准率=查全率”时的取值，可用于度量P-R曲线有交叉的分类器性能高低</p>
+<p>BEP太简单，更常用的是F1度量：</p>
+<script type="math/tex; mode=display">
+F1 = \frac{2 \times P \times R}{P + R}</script><p>比F1更一般形式的 $F_{\beta}$:</p>
+<script type="math/tex; mode=display">
+F_{\beta} = \frac{ 1 + \beta^2 \times P \times R}{ ( \beta^2 \times P ) + R }</script><p>$\beta$是启发值，可以表示模型对查准/查全率的偏好</p>
+<ul>
+<li>$\beta = 1$: 标准 F1</li>
+<li>$\beta &gt; 1$:偏重查全率</li>
+<li>$\beta 《 1$: 偏重查准率</li>
+</ul>
+<h3 id="ROC"><a href="#ROC" class="headerlink" title="ROC"></a>ROC</h3><p> ROC曲线纵轴是“真正例率”，横轴是“假正例率”</p>
+<script type="math/tex; mode=display">
+TPR = \frac{ TP }{TP + FN} \\
+ FPR = \frac{FP}{TN + FP}</script><p>如果一个学习器的ROC曲线被另一个的完全包住，我们可以认为前者的性能小于后者，但有时会发生曲线交叉的情况，此时可以根据曲线下的面积大小进行比较，也就是<strong>AUC</strong>( Area Under Curve )</p>
+<h3 id="AUC"><a href="#AUC" class="headerlink" title="AUC"></a>AUC</h3><p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/AUC%20curve.png" alt="AUC curve"></p>
+<p>假设AUC曲线由${(x_1,y_1), (x_2,y_2), \dots, (x_m,y_m) }$   的点按序连接而形成，则AUC可估算为：</p>
+<script type="math/tex; mode=display">
+\mathrm{AUC} = \frac{1}{2} \sum\limits_{i=1}^{m-1}(x_{i+1} - x_i)(y_i + y_{i+1})</script><p>AUC 衡量了样本预测的排序质量</p>
+<script type="math/tex; mode=display">
+\mathrm{AUC} = 1 - l_{rank}</script><h3 id="代价错误敏感率"><a href="#代价错误敏感率" class="headerlink" title="代价错误敏感率"></a>代价错误敏感率</h3><p>为了权衡不同类型错误所造成的不同损失，为错误赋予“非均等代价”（unequal cost）：</p>
+<p>以二分类为例：可设定一个代价矩阵（cost matrix）</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>真实类别</th>
+<th>预测 第0类</th>
+<th>结果 第1类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第0类</td>
+<td>0</td>
+<td>$cost_{01}$</td>
+</tr>
+<tr>
+<td>第1类</td>
+<td>$cost_{10}$</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中用$cost_{ij}$表示将第$i$类预测为第$j$类的代价</p>
+<p>在非均等代价下，我们所希望的不再是简单地最小化错误的次数，而是希望最小化<strong>总体代价</strong>（total cost）</p>
+<p>（以上面二分类为例0为正例，1为负例）<strong>代价敏感率</strong>（cost-sensitive）错误率为：</p>
+<script type="math/tex; mode=display">
+E(f ; D ; \cos t)=\frac{1}{m}\left\{\sum_{x_{i} \in D^{+}}\left\|\left(f\left(x_{i}\right) !=y_{i}\right)^{*} \cos t_{01}+\sum_{x_{i} \in D^{-}}\right\|\left(f\left(x_{i}\right)==y_{i}\right) * \cos t_{10}\right\}</script><p>$D$:数据集      $D^+$ ：正样本数据集    $D^-$:负样本数据集</p>
+<p>若令$cost_{ij}$的取值不限于0,1,则可以定义出多任务分类的代价敏感性能度量</p>
+<h3 id="代价曲线"><a href="#代价曲线" class="headerlink" title="代价曲线"></a>代价曲线</h3><p>在非均等代价下，ROC曲线不能直接反映出学习器的期望总体代价，可以用“<strong>代价曲线</strong>”</p>
+<p>代价曲线图的横轴是取值为[0, 1]的正例概率代价,</p>
+<script type="math/tex; mode=display">
+P(+) \cos t=\frac{p^{*} \cos t_{01}}{p^{*} \cos t_{01}+(1-p) \cos t_{10}}</script><p>$p$：样例为正例的概率</p>
+<p>纵轴为取值[0, 1]的归一化代价:</p>
+<script type="math/tex; mode=display">
+\operatorname{cost}_{n o r m}=\frac{F N R * P * \cos t_{01}+F P R *(1-P) * \cos t_{10}}{p^{*} \cos t_{01}+(1-p) * \cos t_{10}}</script><h2 id="比较检验"><a href="#比较检验" class="headerlink" title="比较检验"></a>比较检验</h2><h3 id="二项检验"><a href="#二项检验" class="headerlink" title="二项检验"></a>二项检验</h3><h3 id="T检验"><a href="#T检验" class="headerlink" title="T检验"></a>T检验</h3><h3 id="交叉验证-T-检验"><a href="#交叉验证-T-检验" class="headerlink" title="交叉验证 T-检验"></a>交叉验证 T-检验</h3><h3 id="偏差与方差"><a href="#偏差与方差" class="headerlink" title="偏差与方差"></a>偏差与方差</h3><p>对测试样本x,令$y_D$为$x$在数据集中的标记，$y$为$x$的真实标记, $f(x;D)$为训练集 $D$上学得模型$$在$x$上的预测输出。 以回归任务为例，学习期望为：</p>
+<script type="math/tex; mode=display">
+\bar f(x) = E_D [ f(x;D) ] \\</script><p>使用样本数目相同的不同训练集产生的方差为：</p>
+<script type="math/tex; mode=display">
+var(x) = E_D [ ( f(x;D) - \bar f(x) )^2]</script><p>噪声为：</p>
+<script type="math/tex; mode=display">
+\epsilon^2 = E_D [ (y_D - y)^2 ]</script><p>偏差定义为期望输出与真实标记的差别： $bias^2 = ( \bar f(x) - y )^2$, 为方便讨论，我们假设噪声的期望为0 ， 即$E_D [ (y_D - y)^2 ] = 0$. 对泛化误差分解：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E(f ; D)=& \mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-y_{D}\right)^{2}\right] \\
+=& \mathbb{E}_{D}\left[\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})+\bar{f}(\boldsymbol{x})-y_{D}\right)^{2}\right] \\
+=& \mathbb{E}_{D}\left[(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x}))^{2}\right]+\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y_{D}\right)^{2}\right] \\
+&+\mathbb{E}_{D}\left[2(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x}))\left(\bar{f}(\boldsymbol{x})-y_{D}\right)\right] \\
+=& \mathbb{E}_{D}\left[(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x}))^{2}\right]+\mathbb{E}_{D}\left[\left(\bar{f}(\boldsymbol{x})-y_{D}\right)^{2}\right]
+\end{aligned}</script><p>我们看到，<strong>泛化误差 = 方差 + 偏差 + 噪声</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/15/Docker-Compose/" rel="prev" title="Docker Compose">
+      <i class="fa fa-chevron-left"></i> Docker Compose
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/19/Linux-Hardware-Basic/" rel="next" title="Linux Hardware Basic">
+      Linux Hardware Basic <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Term"><span class="nav-text">Basic Term</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Data"><span class="nav-text">Data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task"><span class="nav-text">Task</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Goal"><span class="nav-text">Goal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%81%87%E8%AE%BE%E7%A9%BA%E9%97%B4"><span class="nav-text">假设空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NFL%E5%AE%9A%E7%90%86"><span class="nav-text">NFL定理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9"><span class="nav-text">模型评估与选择</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%B7%AE"><span class="nav-text">误差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88-amp-%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="nav-text">过拟合&amp; 欠拟合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95"><span class="nav-text">评估方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F"><span class="nav-text">性能度量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E7%8E%87%E5%92%8C%E7%B2%BE%E5%BA%A6"><span class="nav-text">错误率和精度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E5%87%86%E7%8E%87%EF%BC%8C%E6%9F%A5%E5%85%A8%E7%8E%87%E5%92%8CF1"><span class="nav-text">查准率，查全率和F1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROC"><span class="nav-text">ROC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AUC"><span class="nav-text">AUC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E4%BB%B7%E9%94%99%E8%AF%AF%E6%95%8F%E6%84%9F%E7%8E%87"><span class="nav-text">代价错误敏感率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E4%BB%B7%E6%9B%B2%E7%BA%BF"><span class="nav-text">代价曲线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E6%A3%80%E9%AA%8C"><span class="nav-text">比较检验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E9%A1%B9%E6%A3%80%E9%AA%8C"><span class="nav-text">二项检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#T%E6%A3%80%E9%AA%8C"><span class="nav-text">T检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81-T-%E6%A3%80%E9%AA%8C"><span class="nav-text">交叉验证 T-检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%8F%E5%B7%AE%E4%B8%8E%E6%96%B9%E5%B7%AE"><span class="nav-text">偏差与方差</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

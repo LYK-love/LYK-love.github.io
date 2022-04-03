@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="awk is a an interpreted programming language that is good at processing text streams ref: awk tutorial">
+<meta property="og:type" content="article">
+<meta property="og:title" content="awk">
+<meta property="og:url" content="http://lyk-love.cn/2022/02/09/awk/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="awk is a an interpreted programming language that is good at processing text streams ref: awk tutorial">
+<meta property="og:locale">
+<meta property="og:image" content="https://www.tutorialspoint.com/awk/images/awk_workflow.jpg">
+<meta property="article:published_time" content="2022-02-08T18:13:53.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="awk">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.tutorialspoint.com/awk/images/awk_workflow.jpg">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/02/09/awk/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>awk | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/02/09/awk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          awk
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-08 18:13:53" itemprop="dateCreated datePublished" datetime="2022-02-08T18:13:53Z">2022-02-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><code>awk</code> is a an <strong>interpreted</strong> programming language that is good at <strong>processing text streams</strong></p>
+<p>ref: <a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/awk/index.htm">awk tutorial</a></p>
+<span id="more"></span>
+<h1 id="AWK"><a href="#AWK" class="headerlink" title="AWK"></a>AWK</h1><h2 id="workflow"><a href="#workflow" class="headerlink" title="workflow"></a>workflow</h2><p><img src="https://www.tutorialspoint.com/awk/images/awk_workflow.jpg" alt=""></p>
+<ul>
+<li><p>Read</p>
+<p>AWK reads a line from the input stream (file, pipe, or stdin) and stores it in memory.</p>
+</li>
+<li><p>Execute</p>
+<p>All AWK commands are applied sequentially on the input. By default AWK execute commands on every line. We can restrict this by providing patterns.</p>
+</li>
+<li><p>Repeat</p>
+<p>This process repeats until the file reaches its end.</p>
+</li>
+</ul>
+<h2 id="Program-Structure"><a href="#Program-Structure" class="headerlink" title="Program Structure"></a>Program Structure</h2><p>Let us now understand the program structure of AWK.</p>
+<h3 id="Body-Block"><a href="#Body-Block" class="headerlink" title="Body Block"></a>Body Block</h3><p>The syntax of the body block is as follows −</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/pattern/ &#123;awk-commands&#125;</span><br></pre></td></tr></table></figure>
+<p><code>awk</code> programs take the form of an optional <strong>pattern</strong> plus a <strong>block</strong> saying what to do if the pattern matches a given line. </p>
+<ul>
+<li><p>The default pattern (which we used above) matches all lines</p>
+</li>
+<li><p>pattern不仅可以是REGEX，还可以是条件表达式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">输出奇数行</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">awk -F <span class="string">&#x27;:&#x27;</span> <span class="string">&#x27;NR % 2 == 1 &#123;print $1&#125;&#x27;</span> demo.txt</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>In the absence of a body block − default action is taken which is <strong>print</strong> the line.</p>
+</li>
+<li><p>Inside the block, </p>
+<ul>
+<li><code>$0</code> :  entire line’s contents, and</li>
+<li><code>$1</code> through <code>$n</code> :  the <code>n</code>th <em>field</em> of that line,<ul>
+<li>fields are separated by the <code>awk</code> field separator, (whitespace by default, change with <code>-F</code>)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="BEGIN-amp-amp-END-block"><a href="#BEGIN-amp-amp-END-block" class="headerlink" title="BEGIN &amp;&amp; END block"></a>BEGIN &amp;&amp; END block</h3><p>this block is optional.</p>
+<p><strong>Syntax</strong></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span> &#123;awk-commands&#125;</span><br><span class="line"><span class="keyword">END</span> &#123;awk-commands&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>The BEGIN block gets executed at program start-up.  </p>
+</li>
+<li><p>The END block executes at the end of the program</p>
+</li>
+<li><p>属于 AWK keyword， 必须大写</p>
+</li>
+</ul>
+<p>===================================&gt;</p>
+<ul>
+<li><p>examole:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">| awk &#x27;$1 == 1 &amp;&amp; $2 ~ /^c[^ ]*e$/ &#123; print $2 &#125;&#x27; | wc -l</span><br></pre></td></tr></table></figure>
+<ul>
+<li>The pattern says that the first field of the line should be equal to 1 (that’s the count from <code>uniq -c</code>), and that the second field should match the given regular expression. And the block just says to print the username.</li>
+<li>We then count the number of lines in the output with <code>wc -l</code>.</li>
+</ul>
+</li>
+</ul>
+<h2 id="command-line"><a href="#command-line" class="headerlink" title="command line"></a>command line</h2><ul>
+<li>ark command 必须用单引号括起来</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk [options] <span class="string">&#x27;command&#x27;</span> target_file</span><br></pre></td></tr></table></figure>
+<h2 id="program-File"><a href="#program-File" class="headerlink" title="program File"></a>program File</h2><p>We can provide AWK commands in a script file </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk [options]-f source_code_file  target_file</span><br></pre></td></tr></table></figure>
+<h2 id="standard-options"><a href="#standard-options" class="headerlink" title="standard options"></a>standard options</h2><ul>
+<li><p><code>-v</code>:  assigns a value to a variable. It allows assignment before the program execution.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ awk -v name=Jerry <span class="string">&#x27;BEGIN&#123;printf &quot;Name = %s\n&quot;, name&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>--dump-variables[=file]</code>:  prints a sorted list of global variables and their final values to file. The default file is <code>awkvars.out</code></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ awk --dump-variables <span class="string">&#x27;&#x27;</span></span><br><span class="line">$ cat awkvars.out </span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>--help</code></p>
+</li>
+<li><p><code>--lint[=fatal]</code> :  enables checking of non-portable or dubious constructs. When an argument <strong>fatal</strong> is provided, it treats warning messages as errors</p>
+</li>
+<li><p><code>-posix option</code>:   turns on strict POSIX compatibility, in which all common and gawk-specific extensions are disabled</p>
+</li>
+<li><p><code>--profile[=file]</code>: generates a pretty-printed version of the program in file. Default file is <code>awkprof.out</code></p>
+<p>example:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[jerry]$ </span><span class="language-bash">awk --profile <span class="string">&#x27;BEGIN&#123;printf&quot;---|Header|--\n&quot;&#125; &#123;print&#125;</span></span> </span><br><span class="line">END&#123;printf&quot;---|Footer|---\n&quot;&#125;&#x27; marks.txt &gt; /dev/null </span><br><span class="line"><span class="meta">[jerry]$ </span><span class="language-bash"><span class="string">cat awkprof.out</span></span></span><br></pre></td></tr></table></figure>
+<p>output:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># gawk profile, created Sun Oct 26 19:50:48 2014</span><br><span class="line"></span><br><span class="line">   # BEGIN block(s)</span><br><span class="line"></span><br><span class="line">   BEGIN &#123;</span><br><span class="line">      printf &quot;---|Header|--\n&quot;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   # Rule(s) &#123;</span><br><span class="line">      print $0</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   # END block(s)</span><br><span class="line"></span><br><span class="line">   END &#123;</span><br><span class="line">      printf &quot;---|Footer|---\n&quot;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>--traditional</code> :  disables all gawk-specific extensions.</p>
+</li>
+</ul>
+<h2 id="variable"><a href="#variable" class="headerlink" title="variable"></a>variable</h2><ul>
+<li>awk变量不需要定义和声明，可以直接使用，初始值为<code>0</code></li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[jerry]$ awk <span class="string">&#x27;/a/&#123;++cnt&#125; END &#123;print &quot;Count = &quot;, cnt&#125;&#x27;</span> marks.txt</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>built-in variables:</p>
+<ul>
+<li><p><code>ARGC</code></p>
+</li>
+<li><p><code>ARGV</code></p>
+</li>
+<li><p><code>CONVFMT</code>: It represents the conversion format for numbers. Its default value is <code>%.6g</code></p>
+</li>
+<li><p><code>ENVIRON</code>: It is an associative array of environment variables.</p>
+<p><code>awk &#39;BEGIN &#123; print ENVIRON[&quot;USER&quot;] &#125;&#39;</code></p>
+</li>
+<li><p><code>FILENAME</code>: 当前处理的文件名</p>
+</li>
+<li><p><code>FS</code>: 字段分隔符，默认是空格和制表符, 可以用<code>-F</code>更改</p>
+<p><code>awk &#39;BEGIN &#123;print &quot;FS = &quot; FS&#125;&#39; | cat -vte</code></p>
+</li>
+<li><p><code>NF</code>: 表示当前行的字段数，因此<code>$NF</code>就代表最后一个字段。</p>
+<p><code>echo -e &quot;One Two\nOne Two Three\nOne Two Three Four&quot; | awk &#39;NF &gt; 2&#39;</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> <span class="string">&#x27;this is a test&#x27;</span> | awk <span class="string">&#x27;&#123;print $NF&#125;&#x27;</span></span><br><span class="line"><span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>NR</code>：表示当前处理的行号</p>
+</li>
+<li><p><code>OFMT</code>: It represents the output format number and its default value is <code>%.6g</code>.</p>
+</li>
+<li><p><code>OFS</code>:  输出字段的分隔符，用于打印时分隔字段，默认为空格。</p>
+<p><code>awk &#39;BEGIN &#123;print &quot;OFS = &quot; OFS&#125;&#39; | cat -vte</code></p>
+</li>
+<li><p><code>ORS</code>:  输出记录的分隔符，用于打印时分隔记录，默认为换行符。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="REGEX"><a href="#REGEX" class="headerlink" title="REGEX"></a>REGEX</h2><p>与其他语言的regex相同</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo -e &quot;Apple Juice\nApple Pie\nApple Tart\nApple Cake&quot; | awk </span><br><span class="line">   &#x27;/Apple (Juice|Cake)/&#x27;</span><br><span class="line">   </span><br><span class="line"><span class="meta">#</span><span class="language-bash">output：</span></span><br><span class="line">Apple Juice</span><br><span class="line">Apple Cake</span><br></pre></td></tr></table></figure>
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><ul>
+<li><p>assign : <code>array_name[index] = value</code></p>
+<ul>
+<li>不需要定义或声明</li>
+<li><code>index</code>可以是<code>string</code>或<code>number</code></li>
+</ul>
+</li>
+<li><p>Creating Array</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[jerry]$ awk <span class="string">&#x27;BEGIN &#123;</span></span><br><span class="line"><span class="string">   fruits[&quot;mango&quot;] = &quot;yellow&quot;;</span></span><br><span class="line"><span class="string">   fruits[&quot;orange&quot;] = &quot;orange&quot;</span></span><br><span class="line"><span class="string">   print fruits[&quot;orange&quot;] &quot;\n&quot; fruits[&quot;mango&quot;]</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#output</span></span><br><span class="line">orange</span><br><span class="line">yellow</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Deleting Array Elements</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete array_name[index]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Multi-Dimensional arrays</p>
+<p><code>array_name[index, index] = value</code></p>
+</li>
+</ul>
+<h2 id="control-flow"><a href="#control-flow" class="headerlink" title="control flow"></a>control flow</h2><p>与其他语言同</p>
+<ul>
+<li><p><code>if</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if (condition)</span><br><span class="line">   action</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[jerry]$ </span><span class="language-bash">awk <span class="string">&#x27;BEGIN &#123;num = 10; if (num % 2 == 0) printf &quot;%d is even number.\n&quot;, num &#125;&#x27;</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p><code>if-else</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (condition)</span><br><span class="line">   action-1</span><br><span class="line">else</span><br><span class="line">   action-2</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[jerry]$ </span><span class="language-bash">awk <span class="string">&#x27;BEGIN &#123;</span></span></span><br><span class="line">   num = 11; if (num % 2 == 0) printf &quot;%d is even number.\n&quot;, num; </span><br><span class="line">      else printf &quot;%d is odd number.\n&quot;, num </span><br><span class="line">&#125;&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p><code>if -else if</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[jerry]$ </span><span class="language-bash">awk <span class="string">&#x27;BEGIN &#123;</span></span></span><br><span class="line">   a = 30;</span><br><span class="line">   </span><br><span class="line">   if (a==10)</span><br><span class="line">   print &quot;a = 10&quot;;</span><br><span class="line">   else if (a == 20)</span><br><span class="line">   print &quot;a = 20&quot;;</span><br><span class="line">   else if (a == 30)</span><br><span class="line">   print &quot;a = 30&quot;;</span><br><span class="line">&#125;&#x27;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="loop"><a href="#loop" class="headerlink" title="loop"></a>loop</h2><ul>
+<li><p><code>for</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[jerry]$ </span><span class="language-bash">awk <span class="string">&#x27;BEGIN &#123; for (i = 1; i &lt;= 5; ++i) print i &#125;&#x27;</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>while</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[jerry]$ </span><span class="language-bash">awk <span class="string">&#x27;BEGIN &#123;i = 1; while (i &lt; 6) &#123; print i; ++i &#125; &#125;&#x27;</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="built-in-function"><a href="#built-in-function" class="headerlink" title="built-in function"></a>built-in function</h2><h3 id="arithmetic-function"><a href="#arithmetic-function" class="headerlink" title="arithmetic function"></a>arithmetic function</h3><ul>
+<li><code>sin()</code>：正弦。</li>
+<li><code>cos()</code>：余弦。</li>
+<li><code>sqrt()</code>：平方根。</li>
+<li><code>rand()</code>：随机数。</li>
+</ul>
+<h3 id="string-function"><a href="#string-function" class="headerlink" title="string function"></a>string function</h3><ul>
+<li><p><code>length(arg)</code></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[jerry]$ awk <span class="string">&#x27;length($0) &gt; 18&#x27;</span> marks.txt</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p><code>print item1，item,...</code></p>
+<p>各项目间使用逗号分隔开，而输出时以<code>OFS</code>为分隔</p>
+</li>
+<li><p><code>printf &quot;format&quot;, expr,expr,...</code></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[jerry]$ awk <span class="string">&#x27;BEGIN &#123;</span></span><br><span class="line"><span class="string">   param = 1024.0</span></span><br><span class="line"><span class="string">   result = sqrt(param)</span></span><br><span class="line"><span class="string">   </span></span><br><span class="line"><span class="string">   printf &quot;sqrt(%f) = %f\n&quot;, param, result</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p><code>asort(arr [, d [, how] ])</code></p>
+<p>This function sorts the contents of <strong>arr</strong> using GAWK’s normal rules for comparing values, and replaces the indexes of the sorted values <strong>arr</strong> with sequential integers starting with 1.</p>
+</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[jerry]$ awk &#x27;BEGIN &#123;</span><br><span class="line">   arr[0] = &quot;Three&quot;</span><br><span class="line">   arr[1] = &quot;One&quot;</span><br><span class="line">   arr[2] = &quot;Two&quot;</span><br><span class="line">   print &quot;Array elements before sorting:&quot;</span><br><span class="line">   </span><br><span class="line">   for (i in arr) &#123;</span><br><span class="line">      print arr[i]</span><br><span class="line">   &#125;</span><br><span class="line">   asort(arr)</span><br><span class="line">   print &quot;Array elements after sorting:&quot;</span><br><span class="line">   </span><br><span class="line">   for (i in arr) &#123;</span><br><span class="line">      print arr[i]</span><br><span class="line">   &#125;</span><br><span class="line">&#125;&#x27;</span><br><span class="line"></span><br><span class="line">#Output</span><br><span class="line">Array elements before sorting:</span><br><span class="line">Three</span><br><span class="line">One</span><br><span class="line">Two</span><br><span class="line">Array elements after sorting:</span><br><span class="line">One</span><br><span class="line">Three</span><br><span class="line">Two</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>asorti(arr [, d [, how] ])</code></p>
+<p>The behavior of this function is the same as that of <strong>asort()</strong>, except that the array indexes are used for sorting.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[jerry]$ awk &#x27;BEGIN &#123;</span><br><span class="line">   arr[&quot;Two&quot;] = 1</span><br><span class="line">   arr[&quot;One&quot;] = 2</span><br><span class="line">   arr[&quot;Three&quot;] = 3</span><br><span class="line">   asorti(arr)</span><br><span class="line">   print &quot;Array indices after sorting:&quot;</span><br><span class="line">   </span><br><span class="line">   for (i in arr) &#123;</span><br><span class="line">      print arr[i]</span><br><span class="line">   &#125;</span><br><span class="line">&#125;&#x27;</span><br><span class="line"></span><br><span class="line">#Output</span><br><span class="line">Array indices after sorting:</span><br><span class="line">One</span><br><span class="line">Three</span><br><span class="line">Two</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p><code>gsub(regex, sub, string)</code></p>
+<p>global substitution. It replaces every occurrence of regex with the given string (sub). The third parameter is optional. If it is omitted, then $0 is used.</p>
+</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[jerry]$ awk &#x27;BEGIN &#123;</span><br><span class="line">   str = &quot;Hello, World&quot;</span><br><span class="line">   print &quot;String before replacement = &quot; str</span><br><span class="line">   </span><br><span class="line">   gsub(&quot;World&quot;, &quot;Jerry&quot;, str)</span><br><span class="line">   print &quot;String after replacement = &quot; str</span><br><span class="line">&#125;&#x27;</span><br><span class="line"></span><br><span class="line">#output</span><br><span class="line">String before replacement = Hello, World</span><br><span class="line">String after replacement = Hello, Jerry</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>match(str, regex)</code><br>It returns the index of the first longest match of regex in string str. It returns 0 if no match found.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[jerry]$ awk <span class="string">&#x27;BEGIN &#123;</span></span><br><span class="line"><span class="string">     str = &quot;One Two Three&quot;</span></span><br><span class="line"><span class="string">     subs = &quot;Two&quot;</span></span><br><span class="line"><span class="string">     ret = match(str, subs)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">   printf &quot;Substring \&quot;%s\&quot; found at %d location.\n&quot;, subs, ret</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line">On executing this code, you get the following result −</span><br><span class="line"></span><br><span class="line"><span class="comment">#Output</span></span><br><span class="line">Substring <span class="string">&quot;Two&quot;</span> found at <span class="number">5</span> location</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p><code>split(str, arr, regex)</code></p>
+<p>splits the string <strong>str</strong> into fields by regular expression <strong>regex</strong> and the fields are loaded into the array <strong>arr</strong>. If <strong>regex</strong> is omitted, then FS is used.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[jerry]$ awk <span class="string">&#x27;BEGIN &#123;</span></span><br><span class="line"><span class="string">   str = &quot;One,Two,Three,Four&quot;</span></span><br><span class="line"><span class="string">   split(str, arr, &quot;,&quot;)</span></span><br><span class="line"><span class="string">   print &quot;Array contains following values&quot;</span></span><br><span class="line"><span class="string">   </span></span><br><span class="line"><span class="string">   for (i in arr) &#123;</span></span><br><span class="line"><span class="string">      print arr[i]</span></span><br><span class="line"><span class="string">   &#125;</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#output</span></span><br><span class="line">Array contains following values</span><br><span class="line">One</span><br><span class="line">Two</span><br><span class="line">Three</span><br><span class="line">Four</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>strtonum(str)</code></p>
+<p>This function examines <strong>str</strong> and return its numeric value. If str begins with a leading 0, it is treated as an octal number. If str begins with a leading 0x or 0X, it is taken as a hexadecimal number. Otherwise, assume it is a decimal number.</p>
+</li>
+</ul>
+  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[jerry]$ awk &#x27;BEGIN &#123;</span><br><span class="line">   print &quot;Decimal num = &quot; strtonum(&quot;123&quot;)</span><br><span class="line">   print &quot;Octal num = &quot; strtonum(&quot;0123&quot;)</span><br><span class="line">   print &quot;Hexadecimal num = &quot; strtonum(&quot;0x123&quot;)</span><br><span class="line">&#125;&#x27;</span><br><span class="line"></span><br><span class="line">#output</span><br><span class="line">Decimal num = 123</span><br><span class="line">Octal num = 83</span><br><span class="line">Hexadecimal num = 291</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>sub(regex, sub, string)</code></p>
+<p>This function performs a single <strong>substitution</strong>. It replaces the first occurrence of the regex pattern with the given string (sub). The third parameter is optional. If it is omitted, $0 is used.</p>
+</li>
+<li><p><code>substr(str, start, l)</code></p>
+<p>This function returns the substring of string <strong>str</strong>, starting at index <strong>start</strong> of length <strong>l</strong>. If length is omitted, the suffix of <strong>str</strong> starting at index <strong>start</strong> is returned.</p>
+</li>
+<li><p><code>tolower()</code>：字符转为小写</p>
+</li>
+</ul>
+<h2 id="user-defined-functions"><a href="#user-defined-functions" class="headerlink" title="user-defined functions"></a>user-defined functions</h2><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> function_name(argument1, argument2, ...) &#123; </span><br><span class="line">   <span class="keyword">function</span> body</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>example</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Returns minimum number</span></span><br><span class="line"><span class="keyword">function</span> find_min(num1, num2)&#123;</span><br><span class="line">   <span class="keyword">if</span> (num1 &lt; num2)</span><br><span class="line">   		return num1</span><br><span class="line">   return num2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="redirection"><a href="#redirection" class="headerlink" title="redirection"></a>redirection</h2><p>Redirections in AWK are written just like redirection in shell commands, except that they are written inside the AWK program</p>
+<h2 id="pretty-printing"><a href="#pretty-printing" class="headerlink" title="pretty printing"></a>pretty printing</h2><ul>
+<li><p>Horizontal Tab</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[jerry]$ </span><span class="language-bash">awk <span class="string">&#x27;BEGIN &#123; printf &quot;Sr No\tName\tSub\tMarks\n&quot; &#125;&#x27;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">output</span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">Sr No   Name    Sub Marks</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Backspace</p>
+<p><code>\b</code>删除前一个字符</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">[jerry]$ </span><span class="language-bash">awk <span class="string">&#x27;BEGIN &#123; printf &quot;Field 1\bField 2\bField 3\bField 4\n&quot; &#125;&#x27;</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">Output</span></span><br><span class="line"><span class="meta">#</span><span class="language-bash">Field Field Field Field 4</span></span><br></pre></td></tr></table></figure>
+<p>On executing this code, you get the following result −</p>
+</li>
+<li><p>Format Specifier</p>
+<p>同其他语言</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/awk/" rel="tag"># awk</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/04/Blindness/" rel="prev" title="Blindness">
+      <i class="fa fa-chevron-left"></i> Blindness
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/09/Data-Wrangling/" rel="next" title="Data Wrangling">
+      Data Wrangling <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#AWK"><span class="nav-text">AWK</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#workflow"><span class="nav-text">workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Program-Structure"><span class="nav-text">Program Structure</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Body-Block"><span class="nav-text">Body Block</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BEGIN-amp-amp-END-block"><span class="nav-text">BEGIN &amp;&amp; END block</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#command-line"><span class="nav-text">command line</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#program-File"><span class="nav-text">program File</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#standard-options"><span class="nav-text">standard options</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#variable"><span class="nav-text">variable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#REGEX"><span class="nav-text">REGEX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array"><span class="nav-text">Array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#control-flow"><span class="nav-text">control flow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#loop"><span class="nav-text">loop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#built-in-function"><span class="nav-text">built-in function</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#arithmetic-function"><span class="nav-text">arithmetic function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string-function"><span class="nav-text">string function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#user-defined-functions"><span class="nav-text">user-defined functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#redirection"><span class="nav-text">redirection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pretty-printing"><span class="nav-text">pretty printing</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -27,7 +27,7 @@
 <meta property="og:description" content="Linux主机的常用命令，可以用来快速进行linux服务器的配置 OS可以是各种LINUX发行版，因此你可以看到各种包管理工具（yay,apt,yum…）, 选自己用的就好">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-02-19T14:04:37.000Z">
-<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-04-03T16:33:51.861Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+                <time title="Modified: 2022-04-03 16:33:51" itemprop="dateModified" datetime="2022-04-03T16:33:51Z">2022-04-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -251,10 +251,13 @@
 <span id="more"></span>
 <h1 id="配置ssh免密登陆"><a href="#配置ssh免密登陆" class="headerlink" title="配置ssh免密登陆"></a>配置ssh免密登陆</h1><p>主机上生成 ssh key：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
+<ul>
+<li>腾讯云的服务器不会默认生成ssh key， 所以也不会有<code>~/.ssh</code>文件夹， 其他主机也无法通过ssh连接（<code>ssh-copy-id</code>）也不行。 因此腾讯云服务器需要先生成ssh key，才能使用</li>
+</ul>
 <p>查看<code>~/.ssh</code>:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">❯ ls -l ~/.ssh</span><br><span class="line">total 20</span><br><span class="line">-rw-r--r-- 1 lyk lyk   27  2月 10 15:44 config</span><br><span class="line">-rw------- 1 lyk lyk 2602  2月  9 17:18 id_rsa</span><br><span class="line">-rw-r--r-- 1 lyk lyk  571  2月  9 17:18 id_rsa.pub</span><br><span class="line">-rw------- 1 lyk lyk 3926  2月 19 12:58 known_hosts</span><br><span class="line">-rw------- 1 lyk lyk 3182  2月 19 12:41 known_hosts.old</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <ul>
-<li><p>authorized_keys: 存放远程免密登录的公钥,主要通过这个文件记录多台机器的公钥。</p>
+<li><p>authorized_keys: 存放远程免密登录的公钥,主要通过这个文件记录多台机器的公钥。(没有则手动创建该文件)</p>
 </li>
 <li><p>id_rsa: 生成的私钥文件</p>
 </li>
@@ -271,7 +274,7 @@
 </li>
 <li>也可以<code>ssh-copy-id user@host</code></li>
 </ul>
-<h1 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h1><h2 id="创建新用户"><a href="#创建新用户" class="headerlink" title="创建新用户"></a>创建新用户</h2><p><code>sudo adduser username</code></p>
+<h1 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h1><h2 id="查看用户名"><a href="#查看用户名" class="headerlink" title="查看用户名"></a>查看用户名</h2><h2 id="创建新用户"><a href="#创建新用户" class="headerlink" title="创建新用户"></a>创建新用户</h2><p><code>sudo adduser username</code></p>
 <h2 id="赋予新用户sudo权限"><a href="#赋予新用户sudo权限" class="headerlink" title="赋予新用户sudo权限"></a>赋予新用户sudo权限</h2><p>用adduser创建后的新用户是不能使用sudo的，因为还没有赋予相关root权限，执行以下代码赋予权限</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo usermod -a -G adm username</span><br><span class="line">sudo usermod -a -G sudo username</span><br></pre></td></tr></table></figure>
 <p>或者将用户加到sudoers文件中:</p>
@@ -282,6 +285,8 @@
 <li><code>-r</code>: 删除用户的home目录文件</li>
 </ul>
 <p>当需要删除用户时可以使用以下指令</p>
+<h2 id="切换用户"><a href="#切换用户" class="headerlink" title="切换用户"></a>切换用户</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">su [user]</span><br></pre></td></tr></table></figure>
+<p>输入要切换的用户的密码</p>
 <h2 id="查看用户组"><a href="#查看用户组" class="headerlink" title="查看用户组"></a>查看用户组</h2><p><code>cat /etc/group</code></p>
 <h1 id="磁盘挂载"><a href="#磁盘挂载" class="headerlink" title="磁盘挂载"></a>磁盘挂载</h1><p><code>fdisk</code>：查看磁盘信息</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo fdisk -l</span><br></pre></td></tr></table></figure>
@@ -393,7 +398,9 @@
 </ol>
 </li>
 </ul>
-<h1 id="包管理工具"><a href="#包管理工具" class="headerlink" title="包管理工具"></a>包管理工具</h1><h2 id="pacman"><a href="#pacman" class="headerlink" title="pacman"></a>pacman</h2><p>同步存储库数据库，并且更新系统的所有软件包，但不包括不在软件库中的“本地安装的”包：</p>
+<h1 id="包管理工具"><a href="#包管理工具" class="headerlink" title="包管理工具"></a>包管理工具</h1><h2 id="brew"><a href="#brew" class="headerlink" title="brew"></a>brew</h2><p>安装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/bin/zsh -c &quot;$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="pacman"><a href="#pacman" class="headerlink" title="pacman"></a>pacman</h2><p>同步存储库数据库，并且更新系统的所有软件包，但不包括不在软件库中的“本地安装的”包：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -Syu</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>S</code> 代表同步</li>
@@ -409,7 +416,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash /path/to/miniconda</span><br></pre></td></tr></table></figure>
 <p>重启终端，检查安装是否成功：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda -V</span><br></pre></td></tr></table></figure>
-<h2 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h2><p>conda换源建议用nju源  （清华源早就不行了，建议别用）， <a target="_blank" rel="noopener" href="https://mirrors.nju.edu.cn/help/anaconda">具体指导</a></p>
+<h3 id="换源"><a href="#换源" class="headerlink" title="换源"></a>换源</h3><p>conda换源建议用nju源  （清华源早就不行了，建议别用）， <a target="_blank" rel="noopener" href="https://mirrors.nju.edu.cn/help/anaconda">具体指导</a></p>
 <ol>
 <li><p>先执行 <code>conda config --set show_channel_urls yes</code> 生成用户目录下的 <code>.condarc</code> 文件</p>
 </li>
@@ -424,7 +431,12 @@
 </ol>
 <h2 id="pip3"><a href="#pip3" class="headerlink" title="pip3"></a>pip3</h2><p>python2: pip</p>
 <p>python3: pip3</p>
-<p>在 pip 命令中使用 <strong>-i</strong> 参数来指定镜像地址</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S pip3</span><br></pre></td></tr></table></figure>
+<p>mac用户：<code>brew intall pip3</code>相当卡， 因此要用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl bootstrap.pypa.io/get-pip.py | python3</span><br></pre></td></tr></table></figure>
+<p>检查安装是否成功：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 --version</span><br></pre></td></tr></table></figure>
+<h3 id="换源-1"><a href="#换源-1" class="headerlink" title="换源"></a>换源</h3><p>在 pip 命令中使用 <strong>-i</strong> 参数来指定镜像地址</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install numpy -i https://mirrors.aliyun.com/pypi/simple/</span><br></pre></td></tr></table></figure>
 <p>如果需要全局修改，则需要修改配置文件:</p>
 <p>Linux/Mac os 环境中，配置文件在 ~/.pip/pip.conf（如不存在创建该目录和文件）：</p>
@@ -433,6 +445,62 @@
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">[install]</span><br><span class="line">trusted-host = https://mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
 <p>查看镜像地址：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip3 config list  </span><br></pre></td></tr></table></figure>
+<h3 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h3><h4 id="换源-2"><a href="#换源-2" class="headerlink" title="换源"></a>换源</h4><h2 id="国内优秀npm镜像"><a href="#国内优秀npm镜像" class="headerlink" title="国内优秀npm镜像"></a>国内优秀npm镜像</h2><hr>
+<h4 id="淘宝npm镜像"><a href="#淘宝npm镜像" class="headerlink" title="淘宝npm镜像"></a>淘宝npm镜像</h4><ul>
+<li>搜索地址：<a target="_blank" rel="noopener" href="https://link.jianshu.com?t=http://npm.taobao.org/">http://npm.taobao.org/</a></li>
+<li>registry地址：<a target="_blank" rel="noopener" href="https://link.jianshu.com?t=http://registry.npm.taobao.org/">http://registry.npm.taobao.org/</a></li>
+</ul>
+<h4 id="cnpmjs镜像"><a href="#cnpmjs镜像" class="headerlink" title="cnpmjs镜像"></a>cnpmjs镜像</h4><ul>
+<li>搜索地址：<a target="_blank" rel="noopener" href="https://link.jianshu.com?t=http://cnpmjs.org/">http://cnpmjs.org/</a></li>
+<li>registry地址：<a target="_blank" rel="noopener" href="https://link.jianshu.com?t=http://r.cnpmjs.org/">http://r.cnpmjs.org/</a></li>
+</ul>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p> 1.临时使用<br> <code>npm install express --registry https://registry.npm.taobao.org</code></p>
+<p>2.持久使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+<p> 配置后可通过下面方式来验证是否成功:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
+<h1 id="开发环境配置"><a href="#开发环境配置" class="headerlink" title="开发环境配置"></a>开发环境配置</h1><h2 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h2><h3 id="安装jdk"><a href="#安装jdk" class="headerlink" title="安装jdk"></a>安装jdk</h3><p>mac:</p>
+<p>mac建议到<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/downloads/#java11-mac">oracle官网</a>下载jdk</p>
+<p>Ubuntu:</p>
+<p>linux一般用命令行安装，因此推荐openjdk</p>
+<p>查找合适的openjdk版本:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">ubuntu</span></span><br><span class="line">apt-cache search openjdk</span><br></pre></td></tr></table></figure>
+<p>安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openjdk-8-jdk</span><br></pre></td></tr></table></figure>
+<p>Manjaro:</p>
+<p>查找合适的openjdk版本:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay search jdk</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay install openjdk-8-jdk</span><br></pre></td></tr></table></figure>
+<p>(3) 配置环境变量, 编辑如下文件:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>在最后一行加:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64</span><br><span class="line">export PATH=$JAVA_HOME/bin:$PATH</span><br><span class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br></pre></td></tr></table></figure>
+<h2 id="查找JDK"><a href="#查找JDK" class="headerlink" title="查找JDK"></a>查找JDK</h2><p>查看jdk版本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<p>查找jdk:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis java</span><br></pre></td></tr></table></figure>
+<p>输出为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java: /usr/bin/java /usr/share/java /usr/share/man/man1/java.1.gz</span><br></pre></td></tr></table></figure>
+<p>查看jdk真实位置（上面的都是软链接）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /usr/bin/java</span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lrwxrwxrwx 1 root root 22 Mar 30 16:07 /usr/bin/java -&gt; /etc/alternatives/java</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l /etc/alternatives/java</span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lrwxrwxrwx 1 root root 46 Mar 30 16:07 /etc/alternatives/java -&gt; /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java</span><br><span class="line"><span class="meta"># </span><span class="language-bash">以上就是jdk位置</span></span><br></pre></td></tr></table></figure>
+<h3 id="配置jdk环境变量"><a href="#配置jdk环境变量" class="headerlink" title="配置jdk环境变量"></a>配置jdk环境变量</h3><h4 id="linux"><a href="#linux" class="headerlink" title="linux"></a>linux</h4><p>对于linux:  编辑<code>/etc/profile</code>, 或 <code>~/.bashrc</code>, <code>.zshrc</code>等：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile # 这里可以选择任意的shell配置文件，</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 # 这里填jdk位置</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=./:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$PATH:$&#123;JAVA_HOME&#125;/bin</span><br></pre></td></tr></table></figure>
+<p>使配置文件生效：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+<h4 id="mac"><a href="#mac" class="headerlink" title="mac"></a>mac</h4><p>mac的jdk安装位置和linux不同</p>
+<p>查询当前的java的安装版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /Library/Java/JavaVirtualMachines</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><p>配置<code>.zshrc</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># jdk 版本切换， on mac</span></span><br><span class="line"><span class="comment"># jdk-17.0.2.jdk   jdk1.8.0_321.jdk jdk-11.0.14.jdk </span></span><br><span class="line"><span class="built_in">export</span> JAVA_8_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_321.jdk/Contents/Home</span><br><span class="line"><span class="built_in">export</span> JAVA_11_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.14.jdk/Contents/Home</span><br><span class="line"><span class="built_in">export</span> JAVA_17_HOME=/Library/Java/JavaVirtualMachines/jdk-17.0.2.jdk/Contents/Home</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">alias</span> jdk8=<span class="string">&#x27;export JAVA_HOME=$JAVA_8_HOME&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> jdk11=<span class="string">&#x27;export JAVA_HOME=$JAVA_11_HOME&#x27;</span></span><br><span class="line"><span class="built_in">alias</span> jdk17=<span class="string">&#x27;export JAVA_HOME=$JAVA_17_HOME&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.bash_profi</span><br></pre></td></tr></table></figure>
+<p>切换jdk版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jdk11</span><br><span class="line">java -version</span><br></pre></td></tr></table></figure>
 <h1 id="用户软件安装"><a href="#用户软件安装" class="headerlink" title="用户软件安装"></a>用户软件安装</h1><p>这部分不仅是给主机，也是给容器的，尤其是容器，可能连ping这样的基本命令都没有，需要手动安装</p>
 <p>如果OS是Ubuntu（ 云服务器或容器 ）， 需要先：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
@@ -454,11 +522,30 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://zz1b9pta.mirror.aliyuncs.com&quot;] # 这个url需要去阿里云“容器镜像服务” --&gt; “镜像加速器” 生成</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<h2 id="mycli"><a href="#mycli" class="headerlink" title="mycli"></a>mycli</h2><p>好用的命令行mysql界面,<a target="_blank" rel="noopener" href="https://github.com/dbcli/mycli">项目地址</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">通用</span></span><br><span class="line">pip install -U mycli</span><br></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">on Arch</span></span><br><span class="line">yay -S mycli</span><br></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">Only on macOS</span></span><br><span class="line">brew update &amp;&amp; brew install mycli  </span><br></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">Only on debian or ubuntu</span></span><br><span class="line">sudo apt-get install mycli </span><br></pre></td></tr></table></figure>
 <h2 id="ping-amp-traceroute"><a href="#ping-amp-traceroute" class="headerlink" title="ping  &amp; traceroute"></a>ping  &amp; traceroute</h2><p>ping:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install iputils-ping</span><br></pre></td></tr></table></figure>
 <p>traceroute:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install traceroute</span><br></pre></td></tr></table></figure>
-<h1 id="Dababase"><a href="#Dababase" class="headerlink" title="Dababase"></a>Dababase</h1><h2 id="mongodb"><a href="#mongodb" class="headerlink" title="mongodb"></a>mongodb</h2><p>由于 MongoDB 修改了软件授权协议，  官方仓库已经删除了此软件包。请注意从代码编译 mongodb 需要 ~160GB 磁盘空间，需要花费几个小时时间。因此我们最好安装<code>-bin</code>版本</p>
+<h1 id="Dababase"><a href="#Dababase" class="headerlink" title="Dababase"></a>Dababase</h1><h2 id="mysql"><a href="#mysql" class="headerlink" title="mysql"></a>mysql</h2><p>manjaro:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S mysql</span><br></pre></td></tr></table></figure>
+<p>mac:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install mysql</span><br></pre></td></tr></table></figure>
+<p>ubuntu:</p>
+<p>这里只针对ubuntu 20.04， Ubuntu 源仓库中最新的 MySQL 版本号是 MySQL 8.0</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install mysql-server</span><br></pre></td></tr></table></figure>
+<p>安装完成后，MySQL 服务将会自动启动。想要验证 MySQL 服务器正在运行，输入：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status mysql</span><br></pre></td></tr></table></figure>
+<p>输出应该显示服务已经被启用，并且正在运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">● mysql.service - MySQL Community Server</span><br><span class="line">     Loaded: loaded (/lib/systemd/system/mysql.service; enabled; vendor preset: enabled)</span><br><span class="line">     Active: active (running) since Tue 2020-04-28 20:59:52 UTC; 10min ago</span><br><span class="line">   Main PID: 8617 (mysqld)</span><br><span class="line">     Status: &quot;Server is operational&quot;</span><br><span class="line">     ...</span><br></pre></td></tr></table></figure>
+<h2 id="mongodb"><a href="#mongodb" class="headerlink" title="mongodb"></a>mongodb</h2><p>由于 MongoDB 修改了软件授权协议，  官方仓库已经删除了此软件包。请注意从代码编译 mongodb 需要 ~160GB 磁盘空间，需要花费几个小时时间。因此我们最好安装<code>-bin</code>版本</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S mongodb</span><br></pre></td></tr></table></figure>
 <p>注意： 只有先启动<code>mongod</code>， 才能正确启动<code>mongo</code></p>
 <h3 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h3><p>可能有报错：</p>
@@ -491,10 +578,18 @@
 <h2 id="切换tty"><a href="#切换tty" class="headerlink" title="切换tty"></a>切换tty</h2><ol>
 <li><p>CTRL + ALT + Fn</p>
 </li>
-<li><pre><code class="lang-shell">sudo chvt N # N: tty number, 1 represents the main tty
-</code></pre>
+<li><p>```shell<br>sudo chvt N # N: tty number, 1 represents the main tty</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 下载</span><br><span class="line"></span><br><span class="line">```shell</span><br><span class="line"># Download the contents of a URL to a file (named &quot;foo&quot; in this case):</span><br><span class="line">wget https://example.com/foo</span><br><span class="line"></span><br><span class="line"># Download the contents of a URL to a file (named &quot;bar&quot; in this case):</span><br><span class="line">wget -O bar https://example.com/foo</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<h2 id="主机操作"><a href="#主机操作" class="headerlink" title="主机操作"></a>主机操作</h2><p>查看主机名：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostname </span><br></pre></td></tr></table></figure>
+<p>更改主机名：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hostname # 编辑该文件</span><br></pre></td></tr></table></figure>
+<p>添加域名映射：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
+<h2 id="时间"><a href="#时间" class="headerlink" title="时间"></a>时间</h2><p>查看时间：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -513,11 +608,11 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/02/18/Linux-Hardware-Basic/" rel="prev" title="Linux Hardware Basic">
+    <a href="/2022/02/19/Linux-Hardware-Basic/" rel="prev" title="Linux Hardware Basic">
       <i class="fa fa-chevron-left"></i> Linux Hardware Basic
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/02/20/Computer%20Networking%20Network-Layer/" rel="next" title="Network Layer">
+    <a href="/2022/02/21/Computer%20Networking%20Network-Layer/" rel="next" title="Network Layer">
       Network Layer <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
@@ -578,7 +673,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86"><span class="nav-text">配置ssh免密登陆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%88%B7"><span class="nav-text">用户</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7"><span class="nav-text">创建新用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%8B%E4%BA%88%E6%96%B0%E7%94%A8%E6%88%B7sudo%E6%9D%83%E9%99%90"><span class="nav-text">赋予新用户sudo权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81"><span class="nav-text">修改用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7"><span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-text">查看用户组</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD"><span class="nav-text">磁盘挂载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E5%88%86%E5%8C%BA%EF%BC%88%E4%B8%B4%E6%97%B6%EF%BC%89"><span class="nav-text">挂载分区（临时）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD"><span class="nav-text">设置开机自动挂载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell"><span class="nav-text">Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zsh"><span class="nav-text">zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ohmyzsh"><span class="nav-text">ohmyzsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plugins"><span class="nav-text">plugins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#theme"><span class="nav-text">theme</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Changing-your-default-shell"><span class="nav-text">Changing your default shell</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Editor"><span class="nav-text">Editor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nvim"><span class="nav-text">nvim</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-text">包管理工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pacman"><span class="nav-text">pacman</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conda"><span class="nav-text">conda</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%A2%E6%BA%90"><span class="nav-text">换源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pip3"><span class="nav-text">pip3</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-text">用户软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker"><span class="nav-text">docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ping-amp-traceroute"><span class="nav-text">ping  &amp; traceroute</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dababase"><span class="nav-text">Dababase</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mongodb"><span class="nav-text">mongodb</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E9%94%99"><span class="nav-text">报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="nav-text">启动服务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DEV"><span class="nav-text">DEV</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#maven"><span class="nav-text">maven</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="nav-text">设置开机自启</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#clear"><span class="nav-text">clear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E6%8D%A2tty"><span class="nav-text">切换tty</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEssh%E5%85%8D%E5%AF%86%E7%99%BB%E9%99%86"><span class="nav-text">配置ssh免密登陆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%88%B7"><span class="nav-text">用户</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E5%90%8D"><span class="nav-text">查看用户名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E7%94%A8%E6%88%B7"><span class="nav-text">创建新用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%8B%E4%BA%88%E6%96%B0%E7%94%A8%E6%88%B7sudo%E6%9D%83%E9%99%90"><span class="nav-text">赋予新用户sudo权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81"><span class="nav-text">修改用户密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%94%A8%E6%88%B7"><span class="nav-text">删除用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E6%8D%A2%E7%94%A8%E6%88%B7"><span class="nav-text">切换用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E7%BB%84"><span class="nav-text">查看用户组</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD"><span class="nav-text">磁盘挂载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E5%88%86%E5%8C%BA%EF%BC%88%E4%B8%B4%E6%97%B6%EF%BC%89"><span class="nav-text">挂载分区（临时）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD"><span class="nav-text">设置开机自动挂载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell"><span class="nav-text">Shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#zsh"><span class="nav-text">zsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ohmyzsh"><span class="nav-text">ohmyzsh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plugins"><span class="nav-text">plugins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#theme"><span class="nav-text">theme</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Changing-your-default-shell"><span class="nav-text">Changing your default shell</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Editor"><span class="nav-text">Editor</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#nvim"><span class="nav-text">nvim</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7"><span class="nav-text">包管理工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#brew"><span class="nav-text">brew</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pacman"><span class="nav-text">pacman</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conda"><span class="nav-text">conda</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%A2%E6%BA%90"><span class="nav-text">换源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pip3"><span class="nav-text">pip3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%A2%E6%BA%90-1"><span class="nav-text">换源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm"><span class="nav-text">npm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8D%A2%E6%BA%90-2"><span class="nav-text">换源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BD%E5%86%85%E4%BC%98%E7%A7%80npm%E9%95%9C%E5%83%8F"><span class="nav-text">国内优秀npm镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B7%98%E5%AE%9Dnpm%E9%95%9C%E5%83%8F"><span class="nav-text">淘宝npm镜像</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cnpmjs%E9%95%9C%E5%83%8F"><span class="nav-text">cnpmjs镜像</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8"><span class="nav-text">如何使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-text">开发环境配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK"><span class="nav-text">JDK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85jdk"><span class="nav-text">安装jdk</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%89%BEJDK"><span class="nav-text">查找JDK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEjdk%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">配置jdk环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#linux"><span class="nav-text">linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mac"><span class="nav-text">mac</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text"> </span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="nav-text">用户软件安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker"><span class="nav-text">docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mycli"><span class="nav-text">mycli</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ping-amp-traceroute"><span class="nav-text">ping  &amp; traceroute</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dababase"><span class="nav-text">Dababase</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql"><span class="nav-text">mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mongodb"><span class="nav-text">mongodb</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%A5%E9%94%99"><span class="nav-text">报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-text">配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="nav-text">启动服务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DEV"><span class="nav-text">DEV</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#maven"><span class="nav-text">maven</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="nav-text">设置开机自启</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="nav-text">基本命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#clear"><span class="nav-text">clear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%87%E6%8D%A2tty"><span class="nav-text">切换tty</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E6%9C%BA%E6%93%8D%E4%BD%9C"><span class="nav-text">主机操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4"><span class="nav-text">时间</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -594,7 +689,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-count">128</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

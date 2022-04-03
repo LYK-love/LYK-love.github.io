@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline:  Decision Problem The class P The class NP Reduction between problems NP-Complete Problems Other advanced topics">
+<meta property="og:type" content="article">
+<meta property="og:title" content="L19&amp;L20 NP">
+<meta property="og:url" content="http://lyk-love.cn/2021/08/13/L19-L20-NP/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Decision Problem The class P The class NP Reduction between problems NP-Complete Problems Other advanced topics">
+<meta property="og:locale">
+<meta property="article:published_time" content="2021-08-12T16:31:38.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Algorithm design and analysis">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2021/08/13/L19-L20-NP/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>L19&L20 NP | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/08/13/L19-L20-NP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          L19&L20 NP
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-12 16:31:38" itemprop="dateCreated datePublished" datetime="2021-08-12T16:31:38Z">2021-08-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<ul>
+<li><strong>Decision Problem</strong></li>
+<li><strong>The class P</strong></li>
+<li><strong>The class NP</strong></li>
+<li><strong>Reduction between problems</strong></li>
+<li><strong>NP-Complete Problems</strong></li>
+<li><strong>Other advanced topics</strong></li>
+</ul>
+<span id="more"></span>
+<h1 id="Decision-Problem"><a href="#Decision-Problem" class="headerlink" title="Decision Problem"></a>Decision Problem</h1><ul>
+<li><strong>Statement of a decision problem</strong><ul>
+<li>Part 1: instance description defining the input</li>
+<li>Part2: question stating the actual yes-or-no question</li>
+</ul>
+</li>
+<li><strong>A decision problem is a mapping from all possible inputs into the set {yes, no}</strong></li>
+</ul>
+<h2 id="Optimization-vs-Decision"><a href="#Optimization-vs-Decision" class="headerlink" title="Optimization vs. Decision"></a>Optimization vs. Decision</h2><ul>
+<li>Usually, an optimization problem can be rephrased as a decision problem.<ul>
+<li>优化问题往往比判定问题难</li>
+</ul>
+</li>
+<li>If the decision problem can’t be solved in <strong>polynomial time</strong>, then the corresponding optimization problem can’t be either.</li>
+<li>Often, it can be proved that the decision can be solved in <strong>polynomial time </strong> <u>if and only if</u> the corresponding optimization problem can. （ 通常， 判定问题在多项式时间可解当且仅当优化问题在多项式时间可解）</li>
+</ul>
+<h2 id="Some-Typical-Decision-Problems"><a href="#Some-Typical-Decision-Problems" class="headerlink" title="Some Typical Decision Problems"></a>Some Typical Decision Problems</h2><ul>
+<li><strong>Graph coloring</strong><ul>
+<li>Given a undirected graph G and a positive integer <em>k</em>, is there a coloring of G using at most <em>k</em> colors?</li>
+</ul>
+</li>
+<li><strong>Job scheduling with penalties</strong><ul>
+<li>Given a group of jobs, each with its execution duration, deadline and penalty for missing the deadline, and a nonnegative integer <em>k</em>, is there a schedule with the total penalty bounded by <em>k</em>?</li>
+</ul>
+</li>
+<li><strong>Bin packing</strong><ul>
+<li>Given <em>k</em> bins each of capacities one, and <em>n</em> objects with size $s<em>1,\dots,s_n$, (where $s</em>{i}$ is a rational number in (0,1] ). Do the <em>n</em> objects fit in <em>k</em> bins?</li>
+</ul>
+</li>
+<li><strong>Knapsack</strong><ul>
+<li>Given a knapsack of capacity C, <em>n</em> objects with sizes $s_1, \dots, s_n$ and “profits” $p_1, \dots, p_n$, and a positive integer <em>k</em>. Is there a subset of the <em>n</em> objects that fits in the knapsack and has total profit at least <em>k</em>?<ul>
+<li>( <strong>Subset sum</strong>  as a simplified version )</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>CNF-Satisfiability</strong><ul>
+<li>Given a CNF formula, is there a truth assignment that satisfied it?</li>
+</ul>
+</li>
+<li><strong>Hamiltonian cycles or Hamiltonian paths</strong></li>
+<li><strong>Traveling salespersion</strong><ul>
+<li>带权完全图，问是否存在总权小于 <em>k</em> 的哈密尔顿回路？</li>
+</ul>
+</li>
+</ul>
+<h2 id="Theory-of-NP-Completeness"><a href="#Theory-of-NP-Completeness" class="headerlink" title="Theory of NP-Completeness"></a>Theory of NP-Completeness</h2><ul>
+<li>What it <strong>cannot</strong> do<ul>
+<li>Provide a method of obtaining polynomial time algorithms for those “hard” problems.  不能为难问题提出高效解</li>
+<li>Negate  the existence of algorithms of polynomial complexity for those problems. 不能否定难问题的高效解的存在</li>
+</ul>
+</li>
+<li>What it <strong>can</strong> do<ul>
+<li>Show that many of the problems for which there is no known polynomial time algorithm are computationally related.  可以给问题难度分档</li>
+</ul>
+</li>
+</ul>
+<h1 id="The-class-P"><a href="#The-class-P" class="headerlink" title="The class P"></a>The class P</h1><ul>
+<li><strong>A <u>polynomially</u> bounded <u>algorithm</u></strong><ul>
+<li>is one with its <strong>worse-case</strong> complexity bounded by a polynomial function of the input size</li>
+</ul>
+</li>
+<li><strong>A <u>polynomially</u> bounded <u>problem</u></strong><ul>
+<li>is one for which there is a polynomially bounded algorithm.<ul>
+<li>“bounded”： 问题只要小于等于多项式时间。 如O(logn)不是多项式，但是小于多项式，这也算多项式可解</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>The <u>class P</u> is the class of decision problems that are polynomially bounded</strong></li>
+</ul>
+<h2 id="Notes-one-the-class-P"><a href="#Notes-one-the-class-P" class="headerlink" title="Notes one the class P"></a>Notes one the class P</h2><ul>
+<li><strong>Class P has a too broad coverage</strong></li>
+<li><strong>However</strong><ul>
+<li>The problem not in P must be extremely expensive and probably impossible to solve in practice.</li>
+<li>The problems in P have nice “closure” properties for algorithm integration.</li>
+<li>The property of being in P is <strong>independent of the particular formal model of computation used</strong>.</li>
+</ul>
+</li>
+</ul>
+<h1 id="The-class-NP"><a href="#The-class-NP" class="headerlink" title="The class NP"></a><strong>The class NP</strong></h1><ul>
+<li><strong>A polynomial bounded  nondeterministic algorithm</strong>( 非确定性算法, 就是猜一个解并验证这个解 )<ul>
+<li>$O(p(n))$ time for some polynomial function $p(n)$</li>
+<li><strong>For all</strong> possible executions</li>
+</ul>
+</li>
+<li><p><strong>The class NP</strong></p>
+<ul>
+<li>is the class of decision problems for which there is a polynomial bounded nondeterministic algorithm.</li>
+</ul>
+</li>
+<li><p><strong>NP means Non-deterministic P</strong></p>
+<ul>
+<li>From “deterministic” to “non-deterministic”</li>
+<li>From “solve a problem” to “verify the answer of a problem”</li>
+</ul>
+</li>
+<li><strong>What does NP indicate?</strong><ul>
+<li>Harder problems</li>
+<li><strong>Not too hard</strong><ul>
+<li>At least, you can quickly understand the answer</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Proof-of-Being-in-NP"><a href="#Proof-of-Being-in-NP" class="headerlink" title="Proof of Being in NP"></a>Proof of Being in NP</h2><p>先猜一个解； 对于任意一个猜的解，你都能够验证yes or no, 如果这两个步骤都必定能够在多项式时间内结束，则该问题为NP( NP不是Not P ! )</p>
+<ul>
+<li><p><strong>Graph coloring is in NP</strong></p>
+<ul>
+<li>Phase1 - Guess a certificate<ul>
+<li>Description of the input and the certificate</li>
+</ul>
+</li>
+<li>Guess2 - Verify the certificate<ul>
+<li>There are <em>n</em> colors listed: $c_1,c_2,\dots,c_n$ ( not necessarily different )</li>
+<li>Each $c_i$ is in the range $1,\dots,k$​  //颜色在范围内</li>
+<li>Scan the list of edges to see if a conflict exists //颜色有无冲突</li>
+</ul>
+</li>
+<li>Phase1 and 2 in polynomial time</li>
+</ul>
+</li>
+<li><p><strong>CLIQUE is in NP</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">nodeteClique</span><span class="params">( graph G, <span class="type">int</span> n, <span class="type">int</span> k )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	S = <span class="built_in">genCertif</span>(); <span class="comment">// in O(n)</span></span><br><span class="line">    <span class="keyword">if</span>( S is a clique of size k )	Output <span class="string">&quot;accept&quot;</span>;</span><br><span class="line">    <span class="keyword">else</span> Output <span class="string">&quot;reject&quot;</span>; <span class="comment">// in O(k^2)</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p><strong>SAT</strong></p>
+<p>略</p>
+</li>
+</ul>
+<h2 id="Relation-between-P-and-NP"><a href="#Relation-between-P-and-NP" class="headerlink" title="Relation between  P and NP"></a>Relation between  P and NP</h2><ul>
+<li><p>An deterministic algorithm for a decision problem is a special  case of a nondeterministic algorithm, which means: $P \subset NP$​（已证明）</p>
+</li>
+<li><p>Intuition implies that <strong>NP</strong> is much larger than <strong>P</strong>. 直觉和经验告诉我们P<strong>真包含</strong>于NP， 但目前没人能证明</p>
+<ul>
+<li>The number of possible <em>s</em> is exponential in <em>n</em>.</li>
+<li>No one problem in <strong>NP</strong> has been proved not in <strong>P</strong>.</li>
+</ul>
+</li>
+</ul>
+<h1 id="Reduction-between-problems"><a href="#Reduction-between-problems" class="headerlink" title="Reduction between problems"></a>Reduction between problems</h1><ul>
+<li><p>归约： reduce P to Q. 通过解决Q来间接解决P</p>
+<ul>
+<li>把P的输入转换为Q的合法输入</li>
+<li>并验证正确性（符合Specification）</li>
+</ul>
+</li>
+<li><p>“P多项式时间归约到Q”  记为 $P \leq_P Q$​​. </p>
+<ul>
+<li>如果解决了Q，根据归约，能够解决P</li>
+<li>如果解决了P，还不能根据归约解决Q</li>
+<li>这说明<strong>Q更难</strong></li>
+<li>若Q问题多项式时间可解，可证明P问题也是多项式时间可解。 证明略</li>
+<li>$\leq_P$ 是可传递的。（通过多项式的封闭性可证）</li>
+</ul>
+</li>
+</ul>
+<h1 id="NP-Complete-Problems"><a href="#NP-Complete-Problems" class="headerlink" title="NP-Complete Problems"></a>NP-Complete Problems</h1><h2 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h2><ul>
+<li><p>A  problem Q is <strong>NP-hard</strong> if <strong>every</strong> problem P in <strong>NP</strong> is reducible to Q, that is $P \leq_P Q$​.</p>
+<p>（which means that Q is at least as hard as any problem in <strong>NP</strong> ）</p>
+<ul>
+<li>比所有NP都难或者一样难，但是难度上不封顶，甚至可以不属于NP（ 比如不可判定问题 ）</li>
+</ul>
+</li>
+<li><p>A problem Q is <strong>NP-complete</strong> if it is <strong>in NP</strong> and is <strong>NP-hard</strong>( which means that Q is at most as hard as to be solved by a polynomially bounded nondeterministic algorithm  )</p>
+</li>
+</ul>
+<h3 id="P-and-NP-Revisited"><a href="#P-and-NP-Revisited" class="headerlink" title="P and NP - Revisited"></a>P and NP - Revisited</h3><ul>
+<li>Intuition implies that <strong>NP</strong> is a much larger set than <strong>P</strong><ul>
+<li>No one problem in <strong>NP</strong> has been proved not in <strong>P</strong>.</li>
+</ul>
+</li>
+<li>If any <strong>NP - completed</strong> problem is in <strong>P</strong>, then <strong>NP = P </strong><ul>
+<li>Which means that every problems in <strong>NP</strong> can be reducible to a problem in <strong>P</strong></li>
+</ul>
+</li>
+</ul>
+<h2 id="Proof-of-NP-Completeness"><a href="#Proof-of-NP-Completeness" class="headerlink" title="Proof of NP-Completeness"></a>Proof of NP-Completeness</h2><ul>
+<li>Knowledge ： P is  NPC</li>
+<li>Task: to prove that Q is NPC</li>
+<li>Approach: to reduce P to Q<ul>
+<li>已知 For any $R \in NP$, $ R \le_P P$​ ​</li>
+<li>Show $P \le_P Q$</li>
+<li>Then $R \le_P Q$, by transitivity of reductions</li>
+<li>Done. Q is NP-complete ( given that Q has been proven in NP ) 即通过传递性证明Q是NP-hard, 而Q是否为NP需要另外证明</li>
+</ul>
+</li>
+<li>该证明需要知道一个<strong>最初的NPC</strong><ul>
+<li>SAT问题, 由<em>Cook</em>提出</li>
+</ul>
+</li>
+</ul>
+<h3 id="Satisfiability-Problem"><a href="#Satisfiability-Problem" class="headerlink" title="Satisfiability Problem"></a>Satisfiability Problem</h3><ul>
+<li><strong>CNF</strong></li>
+<li><strong>CNF-SAT problem</strong></li>
+<li><strong>a special case: 3-SAT</strong><ul>
+<li>子句中的布尔量永远小于等于3 (  永远小于等于二 则成为2-SAT)</li>
+</ul>
+</li>
+</ul>
+<h3 id="Example-Prove-CLIQUE-is-NPC"><a href="#Example-Prove-CLIQUE-is-NPC" class="headerlink" title="Example: Prove CLIQUE is NPC"></a>Example: Prove CLIQUE is NPC</h3><ul>
+<li>把3-SAT的输入转换成图作为CLIQUE 的输入,并证明3-SAT的输出(即只能个语句是否为True)等价于CLIQUE的输出</li>
+</ul>
+<h3 id="Known-NP-Complete-Problems"><a href="#Known-NP-Complete-Problems" class="headerlink" title="Known NP-Complete Problems"></a>Known NP-Complete Problems</h3><p>Ref: <em>Computer and Intractability: A guide to the Theory of  NP-Completeness,Freeman,1979</em></p>
+<h1 id="Other-advanced-topics"><a href="#Other-advanced-topics" class="headerlink" title="Other advanced topics"></a>Other advanced topics</h1><h2 id="Advanced-algorithms"><a href="#Advanced-algorithms" class="headerlink" title="Advanced algorithms"></a>Advanced algorithms</h2><h3 id="Approximation"><a href="#Approximation" class="headerlink" title="Approximation"></a>Approximation</h3><ul>
+<li><strong>Make modification on the problem</strong><ul>
+<li>Restrictions on the input</li>
+<li>Change the criteria for the output</li>
+<li>Find new abstractions for a practical situation</li>
+</ul>
+</li>
+<li><p><strong>Find approximate solution</strong></p>
+<ul>
+<li>Approximation algorithm</li>
+<li><u>Bound of the errors</u></li>
+</ul>
+</li>
+<li><p>应用: Bin Packing Problem</p>
+</li>
+</ul>
+<h3 id="Randomized-Algorithm"><a href="#Randomized-Algorithm" class="headerlink" title="Randomized Algorithm"></a>Randomized Algorithm</h3><ul>
+<li><strong>Mote Carlo</strong><ul>
+<li>Always finish in time</li>
+<li>The answer may be incorrect</li>
+</ul>
+</li>
+<li><strong>Las Vegas</strong><ul>
+<li>Always return the correct answer</li>
+<li>The running time varies a lot</li>
+</ul>
+</li>
+</ul>
+<h3 id="Online-Algorithm"><a href="#Online-Algorithm" class="headerlink" title="Online Algorithm"></a>Online Algorithm</h3><ul>
+<li><strong>The main difference</strong><ul>
+<li>Offline algorithm: you can obtain all your input in advance</li>
+<li>Online Algorithm: you must cope with unpredictable inputs</li>
+</ul>
+</li>
+<li><strong>How to analyze an online algorithm</strong><ul>
+<li>Competitive analysis: the performance of an online algorithm is compared to that of an optimal offline algorithm</li>
+</ul>
+</li>
+</ul>
+<h3 id="Distributed-Algorithm"><a href="#Distributed-Algorithm" class="headerlink" title="Distributed Algorithm"></a>Distributed Algorithm</h3><ul>
+<li>Model of distributed computation</li>
+</ul>
+<h2 id="Advanced-computation-models"><a href="#Advanced-computation-models" class="headerlink" title="Advanced computation models"></a>Advanced computation models</h2><h3 id="Distributed-Data"><a href="#Distributed-Data" class="headerlink" title="Distributed Data"></a>Distributed Data</h3><ul>
+<li>External memory model </li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm-design-and-analysis/" rel="tag"># Algorithm design and analysis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/12/The-Queen-s-Gambit/" rel="prev" title="The Queen's Gambit">
+      <i class="fa fa-chevron-left"></i> The Queen's Gambit
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/14/T5-%E5%9B%BE%E4%BC%98%E5%8C%96/" rel="next" title="T5 图优化">
+      T5 图优化 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Decision-Problem"><span class="nav-text">Decision Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Optimization-vs-Decision"><span class="nav-text">Optimization vs. Decision</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Some-Typical-Decision-Problems"><span class="nav-text">Some Typical Decision Problems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Theory-of-NP-Completeness"><span class="nav-text">Theory of NP-Completeness</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-class-P"><span class="nav-text">The class P</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Notes-one-the-class-P"><span class="nav-text">Notes one the class P</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-class-NP"><span class="nav-text">The class NP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Proof-of-Being-in-NP"><span class="nav-text">Proof of Being in NP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Relation-between-P-and-NP"><span class="nav-text">Relation between  P and NP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reduction-between-problems"><span class="nav-text">Reduction between problems</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NP-Complete-Problems"><span class="nav-text">NP-Complete Problems</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Definition"><span class="nav-text">Definition</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#P-and-NP-Revisited"><span class="nav-text">P and NP - Revisited</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proof-of-NP-Completeness"><span class="nav-text">Proof of NP-Completeness</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Satisfiability-Problem"><span class="nav-text">Satisfiability Problem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-Prove-CLIQUE-is-NPC"><span class="nav-text">Example: Prove CLIQUE is NPC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Known-NP-Complete-Problems"><span class="nav-text">Known NP-Complete Problems</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Other-advanced-topics"><span class="nav-text">Other advanced topics</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Advanced-algorithms"><span class="nav-text">Advanced algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Approximation"><span class="nav-text">Approximation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Randomized-Algorithm"><span class="nav-text">Randomized Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Online-Algorithm"><span class="nav-text">Online Algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Distributed-Algorithm"><span class="nav-text">Distributed Algorithm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Advanced-computation-models"><span class="nav-text">Advanced computation models</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Distributed-Data"><span class="nav-text">Distributed Data</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

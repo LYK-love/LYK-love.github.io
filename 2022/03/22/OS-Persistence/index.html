@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline:  I&#x2F;O Devices File File System Locality and FFS Crush-Consistency Problem VFS  Ref: OSTEP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS Persistence">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/22/OS-Persistence/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  I&#x2F;O Devices File File System Locality and FFS Crush-Consistency Problem VFS  Ref: OSTEP">
+<meta property="og:locale">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Layers.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VSFS%20Disk%20Image.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/Crush%20Consistency%20example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/Crush%20Consistency%20example%20expected%20result.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/ext3%20with%20journalist.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/data%20journaling.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/journaling%20circyling%20journalist.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Layer.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Function%20Call%20workflow.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20example.png">
+<meta property="article:published_time" content="2022-03-21T17:31:25.000Z">
+<meta property="article:modified_time" content="2022-04-03T17:12:31.664Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Arch.png">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/03/22/OS-Persistence/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>OS Persistence | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/22/OS-Persistence/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS Persistence
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-03-21 17:31:25" itemprop="dateCreated datePublished" datetime="2022-03-21T17:31:25Z">2022-03-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-03 17:12:31" itemprop="dateModified" datetime="2022-04-03T17:12:31Z">2022-04-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<ul>
+<li>I/O Devices</li>
+<li>File</li>
+<li>File System</li>
+<li>Locality and FFS</li>
+<li>Crush-Consistency Problem</li>
+<li>VFS</li>
+</ul>
+<p>Ref: <em>OSTEP</em></p>
+<span id="more"></span>
+<h1 id="I-O-Devicecs"><a href="#I-O-Devicecs" class="headerlink" title="I/O Devicecs"></a>I/O Devicecs</h1><p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Arch.png" alt="IO Arch"></p>
+<ul>
+<li>CPU通过内存总线连接到内存</li>
+<li>图像和其他高性能IO设备连接到常规的IO总线（如PCI）</li>
+<li>最慢的设备，如键盘、鼠标等，连接到外围总线</li>
+</ul>
+<h2 id="I-O系统各层软件及其功能"><a href="#I-O系统各层软件及其功能" class="headerlink" title="I/O系统各层软件及其功能"></a>I/O系统各层软件及其功能</h2><p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Arch.png" alt="IO Layers"></p>
+<h1 id="RAID"><a href="#RAID" class="headerlink" title="RAID"></a>RAID</h1><p>略</p>
+<h1 id="File"><a href="#File" class="headerlink" title="File"></a>File</h1><ul>
+<li>进程是虚拟化的CPU, 地址空间是虚拟化的内存， 而文件和目录就是虚拟化的外部存储设备</li>
+<li>文件：线性字节数组，每个文件都有一个低级名称：<code>inode number</code></li>
+<li>目录：目录是特殊的文件，本身也有低级名称<code>inode number</code>，其内容为<code>（用户可读名字， 低级名称）</code>对的列表。 <ul>
+<li>目录的每个对，即每个条目<code>dentry</code>，都指向文件或其他目录</li>
+<li>目录层次结构从根目录<code>/</code>开始</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Layers.png" alt="File Structure"></p>
+<h2 id="File-types"><a href="#File-types" class="headerlink" title="File types"></a>File types</h2><p>从细节来说，文件类型分为:</p>
+<ul>
+<li>regular file </li>
+<li>character special file </li>
+<li>block special file </li>
+<li>fifo </li>
+<li>socket </li>
+<li>symbolic link </li>
+<li>directory (  目录也是一种文件，我们只是把目录和文件分开讨论 )</li>
+</ul>
+<h2 id="File-Structure"><a href="#File-Structure" class="headerlink" title="File  Structure"></a>File  Structure</h2><p>File  Structure:</p>
+<ul>
+<li>Byte stream; </li>
+<li>no particular internal structure</li>
+</ul>
+<h2 id="Unbuffered-I-O-amp-Buffered-I-O"><a href="#Unbuffered-I-O-amp-Buffered-I-O" class="headerlink" title="Unbuffered I/O &amp; Buffered I/O"></a>Unbuffered I/O &amp; Buffered I/O</h2><ul>
+<li>Unbuffered I/O:<ul>
+<li>read/write -&gt;System calls </li>
+<li>File descriptor </li>
+<li>Not in ANSI C, but in POSIX.1 and XPG3 </li>
+</ul>
+</li>
+<li>Buffered I/O <ul>
+<li>Implemented in standard I/O library (属于库函数，而不是系统调用)</li>
+<li>处理很多细节, 如缓存分配, 以优化长度执行I/O等. </li>
+<li>Stream -&gt; a pointer to FILE</li>
+</ul>
+</li>
+</ul>
+<h2 id="Basic-I-O-System-Calls"><a href="#Basic-I-O-System-Calls" class="headerlink" title="Basic I/O System Calls"></a>Basic I/O System Calls</h2><ul>
+<li>File descriptor </li>
+<li>Basic I/O:<ul>
+<li>open/creat, close, read, write, lseek </li>
+<li>dup/dup2 </li>
+<li>fcntl</li>
+<li>ioctl</li>
+</ul>
+</li>
+</ul>
+<h2 id="File-descriptor"><a href="#File-descriptor" class="headerlink" title="File descriptor"></a>File descriptor</h2><p>File descriptor:</p>
+<ul>
+<li>A small non-negative integer <ul>
+<li><code>int fd;</code> </li>
+</ul>
+</li>
+<li><strong>是thread local的</strong></li>
+<li>在UNIX中用于访问文件,  也可以将它作为指向文件对象的指针</li>
+<li>in <code>&lt;unistd.h&gt;</code><ul>
+<li><strong>STDIN_FILENO: 0</strong></li>
+<li><strong>STDOUT_FILENO : 1</strong></li>
+<li><strong>STDERR_FILENO: 2</strong> </li>
+</ul>
+</li>
+</ul>
+<p>General steps of file operation: </p>
+<ol>
+<li>open</li>
+<li>read/write</li>
+<li>[lseek]</li>
+<li>close</li>
+</ol>
+<h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><h3 id="open-creat-Function"><a href="#open-creat-Function" class="headerlink" title="open/creat Function"></a>open/creat Function</h3><p>Open and possibly create a file or device</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">open</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname, <span class="type">int</span> flags)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">open</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname, <span class="type">int</span> flags, <span class="type">mode_t</span> mode)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">creat</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname, <span class="type">mode_t</span> mode)</span>; <span class="comment">// equivalent to open with flags: O_CREAT|O_WRONLY|O_TRUNC</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: a new file descriptor if success; -1 if failure</li>
+</ul>
+<h4 id="Parameter‏”flags”"><a href="#Parameter‏”flags”" class="headerlink" title="Parameter‏”flags”"></a>Parameter‏”flags”</h4><p>“flags”:‏file‏ access‏ mode </p>
+<ul>
+<li>定义在 <code>&lt;fcntl.h&gt;</code></li>
+<li>分为主标志和副标志， 主标志必须，且是互斥的，即只能选择一种。 副标志是可选的，可以选择多个</li>
+<li>标志之间用<code>|</code>隔开</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>主标志</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>O_RDONLY</strong></td>
+<td><strong>以只读方式打开文件</strong></td>
+</tr>
+<tr>
+<td><strong>O_WRONLY</strong></td>
+<td><strong>以只写方式打开文件</strong></td>
+</tr>
+<tr>
+<td><strong>O_RDWR</strong></td>
+<td><strong>以可读写方式打开文件</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>副标志</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>O_TRUNC</strong></td>
+<td><strong>若文件存在并且以可写的方式打开时，</strong>此标志会将文件长度清为0，而原来存于该文件的资料也会消失</td>
+</tr>
+<tr>
+<td><strong>O_CREAT</strong></td>
+<td><strong>若路径中的文件不存在则自动建立该文件</strong></td>
+</tr>
+<tr>
+<td><strong>O_EXCL</strong></td>
+<td>如果与O_CREAT同时设置，此指令会去检查文件是否存在，文件若不存在则建立该文件，否则将导致打开文件错误。此外，若O_CREAT与O_EXCL同时设置，并且将要打开的文件为符号链接，则将导致打开文件失败</td>
+</tr>
+<tr>
+<td><strong>O_APPEND</strong></td>
+<td>读写文件从文件尾部开始移动，所写入的数据追加到文件尾</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="Parameter‏-mode"><a href="#Parameter‏-mode" class="headerlink" title="Parameter‏: mode"></a>Parameter‏: mode</h4><p>mode:  设定新建的文件的权限,    详见下文《File Permission》</p>
+<h3 id="close-Funtion"><a href="#close-Funtion" class="headerlink" title="close Funtion"></a>close Funtion</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Close a file descriptor</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">close</span><span class="params">(<span class="type">int</span> fd)</span>;</span><br><span class="line">(Return: <span class="number">0</span> <span class="keyword">if</span> success; <span class="number">-1</span> <span class="keyword">if</span> failure)</span><br></pre></td></tr></table></figure>
+<p><code>open</code>系统调用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span>    </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span>    </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> fd = <span class="built_in">open</span>(<span class="string">&quot;foo&quot;</span>, O_CREAT, O_WRONLY | O_TRUNC);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>open</code>返回<code>file discriptor</code>,这是一个thread local的整数，在UNIX中用于访问文件。 也可以将它作为指向文件对象的指针</p>
+</li>
+<li><p>打开文件过程：</p>
+<ol>
+<li>检索目录,把它的外存索引节点复制到活动索引节点表。</li>
+<li>根据参数<code>mode</code>核对权限,如果非法,则这次打开失败。</li>
+<li>当“打开”合法时,为文件分配用户打开文件表项和系统打开文件表项,并为表项设置初值。通过指针建立这些表项与活动索引节点间的联系。把<code>fd</code>,即用户打开文件表中相应文件表项的序号返回给调用者。</li>
+</ol>
+</li>
+<li><p>关闭文件过程：</p>
+<ol>
+<li>根据<code>fd</code>找到用户打开文件表项,再找到系统打开文件表项。释放用户打开文件表项。</li>
+<li>把对应系统打开文件表项中的<code>f_count--</code>如果非“0”,说明还有进程共享这一表项,不用释放直接返回;否则释放表项</li>
+<li>把活动索引节点中的<code>i_count --</code>,若不为“0”,表明还有用户进程正在使用该文件,不用释放而直接返回,否则在把该活动索引节点中的内容复制回文件卷上的相应索引节点中后,释放该活动索引节点。</li>
+</ol>
+</li>
+<li><p>f_count和i_count分别反映进程动态地共享一个文件的两种方式,</p>
+<ul>
+<li><code>f_count</code>反映不同进程通过同一个系统打开文件表项共享<br>一个文件的情况;</li>
+<li><code>i_count</code>反映不同进程通过不同系统打开文件表项共享一<br>个文件的情况。</li>
+<li>通过两种方式,进程之间既可用相同的位移指针f_offset,<br>也可用不同位移指针f_offset共享同一个文件。</li>
+</ul>
+</li>
+</ul>
+<h3 id="read-write-Function"><a href="#read-write-Function" class="headerlink" title="read/write Function"></a>read/write Function</h3><p><code>&lt;unistd.h&gt;</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Read from a file descriptor</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">ssize_t</span> <span class="title function_">read</span><span class="params">(<span class="type">int</span> fd, <span class="type">void</span> *buf, <span class="type">size_t</span> count)</span>;</span><br><span class="line">(返回值: )</span><br><span class="line"></span><br><span class="line"><span class="comment">//Write to a file descriptor</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">ssize_t</span> <span class="title function_">write</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">void</span> *buf, <span class="type">size_t</span> count)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一个参数为文件描述符</li>
+<li>第二个参数指向放置结果的缓冲区</li>
+<li>第三个参数是缓冲区大小</li>
+<li>返回值：<ul>
+<li><code>read()</code>: 读到的字节数，若已到文件尾为0. 若出错为-1</li>
+<li><code>write()</code>: 若成功为已写的字节数. 若出错为-1</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// myCat.c</span></span><br><span class="line"><span class="keyword">while</span> ((n = read(STDIN_FILENO, buf, BUFSIZE)) &gt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> (write(STDOUT_FILENO, buf, n) != n)</span><br><span class="line">		err_sys(“write error”);	</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (n&lt;<span class="number">0</span>)</span><br><span class="line">		err_sys(“read error”);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p>使用<code>strace</code>跟踪system call</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt; </span><span class="language-bash"><span class="built_in">echo</span> hello&gt;foo</span></span><br><span class="line"><span class="meta">&gt; </span><span class="language-bash">strace <span class="built_in">cat</span> foo</span> </span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt; </span><span class="language-bash">open(<span class="string">&quot;foo&quot;</span>, O_RDonly|O_LARGEFILE) //使用64位偏移量（ O_LARGEFILE ）</span></span><br><span class="line"><span class="meta">&gt; </span><span class="language-bash"><span class="built_in">read</span>(3, <span class="string">&quot;hello\n&quot;</span>, 6  )</span></span><br><span class="line"><span class="meta">&gt; </span><span class="language-bash"><span class="built_in">read</span>(3,<span class="string">&quot;&quot;</span>,4096)</span></span><br><span class="line"><span class="meta">&gt; </span><span class="language-bash">close(3)</span></span><br><span class="line">...</span><br><span class="line"><span class="meta">&gt;</span><span class="language-bash">prompt</span></span><br></pre></td></tr></table></figure>
+<p>这是书上的输出，我自己manjaro64的打印结果如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">openat(AT_FDCWD, &quot;foo&quot;, O_RDONLY)       = 3</span><br><span class="line">...</span><br><span class="line">read(3, &quot;hello\n&quot;, 131072)              = 6</span><br><span class="line">write(1, &quot;hello\n&quot;, 6hello)             = 6</span><br><span class="line">read(3, &quot;&quot;, 131072)                     = 0</span><br><span class="line">munmap(0x7f90b3935000, 139264)          = 0</span><br><span class="line">close(3)                                = 0</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>省略了一些输出</p>
+<ul>
+<li><p><code>cat</code>先打开文件准备读取</p>
+<ul>
+<li>每个进程已经打开了三个文件： <code>std input</code>, <code>std output</code>, <code>std err</code>,其文件描述符分别为<code>0</code>，<code>1</code>，<code>2</code>。 因此<code>open</code>返回<code>3</code></li>
+</ul>
+</li>
+<li><p>打开后，<code>cat</code>使用<code>read()</code> system call, </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ssize_t</span> <span class="title function_">read</span><span class="params">(<span class="type">int</span> fd, <span class="type">void</span> * buf, <span class="type">size_t</span> count)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一个参数为文件描述符</li>
+<li>第二个参数指向放置结果的缓冲区, <code>strace</code>显示了此时的读取结果<code>hello\n</code></li>
+<li>第三个参数是缓冲区大小, 在我的电脑上是<code>139264B</code></li>
+<li>返回值为其读取的字节数，这里是<code>6</code></li>
+</ul>
+</li>
+<li><p>同样能看到，<code>write（）</code>针对文件描述符<code>1</code>，这是标准输出。</p>
+<ul>
+<li>这是<code>cat</code>要做的事，它可能直接调用<code>write（）</code>，也可能调用库例程<code>printf（）</code>，当然最终还是会调用<code>write（）</code></li>
+</ul>
+</li>
+<li><p>然后，<code>cat</code>试图从文件中读取更多内容，但是文件中没有剩余字节，<code>read（）</code>返回0</p>
+</li>
+<li><p>程序知道它已经读取完了文件，因此调用<code>close（）</code>，传入相应的文件描述符（<code>3</code>），该文件因此会关闭</p>
+</li>
+</ul>
+<h3 id="lseek-Function"><a href="#lseek-Function" class="headerlink" title="lseek Function"></a>lseek Function</h3><p>不按顺序读取和写入</p>
+<p>Reposition read/write file offset:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">off_t</span> <span class="title function_">lseek</span><span class="params">(<span class="type">int</span> fildes, <span class="type">off_t</span> offset, <span class="type">int</span> whence)</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: the resulting offset location if success; -1 if failure</li>
+</ul>
+<p>The ‏directive‏  <code>whence</code>:</p>
+<ul>
+<li>SEEK_SET: ‏the‏ offset ‏is ‏set ‏to ‏”offset” ‏bytes</li>
+<li>SEEK_CUR: the offset is set to its current location plus “offset” ‏bytes</li>
+<li>SEEK_END:‏the ‏offset‏ if‏ set ‏to ‏the ‏size‏ of‏ the ‏file ‏plus ‏”offset”‏ bytes</li>
+</ul>
+<p>使用<code>lseek（）</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">off_t</span> <span class="title function_">lseek</span><span class="params">(<span class="type">int</span> fildes, <span class="type">off_t</span> offset, <span class="type">int</span> whence)</span>;</span><br></pre></td></tr></table></figure>
+<p>可以看到，对每个进程打开的文件，OS都会跟踪一个当前偏移量<code>offset</code>。 要么每次读写后隐式更新，要么通过<code>lssek（）</code>指定</p>
+<h3 id="dup-dup2-Function"><a href="#dup-dup2-Function" class="headerlink" title="dup/dup2 Function"></a>dup/dup2 Function</h3><ul>
+<li><p>Duplicate a file descriptor </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">dup</span><span class="params">(<span class="type">int</span> oldfd)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">dup2</span><span class="params">(<span class="type">int</span> oldfd, <span class="type">int</span> newfd)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: the new file descriptor if success; -1 if failure</li>
+</ul>
+</li>
+<li><p>File sharing</p>
+<ul>
+<li><strong>Example: redirection</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="fcntl-Function"><a href="#fcntl-Function" class="headerlink" title="fcntl Function"></a>fcntl Function</h3><ul>
+<li><p>Manipulate a file descriptor </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fcntl</span><span class="params">(<span class="type">int</span> fd, <span class="type">int</span> cmd)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fcntl</span><span class="params">(<span class="type">int</span> fd, <span class="type">int</span> cmd, <span class="type">long</span> arg)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fcntl</span><span class="params">(<span class="type">int</span> fd, <span class="type">int</span> cmd, <span class="keyword">struct</span> flock *lock)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>返回值: 若成功则依赖于<code>cmd</code>，若出错为-1</li>
+</ul>
+</li>
+<li><p>The ‏operation‏ is ‏determined‏ by ‏<code>cmd</code></p>
+</li>
+</ul>
+<h4 id="cmd"><a href="#cmd" class="headerlink" title="cmd"></a>cmd</h4><ul>
+<li><p>The ‏value ‏of‏ <code>cmd</code>:</p>
+<ul>
+<li><code>F_DUPFD</code>: Duplicate a file descriptor </li>
+<li><code>F_GETFD</code>/<code>F_SETFD</code>:‏Get/set‏the‏file‏descriptor‟s‏close-onexec flag. </li>
+<li><code>F_GETFL</code>/<code>F_SETFL</code>:‏Get/set‏the‏file‏descriptor‟s‏flags </li>
+<li><code>F_GETOWN</code>/<code>F_SETOWN</code>: Manage I/O availability signals </li>
+<li><code>F_GETLK</code>/<code>F_SETLK</code>/<code>F_SETLKW</code>: Get/set the file lock</li>
+</ul>
+</li>
+<li><p>Example: </p>
+<ul>
+<li>dup/dup2 and fcntl</li>
+</ul>
+</li>
+</ul>
+<h3 id="ioctl-Function"><a href="#ioctl-Function" class="headerlink" title="ioctl Function"></a>ioctl Function</h3><p>Control devices </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span>  </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">ioctl</span><span class="params">(<span class="type">int</span> d, <span class="type">int</span> request, ...)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="fsync-Function"><a href="#fsync-Function" class="headerlink" title="fsync Function"></a>fsync Function</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">fsync</span><span class="params">(<span class="type">int</span> fildes)</span>;</span><br></pre></td></tr></table></figure>
+<p>一般来说， 程序执行<code>write（）</code>系统调用时，文件系统会将写入在内存中缓冲一段时间。 要立即写入，需要<code>fsync（）</code></p>
+<ul>
+<li>强制写回脏数据</li>
+</ul>
+<h3 id="文件改名"><a href="#文件改名" class="headerlink" title="文件改名"></a>文件改名</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">rename</span><span class="params">(<span class="type">char</span> * oldname, <span class="type">char</span> * newname)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>rename（）</code>是原子操作</li>
+</ul>
+<h3 id="获取文件信息"><a href="#获取文件信息" class="headerlink" title="获取文件信息"></a>获取文件信息</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int stat(const char * file_name, struct stat *buf);</span><br></pre></td></tr></table></figure>
+<p><code>stat()</code>用来将参数<code>file_name</code> 所指的文件状态, 复制到参数<code>buf</code>所指的结构中。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">stat</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">dev_t</span> st_dev; <span class="comment">//device 文件的设备编号</span></span><br><span class="line">  <span class="type">ino_t</span> st_ino; <span class="comment">//inode 文件的i-node</span></span><br><span class="line">  <span class="type">mode_t</span> st_mode; <span class="comment">//protection 文件的类型和存取的权限</span></span><br><span class="line">  <span class="type">nlink_t</span> st_nlink; <span class="comment">//number of hard links 连到该文件的硬连接数目, 刚建立的文件值为1.</span></span><br><span class="line">  <span class="type">uid_t</span> st_uid; <span class="comment">//user ID of owner 文件所有者的用户识别码</span></span><br><span class="line">  <span class="type">gid_t</span> st_gid; <span class="comment">//group ID of owner 文件所有者的组识别码</span></span><br><span class="line">  <span class="type">dev_t</span> st_rdev; <span class="comment">//device type 若此文件为装置设备文件, 则为其设备编号</span></span><br><span class="line">  <span class="type">off_t</span> st_size; <span class="comment">//total size, in bytes 文件大小, 以字节计算</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">long</span> st_blksize; <span class="comment">//blocksize for filesystem I/O 文件系统的I/O 缓冲区大小.</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">long</span> st_blocks; <span class="comment">//number of blocks allocated 占用文件区块的个数, 每一区块大小为512 个字节.</span></span><br><span class="line">  <span class="type">time_t</span> st_atime; <span class="comment">//time of lastaccess 文件最近一次被存取或被执行的时间, 一般只有在用mknod、utime、read、write 与tructate 时改变.</span></span><br><span class="line">  <span class="type">time_t</span> st_mtime; <span class="comment">//time of last modification 文件最后一次被修改的时间, 一般只有在用mknod、utime 和write 时才会改变</span></span><br><span class="line">  <span class="type">time_t</span> st_ctime; <span class="comment">//time of last change i-node 最近一次被更改的时间, 此参数会在文件所有者、组、权限被更改时更新</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>shell中可以用<code>stat</code>工具</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">stat far</span><br><span class="line">  File: far</span><br><span class="line">  Size: 6               Blocks: 8          IO Block: 4096   regular file</span><br><span class="line">Device: 259,8   Inode: 2536724     Links: 1</span><br><span class="line">Access: (0777/-rwxrwxrwx)  Uid: ( 1000/     lyk)   Gid: ( 1001/     lyk)</span><br><span class="line">Access: 2021-11-26 21:31:56.163748288 +0800</span><br><span class="line">Modify: 2021-11-26 21:41:07.306528022 +0800</span><br><span class="line">Change: 2021-11-26 21:59:32.375301046 +0800</span><br><span class="line"> Birth: 2021-11-26 21:31:56.163748288 +0800</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h3><p>shell命令<code>rm</code>使用<code>unlink（）</code>系统调用删除文件：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">unlink</span><span class="params">(<span class="type">const</span> <span class="type">char</span> * pathname)</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="change-ownership"><a href="#change-ownership" class="headerlink" title="change ownership"></a>change ownership</h4><p>Change ownership of a file</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">chown</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path, <span class="type">uid_t</span> owner, <span class="type">gid_t</span> group)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fchown</span><span class="params">(<span class="type">int</span> fd, <span class="type">uid_t</span> owner, <span class="type">gid_t</span> group)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">lchown</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path, <span class="type">uid_t</span> owner, <span class="type">gid_t</span> group)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: 0 if success; -1 if failure</li>
+</ul>
+<h3 id="目录操作"><a href="#目录操作" class="headerlink" title="目录操作"></a>目录操作</h3><p>仅仅列举函数名:</p>
+<ul>
+<li><code>mkdir / rmdir</code></li>
+<li><code>chdir/fchdir, getcwd</code></li>
+<li>Read a directory：<ul>
+<li><code>opendir/closedir</code></li>
+<li><code>readdir</code></li>
+<li><code>telldir</code></li>
+<li><code>seekdir</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="Data-structures"><a href="#Data-structures" class="headerlink" title="Data structures"></a>Data structures</h4><ul>
+<li><p><code>DIR</code>: The data type of directory stream objects</p>
+<ul>
+<li><p><code>&lt;dirent.h&gt;</code>:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> __<span class="title">dirstream</span> <span class="title">DIR</span>;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>struct dirent:</p>
+<ul>
+<li>Directory item</li>
+<li>Defined in <code>&lt;dirent.h&gt;</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ino_t</span> d_ino; <span class="comment">/* inode number */</span></span><br><span class="line"><span class="type">char</span> d_name[NAME_MAX + <span class="number">1</span>]; <span class="comment">/* file name */</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="目录的打开、关闭、读、定位"><a href="#目录的打开、关闭、读、定位" class="headerlink" title="目录的打开、关闭、读、定位"></a>目录的打开、关闭、读、定位</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">DIR *<span class="title function_">opendir</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">closedir</span><span class="params">(DIR *dir)</span>;</span><br><span class="line"><span class="keyword">struct</span> dirent *<span class="title function_">readdir</span><span class="params">(DIR *dir)</span>;</span><br><span class="line"><span class="type">off_t</span> <span class="title function_">telldir</span><span class="params">(DIR *dir)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">seekdir</span><span class="params">(DIR *dir, <span class="type">off_t</span> offset)</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="example"><a href="#example" class="headerlink" title="example"></a>example</h4><p>A directory scanning program</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">DIR *dp;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dirent</span> *<span class="title">entry</span>;</span></span><br><span class="line"><span class="keyword">if</span> ( (dp = opendir(dir)) == <span class="literal">NULL</span> )</span><br><span class="line">err_sys(…);</span><br><span class="line"><span class="keyword">while</span> ( (entry = readdir(dp)) != <span class="literal">NULL</span> ) &#123;</span><br><span class="line">lstat(entry-&gt;d_name, &amp;statbuf);</span><br><span class="line"><span class="keyword">if</span> ( S_ISDIR(statbuf.st_mode) )</span><br><span class="line">…</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">…</span><br><span class="line">&#125;</span><br><span class="line">closedir(dp);</span><br></pre></td></tr></table></figure>
+<h3 id="硬链接-link"><a href="#硬链接-link" class="headerlink" title="硬链接( link )"></a>硬链接( link )</h3><p>Create a new link to (make a new name for) a file:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">link</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *oldpath, <span class="type">const</span> <span class="type">char</span> *newpath)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: 0 if success; -1 if failure</li>
+<li>对应系统调用<code>link</code></li>
+</ul>
+<p>Delete a name and possibly the file it refers to:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unistd.h&gt;</span><br><span class="line">int unlink(const char *pathname);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: 0 if success; -1 if failure</li>
+</ul>
+<ul>
+<li><p>对应的shell工具是<code>ln</code></p>
+</li>
+<li><p>硬链接只是对<strong>同一个</strong>inode创建了新的引用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt; </span><span class="language-bash"><span class="built_in">ln</span> far far2</span> </span><br><span class="line"><span class="meta">&gt; </span><span class="language-bash"><span class="built_in">ls</span> -i</span>                                                                       </span><br><span class="line"></span><br><span class="line">2536724 far  2536724 far2  //inode number一样</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>事实上，文件名都只是对<code>inode</code>的链接</p>
+</li>
+<li><p>创建文件时，实际上是先创建<code>inode</code>，然后将人类可读的名称链接到该文件，并将这个键值对存入目录</p>
+</li>
+<li><p>不能创建目录的硬链接，因为会在目录树中成环</p>
+</li>
+<li><p><code>inode  number</code>在不同文件系统中不唯一，因此硬链接不能跨文件系统</p>
+</li>
+</ul>
+<h3 id="软链接-symlink"><a href="#软链接-symlink" class="headerlink" title="软链接( symlink )"></a>软链接( symlink )</h3><p>也称为符号链接</p>
+<p>Create a symbolic link (named newpath which contains‏the‏sting‏”oldpath”):</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">symlink</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *oldpath, <span class="type">const</span> <span class="type">char</span> *newpath)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: 0 if success; -1 if failure</li>
+</ul>
+<p>Read value of a symbolic link: </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">readlink</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path, <span class="type">char</span> *buf, <span class="type">size_t</span> bufsiz)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: the count of characters placed in the buffer if success; -1 if failure</li>
+</ul>
+<p> 对应命令行工具<code>ln -s</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s  far far3  </span><br></pre></td></tr></table></figure>
+<ul>
+<li>符号链接是一个<strong>不同类型的文件</strong>, 它的内容是被链接文件的文件名<ul>
+<li><code>ls</code>显示，类型为<code>l</code></li>
+</ul>
+</li>
+<li><strong>OS将截获对符号链接文件的访问，,依据符号链接中的文件名去读真正的目标文件</strong></li>
+<li>优点： 可链接目录， 可跨文件系统链接</li>
+<li>缺点:<strong>搜索文件路径</strong>开销大,需要额外的空间查找存储路径</li>
+<li>对应系统调用<code>symlink</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt; </span><span class="language-bash"><span class="built_in">ls</span> -al</span></span><br><span class="line">drwxr-xr-x 3 lyk lyk  4096 11月 26 22:14 .</span><br><span class="line">drwxr-xr-x 4 lyk lyk  4096 11月 26 22:00 ..</span><br><span class="line">-rwxrwxrwx 2 lyk lyk     6 11月 26 21:41 far</span><br><span class="line">-rwxrwxrwx 2 lyk lyk     6 11月 26 21:41 far2</span><br><span class="line">lrwxrwxrwx 1 lyk lyk     3 11月 26 22:14 far3 -&gt; far  //软链接，内容为目标文件名“far”，是三字节</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="创建并挂载文件系统"><a href="#创建并挂载文件系统" class="headerlink" title="创建并挂载文件系统"></a>创建并挂载文件系统</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkfs()</span><br><span class="line">mount()</span><br></pre></td></tr></table></figure>
+<h1 id="Standard-I-O-Library"><a href="#Standard-I-O-Library" class="headerlink" title="Standard I/O Library"></a>Standard I/O Library</h1><ul>
+<li><p>File stream </p>
+</li>
+<li><p>Standard I/O functions</p>
+</li>
+</ul>
+<h2 id="File-Stream"><a href="#File-Stream" class="headerlink" title="File Stream"></a>File Stream</h2><ul>
+<li>Stream ‏and ‏”FILE” ‏structure:<ul>
+<li><code>FILE* fp;</code></li>
+<li>Predefined pointer: stdin, stdout, stderr  </li>
+</ul>
+</li>
+<li>Buffered I/O</li>
+</ul>
+<h3 id="Stream-Buffering-Operations"><a href="#Stream-Buffering-Operations" class="headerlink" title="Stream Buffering Operations"></a>Stream Buffering Operations</h3><p><code>&lt;stdio.h&gt;</code></p>
+<p>Three types of buffering: </p>
+<ul>
+<li>block buffered (fully buffered) </li>
+<li>line buffered </li>
+<li>unbuffered</li>
+</ul>
+<p>setbuf, setvbuf functions: </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">setbuf</span><span class="params">(FILE *stream, <span class="type">char</span> *buf)</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">setvbuf</span><span class="params">(FILE *stream, <span class="type">char</span> *buf, <span class="type">int</span> mode, <span class="type">size_t</span></span></span><br><span class="line"><span class="params">size)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>type：<ul>
+<li><code>_IOFBF</code>: 满缓冲</li>
+<li><code>_IOLBF</code>: 行缓冲</li>
+<li><code>_IONBF</code>: 无缓冲</li>
+</ul>
+</li>
+</ul>
+<h2 id="Standard-I-O-Functions"><a href="#Standard-I-O-Functions" class="headerlink" title="Standard I/O Functions"></a>Standard I/O Functions</h2><ul>
+<li>Stream open/close </li>
+<li>Stream read/write <ul>
+<li>每次一个字符的I/O </li>
+<li>每次一行的I/O </li>
+<li>直接I/O(二进制I/O) </li>
+<li>格式化I/O </li>
+</ul>
+</li>
+<li>Stream reposition </li>
+<li>Stream flush</li>
+</ul>
+<h3 id="Stream-open-close"><a href="#Stream-open-close" class="headerlink" title="Stream open/close"></a>Stream open/close</h3><h4 id="Open-a-stream"><a href="#Open-a-stream" class="headerlink" title="Open a stream:"></a>Open a stream:</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line">FILE *<span class="title function_">fopen</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *filename, <span class="type">const</span> <span class="type">char</span> *mode)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fclose</span><span class="params">(FILE *stream)</span>;</span><br></pre></td></tr></table></figure>
+<p>Parameter‏ <code>mode</code>:</p>
+<ul>
+<li><code>r</code>: Open text file for reading. </li>
+<li><code>w</code>: Truncate file to zero length or create text file for writing. </li>
+<li><code>a</code>: Open for appending. </li>
+<li><code>r+</code>: Open for reading and writing. </li>
+<li><code>w+</code>: Open for reading and writing. The file is created if it does not exist, otherwise it is truncated. </li>
+<li><code>a+</code>: Open for reading and appending. The file is created if does not exist.</li>
+</ul>
+<h4 id="Close-a-stream"><a href="#Close-a-stream" class="headerlink" title="Close a stream"></a>Close a stream</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fclose</span><span class="params">(FILE *fp)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: 0 if success; -1 if failure</li>
+</ul>
+<h3 id="character-operations"><a href="#character-operations" class="headerlink" title="character operations"></a>character operations</h3><h4 id="input-of-a-character"><a href="#input-of-a-character" class="headerlink" title="input of a character"></a>input of a character</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">getc</span><span class="params">(FILE *fp)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fgetc</span><span class="params">(FILE *fp)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">getchar</span><span class="params">(<span class="type">void</span>)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Result: Reads the next character from a stream and returns it as an unsigned char cast to an int, or EOF on end of file or error.</li>
+</ul>
+<p>Three functions: </p>
+<ul>
+<li><code>ferror</code></li>
+<li><code>feof</code></li>
+<li><code>clearerr</code>  </li>
+</ul>
+<p><code>ungetc</code> function: push a character back to a stream.</p>
+<h4 id="output-of-a-character"><a href="#output-of-a-character" class="headerlink" title="output of a character"></a>output of a character</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">putc</span><span class="params">(<span class="type">int</span> c, FILE *fp)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fputc</span><span class="params">(<span class="type">int</span> c, FILE *fp)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">putchar</span><span class="params">(<span class="type">int</span> c)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: the character if success; -1 if failure</li>
+</ul>
+<h3 id="Line-of-String-operations"><a href="#Line-of-String-operations" class="headerlink" title="Line of String operations"></a>Line of String operations</h3><h4 id="Input-of-a-Line-of-String"><a href="#Input-of-a-Line-of-String" class="headerlink" title="Input of a Line of String"></a>Input of a Line of String</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">char</span> *<span class="title function_">fgets</span><span class="params">(<span class="type">char</span> *s, <span class="type">int</span> size, FILE *stream)</span>;</span><br><span class="line"><span class="type">char</span> *<span class="title function_">gets</span><span class="params">(<span class="type">char</span> *s)</span>; <span class="comment">//not recommended.</span></span><br></pre></td></tr></table></figure>
+<p><code>fgets</code>: reads in at most <strong>size-1</strong> characters from <strong>stream</strong> and stores them into the buffer pointed by <code>s</code>. <strong>Reading stops after an EOF or a new line.</strong>  A <code>\0</code> character is stored at the end of the buffer.</p>
+<h4 id="Output-of-a-Line-of-String"><a href="#Output-of-a-Line-of-String" class="headerlink" title="Output of a Line of String"></a>Output of a Line of String</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fputs</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s, FILE *stream)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">puts</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *s)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Binary-Stream-Input-Output"><a href="#Binary-Stream-Input-Output" class="headerlink" title="Binary Stream Input/Output"></a>Binary Stream Input/Output</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">size_t</span> <span class="title function_">fread</span><span class="params">(<span class="type">void</span> *ptr, <span class="type">size_t</span> size, <span class="type">size_t</span> nmemb, FILE *stream)</span>;</span><br><span class="line">size <span class="title function_">fwrite</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *ptr, <span class="type">size_t</span> size, <span class="type">size_t</span> nmemb, FILE *stream)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: the number of a items successfully read or written</li>
+</ul>
+<p>Application:</p>
+<ul>
+<li><p>Read/write a binary array:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> data[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">if</span> ( fwrite(&amp;data[<span class="number">2</span>], <span class="keyword">sizeof</span>(<span class="type">float</span>), <span class="number">4</span>, fp) != <span class="number">4</span> )</span><br><span class="line">err_sys(“fwrite‏error”);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Read/write a structure:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line"><span class="type">short</span> count; <span class="type">long</span> total; <span class="type">char</span> name[NAMESIZE];</span><br><span class="line">&#125;item;</span><br><span class="line"><span class="keyword">if</span> ( fwrite(&amp;item, <span class="keyword">sizeof</span>(item), <span class="number">1</span>, fp) != <span class="number">1</span>)</span><br><span class="line">err_sys(“fwrite‏error”);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Formatted-I-O"><a href="#Formatted-I-O" class="headerlink" title="Formatted I/O"></a>Formatted I/O</h3><p>scanf, fscanf, sscanf functions</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">scanf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fscanf</span><span class="params">(FILE *stream, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">sscanf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *str, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Use fgets, then parse the string</li>
+</ul>
+<p>printf, fprintf, sprintf functions:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">printf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fprintf</span><span class="params">(FILE *stream, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">sprintf</span><span class="params">(<span class="type">char</span> *str, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Reposition-a-stream"><a href="#Reposition-a-stream" class="headerlink" title="Reposition a stream"></a>Reposition a stream</h3><p>fseek, ftell, rewind functions:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fseek</span><span class="params">(FILE *stream, <span class="type">long</span> <span class="type">int</span> offset, <span class="type">int</span> whence)</span>;</span><br><span class="line"><span class="type">long</span> <span class="title function_">ftell</span><span class="params">(FILE *stream)</span>;</span><br><span class="line"><span class="type">void</span> <span class="title function_">rewind</span><span class="params">(FILE *stream)</span>;</span><br></pre></td></tr></table></figure>
+<p>fgetpos, fsetpos functions ( Introduced in ANSI C):</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fgetpos</span><span class="params">(FILE *fp, <span class="type">fpos_t</span> *pos)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fsetpos</span><span class="params">(FILE *fp, <span class="type">const</span> <span class="type">fpos_t</span> *pos)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Flush-a-stream"><a href="#Flush-a-stream" class="headerlink" title="Flush a stream"></a>Flush a stream</h3><p>把流里的数据立刻写入文件</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fflush</span><span class="params">(FILE *stream)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Stream-and-File-Descriptor"><a href="#Stream-and-File-Descriptor" class="headerlink" title="Stream and File Descriptor"></a>Stream and File Descriptor</h3><p>确定流使用的底层文件描述符:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fileno</span><span class="params">(FILE *fp)</span>;</span><br></pre></td></tr></table></figure>
+<p>根据已打开的文件描述符创建一个流:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line">FILE *<span class="title function_">fdopen</span><span class="params">(<span class="type">int</span> fildes, <span class="type">const</span> <span class="type">char</span> *mode)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="Temporary-File"><a href="#Temporary-File" class="headerlink" title="Temporary File"></a>Temporary File</h3><p>Create a name for a temporary file:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="type">char</span> *<span class="title function_">tmpnam</span><span class="params">(<span class="type">char</span> *s)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>返回值: 指向唯一路径名的指针</li>
+</ul>
+<p>Create a temporary file:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line">FILE *<span class="title function_">tmpfile</span><span class="params">(<span class="type">void</span>)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>返回值: 若成功为文件指针，若出错为NULL</li>
+</ul>
+<h3 id="Advanced-System-Calls"><a href="#Advanced-System-Calls" class="headerlink" title="Advanced System Calls"></a>Advanced System Calls</h3><p>Handling file attributes </p>
+<ul>
+<li>stat/fstat/lstat, … </li>
+</ul>
+<p>Handling directory</p>
+<h4 id="stat-fstat-lstat-functions"><a href="#stat-fstat-lstat-functions" class="headerlink" title="stat/fstat/lstat functions"></a>stat/fstat/lstat functions</h4><p>Get file status</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">stat</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *filename, <span class="keyword">struct</span> stat *buf)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fstat</span><span class="params">(<span class="type">int</span> filedes, <span class="keyword">struct</span> stat *buf)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">lstat</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *file_name, <span class="keyword">struct</span> stat *buf)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: 0 if success; -1 if failure</li>
+</ul>
+<h4 id="struct-stat"><a href="#struct-stat" class="headerlink" title="struct stat"></a>struct stat</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span> &#123;</span></span><br><span class="line"><span class="type">mode_t</span> st_mode; <span class="comment">/*file type &amp; mode*/</span></span><br><span class="line"><span class="type">ino_t</span> st_ino; <span class="comment">/*inode number (serial number)*/</span></span><br><span class="line"><span class="type">dev_t</span> st_rdev; <span class="comment">/*device number (file system)*/</span></span><br><span class="line"><span class="type">nlink_t</span> st_nlink; <span class="comment">/*link count*/</span></span><br><span class="line"><span class="type">uid_t</span> st_uid; <span class="comment">/*user ID of owner*/</span></span><br><span class="line"><span class="type">gid_t</span> st_gid; <span class="comment">/*group ID of owner*/</span></span><br><span class="line"><span class="type">off_t</span> st_size; <span class="comment">/*size of file, in bytes*/</span></span><br><span class="line"><span class="type">time_t</span> st_atime; <span class="comment">/*time of last access*/</span></span><br><span class="line"><span class="type">time_t</span> st_mtime; <span class="comment">/*time of last modification*/</span></span><br><span class="line"><span class="type">time_t</span> st_ctime; <span class="comment">/*time of last file status change*/</span></span><br><span class="line"><span class="type">long</span> st_blksize; <span class="comment">/*Optimal block size for I/O*/</span></span><br><span class="line"><span class="type">long</span> st_blocks; <span class="comment">/*number 512-byte blocks allocated*/</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="Test-macros-for-file-types"><a href="#Test-macros-for-file-types" class="headerlink" title="Test macros for file types"></a>Test macros for file types</h4><p>Defined in <code>&lt;sys/stat.h&gt;</code></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Macro</th>
+<th>File type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S_ISREG</td>
+<td>regular file</td>
+</tr>
+<tr>
+<td>S_ISDIR</td>
+<td>directory</td>
+</tr>
+<tr>
+<td>S_ISCHR</td>
+<td>character special file</td>
+</tr>
+<tr>
+<td>S_ISBLK</td>
+<td>block special file</td>
+</tr>
+<tr>
+<td>S_ISFIFO</td>
+<td>fifo</td>
+</tr>
+<tr>
+<td>S_ISLNK()</td>
+<td>symbolic link</td>
+</tr>
+<tr>
+<td>S_ISSOCK</td>
+<td>socket</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="File-Permission"><a href="#File-Permission" class="headerlink" title="File Permission"></a>File Permission</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Perm</th>
+<th>File</th>
+<th>Directory</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>r</td>
+<td>User can read contents of file</td>
+<td>User can list the contents of the directory</td>
+</tr>
+<tr>
+<td>w</td>
+<td>User can change contents of file</td>
+<td>User can change the contents of the directory</td>
+</tr>
+<tr>
+<td>x</td>
+<td>User can execute file as a command</td>
+<td>User can cd to directory and can use it in PATH</td>
+</tr>
+<tr>
+<td>SUID</td>
+<td>Program runs with effective user ID of owner</td>
+<td></td>
+</tr>
+<tr>
+<td>SGID</td>
+<td>Program runs with effective group ID of owner</td>
+<td>Files created in directory inherit the same group ID as the directory</td>
+</tr>
+<tr>
+<td>Sticky bit</td>
+<td></td>
+<td>Only the owner of the file and the owner of the directory may delete files in this directory</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>mode</strong></th>
+<th><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S_IRUSR (00400)</td>
+<td>Read by owner</td>
+</tr>
+<tr>
+<td>S_IWUSR (00200)</td>
+<td>Write by owner</td>
+</tr>
+<tr>
+<td>S_IXUSR (00100)</td>
+<td>Execute by owner</td>
+</tr>
+<tr>
+<td>S_IRWXU(00700)</td>
+<td>Read, write and execute by owner</td>
+</tr>
+<tr>
+<td>S_IRGRP (00040)</td>
+<td>Read by group</td>
+</tr>
+<tr>
+<td>S_IWGRP (00020)</td>
+<td>Write by group</td>
+</tr>
+<tr>
+<td>S_IXGRP (00010)</td>
+<td>Execute by group</td>
+</tr>
+<tr>
+<td>S_IRWXG (00070)</td>
+<td>Read, write and execute by group</td>
+</tr>
+<tr>
+<td>S_IROTH (00004)</td>
+<td>Read by others</td>
+</tr>
+<tr>
+<td>S_IWOTH (00002)</td>
+<td>Write by others</td>
+</tr>
+<tr>
+<td>S_IXOTH (00001)</td>
+<td>Execute by others</td>
+</tr>
+<tr>
+<td>S_IRWXO (00007)</td>
+<td>Read, write and execute by others</td>
+</tr>
+<tr>
+<td>S_ISUID(04000)</td>
+<td>Set user ID on execution</td>
+</tr>
+<tr>
+<td>S_ISGID(02000)</td>
+<td>Set group ID on execution</td>
+</tr>
+<tr>
+<td>S_ISVTX(01000)</td>
+<td>Saved-text bit (sticky bit)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Example: testing file permission:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (buf.st_mode &amp; S_IRUSR)</span><br><span class="line">	<span class="built_in">printf</span>(“readable by owner”);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="built_in">printf</span>(“unreadable by owner”);</span><br></pre></td></tr></table></figure>
+<h3 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h3><p><code>umask</code>：  文件权限屏蔽字,  是用户在建立文件或目录时需要减掉的权限</p>
+<ul>
+<li><p><strong>file persission = mode &amp; ~umask</strong></p>
+</li>
+<li><p>命令行工具：<code>umask</code></p>
+<ul>
+<li><code>umask -S</code>:  以符号形式显示</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">❯ umask //表明group和others没有2（写）权限</span><br><span class="line">022</span><br><span class="line"></span><br><span class="line">//或者</span><br><span class="line">❯ umask -S </span><br><span class="line">u=rwx,g=rx,o=rx</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="type">mode_t</span> <span class="title function_">umask</span><span class="params">(<span class="type">mode_t</span> mask)</span>; <span class="comment">//为进程设置文件存取权限屏蔽字，并返回以前的值</span></span><br></pre></td></tr></table></figure>
+<p>Regular files:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>permissions</th>
+<th>symbol</th>
+<th>number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>default permissions</td>
+<td><code>rw-rw-rw-</code></td>
+<td>666</td>
+</tr>
+<tr>
+<td>umask</td>
+<td><code>----w--w-</code></td>
+<td>022</td>
+</tr>
+<tr>
+<td>resulting permissions</td>
+<td><code>rw-r--r--</code></td>
+<td>644</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Directories:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>permissions</th>
+<th>symbol</th>
+<th>number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>default permissions</td>
+<td><code>rwxrwxrwx</code></td>
+<td>777</td>
+</tr>
+<tr>
+<td>umask</td>
+<td><code>----w--w-</code></td>
+<td>022</td>
+</tr>
+<tr>
+<td>resulting permissions</td>
+<td><code>rwxr-xr-x</code></td>
+<td>755</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="access-function"><a href="#access-function" class="headerlink" title="access function"></a>access function</h3><p>按实际用户ID和实际组ID测试文件存取权限</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">access</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname, <span class="type">int</span> mode)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: 0 if success; -1 if failure</li>
+<li>Parameter‏ <code>mode</code>:<ul>
+<li><code>R_OK</code></li>
+<li><code>W_OK</code></li>
+<li><code>X_OK</code></li>
+<li><code>F_OK</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="chmod-fchmod-functions"><a href="#chmod-fchmod-functions" class="headerlink" title="chmod/fchmod functions"></a>chmod/fchmod functions</h3><p>Change permissions of a file:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">chmod</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path, <span class="type">mode_t</span> mode)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fchmod</span><span class="params">(<span class="type">int</span> fildes, <span class="type">mode_t</span> mode)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Return: 0 if success; -1 if failure</li>
+</ul>
+<h2 id="File-lock"><a href="#File-lock" class="headerlink" title="File lock"></a>File lock</h2><p>File lock 可以保证文件的并发安全访问</p>
+<p>分类：</p>
+<ul>
+<li>记录锁 </li>
+<li>劝告锁<ul>
+<li>检查，加锁有应用程序自己控制 </li>
+</ul>
+</li>
+<li>强制锁<ul>
+<li>检查，加锁由内核控制 </li>
+<li>影响[ <code>open()</code>，  <code>read()</code>，  <code>write()</code> ]等 </li>
+</ul>
+</li>
+<li>共享锁</li>
+<li>排他锁</li>
+</ul>
+<p>特殊类型：</p>
+<ul>
+<li>共享模式强制锁 </li>
+<li>租借锁</li>
+</ul>
+<h3 id="标志位"><a href="#标志位" class="headerlink" title="标志位"></a>标志位</h3><ul>
+<li><p><code>mount -o mand /dev/sdb7 /mnt</code></p>
+</li>
+<li><p>super_block </p>
+<ul>
+<li>s_flags </li>
+</ul>
+</li>
+<li><p><code>MS_MANDLOCK</code></p>
+</li>
+</ul>
+<h3 id="fcntl记录锁"><a href="#fcntl记录锁" class="headerlink" title="fcntl记录锁"></a>fcntl记录锁</h3><p>用于记录锁的fcntl函数:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">fcntl</span><span class="params">(<span class="type">int</span> fd, <span class="type">int</span> cmd, <span class="keyword">struct</span> flock *lock)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>返回值: 若成功则依赖于<code>cmd</code>，若出错为-1</li>
+</ul>
+<h3 id="struct-flock"><a href="#struct-flock" class="headerlink" title="struct flock"></a>struct flock</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">flock</span>&#123;</span></span><br><span class="line">...</span><br><span class="line"><span class="type">short</span> l_type; <span class="comment">/* Type of lock: F_RDLCK, F_WRLCK, F_UNLCK */</span></span><br><span class="line"><span class="type">short</span> l_whence; <span class="comment">/* How to interpret l_start: SEEK_SET, SEEK_CUR,</span></span><br><span class="line"><span class="comment">SEEK_END */</span></span><br><span class="line"><span class="type">off_t</span> l_start; <span class="comment">/* Starting offset for lock */</span></span><br><span class="line"><span class="type">off_t</span> l_len; <span class="comment">/* Number of bytes to lock */</span></span><br><span class="line"><span class="type">pid_t</span> l_pid; <span class="comment">/* PID of process blocking our lock (F_GETLK only) */</span></span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="cmd参数"><a href="#cmd参数" class="headerlink" title="cmd参数"></a>cmd参数</h3><p>cmd参数的取值：</p>
+<ul>
+<li><code>F_GETLK</code>：获得文件的封锁信息 </li>
+<li><code>F_SETLK</code>：对文件的某个区域封锁或解除封锁</li>
+<li><code>F_SETLKW</code>：功能同<code>F_SETLK</code>, wait方式</li>
+</ul>
+<h3 id="其它封锁命令"><a href="#其它封锁命令" class="headerlink" title="其它封锁命令"></a>其它封锁命令</h3><p><code>lockf</code>函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/file.h&gt;</span></span></span><br><span class="line"><span class="type">int</span> <span class="title function_">lockf</span><span class="params">(<span class="type">int</span> fd, <span class="type">int</span> cmd, <span class="type">off_t</span> len)</span></span><br></pre></td></tr></table></figure>
+<h1 id="File-System"><a href="#File-System" class="headerlink" title="File System"></a>File System</h1><h2 id="整体组织"><a href="#整体组织" class="headerlink" title="整体组织"></a>整体组织</h2><p>我们实现极简版的VSFS（ <code>Very Simple File System</code> ）， 本文最后会看到，VVFS事实上与Linux的VFS（虚拟文件系统，提供了统一的文件系统模型）相同：</p>
+<ul>
+<li>磁盘分块（block），文件系统由一系列块组成</li>
+<li>假定有64块，每块4KB. 数据块为最后56个，inode表占5个，两种位图各占一个，超级块占一个</li>
+</ul>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VSFS%20Disk%20Image.png" alt="VSFS Disk Image"></p>
+<ul>
+<li><code>superblock</code>：位于第一块， 记录关于该文件系统的信息, 包括<code>inode</code>和数据块数量，inode表的起始地址等。 和一些标识文件系统类型的<code>magic number</code></li>
+<li>位图（bitmap）：记录inode或数据块是否已分配的数据结构，有<code>inode bitmap</code>和<code>data bitmap</code></li>
+<li><code>inode</code>表：就是 <code>inode</code>数组</li>
+<li>数据块</li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>超级块</th>
+<th>inode bit map</th>
+<th>data bitmap</th>
+<th>inode table</th>
+<th>datablock</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>56</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>挂载文件系统时，OS首先读取<code>superblock</code>，初始化各种参数，然后将该卷添加到文件系统树中</strong><ul>
+<li>也就是说挂载文件系统时，超级块必定被加载到内存里</li>
+</ul>
+</li>
+</ul>
+<h3 id="文件组织：-inode"><a href="#文件组织：-inode" class="headerlink" title="文件组织： inode"></a>文件组织： inode</h3><p>index node， named by Ken Thompson</p>
+<ul>
+<li><p><code>inode</code>：保存给定文件的元数据的结构</p>
+</li>
+<li><p><strong>由<code>inumber</code>隐式引用,</strong> 给定<code>inumber</code>，可以计算磁盘上相应节点的位置</p>
+</li>
+<li><p>假设：</p>
+<ul>
+<li>inode表大小为20KB（5个4KB块）</li>
+<li>每个<code>inode</code>256字节，因此有80个<code>inode</code>；</li>
+<li>超级块0KB开始，<code>inode map</code>从4KB开始， <code>data map</code>从8KB开始，<code>inode table</code>从12字节开始</li>
+<li>要读取<code>inode number=32</code></li>
+</ul>
+</li>
+<li><p>过程：</p>
+<ol>
+<li><p>先得到inode表的起始地址：<code>12KB</code></p>
+</li>
+<li><p>再加上此<code>inode</code>在表内的偏移量：<code>32 * 256B = 8192B</code>， <code>12KB + 8192B= 20KB</code></p>
+</li>
+<li><p>由于磁盘不是字节可寻址的，而是由可寻址扇区组成（512B），因此为了获取<code>inumber=32</code>的<code>inode</code>块，文件系统将请求物理节点号<code>40</code>（ <code>20KB / 512B= 40</code> ）,获得期望的<code>inode</code>块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#通用算法： inumber -&gt; sector number</span></span><br><span class="line">blk = ( inumber * sizeof(inode_t) )/ blockSize; <span class="comment"># 得到该inode所在的块号</span></span><br><span class="line">sector = ((blk*blockSize)+ inodeStartAddr)/ sectorSize;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="多级索引"><a href="#多级索引" class="headerlink" title="多级索引"></a>多级索引</h4><p>为了支持大文件，inode中除了直接指针外，还允许间接指针。 间接指针指向一个间接块（磁盘的数据块区域）。 假设一个块是4KB，磁盘地址空间是4Byte， 那就增加了1024个指针。 假设inode有12个直接指针和一个间接指针，则一个inode可以支持$(12+ 1 \times 1024) \times 4 \mathrm{KB}$</p>
+<p>按这个逻辑，还可以分配一个二重间接块，存放指向间接块的指针， inode存放一个二重间接指针， 这个指针就可以表示$1024 \times 1024 \mathrm{KB}$</p>
+<ul>
+<li>注意到，使用了多级索引的文件系统的文件分配模型是一个不平衡树，这个设计的初衷是： 大部分文件都是小文件， 因此只需要对大文件进行特殊的设计， 小文件让直接指针指向就好了</li>
+</ul>
+<ul>
+<li>还有一种基于链表的方法，即inode只需存储一个指向第一个块的指针， 而数据区每个数据块的末尾都会有一个指向该文件下一个数据块的指针。但是这种方式对于某些workload效果不好，比如随机访问。<ul>
+<li>windows采用FAT（File Allocation Table）, 指向下一块的指针不存在当前数据块中， 而是存在FAT（位于内存）中</li>
+</ul>
+</li>
+</ul>
+<h3 id="目录组织"><a href="#目录组织" class="headerlink" title="目录组织"></a>目录组织</h3><p>目录是特殊的文件，它也有inode， 但是目录的内容（即数据块的内容）是目录条目（称为<code>dentry</code> )与该条目对应inode的映射</p>
+<p>打开目录，首先是打开目录的文件描述符</p>
+<p>目录基本上是一个<code>&lt;dentry， inode number&gt;</code>的列表。 其中条目名称还包括条目的记录长度（名称的总字节数 + 所有的剩余空间）和字符串长度（即条目名称的实际长度）。 每个目录还有两个额外的条目： <code>.</code>和<code>..</code> 用于表示当前目录和父目录</p>
+<ul>
+<li>目录就是特殊的文件， 它也有inode， 目录的数据块的内容就是以上说的<code>&lt;条目名称， inode number&gt;</code>的列表</li>
+</ul>
+<p>假设某目录（i number = 5）中有三个文件（foo, bar, foo bar）， i number分别为12，13和24，则dir在磁盘上的数据是：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>inum</th>
+<th>reclen</th>
+<th>strlen</th>
+<th>name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>4</td>
+<td>2</td>
+<td>.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4</td>
+<td>3</td>
+<td>..</td>
+</tr>
+<tr>
+<td>12</td>
+<td>4</td>
+<td>4</td>
+<td>foo</td>
+</tr>
+<tr>
+<td>13</td>
+<td>4</td>
+<td>4</td>
+<td>bar</td>
+</tr>
+<tr>
+<td>24</td>
+<td>8</td>
+<td>7</td>
+<td>foobar</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>删除一个文件会在目录中留下一段空白标签， 一半是将该文件对应条目的inum设为一个保留的inum（例如0）</p>
+<p>目录的内容虽然位于数据块，但是它一般被认为是<strong>元数据</strong>， 因此在写入日志时，会被当作元数据（而不是物理数据）处理</p>
+<h2 id="空闲空间管理"><a href="#空闲空间管理" class="headerlink" title="空闲空间管理"></a>空闲空间管理</h2><p>文件系统必须记录哪些inode和数据块是空闲的，这样在分配新文件/新目录时，就可以使用空闲的inode和数据块， 这就是空闲空间管理</p>
+<p>VFSFS中使用位图进行空闲空间管理， 然而也有别的方法， 比如空闲列表和B树等</p>
+<ul>
+<li>空闲列表：（超级块中的有一个空闲指针，指向第一个空闲块，此后每个空闲块内部都有指向下一个空闲块的指针</li>
+</ul>
+<h2 id="文件访问"><a href="#文件访问" class="headerlink" title="文件访问"></a>文件访问</h2><p>假设文件系统已经挂载，要读取文件<code>/foo/bar</code>, 要读取该文件（也就是该文件的数据块），需要先找到该文件的inode， <strong>文件系统必须遍历路径名，才能找到inode， 所有遍历都从文件系统的根目录开始</strong>。 即文件系统会先读入inode为2的块， 然后找到<code>/foo</code>的inumber和块，最后找到<code>/foo/bar</code>的inumber和块</p>
+<ul>
+<li>一般而言，根目录的inode number为2</li>
+<li>这种遍历方式会导致， 访问文件导致的IO与路径长度成正比，路径上的每个目录都会被读取</li>
+<li><code>read()</code>系统调用不会查询位图，因为<strong>只有要分配空间时（比如write()）才需要查询分配结构</strong></li>
+</ul>
+<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><p>如前所述，每次文件访问都会读取路径上的所有目录，为此可以用缓存，将数据保留在内存中， 分为读缓存和写缓存</p>
+<ul>
+<li>写缓存： 显然，写入数据最终必须要写入磁盘，这看上去和缓存没什么关系。然而，写缓存可以将一组写入操作编成一批（batch）, 再延迟写入， 一次延迟写入就处理一批写操作</li>
+</ul>
+<p>为了避免缓存，可以用<code>fsync()</code>来强制写入磁盘， 甚至可以不使用文件系统，直接使用原始磁盘接口（<code>raw disk interface</code>）来写入数据（数据库就经常这么干， 因为数据库坚持自己控制一切）</p>
+<h1 id="Locality-and-FFS"><a href="#Locality-and-FFS" class="headerlink" title="Locality and FFS"></a>Locality and FFS</h1><p><strong>内存是随机访问的，但目前为止的磁盘都是顺序访问的，OS通过抽象，把磁盘抽象成了内存，让程序以为所有空间都是顺序访问的，这就导致了某些workload会导致磁盘性能不佳，因为毕竟底层是顺序访问</strong></p>
+<p>解决这个问题，需要文件系统面向磁盘设计。为此，Berkley的一个小组设计了FFS（Fast File System），它将磁盘分为一些组，称为柱面组（或称为块组），将两个<strong>有关联</strong>的块放到同一分组，这样访问的时候可以提高效率</p>
+<ul>
+<li>举例来说，FFS将文件的inode所在块和数据块放在一起（因为这二者必定有关联），避免长时间寻道</li>
+<li>“有关联”还可以建立在局部性原理上，例如，FFS将同一目录下的所有文件尽量放在一组，因为按照局部性原理，这些文件被经常一起访问</li>
+</ul>
+<p>由于大文件无法全部放入一个分组，因此FFS会将某些块（比如inode块）分配到一个组， 而大块房贷单独的分组。这会导致磁盘碎片化。 当然，允许的块越大，这种碎片也就越少</p>
+<p>FFS的贡献：</p>
+<ul>
+<li>引入了面向磁盘的文件系统</li>
+<li>引入了软链接</li>
+<li>引入了<code>rename()</code>系统调用</li>
+</ul>
+<h1 id="Crush-Consistency-Problem"><a href="#Crush-Consistency-Problem" class="headerlink" title="Crush-Consistency Problem"></a>Crush-Consistency Problem</h1><p>崩溃一致性问题 ： 更新持久数据结构时发生崩溃，解决方案有fsck和日志</p>
+<p>向文件写数据时，要更新至少三个块：更新的inode（比如，要增加新的指针）， 更新的数据块和更新的数据位图</p>
+<p>这三个块的写入操作，无论哪个出问题，都会导致崩溃后不一致</p>
+<p>在元数据日志中，我们会看到， 解决崩溃一致性的核心，就是<strong>先写入被指对象，再写入指针对象</strong>，这样能保证数据的正确性</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>示例：对于如下文件系统结构，有一个inode位图，一个数据位图，一个inode表（包含8个inode）和一个数据块表（包含8个数据块）</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/Crush%20Consistency%20example.png" alt="Crush Consistency example"></p>
+<p>（ 这里inode bmap和data bmap实际指向了下标3和5，应该是图画错了 ）</p>
+<p>可以看到，已经分配了一个inode（inumber=2），它在inode位图中标记， 单个分配的数据块Da（数据块4）也在数据位图（记为<code>B[v1]</code>， 表示第一个版本)）中标记， inode表示为<code>I[v1]</code>，即该inode的第一个版本，<code>I[v1]</code>的内容有：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">owner						:lyk</span><br><span class="line">permissions			:read-write</span><br><span class="line">size						:1</span><br><span class="line">pointer				  :4</span><br><span class="line">pointer:				:null</span><br><span class="line">pointer:				:null</span><br><span class="line">pointer:				:null</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>文件大小为1 （ 有一个数据块 ）， 第一个直接指针指向块4， 且所有其他直接指针都是null</li>
+</ul>
+<p>假如要向文件追加内容，比如要增加一个数据块， 此时要更新至少三个块：更新的inode（比如，要增加新的指针）， 更新的数据块和更新的数据位图：</p>
+<p>我们希望更新后的inode（用<code>I[v2]</code>表示）内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">owner						:lyk</span><br><span class="line">permissions			:read-write</span><br><span class="line">size						:2</span><br><span class="line">pointer				  :4</span><br><span class="line">pointer:				:5</span><br><span class="line">pointer:				:null</span><br><span class="line">pointer:				:null</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更新后的数据位图(记为<code>B[v2]</code>)要变成： 00001100</li>
+<li>新增的数据块记为Db</li>
+</ul>
+<p>我们希望最终的文件系统如下所示：</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/Crush%20Consistency%20example%20expected%20result.png" alt="Crush Consistency example expected result"></p>
+<p>然而，对<code>I[v2]</code>, <code>B[v2]</code>, Db 这三个块的写入操作，无论哪个出问题，都会导致崩溃后不一致</p>
+<h2 id="FSCK"><a href="#FSCK" class="headerlink" title="FSCK"></a>FSCK</h2><p>File System Checker</p>
+<p>一个UNIX工具，在文件系统挂载之前执行， 可以保证，fsck检查结束后，文件系统时一致的</p>
+<p>fsc会检查超级块，空闲块，inode状态，inode链接等信息， 事实上，fsck会<strong>扫描整个磁盘</strong>（另一方面，出现不一致的可能只是几个数据块）， 因此fsck的代价非常大</p>
+<h2 id="Journalist"><a href="#Journalist" class="headerlink" title="Journalist"></a>Journalist</h2><p>Linux的ext2文件系统没有日志 ，日志是由ext3引入的</p>
+<p>带有日志的ext3文件系统如下所示：</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/ext3%20with%20journalist.png" alt="ext3 with journalist"></p>
+<ul>
+<li>可以看到，这里对块/柱面进行了分组</li>
+</ul>
+<h3 id="Data-Journaling"><a href="#Data-Journaling" class="headerlink" title="Data Journaling"></a>Data Journaling</h3><p>数据日志就是将要更新的物理内容也写进日志里</p>
+<p>对于之前的示例，加入数据日志后，文件系统的日志区域如下所示：</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/data%20journaling.png" alt="data journaling"></p>
+<p>这里写了五个块：</p>
+<ul>
+<li>事务开始TxB： 此更新的相关信息，以及事务标识符（TID）</li>
+<li>物理日志： 这里占三个块，就是更新的确切物理内容</li>
+<li>事务结束TxE： 也会包含TID</li>
+</ul>
+<p>更新文件系统分为三个步骤：</p>
+<ol>
+<li><p>日志写入： 将食物的内容（包括TxB， 元数据和数据）写入日志，等待这些写入完成</p>
+</li>
+<li><p>日志提交： 将事务提交块（包括TxE）写入日志，事务被认为已提交（committed）</p>
+</li>
+<li><p>加检查点： 将更新内容（元数据和数据）写入磁盘</p>
+</li>
+<li><p>释放： 一段时间后，通过更新日志超级块（不是主文件系统的超级块）， 在超级块中标识该事物为空闲</p>
+<ul>
+<li>这一步和事务的原子性没有关系，只是为了重用日志空间。日志空间如果满了，就无法提交事务了，因此日志被实现为循环数据结构，一旦事务被加检查点，文件系统就应该释放它在日志中占用的空间，允许重用日志空间<ul>
+<li>要达到这个目的有很多方法，比如在日志超级块中标记最新和最旧的事务</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/journaling%20circyling%20journalist.png" alt="journaling circyling journalist"></p>
+</li>
+</ol>
+<p>注意，如果将TxE在日志写入阶段一并提交（即没有日志提交步骤），那么在日志写入阶段发生崩溃时（即将以上五个块发生崩溃时），会出现问题。 因此， <strong>日志总是要分为日志写入和提交两阶段，来确日志的原子性</strong></p>
+<p>崩溃恢复：</p>
+<ol>
+<li>如果在步骤2之前崩溃，那可以跳过这个更新（事务），因为没有该事物的日志，崩溃后的系统根本不知道这个事务的存在</li>
+<li>如果在步骤3之前崩溃，系统只需要replay日志中的食物，这称为redo logging</li>
+<li>如果在加检查点时发生崩溃，处理方式如步骤2</li>
+</ol>
+<p>缺点： 数据日志需要将待更新数据写入磁盘两次，一次写入日志空间，一次写入真正的待更新区域，这是巨大的开销，为此，我们一般使用<strong>元数据日志</strong></p>
+<h3 id="Metadata-Journaling"><a href="#Metadata-Journaling" class="headerlink" title="Metadata Journaling"></a>Metadata Journaling</h3><p>元数据日志与数据日志几乎相同，但是物理数据没有写入日志，而是直接写入文件系统</p>
+<p>但是，物理数据不能在事务提交后再写入文件系统，否则即使replay日志，也无法恢复数据（因为此时的日志中没有物理数据），所以，应该<strong>首先进行数据写入，这可以保证指针永远不会指向垃圾</strong>， 其核心理念是<strong>先写入被指对象，再写入指针对象</strong>：</p>
+<ol>
+<li>物理数据写入</li>
+<li>日志元数据写入： 将开始块TxB和元数据写入日志</li>
+<li>日志提交</li>
+<li>加检查点元数据： 将元数据更新的内容写入文件系统</li>
+<li>释放</li>
+</ol>
+<p>元数据日志的缺点是<strong>块复用问题</strong>， 因为目录的内容被当作元数据而不是物理数据，这意味着（在元数据日志中）<strong>目录的内容会放在日志空间</strong>。 假设某目录的内容在日志空间中占用块1000， 随后用户删除该目录，并释放块1000， 最后用户创建了新文件，并复用了块1000（此时该块位于物理数据空间）， 此时，在日志提交后，加检查点完成之前发生了崩溃，在replay阶段， 会重放日志中所有内容， 那么新文件的内容（也就是块1000）就会被恢复为目录的内容！ 这都是因为目录的内容被视作元数据，而不是物理数据，保留在日志空间</p>
+<p>Linux ext3点解决方案是加入撤销（revoke）指令，在上例中，删除目录将导致revoke指令被添加到日志，在replay时，被revoke的数据（这里是目录的内容）将不会被重放</p>
+<h1 id="Data-Integrity-and-Protection"><a href="#Data-Integrity-and-Protection" class="headerlink" title="Data Integrity and Protection"></a>Data Integrity and Protection</h1><h1 id="VFS"><a href="#VFS" class="headerlink" title="VFS"></a>VFS</h1><p>VFS（Virtual Filesystem Switch）：虚拟文件系统或虚拟文件系统转换，是文件系统的虚拟化，位于内核态，将底层异构的文件系统转换为统一的文件系统，并通过统一的Posix接口访问</p>
+<ul>
+<li>作为文件系统的抽象，VFS只存在于内存</li>
+<li>VFS起源于Unix， 所以VFS适用于所有Unix like OS</li>
+<li>VFS的整体组织与前文提到的VVFS相同，分为超级块、inode等</li>
+</ul>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Arch.png" alt="VFS Arch"></p>
+<h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><p>VFS在整个Linux系统中的分层视图如下：</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Layer.png" alt="VFS Layer"></p>
+<p>Linux系统的User<strong>使用GLIBC（POSIX标准、GUN C运行时库）作为应用程序的运行时库</strong>，然后通过OS转换为系统调用SCI（system-call interface），SCI是操作系统内核定义的系统调用接口，这层抽象允许<strong>用户程序的I/O操作转换为内核的接口调用</strong>。VFS提供了一个抽象层，将POSIX API接口与不同存储设备的具体接口实现进行了分离，使得底层的文件系统类型、设备类型对上层应用程序透明。</p>
+<h2 id="接口适配示例"><a href="#接口适配示例" class="headerlink" title="接口适配示例"></a>接口适配示例</h2><p>用户写入文件时，使用POSIX标准的write接口，然后陷入kernel mode，调用<code>sys_write()</code>系统调用（属于SCI层）。然后VFS层接受到该调用，转换为对给定文件系统、给定设备的操作</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Function%20Call%20workflow.png" alt="VFS Function Call workflow"></p>
+<h2 id="跨设备-文件系统示例"><a href="#跨设备-文件系统示例" class="headerlink" title="跨设备/文件系统示例"></a>跨设备/文件系统示例</h2><p>下面中，用户通过cp命令进行文件拷贝，用户不需要关心底层文件系统的实现，只需要通过VFS抽象层实现对不同文件系统的读写操作：</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20example.png" alt="VFS example"></p>
+<h2 id="VFS支持的系统调用"><a href="#VFS支持的系统调用" class="headerlink" title="VFS支持的系统调用"></a>VFS支持的系统调用</h2><p>上述示例中提到VFS也有自己的文件模型，用来支持操作系统的系统调用。下面是VFS抽象模型支持的所有Linux系统调用：</p>
+<ul>
+<li>文件系统相关：mount, umount, umount2, sysfs,  statfs,  fstatfs,  fstatfs64, ustat</li>
+<li>目录相关：chroot，pivot_root，chdir，fchdir，getcwd，mkdir，rmdir，getdents，getdents64，readdir，link，unlink，rename，lookup_dcookie</li>
+<li>链接相关：readlink，symlink</li>
+<li>文件相关：chown， fchown，lchown，chown16，fchown16，lchown16，hmod，fchmod，utime，stat，fstat，lstat，acess，oldstat，oldfstat，oldlstat，stat64，lstat64，lstat64，open，close，creat，umask，dup，dup2，fcntl， fcntl64，select，poll，truncate，ftruncate，truncate64，ftruncate64，lseek，llseek，read，write，readv，writev，sendfile，sendfile64，readahead</li>
+</ul>
+<h2 id="VFS支持的文件系统"><a href="#VFS支持的文件系统" class="headerlink" title="VFS支持的文件系统"></a>VFS支持的文件系统</h2><ul>
+<li>Disk-based 文件系统：Ext2, ext3, ReiserFS，Sysv, UFS, MINIX, VxFS，VFAT, NTFS，ISO9660 CD-ROM, UDF DVD，HPFS, HFS, AFFS, ADFS,</li>
+<li>Network 文件系统：NFS, Coda, AFS, CIFS, NCP</li>
+<li>特殊文件系统：/proc，/tmpfs等</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/03/19/Training-Day/" rel="prev" title="Training Day">
+      <i class="fa fa-chevron-left"></i> Training Day
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/03/22/Spring-Cache/" rel="next" title="Spring Cache">
+      Spring Cache <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O-Devicecs"><span class="nav-text">I&#x2F;O Devicecs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O%E7%B3%BB%E7%BB%9F%E5%90%84%E5%B1%82%E8%BD%AF%E4%BB%B6%E5%8F%8A%E5%85%B6%E5%8A%9F%E8%83%BD"><span class="nav-text">I&#x2F;O系统各层软件及其功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAID"><span class="nav-text">RAID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File"><span class="nav-text">File</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#File-types"><span class="nav-text">File types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-Structure"><span class="nav-text">File  Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unbuffered-I-O-amp-Buffered-I-O"><span class="nav-text">Unbuffered I&#x2F;O &amp; Buffered I&#x2F;O</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-I-O-System-Calls"><span class="nav-text">Basic I&#x2F;O System Calls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-descriptor"><span class="nav-text">File descriptor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C"><span class="nav-text">文件操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#open-creat-Function"><span class="nav-text">open&#x2F;creat Function</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Parameter%E2%80%8F%E2%80%9Dflags%E2%80%9D"><span class="nav-text">Parameter‏”flags”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parameter%E2%80%8F-mode"><span class="nav-text">Parameter‏: mode</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#close-Funtion"><span class="nav-text">close Funtion</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#read-write-Function"><span class="nav-text">read&#x2F;write Function</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lseek-Function"><span class="nav-text">lseek Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dup-dup2-Function"><span class="nav-text">dup&#x2F;dup2 Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fcntl-Function"><span class="nav-text">fcntl Function</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#cmd"><span class="nav-text">cmd</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ioctl-Function"><span class="nav-text">ioctl Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fsync-Function"><span class="nav-text">fsync Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E6%94%B9%E5%90%8D"><span class="nav-text">文件改名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E4%BF%A1%E6%81%AF"><span class="nav-text">获取文件信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%96%87%E4%BB%B6"><span class="nav-text">删除文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#change-ownership"><span class="nav-text">change ownership</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C"><span class="nav-text">目录操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-structures"><span class="nav-text">Data structures</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%9A%84%E6%89%93%E5%BC%80%E3%80%81%E5%85%B3%E9%97%AD%E3%80%81%E8%AF%BB%E3%80%81%E5%AE%9A%E4%BD%8D"><span class="nav-text">目录的打开、关闭、读、定位</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#example"><span class="nav-text">example</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E9%93%BE%E6%8E%A5-link"><span class="nav-text">硬链接( link )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E9%93%BE%E6%8E%A5-symlink"><span class="nav-text">软链接( symlink )</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%B9%B6%E6%8C%82%E8%BD%BD%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-text">创建并挂载文件系统</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Standard-I-O-Library"><span class="nav-text">Standard I&#x2F;O Library</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#File-Stream"><span class="nav-text">File Stream</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stream-Buffering-Operations"><span class="nav-text">Stream Buffering Operations</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Standard-I-O-Functions"><span class="nav-text">Standard I&#x2F;O Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Stream-open-close"><span class="nav-text">Stream open&#x2F;close</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Open-a-stream"><span class="nav-text">Open a stream:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Close-a-stream"><span class="nav-text">Close a stream</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#character-operations"><span class="nav-text">character operations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#input-of-a-character"><span class="nav-text">input of a character</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#output-of-a-character"><span class="nav-text">output of a character</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Line-of-String-operations"><span class="nav-text">Line of String operations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Input-of-a-Line-of-String"><span class="nav-text">Input of a Line of String</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Output-of-a-Line-of-String"><span class="nav-text">Output of a Line of String</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Stream-Input-Output"><span class="nav-text">Binary Stream Input&#x2F;Output</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Formatted-I-O"><span class="nav-text">Formatted I&#x2F;O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reposition-a-stream"><span class="nav-text">Reposition a stream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flush-a-stream"><span class="nav-text">Flush a stream</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stream-and-File-Descriptor"><span class="nav-text">Stream and File Descriptor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Temporary-File"><span class="nav-text">Temporary File</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Advanced-System-Calls"><span class="nav-text">Advanced System Calls</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#stat-fstat-lstat-functions"><span class="nav-text">stat&#x2F;fstat&#x2F;lstat functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#struct-stat"><span class="nav-text">struct stat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Test-macros-for-file-types"><span class="nav-text">Test macros for file types</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-Permission"><span class="nav-text">File Permission</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#umask"><span class="nav-text">umask</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#access-function"><span class="nav-text">access function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chmod-fchmod-functions"><span class="nav-text">chmod&#x2F;fchmod functions</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-lock"><span class="nav-text">File lock</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%BF%97%E4%BD%8D"><span class="nav-text">标志位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fcntl%E8%AE%B0%E5%BD%95%E9%94%81"><span class="nav-text">fcntl记录锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#struct-flock"><span class="nav-text">struct flock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cmd%E5%8F%82%E6%95%B0"><span class="nav-text">cmd参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E5%B0%81%E9%94%81%E5%91%BD%E4%BB%A4"><span class="nav-text">其它封锁命令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-System"><span class="nav-text">File System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E7%BB%84%E7%BB%87"><span class="nav-text">整体组织</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%EF%BC%9A-inode"><span class="nav-text">文件组织： inode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E7%B4%A2%E5%BC%95"><span class="nav-text">多级索引</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%84%E7%BB%87"><span class="nav-text">目录组织</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B2%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86"><span class="nav-text">空闲空间管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE"><span class="nav-text">文件访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-text">缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Locality-and-FFS"><span class="nav-text">Locality and FFS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Crush-Consistency-Problem"><span class="nav-text">Crush-Consistency Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FSCK"><span class="nav-text">FSCK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Journalist"><span class="nav-text">Journalist</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Journaling"><span class="nav-text">Data Journaling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metadata-Journaling"><span class="nav-text">Metadata Journaling</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-Integrity-and-Protection"><span class="nav-text">Data Integrity and Protection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VFS"><span class="nav-text">VFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B1%82"><span class="nav-text">分层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D%E7%A4%BA%E4%BE%8B"><span class="nav-text">接口适配示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E8%AE%BE%E5%A4%87-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%A4%BA%E4%BE%8B"><span class="nav-text">跨设备&#x2F;文件系统示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VFS%E6%94%AF%E6%8C%81%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">VFS支持的系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VFS%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-text">VFS支持的文件系统</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

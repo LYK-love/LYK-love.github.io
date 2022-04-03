@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Some tools for data wrangling ref: MIT lesson">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Wrangling">
+<meta property="og:url" content="http://lyk-love.cn/2022/02/09/Data-Wrangling/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Some tools for data wrangling ref: MIT lesson">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-02-08T18:14:27.000Z">
+<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:author" content="有多远滚多远">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/02/09/Data-Wrangling/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Data Wrangling | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/02/09/Data-Wrangling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Data Wrangling
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2022-02-08 18:14:27" itemprop="dateCreated datePublished" datetime="2022-02-08T18:14:27Z">2022-02-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Some tools for data wrangling</p>
+<p>ref: <a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/data-wrangling/">MIT lesson</a></p>
+<span id="more"></span>
+<h1 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h1><ul>
+<li><p><code>sed</code> is a “stream editor” that builds on top of the old <code>ed</code> editor. In it, you basically give short <strong>commands</strong> for how to modify the file, rather than manipulate its contents directly (although you can do that too). </p>
+<ul>
+<li>one of the most common ones is <code>s</code>: substitution<ul>
+<li><code>sed &#39;s/REGEX/SUBSTITUTION/&#39;</code>： Replace <strong>the first occurrence</strong> of a regular expression in <strong>each line</strong> of a file, and print the result<ul>
+<li><code>REGEX</code>:  the regular expression you want to search for</li>
+<li>SUBSTITUTION`: the text you want to substitute matching text with</li>
+<li><code>&#39;s/REGEX/SUBSTITUTION/g&#39;</code>:  Replace <strong>all occurrences</strong> of an extended regular expression in a <strong>file</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssh myserver journalctl</span><br><span class="line"> | grep sshd</span><br><span class="line"> | grep &quot;Disconnected from&quot;</span><br><span class="line"> | sed &#x27;s/.*Disconnected from //&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="REGEX"><a href="#REGEX" class="headerlink" title="REGEX"></a>REGEX</h2><ul>
+<li>REGEX special characters:<ul>
+<li><code>.</code> means “any single character” except newline</li>
+<li><code>*</code> zero or more of the preceding match</li>
+<li><code>+</code> one or more of the preceding match</li>
+<li><code>[abc]</code> any one character of <code>a</code>, <code>b</code>, and <code>c</code></li>
+<li><code>(RX1|RX2)</code> either something that matches <code>RX1</code> or <code>RX2</code></li>
+<li><code>^</code> the start of the line</li>
+<li><code>$</code> the end of the line</li>
+</ul>
+</li>
+<li><code>sed</code>默认<strong>不转义特殊字符</strong>， 这与其他工具都相反。<ul>
+<li>使用<code>-E</code>开启转义</li>
+</ul>
+</li>
+<li><code>sed</code>的REGEX是贪婪匹配</li>
+</ul>
+<h2 id="capture-groups"><a href="#capture-groups" class="headerlink" title="capture groups"></a>capture groups</h2><ul>
+<li><p>使用捕获组来进行非贪婪匹配</p>
+</li>
+<li><p>Any text matched by a regex surrounded by parentheses is stored in a numbered capture group. These are available in the substitution (and in some engines, even in the pattern itself!) as <code>\1</code>, <code>\2</code>, <code>\3</code>, etc. So:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">| sed -E &#x27;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#x27;</span><br></pre></td></tr></table></figure>
+<p>将输出username</p>
+</li>
+</ul>
+<h1 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h1><ul>
+<li><code>sort</code> will sort its input<ul>
+<li>default: in lexicographic order</li>
+<li><code>-n</code>: in numeric order</li>
+<li><code>k, --key=KEYDEF</code> :sort via a key; KEYDEF gives location and type<ul>
+<li><code>KEYDEF</code> is <code>F[.C][OPTS][,F[.C][OPTS]]</code> for <strong>start and stop position</strong>, where F is a <strong>field number</strong> and C a character position in the field; both are origin 1, and the stop posi‐ tion defaults to the line’s end.  </li>
+<li>If neither <strong>-t</strong> nor <strong>-b</strong> is in effect, characters in a field are counted from the beginning of the preceding whitespace.  </li>
+<li>OPTS  is  one  or more single-letter ordering options <code>[bdfgiMhnRrV]</code>, which override global ordering options for that key.  If no key is given, use the entire line as the key.  Use <strong>—debug</strong> to diagnose incorrect key usage.</li>
+<li>example: <code>-k1,1</code>即以第一个field为key排序， 而<code>-k</code>1即以第一个field直到行的末尾为key进行排序<ul>
+<li><code>,n</code>:  sort until the <code>n</code>th field, where the default is the end of the line</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>-r</code>: sort in reverse order.</li>
+</ul>
+</li>
+</ul>
+<h1 id="uniq"><a href="#uniq" class="headerlink" title="uniq"></a>uniq</h1><ul>
+<li><p><code>uniq -c</code> will collapse consecutive lines that are the same into a single line, prefixed with a count of the number of occurrences</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssh myserver journalctl</span><br><span class="line"> | grep sshd</span><br><span class="line"> | grep &quot;Disconnected from&quot;</span><br><span class="line"> | sed -E &#x27;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#x27;</span><br><span class="line"> | sort | uniq -c</span><br><span class="line"> | sort -nk1,1 | tail -n10</span><br></pre></td></tr></table></figure>
+<p>对username（sort默认按字典序）排序</p>
+</li>
+</ul>
+<h1 id="tail"><a href="#tail" class="headerlink" title="tail"></a>tail</h1><ul>
+<li>Display the last part of a file.</li>
+</ul>
+<h1 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;sfsdfs\n asdfdas&quot; | awk &#x27;&#123;print $2&#125;&#x27; | paste -sd,</span><br></pre></td></tr></table></figure>
+<ul>
+<li>explain:  for every line, print the contents of the second field,</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span> &#123; rows = <span class="number">0</span> &#125;</span><br><span class="line"><span class="variable">$1</span> == <span class="number">1</span> &amp;&amp; <span class="variable">$2</span> ~ <span class="regexp">/^c[^ ]*e$/</span> &#123; rows += <span class="variable">$1</span> &#125;</span><br><span class="line"><span class="keyword">END</span> &#123; print rows &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="paste"><a href="#paste" class="headerlink" title="paste"></a>paste</h1><ul>
+<li><p><code>paste</code>: Merge lines of files</p>
+<ul>
+<li><code>-s</code>: join all the lines into a single line, using TAB as delimiter</li>
+<li><p><code>-d</code>: using the specified delimiter</p>
+<ul>
+<li><code>paste -s -d delimiter file</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ssh myserver journalctl</span><br><span class="line"> | grep sshd</span><br><span class="line"> | grep &quot;Disconnected from&quot;</span><br><span class="line"> | sed -E &#x27;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#x27;</span><br><span class="line"> | sort | uniq -c</span><br><span class="line"> | sort -nk1,1 | tail -n10</span><br><span class="line"> | awk &#x27;&#123;print $2&#125;&#x27; | paste -sd,</span><br></pre></td></tr></table></figure>
+<p>extract the usernames as a comma-separated list instead of one per line</p>
+<h1 id="bc"><a href="#bc" class="headerlink" title="bc"></a>bc</h1><p>You can do math directly in your shell using <code>bc</code>, a calculator that can read from STDIN! For example, add the numbers on each line together by concatenating them together, delimited by <code>+</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">| paste -sd+ | bc -l</span><br></pre></td></tr></table></figure>
+<p>Or produce more elaborate expressions:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;2*($(data | paste -sd+))&quot; | bc -l</span><br></pre></td></tr></table></figure>
+<p>You can get stats in a variety of ways</p>
+<h1 id="st"><a href="#st" class="headerlink" title="st"></a>st</h1><ul>
+<li>优雅简洁的数据处理工具<a target="_blank" rel="noopener" href="https://github.com/nferraz/st">https://github.com/nferraz/st</a></li>
+<li>与linux的<code>st</code>命令重名，需要改名(如<code>scal</code>)</li>
+</ul>
+<h1 id="R"><a href="#R" class="headerlink" title="R"></a>R</h1><ul>
+<li><p>R is another (weird) programming language that’s great at data analysis and <a target="_blank" rel="noopener" href="https://ggplot2.tidyverse.org/">plotting</a>. </p>
+<ul>
+<li>相比之前的工具更重量级</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ssh myserver journalctl</span><br><span class="line"> | grep sshd</span><br><span class="line"> | grep &quot;Disconnected from&quot;</span><br><span class="line"> | sed -E &#x27;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#x27;</span><br><span class="line"> | sort | uniq -c</span><br><span class="line"> | awk &#x27;&#123;print $1&#125;&#x27; | R --no-echo -e &#x27;x &lt;- scan(file=&quot;stdin&quot;, quiet=TRUE); summary(x)&#x27;</span><br><span class="line">R is another (weird) programming language that’s great at data analysis and</span><br></pre></td></tr></table></figure>
+<p><code>summary</code> prints summary statistics for a vector, and we created a vector containing the input stream of numbers, so R gives us the statistics we wanted!</p>
+</li>
+</ul>
+<h1 id="gnuplot"><a href="#gnuplot" class="headerlink" title="gnuplot"></a>gnuplot</h1><ul>
+<li>simple plotting <a target="_blank" rel="noopener" href="http://www.gnuplot.info/">http://www.gnuplot.info/</a></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ssh myserver journalctl</span><br><span class="line"> | grep sshd</span><br><span class="line"> | grep &quot;Disconnected from&quot;</span><br><span class="line"> | sed -E &#x27;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#x27;</span><br><span class="line"> | sort | uniq -c</span><br><span class="line"> | sort -nk1,1 | tail -n10</span><br><span class="line"> | gnuplot -p -e &#x27;set boxwidth 0.5; plot &quot;-&quot; using 1:xtic(2) with boxes&#x27;</span><br></pre></td></tr></table></figure>
+<h1 id="xargs"><a href="#xargs" class="headerlink" title="xargs"></a>xargs</h1><ul>
+<li><p><code>xargs</code>： Execute a command with piped arguments coming from another command, a file, etc.<br> The input is treated as a single block of text and split into separate pieces on spaces, tabs, newlines and end-of-file. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">Run a <span class="built_in">command</span> using the input data as arguments:</span> </span><br><span class="line">arguments_source | xargs command</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>Sometimes you want to do data wrangling to find things to install or remove based on some longer list. The data wrangling we’ve talked about so far + <code>xargs</code> can be a powerful combo.</p>
+<p>For example, as seen in lecture, I can use the following command to uninstall old nightly builds of Rust from my system by extracting the old build names using data wrangling tools and then passing them via <code>xargs</code> to the uninstaller:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustup toolchain list | grep nightly | grep -vE &quot;nightly-x86&quot; | sed &#x27;s/-x86.*//&#x27; | xargs rustup toolchain uninstall</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/02/09/awk/" rel="prev" title="awk">
+      <i class="fa fa-chevron-left"></i> awk
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/02/09/Shell-Tools/" rel="next" title="Shell Tools">
+      Shell Tools <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sed"><span class="nav-text">sed</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#REGEX"><span class="nav-text">REGEX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#capture-groups"><span class="nav-text">capture groups</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sort"><span class="nav-text">sort</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#uniq"><span class="nav-text">uniq</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tail"><span class="nav-text">tail</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#awk"><span class="nav-text">awk</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#paste"><span class="nav-text">paste</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bc"><span class="nav-text">bc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#st"><span class="nav-text">st</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#R"><span class="nav-text">R</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gnuplot"><span class="nav-text">gnuplot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xargs"><span class="nav-text">xargs</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
