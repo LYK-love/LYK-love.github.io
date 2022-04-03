@@ -40,7 +40,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Function%20Call%20workflow.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20example.png">
 <meta property="article:published_time" content="2022-04-04T01:36:01.000Z">
-<meta property="article:modified_time" content="2022-04-03T17:44:06.256Z">
+<meta property="article:modified_time" content="2022-04-03T17:52:40.783Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="OS Basic">
 <meta name="twitter:card" content="summary">
@@ -237,7 +237,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-03 17:44:06" itemprop="dateModified" datetime="2022-04-03T17:44:06Z">2022-04-03</time>
+                <time title="Modified: 2022-04-03 17:52:40" itemprop="dateModified" datetime="2022-04-03T17:52:40Z">2022-04-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1194,8 +1194,8 @@
 </tbody>
 </table>
 </div>
-<p>删除一个文件会在目录中留下一段空白标签， 一半是将该文件对应条目的inum设为一个保留的inum（例如0）</p>
-<p>目录的内容虽然位于数据块，但是它一般被认为是<strong>元数据</strong>， 因此在写入日志时，会被当作元数据（而不是物理数据）处理</p>
+<p>删除一个文件会在目录中留下一段空白空间， 一般是将该文件对应条目的inum设为一个保留的inum（例如0）</p>
+<p>目录的内容虽然位于数据块，但它一般被认为是<strong>元数据</strong>， 因此在写入日志时，会被当作元数据（而不是物理数据）处理</p>
 <h2 id="空闲空间管理"><a href="#空闲空间管理" class="headerlink" title="空闲空间管理"></a>空闲空间管理</h2><p>文件系统必须记录哪些inode和数据块是空闲的，这样在分配新文件/新目录时，就可以使用空闲的inode和数据块， 这就是空闲空间管理</p>
 <p>VFSFS中使用位图进行空闲空间管理， 然而也有别的方法， 比如空闲列表和B树等</p>
 <ul>
