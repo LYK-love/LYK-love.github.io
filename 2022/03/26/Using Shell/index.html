@@ -16,7 +16,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="Outline: 介绍了一些shell的常识">
@@ -27,7 +27,7 @@
 <meta property="og:description" content="Outline: 介绍了一些shell的常识">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-03-26T12:14:21.000Z">
-<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-04-08T07:41:02.069Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary">
@@ -218,6 +218,13 @@
 
               <time title="Created: 2022-03-26 12:14:21" itemprop="dateCreated datePublished" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-08 07:41:02" itemprop="dateModified" datetime="2022-04-08T07:41:02Z">2022-04-08</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -298,6 +305,23 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 3 | sudo tee brightness</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h2 id="Command-Parameters"><a href="#Command-Parameters" class="headerlink" title="Command Parameters"></a>Command Parameters</h2><p>Linux Command的命令行参数可分为长参数（long option）和短参数（short option），长参数形式类似于<code>--print-something</code>， 以<code>--</code>开头，单词间以<code>-</code>分开；短参数形式类似于<code>-p</code>，以<code>-</code>开头，后面跟单词缩写</p>
+<h3 id="短参数"><a href="#短参数" class="headerlink" title="短参数"></a>短参数</h3><p>在短参数中，字母的大写效果是不同的，比如大写 <code>T</code> 和小写 <code>t</code>的含义通常不同</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command -p</span><br></pre></td></tr></table></figure>
+<p>短参数赋值：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command -p 10</span><br></pre></td></tr></table></figure>
+<p>多个短参数，可以用空格隔开:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command -a -b -c -d</span><br></pre></td></tr></table></figure>
+<p>多个短参数也可以合并在一起：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command -abcd</span><br></pre></td></tr></table></figure>
+<h3 id="长参数"><a href="#长参数" class="headerlink" title="长参数"></a>长参数</h3><p>格式：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command --parameter</span><br></pre></td></tr></table></figure>
+<p>长参数赋值：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command --parameter=10</span><br></pre></td></tr></table></figure>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><p>多个长参数，不能像多个短参数那样合并， 只能以空格隔开：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command --parameter1 --parameter2</span><br></pre></td></tr></table></figure>
+<p><strong>可以组合使用短参数和长参数</strong><br>例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command -abcd --parameter1 --parameter2</span><br></pre></td></tr></table></figure>
 <h1 id="Windows-shell"><a href="#Windows-shell" class="headerlink" title="Windows shell"></a>Windows shell</h1><p>windows中：命令和文件名(包括文件类型)不区分大小写. 即 cd 和 CD 一样， dir 和 DIR 一样。 Desktop 和 desktop 一样, <em>.pdf  和 </em>.PDF 一样</p>
 <p>TAB键： 自动补完。 不区分大小写</p>
 <p><code>cd</code> ： change directory 改变目录</p>
@@ -364,12 +388,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/26/The-Story-of-Art-19-20%E4%B8%96%E7%BA%AA/" rel="prev" title="The Story of Art: Chapter 26,27">
-      <i class="fa fa-chevron-left"></i> The Story of Art: Chapter 26,27
+    <a href="/2022/03/26/hadoop+spark%E9%85%8D%E7%BD%AE%E5%92%8C%E9%83%A8%E7%BD%B2/" rel="prev" title="hadoop+spark配置和部署">
+      <i class="fa fa-chevron-left"></i> hadoop+spark配置和部署
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/03/26/Software%20System%20Design%20Intro/" rel="next" title="Software System Design Intro">
-      Software System Design Intro <i class="fa fa-chevron-right"></i>
+    <a href="/2022/03/26/The-Story-of-Art-19-20%E4%B8%96%E7%BA%AA/" rel="next" title="The Story of Art: Chapter 26,27">
+      The Story of Art: Chapter 26,27 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -429,7 +453,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-shell"><span class="nav-text">Linux shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PATH"><span class="nav-text">PATH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Navigating-in-the-shell"><span class="nav-text">Navigating in the shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connecting-programs"><span class="nav-text">Connecting programs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root"><span class="nav-text">root</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-shell"><span class="nav-text">Windows shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browser"><span class="nav-text">Browser</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-shell"><span class="nav-text">Linux shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PATH"><span class="nav-text">PATH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Navigating-in-the-shell"><span class="nav-text">Navigating in the shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connecting-programs"><span class="nav-text">Connecting programs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root"><span class="nav-text">root</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-Parameters"><span class="nav-text">Command Parameters</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E5%8F%82%E6%95%B0"><span class="nav-text">短参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%BF%E5%8F%82%E6%95%B0"><span class="nav-text">长参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text"> </span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-shell"><span class="nav-text">Windows shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browser"><span class="nav-text">Browser</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -445,7 +469,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -504,7 +528,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
         

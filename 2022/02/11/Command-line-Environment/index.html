@@ -16,7 +16,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="Outline:  Intro: Shell Session Job control Tmux Aliase Dotfiles Remote Machines ( ssh端口转发详见其他文章 )  ref: MIT lesson, tmux tutorial, a good introduction of Session">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Toolkit/Shel%20lSession%20Archetecture">
 <meta property="og:image" content="https://img2018.cnblogs.com/blog/952033/202001/952033-20200103182831279-993028624.png">
 <meta property="article:published_time" content="2022-02-10T17:30:37.000Z">
-<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-04-04T14:36:11.258Z">
 <meta property="article:author" content="有多远滚多远">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Toolkit/Shel%20lSession%20Archetecture">
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+                <time title="Modified: 2022-04-04 14:36:11" itemprop="dateModified" datetime="2022-04-04T14:36:11Z">2022-04-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -301,7 +301,8 @@
 <p>Shell 的职责是通知 job 何时停止何时启动，还要把 job 的信息通知给用户，并提供机制允许用户继续暂停的 job、在前台和后台之间切换 job。比如前台 job 可以无限制的自由使用控制终端，而后台 job 则不可以。当后台 job 中的进程试图从其控制终端读取数据时，通常会向进程组发送 SIGTTIN 信号。这通常会导致该组中的所有进程停止(变成 stopped 状态)。类似地，当后台 job 中的进程试图写入其控制终端时，默认行为是向进程组发送 SIGTTOU 信号，但是否允许写入的控制会更加的复杂。</p>
 <h1 id="Job-control"><a href="#Job-control" class="headerlink" title="Job control"></a>Job control</h1><p>shell和进程采用<code>signal</code>通信，<code>signal</code>是一种软件中断</p>
 <h2 id="Killing-a-process"><a href="#Killing-a-process" class="headerlink" title="Killing a process"></a>Killing a process</h2><ul>
-<li><code>Ctrl-C</code>:    <code>SIGINT</code></li>
+<li><code>Ctrl-z</code>:    <code>SIGSTP</code>,</li>
+<li><code>Ctrl-c:</code>SIGINT`</li>
 <li><code>Ctrl-\</code>:    <code>SIGQUIT</code></li>
 <li><code>kill -TERM&lt;PID&gt;</code>: <code>SIGTERM</code>(  比前二者更general )</li>
 </ul>
@@ -311,7 +312,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">202^C</span><br><span class="line">I got a SIGINT, but I am not stopping</span><br><span class="line">212^C</span><br><span class="line">I got a SIGINT, but I am not stopping</span><br><span class="line">219^C</span><br><span class="line">I got a SIGINT, but I am not stopping</span><br><span class="line">367^\zsh: quit (core dumped)  /bin/python ~/Projects/Python/ignoreSIGINT.py</span><br></pre></td></tr></table></figure>
 <p><code>^</code> is how <code>Ctrl</code> is displayed when typed in the terminal</p>
 <h2 id="Pausing-and-backgrounding-processes"><a href="#Pausing-and-backgrounding-processes" class="headerlink" title="Pausing and backgrounding processes"></a>Pausing and backgrounding processes</h2><ul>
-<li><p><code>Ctrl-C</code>:    <code>SIGSTP</code></p>
+<li><p><code>Ctrl-z</code>:    <code>SIGSTP</code>, 会将进程suspend</p>
 <ul>
 <li>short for Terminal Stop (i.e. the terminal’s version of <code>SIGSTOP</code>), which pauses a process</li>
 </ul>
@@ -322,16 +323,23 @@
 <li><code>fg/bg  %job_id</code></li>
 </ul>
 </li>
-<li><p><code>jobs</code>:  显示<strong>当前session</strong>的未完成的job</p>
+<li><p><code>jobs</code>:  显示<strong>当前session</strong>的未完成的job， 每个job都会分配一个工作号， 由<code>%[job_id]引用</code></p>
 <ul>
-<li>得到job的PID：<ul>
+<li><p><code>[工作号] 进程号</code></p>
+</li>
+<li><p>得到job的PID：</p>
+<ul>
 <li><code>grep</code></li>
-<li><code>%job_id</code>: <code>job_id</code>由<code>job</code>显示</li>
 </ul>
 </li>
 <li>To refer to the last backgrounded job you can use the <code>$!</code> special parameter.</li>
 </ul>
 </li>
+</ul>
+<p>  如果在终端上出现如下信息：</p>
+<p>  <code>[1]+ Done find / -name install.log</code></p>
+<p>  则证明后台的这个命令已经完成了。命令如果有执行结果，则也会显示到操作终端上。其中，[1] 是这个命令的工作号，”+”代表这个命令是最近一个被放入后台的</p>
+<ul>
 <li><p><code>pgrep</code>: Find or signal processes by name.</p>
 <ul>
 <li><p><code>-l</code>：同时显示进程名和PID</p>
@@ -647,7 +655,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">130</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -706,7 +714,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
         
