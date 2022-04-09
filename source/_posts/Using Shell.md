@@ -105,7 +105,83 @@ open: Permission denied
   echo 3 | sudo tee brightness
   ```
 
-  
+
+## Command Parameters
+
+Linux Command的命令行参数可分为长参数（long option）和短参数（short option），长参数形式类似于`--print-something`， 以`--`开头，单词间以`-`分开；短参数形式类似于`-p`，以`-`开头，后面跟单词缩写
+
+### 短参数
+
+在短参数中，字母的大写效果是不同的，比如大写 `T` 和小写 `t`的含义通常不同
+
+```shell
+command -p
+```
+
+
+
+短参数赋值：
+
+```shell
+command -p 10
+```
+
+
+
+
+
+多个短参数，可以用空格隔开:
+
+```shell
+command -a -b -c -d
+```
+
+
+
+多个短参数也可以合并在一起：
+
+```shell
+command -abcd
+```
+
+
+
+### 长参数
+
+格式：
+
+```shell
+command --parameter
+```
+
+
+
+长参数赋值：
+
+```shell
+command --parameter=10
+```
+
+
+
+### 
+
+多个长参数，不能像多个短参数那样合并， 只能以空格隔开：
+
+```shell
+command --parameter1 --parameter2
+```
+
+
+
+**可以组合使用短参数和长参数**
+例如：
+
+
+
+```shell
+command -abcd --parameter1 --parameter2
+```
 
 # Windows shell
 

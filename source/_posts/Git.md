@@ -17,8 +17,6 @@ ref:  [廖雪峰的教程](https://www.liaoxuefeng.com/wiki/896043488029600)
 ## Intro 
 
 * Git是Linus用**C**写的分布式版本管理系统
-  * 集中式:版本库存放在中央服务器,必须联网(Problem)
-  * 分布式:每个人电脑上都是完整的版本库,因此比集中式**安全性高**
 
 > 集中式:
 >
@@ -494,7 +492,111 @@ Over!
 
 `rm`是DOS命令,在各个shell都可以用. 用在git仓库中,是删除工作区的文件,用 `git restore readme.txt`可以还原. 而`git rm readme.txt`是删除工作区和暂存区的文件, **由于`git restore`的原理是将工作复原为暂存区中的版本**,而暂存区中该文件也被删除了,所以恢复不了, 分支里还有这个文件,所以用版本回退`git reset --hard HEAD^`
 
-##   修改commit信息
+### 关联分支
+
+将本地分支与远程同名分支相关联
+
+pull和push同
+
+```she l
+git push --set-upstream origin <本地分支名>
+
+# 简写方式： 
+# git push -u origin <本地分支名>
+```
+
+### git pull
+
+1、将远程指定分支 拉取到 本地指定分支上：
+
+```
+git pull origin <远程分支名>:<本地分支名>
+```
+
+2、将远程指定分支 拉取到 本地当前分支上：
+
+```
+git pull origin <远程分支名>
+```
+
+3、将与本地当前分支同名的远程分支 拉取到 本地当前分支上(需先关联远程分支，方法见文章末尾)
+
+```
+git pull
+```
+
+在克隆远程项目的时候，本地分支会自动与远程仓库建立追踪关系，可以使用默认的origin来替代远程仓库名
+
+#### pull强制覆盖本地文件
+
+ref： https://www.jianshu.com/p/1ac2e1f99166
+
+> **重要提示：如果您有任何本地更改，将会丢失。无论是否有--hard选项，任何未被推送的本地提交都将丢失。**
+>  如果您有任何未被Git跟踪的文件(例如上传的用户内容)，这些文件将不会受到影响。
+>  下面是正确的方法：
+
+
+
+```undefined
+git fetch --all
+```
+
+
+
+然后，你有两个选择：
+
+```undefined
+git reset --hard origin/master
+```
+
+或者如果你在其他分支上：
+
+```jsx
+git reset --hard origin/<branch_name>
+```
+
+
+
+说明：
+
+`git fetch`从远程下载最新的，而不尝试合并或rebase任何东西。
+
+然后`git reset`将主分支重置为您刚刚获取的内容。 `--hard`选项更改工作树中的所有文件以匹配`origin/master`中的文件
+
+在重置之前可以通过从master创建一个分支来维护当前的本地提交：
+
+
+
+```cpp
+git checkout master
+git branch new-branch-to-save-current-commits
+git fetch --all
+git reset --hard origin/master
+```
+
+在此之后，所有旧的提交都将保存在new-branch-to-save-current-commits中。然而，没有提交的更改(即使staged)将会丢失。确保存储和提交任何你需要的东西。
+
+### git push
+
+1、将本地当前分支 推送到 **远程指定分支上**：
+
+```
+git push origin <本地分支名>:<远程分支名>
+```
+
+2、将本地当前分支 推送到 **与本地当前分支同名的远程分支**：
+
+```
+git push origin <本地分支名>
+```
+
+3、将本地当前分支 推送到 与本地当前分支同名的远程分支上(需先关联远程分支])
+
+```
+git push
+```
+
+### 修改commit信息
 
 https://blog.csdn.net/Muscleape/article/details/105637401
 
@@ -1071,9 +1173,7 @@ Deleted branch feature-vulcan (was 287773e).
 - bug分支只用于在本地修复bug，就没必要推到远程了，除非老板要看看你每周到底修复了几个bug；
 - feature分支是否推到远程，取决于你是否和你的小伙伴合作在上面开发。
 
-#### 
 
-多人协作：
 
 1. 首先，可以试图用`git push origin <branch-name>`推送自己的修改；
 2. 如果推送失败，则因为远程分支比你的本地更新，需要先用`git pull`试图合并；

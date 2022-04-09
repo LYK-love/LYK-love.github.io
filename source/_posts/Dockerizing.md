@@ -242,7 +242,7 @@ push镜像需要如下信息：
 假设镜像仓库名是web, 那么push后，镜像位于`docker.io/web:latest`,然而用户一般没有一级命名空间的权限,  因此**需要为当前镜像重新打一个标签， 这个标签指定了要推送的用户空间**：
 
 ```shell
-docker image tag <current-tag> <new-tag>
+docker image tag <image-qith-current-wothtag> <image-with-new-tag>
 # 该命令会为镜像添加额外的标签，不会删除已有的标签. 可以通过`docker image ls` 查看，发现镜像拥有了两个标签 
 ```
 
@@ -311,7 +311,7 @@ denied: requested access to the resource is denied
 3. 为此，需要给镜像改名：
 
    ````shell
-   docker  image tag web:latest lyklove/web/latest
+   docker  image tag web:latest lyklove/web:latest
    
    # 由于镜像web的默认标签名就是latest, 因此也可以:
    docker image tag web lyklove/web

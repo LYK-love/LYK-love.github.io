@@ -20,7 +20,7 @@ OS可以是各种LINUX发行版，因此你可以看到各种包管理工具（y
 ssh-keygen -t rsa
 ```
 
-
+* 腾讯云的服务器不会默认生成ssh key， 所以也不会有`~/.ssh`文件夹， 其他主机也无法通过ssh连接（`ssh-copy-id`）也不行。 因此腾讯云服务器需要先生成ssh key，才能使用
 
 查看`~/.ssh`:
 
@@ -35,7 +35,7 @@ total 20
 
 ```
 
-* authorized_keys: 存放远程免密登录的公钥,主要通过这个文件记录多台机器的公钥。
+* authorized_keys: 存放远程免密登录的公钥,主要通过这个文件记录多台机器的公钥。(没有则手动创建该文件)
 
 * id_rsa: 生成的私钥文件
 
@@ -53,9 +53,37 @@ total 20
   * 如果服务器没有`~/.ssh`，则需要自己创建
 * 也可以`ssh-copy-id user@host `
 
+## 本机到本机的免密登陆
+
+本机到本机也是需要配置免密登陆的，但是`root@localhost`需要额外配置，`/etc/ssh/sshd_config`中有一个属性为`PermitRootLogin` ,默认值no不允许进行密码登录，我们需要将其改为yes.：
+
+```shell
+vim /etc/ssh/sshd_config
+```
+
+
+
+然后重启ssh服务:
+
+```shell
+sudo service ssh restart
+```
+
+
+
+ssh会因为各种各样的原因失败，排查ssh问题的命令:
+
+```shell
+sshd -T
+```
+
 
 
 # 用户
+
+## 查看用户名
+
+
 
 ## 创建新用户
 `sudo adduser username`
@@ -103,6 +131,14 @@ sudo passwd user
 * `-r`: 删除用户的home目录文件
 
 当需要删除用户时可以使用以下指令
+
+## 切换用户
+
+```
+su [user]
+```
+
+输入要切换的用户的密码
 
 ## 查看用户组
 
@@ -407,6 +443,29 @@ where *full-path-to-shell* is the full path as given by `chsh -l`.
 
 # 包管理工具
 
+## apt
+
+更新软件源
+
+```
+apt-get update
+apt-get upgrade
+```
+
+
+
+
+
+## brew
+
+安装：
+
+```shekk
+/bin/zsh -c "$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)"
+```
+
+
+
 ## pacman
 
 同步存储库数据库，并且更新系统的所有软件包，但不包括不在软件库中的“本地安装的”包：
@@ -443,7 +502,7 @@ bash /path/to/miniconda
 conda -V
 ```
 
-## 换源
+### 换源
 
 conda换源建议用nju源  （清华源早就不行了，建议别用）， [具体指导](https://mirrors.nju.edu.cn/help/anaconda)
 
@@ -480,6 +539,32 @@ python2: pip
 
 python3: pip3
 
+### 安装
+
+```shell
+yay -S pip3
+```
+
+
+
+mac用户：`brew intall pip3`相当卡， 因此要用：
+
+```
+curl bootstrap.pypa.io/get-pip.py | python3
+```
+
+
+
+检查安装是否成功：
+
+```shell
+pip3 --version
+```
+
+
+
+### 换源
+
 
 
 在 pip 命令中使用 **-i** 参数来指定镜像地址
@@ -514,6 +599,235 @@ trusted-host = https://mirrors.aliyun.com
 ```text
 $ pip3 config list  
 ```
+
+### npm
+
+#### 换源
+
+## 国内优秀npm镜像
+
+------
+
+#### 淘宝npm镜像
+
+- 搜索地址：[http://npm.taobao.org/](https://link.jianshu.com?t=http://npm.taobao.org/)
+- registry地址：[http://registry.npm.taobao.org/](https://link.jianshu.com?t=http://registry.npm.taobao.org/)
+
+#### cnpmjs镜像
+
+- 搜索地址：[http://cnpmjs.org/](https://link.jianshu.com?t=http://cnpmjs.org/)
+- registry地址：[http://r.cnpmjs.org/](https://link.jianshu.com?t=http://r.cnpmjs.org/)
+
+## 如何使用
+
+
+ 1.临时使用
+ `npm install express --registry https://registry.npm.taobao.org `
+
+2.持久使用
+
+```shell
+npm config set registry https://registry.npm.taobao.org
+```
+
+ 配置后可通过下面方式来验证是否成功:
+
+```shell
+npm config get registry
+```
+
+
+
+# 开发环境配置
+
+## JDK
+
+### 安装jdk
+
+mac:
+
+mac建议到[oracle官网](https://www.oracle.com/java/technologies/downloads/#java11-mac)下载jdk
+
+
+
+linux一般用命令行安装，因此推荐openjdk
+
+
+
+Ubuntu:
+
+查找合适的openjdk版本:
+
+```shell
+# ubuntu
+apt-cache search openjdk
+```
+
+安装
+
+```shell
+sudo apt-get install openjdk-8-jdk
+```
+
+* 如果search和install都没反应，应该先更新软件源
+
+Manjaro:
+
+查找合适的openjdk版本:
+
+```shell
+yay search jdk
+```
+
+
+
+```shell
+yay install openjdk-8-jdk
+```
+
+
+
+
+
+(3) 配置环境变量, 编辑如下文件:
+
+```
+vim ~/.bashrc
+```
+
+在最后一行加:
+
+```
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+```
+
+## 查找JDK
+
+查看jdk版本：
+
+```shell
+java -version
+```
+
+
+
+查找jdk:
+
+```shell
+whereis java
+```
+
+输出为
+
+```
+java: /usr/bin/java /usr/share/java /usr/share/man/man1/java.1.gz
+```
+
+
+
+查看jdk真实位置（上面的都是软链接）：
+
+```shell
+ls -l /usr/bin/java
+```
+
+输出为：
+
+```
+lrwxrwxrwx 1 root root 22 Mar 30 16:07 /usr/bin/java -> /etc/alternatives/java
+```
+
+
+
+```
+ls -l /etc/alternatives/java
+```
+
+输出为：
+
+```shell
+lrwxrwxrwx 1 root root 46 Mar 30 16:07 /etc/alternatives/java -> /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+# 以上就是jdk位置
+```
+
+
+
+### 配置jdk环境变量
+
+#### linux
+
+对于linux:  编辑`/etc/profile`, 或 `~/.bashrc`, ` .zshrc`等：
+
+```
+vim /etc/profile # 这里可以选择任意的shell配置文件，
+```
+
+```shell
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 # 这里填jdk位置
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=./:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=$PATH:${JAVA_HOME}/bin
+```
+
+
+
+使配置文件生效：
+
+```
+source /etc/profile
+```
+
+
+
+#### mac
+
+mac的jdk安装位置和linux不同
+
+
+
+查询当前的java的安装版本
+
+```shell
+cd /Library/Java/JavaVirtualMachines
+ls
+```
+
+### 
+
+配置`.zshrc`
+
+```bash
+# jdk 版本切换， on mac
+# jdk-17.0.2.jdk   jdk1.8.0_321.jdk jdk-11.0.14.jdk 
+export JAVA_8_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_321.jdk/Contents/Home
+export JAVA_11_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.14.jdk/Contents/Home
+export JAVA_17_HOME=/Library/Java/JavaVirtualMachines/jdk-17.0.2.jdk/Contents/Home
+
+
+
+alias jdk8='export JAVA_HOME=$JAVA_8_HOME'
+alias jdk11='export JAVA_HOME=$JAVA_11_HOME'
+alias jdk17='export JAVA_HOME=$JAVA_17_HOME'
+```
+
+```shell
+source ~/.bash_profi
+```
+
+
+
+切换jdk版本
+
+```shell
+jdk11
+java -version
+```
+
+
+
+
 
 # 用户软件安装
 
@@ -558,7 +872,38 @@ apt-get update
    sudo systemctl restart docker
    ```
 
-   
+
+## mycli
+
+好用的命令行mysql界面,[项目地址](https://github.com/dbcli/mycli)
+
+
+
+```shell
+# 通用
+pip install -U mycli
+```
+
+or
+
+```shell
+# on Arch
+yay -S mycli
+```
+
+or
+
+```shell
+# Only on macOS
+brew update && brew install mycli  
+```
+
+or
+
+```shell
+# Only on debian or ubuntu
+sudo apt-get install mycli 
+```
 
 ## ping  & traceroute
 
@@ -579,6 +924,54 @@ apt-get install traceroute
 
 
 # Dababase
+
+## mysql
+
+manjaro:
+
+```shell
+yay -S mysql
+```
+
+
+
+mac:
+
+```
+brew install mysql
+```
+
+
+
+
+
+ubuntu:
+
+这里只针对ubuntu 20.04， Ubuntu 源仓库中最新的 MySQL 版本号是 MySQL 8.0
+
+```shell
+sudo apt update
+sudo apt install mysql-server
+```
+
+
+
+安装完成后，MySQL 服务将会自动启动。想要验证 MySQL 服务器正在运行，输入：
+
+```shell
+sudo systemctl status mysql
+```
+
+输出应该显示服务已经被启用，并且正在运行：
+
+```
+● mysql.service - MySQL Community Server
+     Loaded: loaded (/lib/systemd/system/mysql.service; enabled; vendor preset: enabled)
+     Active: active (running) since Tue 2020-04-28 20:59:52 UTC; 10min ago
+   Main PID: 8617 (mysqld)
+     Status: "Server is operational"
+     ...
+```
 
 ## mongodb
 
@@ -709,4 +1102,54 @@ clear
 
 
 
+
+## 下载
+
+```shell
+# Download the contents of a URL to a file (named "foo" in this case):
+wget https://example.com/foo
+
+# Download the contents of a URL to a file (named "bar" in this case):
+wget -O bar https://example.com/foo
+```
+
+## 主机操作
+
+查看主机名：
+
+```shell
+hostname 
+```
+
+
+
+更改主机名：
+
+```shell
+vim /etc/hostname # 编辑该文件
+```
+
+
+
+添加域名映射：
+
+```
+vim /etc/hosts
+```
+
+
+
+## 时间
+
+查看时间：
+
+```shell
+date
+```
+
+## 查看发行版
+
+```shell
+lsb_release -a
+```
 

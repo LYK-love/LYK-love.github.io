@@ -101,9 +101,12 @@ Shell 的职责是通知 job 何时停止何时启动，还要把 job 的信息�
 
 shell和进程采用`signal`通信，`signal`是一种软件中断
 
+
+
 ## Killing a process
 
-* `Ctrl-C`:	`SIGINT`
+* `Ctrl-z`:	`SIGSTP`,
+* `Ctrl-c:	`SIGINT`
 * `Ctrl-\`:	`SIGQUIT`
 * `kill -TERM<PID>`: `SIGTERM`(  比前二者更general )
 
@@ -147,7 +150,7 @@ I got a SIGINT, but I am not stopping
 
 ## Pausing and backgrounding processes
 
-* `Ctrl-C`:	`SIGSTP`
+* `Ctrl-z`:	`SIGSTP`, 会将进程suspend
 
   * short for Terminal Stop (i.e. the terminal’s version of `SIGSTOP`), which pauses a process
 
@@ -156,12 +159,23 @@ I got a SIGINT, but I am not stopping
   * `fg/bg`: Resume the most recently suspended job and run it in the forward/background
   * `fg/bg  %job_id`
 
-* `jobs`:  显示**当前session**的未完成的job
+* `jobs`:  显示**当前session**的未完成的job， 每个job都会分配一个工作号， 由`%[job_id]引用`
+
+  * `[工作号] 进程号`
 
   * 得到job的PID：
     * `grep`
-    * `%job_id`: `job_id`由`job`显示
   * To refer to the last backgrounded job you can use the `$!` special parameter.
+
+  
+
+  如果在终端上出现如下信息：
+
+  `[1]+ Done find / -name install.log`
+
+  则证明后台的这个命令已经完成了。命令如果有执行结果，则也会显示到操作终端上。其中，[1] 是这个命令的工作号，"+"代表这个命令是最近一个被放入后台的
+
+
 
 * `pgrep`: Find or signal processes by name.
 

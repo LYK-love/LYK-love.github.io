@@ -877,7 +877,45 @@ i = 5; print(i)
   ```
   i = 5
   ```
+### 分割字符串
+
+Python 的字符串默认是有一个 split 来把字符串分割成列表的：
+
+```python
+test_str = "hello world,nice to meet you"
+test_str.split(',')
+['hello world', 'nice to meet you']
+test_str.split(' ')
+['hello', 'world,nice', 'to', 'meet', 'you']
+```
+
+
+
+如果我想让上面的字符串同时按照逗号和空格分割成下面的列表应该怎么做呢？
+
+```python
+['hello', 'world', 'nice', 'to', 'meet', 'you']
+```
+
+
+这个时候，re 的 split 就能派上用场了，它可以把正则匹配到的 pattern 都作为分隔符。
+
+```python
+import re
+test_str = "hello world,nice to meet you"
+re.split('[,| ]', test_str)
+['hello', 'world', 'nice', 'to', 'meet', 'you']
+re.split('[, ]', test_str)
+['hello', 'world', 'nice', 'to', 'meet', 'you']
+re.split(',| ', test_str)
+['hello', 'world', 'nice', 'to', 'meet', 'you']
+```
+
+其实，像 re.sub 和 字符串的 str.replace 也有异曲同工之妙，re.sub 可以同时替换多个满足正则匹配的部分，而不仅仅是某个固定的字符串。
+
+
 ### Expression
+
   ```python
   length = 5 
   breadth = 2
@@ -1420,6 +1458,26 @@ Traceback (most recent call last):
 TypeError: unhashable type: 'list'
 ```
 
+#### defaultdict()
+
+当我使用普通的字典时，用法一般是dict={},添加元素的只需要dict[element] =value即，调用的时候也是如此，dict[element] = xxx,但前提是element字典里，如果不在字典里就会报错
+
+defaultdict的作用是在于，当字典里的key不存在但被查找时，返回的不是keyError而是一个默认值，这个默认值是什么呢，下面会说
+
+#### 如何使用defaultdict
+
+defaultdict接受一个工厂函数作为参数，如下来构造：
+
+
+
+```undefined
+dict =defaultdict( factory_function)
+```
+
+这个factory_function可以是list、set、str等等，作用是当key不存在时，返回的是工厂函数的默认值，比如list对应[ ]，str对应的是空字符串，set对应set( )，int对应0
+
+
+
 ### set
 
 set和dict类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在set中，没有重复的key。
@@ -1530,6 +1588,12 @@ set和dict的唯一区别仅在于没有存储对应的value，但是，set的�
 ```
 
 所以，对于不变对象来说，调用对象自身的任意方法，也不会改变该对象自身的内容。相反，这些方法会创建新的对象并返回，这样，就保证了不可变对象本身永远是不可变的。
+
+## 注意事项
+
+### 文件路径
+
+Python中的相对路径，是相对于**当前被执行文件**的路径， 举例来说， 如果`main.py` 中`import`了`A.py`, 而 `A.py`中有相对路径`../path`, 则在运行`main.py`时， 该路径实际上是相对于`main.py`的， 而如果单独运行`A.py`，该路径才是相对于`A.py`的
 
 # 函数
 
@@ -3243,60 +3307,15 @@ max(*args)
 
 # 模块
 
-在计算机程序的开发过程中，随着程序代码越写越多，在一个文件里代码就会越来越长，越来越不容易维护。
+* 一个`.py`文件就是一个模块（Module）
+* 模块可以避免代码的名冲突，因此命名模块时，应尽量不要与内置函数名字冲突
+  * 最好先查看系统是否已存在该模块，检查方法是在Python交互环境执行`import abc`，若成功则说明系统存在此模块。
 
-为了编写可维护的代码，我们把很多函数分组，分别放到不同的文件里，这样，每个文件包含的代码就相对较少，很多编程语言都采用这种组织代码的方式。在Python中，一个.py文件就称之为一个模块（Module）。
+* 一个文件夹下有`__init__.py`，该文件夹就成为了一个包，而`__init__.py`本身就是一个模块，它的模块名就是包名
 
-使用模块有什么好处？
+* 可以通过包来组织模块
 
-最大的好处是大大提高了代码的可维护性。其次，编写代码不必从零开始。当一个模块编写完毕，就可以被其他地方引用。我们在编写程序的时候，也经常引用其他模块，包括Python内置的模块和来自第三方的模块。
 
-使用模块还可以避免函数名和变量名冲突。相同名字的函数和变量完全可以分别存在不同的模块中，因此，我们自己在编写模块时，不必考虑名字会与其他模块冲突。但是也要注意，尽量不要与内置函数名字冲突。点[这里](http://docs.python.org/3/library/functions.html)查看Python的所有内置函数。
-
-你也许还想到，如果不同的人编写的模块名相同怎么办？为了避免模块名冲突，Python又引入了按目录来组织模块的方法，称为包（Package）。
-
-举个例子，一个`abc.py`的文件就是一个名字叫`abc`的模块，一个`xyz.py`的文件就是一个名字叫`xyz`的模块。
-
-现在，假设我们的`abc`和`xyz`这两个模块名字与其他模块冲突了，于是我们可以通过包来组织模块，避免冲突。方法是选择一个顶层包名，比如`mycompany`，按照如下目录存放：
-
-```ascii
-mycompany
-├─ __init__.py
-├─ abc.py
-└─ xyz.py
-```
-
-引入了包以后，只要顶层的包名不与别人冲突，那所有模块都不会与别人冲突。现在，`abc.py`模块的名字就变成了`mycompany.abc`，类似的，`xyz.py`的模块名变成了`mycompany.xyz`。
-
-请注意，每一个包目录下面都会有一个`__init__.py`的文件，这个文件是必须存在的，否则，Python就把这个目录当成普通目录，而不是一个包。`__init__.py`可以是空文件，也可以有Python代码，因为`__init__.py`本身就是一个模块，而它的模块名就是`mycompany`。
-
-类似的，可以有多级目录，组成多级层次的包结构。比如如下的目录结构：
-
-```ascii
-mycompany
- ├─ web
- │  ├─ __init__.py
- │  ├─ utils.py
- │  └─ www.py
- ├─ __init__.py
- ├─ abc.py
- └─ utils.py
-```
-
-文件`www.py`的模块名就是`mycompany.web.www`，两个文件`utils.py`的模块名分别是`mycompany.utils`和`mycompany.web.utils`。
-
- 自己创建模块时要注意命名，不能和Python自带的模块名称冲突。例如，系统自带了sys模块，自己的模块就不可命名为sys.py，否则将无法导入系统自带的sys模块。
-
-`mycompany.web`也是一个模块，请指出该模块对应的.py文件。
-
-#### 总结
-
-模块是一组Python代码的集合，可以使用其他模块，也可以被其他模块使用。
-
-创建自己的模块时，要注意：
-
-- 模块名要遵循Python变量命名规范，不要使用中文、特殊字符；
-- 模块名不要和系统模块名冲突，最好先查看系统是否已存在该模块，检查方法是在Python交互环境执行`import abc`，若成功则说明系统存在此模块。
 
 ## 使用模块
 
@@ -4299,6 +4318,120 @@ Student
 从上面的例子可以看出，在编写程序的时候，千万不要对实例属性和类属性使用相同的名字，因为相同名称的实例属性将屏蔽掉类属性，但是当你删除实例属性后，再使用相同的名称，访问到的将是类属性。
 
 # 面向对象高级编程
+
+## 抽象类
+
+## 静态成员
+
+静态变量和静态方法都可以通过类名和对象进行访问
+
+
+
+静态方法：加装饰器`@staticmethod`
+
+
+
+静态变量：
+
+```python
+class ClassName:
+    """docstring for ClassName"""
+    arg=0
+    def __init__(self, arg):
+        self.arg = arg
+
+obj = ClassName(2)
+print(obj.arg)
+print(ClassName.arg)
+```
+
+输出结果：
+
+```python
+2
+0
+[Finished in 0.1s]
+```
+
+## 内部类
+
+```python
+## 外部类
+class Outer:
+
+    ## 内部类
+    class Inner:
+        pass
+
+        ## 多级内部类
+        class InnerInner:
+            pass
+
+    ## 另一个内部类
+    class _Inner:
+        pass
+
+    ## ...
+
+    pass
+
+```
+
+
+
+可以使用self关键词来访问内部类，这样我们就可以快速创建内部类的实例，并且根据需要在外部类中执行操作。但是，我们是不能在内部类中访问外部类的。让我们看一下下面的例子：
+
+```text
+class Outer:
+    """外部类"""
+
+    def __init__(self):
+        ## 实例化内部类
+        self.inner = self.Inner()
+
+    def reveal(self):
+        ## calling the 'Inner' class function display
+        self.inner.inner_display("Calling Inner class function from Outer class")
+
+    class Inner:
+        """内部类"""
+
+        def inner_display(self, msg):
+            print(msg)
+```
+
+现在，我们来创建外部类的实例，并调用它的reveal()方法来执行内部类的方法inner_display()。
+
+```text
+## 创建外部类的实例对象
+outer = Outer()
+## 调用'reveal()'方法
+outer.reveal()
+```
+
+
+
+让我们看看访问内部类的另一种方法，不过这种方式的效率相对低一些。
+
+```text
+Outer().Inner().inner_display("Calling the Inner class method directly")
+```
+
+如果我们想摆脱外部类的控制，在运行的时候独立地创建一个内部类的实例对象，也是可以做到的。如下面的代码所示：
+
+```python
+outer = Outer()
+
+## 实例化内部类
+inner = outer.Inner() ## inner = Outer().Inner() or inner = outer.inner
+inner.inner_display("Just Print It!")
+```
+
+
+
+## 操作符重载
+
+
 
 ## 使用__slots__
 
@@ -6461,7 +6594,7 @@ IO编程中，Stream（流）是一个很重要的概念，可以把流想象成
 
 ***
 
-## 文档读写
+## 文件读写
 
 读写文件是最常见的IO操作。Python内置了读写文件的函数，用法和C是兼容的。
 
@@ -6618,7 +6751,7 @@ with open('/Users/michael/test.txt', 'w') as f:
 
 要写入特定编码的文本文件，请给`open()`函数传入`encoding`参数，将字符串自动转换成指定编码。
 
-细心的童鞋会发现，以`'w'`模式写入文件时，如果文件已存在，会直接覆盖（相当于删掉后新写入一个文件）。如果我们希望追加到文件末尾怎么办？可以传入`'a'`以追加（append）模式写入。
+细心的童鞋会发现，以`'w'`模式写入文件时，如果文件已存在，会直接覆盖（相当于删掉后新写入一个文件）。如果我们希望追加到文件末尾怎么办？可以传入`'a'`以**追加**（append）模式写入。
 
 所有模式的定义及含义可以参考Python的[官方文档](https://docs.python.org/3/library/functions.html#open)。
 
@@ -8388,6 +8521,16 @@ loop.run_forever()
 
 
 
+# 外部库
 
+## pandas
 
  
+
+[read_csv()/read_table()文本文件的读取](https://www.cnblogs.com/yeyuzhuanjia/p/14817744.html)
+
+### Dataframe
+
+[Pandas 数据结构 - DataFrame](https://www.runoob.com/pandas/pandas-dataframe.html)
+
+[Pandas.DataFrame 的 iterrows()方法详解](https://www.jianshu.com/p/14c054225f03)
