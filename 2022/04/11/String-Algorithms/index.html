@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline:  String Sort Tries Substring Search Regex Data Compress  目前只更新到String Sort">
+<meta property="og:type" content="article">
+<meta property="og:title" content="String Algorithms">
+<meta property="og:url" content="http://lyk-love.cn/2022/04/11/String-Algorithms/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  String Sort Tries Substring Search Regex Data Compress  目前只更新到String Sort">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-04-10T17:49:04.000Z">
+<meta property="article:modified_time" content="2022-04-10T09:56:43.442Z">
+<meta property="article:author" content="有多远滚多远">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/04/11/String-Algorithms/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>String Algorithms | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/04/11/String-Algorithms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          String Algorithms
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-04-10 17:49:04 / Modified: 09:56:43" itemprop="dateCreated datePublished" datetime="2022-04-10T17:49:04Z">2022-04-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<ul>
+<li>String Sort</li>
+<li>Tries</li>
+<li>Substring Search</li>
+<li>Regex</li>
+<li>Data Compress</li>
+</ul>
+<p>目前只更新到String Sort</p>
+<span id="more"></span>
+<h1 id="String-Sort"><a href="#String-Sort" class="headerlink" title="String Sort"></a>String Sort</h1><p>因为字符串天然就有序（ascii， unicode序），因此可以用桶排序的方法，进行key indexed counting, 这样排序不需要比较，也就能达到线性时间</p>
+<ul>
+<li>这里我用的序都是ascii序，当然你也可以自定义一个符号表，然后用符号表里的序</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">StringSortStrategy</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">LSD</span><span class="params">(  vector&lt;string&gt; &amp;strs)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">MSD</span><span class="params">( vector&lt;string&gt; &amp;strs)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">Quick3string</span><span class="params">( vector&lt;string&gt; &amp;strs)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">LSD</span><span class="params">(  vector&lt;string&gt; &amp;strs , <span class="type">int</span> W)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">MSD</span><span class="params">( vector&lt;string&gt; &amp;strs, vector&lt;string&gt; &amp;aux, vector&lt;<span class="type">int</span>&gt; &amp;count, <span class="type">const</span> <span class="type">int</span> lo, <span class="type">const</span> <span class="type">int</span> hi, <span class="type">const</span> <span class="type">int</span> d )</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">Quick3string</span><span class="params">( vector&lt;string&gt; &amp; strs, <span class="type">const</span> <span class="type">int</span> lo, <span class="type">const</span> <span class="type">int</span> hi, <span class="type">const</span> <span class="type">int</span> d )</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">StringSortStrategy::LSD</span><span class="params">(  vector&lt;string&gt; &amp;strs)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> W = strs[<span class="number">0</span>].<span class="built_in">length</span>();</span><br><span class="line">    <span class="built_in">LSD</span>( strs, W );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">StringSortStrategy::MSD</span><span class="params">( vector&lt;string&gt; &amp;strs)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> R = <span class="number">256</span>;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">count</span><span class="params">(R+<span class="number">2</span>)</span></span>;</span><br><span class="line">    <span class="type">int</span> N = strs.<span class="built_in">size</span>();</span><br><span class="line">    <span class="function">vector&lt;string&gt; <span class="title">aux</span><span class="params">(N)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">MSD</span>(strs, aux, count, <span class="number">0</span>, N - <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">StringSortStrategy::Quick3string</span><span class="params">(vector&lt;string&gt; &amp;strs)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> N = strs.<span class="built_in">size</span>();</span><br><span class="line">    <span class="built_in">Quick3string</span>( strs, <span class="number">0</span>, N<span class="number">-1</span>, <span class="number">0</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="工具函数"><a href="#工具函数" class="headerlink" title="工具函数"></a>工具函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">char</span> <span class="title">CharAt</span><span class="params">(<span class="type">const</span> string s, <span class="type">int</span> i)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (i &lt; s.<span class="built_in">length</span>())</span><br><span class="line">		<span class="keyword">return</span> s[i];</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">exch</span><span class="params">(string &amp;s1, string &amp;s2)</span> </span>&#123;</span><br><span class="line">	string tmp = s1;</span><br><span class="line">	s1 = s2;</span><br><span class="line">	s2 = tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">Less</span><span class="params">(string s1, string s2, <span class="type">int</span> d)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> s1.<span class="built_in">substr</span>(d).<span class="built_in">compare</span>(s2.<span class="built_in">substr</span>(d)) &lt; <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">InsertionSort</span><span class="params">(vector&lt;string&gt; &amp;a, <span class="type">int</span> lo, <span class="type">int</span> hi, <span class="type">int</span> d)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = lo; i &lt;= hi; i++)</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = i; j &gt; lo &amp;&amp; <span class="built_in">Less</span>(a[j], a[j - <span class="number">1</span>], d); j--)</span><br><span class="line">			<span class="built_in">exch</span>(a[j], a[j - <span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="LSD"><a href="#LSD" class="headerlink" title="LSD"></a>LSD</h2><p>LSD算法对等长的字符串数组从右往左按key进行排序，确保稳定性。 由于是key indexed counting, 不需要元素之间两两比较，因此可以达到线性复杂度</p>
+<p>思路是把所有元素按key放在对应的桶里面，桶与桶之间按桶内的元素数拉开距离，然后对于每个桶，对其每个元素进行位置的分配。最后将结果写回到原来的strs数组</p>
+<p>例如， 当前要将所有字符串的第0个字符（这里都是从右往左的，也就是倒数第0个字符）作为key进行排序，假设key为A的字符串有3个， key为B的字符串有5个，key为C的字符串有8个</p>
+<ol>
+<li>可以装三个桶，key为A的桶有三个元素，key为B的桶有5个元素，key为C的桶有8个元素；</li>
+<li>然后桶之间拉开距离，A桶和B桶之间距离为5， B桶和C桶间的距离为8；</li>
+<li>然后给每个桶内的元素分配坐标，对于B桶中五个元素，就把它们按在原strs中的顺序（<strong>这一步确保了算法的稳定性</strong>）分配到A，B桶之间的空间中，其他桶亦如此，这样所有字符串就排好了序；</li>
+<li>接着把上述结果写回到原strs中；</li>
+<li>再对下一个key位置进行迭代（这里就是第1个字符）</li>
+</ol>
+<ul>
+<li>注意<code>count[0]</code>必须存0值，表示下标分配时，最小桶的起始下标从0开始分配。比如0桶存放在<code>count[1]</code>,0桶元素的下标分配就在<code>count[0]</code>和<code>count[1]</code>之间的空间中</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* @param strs: 要排序的字符串列表，LSD要求所有字符串都是等长的（当然不等长的话修改算法也可以排序，但是一般我们     		直接用MSD）</span></span><br><span class="line"><span class="comment">* @param W : 要排序的key的范围，比如W=3，就代表对从右往左的三位进行排序</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">StringSortStrategy::LSD</span><span class="params">(vector&lt;string&gt; &amp;strs , <span class="type">int</span> W)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> R = ALPHABET_SIZE;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> N = strs.<span class="built_in">size</span>();</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> len = strs[<span class="number">0</span>].<span class="built_in">length</span>();</span><br><span class="line"></span><br><span class="line">    <span class="function">vector&lt;string&gt; <span class="title">aux</span><span class="params">(N)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( <span class="type">int</span> w = len - <span class="number">1</span>; w &gt;= len - W; w--  )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> count[ R+<span class="number">1</span> ] = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>( <span class="type">int</span> i = <span class="number">0</span> ; i &lt; N; i++ ) <span class="comment">// count frequencies, 装满桶</span></span><br><span class="line">        &#123;</span><br><span class="line">            count[<span class="built_in">CharAt</span>(strs[i], w) + <span class="number">1</span>]++;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>( <span class="type">int</span> i = <span class="number">1</span>; i &lt; R+<span class="number">1</span>; i++ )<span class="comment">//桶之间拉开距离</span></span><br><span class="line">        &#123;</span><br><span class="line">            count[i] += count[i<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>( <span class="type">int</span> i = <span class="number">0</span>; i &lt; N; i++ )<span class="comment">//桶内元素在空间中进行分配</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="type">int</span> r = <span class="built_in">CharAt</span>(strs[i],w);</span><br><span class="line">            aux[  count[ r ]++ ] = strs[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>( <span class="type">int</span> i = <span class="number">0</span>; i &lt; N; i++ )<span class="comment">//写回</span></span><br><span class="line">        &#123;</span><br><span class="line">            strs[ i ] = aux[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="MSD"><a href="#MSD" class="headerlink" title="MSD"></a>MSD</h2><p>MSD同样是key indexed count的桶排序，但是是从左向右扫，并且能允许不同长度的字符串</p>
+<p>MSD可以看作是从左往右的LSD，并且将空key（因为字符串长度可能不够了，那一位的key可能为空）放在一个特别的空桶上，其余性质不变。 因此MSD也是稳定, 线性时间的</p>
+<p>由于要处理空key，我们将空key的key定义为-1 (见<code>CharAt()</code>函数 )， 本来按LSD算法，桶的大小要存放在下一个count中，比如key为A的元素的个数（即A桶的大小）存放在<code>count[B]</code>。 由于count[0]必须是0值，所以只能把-1桶放在<code>count[1]</code>, 0桶放在<code>count[2]</code>… 相当于所有count后延一位.这样, -1取代0成为符号表最初的元素，-1桶元素的下标也就从<code>count[0]</code>和<code>count[1]</code>的空间中分配。</p>
+<p>总体思路和LSD一模一样，只不过是从左到右的，并且count要后延一位</p>
+<ul>
+<li>注意到MSD对短字符串的处理性能不佳，因此对于短字符串( <code>hi - lo &lt;= M</code>)就直接用插入排序了。 这一步还顺便处理了递归的终止条件，即<code>hi - lo &lt;= 0</code>的情况</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">StringSortStrategy::MSD</span><span class="params">( vector&lt;string&gt; &amp;strs, vector&lt;string&gt; &amp;aux, vector&lt;<span class="type">int</span>&gt; &amp;count, <span class="type">const</span> <span class="type">int</span> lo, <span class="type">const</span> <span class="type">int</span> hi, <span class="type">const</span> <span class="type">int</span> d )</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span> M = <span class="number">3</span>, R = <span class="number">256</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (hi &lt;= lo + M) &#123;</span><br><span class="line">		<span class="built_in">InsertionSort</span>(strs, lo, hi, d);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( <span class="type">int</span> i = <span class="number">0</span>; i &lt;  R + <span class="number">2</span>; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        count[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( <span class="type">int</span> i = lo; i &lt;= hi; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        count[ <span class="built_in">CharAt</span>(strs[i],d) + <span class="number">2</span> ]++; </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( <span class="type">int</span> i = <span class="number">1</span>; i &lt; R+<span class="number">2</span>; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        count[i] += count[i<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( <span class="type">int</span> i = lo; i &lt;= hi; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        aux[ count[ <span class="built_in">CharAt</span>( strs[i],d ) + <span class="number">1</span> ]++ ] = strs[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( <span class="type">int</span> i = lo; i &lt;= hi; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        strs[i] = aux[i - lo];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>( <span class="type">int</span> i = <span class="number">0</span>; i &lt; R; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">MSD</span>( strs, aux, count, lo + count[i], lo + count[i+<span class="number">1</span>] - <span class="number">1</span>, d+<span class="number">1</span> );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="三向排序"><a href="#三向排序" class="headerlink" title="三向排序"></a>三向排序</h2><p>三向排序混合了桶排序（MSD）和快排， 由于引入了快排，所以是不稳定排序，但依然是线性时间</p>
+<p>和MSD的区别是，MSD将每个key作为一个桶，而三向排序通过快排只引入三个桶 ——</p>
+<ul>
+<li>key小于指定key的桶( 放到lt左边)</li>
+<li>key等于指定key的桶（lt ～ ht ）</li>
+<li>和key大于指定key的桶（ht右边）</li>
+</ul>
+<p>对于key种类很少的情况，可以用三向排序，这样产生的桶更少，子数组就更少</p>
+<p>和传统快排的区别在于，快排要左右分别开始扫，扫到符合要求的元素就分别停下，这样做是为了方便两边对换；但是对于三向排序，不需要两边对换（只需要把元素换到左/右界之外），所以也没必要从两边开始扫。一遍就够了</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">StringSortStrategy::Quick3string</span><span class="params">(vector&lt;string&gt; &amp;strs, <span class="type">const</span> <span class="type">int</span> lo, <span class="type">const</span> <span class="type">int</span> hi, <span class="type">const</span> <span class="type">int</span> d)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( hi &lt;= lo )</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> v = <span class="built_in">CharAt</span>(strs[lo],d); <span class="comment">//pivot</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> lt = lo, gt = hi; <span class="comment">//桶的界限，小桶会放到lt左边，大桶放到gt右边，与指定key相等的桶就放到lt，gt之间</span></span><br><span class="line">    <span class="type">int</span> i = lo+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span>( i &lt;= gt ) <span class="comment">//循环可保证，lt之前的值永远小于v， gt之后的值永远大于v</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> t = <span class="built_in">CharAt</span>(strs[i],d);</span><br><span class="line">        <span class="keyword">if</span>( t &lt; v )</span><br><span class="line">            <span class="built_in">exch</span>(strs[i++], strs[lt++]);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>( t &gt; v )</span><br><span class="line">                <span class="built_in">exch</span>( strs[i], strs[gt--] ); <span class="comment">//不能保证换过来的gt之后的值就是v了，因此不能i++，需要再次进循环</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            i++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">Quick3string</span>(strs, lo, lt<span class="number">-1</span>, d);</span><br><span class="line">    <span class="keyword">if</span>( v &gt; <span class="number">0</span> )</span><br><span class="line">        <span class="built_in">Quick3string</span>(strs, lt, gt , d + <span class="number">1</span> );</span><br><span class="line">    <span class="built_in">Quick3string</span>( strs, gt + <span class="number">1</span>, hi, d );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/10/MYSQL-Basic/" rel="prev" title="MYSQL Basic">
+      <i class="fa fa-chevron-left"></i> MYSQL Basic
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#String-Sort"><span class="nav-text">String Sort</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0"><span class="nav-text">工具函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LSD"><span class="nav-text">LSD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MSD"><span class="nav-text">MSD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%90%91%E6%8E%92%E5%BA%8F"><span class="nav-text">三向排序</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
