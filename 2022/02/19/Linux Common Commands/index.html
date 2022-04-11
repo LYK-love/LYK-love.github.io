@@ -27,7 +27,7 @@
 <meta property="og:description" content="Linux主机的常用命令，可以用来快速进行linux服务器的配置 OS可以是各种LINUX发行版，因此你可以看到各种包管理工具（yay,apt,yum…）, 选自己用的就好">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-02-19T14:04:37.000Z">
-<meta property="article:modified_time" content="2022-04-04T16:20:25.859Z">
+<meta property="article:modified_time" content="2022-04-11T15:07:39.780Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-04 16:20:25" itemprop="dateModified" datetime="2022-04-04T16:20:25Z">2022-04-04</time>
+                <time title="Modified: 2022-04-11 15:07:39" itemprop="dateModified" datetime="2022-04-11T15:07:39Z">2022-04-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -252,7 +252,11 @@
 <h1 id="配置ssh免密登陆"><a href="#配置ssh免密登陆" class="headerlink" title="配置ssh免密登陆"></a>配置ssh免密登陆</h1><p>主机上生成 ssh key：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br></pre></td></tr></table></figure>
 <ul>
-<li>腾讯云的服务器不会默认生成ssh key， 所以也不会有<code>~/.ssh</code>文件夹， 其他主机也无法通过ssh连接（<code>ssh-copy-id</code>）也不行。 因此腾讯云服务器需要先生成ssh key，才能使用</li>
+<li><p>腾讯云的服务器不会默认生成ssh key， 所以也不会有<code>~/.ssh</code>文件夹， 其他主机也无法通过ssh连接（<code>ssh-copy-id</code>）也不行。 因此腾讯云服务器需要先生成ssh key，才能使用</p>
+</li>
+<li><p>(这种情况很罕见)如果主机没有安装ssh，需要先安装<code>openssh-server</code>:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install openssh-server</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <p>查看<code>~/.ssh</code>:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">❯ ls -l ~/.ssh</span><br><span class="line">total 20</span><br><span class="line">-rw-r--r-- 1 lyk lyk   27  2月 10 15:44 config</span><br><span class="line">-rw------- 1 lyk lyk 2602  2月  9 17:18 id_rsa</span><br><span class="line">-rw-r--r-- 1 lyk lyk  571  2月  9 17:18 id_rsa.pub</span><br><span class="line">-rw------- 1 lyk lyk 3926  2月 19 12:58 known_hosts</span><br><span class="line">-rw------- 1 lyk lyk 3182  2月 19 12:41 known_hosts.old</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -277,7 +281,12 @@
 <h2 id="本机到本机的免密登陆"><a href="#本机到本机的免密登陆" class="headerlink" title="本机到本机的免密登陆"></a>本机到本机的免密登陆</h2><p>本机到本机也是需要配置免密登陆的，但是<code>root@localhost</code>需要额外配置，<code>/etc/ssh/sshd_config</code>中有一个属性为<code>PermitRootLogin</code> ,默认值no不允许进行密码登录，我们需要将其改为yes.：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
 <p>然后重启ssh服务:</p>
+<p>ubuntu：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service ssh restart</span><br></pre></td></tr></table></figure>
+<p>manjaro:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart sshd.service</span><br></pre></td></tr></table></figure>
+<p>mac:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo launchctl load -w /System/Library/LaunchDaemons/ssh.plist</span><br></pre></td></tr></table></figure>
 <p>ssh会因为各种各样的原因失败，排查ssh问题的命令:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sshd -T</span><br></pre></td></tr></table></figure>
 <h1 id="用户"><a href="#用户" class="headerlink" title="用户"></a>用户</h1><h2 id="查看用户名"><a href="#查看用户名" class="headerlink" title="查看用户名"></a>查看用户名</h2><h2 id="创建新用户"><a href="#创建新用户" class="headerlink" title="创建新用户"></a>创建新用户</h2><p><code>sudo adduser username</code></p>
