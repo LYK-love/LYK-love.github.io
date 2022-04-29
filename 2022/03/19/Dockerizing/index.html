@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20image%20squash.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20push%20information.png">
 <meta property="article:published_time" content="2022-03-19T01:04:45.000Z">
-<meta property="article:modified_time" content="2022-03-30T10:56:27.272Z">
+<meta property="article:modified_time" content="2022-04-11T15:40:23.373Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-30 10:56:27" itemprop="dateModified" datetime="2022-03-30T10:56:27Z">2022-03-30</time>
+                <time title="Modified: 2022-04-11 15:40:23" itemprop="dateModified" datetime="2022-04-11T15:40:23Z">2022-04-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -430,6 +430,14 @@
 <ul>
 <li><code>--name</code>：  指定容器名</li>
 <li><code>-p host_port:container_port</code>: 指定将主机的端口映射到容器的端口</li>
+<li><code>-P</code>: 随机端口映射，容器内部端口随机映射到主机的高端口</li>
+<li><code>-d</code>: 后台运行容器，并返回容器ID</li>
+<li><code>-i</code>: 以交互模式运行容器，通常与 -t 同时使用</li>
+<li><code>-t</code>: 为容器重新分配一个伪输入终端，通常与 -i 同时使用</li>
+<li><code>-e username=&quot;ritchie&quot;</code>: 设置环境变量</li>
+<li><code>--env-file=[file]</code>: 从指定文件读入环境变量</li>
+<li><code>--expose=[port-num]-[port-num]</code>: 开放（暴露）一个端口或一组端口；</li>
+<li><code>--rm</code>:  退出时自动删除容器</li>
 </ul>
 <h1 id="多阶段构建"><a href="#多阶段构建" class="headerlink" title="多阶段构建"></a>多阶段构建</h1><p>进行多阶段构建， 概念和Jenkinsfile、 Github Action workflow一样</p>
 <p>多阶段构建使用一个Dockerfile, 其中包含多个<code>FROM</code>指令， 每个都是一个 Build Stage, 从0开始编号。 每个stage可以复用之前stage的构建结果（jar包， target文件之类的）</p>
@@ -545,7 +553,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">135</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

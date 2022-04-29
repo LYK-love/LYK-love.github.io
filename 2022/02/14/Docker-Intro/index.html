@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20%20Intro/Docker%20Security%20with%20Linux.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20%20Intro/Docker%20Secret%20example.png">
 <meta property="article:published_time" content="2022-02-13T16:08:27.000Z">
-<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-04-11T16:56:08.424Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+                <time title="Modified: 2022-04-11 16:56:08" itemprop="dateModified" datetime="2022-04-11T16:56:08Z">2022-04-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -270,7 +270,16 @@
 </ul>
 <p>介绍了docker的基本概念和命令</p>
 <span id="more"></span>
-<h1 id="Docker-Specification"><a href="#Docker-Specification" class="headerlink" title="Docker Specification"></a>Docker Specification</h1><h2 id="Docker运行时与编排引擎"><a href="#Docker运行时与编排引擎" class="headerlink" title="Docker运行时与编排引擎"></a>Docker运行时与编排引擎</h2><p>Docker一般指Docker引擎，它是用于运行和编排容器的基础工具， 引擎分社区和企业版，版本号遵循<code>YY.MM-xx</code>格式</p>
+<h1 id="Docker-Specification"><a href="#Docker-Specification" class="headerlink" title="Docker Specification"></a>Docker Specification</h1><p>Docker采用CS模式， 分为Client ， Engine， Index三部分， docker server就是docker引擎， docker index就是docker镜像存储服务（docker hub之类）</p>
+<ul>
+<li><p>由于Index是个服务，Client就是个命令行，<strong>我们指的docker一般就是docker engine</strong>， 它是用于<strong>运行和编排容器的基础工具</strong></p>
+</li>
+<li><p>daemon实现了docker engine的api, client和daemon通过本地<code>IPC/UNIX Socket</code>通信（<code>/var/run/docker.sock</code>, 用<code>docker --version</code>可查看二者的通信 )</p>
+</li>
+</ul>
+<p>镜像是未运行的容器，二者是类和对象的关系。 </p>
+<p>也可以把容器理解为<strong>命名空间的有组织集合</strong>, 详见下文Security -&gt; Linux -&gt; Namespace</p>
+<h2 id="Docker运行时与编排引擎"><a href="#Docker运行时与编排引擎" class="headerlink" title="Docker运行时与编排引擎"></a>Docker运行时与编排引擎</h2><p>引擎分社区和企业版，版本号遵循<code>YY.MM-xx</code>格式</p>
 <p>每个docker主机称为一个docker节点</p>
 <h2 id="容器生态"><a href="#容器生态" class="headerlink" title="容器生态"></a>容器生态</h2><p>docker内置组件都可以替换为第三方组件，“ Batteries  included but removable”</p>
 <h2 id="开放容器计划"><a href="#开放容器计划" class="headerlink" title="开放容器计划"></a>开放容器计划</h2><p>The Open Container Initiative, OCI:    旨在管理容器标准的委员会， 目前已发布两项规范</p>
@@ -361,9 +370,6 @@
 </li>
 </ul>
 <p>大部分存储驱动不需要额外配置，但<code>Device Mapper</code>默认情况下采用<code>loopback mpunted sparse file</code>作为底层实现，性能很差，不能用于生产环境，需要手动更换为<code>LVM</code></p>
-<h2 id="Docker架构"><a href="#Docker架构" class="headerlink" title="Docker架构"></a>Docker架构</h2><p>采用cs模式， server是docker引擎，daemon实现了引擎的api, client和daemon通过本地<code>IPC/UNIX Socket</code>通信（<code>/var/run/docker.sock</code>, 用<code>docker --version</code>可查看二者的通信</p>
-<p>镜像是未运行的容器，二者是类和对象的关系。 </p>
-<p>也可以把容器理解为<strong>命名空间的有组织集合</strong>, 详见下文Security -&gt; Linux -&gt; Namespace</p>
 <h1 id="Docker-Engine"><a href="#Docker-Engine" class="headerlink" title="Docker Engine"></a>Docker Engine</h1><p>docker server就是docker引擎，而引擎架构如下：</p>
 <p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/docker%20engine%20archetecture.png" alt="docker engine archetecture"></p>
 <ul>
@@ -388,18 +394,16 @@
 </li>
 </ul>
 <p>在这个架构下，容器的启动和管理实现了和<code>daemon</code>的解耦。 即容器运行时和<code>daemon</code>解耦，称为“无守护进程的容器” <code>daemonless container</code>。 因此，对<code>daemon</code>的维护「升级等<strong>不会影响到运行中的容器</strong></p>
-<h1 id="Docker-Image"><a href="#Docker-Image" class="headerlink" title="Docker Image"></a>Docker Image</h1><h2 id="commands"><a href="#commands" class="headerlink" title="commands"></a>commands</h2><p><code>docekr search</code> 通过CLI方式在docker hub搜索镜像：</p>
+<h1 id="Docker-Image"><a href="#Docker-Image" class="headerlink" title="Docker Image"></a>Docker Image</h1><h2 id="commands"><a href="#commands" class="headerlink" title="commands"></a>commands</h2><h3 id="搜索镜像"><a href="#搜索镜像" class="headerlink" title="搜索镜像"></a>搜索镜像</h3><p><code>docekr search</code> 通过CLI方式在docker hub搜索镜像：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search [OPTIONS] NAME</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>NAME</code>: 仓库名，即<code>&lt;repository&gt;</code></li>
 </ul>
-<p> 下载镜像：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker image pull &lt;image&gt; #默认从docker hub</span><br><span class="line">docker image pull &lt;registry&gt;/&lt;image&gt;:# 指定镜像仓库服务</span><br></pre></td></tr></table></figure>
+<h3 id="下载镜像"><a href="#下载镜像" class="headerlink" title="下载镜像"></a>下载镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker image pull &lt;image&gt; #默认从docker hub</span><br><span class="line">docker image pull &lt;registry&gt;/&lt;image&gt;:# 指定镜像仓库服务</span><br></pre></td></tr></table></figure>
 <ul>
-<li><p><code>&lt;registory&gt;</code>:  <code>&lt;域名/IP&gt;[:端口号]</code>。默认地址是 Docker Hub(<code>docker.io</code>)</p>
-<p>列出本机的所有镜像：</p>
-</li>
+<li><code>&lt;registory&gt;</code>:  <code>&lt;域名/IP&gt;[:端口号]</code>。默认地址是 Docker Hub(<code>docker.io</code>)</li>
 </ul>
+<h3 id="列出镜像"><a href="#列出镜像" class="headerlink" title="列出镜像"></a>列出镜像</h3><p>列出本机的所有镜像：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image ls</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p><code>--digest</code>：查看镜像摘要</p>
@@ -422,12 +426,16 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">列出镜像结果，并且只包含镜像ID和仓库名</span></span><br><span class="line"><span class="meta">$ </span><span class="language-bash">docker image <span class="built_in">ls</span> --format <span class="string">&quot;&#123;&#123;.ID&#125;&#125;: &#123;&#123;.Repository&#125;&#125;&quot;</span></span></span><br><span class="line"></span><br><span class="line">5f515359c7f8: redis</span><br><span class="line">05a60462f8ba: nginx</span><br><span class="line">fe9198c04d62: mongo</span><br><span class="line">00285df0df87: &lt;none&gt;</span><br><span class="line">329ed837d508: ubuntu</span><br><span class="line">329ed837d508: ubuntu</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>列出镜像细节：</p>
+<h3 id="查看镜像"><a href="#查看镜像" class="headerlink" title="查看镜像"></a>查看镜像</h3><p>列出镜像细节：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image inspect</span><br></pre></td></tr></table></figure>
-<p> 删除镜像：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image rm &lt;image&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image rm &lt;image&gt;</span><br></pre></td></tr></table></figure>
 <p> 删除全部的悬虚镜像：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker image prune</span><br></pre></td></tr></table></figure>
+<h3 id="导出镜像为文件"><a href="#导出镜像为文件" class="headerlink" title="导出镜像为文件"></a>导出镜像为文件</h3><p>将指定镜像保存成 tar 文件:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker save -o [file-name].tar  &lt;image&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-o</code>:输出到的文件</li>
+</ul>
 <h2 id="镜像服务"><a href="#镜像服务" class="headerlink" title="镜像服务"></a>镜像服务</h2><p>可完全类比GitHub</p>
 <p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/docker%20registry.png" alt="docker registry"></p>
 <ul>
@@ -490,22 +498,38 @@
 <h2 id="多架构镜像"><a href="#多架构镜像" class="headerlink" title="多架构镜像"></a>多架构镜像</h2><p>为了支持多架构，同一<code>&lt;repository&gt;:&lt;tag&gt;</code>标识的镜像可以有<code>Manifest</code>列表，每个元素是一个<code>Manifest</code>指针，指向具体的<code>Manifest</code>，其中包含了对应架构的镜像</p>
 <p><code>Manifest</code>列表是可选的，在没有<code>Manifest</code>列表时，registry返回普通的<code>Manifest</code></p>
 <p>因此不同架构的主机可以用相同的命令从registry得到同一镜像的不同架构版本</p>
-<h2 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h2><p>删除镜像会删除镜像配置以及相关的镜像层， 镜像层是引用计数的，可以被多个镜像共享。只有当所有依赖该镜像层的镜像都被删除后，该镜像层才被删除。</p>
+<h2 id="删除镜像-1"><a href="#删除镜像-1" class="headerlink" title="删除镜像"></a>删除镜像</h2><p>删除镜像会删除镜像配置以及相关的镜像层， 镜像层是引用计数的，可以被多个镜像共享。只有当所有依赖该镜像层的镜像都被删除后，该镜像层才被删除。</p>
 <h1 id="Docker-Container"><a href="#Docker-Container" class="headerlink" title="Docker Container"></a>Docker Container</h1><h2 id="commands-1"><a href="#commands-1" class="headerlink" title="commands"></a>commands</h2><p>注意：下文的<code>&lt;container&gt;</code>是容器名，和<code>&lt;image&gt;</code>镜像名不同</p>
 <hr>
 <h3 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h3><p>运行容器：<code>docker client</code>会用API与<code>docker daemon</code>通信，后者<strong>先查询本地有无该镜像，如果没有，就从（默认）docker hub pull到本地</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container run [options] &lt;image&gt; &lt;app&gt;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>-i</code>: 交互式</li>
-<li><code>-t</code>: 终端，<code>-it</code>可以将当前终端连接到容器的shell终端上</li>
-<li><code>-d</code>： daemon模式: 在后台运行</li>
-<li><code>&lt;app&gt;</code>: 容器中运行的<strong>主进程</strong>（领头进程）</li>
-<li><code>--name [name]</code>: 给容器起别名</li>
-<li><code>-p [host_port:container_port]</code>: 指定端口映射， 例如<code>-p 80:8080</code>将主机的80端口映射到容器的8080端口</li>
+<li><p><code>-i</code>: 交互式</p>
+</li>
+<li><p><code>-t</code>: 终端，<code>-it</code>可以将当前终端连接到容器的shell终端上</p>
+</li>
+<li><p><code>-d</code>： daemon模式: 在后台运行</p>
+</li>
+<li><p><code>&lt;app&gt;</code>: 容器中运行的<strong>主进程</strong>（领头进程）</p>
+</li>
+<li><p><code>--name [name]</code>: 给容器起别名</p>
+</li>
+<li><p><code>-p [host_port:container_port]</code>: 指定端口映射， 例如<code>-p 80:8080</code>将主机的80端口映射到容器的8080端口</p>
+</li>
+<li><p><code>--network</code>: 指定容器所属的网络类型：</p>
+<ul>
+<li><code>--net=host</code>: host网络</li>
+<li><code>--net=none</code>: 无网络</li>
+<li><code>--net=bridge</code>: bridge网络，这是默认设置</li>
+<li><code>--net=container:&lt;container&gt;</code>: 与指定容器共享一个Network Namespace，但其他的namespace还是隔离的</li>
+</ul>
+</li>
 </ul>
 <p> <code>&lt;Ctrl PQ&gt;</code>： detach容器</p>
-<p>启动处于停止（<code>Exited</code>）状态的容器：</p>
+<h3 id="启动已停止运行的容器"><a href="#启动已停止运行的容器" class="headerlink" title="启动已停止运行的容器"></a>启动已停止运行的容器</h3><p>启动处于停止（<code>Exited</code>）状态的容器：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container start</span><br></pre></td></tr></table></figure>
+<h3 id="重启容器"><a href="#重启容器" class="headerlink" title="重启容器"></a>重启容器</h3><p> 正在运行的容器可以重启:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container restart &lt;container&gt; </span><br></pre></td></tr></table></figure>
 <hr>
 <h3 id="在容器中启动新进程"><a href="#在容器中启动新进程" class="headerlink" title="在容器中启动新进程"></a>在容器中启动新进程</h3><p>在运行的容器中启动新进程：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  container exec [options] &lt;container&gt; &lt;app&gt;</span><br></pre></td></tr></table></figure>
@@ -540,7 +564,20 @@
 <li>选中指定列, 一般是第一列,这是容器的id: <code>cut -d &quot; &quot; -f 1</code></li>
 <li>将容器的id传给<code>rm</code>: <code>docker container rm -f</code></li>
 </ul>
+<p>删除所有Exited的容器:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container prune       </span><br></pre></td></tr></table></figure>
+<h3 id="导出-导入容器的文件系统"><a href="#导出-导入容器的文件系统" class="headerlink" title="导出/导入容器的文件系统"></a>导出/导入容器的文件系统</h3><p>将Docker容器里的文件系统作为一个 tar 文件导出到标准输出， 注意与用于序列化镜像的<code>docker image save</code>不同：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container export [OPTIONS] &lt;container&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-o</code>:将输入内容写到文件</li>
+</ul>
+<p>从tar文件中创建镜像:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker import [OPTIONS] [file_name].tar &lt;image&gt;</span><br></pre></td></tr></table></figure>
 <h3 id="查看容器信息："><a href="#查看容器信息：" class="headerlink" title="查看容器信息："></a>查看容器信息：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  container  inspect &lt;container&gt;</span><br></pre></td></tr></table></figure>
+<p>查看端口映射等信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container port &lt;container&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="查看容器日志"><a href="#查看容器日志" class="headerlink" title="查看容器日志"></a>查看容器日志</h3><p>查看容器内部的标准输出:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs -f &lt;container&gt;    </span><br></pre></td></tr></table></figure>
 <h3 id="查看容器网络"><a href="#查看容器网络" class="headerlink" title="查看容器网络"></a>查看容器网络</h3><p>查看容器网络：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network ls</span><br></pre></td></tr></table></figure>
 <h3 id="查看容器卷"><a href="#查看容器卷" class="headerlink" title="查看容器卷"></a>查看容器卷</h3><p>查看容器的卷：</p>
@@ -628,7 +665,9 @@
 <h2 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h2><p> 查看daemon日志( 仅限于使用<code>systemd</code>的系统)： </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl -u docker.service</span><br></pre></td></tr></table></figure>
 <p>查看容器日志：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker container logs &lt;container-name&gt;</span><br><span class="line">docker service logs &lt;service-name&gt; # 针对Swarm服务</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker container logs -f &lt;container-name&gt;</span><br></pre></td></tr></table></figure>
+<p>对于Swarm服务：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service logs &lt;service-name&gt;</span><br></pre></td></tr></table></figure>
 <h2 id="daemon日志"><a href="#daemon日志" class="headerlink" title="daemon日志"></a>daemon日志</h2><p>daemon日志： 如果OS用<code>Systemd</code>， 日志会存储在<code>Journald</code></p>
 <h3 id="查看daemon日志"><a href="#查看daemon日志" class="headerlink" title="查看daemon日志"></a>查看daemon日志</h3><ul>
 <li>查看日志： <code>journalctl -u docker.service</code></li>
@@ -655,7 +694,7 @@
 <li>syslog</li>
 <li>…</li>
 </ul>
-<h3 id="查看容器日志"><a href="#查看容器日志" class="headerlink" title="查看容器日志"></a>查看容器日志</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker container logs &lt;container-name&gt;</span><br><span class="line">docker service logs &lt;service-name&gt; # 针对Swarm服务</span><br></pre></td></tr></table></figure>
+<h3 id="查看容器日志-1"><a href="#查看容器日志-1" class="headerlink" title="查看容器日志"></a>查看容器日志</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker container logs &lt;container-name&gt;</span><br><span class="line">docker service logs &lt;service-name&gt; # 针对Swarm服务</span><br></pre></td></tr></table></figure>
 <ul>
 <li>json-file和journald日志均可通过这两种命令查看</li>
 <li>其他驱动的日志需要用第三方平台提供的原生工具查看</li>
@@ -763,7 +802,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Specification"><span class="nav-text">Docker Specification</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E8%BF%90%E8%A1%8C%E6%97%B6%E4%B8%8E%E7%BC%96%E6%8E%92%E5%BC%95%E6%93%8E"><span class="nav-text">Docker运行时与编排引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%94%9F%E6%80%81"><span class="nav-text">容器生态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E5%AE%B9%E5%99%A8%E8%AE%A1%E5%88%92"><span class="nav-text">开放容器计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E5%AE%89%E8%A3%85"><span class="nav-text">Docker安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E5%8D%87%E7%BA%A7"><span class="nav-text">Docker升级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E9%85%8D%E7%BD%AE"><span class="nav-text">Docker配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text"> </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90"><span class="nav-text">换阿里源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alpine-linux-%E6%8D%A2%E6%BA%90"><span class="nav-text">alpine linux 换源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E5%AD%98%E5%82%A8%E9%A9%B1%E5%8A%A8%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-text">Docker存储驱动的选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E6%9E%B6%E6%9E%84"><span class="nav-text">Docker架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Engine"><span class="nav-text">Docker Engine</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Image"><span class="nav-text">Docker Image</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#commands"><span class="nav-text">commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%9C%8D%E5%8A%A1"><span class="nav-text">镜像服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%A0%87%E8%AF%86%EF%BC%88-%EF%BC%89"><span class="nav-text">镜像标识（\）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E4%BD%93%E7%A7%AF"><span class="nav-text">镜像体积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%88%86%E5%B1%82"><span class="nav-text">镜像分层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%95%9C%E5%83%8F%E5%B1%82"><span class="nav-text">查看镜像层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%B1%82%E8%AF%A6%E8%A7%A3"><span class="nav-text">镜像层详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E9%95%9C%E5%83%8F%E5%B1%82"><span class="nav-text">共享镜像层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%91%98%E8%A6%81"><span class="nav-text">镜像摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%9E%B6%E6%9E%84%E9%95%9C%E5%83%8F"><span class="nav-text">多架构镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E9%95%9C%E5%83%8F"><span class="nav-text">删除镜像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Container"><span class="nav-text">Docker Container</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#commands-1"><span class="nav-text">commands</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="nav-text">启动容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%AE%B9%E5%99%A8%E4%B8%AD%E5%90%AF%E5%8A%A8%E6%96%B0%E8%BF%9B%E7%A8%8B"><span class="nav-text">在容器中启动新进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E5%AE%B9%E5%99%A8"><span class="nav-text">列出容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E5%AE%B9%E5%99%A8"><span class="nav-text">停止容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8"><span class="nav-text">删除容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-text">查看容器信息：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C"><span class="nav-text">查看容器网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E5%8D%B7"><span class="nav-text">查看容器卷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-text">容器vs虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="nav-text">运行容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E7%AD%96%E7%95%A5"><span class="nav-text">重启策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#example"><span class="nav-text">example</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Security"><span class="nav-text">Docker Security</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-Security"><span class="nav-text">Linux Security</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Namespace"><span class="nav-text">Namespace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-Group"><span class="nav-text">Control  Group</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Capability"><span class="nav-text">Capability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MAC"><span class="nav-text">MAC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Seccomp"><span class="nav-text">Seccomp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-Original-Security"><span class="nav-text">Docker Original Security</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%89%AB%E6%8F%8F"><span class="nav-text">安全扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E4%BF%A1%E4%BB%BB"><span class="nav-text">内容信任</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Secret"><span class="nav-text">Docker Secret</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Logs"><span class="nav-text">Docker Logs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Commands"><span class="nav-text">Commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#daemon%E6%97%A5%E5%BF%97"><span class="nav-text">daemon日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bdaemon%E6%97%A5%E5%BF%97"><span class="nav-text">查看daemon日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%97%A5%E5%BF%97%E8%AF%A6%E7%BB%86%E7%A8%8B%E5%BA%A6"><span class="nav-text">设置日志详细程度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97"><span class="nav-text">容器日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97"><span class="nav-text">查看容器日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97%E9%A9%B1%E5%8A%A8"><span class="nav-text">指定容器日志驱动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Management"><span class="nav-text">Docker Management</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-text">查看配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E9%95%9C%E5%83%8F%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE"><span class="nav-text">更改镜像存储位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%93%BE%E6%8E%A5"><span class="nav-text">使用软链接</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Specification"><span class="nav-text">Docker Specification</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E8%BF%90%E8%A1%8C%E6%97%B6%E4%B8%8E%E7%BC%96%E6%8E%92%E5%BC%95%E6%93%8E"><span class="nav-text">Docker运行时与编排引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%94%9F%E6%80%81"><span class="nav-text">容器生态</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E5%AE%B9%E5%99%A8%E8%AE%A1%E5%88%92"><span class="nav-text">开放容器计划</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E5%AE%89%E8%A3%85"><span class="nav-text">Docker安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E5%8D%87%E7%BA%A7"><span class="nav-text">Docker升级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E9%85%8D%E7%BD%AE"><span class="nav-text">Docker配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text"> </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%A2%E9%98%BF%E9%87%8C%E6%BA%90"><span class="nav-text">换阿里源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alpine-linux-%E6%8D%A2%E6%BA%90"><span class="nav-text">alpine linux 换源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker%E5%AD%98%E5%82%A8%E9%A9%B1%E5%8A%A8%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-text">Docker存储驱动的选择</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Engine"><span class="nav-text">Docker Engine</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Image"><span class="nav-text">Docker Image</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#commands"><span class="nav-text">commands</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E9%95%9C%E5%83%8F"><span class="nav-text">搜索镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F"><span class="nav-text">下载镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E9%95%9C%E5%83%8F"><span class="nav-text">列出镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%95%9C%E5%83%8F"><span class="nav-text">查看镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E9%95%9C%E5%83%8F"><span class="nav-text">删除镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA%E9%95%9C%E5%83%8F%E4%B8%BA%E6%96%87%E4%BB%B6"><span class="nav-text">导出镜像为文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%9C%8D%E5%8A%A1"><span class="nav-text">镜像服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%A0%87%E8%AF%86%EF%BC%88-%EF%BC%89"><span class="nav-text">镜像标识（\）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E4%BD%93%E7%A7%AF"><span class="nav-text">镜像体积</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%88%86%E5%B1%82"><span class="nav-text">镜像分层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%95%9C%E5%83%8F%E5%B1%82"><span class="nav-text">查看镜像层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%B1%82%E8%AF%A6%E8%A7%A3"><span class="nav-text">镜像层详解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E9%95%9C%E5%83%8F%E5%B1%82"><span class="nav-text">共享镜像层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%91%98%E8%A6%81"><span class="nav-text">镜像摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%9E%B6%E6%9E%84%E9%95%9C%E5%83%8F"><span class="nav-text">多架构镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E9%95%9C%E5%83%8F-1"><span class="nav-text">删除镜像</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Container"><span class="nav-text">Docker Container</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#commands-1"><span class="nav-text">commands</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="nav-text">启动容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%B7%B2%E5%81%9C%E6%AD%A2%E8%BF%90%E8%A1%8C%E7%9A%84%E5%AE%B9%E5%99%A8"><span class="nav-text">启动已停止运行的容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E5%AE%B9%E5%99%A8"><span class="nav-text">重启容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%AE%B9%E5%99%A8%E4%B8%AD%E5%90%AF%E5%8A%A8%E6%96%B0%E8%BF%9B%E7%A8%8B"><span class="nav-text">在容器中启动新进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E5%AE%B9%E5%99%A8"><span class="nav-text">列出容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E5%AE%B9%E5%99%A8"><span class="nav-text">停止容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8"><span class="nav-text">删除容器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA-%E5%AF%BC%E5%85%A5%E5%AE%B9%E5%99%A8%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-text">导出&#x2F;导入容器的文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E4%BF%A1%E6%81%AF%EF%BC%9A"><span class="nav-text">查看容器信息：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97"><span class="nav-text">查看容器日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C"><span class="nav-text">查看容器网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E5%8D%B7"><span class="nav-text">查看容器卷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8vs%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="nav-text">容器vs虚拟机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="nav-text">运行容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8D%E5%90%AF%E7%AD%96%E7%95%A5"><span class="nav-text">重启策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#example"><span class="nav-text">example</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Security"><span class="nav-text">Docker Security</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux-Security"><span class="nav-text">Linux Security</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Namespace"><span class="nav-text">Namespace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-Group"><span class="nav-text">Control  Group</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Capability"><span class="nav-text">Capability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MAC"><span class="nav-text">MAC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Seccomp"><span class="nav-text">Seccomp</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-Original-Security"><span class="nav-text">Docker Original Security</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%89%AB%E6%8F%8F"><span class="nav-text">安全扫描</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AE%B9%E4%BF%A1%E4%BB%BB"><span class="nav-text">内容信任</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker-Secret"><span class="nav-text">Docker Secret</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Logs"><span class="nav-text">Docker Logs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Commands"><span class="nav-text">Commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#daemon%E6%97%A5%E5%BF%97"><span class="nav-text">daemon日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bdaemon%E6%97%A5%E5%BF%97"><span class="nav-text">查看daemon日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%97%A5%E5%BF%97%E8%AF%A6%E7%BB%86%E7%A8%8B%E5%BA%A6"><span class="nav-text">设置日志详细程度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97"><span class="nav-text">容器日志</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97-1"><span class="nav-text">查看容器日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%AE%B9%E5%99%A8%E6%97%A5%E5%BF%97%E9%A9%B1%E5%8A%A8"><span class="nav-text">指定容器日志驱动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-Management"><span class="nav-text">Docker Management</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-text">查看配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9%E9%95%9C%E5%83%8F%E5%AD%98%E5%82%A8%E4%BD%8D%E7%BD%AE"><span class="nav-text">更改镜像存储位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%BD%AF%E9%93%BE%E6%8E%A5"><span class="nav-text">使用软链接</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -779,7 +818,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">135</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

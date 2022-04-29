@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Macvlan%20multi-vlan.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Ingress%20example.png">
 <meta property="article:published_time" content="2022-03-23T05:39:44.000Z">
-<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-04-11T16:19:01.385Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+                <time title="Modified: 2022-04-11 16:19:01" itemprop="dateModified" datetime="2022-04-11T16:19:01Z">2022-04-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,7 +266,12 @@
 <li>Networks</li>
 </ul>
 <span id="more"></span>
-<h1 id="Basic-idea"><a href="#Basic-idea" class="headerlink" title="Basic idea"></a>Basic idea</h1><p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Docker%20Network%20Arch.png" alt="Docker Network Arch"></p>
+<h1 id="Basic-idea"><a href="#Basic-idea" class="headerlink" title="Basic idea"></a>Basic idea</h1><p>Docker使用了Linux的Namespaces技术来进行资源隔离，如PID Namespace隔离进程，Mount Namespace隔离文件系统，Network Namespace隔离网络等。一个Network Namespace提供了一份独立的网络环境，包括网卡、路由、Iptable规则等. 与其他的Network Namespace隔离</p>
+<ul>
+<li>因此，一个独立的网络就是一个独立的Network Namespace</li>
+<li>因此，严格意义上讲，下文介绍的Host， None根本不算网络，因为他们没有自己的Network Namespace</li>
+</ul>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Docker%20Network%20Arch.png" alt="Docker Network Arch"></p>
 <p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Docker%20Network%20Layers.png" alt="Docker Network Layers"></p>
 <p>Docker网络架构由三部分组成： </p>
 <ul>
@@ -306,7 +311,8 @@
 <p>第三方也可以编写外部驱动</p>
 <p>每个驱动都负责其上所有网络资源的创建和管理</p>
 <p>Libnetwork支持同时激活多个网络驱动。 这意味着Docker环境可以支持一个庞大的异构网络</p>
-<h1 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h1><h2 id="创建网络"><a href="#创建网络" class="headerlink" title="创建网络"></a>创建网络</h2><p>创建容器网络：</p>
+<h1 id="Commands"><a href="#Commands" class="headerlink" title="Commands"></a>Commands</h1><h2 id="创建网络"><a href="#创建网络" class="headerlink" title="创建网络"></a>创建网络</h2><p>注意到只能用对应驱动创建网络， 而None，Host， Container这些特殊的“网络”，不需要驱动，也就没法用驱动创建</p>
+<p>创建容器网络：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create [OPTIONS] [network_name]</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p><code>-driver, -d</code>: 驱动程序管理网络(  默认 <code>bridge</code>  )</p>
@@ -335,7 +341,16 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network prune</span><br></pre></td></tr></table></figure>
 <h2 id="创建容器并定制DNS"><a href="#创建容器并定制DNS" class="headerlink" title="创建容器并定制DNS"></a>创建容器并定制DNS</h2><p>启动新容器，向其添加自定义的DNS服务器和域名：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker container run -it --name &lt;dontainer-name&gt; \</span><br><span class="line">--dns=&lt;nameserver-ip&gt; \</span><br><span class="line">--dns-search=&lt;domain-name&gt; \</span><br><span class="line">&lt;image&gt; &lt;command&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="Networks"><a href="#Networks" class="headerlink" title="Networks"></a>Networks</h1><h2 id="单机桥接网络"><a href="#单机桥接网络" class="headerlink" title="单机桥接网络"></a>单机桥接网络</h2><ul>
+<h1 id="Networks"><a href="#Networks" class="headerlink" title="Networks"></a>Networks</h1><p>None， Host， Containers网络比较特殊，我们一般也不用</p>
+<h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><h2 id="none"><a href="#none" class="headerlink" title="none"></a>none</h2><p>就是没有网络，使用此网络的主机没有ip地址，处于完全隔离的状态</p>
+<h2 id="host"><a href="#host" class="headerlink" title="host"></a>host</h2><p>Host网络即容器直接使用宿主机的网络，与主机在相同的网络命名空间下，使用相同的网络栈，容器可以直接使用主机的所有端口</p>
+<p>即不进行任何网络的虚拟化</p>
+<h2 id="container"><a href="#container" class="headerlink" title="container"></a>container</h2><p>container网络下的容器都共享相同的Network Namespace， 但除此之外，其他的namespace依然隔离</p>
+<ul>
+<li>这意味着容器共享了网络栈</li>
+<li>这意味着两个容器可以互相ping通</li>
+</ul>
+<h2 id="单机桥接网络"><a href="#单机桥接网络" class="headerlink" title="单机桥接网络"></a>单机桥接网络</h2><ul>
 <li>单机： 该网络只能在单个主机上运行，且只能连接所在主机上的容器</li>
 <li>桥接：该网络是交换机的软件实现</li>
 </ul>
@@ -344,7 +359,7 @@
 <li>除非在容器创建时指定参数<code>--network</code>. 默认情况下，所有容器都会连接到该网络</li>
 </ul>
 <p>linux主机上的bridge网络由Bridge驱动创建， 而Bridge底层基于Linux内核的Linux Bridge技术.</p>
-<p>默认的bridge网络被映射到<code>docker0</code>Linux网桥</p>
+<p>默认的bridge网络被映射到<code>docker0</code>Linux网桥, 容器连接到该网络后，docker就会从docker0子网中分配一个 IP 给容器使用，并设置 docker0 的 IP 地址为容器的<strong>默认网关</strong></p>
 <p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/bridge%20principle.png" alt="bridge principle"></p>
 <p> 创建单机桥接网络：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create -d bridge [name]</span><br></pre></td></tr></table></figure>
@@ -506,7 +521,10 @@
 <li>Ingree网络会<strong>将流量平均分在所有服务副本之上</strong></li>
 </ul>
 </li>
-<li>Host： Host模式发布的服务只能通过运行服务副本的节点来访问</li>
+<li>Host： Host模式发布的服务只能通过运行服务副本的节点来访问<ul>
+<li>这里的host模式不是之前提到的host网络</li>
+</ul>
+</li>
 </ul>
 <p>Host模式发布：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker service create -d --name svc1 \</span><br><span class="line">--publish published=5000,target=80,mode=host \</span><br><span class="line">nginx</span><br></pre></td></tr></table></figure>
@@ -608,7 +626,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-idea"><span class="nav-text">Basic idea</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-DNS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">Docker DNS服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CNM"><span class="nav-text">CNM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Libnetwork"><span class="nav-text">Libnetwork</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Driver"><span class="nav-text">Driver</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Commands"><span class="nav-text">Commands</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%BD%91%E7%BB%9C"><span class="nav-text">创建网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%BD%91%E7%BB%9C"><span class="nav-text">查看网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%BD%91%E7%BB%9C"><span class="nav-text">删除网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%B9%E5%99%A8%E5%B9%B6%E5%AE%9A%E5%88%B6DNS"><span class="nav-text">创建容器并定制DNS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Networks"><span class="nav-text">Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E6%9C%BA%E6%A1%A5%E6%8E%A5%E7%BD%91%E7%BB%9C"><span class="nav-text">单机桥接网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1"><span class="nav-text">容器通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="nav-text">端口映射</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%9C%BA%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">多机覆盖网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1-1"><span class="nav-text">容器通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E5%BB%BASwarm"><span class="nav-text">构建Swarm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">创建覆盖网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E6%9C%8D%E5%8A%A1%E8%BF%9E%E6%8E%A5%E5%88%B0%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">将服务连接到覆盖网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">测试覆盖网络</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%85%A5%E7%8E%B0%E6%9C%89%E7%BD%91%E7%BB%9C"><span class="nav-text">接入现有网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0"><span class="nav-text">服务发现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89DNS%E8%A7%84%E5%88%99"><span class="nav-text">自定义DNS规则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3"><span class="nav-text">示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ingress%E7%BD%91%E7%BB%9C"><span class="nav-text">Ingress网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-4"><span class="nav-text">示例</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-idea"><span class="nav-text">Basic idea</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-DNS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">Docker DNS服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CNM"><span class="nav-text">CNM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Libnetwork"><span class="nav-text">Libnetwork</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Driver"><span class="nav-text">Driver</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Commands"><span class="nav-text">Commands</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%BD%91%E7%BB%9C"><span class="nav-text">创建网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%BD%91%E7%BB%9C"><span class="nav-text">查看网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%BD%91%E7%BB%9C"><span class="nav-text">删除网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%B9%E5%99%A8%E5%B9%B6%E5%AE%9A%E5%88%B6DNS"><span class="nav-text">创建容器并定制DNS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Networks"><span class="nav-text">Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text"> </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#none"><span class="nav-text">none</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#host"><span class="nav-text">host</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#container"><span class="nav-text">container</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E6%9C%BA%E6%A1%A5%E6%8E%A5%E7%BD%91%E7%BB%9C"><span class="nav-text">单机桥接网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1"><span class="nav-text">容器通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="nav-text">端口映射</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%9C%BA%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">多机覆盖网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1-1"><span class="nav-text">容器通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E5%BB%BASwarm"><span class="nav-text">构建Swarm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">创建覆盖网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E6%9C%8D%E5%8A%A1%E8%BF%9E%E6%8E%A5%E5%88%B0%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">将服务连接到覆盖网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">测试覆盖网络</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%85%A5%E7%8E%B0%E6%9C%89%E7%BD%91%E7%BB%9C"><span class="nav-text">接入现有网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0"><span class="nav-text">服务发现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89DNS%E8%A7%84%E5%88%99"><span class="nav-text">自定义DNS规则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3"><span class="nav-text">示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ingress%E7%BD%91%E7%BB%9C"><span class="nav-text">Ingress网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-4"><span class="nav-text">示例</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -624,7 +642,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">135</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

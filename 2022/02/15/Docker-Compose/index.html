@@ -27,7 +27,7 @@
 <meta property="og:description" content="Outline:  Background of Docker Compose 部署要点 Compose文件示例 热部署   本节使用示例：here">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-02-15T15:11:52.000Z">
-<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-04-13T16:43:16.002Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+                <time title="Modified: 2022-04-13 16:43:16" itemprop="dateModified" datetime="2022-04-13T16:43:16Z">2022-04-13</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -358,6 +358,7 @@
 <li><code>ports：- target: [target_port] published: [source_port]</code>: 指定端口映射， 将主机的<code>published</code>端口映射到容器的<code>target</code>端口</li>
 <li><code>networks：</code>: 指定容器连接到的网络， 该网络要么已经存在，要么在<code>networks</code><strong>一级</strong>key中指定, 后者会让Docker创建该网络</li>
 <li><code>volumes</code>:  指定Docker将<code>[source]</code>卷挂到容器的<code>[target]</code> 卷, 该网络要么已经存在，要么在<code>`volumes</code>:`<strong>一级</strong>key中指定</li>
+<li><code>depends_on: &lt;service&gt;</code>： 指定服务启动时间，但是启动时间早并不能保证后一个服务启动时前一个服务已经启动完成</li>
 </ul>
 </li>
 </ul>
@@ -480,7 +481,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">135</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

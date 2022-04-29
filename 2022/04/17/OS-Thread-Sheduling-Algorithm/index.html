@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline:  workload scheduling metrics 处理器调度层次 各种算法…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS Thread Sheduling Algorithm">
+<meta property="og:url" content="http://lyk-love.cn/2022/04/17/OS-Thread-Sheduling-Algorithm/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  workload scheduling metrics 处理器调度层次 各种算法…">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-04-16T23:13:57.000Z">
+<meta property="article:modified_time" content="2022-04-16T15:13:57.045Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/04/17/OS-Thread-Sheduling-Algorithm/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>OS Thread Sheduling Algorithm | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/04/17/OS-Thread-Sheduling-Algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS Thread Sheduling Algorithm
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-04-16 23:13:57 / Modified: 15:13:57" itemprop="dateCreated datePublished" datetime="2022-04-16T23:13:57Z">2022-04-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<ul>
+<li>workload</li>
+<li>scheduling metrics</li>
+<li>处理器调度层次</li>
+<li>各种算法…</li>
+</ul>
+<span id="more"></span>
+<h1 id="workload"><a href="#workload" class="headerlink" title="workload"></a>workload</h1><ul>
+<li>Def: a fully-operational scheduling discipline</li>
+<li>为了方便下面各种算法的说明， 我们目前对work load做出如下假设：<ol>
+<li>每个工作运行相同的时间（工作就是进程）</li>
+<li>所有的工作同时到达</li>
+<li>一旦开始，所有工作保持运行直到完成</li>
+<li>所有工作只使用CPU（即，不执行IO操作）</li>
+<li>所有工作的运行时间已知</li>
+</ol>
+</li>
+</ul>
+<h1 id="scheduling-metrics"><a href="#scheduling-metrics" class="headerlink" title="scheduling metrics"></a>scheduling metrics</h1><ul>
+<li>性能指标：<ul>
+<li>周转时间： 任务完成 - 任务到达</li>
+<li>响应时间：任务首次运行（服务时间） - 任务到达 <ul>
+<li>用于度量<strong>交互性</strong>，因为分时系统的用户会面对终端，这要求终端交互性好</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>公平</li>
+</ul>
+<h1 id="处理器调度层次"><a href="#处理器调度层次" class="headerlink" title="处理器调度层次"></a>处理器调度层次</h1><ul>
+<li>高级调度（长程调度、作业调度）: 决定能否加入到执行的进程池中</li>
+<li>中级调度（平衡负载调度）： 决定主存中的可用进程集合</li>
+<li>低级调度（短程调度、 进程调度）：决定哪个进程占用处理器执行</li>
+</ul>
+<h1 id="优化周转时间算法"><a href="#优化周转时间算法" class="headerlink" title="优化周转时间算法"></a>优化周转时间算法</h1><p>用于批处理作业。下述三个算法都面向“周转时间”，但是当衡量其“响应时间”时，下述算法表现都不好。 对于SJF而言，只要短进程源源不断来,<br>长进程就饿死</p>
+<h2 id="FCFS"><a href="#FCFS" class="headerlink" title="FCFS"></a>FCFS</h2><ul>
+<li>First Come First Service: 非抢占,直到某个进程运行结束,依次调度接下来的,偏爱长作业<ul>
+<li>推翻假设1后（可能出现长作业），该算法fail</li>
+</ul>
+</li>
+</ul>
+<h2 id="SJF"><a href="#SJF" class="headerlink" title="SJF"></a>SJF</h2><ul>
+<li>Shortest Job First: 非抢占，先运行最短的任务<ul>
+<li>再推翻假设2,运行进程不同时到达，此时短任务可能会晚到达，由于算法非抢占，短任务必须等待长任务执行完，该算法fail</li>
+</ul>
+</li>
+</ul>
+<h2 id="STCF"><a href="#STCF" class="headerlink" title="STCF"></a>STCF</h2><ul>
+<li>Shortest Time-to-Completion First: 最短完成时间优先: 抢占式SJF,推翻了假设3</li>
+</ul>
+<h1 id="优化响应时间算法"><a href="#优化响应时间算法" class="headerlink" title="优化响应时间算法"></a>优化响应时间算法</h1><p>用于分时系统</p>
+<h2 id="RR"><a href="#RR" class="headerlink" title="RR"></a>RR</h2><ul>
+<li>Round Robin:抢占,time slice结束时,当前进程放入就绪队列,然后切换到队列中的下个进程<ul>
+<li>“抢占”是指进程之间。 在同一time slice内，进程不抢占</li>
+<li>time slice必须是时钟中断周期的倍数</li>
+<li>time slice太短也不好，因为context switch有成本</li>
+</ul>
+</li>
+<li>该算法在“周转时间”表现不佳</li>
+</ul>
+<h2 id="结合IO的STCF"><a href="#结合IO的STCF" class="headerlink" title="结合IO的STCF"></a>结合IO的STCF</h2><ul>
+<li>推翻假设4,现在运行程序执行IO。此时假设有两个工作A和B,每项占用<code>50ms</code>CPU，但每A运行<code>10ms</code>会发起<code>10ms</code>的IO请求，而B只使用CPU</li>
+<li>此时可以把A的每个<code>10ms</code>工作视为独立的工作，因此系统先调度<code>10ms</code>的A，然后调度<code>50ms</code>的B，而<code>10ms</code>后新的A会提交，因此会抢占B执行，这样做实现了overlap</li>
+<li>overlap： 一个进程在另一个进程等待IO时使用CPU</li>
+</ul>
+<h2 id="MLFQ"><a href="#MLFQ" class="headerlink" title="MLFQ"></a>MLFQ</h2><p> 推翻假设5后，进程运行时间不可知，之前的算法失效</p>
+<ul>
+<li><p>Multi-Level Feedback:多级反馈调度:  <strong>抢占式</strong>,每当进程被抢占时就降级</p>
+<ul>
+<li>建立多个不同优先级的就绪进程队列，多个就绪进程队列之间按照优先级调度</li>
+<li>高优先级的就绪进程, 分配的时间片短</li>
+<li>同一就绪进程队列中的进程的优先数和时间片相同, 按照FCFS调度</li>
+<li>工作进入系统时放在最高优先级</li>
+<li>一旦工作用完了其在某一层中的时间片，它就被抢占，自己移入低一级队列<ul>
+<li>进程只有被抢占后才降级，因此如果一共只有一个进程，该进程不会降级</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>problem： 如果短工作不断到来，长进程可能饿死</p>
+<ul>
+<li>改进： 经过一段时间S, 将系统中所有工作重新加入最高优先级队列</li>
+</ul>
+</li>
+</ul>
+<h2 id="比例份额"><a href="#比例份额" class="headerlink" title="比例份额"></a>比例份额</h2><p>确保每个工作获得一定比例的CPU时间，实现公平性</p>
+<p>份额调度最大的缺点在于难以确定份额，即依赖假设5</p>
+<h2 id="彩票调度"><a href="#彩票调度" class="headerlink" title="彩票调度"></a>彩票调度</h2><ul>
+<li>每个进程持有一定数量的彩票，该进程的彩票数占总彩票数的百分比代表它占有某个资源的份额</li>
+<li>CPU每个时间片随即抽取一个数，拥有该数对应彩票的进程会被调度一个时间片<ul>
+<li>例如工作A和B分别有75, 25个彩票，对应数字0 - 74, 75 - 99.</li>
+<li>OS抽取数字序列为：63, 85, 70, 39, 76, 17, 95</li>
+<li>工作调度次序为：A, B, A, A, B, A, B</li>
+</ul>
+</li>
+<li><strong>随机</strong>， 优点是实现简单，不依赖任何全局量</li>
+<li>PROBLEM：基于概率，因此有可能出现异常情况</li>
+</ul>
+<h2 id="步长调度"><a href="#步长调度" class="headerlink" title="步长调度"></a>步长调度</h2><ul>
+<li>每个进程都具有步长(<code>stride</code>), 和一个行程（<code>pass</code>）值。 <ul>
+<li>步长： 一个大数 / 进程的彩票数</li>
+<li>初始时所有行程值为0</li>
+</ul>
+</li>
+<li>每次调度当前具有最小行程值的进程，每当进程运行一个时间片后后， 行程值 += 步长<ul>
+<li>进程在时间片内不被抢占</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">current = remove_min(<span class="built_in">queue</span>); <span class="comment">//pick client with min pass</span></span><br><span class="line">schedule(current);<span class="comment">// use resource for quantum</span></span><br><span class="line">current -&gt; pass += current -&gt; stride;<span class="comment">// compute next pass using stride</span></span><br><span class="line">insert( <span class="built_in">queue</span>, current );<span class="comment">// put back into the queue</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>例子：假设A,B,C彩票数分别为100,50,250, 其步长值分别为100, 200, 40</p>
+<ol>
+<li><p>初始时所有步长为零，随即调度工作，假设A被调度，执行一个时间片，更新其行程值为100. 然后选择B, 运行后更新其行程值为200； 然后选择C,运行后更新其行程值为40</p>
+</li>
+<li><p>然后算法选择最小的工作，它会再调度2次C, C的行程值增加到120. 然后调度A …</p>
+</li>
+</ol>
+<p>| 行程值（A） （步长 = 100） | 行程值（A） （步长 = 100） | 行程值（A） （步长 = 100） | 被调度进程 |<br>| ————————————— | ————————————— | ————————————— | ————— |<br>| 0                          | 0                          | 0                          | A          |<br>| 100                        | 0                          | 0                          | B          |<br>| 100                        | 200                        | 0                          | C          |<br>| 100                        | 200                        | 40                         | C          |<br>| 100                        | 200                        | 80                         | C          |<br>| 100                        | 200                        | 120                        | A          |<br>| 200                        | 200                        | 120                        | C          |<br>| 200                        | 200                        | 160                        | C          |<br>| 200                        | 200                        | 200                        | …        |<br>|                            |                            |                            |            |</p>
+<p>可以看到，在这段时间内， A, B, C分别调度2, 1， 4次，与其彩票数占比相符合</p>
+</li>
+<li><p>彩票调度只能在概率上实现比例（因此有概率翻车），而步长调度可以直接控制比例</p>
+</li>
+<li><p>PROBLEM： 步长调度需要维护全局状态：行程值。 如果中途有新进程加入，则新进程的行程值为0,它会独占CPU</p>
+</li>
+</ul>
+<h2 id="HRRN"><a href="#HRRN" class="headerlink" title="HRRN"></a>HRRN</h2><ul>
+<li>HRRN(highest response radio next)高响应比优先<strong>: 非抢占式</strong><ul>
+<li>响应比 = (等待时间+服务时间) / 服务时间</li>
+</ul>
+</li>
+</ul>
+<h1 id="多处理器调度"><a href="#多处理器调度" class="headerlink" title="多处理器调度"></a>多处理器调度</h1><p>缓存一致性：</p>
+<ul>
+<li>一种方案： 总线窥探（<code>bus snooping</code>）: 每个缓存都监听链接所有缓存和内存的总线，在发现内存访问。 </li>
+</ul>
+<p>同步问题：</p>
+<ul>
+<li>加锁</li>
+</ul>
+<p>缓存亲和度：</p>
+<ul>
+<li>同意进程在同一CPU运行时，由于有cache而运行得快</li>
+</ul>
+<h2 id="SQMS"><a href="#SQMS" class="headerlink" title="SQMS"></a>SQMS</h2><ul>
+<li><p>单队列调度（Single-Queue Multiprocessor Scheduling）：所有工作放入一个全局的单调队列。每个CPU从队列中拿取工作</p>
+<ul>
+<li>当然，可以将工作以时间片为单位存储进队列，这样CPU每次都运行一个time slice的工作</li>
+</ul>
+</li>
+<li><p>缓存亲和度问题：  假设有CPU 0-3, 队列中工作序列为A,B,C,D,E, 则：</p>
+<p>| CPU0               | CPU1 | CPU2 | CPU3 |<br>| ————————— | —— | —— | —— |<br>| A                  | B    | C    | D    |<br>| E                  | A    | B    | C    |<br>| D                  | E    | A    | B    |<br>| C                  | D    | E    | A    |<br>| 可以看到亲和度很差 |      |      |      |</p>
+</li>
+</ul>
+<h2 id="MQMS"><a href="#MQMS" class="headerlink" title="MQMS"></a>MQMS</h2><ul>
+<li>多队列调度（Multi-Queue Multiprocessor Scheduling）: 每个CPU拥有自己的队列。 不同队列可以采用不同的调度规则。OS依据一些启发式规则将新工作放入某个队列<ul>
+<li>每个CPU之间调度相互独立</li>
+</ul>
+</li>
+</ul>
+<h1 id=""><a href="#" class="headerlink" title=" "></a> </h1>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/04/17/OS-Page-Sheduling-Algorithm/" rel="prev" title="OS Page Sheduling Algorithm">
+      <i class="fa fa-chevron-left"></i> OS Page Sheduling Algorithm
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#workload"><span class="nav-text">workload</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scheduling-metrics"><span class="nav-text">scheduling metrics</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%E8%B0%83%E5%BA%A6%E5%B1%82%E6%AC%A1"><span class="nav-text">处理器调度层次</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%91%A8%E8%BD%AC%E6%97%B6%E9%97%B4%E7%AE%97%E6%B3%95"><span class="nav-text">优化周转时间算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FCFS"><span class="nav-text">FCFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SJF"><span class="nav-text">SJF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STCF"><span class="nav-text">STCF</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4%E7%AE%97%E6%B3%95"><span class="nav-text">优化响应时间算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RR"><span class="nav-text">RR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E5%90%88IO%E7%9A%84STCF"><span class="nav-text">结合IO的STCF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MLFQ"><span class="nav-text">MLFQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E4%BE%8B%E4%BB%BD%E9%A2%9D"><span class="nav-text">比例份额</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%A9%E7%A5%A8%E8%B0%83%E5%BA%A6"><span class="nav-text">彩票调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%95%BF%E8%B0%83%E5%BA%A6"><span class="nav-text">步长调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HRRN"><span class="nav-text">HRRN</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E5%A4%84%E7%90%86%E5%99%A8%E8%B0%83%E5%BA%A6"><span class="nav-text">多处理器调度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQMS"><span class="nav-text">SQMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MQMS"><span class="nav-text">MQMS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text"> </span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

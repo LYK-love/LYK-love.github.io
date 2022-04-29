@@ -27,7 +27,7 @@
 <meta property="og:description" content="Outline:  Mysql Management Mysql Database Management Mysql Table Management">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-04-09T16:44:41.000Z">
-<meta property="article:modified_time" content="2022-04-09T08:50:34.879Z">
+<meta property="article:modified_time" content="2022-04-22T16:05:17.350Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Database">
 <meta name="twitter:card" content="summary">
@@ -215,10 +215,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2022-04-09 16:44:41 / Modified: 08:50:34" itemprop="dateCreated datePublished" datetime="2022-04-09T16:44:41Z">2022-04-09</time>
+              <time title="Created: 2022-04-09 16:44:41" itemprop="dateCreated datePublished" datetime="2022-04-09T16:44:41Z">2022-04-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-04-22 16:05:17" itemprop="dateModified" datetime="2022-04-22T16:05:17Z">2022-04-22</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -270,7 +276,7 @@
 </li>
 </ul>
 <h2 id="创建用户帐户"><a href="#创建用户帐户" class="headerlink" title="创建用户帐户"></a>创建用户帐户</h2><p>MySQL提供了<code>CREATE USER</code>语句，允许您创建一个新的用户帐户。 <code>CREATE USER</code>语句的语法如下：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> user_account IDENTIFIED <span class="keyword">BY</span> password;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> user_account IDENTIFIED <span class="keyword">BY</span> password;</span><br></pre></td></tr></table></figure>
 <p>用户帐号(<code>user_account</code>)是以<code>username@hostname</code>格式跟在<code>CREATE USER</code>子句之后。</p>
 <p>密码(<code>password</code>)在<code>IDENTIFIED BY</code>子句中指定。<code>password</code>必须是明文。 在将用户帐户保存到用户表之前，MySQL将加密明文密码。</p>
 <p>例如，要创建一个新的用户<code>dbadmin</code>，这个用户只允许从<code>localhost</code>主机并使用密码为<code>pwd123</code>连接到MySQL数据库服务器，使用<code>CREATE USER</code>语句，如下所示：</p>
@@ -311,7 +317,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysqldump -u [user] [database_name] &gt; [filename].sql</span><br></pre></td></tr></table></figure>
 <p>导入:</p>
 <figure class="highlight plaintext"><figcaption><span>y</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; source c:\temp\mysqlsampledatabase.sql</span><br></pre></td></tr></table></figure>
-<h2 id="给用户授权"><a href="#给用户授权" class="headerlink" title="给用户授权"></a>给用户授权</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL ON *.* TO &#x27;super&#x27;@&#x27;localhost&#x27; identified by &#x27;abc123&#x27; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+<h2 id="给用户授权"><a href="#给用户授权" class="headerlink" title="给用户授权"></a>给用户授权</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT ALL ON *.* TO &#x27;super&#x27;@&#x27;localhost&#x27; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
 <p><code>ON *.*</code>子句表示MySQL中的所有数据库和所有对象。<code>WITH GRANT OPTION</code>允许<code>super@localhost</code>向其他用户授予权限。</p>
 <h2 id="修改用户名和密码"><a href="#修改用户名和密码" class="headerlink" title="修改用户名和密码"></a>修改用户名和密码</h2><h3 id="在登陆MySQL的情况下"><a href="#在登陆MySQL的情况下" class="headerlink" title="在登陆MySQL的情况下"></a>在登陆MySQL的情况下</h3><p>方法一：通过sql命令修改密码<br>命令格式：set password for 用户名@localhost = password(‘新密码’); </p>
 <p>新版本mysql 命令：</p>
@@ -480,7 +486,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-count">135</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
