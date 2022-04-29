@@ -27,7 +27,7 @@
 <meta property="og:description" content="Outline：  集群简介 Hadoop Spark Hadoop + Spark For Manjaro Hadoop + Spark For Mac Clickhouse Flink Kafka( &#x2F;&#x2F;TODO )">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-03-26T12:14:21.000Z">
-<meta property="article:modified_time" content="2022-04-29T13:44:07.572Z">
+<meta property="article:modified_time" content="2022-04-29T13:51:52.153Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Cloud Computation">
 <meta name="twitter:card" content="summary">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-29 13:44:07" itemprop="dateModified" datetime="2022-04-29T13:44:07Z">2022-04-29</time>
+                <time title="Modified: 2022-04-29 13:51:52" itemprop="dateModified" datetime="2022-04-29T13:51:52Z">2022-04-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -609,15 +609,16 @@
 </ul>
 <h1 id="Hadoop-Spark-For-Manjaro"><a href="#Hadoop-Spark-For-Manjaro" class="headerlink" title="Hadoop + Spark For Manjaro"></a>Hadoop + Spark For Manjaro</h1><p>这里演示一下Manjaro/arch用户安装hadoop的流程，只开个头。剩余的hadoop配置和spark安装及配置也大同小异。主要是对于manjaro/arch用户来说，安装这类软件会有一些小坑</p>
 <ul>
-<li><p><code>sudo pacman -Syu</code></p>
-</li>
-<li><p>安装jdk：<code>yay -S jdk</code></p>
-</li>
+<li><code>sudo pacman -Syu</code></li>
+<li>安装jdk：<code>yay -S jdk</code></li>
 <li><p>安装openssh：<code>yay -S openssh</code></p>
 <ul>
 <li>manjaro默认不安装openssh</li>
 </ul>
 </li>
+</ul>
+<p><strong>如果你要用hadoop用户，而非lyk用户的话，还得做以下步骤</strong></p>
+<ul>
 <li><p>创建hadooop用户并且更改hadoop用户密码</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//创建hadoop用户</span><br><span class="line">sudo adduser hadoop</span><br><span class="line"></span><br><span class="line">//更改hadoop用户密码</span><br><span class="line">sudo passwd hadoop</span><br></pre></td></tr></table></figure>
 <ul>
@@ -737,7 +738,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local</span><br><span class="line">sudo mv ./flink-*/ ./flink</span><br><span class="line">sudo chown -R hadoop:hadoop ./flink</span><br></pre></td></tr></table></figure>
 <p>添加环境变量:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br><span class="line"></span><br><span class="line">export FLINK_HOME=/usr/local/flink</span><br><span class="line">export PATH=$FLINK_HOME/bin:$PATH</span><br></pre></td></tr></table></figure>
-<p>更改配置文件(.<code>[flink位置]/conf/flink-conf.yaml</code> ):</p>
+<p>更改配置文件( <code>[flink位置]/conf/flink-conf.yaml</code> ):</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># The number of task slots that each TaskManager offers. Each slot runs one parallel pipeline.</span><br><span class="line"></span><br><span class="line">taskmanager.numberOfTaskSlots: 4</span><br><span class="line"></span><br><span class="line"># The parallelism used for programs that did not specify and other parallelism.</span><br><span class="line"></span><br><span class="line">parallelism.default: 1</span><br></pre></td></tr></table></figure>
 <h2 id="启动Flink"><a href="#启动Flink" class="headerlink" title="启动Flink"></a>启动Flink</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># </span><span class="language-bash">启动Flink,因为FLINK_HOME已经写入了环境变量，因此可以直接执行脚本：</span></span><br><span class="line">start-cluster.sh</span><br></pre></td></tr></table></figure>
 <ul>
