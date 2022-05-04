@@ -19,20 +19,19 @@
     var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Outline:  Intro: Shell Session Job control Tmux Aliase Dotfiles Remote Machines ( ssh端口转发详见其他文章 )  ref: MIT lesson, tmux tutorial, a good introduction of Session">
+  <meta name="description" content="Outline:  Job control Tmux Aliase Dotfiles Remote Machines ( ssh端口转发详见其他文章 )  ref: MIT lesson, tmux tutorial, a good introduction of Session">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Command-line Environment">
 <meta property="og:url" content="http://lyk-love.cn/2022/02/11/Command-line-Environment/index.html">
 <meta property="og:site_name" content="LYK-love">
-<meta property="og:description" content="Outline:  Intro: Shell Session Job control Tmux Aliase Dotfiles Remote Machines ( ssh端口转发详见其他文章 )  ref: MIT lesson, tmux tutorial, a good introduction of Session">
+<meta property="og:description" content="Outline:  Job control Tmux Aliase Dotfiles Remote Machines ( ssh端口转发详见其他文章 )  ref: MIT lesson, tmux tutorial, a good introduction of Session">
 <meta property="og:locale">
-<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Toolkit/Shel%20lSession%20Archetecture">
 <meta property="og:image" content="https://img2018.cnblogs.com/blog/952033/202001/952033-20200103182831279-993028624.png">
 <meta property="article:published_time" content="2022-02-10T17:30:37.000Z">
-<meta property="article:modified_time" content="2022-04-10T19:03:15.208Z">
+<meta property="article:modified_time" content="2022-05-03T12:57:09.140Z">
 <meta property="article:author" content="有多远滚多远">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Toolkit/Shel%20lSession%20Archetecture">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/952033/202001/952033-20200103182831279-993028624.png">
 
 <link rel="canonical" href="http://lyk-love.cn/2022/02/11/Command-line-Environment/">
 
@@ -225,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-10 19:03:15" itemprop="dateModified" datetime="2022-04-10T19:03:15Z">2022-04-10</time>
+                <time title="Modified: 2022-05-03 12:57:09" itemprop="dateModified" datetime="2022-05-03T12:57:09Z">2022-05-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,7 +249,6 @@
       
         <p>Outline:</p>
 <ul>
-<li>Intro: Shell Session</li>
 <li>Job control</li>
 <li>Tmux</li>
 <li>Aliase</li>
@@ -259,41 +257,6 @@
 </ul>
 <p>ref: <a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/command-line/">MIT lesson</a>, <a target="_blank" rel="noopener" href="https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/">tmux tutorial</a>, <a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/12146305.html">a good introduction of Session</a></p>
 <span id="more"></span>
-<h1 id="Intro-of-Shell-Session"><a href="#Intro-of-Shell-Session" class="headerlink" title="Intro of Shell Session"></a>Intro of Shell Session</h1><p>Shell session 是终端中当前的状态，在终端中只能有一个 session。当我们打开一个新的终端时，总会创建一个新的 shell session。</p>
-<p>就进程间的关系来说，session 由一个或多个进程组组成。一般情况下，来自单个登录的所有进程都属于同一个 session。我们可以通过下图来理解进程、进程组和 session 之间的关系：</p>
-<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Toolkit/Shel%20lSession%20Archetecture" alt="Shell Session Archetecture"></p>
-<p>会话是由会话中的第一个进程创建的，<strong>一般情况下是打开终端时创建的 shell 进程</strong>。该进程也叫 session 的领头进程。Session 中领头进程的 PID 也就是 session 的 SID。我们可以通过下面的命令查看 SID：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -o pid,ppid,pgid,sid,tty,comm</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> PID    PPID    PGID     SID TT       COMMAND</span><br><span class="line">5745    5729    5745    5745 pts/4    zsh</span><br><span class="line">5785       1    5784    5745 pts/4    zsh</span><br><span class="line">5787       1    5784    5745 pts/4    zsh</span><br><span class="line">5789       1    5788    5745 pts/4    zsh</span><br><span class="line">5794    5789    5788    5745 pts/4    gitstatusd</span><br><span class="line">5844    5745    5844    5745 pts/4    ps</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>Session 中的每个进程组被称为一个 <strong>job</strong>，有一个 job 会成为 session 的前台 job(foreground)，其它的 job 则是后台 job(background)。每个 session 连接一个控制终端(control terminal)，控制终端中的输入被发送给前台 job，从前台 job 产生的输出也被发送到控制终端上。同时由控制终端产生的信号，比如 ctrl + z 等都会传递给前台 job。</p>
-<p>一般情况下 session 和终端是一对一的关系，当我们打开多个终端窗口时，实际上就创建了多个 session。</p>
-<p>Session 的意义在于多个工作(job)在一个终端中运行，其中的一个为前台 job，它直接接收该终端的输入并把结果输出到该终端。其它的 job 则在后台运行。</p>
-<h2 id="Session-的创建和销毁"><a href="#Session-的创建和销毁" class="headerlink" title="Session 的创建和销毁"></a>Session 的创建和销毁</h2><p>session的创建：</p>
-<ul>
-<li>通常，新的 session 由系统登录程序创建，session 中的领头进程是运行用户登录 shell 的进程。新创建的每个进程都会属于一个进程组，当创建一个进程时，它和父进程在同一个进程组、session 中。</li>
-</ul>
-<p>将进程放入不同 session 的惟一方法是使用 <code>setsid</code> 函数使其成为新 session 的领头进程。这还会将 session 领头进程放入一个新的进程组</p>
-<p>session的销毁：</p>
-<ul>
-<li>当 session 中的所有进程都结束时 session 也就消亡了。实际使用中比如网络断开了，session 肯定是要消亡的。</li>
-<li>让 session 的领头进程退出。一般情况下 session 的领头进程是 shell 进程，如果它处于前台，我们可以使用 exit 命令或者是 ctrl + d 让它退出。或者我们可以直接通过 kill 命令杀死 session 的领头进程。<ul>
-<li>原理是：当系统检测到挂断(hangup)条件时，内核中的驱动会将 SIGHUP 信号发送到整个 session。通常情况下，这会杀死 session 中的所有进程</li>
-</ul>
-</li>
-</ul>
-<p>session 与终端的关系：</p>
-<ul>
-<li><p>如果 session 关联的是<strong>伪终端</strong>，这个伪终端本身就是随着 session 的建立而创建的，session 结束，那么这个伪终端也会被销毁。</p>
-<ul>
-<li><p>打开终端，会话开始；关闭终端，会话结束，会话内部的进程也会随之终止，不管有没有运行完。</p>
-<p>一个典型的例子就是，<a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">SSH 登录</a>远程计算机，打开一个远程终端执行命令。这时，网络突然断线，再次登录的时候，是找不回上一次执行的命令的。因为上一次 SSH 会话已经终止了，里面的进程也随之消失了</p>
-<p>为了解决这个问题，会话与窗口可以”解绑”：窗口关闭时，会话并不终止，而是继续运行，等到以后需要的时候，再让会话”绑定”其他窗口（见“ Terminal  Multiplexer”）</p>
-</li>
-</ul>
-</li>
-<li><p>如果 session 关联的是 <strong>tty</strong>1-6，tty 则不会被销毁。因为该终端设备是在系统初始化的时候创建的，并不是依赖该会话建立的，所以当 session 退出，tty 仍然存在。只是 init 系统在 session 结束后，会重启 getty 来监听这个 tty</p>
-</li>
-</ul>
 <h2 id="控制终端-controlling-terminal"><a href="#控制终端-controlling-terminal" class="headerlink" title="控制终端(controlling terminal)"></a>控制终端(controlling terminal)</h2><p><strong>控制终端是进程的一个属性。</strong>通过 <code>fork</code> 系统调用创建的子进程会从父进程那里继承控制终端。这样，session 中的所有进程都从 session 领头进程那里继承控制终端。Session 的领头进程称为终端的控制进程(controlling process)。简单点说就是：<strong>一个 session 只能与一个终端关联，这个终端被称为 session 的控制终端(controlling terminal)。</strong>同时只能由 session 的领头进程来建立或者改变终端与 session 的联系。我们可以通过 ps 命令查看进程的控制终端：</p>
 <p><img src="https://img2018.cnblogs.com/blog/952033/202001/952033-20200103182831279-993028624.png" alt="img"></p>
 <p>支持 job control 的 <strong>shell</strong> 必须能够控制在某一时刻由哪个 job 使用终端。否则，可能会有多个 job 试图同时从终端读取数据，这会导致进程在接收用户输入时的混乱。为了防止这种情况发生，shell 必须按照预定的协议与终端驱动程序协作。</p>
@@ -653,7 +616,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro-of-Shell-Session"><span class="nav-text">Intro of Shell Session</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Session-%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E9%94%80%E6%AF%81"><span class="nav-text">Session 的创建和销毁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E7%BB%88%E7%AB%AF-controlling-terminal"><span class="nav-text">控制终端(controlling terminal)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Job-control"><span class="nav-text">Job control</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Killing-a-process"><span class="nav-text">Killing a process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pausing-and-backgrounding-processes"><span class="nav-text">Pausing and backgrounding processes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example"><span class="nav-text">example</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Terminal-Multiplexers"><span class="nav-text">Terminal Multiplexers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hierarchy"><span class="nav-text">hierarchy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sessions"><span class="nav-text">Sessions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows"><span class="nav-text">Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Panes"><span class="nav-text">Panes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#moving-on"><span class="nav-text">moving on</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#session-handling"><span class="nav-text">session handling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Aliases"><span class="nav-text">Aliases</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#example-1"><span class="nav-text">example</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dotfiles"><span class="nav-text">Dotfiles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSH"><span class="nav-text">SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#execute-commands-on-remote-machine"><span class="nav-text">execute commands on remote machine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Key-generation"><span class="nav-text">Key  generation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Key-based-authentication"><span class="nav-text">Key based authentication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copying-files-over-SSH"><span class="nav-text">Copying files over SSH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Port-Forwarding"><span class="nav-text">Port Forwarding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH-Configuration"><span class="nav-text">SSH Configuration</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E7%BB%88%E7%AB%AF-controlling-terminal"><span class="nav-text">控制终端(controlling terminal)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Job-control"><span class="nav-text">Job control</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Killing-a-process"><span class="nav-text">Killing a process</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pausing-and-backgrounding-processes"><span class="nav-text">Pausing and backgrounding processes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example"><span class="nav-text">example</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Terminal-Multiplexers"><span class="nav-text">Terminal Multiplexers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hierarchy"><span class="nav-text">hierarchy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sessions"><span class="nav-text">Sessions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows"><span class="nav-text">Windows</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Panes"><span class="nav-text">Panes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#moving-on"><span class="nav-text">moving on</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#session-handling"><span class="nav-text">session handling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Aliases"><span class="nav-text">Aliases</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#example-1"><span class="nav-text">example</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dotfiles"><span class="nav-text">Dotfiles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SSH"><span class="nav-text">SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#execute-commands-on-remote-machine"><span class="nav-text">execute commands on remote machine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Key-generation"><span class="nav-text">Key  generation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Key-based-authentication"><span class="nav-text">Key based authentication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copying-files-over-SSH"><span class="nav-text">Copying files over SSH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Port-Forwarding"><span class="nav-text">Port Forwarding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH-Configuration"><span class="nav-text">SSH Configuration</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -669,14 +632,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-count">141</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">

@@ -19,20 +19,22 @@
     var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Outline: 介绍了一些shell的常识">
+  <meta name="description" content="Outline: 介绍了一些shell的基本概念">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Using Shell">
-<meta property="og:url" content="http://lyk-love.cn/2022/03/26/Using%20Shell/index.html">
+<meta property="og:title" content="Shell Basic">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/26/Shell-Basic/index.html">
 <meta property="og:site_name" content="LYK-love">
-<meta property="og:description" content="Outline: 介绍了一些shell的常识">
+<meta property="og:description" content="Outline: 介绍了一些shell的基本概念">
 <meta property="og:locale">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Toolkit/Shel%20lSession%20Archetecture">
 <meta property="article:published_time" content="2022-03-26T12:14:21.000Z">
-<meta property="article:modified_time" content="2022-04-08T07:41:02.069Z">
+<meta property="article:modified_time" content="2022-05-04T19:38:19.994Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Toolkit/Shel%20lSession%20Archetecture">
 
-<link rel="canonical" href="http://lyk-love.cn/2022/03/26/Using%20Shell/">
+<link rel="canonical" href="http://lyk-love.cn/2022/03/26/Shell-Basic/">
 
 
 <script id="page-configurations">
@@ -45,7 +47,7 @@
   };
 </script>
 
-  <title>Using Shell | LYK-love</title>
+  <title>Shell Basic | LYK-love</title>
   
 
 
@@ -193,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/26/Using%20Shell/">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/26/Shell-Basic/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/rose1.jpg">
@@ -206,7 +208,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Using Shell
+          Shell Basic
         </h1>
 
         <div class="post-meta">
@@ -223,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-08 07:41:02" itemprop="dateModified" datetime="2022-04-08T07:41:02Z">2022-04-08</time>
+                <time title="Modified: 2022-05-04 19:38:19" itemprop="dateModified" datetime="2022-05-04T19:38:19Z">2022-05-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,8 +249,149 @@
 
       
         <p>Outline:</p>
-<p>介绍了一些shell的常识</p>
+<p>介绍了一些shell的基本概念</p>
 <span id="more"></span>
+<h1 id="Shell-Basic"><a href="#Shell-Basic" class="headerlink" title="Shell Basic"></a>Shell Basic</h1><p>详见拙著： <em>OS Introduction</em> : The user interface program, <strong>shell</strong> or <strong>GUI</strong>, is the <u>lowest level of user-mode software</u>, and allows the user to start other programs</p>
+<p>Shell是用户和操作系统之间的接口， 位于用户态的最底层</p>
+<p>Linux中有多种shell，默认使用的是Bash</p>
+<h3 id="shell种类"><a href="#shell种类" class="headerlink" title="shell种类"></a>shell种类</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>shell名称</th>
+<th>描述</th>
+<th>位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ash</td>
+<td>一个小的shell，但与bash完全兼容</td>
+<td>/bin/ash</td>
+</tr>
+<tr>
+<td>ash.static</td>
+<td>一个不依靠软件库的ash版本</td>
+<td>/bin/ash.static</td>
+</tr>
+<tr>
+<td>bin</td>
+<td>ash的一个符号链接</td>
+<td>/bin/ash</td>
+</tr>
+<tr>
+<td>bash</td>
+<td>“Bourne Again Shell”。由GNU开发，保持了对 sh shell 的(大部分)兼容性，是各种 Linux 发行版默认配置的 shell</td>
+<td>/bin/bash</td>
+</tr>
+<tr>
+<td>sh</td>
+<td>Bourne shell，是 UNIX 上的标准 shell</td>
+<td>/bin/sh</td>
+</tr>
+<tr>
+<td>ksh</td>
+<td>Korn Shell</td>
+<td>/bin/ksh</td>
+</tr>
+<tr>
+<td>csh</td>
+<td>C shell,  该shell的语法有点类似C语言</td>
+<td>/bin/csh</td>
+</tr>
+<tr>
+<td>tcsh</td>
+<td>csh 的增强版，加入了命令补全功能，提供了更加强大的语法支持</td>
+<td>/bin/tcsh</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><p>在现代的 Linux 上，sh 已经被 bash 代替。 sh在Linux中是bash的一个符号链接； 在mac中是一个独立的程序</p>
+</li>
+<li><p>当前 Linux 系统可用的 Shell 都记录在<code>/etc/shells</code>文件中：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">❯ cat /etc/shells</span><br><span class="line"><span class="meta"># </span><span class="language-bash">/etc/shells: valid login shells</span></span><br><span class="line">/bin/sh</span><br><span class="line">/bin/bash</span><br><span class="line">/usr/bin/bash</span><br><span class="line">/bin/rbash</span><br><span class="line">/usr/bin/rbash</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Shell-Session"><a href="#Shell-Session" class="headerlink" title="Shell Session"></a>Shell Session</h1><p>Shell session 是终端中当前的状态，在终端中只能有一个 session。当我们打开一个新的终端时，总会创建一个新的 shell session。</p>
+<p>就进程间的关系来说，session 由一个或多个进程组组成。一般情况下，来自单个登录的所有进程都属于同一个 session。我们可以通过下图来理解进程、进程组和 session 之间的关系：</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Toolkit/Shel%20lSession%20Archetecture" alt="Shell Session Archetecture"></p>
+<p>会话是由会话中的第一个进程创建的，<strong>一般情况下是打开终端时创建的 shell 进程</strong>。该进程也叫 session 的领头进程。Session 中领头进程的 PID 也就是 session 的 SID。我们可以通过下面的命令查看 SID：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -o pid,ppid,pgid,sid,tty,comm</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> PID    PPID    PGID     SID TT       COMMAND</span><br><span class="line">5745    5729    5745    5745 pts/4    zsh</span><br><span class="line">5785       1    5784    5745 pts/4    zsh</span><br><span class="line">5787       1    5784    5745 pts/4    zsh</span><br><span class="line">5789       1    5788    5745 pts/4    zsh</span><br><span class="line">5794    5789    5788    5745 pts/4    gitstatusd</span><br><span class="line">5844    5745    5844    5745 pts/4    ps</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Session 中的每个进程组被称为一个 <strong>job</strong>，有一个 job 会成为 session 的前台 job(foreground)，其它的 job 则是后台 job(background)。每个 session 连接一个控制终端(control terminal)，控制终端中的输入被发送给前台 job，从前台 job 产生的输出也被发送到控制终端上。同时由控制终端产生的信号，比如 ctrl + z 等都会传递给前台 job。</p>
+<p>一般情况下 session 和终端是一对一的关系，当我们打开多个终端窗口时，实际上就创建了多个 session。</p>
+<p>Session 的意义在于多个工作(job)在一个终端中运行，其中的一个为前台 job，它直接接收该终端的输入并把结果输出到该终端。其它的 job 则在后台运行。</p>
+<h1 id="Shell与系统调用"><a href="#Shell与系统调用" class="headerlink" title="Shell与系统调用"></a>Shell与系统调用</h1><p>由于系统调用<code>fork()</code>和<code>exec()</code>的分离，程序可以在<code>fork()</code>之后，<code>exec()</code>之前运行代码，方便了shell的工作</p>
+<h2 id="shell-workflow"><a href="#shell-workflow" class="headerlink" title="shell workflow"></a>shell workflow</h2><ul>
+<li><code>shell</code>的workflow：<ol>
+<li>显示一个<code>prompt</code>,等待用户输入</li>
+<li>用户进行输入，输入内容是一个命令，由一个可执行程序和若干参数组成</li>
+<li><code>shell</code>找到该可执行程序。调用<code>fork()</code>创建新进程</li>
+<li><code>shell</code>可能执行某些代码</li>
+<li>调用<code>exec()</code>执行这个可执行程序</li>
+<li>调用<code>wait()</code>等待该命令完成</li>
+<li>子进程执行结束后，shell从<code>wait()</code>返回，继续步骤1</li>
+</ol>
+</li>
+</ul>
+<h2 id="shell-重定向"><a href="#shell-重定向" class="headerlink" title="shell 重定向"></a>shell 重定向</h2><p>shell实现重定向：对于<code>wc 5_2.c &gt; [filename].txt</code>, wc的输出结果被重定向到<code>[filename].txt</code></p>
+<p>步骤解释：</p>
+<ol>
+<li><p>shell在<code>fork()</code>之后，<code>exec()</code>之前，会：</p>
+<ol>
+<li>先用<code>open</code>打开文件<code>[filename].txt</code>, 给它分配一个文件描述符, 记为<code>STDOUT_FILENO</code>(一般是3，因为0，1，2都已被占用)</li>
+<li>再关闭标准输出( fd = 1 )</li>
+</ol>
+</li>
+</ol>
+<ol>
+<li><p>shell使用<code>dup</code>/<code>dup2</code>来分配一个<code>STDOUT_FILENO</code>的复制，由于<code>dup</code>默认是分配未使用的最小的fd），此时fd=1已经关闭，所以就又分配了fd=1，它是<code>STDOUT_FILENO</code>的复制</p>
+</li>
+<li><p>shell执行指令，子进程准备输出，由于UNIX系统会从零开始寻找可用的fd(文件描述符)，因此<code>STDOUT_FILENO</code>会成为第一个可用的fd，作为子进程输出的目标</p>
+</li>
+</ol>
+<p>详见<em>OS Persistence</em></p>
+<ul>
+<li>UNIX pipe也用类似方式实现，但使用<code>pipe()</code>系统调用,将前一个进程的输入作为后一个进程的输出：<code>grep -o foo fole | wc -l</code></li>
+</ul>
+<h2 id="Session-的创建和销毁"><a href="#Session-的创建和销毁" class="headerlink" title="Session 的创建和销毁"></a>Session 的创建和销毁</h2><p>session的创建：</p>
+<ul>
+<li>通常，新的 session 由系统登录程序创建，session 中的领头进程是运行用户登录 shell 的进程。新创建的每个进程都会属于一个进程组，当创建一个进程时，它和父进程在同一个进程组、session 中。</li>
+</ul>
+<p>将进程放入不同 session 的惟一方法是使用 <code>setsid</code> 函数使其成为新 session 的领头进程。这还会将 session 领头进程放入一个新的进程组</p>
+<p>session的销毁：</p>
+<ul>
+<li>当 session 中的所有进程都结束时 session 也就消亡了。实际使用中比如网络断开了，session 肯定是要消亡的。</li>
+<li>让 session 的领头进程退出。一般情况下 session 的领头进程是 shell 进程，如果它处于前台，我们可以使用 exit 命令或者是 ctrl + d 让它退出。或者我们可以直接通过 kill 命令杀死 session 的领头进程。<ul>
+<li>原理是：当系统检测到挂断(hangup)条件时，内核中的驱动会将 SIGHUP 信号发送到整个 session。通常情况下，这会杀死 session 中的所有进程</li>
+</ul>
+</li>
+</ul>
+<p>session 与终端的关系：</p>
+<ul>
+<li><p>如果 session 关联的是<strong>伪终端</strong>，这个伪终端本身就是随着 session 的建立而创建的，session 结束，那么这个伪终端也会被销毁。</p>
+<ul>
+<li><p>打开终端，会话开始；关闭终端，会话结束，会话内部的进程也会随之终止，不管有没有运行完。</p>
+<p>一个典型的例子就是，<a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html">SSH 登录</a>远程计算机，打开一个远程终端执行命令。这时，网络突然断线，再次登录的时候，是找不回上一次执行的命令的。因为上一次 SSH 会话已经终止了，里面的进程也随之消失了</p>
+<p>为了解决这个问题，会话与窗口可以”解绑”：窗口关闭时，会话并不终止，而是继续运行，等到以后需要的时候，再让会话”绑定”其他窗口（见“ Terminal  Multiplexer”）</p>
+</li>
+</ul>
+</li>
+<li><p>如果 session 关联的是 <strong>tty</strong>1-6，tty 则不会被销毁。因为该终端设备是在系统初始化的时候创建的，并不是依赖该会话建立的，所以当 session 退出，tty 仍然存在。只是 init 系统在 session 结束后，会重启 getty 来监听这个 tty</p>
+</li>
+</ul>
+<h1 id="用户环境"><a href="#用户环境" class="headerlink" title="用户环境"></a>用户环境</h1><p>.bash_profile, .bash_logout, .bashrc files</p>
+<ul>
+<li>.bash_profile: 用户<strong>登录时</strong>被读取，其中包含的命令被bash执行</li>
+<li>.bashrc: <strong>启动一个新的shell时</strong>读取并执行 </li>
+<li>.bash_logout: 登录退出时读取执行</li>
+</ul>
 <h1 id="Linux-shell"><a href="#Linux-shell" class="headerlink" title="Linux shell"></a>Linux shell</h1><p>When you launch your terminal, you will see a <em>prompt</em> that often looks a little like this:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">missing:~$ </span><br></pre></td></tr></table></figure>
 <ul>
@@ -318,7 +461,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command --parameter</span><br></pre></td></tr></table></figure>
 <p>长参数赋值：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command --parameter=10</span><br></pre></td></tr></table></figure>
-<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><p>多个长参数，不能像多个短参数那样合并， 只能以空格隔开：</p>
+<p>多个长参数，不能像多个短参数那样合并， 只能以空格隔开：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command --parameter1 --parameter2</span><br></pre></td></tr></table></figure>
 <p><strong>可以组合使用短参数和长参数</strong><br>例如：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">command -abcd --parameter1 --parameter2</span><br></pre></td></tr></table></figure>
@@ -388,12 +531,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/03/26/%E5%AF%BC%E8%AE%BA-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="prev" title="AI Intro">
-      <i class="fa fa-chevron-left"></i> AI Intro
+    <a href="/2022/03/26/T1&T2%20%E6%8E%92%E5%BA%8F%E4%B8%8E%E5%88%86%E6%B2%BB/" rel="prev" title="T1&T2 排序与分治">
+      <i class="fa fa-chevron-left"></i> T1&T2 排序与分治
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/03/26/The-Story-of-Art-19-20%E4%B8%96%E7%BA%AA/" rel="next" title="The Story of Art: Chapter 26,27">
-      The Story of Art: Chapter 26,27 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/03/26/MySQL%20Data%20Manipulation/" rel="next" title="MySQL Data Manipulation">
+      MySQL Data Manipulation <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -453,7 +596,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-shell"><span class="nav-text">Linux shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PATH"><span class="nav-text">PATH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Navigating-in-the-shell"><span class="nav-text">Navigating in the shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connecting-programs"><span class="nav-text">Connecting programs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root"><span class="nav-text">root</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-Parameters"><span class="nav-text">Command Parameters</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E5%8F%82%E6%95%B0"><span class="nav-text">短参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%BF%E5%8F%82%E6%95%B0"><span class="nav-text">长参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text"> </span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-shell"><span class="nav-text">Windows shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browser"><span class="nav-text">Browser</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-Basic"><span class="nav-text">Shell Basic</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shell%E7%A7%8D%E7%B1%BB"><span class="nav-text">shell种类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-Session"><span class="nav-text">Shell Session</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">Shell与系统调用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-workflow"><span class="nav-text">shell workflow</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="nav-text">shell 重定向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Session-%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E9%94%80%E6%AF%81"><span class="nav-text">Session 的创建和销毁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E7%8E%AF%E5%A2%83"><span class="nav-text">用户环境</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linux-shell"><span class="nav-text">Linux shell</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PATH"><span class="nav-text">PATH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Navigating-in-the-shell"><span class="nav-text">Navigating in the shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Connecting-programs"><span class="nav-text">Connecting programs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#root"><span class="nav-text">root</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-Parameters"><span class="nav-text">Command Parameters</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E5%8F%82%E6%95%B0"><span class="nav-text">短参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%BF%E5%8F%82%E6%95%B0"><span class="nav-text">长参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-shell"><span class="nav-text">Windows shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Browser"><span class="nav-text">Browser</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -469,14 +612,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-count">141</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">

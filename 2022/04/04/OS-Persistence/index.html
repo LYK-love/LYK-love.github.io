@@ -19,12 +19,12 @@
     var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Outline:  I&#x2F;O Devices File File System Locality and FFS Crush-Consistency Problem VFS  Ref: OSTEP">
+  <meta name="description" content="Outline:  I&#x2F;O Devices File File System Locality and FFS Crush-Consistency Problem  Ref: OSTEP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OS Persistence">
 <meta property="og:url" content="http://lyk-love.cn/2022/04/04/OS-Persistence/index.html">
 <meta property="og:site_name" content="LYK-love">
-<meta property="og:description" content="Outline:  I&#x2F;O Devices File File System Locality and FFS Crush-Consistency Problem VFS  Ref: OSTEP">
+<meta property="og:description" content="Outline:  I&#x2F;O Devices File File System Locality and FFS Crush-Consistency Problem  Ref: OSTEP">
 <meta property="og:locale">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Arch.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Layers.png">
@@ -35,12 +35,8 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/ext3%20with%20journalist.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/data%20journaling.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/journaling%20circyling%20journalist.png">
-<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Arch.png">
-<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Layer.png">
-<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Function%20Call%20workflow.png">
-<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20example.png">
 <meta property="article:published_time" content="2022-04-04T01:36:01.000Z">
-<meta property="article:modified_time" content="2022-04-16T15:04:13.025Z">
+<meta property="article:modified_time" content="2022-05-04T18:22:55.709Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="OS Basic">
 <meta name="twitter:card" content="summary">
@@ -237,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-04-16 15:04:13" itemprop="dateModified" datetime="2022-04-16T15:04:13Z">2022-04-16</time>
+                <time title="Modified: 2022-05-04 18:22:55" itemprop="dateModified" datetime="2022-05-04T18:22:55Z">2022-05-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -267,7 +263,6 @@
 <li>File System</li>
 <li>Locality and FFS</li>
 <li>Crush-Consistency Problem</li>
-<li>VFS</li>
 </ul>
 <p>Ref: <em>OSTEP</em></p>
 <span id="more"></span>
@@ -350,7 +345,7 @@
 <li>[lseek]</li>
 <li>close</li>
 </ol>
-<h1 id="File-System"><a href="#File-System" class="headerlink" title="File System"></a>File System</h1><h2 id="整体组织"><a href="#整体组织" class="headerlink" title="整体组织"></a>整体组织</h2><p>我们实现极简版的VSFS（ <code>Very Simple File System</code> ）， 本文最后会看到，VVFS事实上与Linux的VFS（虚拟文件系统，提供了统一的文件系统模型）相同：</p>
+<h1 id="File-System"><a href="#File-System" class="headerlink" title="File System"></a>File System</h1><h2 id="整体组织"><a href="#整体组织" class="headerlink" title="整体组织"></a>整体组织</h2><p>我们实现极简版的VSFS（ <code>Very Simple File System</code> ）， VVFS与Linux的VFS（虚拟文件系统，提供了统一的文件系统模型，详见<em>Linux Basic</em>）大致相同：</p>
 <ul>
 <li>磁盘分块（block），文件系统由一系列块组成</li>
 <li>假定有64块，每块4KB. 数据块为最后56个，inode表占5个，两种位图各占一个，超级块占一个</li>
@@ -586,32 +581,6 @@
 </ol>
 <p>元数据日志的缺点是<strong>块复用问题</strong>， 因为目录的内容被当作元数据而不是物理数据，这意味着（在元数据日志中）<strong>目录的内容会放在日志空间</strong>。 假设某目录的内容在日志空间中占用块1000， 随后用户删除该目录，并释放块1000， 最后用户创建了新文件，并复用了块1000（此时该块位于物理数据空间）， 此时，在日志提交后，加检查点完成之前发生了崩溃，在replay阶段， 会重放日志中所有内容， 那么新文件的内容（也就是块1000）就会被恢复为目录的内容！ 这都是因为目录的内容被视作元数据，而不是物理数据，保留在日志空间</p>
 <p>Linux ext3点解决方案是加入撤销（revoke）指令，在上例中，删除目录将导致revoke指令被添加到日志，在replay时，被revoke的数据（这里是目录的内容）将不会被重放</p>
-<h1 id="Data-Integrity-and-Protection"><a href="#Data-Integrity-and-Protection" class="headerlink" title="Data Integrity and Protection"></a>Data Integrity and Protection</h1><h1 id="VFS"><a href="#VFS" class="headerlink" title="VFS"></a>VFS</h1><p>VFS（Virtual Filesystem Switch）：虚拟文件系统或虚拟文件系统转换，是文件系统的虚拟化，位于内核态，将底层异构的文件系统转换为统一的文件系统，并通过统一的Posix接口访问</p>
-<ul>
-<li>作为文件系统的抽象，VFS只存在于内存</li>
-<li>VFS起源于Unix， 所以VFS适用于所有Unix like OS</li>
-<li>VFS的整体组织与前文提到的VVFS相同，分为超级块、inode等</li>
-</ul>
-<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Arch.png" alt="VFS Arch"></p>
-<h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><p>VFS在整个Linux系统中的分层视图如下：</p>
-<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Layer.png" alt="VFS Layer"></p>
-<p>Linux系统的User<strong>使用GLIBC（POSIX标准、GUN C运行时库）作为应用程序的运行时库</strong>，然后通过OS转换为系统调用SCI（system-call interface），SCI是操作系统内核定义的系统调用接口，这层抽象允许<strong>用户程序的I/O操作转换为内核的接口调用</strong>。VFS提供了一个抽象层，将POSIX API接口与不同存储设备的具体接口实现进行了分离，使得底层的文件系统类型、设备类型对上层应用程序透明。</p>
-<h2 id="接口适配示例"><a href="#接口适配示例" class="headerlink" title="接口适配示例"></a>接口适配示例</h2><p>用户写入文件时，使用POSIX标准的write接口，然后陷入kernel mode，调用<code>sys_write()</code>系统调用（属于SCI层）。然后VFS层接受到该调用，转换为对给定文件系统、给定设备的操作</p>
-<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20Function%20Call%20workflow.png" alt="VFS Function Call workflow"></p>
-<h2 id="跨设备-文件系统示例"><a href="#跨设备-文件系统示例" class="headerlink" title="跨设备/文件系统示例"></a>跨设备/文件系统示例</h2><p>下面中，用户通过cp命令进行文件拷贝，用户不需要关心底层文件系统的实现，只需要通过VFS抽象层实现对不同文件系统的读写操作：</p>
-<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VFS%20example.png" alt="VFS example"></p>
-<h2 id="VFS支持的系统调用"><a href="#VFS支持的系统调用" class="headerlink" title="VFS支持的系统调用"></a>VFS支持的系统调用</h2><p>上述示例中提到VFS也有自己的文件模型，用来支持操作系统的系统调用。下面是VFS抽象模型支持的所有Linux系统调用：</p>
-<ul>
-<li>文件系统相关：mount, umount, umount2, sysfs,  statfs,  fstatfs,  fstatfs64, ustat</li>
-<li>目录相关：chroot，pivot_root，chdir，fchdir，getcwd，mkdir，rmdir，getdents，getdents64，readdir，link，unlink，rename，lookup_dcookie</li>
-<li>链接相关：readlink，symlink</li>
-<li>文件相关：chown， fchown，lchown，chown16，fchown16，lchown16，hmod，fchmod，utime，stat，fstat，lstat，acess，oldstat，oldfstat，oldlstat，stat64，lstat64，lstat64，open，close，creat，umask，dup，dup2，fcntl， fcntl64，select，poll，truncate，ftruncate，truncate64，ftruncate64，lseek，llseek，read，write，readv，writev，sendfile，sendfile64，readahead</li>
-</ul>
-<h2 id="VFS支持的文件系统"><a href="#VFS支持的文件系统" class="headerlink" title="VFS支持的文件系统"></a>VFS支持的文件系统</h2><ul>
-<li>Disk-based 文件系统：Ext2, ext3, ReiserFS，Sysv, UFS, MINIX, VxFS，VFAT, NTFS，ISO9660 CD-ROM, UDF DVD，HPFS, HFS, AFFS, ADFS,</li>
-<li>Network 文件系统：NFS, Coda, AFS, CIFS, NCP</li>
-<li>特殊文件系统：/proc，/tmpfs等</li>
-</ul>
 
     </div>
 
@@ -695,7 +664,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O-Devicecs"><span class="nav-text">I&#x2F;O Devicecs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O%E7%B3%BB%E7%BB%9F%E5%90%84%E5%B1%82%E8%BD%AF%E4%BB%B6%E5%8F%8A%E5%85%B6%E5%8A%9F%E8%83%BD"><span class="nav-text">I&#x2F;O系统各层软件及其功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unbuffered-I-O-amp-Buffered-I-O"><span class="nav-text">Unbuffered I&#x2F;O &amp; Buffered I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAID"><span class="nav-text">RAID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File"><span class="nav-text">File</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#File-types"><span class="nav-text">File types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-Structure"><span class="nav-text">File  Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-I-O-System-Calls"><span class="nav-text">Basic I&#x2F;O System Calls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-descriptor"><span class="nav-text">File descriptor</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-System"><span class="nav-text">File System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E7%BB%84%E7%BB%87"><span class="nav-text">整体组织</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%EF%BC%9A-inode"><span class="nav-text">文件组织： inode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E7%B4%A2%E5%BC%95"><span class="nav-text">多级索引</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%84%E7%BB%87"><span class="nav-text">目录组织</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B2%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86"><span class="nav-text">空闲空间管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE"><span class="nav-text">文件访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-text">缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Locality-and-FFS"><span class="nav-text">Locality and FFS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Crush-Consistency-Problem"><span class="nav-text">Crush-Consistency Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FSCK"><span class="nav-text">FSCK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Journalist"><span class="nav-text">Journalist</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Journaling"><span class="nav-text">Data Journaling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metadata-Journaling"><span class="nav-text">Metadata Journaling</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Data-Integrity-and-Protection"><span class="nav-text">Data Integrity and Protection</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VFS"><span class="nav-text">VFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B1%82"><span class="nav-text">分层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E9%80%82%E9%85%8D%E7%A4%BA%E4%BE%8B"><span class="nav-text">接口适配示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E8%AE%BE%E5%A4%87-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%A4%BA%E4%BE%8B"><span class="nav-text">跨设备&#x2F;文件系统示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VFS%E6%94%AF%E6%8C%81%E7%9A%84%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">VFS支持的系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VFS%E6%94%AF%E6%8C%81%E7%9A%84%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-text">VFS支持的文件系统</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O-Devicecs"><span class="nav-text">I&#x2F;O Devicecs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O%E7%B3%BB%E7%BB%9F%E5%90%84%E5%B1%82%E8%BD%AF%E4%BB%B6%E5%8F%8A%E5%85%B6%E5%8A%9F%E8%83%BD"><span class="nav-text">I&#x2F;O系统各层软件及其功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unbuffered-I-O-amp-Buffered-I-O"><span class="nav-text">Unbuffered I&#x2F;O &amp; Buffered I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAID"><span class="nav-text">RAID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File"><span class="nav-text">File</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#File-types"><span class="nav-text">File types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-Structure"><span class="nav-text">File  Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-I-O-System-Calls"><span class="nav-text">Basic I&#x2F;O System Calls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-descriptor"><span class="nav-text">File descriptor</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-System"><span class="nav-text">File System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E7%BB%84%E7%BB%87"><span class="nav-text">整体组织</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%EF%BC%9A-inode"><span class="nav-text">文件组织： inode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E7%B4%A2%E5%BC%95"><span class="nav-text">多级索引</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%84%E7%BB%87"><span class="nav-text">目录组织</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B2%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86"><span class="nav-text">空闲空间管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE"><span class="nav-text">文件访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-text">缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Locality-and-FFS"><span class="nav-text">Locality and FFS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Crush-Consistency-Problem"><span class="nav-text">Crush-Consistency Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FSCK"><span class="nav-text">FSCK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Journalist"><span class="nav-text">Journalist</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Journaling"><span class="nav-text">Data Journaling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metadata-Journaling"><span class="nav-text">Metadata Journaling</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -711,14 +680,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-count">141</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
