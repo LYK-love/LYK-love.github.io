@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/data%20journaling.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/journaling%20circyling%20journalist.png">
 <meta property="article:published_time" content="2022-04-04T01:36:01.000Z">
-<meta property="article:modified_time" content="2022-05-04T18:22:55.709Z">
+<meta property="article:modified_time" content="2022-05-05T04:24:05.721Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="OS Basic">
 <meta name="twitter:card" content="summary">
@@ -233,7 +233,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-05-04 18:22:55" itemprop="dateModified" datetime="2022-05-04T18:22:55Z">2022-05-04</time>
+                <time title="Modified: 2022-05-05 04:24:05" itemprop="dateModified" datetime="2022-05-05T04:24:05Z">2022-05-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -298,53 +298,7 @@
 </li>
 </ul>
 <p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Layers.png" alt="File Structure"></p>
-<h2 id="File-types"><a href="#File-types" class="headerlink" title="File types"></a>File types</h2><p>从细节来说，文件类型分为:</p>
-<ul>
-<li>regular file </li>
-<li>character special file </li>
-<li>block special file </li>
-<li>fifo </li>
-<li>socket </li>
-<li>symbolic link </li>
-<li>directory (  目录也是一种文件，我们只是把目录和文件分开讨论 )</li>
-</ul>
-<h2 id="File-Structure"><a href="#File-Structure" class="headerlink" title="File  Structure"></a>File  Structure</h2><p>File  Structure:</p>
-<ul>
-<li>Byte stream; </li>
-<li>no particular internal structure</li>
-</ul>
-<h2 id="Basic-I-O-System-Calls"><a href="#Basic-I-O-System-Calls" class="headerlink" title="Basic I/O System Calls"></a>Basic I/O System Calls</h2><ul>
-<li>File descriptor </li>
-<li>Basic I/O:<ul>
-<li>open/creat, close, read, write, lseek </li>
-<li>dup/dup2 </li>
-<li>fcntl</li>
-<li>ioctl</li>
-</ul>
-</li>
-</ul>
-<h2 id="File-descriptor"><a href="#File-descriptor" class="headerlink" title="File descriptor"></a>File descriptor</h2><p>File descriptor:</p>
-<ul>
-<li>A small non-negative integer <ul>
-<li><code>int fd;</code> </li>
-</ul>
-</li>
-<li><strong>是thread local的</strong></li>
-<li>在UNIX中用于访问文件,  也可以将它作为指向文件对象的指针</li>
-<li>in <code>&lt;unistd.h&gt;</code><ul>
-<li><strong>STDIN_FILENO: 0</strong></li>
-<li><strong>STDOUT_FILENO : 1</strong></li>
-<li><strong>STDERR_FILENO: 2</strong> </li>
-</ul>
-</li>
-</ul>
-<p>General steps of file operation: </p>
-<ol>
-<li>open</li>
-<li>read/write</li>
-<li>[lseek]</li>
-<li>close</li>
-</ol>
+<p>Linux文件的细节详见<em>Linux Programming</em></p>
 <h1 id="File-System"><a href="#File-System" class="headerlink" title="File System"></a>File System</h1><h2 id="整体组织"><a href="#整体组织" class="headerlink" title="整体组织"></a>整体组织</h2><p>我们实现极简版的VSFS（ <code>Very Simple File System</code> ）， VVFS与Linux的VFS（虚拟文件系统，提供了统一的文件系统模型，详见<em>Linux Basic</em>）大致相同：</p>
 <ul>
 <li>磁盘分块（block），文件系统由一系列块组成</li>
@@ -664,7 +618,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O-Devicecs"><span class="nav-text">I&#x2F;O Devicecs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O%E7%B3%BB%E7%BB%9F%E5%90%84%E5%B1%82%E8%BD%AF%E4%BB%B6%E5%8F%8A%E5%85%B6%E5%8A%9F%E8%83%BD"><span class="nav-text">I&#x2F;O系统各层软件及其功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unbuffered-I-O-amp-Buffered-I-O"><span class="nav-text">Unbuffered I&#x2F;O &amp; Buffered I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAID"><span class="nav-text">RAID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File"><span class="nav-text">File</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#File-types"><span class="nav-text">File types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-Structure"><span class="nav-text">File  Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Basic-I-O-System-Calls"><span class="nav-text">Basic I&#x2F;O System Calls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File-descriptor"><span class="nav-text">File descriptor</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-System"><span class="nav-text">File System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E7%BB%84%E7%BB%87"><span class="nav-text">整体组织</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%EF%BC%9A-inode"><span class="nav-text">文件组织： inode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E7%B4%A2%E5%BC%95"><span class="nav-text">多级索引</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%84%E7%BB%87"><span class="nav-text">目录组织</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B2%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86"><span class="nav-text">空闲空间管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE"><span class="nav-text">文件访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-text">缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Locality-and-FFS"><span class="nav-text">Locality and FFS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Crush-Consistency-Problem"><span class="nav-text">Crush-Consistency Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FSCK"><span class="nav-text">FSCK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Journalist"><span class="nav-text">Journalist</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Journaling"><span class="nav-text">Data Journaling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metadata-Journaling"><span class="nav-text">Metadata Journaling</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O-Devicecs"><span class="nav-text">I&#x2F;O Devicecs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O%E7%B3%BB%E7%BB%9F%E5%90%84%E5%B1%82%E8%BD%AF%E4%BB%B6%E5%8F%8A%E5%85%B6%E5%8A%9F%E8%83%BD"><span class="nav-text">I&#x2F;O系统各层软件及其功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unbuffered-I-O-amp-Buffered-I-O"><span class="nav-text">Unbuffered I&#x2F;O &amp; Buffered I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAID"><span class="nav-text">RAID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File"><span class="nav-text">File</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-System"><span class="nav-text">File System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E7%BB%84%E7%BB%87"><span class="nav-text">整体组织</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%EF%BC%9A-inode"><span class="nav-text">文件组织： inode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E7%B4%A2%E5%BC%95"><span class="nav-text">多级索引</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%84%E7%BB%87"><span class="nav-text">目录组织</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B2%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86"><span class="nav-text">空闲空间管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE"><span class="nav-text">文件访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-text">缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Locality-and-FFS"><span class="nav-text">Locality and FFS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Crush-Consistency-Problem"><span class="nav-text">Crush-Consistency Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FSCK"><span class="nav-text">FSCK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Journalist"><span class="nav-text">Journalist</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Journaling"><span class="nav-text">Data Journaling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metadata-Journaling"><span class="nav-text">Metadata Journaling</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -680,7 +634,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-count">143</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -693,7 +647,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

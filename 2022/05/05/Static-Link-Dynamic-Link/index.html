@@ -27,7 +27,7 @@
 <meta property="og:description" content="Outline:  static link static load dynamic link &amp;&amp; load">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-05T01:18:34.000Z">
-<meta property="article:modified_time" content="2022-05-04T17:18:34.599Z">
+<meta property="article:modified_time" content="2022-05-05T05:42:16.520Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -215,16 +215,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2022-05-05 01:18:34" itemprop="dateCreated datePublished" datetime="2022-05-05T01:18:34Z">2022-05-05</time>
+              <time title="Created: 2022-05-05 01:18:34 / Modified: 05:42:16" itemprop="dateCreated datePublished" datetime="2022-05-05T01:18:34Z">2022-05-05</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-05-04 17:18:34" itemprop="dateModified" datetime="2022-05-04T17:18:34Z">2022-05-04</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -336,6 +330,31 @@
 </ul>
 </li>
 </ul>
+<h1 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h1><p>编写两个简单的程序（fred.c, bill.c），将其编译为目标文件，并分别生成静态库和动态库。再编写程序调用之，说明库的使用。</p>
+<ol>
+<li>生成静态链接库<ol>
+<li><code>gcc -c h.c -o h.o</code></li>
+<li><code>ar cqs libh.a h.o</code>：ar是生成库的命令，cqs是参数，libh.a是生成的静态链接库须以lib开头，h是库名，a表示是静态链接库，h.o是刚生成的目标文件</li>
+</ol>
+</li>
+<li>生成动态链接库<ol>
+<li><code>gcc -c h.c -o h.o</code></li>
+<li><code>gcc -shared -WI -o libh.so h.o</code>：生成动态链接库使用gcc来完成，-shared -WI是参数，libh.so是刚生成的静态链接库，必须以lib开头，h是库名，so表示动态链接库，h.o是刚生成目标文件。</li>
+</ol>
+</li>
+<li>将生成的libh.a，libh.so拷贝到/usr/lib或/lib下</li>
+<li>编译带静态链接库的程序<ol>
+<li><code>gcc -c test.c -o test.o</code></li>
+<li><code>gcc test.o -o test -WI -Bstatic -lh</code>:-WI -Bstatic表示链接静态库，-lh中-l表示链接，h是库名即/usr/lib下的libh.a</li>
+</ol>
+</li>
+<li>编译带动态链接库的程序<ol>
+<li><code>gcc -c test.c -o test.o</code></li>
+<li><code>gcc test.o -o test -WI -Bdynamic -lh</code>:-WI -Bdynamic表示链接动态库，-lh中-l表示链接，h是库名即/usr/lib下的libh.so</li>
+</ol>
+</li>
+<li>运行./test得到结果</li>
+</ol>
 
     </div>
 
@@ -419,7 +438,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Link-amp-Load"><span class="nav-text">Link &amp; Load</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#static-link"><span class="nav-text">static link</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static-load"><span class="nav-text">static load</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dynamic-link-amp-load"><span class="nav-text">dynamic link &amp; load</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Link-amp-Load"><span class="nav-text">Link &amp; Load</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#static-link"><span class="nav-text">static link</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#static-load"><span class="nav-text">static load</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dynamic-link-amp-load"><span class="nav-text">dynamic link &amp; load</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Example"><span class="nav-text">Example</span></a></div>
       </div>
       <!--/noindex-->
 
@@ -435,7 +454,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-count">143</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -448,7 +467,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

@@ -27,7 +27,7 @@
 <meta property="og:description" content="Outline:  Comman Commands All Commands">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-05-05T03:41:07.000Z">
-<meta property="article:modified_time" content="2022-05-04T19:41:07.735Z">
+<meta property="article:modified_time" content="2022-05-26T15:13:05.545Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-05-04 19:41:07" itemprop="dateModified" datetime="2022-05-04T19:41:07Z">2022-05-04</time>
+                <time title="Modified: 2022-05-26 15:13:05" itemprop="dateModified" datetime="2022-05-26T15:13:05Z">2022-05-26</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,14 +255,19 @@
 <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>GCC： GNU Compiler Collection，是GNU的一套编程语言编译器</p>
 <p>原名为<strong>GNU C语言编译器</strong>（<strong>GNU C Compiler</strong>），因为它原本只能处理<a target="_blank" rel="noopener" href="https://www.wikiwand.com/zh-hans/C語言">C语言</a>。GCC在发布后很快地得到扩展，变得可处理<a target="_blank" rel="noopener" href="https://www.wikiwand.com/zh-hans/C%2B%2B">C++</a>。之后也变得可处理<a target="_blank" rel="noopener" href="https://www.wikiwand.com/zh-hans/Fortran">Fortran</a>、<a target="_blank" rel="noopener" href="https://www.wikiwand.com/zh-hans/Pascal_(程式語言">Pascal</a>)、<a target="_blank" rel="noopener" href="https://www.wikiwand.com/zh-hans/Objective-C">Objective-C</a>、<a target="_blank" rel="noopener" href="https://www.wikiwand.com/zh-hans/Java">Java</a>、<a target="_blank" rel="noopener" href="https://www.wikiwand.com/zh-hans/Ada">Ada</a>，<a target="_blank" rel="noopener" href="https://www.wikiwand.com/zh-hans/Go">Go</a>与其他语言。</p>
 <p>许多操作系统，包括许多<a target="_blank" rel="noopener" href="https://www.wikiwand.com/zh-hans/类Unix">类Unix</a>系统，如<a target="_blank" rel="noopener" href="https://www.wikiwand.com/zh-hans/Linux">Linux</a>及BSD家族都采用GCC作为标准编译</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38410730/article/details/80530616">https://blog.csdn.net/qq_38410730/article/details/80530616</a></p>
 <h2 id="Comman-Commands"><a href="#Comman-Commands" class="headerlink" title="Comman Commands"></a>Comman Commands</h2><ol>
 <li><code>gcc -c (编译)</code></li>
 <li><code>gcc (链接 或者 编译 + 链接)</code></li>
 <li><code>g++ (C++对应的命令，其实就是换了前端)</code></li>
 </ol>
+<p>gcc总体选项<br>后缀名    对于的语言<br>-c    只汇编不链接，生成目标文件“.o”<br>-S    只编译不汇编，生成汇编代码“.s”<br>-E    只预处理不编译，生成文件“.i”<br>-g    在可执行程序中包含标准调试信息<br>-o file    将文件输出到file里<br>-v    打印编译器内部各编译过程的命令行信息<br>-I dir    在头文件的搜索路径列表中添加dir目录<br>-L dir    在库函数的搜索路径列表中添加dir目录<br>-static    链接静态库<br>-l library    链接名为library的库文件<br>gcc告警和出错选项<br>选项    含义<br>-ansi    支持符合ANSI标准的C程序<br>-pedantic    允许发出ANSIC标准所列的全部告警信息<br>-pedantic-error    允许发出ANSIC标准所列的全部错误信息<br>-w    关闭所有告警<br>-Wall    允许发出gcc提供的所有有用的报警信息<br>-werror    把所有的告警信息转换为错误信息，并在告警发生时终止编译过程<br>gcc可以对代码进行优化，它通过编译选项“-On”控制优化代码的生成，其中n是一个代表优化级别的整数。对于不同版本的gcc，n的取值范围及其对应的优化效果可能并不完全相同，比较典型的范围是0-2或0-3。</p>
+<p>不同的优化级别对应不同的优化处理工作。例如：优化选项“-O1”主要进行线程跳转和延迟退栈两种优化；优化选项“-O2”除了完成所有的“-O1”级别的优化之外，还要进行一些额外的调整工作，例如处理器指令调度等；优化选项“-O3”则还包括循环开展和其他一些与处理器特性相关的优化工作。</p>
+<p>gcc体系结构相关选项<br>选项    含义<br>-mieee-fp/-mno-ieee-fp    使用/不使用IEEE标准进行浮点数的比较<br>-msoft-float    输出包含浮点库调用的目标代码<br>-mshort    将int类型作为16位处理，相当于short int<br>-mrtd    强行将函数参数固定的函数用ret NUM返回，节省调用函数的一条指令<br>-mcpu=type    针对不同的CPU使用相应的CPU指令。可选择的type有i386、i486、pentium、i686等<br>gcc指令的一般格式为：</p>
+<p>gcc [选项] 要编译的文件 [选项] [目标文件]</p>
 <p>example：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gcc –o hello hello.c ： 将hello.c文件编译成hello的可执行文件</span><br><span class="line">gcc –c hello.c ： 将hello.c文件生成hello.o文件 gcc -E hello.c ： 只是激活预处理，不生成文档，需要把它重定向到另外一个文档里</span><br><span class="line">gcc –S hello.c ： 将hello.c文件生成hello.s文件的汇编代码</span><br><span class="line">gcc –pipe –o hello hello.c ： 使用管道代替编译中临时文档</span><br><span class="line">gcc hello.c –include /root/hello.h ：包含某个代码，简单来说，就是以某个文档，需要另外一个文档的时候，就能够用它设定，功能就相当于在代码中使</span><br></pre></td></tr></table></figure>
-<h2 id=""><a href="#" class="headerlink" title=" "></a> </h2><h2 id="All-Commands"><a href="#All-Commands" class="headerlink" title="All Commands"></a>All Commands</h2><ol>
+<h2 id="All-Commands"><a href="#All-Commands" class="headerlink" title="All Commands"></a>All Commands</h2><ol>
 <li>Usage:<ol>
 <li>gcc [options] [filename]</li>
 </ol>
@@ -275,9 +280,6 @@
 <li>-g: 产生调试工具必需的符号信息</li>
 <li>-O/On: 在程序编译、链接过程中进行优化处理</li>
 <li>-Wall: 显示所有的警告信息</li>
-</ol>
-</li>
-<li>Basic options:<ol>
 <li><code>-Idir</code>: 指定额外的<strong>头文件</strong>搜索路径</li>
 <li><code>-Ldir</code>: 指定额外的<strong>库文件</strong>搜索路径</li>
 <li><code>-lname</code>: 链接时搜索指定的库文件</li>
@@ -385,7 +387,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Comman-Commands"><span class="nav-text">Comman Commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text"> </span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#All-Commands"><span class="nav-text">All Commands</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Comman-Commands"><span class="nav-text">Comman Commands</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#All-Commands"><span class="nav-text">All Commands</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -401,7 +403,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-count">143</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -414,7 +416,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

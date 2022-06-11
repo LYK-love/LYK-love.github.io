@@ -28,7 +28,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Swarm/Docker%20Swarm%20Arch.png">
 <meta property="article:published_time" content="2022-03-24T23:44:59.000Z">
-<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-05-28T17:33:55.553Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+                <time title="Modified: 2022-05-28 17:33:55" itemprop="dateModified" datetime="2022-05-28T17:33:55Z">2022-05-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -352,11 +352,13 @@
 <ul>
 <li><code>--force</code>: Manager leave需要加<code>--force</code></li>
 </ul>
-<h2 id="创建Service"><a href="#创建Service" class="headerlink" title="创建Service"></a>创建Service</h2><p>创建新服务,:</p>
+<h2 id="创建Service"><a href="#创建Service" class="headerlink" title="创建Service"></a>创建Service</h2><p>创建新服务,  </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker service create --name &lt;service-name&gt; \</span><br><span class="line">--replicas &lt;num-of-replica&gt; \</span><br><span class="line">&lt;image&gt;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>docker service create</code> 格式与<code>docker container run</code> 类似</li>
-<li><code>--replicas</code>: 告知Docker应该总是有n个此服务的副本, 这定义了<code>期望状态</code><ul>
+<li><p><code>docker service create</code> 格式与<code>docker container run</code> 类似</p>
+</li>
+<li><p><code>--replicas</code>: 告知Docker应该总是有n个此服务的副本, 这定义了<code>期望状态</code></p>
+<ul>
 <li>默认为1</li>
 <li>Leader会按要求在Swarm中实例化n个副本,<ul>
 <li>服务副本使用相同的镜像和配置</li>
@@ -365,17 +367,25 @@
 </li>
 </ul>
 </li>
+<li><p><code>-p, --publish port</code>：<code>&lt;host-port&gt;:&lt;container-port&gt;</code>， 宿主机端口映射到容器端口，由于是swarm模式，该宿主机端口会监听在集群所有节点上</p>
+</li>
+<li><p>注意，只有<strong>拥有该镜像的节点</strong>才会被调度到运行该服务, 可以从<code>docker service ps &lt;service&gt;</code>中看到，某些节点“拒绝了任务调度，因为”：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">No such image: &lt;imaeg&gt;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-<p>Swarm会持续确保服务的实际状态和期望状态一致</p>
+<p>Swarm会持续确保服务的实际状态和期望状态一致(也就是K8S中的调协循环)</p>
 <ul>
 <li>Swarm会在后台轮询检查所有服务, 来持续比较服务的实际状态和期望状态</li>
 </ul>
 <h2 id="查看Service"><a href="#查看Service" class="headerlink" title="查看Service"></a>查看Service</h2><p>列出Swarm中所有运行中的服务:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service ls</span><br></pre></td></tr></table></figure>
-<p>进一步查看Swarm中某个服务的信息:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service ps &lt;serive&gt;</span><br></pre></td></tr></table></figure>
+<p>进一步查看Swarm中某个服务的信息, 比如哪些节点在运行该服务实例:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service ps &lt;service&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在运行任务的节点上运行<code>docker ps</code>也能看到这个service对应的容器</li>
+</ul>
 <p>查看服务的详细信息:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service inspect</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service inspect --pretty &lt;service&gt;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>--pretty</code>:  文本更可读</li>
 </ul>
@@ -390,12 +400,17 @@
 </ul>
 <p>所有update操作都是持久的, 可以用<code>docker service inspect</code> 查看</p>
 <h2 id="服务扩缩容"><a href="#服务扩缩容" class="headerlink" title="服务扩缩容"></a>服务扩缩容</h2><p> 对服务副本个数进行增减</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker serivice scale</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service scale</span><br></pre></td></tr></table></figure>
 <h2 id="删除Service"><a href="#删除Service" class="headerlink" title="删除Service"></a>删除Service</h2><p>删除服务, 该命令不会要求确认</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker serivice rm</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service rm</span><br></pre></td></tr></table></figure>
 <h2 id="配置CA"><a href="#配置CA" class="headerlink" title="配置CA"></a>配置CA</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  swarm ca</span><br></pre></td></tr></table></figure>
+<h2 id="服务滚动更新"><a href="#服务滚动更新" class="headerlink" title="服务滚动更新"></a>服务滚动更新</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker service update \</span><br><span class="line">--image &lt;new-image&gt; \ </span><br><span class="line">--update-parallelism &lt;num&gt; \ </span><br><span class="line">--update-delay &lt;time&gt; uber-svc \</span><br><span class="line">&lt;service-to-update&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>--update-parallelism &lt;num&gt;</code>： 每次更新<code>num</code>个副本</li>
+<li><code>--update-delay &lt;time&gt;</code> # 每次更新有<code>time</code>s 延迟</li>
+</ul>
 <h2 id="查看Service日志"><a href="#查看Service日志" class="headerlink" title="查看Service日志"></a>查看Service日志</h2><p>  查看服务的日志</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker serivice logs</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service logs</span><br></pre></td></tr></table></figure>
 <h1 id="Swarm-Service"><a href="#Swarm-Service" class="headerlink" title="Swarm Service"></a>Swarm Service</h1><h2 id="创建Swarm服务"><a href="#创建Swarm服务" class="headerlink" title="创建Swarm服务"></a>创建Swarm服务</h2><p>创建新服务,:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">❯ docker service create --name web-fe \</span><br><span class="line"><span class="meta">&gt; </span><span class="language-bash">-p 4000:8080 \</span></span><br><span class="line"><span class="language-bash">&gt; --replicas 5 \</span></span><br><span class="line"><span class="language-bash">&gt; nigelpoulton/pluralsight-docker-ci</span> </span><br></pre></td></tr></table></figure>
 <h2 id="副本模式-vs-全局模式"><a href="#副本模式-vs-全局模式" class="headerlink" title="副本模式 vs 全局模式"></a>副本模式 vs 全局模式</h2><p>服务的复制模式:</p>
@@ -454,6 +469,81 @@
 <p>输出为:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error response from daemon: Swarm is encrypted and needs to be unlocked before it can be used. Please use &quot;docker swarm unlock&quot; to unlock it.</span><br></pre></td></tr></table></figure>
 <h2 id="解锁"><a href="#解锁" class="headerlink" title="解锁"></a>解锁</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker swarm unlock</span><br><span class="line"><span class="meta"># </span><span class="language-bash">然后会要求你输入解锁码</span></span><br></pre></td></tr></table></figure>
+<h1 id="swarm实战"><a href="#swarm实战" class="headerlink" title="swarm实战"></a>swarm实战</h1><p>我们要将前端服务<code>volatile_frontend_svc</code>(容器监听80端口)部署到集群，对外暴露集群的80端口</p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>主机名</th>
+<th>主机ip</th>
+<th>角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lyk阿里云服务器</td>
+<td>**</td>
+<td>master，CICD工作节点</td>
+</tr>
+<tr>
+<td>lyk华为云服务器</td>
+<td>**</td>
+<td>master</td>
+</tr>
+<tr>
+<td>lyk腾讯云服务器</td>
+<td>**</td>
+<td>master</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>3台Master， 3台Worker（ Master也同时作为Worker，因此实际上只有三台主机 ）</p>
+<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>前置准备：所有节点必须打开：</p>
+<ul>
+<li>UDP/4789： 绑定到VTE</li>
+<li>TCP/2377： Swarm的集群管理默认使用2377端口</li>
+<li>TCP/7946, UDP/7946: Swarm的节点发现使用7946端口</li>
+</ul>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li><p>先在阿里云主机上创建第一个master节点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  swarm init --advertise-addr **:2377</span><br></pre></td></tr></table></figure>
+<ul>
+<li>填该master节点的公网ip</li>
+</ul>
+</li>
+<li><p>生成令节点作为master加入集群的令牌：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker swarm join-token manager</span><br></pre></td></tr></table></figure>
+<ul>
+<li>该命令的输出即为令牌</li>
+</ul>
+</li>
+<li><p>在其他节点上使用上述令牌，使其作为master加入该swarm集群。 成功后执行下述命令，查看集群中的节点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker node ls </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在任意master上创建overlay网络，名为<code>volatile</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create -d overlay volatile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在master上基于镜像创建新服务<code>volatile_frontend_svc</code>，并使用网络<code>volatile</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service create --name volatile_frontend_svc --network volatile -p 80:80 --replicas 3 lyklove/volatile_frontend:latest</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里设置服务实例数为3</li>
+<li>我们将集群的80端口映射到了容器的80端口。 因此访问集群的任意节点的80端口的流量最终都会被抓发到运行了该服务副本的节点</li>
+</ul>
+</li>
+<li><p>（后续）滚动更新:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker service update --image lyklove/volatile_frontend:new --update-parallelism 2  --update-delay 1s volatile_frontend_svc</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li>基于新镜像<code>lyklove/volatile_frontend:new</code>更新服务，并在其他节点上也进行服务更新</li>
+<li>该命令可以在任意拥有该新镜像的master节点上执行</li>
+</ul>
+<h2 id="集成CICD"><a href="#集成CICD" class="headerlink" title="集成CICD"></a>集成CICD</h2><p>可以发现，CICD只需要将服务打包成镜像，然后利用该镜像滚动更新就行了</p>
+<p>Jenkins脚本<code>jenkinsfile.groovy</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="comment">// 根据代码构建新镜像</span></span><br><span class="line">stage(<span class="string">&quot;update service by built image&quot;</span>)&#123;</span><br><span class="line">        sh <span class="string">&quot;docker service update --image $&#123;IMAGE_TO_RUN&#125; --update-parallelism 2  --update-delay 2s $&#123;SERVICE_NAME&#125;&quot;</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="集群使用"><a href="#集群使用" class="headerlink" title="集群使用"></a>集群使用</h2><p>通过<code>[host-ip]:80</code>访问前端</p>
+<p>其中<code>host-ip</code>可以是集群中任意节点的ip</p>
 
     </div>
 
@@ -537,7 +627,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Idea"><span class="nav-text">Basic Idea</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#node"><span class="nav-text">node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Raft"><span class="nav-text">Raft</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#service"><span class="nav-text">service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etcd"><span class="nav-text">etcd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#token"><span class="nav-text">token</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLS"><span class="nav-text">TLS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BCA%E9%85%8D%E7%BD%AE"><span class="nav-text">查看CA配置:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%A4%96%E9%83%A8CA"><span class="nav-text">指定外部CA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E8%AF%81%E4%B9%A6%E7%9A%84%E6%9B%B4%E6%96%B0%E5%91%A8%E6%9C%9F"><span class="nav-text">更新证书的更新周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CA%E9%85%8D%E7%BD%AE"><span class="nav-text">CA配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Commands"><span class="nav-text">Commands</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BASwarm"><span class="nav-text">创建Swarm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%87%86%E5%85%A5%E4%BB%A4%E7%89%8C"><span class="nav-text">获取准入令牌</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E5%87%86%E5%85%A5%E4%BB%A4%E7%89%8C"><span class="nav-text">更新准入令牌</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5Swarm"><span class="nav-text">加入Swarm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BSwarm"><span class="nav-text">查看Swarm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E5%BC%80Swarm"><span class="nav-text">离开Swarm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAService"><span class="nav-text">创建Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BService"><span class="nav-text">查看Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E5%8F%98Service"><span class="nav-text">改变Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E6%89%A9%E7%BC%A9%E5%AE%B9"><span class="nav-text">服务扩缩容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4Service"><span class="nav-text">删除Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AECA"><span class="nav-text">配置CA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BService%E6%97%A5%E5%BF%97"><span class="nav-text">查看Service日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Swarm-Service"><span class="nav-text">Swarm Service</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BASwarm%E6%9C%8D%E5%8A%A1"><span class="nav-text">创建Swarm服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%E6%A8%A1%E5%BC%8F-vs-%E5%85%A8%E5%B1%80%E6%A8%A1%E5%BC%8F"><span class="nav-text">副本模式 vs 全局模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E7%BC%A9%E5%AE%B9"><span class="nav-text">扩缩容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%9C%8D%E5%8A%A1"><span class="nav-text">删除服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0"><span class="nav-text">滚动更新</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Swarm-Security"><span class="nav-text">Swarm Security</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Swarm-Lock"><span class="nav-text">Swarm Lock</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E9%94%81"><span class="nav-text">开启锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E9%94%81%E6%95%88%E6%9E%9C"><span class="nav-text">验证锁效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%94%81"><span class="nav-text">解锁</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface"><span class="nav-text">Preface</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Idea"><span class="nav-text">Basic Idea</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#node"><span class="nav-text">node</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Raft"><span class="nav-text">Raft</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#service"><span class="nav-text">service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#etcd"><span class="nav-text">etcd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#token"><span class="nav-text">token</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLS"><span class="nav-text">TLS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BCA%E9%85%8D%E7%BD%AE"><span class="nav-text">查看CA配置:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%A4%96%E9%83%A8CA"><span class="nav-text">指定外部CA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E8%AF%81%E4%B9%A6%E7%9A%84%E6%9B%B4%E6%96%B0%E5%91%A8%E6%9C%9F"><span class="nav-text">更新证书的更新周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CA%E9%85%8D%E7%BD%AE"><span class="nav-text">CA配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Commands"><span class="nav-text">Commands</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BASwarm"><span class="nav-text">创建Swarm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%87%86%E5%85%A5%E4%BB%A4%E7%89%8C"><span class="nav-text">获取准入令牌</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E5%87%86%E5%85%A5%E4%BB%A4%E7%89%8C"><span class="nav-text">更新准入令牌</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5Swarm"><span class="nav-text">加入Swarm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BSwarm"><span class="nav-text">查看Swarm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A6%BB%E5%BC%80Swarm"><span class="nav-text">离开Swarm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAService"><span class="nav-text">创建Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BService"><span class="nav-text">查看Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E5%8F%98Service"><span class="nav-text">改变Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E6%89%A9%E7%BC%A9%E5%AE%B9"><span class="nav-text">服务扩缩容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4Service"><span class="nav-text">删除Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AECA"><span class="nav-text">配置CA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0"><span class="nav-text">服务滚动更新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BService%E6%97%A5%E5%BF%97"><span class="nav-text">查看Service日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Swarm-Service"><span class="nav-text">Swarm Service</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BASwarm%E6%9C%8D%E5%8A%A1"><span class="nav-text">创建Swarm服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%E6%A8%A1%E5%BC%8F-vs-%E5%85%A8%E5%B1%80%E6%A8%A1%E5%BC%8F"><span class="nav-text">副本模式 vs 全局模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E7%BC%A9%E5%AE%B9"><span class="nav-text">扩缩容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E6%9C%8D%E5%8A%A1"><span class="nav-text">删除服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0"><span class="nav-text">滚动更新</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Swarm-Security"><span class="nav-text">Swarm Security</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Swarm-Lock"><span class="nav-text">Swarm Lock</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E9%94%81"><span class="nav-text">开启锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81%E9%94%81%E6%95%88%E6%9E%9C"><span class="nav-text">验证锁效果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%94%81"><span class="nav-text">解锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#swarm%E5%AE%9E%E6%88%98"><span class="nav-text">swarm实战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87"><span class="nav-text">准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E6%88%90CICD"><span class="nav-text">集成CICD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E4%BD%BF%E7%94%A8"><span class="nav-text">集群使用</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -553,7 +643,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">141</span>
+          <span class="site-state-item-count">143</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -566,7 +656,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
