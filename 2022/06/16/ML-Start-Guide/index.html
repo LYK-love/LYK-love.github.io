@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"lyk-love.cn","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Outline:  学习路线 经验 行业前景 就业">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ML Start Guide">
+<meta property="og:url" content="http://lyk-love.cn/2022/06/16/ML-Start-Guide/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  学习路线 经验 行业前景 就业">
+<meta property="og:locale">
+<meta property="article:published_time" content="2022-06-16T12:14:30.000Z">
+<meta property="article:modified_time" content="2022-06-16T04:15:37.296Z">
+<meta property="article:author" content="有多远滚多远">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://lyk-love.cn/2022/06/16/ML-Start-Guide/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>ML Start Guide | LYK-love</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">LYK-love</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/06/16/ML-Start-Guide/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/rose1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ML Start Guide
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2022-06-16 12:14:30 / Modified: 04:15:37" itemprop="dateCreated datePublished" datetime="2022-06-16T12:14:30Z">2022-06-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Outline:</p>
+<ul>
+<li>学习路线</li>
+<li>经验</li>
+<li>行业前景</li>
+<li>就业</li>
+</ul>
+<span id="more"></span>
+<h1 id="学习路线"><a href="#学习路线" class="headerlink" title="学习路线"></a>学习路线</h1><h2 id="Book"><a href="#Book" class="headerlink" title="Book"></a>Book</h2><ul>
+<li>西瓜书</li>
+<li>《动手学深度学习》 + <a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18h411r7Z7?spm_id_from=333.1007.top_right_bar_window_history.content.click&amp;vd_source=f293ba57058847ba700ac500c350b997">李沐的深度学习课</a></li>
+</ul>
+<h2 id="Course"><a href="#Course" class="headerlink" title="Course"></a>Course</h2><p>之前提到的李沐的DL课</p>
+<p><a target="_blank" rel="noopener" href="https://c.d2l.ai/stanford-cs329p/">斯坦福2021秋季·实用机器学习</a></p>
+<h2 id="Articles"><a href="#Articles" class="headerlink" title="Articles"></a>Articles</h2><p>github搜awesome … learning基本都有论文整理，要看最近几年的</p>
+<p>例如：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/yassouali/awesome-semi-supervised-learning">https://github.com/yassouali/awesome-semi-supervised-learning</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/jindongwang/transferlearning#5transfer-learning-scholars-%E8%91%97%E5%90%8D%E5%AD%A6%E8%80%85">https://github.com/jindongwang/transferlearning#5transfer-learning-scholars-%E8%91%97%E5%90%8D%E5%AD%A6%E8%80%85</a></p>
+<h3 id="Conference"><a href="#Conference" class="headerlink" title="Conference"></a>Conference</h3><p>以下均属于CCF A</p>
+<p>ML大会：</p>
+<ul>
+<li>icml</li>
+<li>neurips</li>
+<li>iclr</li>
+</ul>
+<p>稍微水一点：</p>
+<ul>
+<li>aaai</li>
+<li>IJCAI</li>
+</ul>
+<h3 id="Journal"><a href="#Journal" class="headerlink" title="Journal"></a>Journal</h3><ul>
+<li>JMLR： 注重理论+应用，强调算法必须有理论解释</li>
+<li>TPAMI： 文章看上去繁杂，没什么理论，但注重实验效果好</li>
+<li>COLT：不要看。全是理论，涉及优化，PAC学习理论等</li>
+</ul>
+<h2 id="Math"><a href="#Math" class="headerlink" title="Math"></a>Math</h2><p>对于CV，NLP这些方向，不需要什么数学。 对于纯ML，也就是关注ML本身问题的领域，需要懂线代和概率论，以及一些一些ML理论。</p>
+<p>总结： 前期不需要很强的数学基础，线代+概率论已经足够</p>
+<ul>
+<li>为了保险，还是把数分、泛函、拓扑、统计、数理逻辑、凸优化全学了吧。 不过这是高阶需求，可以慢慢来</li>
+</ul>
+<h1 id="经验"><a href="#经验" class="headerlink" title="经验"></a>经验</h1><p>个人的经验是深度和广度同时并存。深度是找个方向把前沿（16年后至今的）的方法看一遍，广度是从知乎或者其他综述看看其他的方向有哪些经典重要的方法</p>
+<p>推荐的方向：弱监督学习和迁移学习、图学习、自监督学习</p>
+<ul>
+<li>这些都是比较大的方向，还能再细化。比如弱监督有噪声学习，部分标记学习，主动学习等；迁移学习有领域自适应，领域泛化等</li>
+</ul>
+<h1 id="行业前景"><a href="#行业前景" class="headerlink" title="行业前景"></a>行业前景</h1><p>应用基本是深度学习。 包括CV， NLP，推荐算法等</p>
+<p>CV和NLP已经卷烂了。 ML和CV、NLP是纵向、横向的关系</p>
+<p>整个CS都在衰败，ML也不例外。 尽管如此，ML依然是CS领域最有前景的学科，ML完蛋就代表CS也完蛋了</p>
+<h1 id="就业"><a href="#就业" class="headerlink" title="就业"></a>就业</h1><h2 id="工业界"><a href="#工业界" class="headerlink" title="工业界"></a>工业界</h2><p>算法工程师，要求顶会论文。 工作就是调整模型甚至调参，希望以后能改变吧。</p>
+<h2 id="学术界"><a href="#学术界" class="headerlink" title="学术界"></a>学术界</h2><p>extreamly hard</p>
+<p>博士毕业7篇A的一作才能去东南当个讲师</p>
+<p>留南大当讲师起码10篇</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/12/Design-Principle/" rel="prev" title="Design Principle">
+      <i class="fa fa-chevron-left"></i> Design Principle
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF"><span class="nav-text">学习路线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Book"><span class="nav-text">Book</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Course"><span class="nav-text">Course</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Articles"><span class="nav-text">Articles</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Conference"><span class="nav-text">Conference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Journal"><span class="nav-text">Journal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Math"><span class="nav-text">Math</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%8F%E9%AA%8C"><span class="nav-text">经验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%8C%E4%B8%9A%E5%89%8D%E6%99%AF"><span class="nav-text">行业前景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%B1%E4%B8%9A"><span class="nav-text">就业</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%B8%9A%E7%95%8C"><span class="nav-text">工业界</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E6%9C%AF%E7%95%8C"><span class="nav-text">学术界</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/rose1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+<span id="busuanzi_container_site_uv">
+  本站访客数<span id="busuanzi_value_site_uv"></span>人次
+</span>
+</div>
+
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
