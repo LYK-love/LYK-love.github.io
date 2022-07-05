@@ -44,7 +44,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20SACK.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20flow%20control%20with%20sliding%20window.png">
 <meta property="article:published_time" content="2022-07-05T16:47:03.000Z">
-<meta property="article:modified_time" content="2022-07-05T11:55:32.290Z">
+<meta property="article:modified_time" content="2022-07-05T12:15:11.757Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Computer Networking">
 <meta name="twitter:card" content="summary">
@@ -235,7 +235,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2022-07-05 16:47:03 / Modified: 11:55:32" itemprop="dateCreated datePublished" datetime="2022-07-05T16:47:03Z">2022-07-05</time>
+              <time title="Created: 2022-07-05 16:47:03 / Modified: 12:15:11" itemprop="dateCreated datePublished" datetime="2022-07-05T16:47:03Z">2022-07-05</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -276,7 +276,7 @@
 <h2 id="运输层的作用"><a href="#运输层的作用" class="headerlink" title="运输层的作用"></a>运输层的作用</h2><p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/Transport%20Layer.png" alt="Transport Layer"></p>
 <ul>
 <li>复用( multiplexing )：client的不同进程都可以使用同一个运输层协议发送数据到网络层</li>
-<li>分用( demultiplexing ): server的运输层在从网络层收到发送给各进程到数据后，可以分别交付给目的进程， 即server的不同进程可以用同一个运输层协议接收数据</li>
+<li>分用( demultiplexing ): server的运输层在从网络层收到发送给各进程的数据后，可以分别交付给目的进程， 即server的不同进程可以用同一个运输层协议接收数据</li>
 <li>对报文进行差错检测</li>
 </ul>
 <h2 id="运输层的协议"><a href="#运输层的协议" class="headerlink" title="运输层的协议"></a>运输层的协议</h2><p>运输层协议主要有面向连接的TCP和无连接的UDP。 两种协议在协议栈中的位置：</p>
@@ -358,7 +358,7 @@
 <h2 id="Socket-amp-amp-port"><a href="#Socket-amp-amp-port" class="headerlink" title="Socket &amp;&amp; port"></a>Socket &amp;&amp; port</h2><ul>
 <li><p>套接字( Socket ): 网络通信中的进程的唯一标识， 格式为<code>( IP : port )</code></p>
 </li>
-<li><p>协议端口号(.protocal port number ): 简称端口( port )，用来唯一标识一个本机的（应用层）进程</p>
+<li><p>协议端口号( protocal port number ): 简称端口( port )，用来唯一标识一个本机的（应用层）进程</p>
 <ul>
 <li>数据通过IP发送到对应的主机， 主机上的运输层协议再通过端口来找到对应的应用层进程, 即: <strong>端口是本机的应用层进程和运输层协议交互的一种地址</strong></li>
 <li>在本机中，进程也可以通过PID标识，不同的OS拥有不同格式的PID，格式无法统一，因此无法用于运输层与应用层的交互</li>
@@ -446,7 +446,7 @@
 <li>首部开销小，只有 8 Byte</li>
 </ol>
 <h2 id="UDP通信过程"><a href="#UDP通信过程" class="headerlink" title="UDP通信过程"></a>UDP通信过程</h2><p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/UDP%20communication%20prodedure.png" alt="UDP communication prodedure"></p>
-<h2 id="UDP-Diagram"><a href="#UDP-Diagram" class="headerlink" title="UDP Diagram"></a>UDP Diagram</h2><p>UDP的基本数据传输单位是UDP Diagram，，分为Header和Dara两部分</p>
+<h2 id="UDP-Diagram"><a href="#UDP-Diagram" class="headerlink" title="UDP Diagram"></a>UDP Diagram</h2><p>UDP Diagram分为Header和Dara两部分</p>
 <ul>
 <li>Header是固定的8 Byte</li>
 </ul>
@@ -514,7 +514,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="TCP-Segment"><a href="#TCP-Segment" class="headerlink" title="TCP Segment"></a>TCP Segment</h2><p>TCP的基本数据传输单位是TCP Segment，分为Header和Dara两部分</p>
+<h2 id="TCP-Segment"><a href="#TCP-Segment" class="headerlink" title="TCP Segment"></a>TCP Segment</h2><p>TCP Segment分为Header和Data两部分</p>
 <ul>
 <li>Header前20Byte固定，后面跟$4n$个可选的Byte，因此Header占$20 + 4n$ Byte</li>
 </ul>
@@ -797,14 +797,14 @@
 <p>然而Karn算法也不太合理（自行百度），实践中一般采用改进的Karn算法。 总之，RTO的选择是很复杂的。            </p>
 <h3 id="选择确认SACK"><a href="#选择确认SACK" class="headerlink" title="选择确认SACK"></a>选择确认SACK</h3><p>如果收到的报文段无差错，只是中间缺少了一些序号。 选择确认( Selective ACK, aka SACK ) 可以让发送方只传送缺少的数据，而不是重传所有数据</p>
 <p>示例：   </p>
-<p>假设TCP的接收方收到了序号1 ~ 1000, 1501 ~ 3000, 3501 ~ 4500, 其余序号都没有收到，如果所有序号的范围都在接收窗口内，则接收方会收下这些数据，并把已收到序号的“边界”告诉对方，让对方不要再重传这些数据。 对于本例，“边界”就是$[1,1001]$,$[1501,3001]$, $3501, 4501$， 注意边界的右界是序号的最右端 + 1</p>
+<p>假设TCP的接收方收到了序号1 ~ 1000, 1501 ~ 3000, 3501 ~ 4500, 其余序号都没有收到，如果所有序号的范围都在接收窗口内，则接收方会收下这些数据，并把已收到序号的“边界”告诉对方，让对方不要再重传这些数据。 对于本例，“边界”就是$[1,1001)$,$[1501,3001)$, $[3501, 4501)$， 注意边界的右界是序号的最右端 + 1</p>
 <p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20SACK.png" alt="TCP SACK"></p>
 <p>显然，TCP 首部中没有哪个字段是用来存放边界的， 因此边界信息都存放在首部“选项”字段。 由于首部选项最多只有40Byte， 而每个字节块有两个边界， 每个边界4Byte（因为序号用4byte表示）， 所以一个字节块就要用8Byte。 选项中还需要指明“启用SACK”（1Byte）和“SACK选项占用的字节数”（1Byte）， 对于n个字节块，一共会在选项字段占用：</p>
 <script type="math/tex; mode=display">
 8n + 2</script><p>字节， 很容易就超过了选项字段40Byte的上限， 再加上SACK文档没有对发送方怎样响应SACK做规定， 因此SACK没有被广泛采用。 一般的实现还是重传所有数据块。</p>
 <p>​         </p>
 <h1 id="TCP-Flow-Control"><a href="#TCP-Flow-Control" class="headerlink" title="TCP Flow Control"></a>TCP Flow Control</h1><ul>
-<li>流量控制( Flow Control ):  让发送方发送速率不要太快，让接收方来得及接收。 这是<strong>端到端</strong>通信量的控制( 接收端控制发送端 )， </li>
+<li>流量控制( Flow Control ):  让发送方发送速率不要太快，使接收方来得及接收。 这是<strong>端到端</strong>通信量的控制( 接收端控制发送端 )， </li>
 </ul>
 <h2 id="利用滑动窗口实现流量控制"><a href="#利用滑动窗口实现流量控制" class="headerlink" title="利用滑动窗口实现流量控制"></a>利用滑动窗口实现流量控制</h2><p>TCP利用滑动窗口实现流量控制，示例：</p>
 <p>我们假设A向B发送数据，且：</p>
@@ -824,7 +824,7 @@
 <li>注意，B如果不继续收到A的报文段，自己是不会再次主动通知A的 （ 因为“通知”是ACK ， 而ACK报文段不会被重传）</li>
 </ul>
 <p>为此，需要对TCP连接设置<strong>持续计时器</strong>：只要TCP连接的一方收到对方的零窗口通知，就启动持续计时器，若计时器到期，就发送一个零窗口<strong>探测报文段</strong>，而对方就在确认这个报文段时给出了现在的窗口值，若窗口值仍是零，那么收到报文的一方就重新设置持续计时器，若不是零，那么死锁就被打破</p>
-<h2 id="TCP的传输效率"><a href="#TCP的传输效率" class="headerlink" title="TCP的传输效率"></a>TCP的传输效率</h2><p>进程把数据传送到TCP发送缓存后，就由TCP来控制数据的发送。 TCP需要控制报文的发送时机，来得到最大的数据传输效率。 目前的TCP视线中广泛采用Nagle算法</p>
+<h2 id="TCP的传输效率"><a href="#TCP的传输效率" class="headerlink" title="TCP的传输效率"></a>TCP的传输效率</h2><p>进程把数据传送到TCP发送缓存后，就由TCP来控制数据的发送。 TCP需要控制报文的发送时机，来得到最大的数据传输效率。 目前的TCP实现中广泛采用Nagle算法</p>
 <ul>
 <li>Nagle算法：若进程要把数据逐个字节地送到TCP发送缓存，则发送方就把第一个数据字节先发送出去，把后面到达的数据字节都缓存起来。当发送方收到对第一个数据字符的确认后，再把发送缓存中的所有数据组装成一个报文发送出去，同时继续对后到达的数据进行缓存。只有在收到对前一个报文段的确认后才继续发送下一个报文段</li>
 </ul>

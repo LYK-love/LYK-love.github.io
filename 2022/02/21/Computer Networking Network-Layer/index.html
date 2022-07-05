@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/RPF.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/MPLS%20Header.png">
 <meta property="article:published_time" content="2022-02-21T00:33:00.000Z">
-<meta property="article:modified_time" content="2022-07-05T10:12:30.613Z">
+<meta property="article:modified_time" content="2022-07-05T12:17:54.595Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Computer Networking">
 <meta name="twitter:card" content="summary">
@@ -236,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-07-05 10:12:30" itemprop="dateModified" datetime="2022-07-05T10:12:30Z">2022-07-05</time>
+                <time title="Modified: 2022-07-05 12:17:54" itemprop="dateModified" datetime="2022-07-05T12:17:54Z">2022-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -681,7 +681,6 @@ D_x(y) = min_v\{ \ c(x,v) + d_v(y) \ \} \quad  对N中的每个节点</script></
 </li>
 </ul>
 <h3 id="无穷计数问题"><a href="#无穷计数问题" class="headerlink" title="无穷计数问题"></a>无穷计数问题</h3><p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/endless%20counting%20problem.png" alt="endless counting problem"></p>
-<p>&gt;<br>&gt;</p>
 <blockquote>
 <p>图中有X、Y、Z三个节点。我们增加链路费用。 Y检测到它到X的路径费用由4增加到了60。此时节点Z的距离向量为：d(X) = 5, d(Y) = 1, d(Z) = 0。于是Y在更新向量时发现，咦，Z到X的距离只有5诶，那可以先到Z再到X，于是Y的距离向量更新为：d(x) = 5 + 1 = 6, d(Y) = 0, d(z) = 1。我们可以发现，这个逻辑显然是错误的，因为Z到X的距离为5的前提是要经过Y，但Y更新后的路径又要经过Z，这就形成了一个选路环路（routing-loop）问题。因为Y的距离向量更新了（虽然是错误的），但它还是向Z发送了更新报文。Z收到更新报文后，比较了下邻居们到X的距离，发现经过Y的路径距离为1 + 6 = 7，小于直接到X的距离，于是Z也更新的自己的距离向量，然后又将更新后的距离向量发给Y。Y收到后又更新向量为8，然后再发给Z。。。这样循环往复，更新报文在Y和Z之间传来传去，直到第44次迭代后，Z算出它经由Y的路径费用大于50为止。此时，Z最终确定到X的最短路径费用是直接到达X的费用50，而Y也得到了最短路径是经Z到X的费用51。</p>
 </blockquote>
@@ -1060,6 +1059,61 @@ D_x(y) = min_v\{ \ c(x,v) + d_v(y) \ \} \quad  对N中的每个节点</script></
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
