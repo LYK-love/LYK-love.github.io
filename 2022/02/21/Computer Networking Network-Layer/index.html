@@ -26,24 +26,24 @@
 <meta property="og:site_name" content="LYK-love">
 <meta property="og:description" content="Outline:  Intro 虚电路和数据报网络 路由器工作原理 网际协议IP ICMP 路由选择算法 因特网中的路由选择 广播和多播路由选择 VPN, NAT MPLS  ref:  《计算机网络》 —谢希仁； 《计算机网络自顶而下》">
 <meta property="og:locale">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20201214232315784.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzk4NDE4,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="http://lyk-love.cn/home/lyk/snap/typora/49/.config/Typora/typora-user-images/image-20220219195343203.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2020121423232614.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzk4NDE4,size_16,color_FFFFFF,t_70#pic_center">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/f738ea7ed02848c584b0da5130efe77b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAd2VsbG53,size_20,color_FFFFFF,t_70,g_se,x_16">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20190325225036683.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzI2NDcy,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://imgconvert.csdnimg.cn/aHR0cDovL2JyeWFudHprLm9zcy1jbi1zaGFuZ2hhaS5hbGl5dW5jcy5jb20vaW1nL0lDTVAucG5n?x-oss-process=image/format,png">
-<meta property="og:image" content="http://lyk-love.cn/home/lyk/snap/typora/49/.config/Typora/typora-user-images/image-20220220235802213.png">
-<meta property="og:image" content="https://img2020.cnblogs.com/blog/1774310/202006/1774310-20200602174957477-1781975823.png">
-<meta property="og:image" content="https://img2020.cnblogs.com/blog/1774310/202006/1774310-20200602203336144-1456539086.png">
-<meta property="og:image" content="https://img2020.cnblogs.com/blog/1774310/202006/1774310-20200603002359144-1106335193.png">
-<meta property="og:image" content="http://lyk-love.cn/home/lyk/snap/typora/49/.config/Typora/typora-user-images/image-20220219232512287.png">
-<meta property="og:image" content="http://lyk-love.cn/home/lyk/snap/typora/49/.config/Typora/typora-user-images/image-20220220235545288.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B8%89%E5%A4%A7%E7%BB%84%E4%BB%B6.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/%E8%99%9A%E7%94%B5%E8%B7%AF%E7%BD%91%E7%BB%9C%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/IPV4%20packet.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/IPv6.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/%E5%8F%8C%E6%A0%88.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/ICMPv4.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/ICMPv6.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/oscillation%20problem.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/endless%20counting%20problem.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/AS.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/RPF.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/MPLS%20Header.png">
 <meta property="article:published_time" content="2022-02-21T00:33:00.000Z">
-<meta property="article:modified_time" content="2022-03-26T12:14:21.000Z">
+<meta property="article:modified_time" content="2022-07-05T10:12:30.613Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Computer Networking">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201214232315784.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzk4NDE4,size_16,color_FFFFFF,t_70#pic_center">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B8%89%E5%A4%A7%E7%BB%84%E4%BB%B6.png">
 
 <link rel="canonical" href="http://lyk-love.cn/2022/02/21/Computer%20Networking%20Network-Layer/">
 
@@ -236,7 +236,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-26 12:14:21" itemprop="dateModified" datetime="2022-03-26T12:14:21Z">2022-03-26</time>
+                <time title="Modified: 2022-07-05 10:12:30" itemprop="dateModified" datetime="2022-07-05T10:12:30Z">2022-07-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -289,7 +289,7 @@
 </li>
 <li>（某些网络层结构，如ATM, MPLS中有）连接建立： 从源到目的地沿着所选择的路径彼此握手，以便在分组传输之前就建立好状态</li>
 </ul>
-<h2 id="网络层的组件"><a href="#网络层的组件" class="headerlink" title="网络层的组件"></a>网络层的组件</h2><p><img src="https://img-blog.csdnimg.cn/20201214232315784.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzk4NDE4,size_16,color_FFFFFF,t_70#pic_center" alt="网络层三大组件"></p>
+<h2 id="网络层的组件"><a href="#网络层的组件" class="headerlink" title="网络层的组件"></a>网络层的组件</h2><p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B8%89%E5%A4%A7%E7%BB%84%E4%BB%B6.png" alt="网络层三大组件"></p>
 <p>网络层三大组件：</p>
 <ul>
 <li>IP协议</li>
@@ -330,7 +330,7 @@
 <li>注意， <strong>一段链路可以有多条虚电路，每条虚电路有一个VC号</strong>， 因此属于某虚电路的分组在到达对应链路时，会获得唯一的VC号（ 不会与同一链路上其他虚电路的分组发生冲突 ）</li>
 </ul>
 <p>示例： 假设主机A要与B创建虚电路，且网络给该虚电路选择路径 A-R1-R2-B,并为三段链路分配VC号 12, 22，32。 该分组离开主机A时，首部的VC号是12,而离开R1时，VC号变成了22；离开R2时，VC号是32</p>
-<p><img src="/home/lyk/snap/typora/49/.config/Typora/typora-user-images/image-20220219195343203.png" alt="image-20220219195343203"></p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/%E8%99%9A%E7%94%B5%E8%B7%AF%E7%BD%91%E7%BB%9C%E7%A4%BA%E4%BE%8B.png" alt="虚电路网络示例"></p>
 <p>R1的转发表：</p>
 <div class="table-container">
 <table>
@@ -413,7 +413,7 @@
 <p>RED： 为输出队列维护一个加权平均值，如果该值大于某个阈值，则丢弃后续到达的分组</p>
 <p>当然，如果交换结构不够快，那么在输入端口也将发生分组排队</p>
 <h1 id="网际协议IP（v4）"><a href="#网际协议IP（v4）" class="headerlink" title="网际协议IP（v4）"></a>网际协议IP（v4）</h1><p>网络层分组被称为<em>数据报</em></p>
-<p><img src="https://img-blog.csdnimg.cn/2020121423232614.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQxMzk4NDE4,size_16,color_FFFFFF,t_70#pic_center" alt="IPV4 packet"></p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/IPV4%20packet.png" alt="IPv4 packet"></p>
 <p>其中的关键字段如下：</p>
 <ul>
 <li>版本号：4个比特。通过查看版本号，路由器可以确定如何解释IP数据报的剩余部分，因为不同IP版本使用不同数据报格式。</li>
@@ -466,7 +466,7 @@
 <li>简化高效的40字节首部</li>
 <li>流标签与优先级： 某些分组（如音频、视频传输）可以被当作一个<strong>流</strong>，并打上特定的标签</li>
 </ul>
-<p><img src="https://img-blog.csdnimg.cn/f738ea7ed02848c584b0da5130efe77b.png?x-oss-process=image/watermark,type_d3F5LXplbmhlaQ,shadow_50,text_Q1NETiBAd2VsbG53,size_20,color_FFFFFF,t_70,g_se,x_16" alt="img"></p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/IPv6.png" alt="IPv6"></p>
 <ul>
 <li><p>版本：该4比特字段用于标识IP版本号。IPv6将该字段设为6。注意到将该字段值设置为4并不能创建一个合法的IPv4数据报。</p>
 </li>
@@ -493,7 +493,7 @@
 </li>
 <li>选项：选项字段不再是标准IP首部的一部分了。但是它并未消失，而是可能出现在IPv6首部中由下一个首部指出的位置上</li>
 </ul>
-<h2 id="从IPV4到IPV6的迁移"><a href="#从IPV4到IPV6的迁移" class="headerlink" title="从IPV4到IPV6的迁移"></a>从IPV4到IPV6的迁移</h2><p><img src="https://img-blog.csdnimg.cn/20190325225036683.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5MzI2NDcy,size_16,color_FFFFFF,t_70" alt="img"></p>
+<h2 id="从IPV4到IPV6的迁移"><a href="#从IPV4到IPV6的迁移" class="headerlink" title="从IPV4到IPV6的迁移"></a>从IPV4到IPV6的迁移</h2><p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/%E5%8F%8C%E6%A0%88.png" alt="双栈"></p>
 <p>有两种方案： 双栈， 隧道</p>
 <ul>
 <li>双栈： 使用双栈的IPV6节点具有完整的IPV4实现，即同时具有收发两种数据报的能力。 在与IPV4节点进行交互时采用IPV4, 与IPV6节点交互时采用IPV6<ul>
@@ -518,7 +518,7 @@
 </li>
 </ul>
 <h1 id="ICMP（V4）"><a href="#ICMP（V4）" class="headerlink" title="ICMP（V4）"></a>ICMP（V4）</h1><p>ICMP协议用于在网络层进行差错报告</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL2JyeWFudHprLm9zcy1jbi1zaGFuZ2hhaS5hbGl5dW5jcy5jb20vaW1nL0lDTVAucG5n?x-oss-process=image/format,png" alt="img"></p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/ICMPv4.png" alt="ICMPv4"></p>
 <p>ICMP是网络层协议，但从体系结构上讲位于IP协议之上，因为ICMP报文是作为IP报文的有效载荷承载的。同样，当一台主机收到一个指明上层协议为ICMP的IP数据报时，它分解出该报文的内容交给ICMP（就像任何低层次协议到高层一样）</p>
 <p>ICMP报文有两种：</p>
 <ul>
@@ -530,8 +530,8 @@
 <thead>
 <tr>
 <th>ICMP种类</th>
-<th>ICMP类型字段</th>
-<th>编码</th>
+<th>ICMP type字段</th>
+<th>code</th>
 <th>描述</th>
 </tr>
 </thead>
@@ -564,7 +564,7 @@
 <td></td>
 <td>3</td>
 <td>3</td>
-<td>目的主机不可达</td>
+<td>目的主机的端口不可达</td>
 </tr>
 <tr>
 <td></td>
@@ -634,7 +634,7 @@
 <ul>
 <li><strong>ARP和IGMP都被合并到了ICMPv6中</strong> </li>
 </ul>
-<p><img src="/home/lyk/snap/typora/49/.config/Typora/typora-user-images/image-20220220235802213.png" alt="image-20220220235802213"></p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/ICMPv6.png" alt="ICMPv6"></p>
 <h1 id="路由选择算法"><a href="#路由选择算法" class="headerlink" title="路由选择算法"></a>路由选择算法</h1><p>原理：将网络抽象为图</p>
 <p>依据算法是全局的还是分布式的，可以分为：</p>
 <ul>
@@ -646,7 +646,7 @@
 </ul>
 <h2 id="LS算法"><a href="#LS算法" class="headerlink" title="LS算法"></a>LS算法</h2><p>就是Dijkstra算法，需要有网络的全局信息</p>
 <p>LS算法的缺陷： 链路振荡</p>
-<h3 id="振荡问题"><a href="#振荡问题" class="headerlink" title="振荡问题"></a>振荡问题</h3><p><img src="https://img2020.cnblogs.com/blog/1774310/202006/1774310-20200602174957477-1781975823.png" alt="img"></p>
+<h3 id="振荡问题"><a href="#振荡问题" class="headerlink" title="振荡问题"></a>振荡问题</h3><p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/oscillation%20problem.png" alt="oscillation problem"></p>
 <p>假设网络出初始的链路费用和路由选择如下，路由费用等于路由负载</p>
 <p>那么算法再次运行时， y会发现顺时针到达w的代价为1,低于逆时针的代价，其他节点亦如是，整个链路的方向变为顺时针</p>
 <p>算法再次运行，再次发生上述状况，链路方向又变为顺时针 。。。 循环往复，整个链路在不断<strong>振荡</strong></p>
@@ -680,7 +680,7 @@ D_x(y) = min_v\{ \ c(x,v) + d_v(y) \ \} \quad  对N中的每个节点</script></
 <li><p>DV算法的缺点：无穷计数问题</p>
 </li>
 </ul>
-<h3 id="无穷计数问题"><a href="#无穷计数问题" class="headerlink" title="无穷计数问题"></a>无穷计数问题</h3><p><img src="https://img2020.cnblogs.com/blog/1774310/202006/1774310-20200602203336144-1456539086.png" alt="img"></p>
+<h3 id="无穷计数问题"><a href="#无穷计数问题" class="headerlink" title="无穷计数问题"></a>无穷计数问题</h3><p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/endless%20counting%20problem.png" alt="endless counting problem"></p>
 <p>&gt;<br>&gt;</p>
 <blockquote>
 <p>图中有X、Y、Z三个节点。我们增加链路费用。 Y检测到它到X的路径费用由4增加到了60。此时节点Z的距离向量为：d(X) = 5, d(Y) = 1, d(Z) = 0。于是Y在更新向量时发现，咦，Z到X的距离只有5诶，那可以先到Z再到X，于是Y的距离向量更新为：d(x) = 5 + 1 = 6, d(Y) = 0, d(z) = 1。我们可以发现，这个逻辑显然是错误的，因为Z到X的距离为5的前提是要经过Y，但Y更新后的路径又要经过Z，这就形成了一个选路环路（routing-loop）问题。因为Y的距离向量更新了（虽然是错误的），但它还是向Z发送了更新报文。Z收到更新报文后，比较了下邻居们到X的距离，发现经过Y的路径距离为1 + 6 = 7，小于直接到X的距离，于是Z也更新的自己的距离向量，然后又将更新后的距离向量发给Y。Y收到后又更新向量为8，然后再发给Z。。。这样循环往复，更新报文在Y和Z之间传来传去，直到第44次迭代后，Z算出它经由Y的路径费用大于50为止。此时，Z最终确定到X的最短路径费用是直接到达X的费用50，而Y也得到了最短路径是经Z到X的费用51。</p>
@@ -695,7 +695,7 @@ D_x(y) = min_v\{ \ c(x,v) + d_v(y) \ \} \quad  对N中的每个节点</script></
 <li>（片面的）解决方案：参加RIP</li>
 </ul>
 <h2 id="层次路由选择"><a href="#层次路由选择" class="headerlink" title="层次路由选择"></a>层次路由选择</h2><p>在互联网等大型网络中，一般把路由器组织为<strong>自治系统</strong>（  Autonomous System, AS  ）</p>
-<p><img src="https://img2020.cnblogs.com/blog/1774310/202006/1774310-20200603002359144-1106335193.png" alt="img"></p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/AS.png" alt="AS"></p>
 <ul>
 <li><p>将路由器组织成AS的理由：</p>
 <ul>
@@ -712,7 +712,7 @@ D_x(y) = min_v\{ \ c(x,v) + d_v(y) \ \} \quad  对N中的每个节点</script></
 </ul>
 <h1 id="因特网中的路由选择"><a href="#因特网中的路由选择" class="headerlink" title="因特网中的路由选择"></a>因特网中的路由选择</h1><h2 id="自治系统内的路由选择协议"><a href="#自治系统内的路由选择协议" class="headerlink" title="自治系统内的路由选择协议"></a>自治系统内的路由选择协议</h2><p>也称为<strong>内部网关协议</strong>（ interior gateway protocol ）</p>
 <h3 id="RIP"><a href="#RIP" class="headerlink" title="RIP"></a>RIP</h3><p>就是AS内的DV算法，只不过定义了最大跳数（默认16）来解决无穷计数问题，这个方案太简陋了，因为还是要绕圈子， 而且这种定义跳数上限的行为，导致网络中不能存在距离大于16的节点，这导致RIP只能用于小型网络</p>
-<p>RIP使用UDP进行传送</p>
+<p>RIP在传输层使用UDP</p>
 <h3 id="OSPF"><a href="#OSPF" class="headerlink" title="OSPF"></a>OSPF</h3><p>开放最短路径优先（ Open Shortest Path First, OSPF）：使用洪泛链路状态信息和Dijkstra最低开销路径算法。，每台路由器知道整个自治系统的完整拓扑图。</p>
 <ul>
 <li>当且仅当链路状态发生变化时，向本AS中所有路由器发送信息（洪泛）<ul>
@@ -760,12 +760,12 @@ D_x(y) = min_v\{ \ c(x,v) + d_v(y) \ \} \quad  对N中的每个节点</script></
 <h3 id="受控洪泛"><a href="#受控洪泛" class="headerlink" title="受控洪泛"></a>受控洪泛</h3><p>原理：如果节点已经接收并且洪泛了某分组的较早副本，它就不应该继续洪泛该分组</p>
 <h4 id="序号控制洪泛"><a href="#序号控制洪泛" class="headerlink" title="序号控制洪泛"></a>序号控制洪泛</h4><p>序号控制洪泛： 每个广播分组带有一个广播序号和源节点的地址。节点维护一个接收过的广播分组的广播序号列表。  节点只会复制并转发列表中没有对应序号的分组</p>
 <h4 id="反向路径转发"><a href="#反向路径转发" class="headerlink" title="反向路径转发"></a>反向路径转发</h4><p>反向路径转发（ Reverse Path Forwarding, RPF ）: 当一台路由器接收到具有给定源地址的广播分组时，仅当<strong>该分组到达的链路正好位于它自己的返回其源的最短单播路径上</strong>，它才向其所有出链路传输报文；否则，路由器只是丢弃入分组而不向任何它的出链路转发分组</p>
-<p><img src="/home/lyk/snap/typora/49/.config/Typora/typora-user-images/image-20220219232512287.png" alt="image-20220219232512287"></p>
-<p>如图，假设粗线是源R1到其它接收方的最低费用路径：</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/RPF.png" alt="RPF"></p>
+<p>如图，假设粗线是源A到其它接收方的最低费用路径：</p>
 <ol>
-<li>A先广播一个源为R1的分组到节点R4, R2</li>
-<li>R4将向R2, R5转发它从节点R1接收到的源为R1的分组（因为R1位于R4自己到R1的最低费用路径上）， R4将忽略从其它任何节点接收的源为R1的分组</li>
-<li>考虑R2, R2将从R1和R4接收源为R1的分组， 而R4不在R2自己到R1的最短路径上， 因此R2将忽略来自R4的任何源为R1的分组</li>
+<li>A先广播一个源为A的分组到节点C, B</li>
+<li>B将向C, D转发它从节点A接收到的源为A的分组（因为A位于自己到A的最低费用路径上）， B将忽略从其它任何节点接收的源为A的分组</li>
+<li>考虑C， C将从A和B接收源为A的分组， 而B不在C自己到A的最短路径上， 因此C将忽略来自B的任何源为A的分组</li>
 </ol>
 <h3 id="生成树广播"><a href="#生成树广播" class="headerlink" title="生成树广播"></a>生成树广播</h3><p>首先对网络构造出一个最小生成树</p>
 <p>实现方法：</p>
@@ -811,9 +811,9 @@ D_x(y) = min_v\{ \ c(x,v) + d_v(y) \ \} \quad  对N中的每个节点</script></
 <p>注意到，该树可能会包含一些非多播组节点，它们因此也会承载多播流量</p>
 <h1 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h1><p>机构可以为内部的主机自行分配IP地址。RFC1918指定了一些专用地址，只能用于内部网络：</p>
 <ul>
-<li>10.0.0.0——10.255.255.255</li>
-<li>172.16.0.0——172.31.255.255</li>
-<li>192.168.0.0——192.168.255.255</li>
+<li><strong>10.0.0.0——10.255.255.255</strong></li>
+<li><strong>172.16.0.0——172.31.255.255</strong></li>
+<li><strong>192.168.0.0——192.168.255.255</strong></li>
 </ul>
 <p><strong>在互联网中的所有路由器，对目的地址是专用地址的数据报一律不进行转发</strong></p>
 <p>专用网PN：采用专用地址的网络</p>
@@ -827,22 +827,23 @@ D_x(y) = min_v\{ \ c(x,v) + d_v(y) \ \} \quad  对N中的每个节点</script></
 <h1 id="NAT"><a href="#NAT" class="headerlink" title="NAT"></a>NAT</h1><p>网络地址转换NAT（Network Address Transition）：将专用地址映射为公用地址， 用于专用网内的主机和互联网上的主机通信</p>
 <ul>
 <li>运行NAT的路由器称为NAT代理，显然，如果NAT代理具有n个公网IP，则最多允许n个内网主机联网。</li>
-<li>由于一个公网IP可能会映射不同的内网主机， 外部主机将无法通过NAT代理与内网通信。因此，专用网内部的主机无法当服务器用</li>
+<li>同一时刻，一个内部主机持有一个公网IP，因此当NAT路由器收到互联网上的主机发来的IP数据报时，可以映射表来进行IP地址转换</li>
+<li>由于一个公网IP可能会映射不同的内网主机， 外部主机将无法通过NAT代理与内网通信， 即通信只能由内网的主机发起。因此，专用网内部的主机无法当服务器用</li>
 </ul>
 <p>NAPT：同时做IP映射和端口映射， 此时内网主机在代理时可通过端口来区分，哪怕它们映射到一个公网IP</p>
 <ul>
-<li>NAPT技术使得内网主机能接受外网的请求了</li>
+<li>NAPT不仅要改变IP，还要改变端口号，后者属于运输层的范畴，因此NAPT不是“纯的”IP层协议</li>
 </ul>
 <h1 id="MPLS"><a href="#MPLS" class="headerlink" title="MPLS"></a>MPLS</h1><p>传统的IP网络中， 路由器对分组在转发表中进行最长前缀匹配， 找到下一跳的IP地址，这个过程需要软件计算路由表，速度太慢</p>
 <p>转发等价类FEC（  Forwarding Equivalence Class ）:  路由器按照同样方式对待的IP数据报的集合（ 比如，具有相同的源和目的地址 ）</p>
-<p>多协议标记交换MPLS（  MultiProtocol Label Switching ）: 给属于同一FEC的IP数据报打上相同的标记，路由器 <strong>仅仅根据转发表</strong>来对打上标记的数据报进行转发，</p>
+<p>多协议标记交换MPLS（  MultiProtocol Label Switching ）: 给属于同一FEC的IP数据报打上相同的标记，路由器<strong>仅仅根据转发表</strong>来对打上标记的数据报进行转发，</p>
 <ul>
 <li>这里的“路由器”只用到了转发表，没用到路由表，相当于交换机，即整个转发由硬件实现</li>
 <li>硬件意味着开销小，且需要人为控制，这也称为<strong>流量工程</strong></li>
 </ul>
-<h2 id="MPLS首部的位置"><a href="#MPLS首部的位置" class="headerlink" title="MPLS首部的位置"></a>MPLS首部的位置</h2><p>由于IPv4 首部没有多余的位置存放MPLS标记，MPLS首部实际上位于第二层和第三层之间：</p>
-<p><img src="/home/lyk/snap/typora/49/.config/Typora/typora-user-images/image-20220220235545288.png" alt="image-20220220235545288"></p>
-<p>“打标记” 就是在帧首部和IP数据报首部之间插入一个4字节的MPLS首部，具体的标记值是一个整数，位于首部字段中</p>
+<h2 id="MPLS首部的位置"><a href="#MPLS首部的位置" class="headerlink" title="MPLS首部的位置"></a>MPLS首部的位置</h2><p>由于IPv4 首部没有多余的位置存放MPLS标记，MPLS首部实际上位于第二层和第三层之间:</p>
+<p><img src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Layer/MPLS%20Header.png" alt="MPLS Header"></p>
+<p>“打标记” 就是在帧首部和IP数据报首部之间插入一个4字节的MPLS首部，具体的标记值是一个整数， 位于“MPLS首部”字段中</p>
 <p>.</p>
 
     </div>
@@ -943,7 +944,7 @@ D_x(y) = min_v\{ \ c(x,v) + d_v(y) \ \} \quad  对N中的每个节点</script></
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">149</span>
+          <span class="site-state-item-count">150</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
