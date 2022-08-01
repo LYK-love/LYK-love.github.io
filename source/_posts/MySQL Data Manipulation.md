@@ -196,6 +196,8 @@ value IS NULLCode language: SQL (Structured Query Language) (sql)
 
 ## LIMIT
 
+注意： `limit`作用于结果集产生的最后，在`order by`之后，所以要先`order by`, 再 `lmit`
+
 The `LIMIT` clause is used in the `SELECT` statement to constrain the number of rows to return. 
 
 ```mysql
@@ -257,6 +259,44 @@ LIMIT 5;
 
 - First, the `ORDER BY` clause sorts the customers by credits in high to low.
 - Then, the `LIMIT` clause returns the first 5 rows.
+
+## IS NULL
+
+To test whether a value is `NULL` or not, you use the  `IS NULL` operator. Here’s the basic syntax of the `IS NULL` operator:
+
+```
+value IS NULLCode language: SQL (Structured Query Language) (sql)
+```
+
+If the value is `NULL`, the expression returns true. Otherwise, it returns false.
+
+Note that MySQL does not have a built-in [`BOOLEAN`](https://www.mysqltutorial.org/mysql-boolean/) type. It uses the [`TINYINT(1)`](https://www.mysqltutorial.org/mysql-int/) to represent the `BOOLEAN` values i.e.,  true means 1 and false means 0.
+
+Because the `IS NULL` is a comparison operator, you can use it anywhere that an operator can be used e.g., in the [`SELECT`](https://www.mysqltutorial.org/mysql-select-statement-query-data.aspx) or [`WHERE`](https://www.mysqltutorial.org/mysql-where/) clause.
+
+See the following example:
+
+```sql
+SELECT 1 IS NULL,  -- 0
+       0 IS NULL,  -- 0
+       NULL IS NULL; -- 1Code language: SQL (Structured Query Language) (sql)
+```
+
+To check if a value is not `NULL`, you use `IS NOT NULL` operator:
+
+```sql
+value IS NOT NULLCode language: SQL (Structured Query Language) (sql)
+```
+
+This expression returns true (1) if the value is not `NULL`. Otherwise, it returns false (0).
+
+Consider the following example:
+
+```sql
+SELECT 1 IS NOT NULL, -- 1
+       0 IS NOT NULL, -- 1
+       NULL IS NOT NULL; -- 0Code language: SQL (Structured Query Language) (sql)
+```
 
 ## SELECT DISTINCT
 
@@ -457,6 +497,20 @@ GROUP BY
 
 
 
+可以按多个字段`group by`，用逗号分隔:
+
+```sql
+select 
+    gender, university,
+    count(device_id) as user_num,
+    avg(active_days_within_30) as avg_active_days,
+    avg(question_cnt) as avg_question_cnt
+from user_profile
+group by gender, university # 多个字段
+```
+
+
+
 ## HAVING
 
 ![MySQL Having](https://www.mysqltutorial.org/wp-content/uploads/2021/07/MySQL-Having.svg)
@@ -488,7 +542,7 @@ HAVING
 
 子查询必须用括号括起来， 可以作为表达式，用在任何需要表达式的地方
 
-其中， 如果用在`FROM`子句，则返回的结果集是一张临时表，被称为“导出表”， 导出表一定要有别名， 好作为一张表被引用
+子查询如果用在`FROM`子句，则返回的结果集是一张临时表，被称为“导出表”， 导出表一定要有别名， 好作为一张表被引用
 
 ### WHERE
 
@@ -740,7 +794,7 @@ FROM
 
 
 
-* `UNION`默认就是`UNION DISTINCT`； 要保留重复的行，需要使用`UNION ALL`
+* `UNION`默认是`UNION DISTINCT`； 要保留重复的行，需要使用`UNION ALL`
 
 * `UNION`后产生的大表的字段名用的是`UNION`主语的`SELECT`的字段名
 
@@ -793,6 +847,117 @@ WHERE
 
 
 
+## INSERT
+
+
+
+```sql
+INSERT INTO table(c1,c2,...)
+VALUES (v1,v2,...);
+```
+
+* The number of columns and values must be the same. In addition, the positions of columns must be corresponding with the positions of their values
+
+
+
+To [insert multiple rows](https://www.mysqltutorial.org/mysql-insert-multiple-rows/) into a table using a single `INSERT` statement, you use the following syntax:
+
+```sql
+INSERT INTO table(c1,c2,...)
+VALUES 
+   (v11,v12,...),
+   (v21,v22,...),
+    ...
+   (vnn,vn2,...);
+```
+
+### insert using default value
+
+If you want to insert a default value into a column, you have two ways:
+
+- Ignore both the column name and value in the `INSERT` statement.
+- Specify the column name in the `INSERT INTO` clause and use the `DEFAULT` keyword in the `VALUES` clause.
+
+The following example demonstrates the second way:
+
+```
+INSERT INTO tasks(title,priority)
+VALUES('Understanding DEFAULT keyword in INSERT statement',DEFAULT);Code language: SQL (Structured Query Language) (sql)
+```
+
+In this example, we specified the `priority` column and the  `DEFAULT` keyword.
+
+Because the default value for the column `priority` is 3 as declared in the table definition:
+
+```
+priority TINYINT NOT NULL DEFAULT 3Code language: SQL (Structured Query Language) (sql)
+```
+
+MySQL uses the number 3 to insert into the `priority` column.
+
+### Inserting dates
+
+To insert a literal date value into a column, you use the following format:
+
+```
+'YYYY-MM-DD'Code language: SQL (Structured Query Language) (sql)
+```
+
+In this format:
+
+- `YYYY` represents a four-digit year e.g., 2018.
+- `MM` represents a two-digit month e.g., 01, 02, and 12.
+- `DD` represents a two-digit day e.g., 01, 02, 30.
+
+The following statement inserts a new row to the `tasks` table with the start and due date values:
+
+```
+INSERT INTO tasks(title, start_date, due_date)
+VALUES('Insert date into table','2018-01-09','2018-09-15');Code language: SQL (Structured Query Language) (sql)
+```
+
+The following picture shows the contents of the `tasks` table after the insert:
+
+![MySQL INSERT dates into table](https://www.mysqltutorial.org/wp-content/uploads/2018/09/MySQL-INSERT-dates-into-table.png)
+
+It is possible to use expressions in the `VALUES` clause. For example, the following statement adds a new task using the current date for start date and due date columns:
+
+```
+INSERT INTO tasks(title,start_date,due_date)
+VALUES('Use current date for the task',CURRENT_DATE(),CURRENT_DATE())Code language: SQL (Structured Query Language) (sql)
+```
+
+In this example, we used the `CURRENT_DATE()` function as the values for the `start_date` and `due_date` columns. Note that the `CURRENT_DATE()` function is a [date function](https://www.mysqltutorial.org/mysql-date-functions/) that returns the current system date.
+
+## Insert Into Select
+
+In the previous tutorial, you learned how to insert one or more rows into a table using the `INSERT` statement with a list of column values specified in the `VALUES` clause.
+
+```
+INSERT INTO table_name(c1,c2,...)
+VALUES(v1,v2,..);Code language: SQL (Structured Query Language) (sql)
+```
+
+Besides using row values in the `VALUES` clause, you can use the result of a `SELECT` statement as the data source for the `INSERT` statement.
+
+The following illustrates the syntax of the `INSERT INTO SELECT` statement:
+
+```
+INSERT INTO table_name(column_list)
+SELECT 
+   select_list 
+FROM 
+   another_table
+WHERE
+   condition;Code language: SQL (Structured Query Language) (sql)
+```
+
+In this syntax, instead of using the `VALUES` clause, you can use a `SELECT` statement. The `SELECT` statement can retrieve data from one or more tables.
+
+The `INSERT INTO SELECT` statement is very useful when you want to copy data from other tables to a table or to summary data from multiple tables into a table.
+
+
+
 ## UPDATE
 
 ```mysql
@@ -817,17 +982,13 @@ case和when的参数字段都不要加别名， 别名要加在整个case子句�
 ### Simple CASE expression
 
 ```mysql
-CASE expression
-WHEN when_expression_1 THEN
-	result_1
-WHEN when_expression_2 THEN
-	result_2
-WHEN when_expression_3 THEN
-	result_3
-...
-ELSE
-	else_result
-END
+CASE case_value
+   WHEN when_value1 THEN statements
+   WHEN when_value2 THEN statements
+   ...
+   [ELSE else-statements]
+END CASE;
+
 ```
 
 * 如果没有任何一个`WHEN`子句被匹配，则进入`ELSE`子句。 `ELSE`子句是可选的， 如果省略了`ELSE`子句，则不匹配任何when时，直接返回`NULL`
@@ -921,7 +1082,7 @@ aA12345678
 
 ### ROUND
 
-## ROUND(X,D)
+### ROUND(X,D)
 
 ​	此函数返回x舍入到最接近的整数。如果第二个参数，D有提供，则函数返回x四舍五入至第D位小数点。D必须是正数
 
@@ -946,11 +1107,520 @@ SQL
 
 
 
-# 
+# Aggregate Functions
 
-# 
+```sql
+function_name(DISTINCT | ALL expression)
+```
+
+* use `DISTINCT` if you want to calculate based on distinct values or `ALL` in case you want to calculate all values including duplicates. The default is `ALL`
+* The aggregate functions are often used with the `GROUP BY` clause to calculate an aggregate value for each group
+
+## AVG()
+
+The `AVG()` function calculates the average value of a set of values. It ignores NULL in the calculation.
+
+```sql
+AVG(expression)
+```
+
+
+
+## COUNT()
+
+The `COUNT()` function returns the number of the value in a set.
+
+For example, you can use the `COUNT()` function to get the number of products in the `products` table as shown in the following query:
+
+```sql
+SELECT 
+    COUNT(*) AS total
+FROM 
+    products;
+```
+
+## SUM()
+
+The `SUM()` function returns the sum of values in a set. The `SUM()` function ignores `NULL`. If no matching row found, the `SUM()` function returns NULL.
+
+To get the total order value of each product, you can use the `SUM()` function in conjunction with the `GROUP BY` clause as follows:
+
+```sql
+SELECT 
+    productCode, 
+    SUM(priceEach * quantityOrdered) total
+FROM
+    orderDetails
+GROUP BY productCode
+ORDER BY total DESC;
+```
+
+## MAX()
+
+The `MAX()` function returns the maximum value in a set.
+
+```
+MAX(expression)Code language: SQL (Structured Query Language) (sql)
+```
+
+For example, you can use the `MAX()` function to get the highest buy price from the `products` table as shown in the following query:
+
+```
+SELECT 
+     MAX(buyPrice) highest_price
+FROM 
+     products;
+```
 
 # CONSTRAINTS
+
+## Primary Key
+
+When you define a primary key for a table, MySQL automatically [creates an index](https://www.mysqltutorial.org/mysql-index/mysql-create-index/) called `PRIMARY`
+
+### 1) Define a `PRIMARY KEY` constraint in `CREATE TABLE`
+
+Typically, you define the primary key for a table in the `CREATE TABLE` statement.
+
+If the primary key has one column, you can use the `PRIMARY KEY` constraint as a column constraint:
+
+```
+CREATE TABLE table_name(
+    primary_key_column datatype PRIMARY KEY,
+    ...
+);Code language: SQL (Structured Query Language) (sql)
+```
+
+When the primary key has more than one column, you must use the `PRIMARY KEY` constraint as a table constraint.
+
+```
+CREATE TABLE table_name(
+    primary_key_column1 datatype,
+    primary_key_column2 datatype,
+    ...,
+    PRIMARY KEY(column_list)
+);Code language: SQL (Structured Query Language) (sql)
+```
+
+In this syntax, you separate columns in the `column_list` by commas (,).
+
+The `PRIMARY KEY` table constraint can be used when the primary key has one column:
+
+```
+CREATE TABLE table_name ( 
+    primary_key_column datatype, 
+    ... ,
+    PRIMARY KEY(primary_key_column)
+);
+```
+
+## Foreign Key
+
+A foreign key is a column or group of columns in a table that links to a column or group of columns in another table. The foreign key places constraints on data in the related tables, which allows MySQL to maintain referential integrity.
+
+
+
+Once a foreign key constraint is in place, the foreign key columns from the child table must have the corresponding row in the parent key columns of the parent table or values in these foreign key column must be `NULL` (see the `SET NULL` action example below).
+
+### Self-referencing foreign key
+
+Sometimes, the child and parent tables may refer to the same table. In this case, the foreign key references back to the primary key within the same table.
+
+See the following `employees` table from the [sample database](https://www.mysqltutorial.org/mysql-sample-database.aspx).
+
+![img](https://www.mysqltutorial.org/wp-content/uploads/2019/08/employees.png)
+
+The `reportTo` column is a foreign key that refers to the `employeeNumber` column which is the primary key of the `employees` table.
+
+This relationship allows the `employees` table to store the reporting structure between employees and managers. Each employee reports to zero or one employee and an employee can have zero or many subordinates.
+
+The foreign key on the column `reportTo` is known as a *recursive* or *self-referencing* foreign key.
+
+## MySQL `FOREIGN KEY` syntax
+
+Here is the basic syntax of defining a foreign key constraint in the `CREATE TABLE` or `ALTER TABLE` statement:
+
+```
+[CONSTRAINT constraint_name]
+FOREIGN KEY [foreign_key_name] (column_name, ...)
+REFERENCES parent_table(colunm_name,...)
+[ON DELETE reference_option]
+[ON UPDATE reference_option]Code language: SQL (Structured Query Language) (sql)
+```
+
+In this syntax:
+
+First, specify the name of foreign key constraint that you want to create after the `CONSTRAINT` keyword. If you omit the constraint name, MySQL automatically generates a name for the foreign key constraint.
+
+Second, specify a list of comma-separated foreign key columns after the `FOREIGN KEY` keywords. The foreign key name is also optional and is generated automatically if you skip it.
+
+Third, specify the parent table followed by a list of comma-separated columns to which the foreign key columns reference.
+
+Finally, specify how foreign key maintains the referential integrity between the child and parent tables by using the `ON DELETE` and `ON UPDATE` clauses. The `reference_option` determines action which MySQL will take when values in the parent key columns are deleted (`ON DELETE`) or updated (`ON UPDATE`).
+
+MySQL has five reference options: `CASCADE`, `SET NULL`, `NO ACTION`, `RESTRICT`, and `SET DEFAULT`.
+
+- `CASCADE`: if a row from the parent table is deleted or updated, the values of the matching rows in the child table automatically deleted or updated.
+- `SET NULL`: if a row from the parent table is deleted or updated, the values of the foreign key column (or columns) in the child table are set to `NULL`.
+- `RESTRICT`: if a row from the parent table has a matching row in the child table, MySQL rejects deleting or updating rows in the parent table.
+- `NO ACTION`: is the same as `RESTRICT`.
+- `SET DEFAULT`: is recognized by the MySQL parser. However, this action is rejected by both InnoDB and NDB tables.
+
+In fact, MySQL fully supports three actions: `RESTRICT`, `CASCADE` and `SET NULL`.
+
+If you don’t specify the `ON DELETE` and `ON UPDATE` clause, the default action is `RESTRICT`.
+
+## MySQL `FOREIGN KEY` examples
+
+Let’s [create a new database](https://www.mysqltutorial.org/mysql-create-database/) called `fkdemo` for the demonstration.
+
+```
+CREATE DATABASE fkdemo;
+
+USE fkdemo;Code language: SQL (Structured Query Language) (sql)
+```
+
+### `RESTRICT` & `NO ACTION` actions
+
+Inside the `fkdemo` database, create two tables `categories` and `products`:
+
+```
+CREATE TABLE categories(
+    categoryId INT AUTO_INCREMENT PRIMARY KEY,
+    categoryName VARCHAR(100) NOT NULL
+) ENGINE=INNODB;
+
+CREATE TABLE products(
+    productId INT AUTO_INCREMENT PRIMARY KEY,
+    productName varchar(100) not null,
+    categoryId INT,
+    CONSTRAINT fk_category
+    FOREIGN KEY (categoryId) 
+        REFERENCES categories(categoryId)
+) ENGINE=INNODB;Code language: SQL (Structured Query Language) (sql)
+```
+
+The `categoryId` in the `products` table is the foreign key column that refers to the `categoryId` column in the `categories` table.
+
+Because we don’t specify any `ON UPDATE` and `ON DELETE` clauses, the default action is `RESTRICT` for both update and delete operation.
+
+The following steps illustrate the `RESTRICT` action.
+
+\1) [Insert two rows](https://www.mysqltutorial.org/mysql-insert-multiple-rows/) into the `categories` table:
+
+```
+INSERT INTO categories(categoryName)
+VALUES
+    ('Smartphone'),
+    ('Smartwatch');Code language: SQL (Structured Query Language) (sql)
+```
+
+\2) [Select](https://www.mysqltutorial.org/mysql-select-statement-query-data.aspx) data from the `categories` table:
+
+```
+SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)
+```
+
+![img](https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table.png)
+
+\3) [Insert a new row](https://www.mysqltutorial.org/mysql-insert-statement.aspx) into the `products` table:
+
+```
+INSERT INTO products(productName, categoryId)
+VALUES('iPhone',1);Code language: SQL (Structured Query Language) (sql)
+```
+
+It works because the `categoryId` 1 exists in the `categories` table.
+
+\4) Attempt to insert a new row into the `products` table with a `categoryId` value does not exist in the `categories` table:
+
+```
+INSERT INTO products(productName, categoryId)
+VALUES('iPad',3);Code language: SQL (Structured Query Language) (sql)
+```
+
+MySQL issued the following error:
+
+```
+Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`fkdemo`.`products`, CONSTRAINT `fk_category` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`) ON DELETE RESTRICT ON UPDATE RESTRICT)Code language: JavaScript (javascript)
+```
+
+\5) Update the value in the `categoryId` column in the `categories` table to `100`:
+
+```
+UPDATE categories
+SET categoryId = 100
+WHERE categoryId = 1;
+Code language: SQL (Structured Query Language) (sql)
+```
+
+MySQL issued this error:
+
+```
+Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`fkdemo`.`products`, CONSTRAINT `fk_category` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`) ON DELETE RESTRICT ON UPDATE RESTRICT)Code language: JavaScript (javascript)
+```
+
+Because of the `RESTRICT` option, you cannot delete or update `categoryId 1` since it is referenced by the `productId` `1` in the `products` table.
+
+### `CASCADE` action
+
+These steps illustrate how `ON UPDATE CASCADE` and `ON DELETE CASCADE` actions work.
+
+\1) [Drop](https://www.mysqltutorial.org/mysql-drop-table) the `products` table:
+
+```
+DROP TABLE products;Code language: SQL (Structured Query Language) (sql)
+```
+
+\2) Create the `products` table with the `ON UPDATE CASCADE` and `ON DELETE CASCADE` options for the foreign key:
+
+```
+CREATE TABLE products(
+    productId INT AUTO_INCREMENT PRIMARY KEY,
+    productName varchar(100) not null,
+    categoryId INT NOT NULL,
+    CONSTRAINT fk_category
+    FOREIGN KEY (categoryId) 
+    REFERENCES categories(categoryId)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+) ENGINE=INNODB;Code language: SQL (Structured Query Language) (sql)
+```
+
+\3) Insert four rows into the `products` table:
+
+```
+INSERT INTO products(productName, categoryId)
+VALUES
+    ('iPhone', 1), 
+    ('Galaxy Note',1),
+    ('Apple Watch',2),
+    ('Samsung Galary Watch',2);
+Code language: SQL (Structured Query Language) (sql)
+```
+
+\4) Select data from the `products` table:
+
+```
+SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)
+```
+
+![img](https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table.png)
+
+\5) Update `categoryId` 1 to 100 in the `categories` table:
+
+```
+UPDATE categories
+SET categoryId = 100
+WHERE categoryId = 1;Code language: SQL (Structured Query Language) (sql)
+```
+
+\6) Verify the update:
+
+```
+SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)
+```
+
+![img](https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-cascade.png)
+
+\7) Get data from the `products` table:
+
+```
+SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)
+```
+
+![img](https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-update-cascade-.png)
+
+As you can see, two rows with value `1` in the `categoryId` column of the `products` table were automatically updated to `100` because of the `ON UPDATE CASCADE` action.
+
+\8) Delete `categoryId` 2 from the `categories` table:
+
+```
+DELETE FROM categories
+WHERE categoryId = 2;
+Code language: SQL (Structured Query Language) (sql)
+```
+
+\9) Verify the deletion:
+
+```
+SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)
+```
+
+![img](https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-delete-cascade.png)
+
+\10) Check the `products` table:
+
+```
+SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)
+```
+
+![img](https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-delete-cascade.png)
+
+All products with `categoryId` 2 from the `products` table were automatically deleted because of the `ON DELETE CASCADE` action.
+
+### `SET NULL` action
+
+These steps illustrate how the `ON UPDATE SET NULL` and `ON DELETE SET NULL` actions work.
+
+\1) Drop both `categories` and `products` tables:
+
+```
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS products;
+Code language: SQL (Structured Query Language) (sql)
+```
+
+\2) Create the `categories` and `products` tables:
+
+```
+CREATE TABLE categories(
+    categoryId INT AUTO_INCREMENT PRIMARY KEY,
+    categoryName VARCHAR(100) NOT NULL
+)ENGINE=INNODB;
+
+CREATE TABLE products(
+    productId INT AUTO_INCREMENT PRIMARY KEY,
+    productName varchar(100) not null,
+    categoryId INT,
+    CONSTRAINT fk_category
+    FOREIGN KEY (categoryId) 
+        REFERENCES categories(categoryId)
+        ON UPDATE SET NULL
+        ON DELETE SET NULL 
+)ENGINE=INNODB;
+Code language: SQL (Structured Query Language) (sql)
+```
+
+The foreign key in the `products` table changed to `ON UPDATE SET NULL` and `ON DELETE SET NULL` options.
+
+\3) Insert rows into the `categories` table:
+
+```
+INSERT INTO categories(categoryName)
+VALUES
+    ('Smartphone'),
+    ('Smartwatch');
+Code language: SQL (Structured Query Language) (sql)
+```
+
+\4) Insert rows into the `products` table:
+
+```
+INSERT INTO products(productName, categoryId)
+VALUES
+    ('iPhone', 1), 
+    ('Galaxy Note',1),
+    ('Apple Watch',2),
+    ('Samsung Galary Watch',2);
+Code language: SQL (Structured Query Language) (sql)
+```
+
+\5) Update `categoryId` from 1 to 100 in the `categories` table:
+
+```
+UPDATE categories
+SET categoryId = 100
+WHERE categoryId = 1;Code language: SQL (Structured Query Language) (sql)
+```
+
+\6) Verify the update:
+
+```
+SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)
+```
+
+![img](https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-set-null.png)
+
+\7) Select data from the `products` table:
+
+![img](https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-set-null.png)
+
+The rows with the `categoryId` 1 in the `products` table were automatically set to `NULL` due to the `ON UPDATE SET NULL` action.
+
+\8) Delete the `categoryId` 2 from the `categories` table:
+
+```
+DELETE FROM categories 
+WHERE categoryId = 2;Code language: SQL (Structured Query Language) (sql)
+```
+
+\9) Check the `products` table:
+
+```
+SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)
+```
+
+![img](https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-on-delete-set-null.png)
+
+The values in the `categoryId` column of the rows with `categoryId` 2 in the `products` table were automatically set to `NULL` due to the `ON DELETE SET NULL` action.
+
+## Drop MySQL foreign key constraints
+
+To drop a foreign key constraint, you use the `ALTER TABLE` statement:
+
+```
+ALTER TABLE table_name 
+DROP FOREIGN KEY constraint_name;Code language: SQL (Structured Query Language) (sql)
+```
+
+In this syntax:
+
+- First, specify the name of the table from which you want to drop the foreign key after the `ALTER TABLE` keywords.
+- Second, specify the constraint name after the `DROP FOREIGN KEY` keywords.
+
+Notice that `constraint_name` is the name of the foreign key constraint specified when you created or added the foreign key constraint to the table.
+
+To obtain the generated constraint name of a table, you use the `SHOW CREATE TABLE` statement:
+
+```
+SHOW CREATE TABLE table_name;Code language: SQL (Structured Query Language) (sql)
+```
+
+For example, to see the foreign keys of the `products` table, you use the following statement:
+
+```
+SHOW CREATE TABLE products;Code language: SQL (Structured Query Language) (sql)
+```
+
+The following is the output of the statement:
+
+![img](https://www.mysqltutorial.org/wp-content/uploads/2019/09/MySQL-Foreign-Key-drop-foreign-key-constraint.png)
+
+As you can see clearly from the output, the table `products` table has one foreign key constraint: `fk_category`
+
+And this statement drops the foreign key constraint of the `products` table:
+
+```
+ALTER TABLE products 
+DROP FOREIGN KEY fk_category;Code language: SQL (Structured Query Language) (sql)
+```
+
+To ensure that the foreign key constraint has been dropped, you can view the structure of the products table:
+
+```
+SHOW CREATE TABLE products;Code language: SQL (Structured Query Language) (sql)
+```
+
+![MySQL Foreign Key - after drop foreign key constraint](https://www.mysqltutorial.org/wp-content/uploads/2019/09/MySQL-Foreign-Key-after-drop-foreign-key-constraint.png)
+
+## Disabling foreign key checks
+
+Sometimes, it is very useful to disable foreign key checks e.g., when you [import data from a CSV file into a table](https://www.mysqltutorial.org/import-csv-file-mysql-table/). If you don’t disable foreign key checks, you have to load data into a proper order i.e., you have to load data into parent tables first and then child tables, which can be tedious. However, if you disable the foreign key checks, you can load data into tables in any order.
+
+To disable foreign key checks, you use the following statement:
+
+```
+SET foreign_key_checks = 0;Code language: SQL (Structured Query Language) (sql)
+```
+
+And you can enable it by using the following statement:
+
+```
+SET foreign_key_checks = 1;Code language: SQL (Structured Query Language) (sql)
+```
+
+In this tutorial, you have learned about the MySQL foreign key and how to create a foreign key constraint with various reference options.
 
 # DATA TYPES
 

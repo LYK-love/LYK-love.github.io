@@ -24,9 +24,21 @@ Outline:
 
 # Docker Specification
 
+Docker采用CS模式， 分为Client ， Engine， Index三部分， docker server就是docker引擎， docker index就是docker镜像存储服务（docker hub之类）
+
+* 由于Index是个服务，Client就是个命令行，**我们指的docker一般就是docker engine**， 它是用于**运行和编排容器的基础工具**
+
+* daemon实现了docker engine的api, client和daemon通过本地`IPC/UNIX Socket`通信（`/var/run/docker.sock`, 用`docker --version`可查看二者的通信 )
+
+ 
+
+镜像是未运行的容器，二者是类和对象的关系。 
+
+也可以把容器理解为**命名空间的有组织集合**, 详见下文Security -> Linux -> Namespace
+
 ## Docker运行时与编排引擎
 
-Docker一般指Docker引擎，它是用于运行和编排容器的基础工具， 引擎分社区和企业版，版本号遵循` YY.MM-xx`格式
+引擎分社区和企业版，版本号遵循` YY.MM-xx`格式
 
 每个docker主机称为一个docker节点
 
@@ -230,16 +242,6 @@ Storage Driver: overlay2
 
 
 
-## Docker架构
-
-采用cs模式， server是docker引擎，daemon实现了引擎的api, client和daemon通过本地`IPC/UNIX Socket`通信（`/var/run/docker.sock`, 用`docker --version`可查看二者的通信
-
- 
-
-镜像是未运行的容器，二者是类和对象的关系。 
-
-也可以把容器理解为**命名空间的有组织集合**, 详见下文Security -> Linux -> Namespace
-
 # Docker Engine
 
 docker server就是docker引擎，而引擎架构如下：
@@ -264,6 +266,8 @@ docker server就是docker引擎，而引擎架构如下：
 
 ## commands
 
+### 搜索镜像
+
 `docekr search` 通过CLI方式在docker hub搜索镜像：
 
 ```shell
@@ -274,7 +278,7 @@ docker search [OPTIONS] NAME
 
 
 
- 下载镜像：
+### 下载镜像
 
 ```shell
 docker image pull <image> #默认从docker hub
@@ -283,7 +287,9 @@ docker image pull <registry>/<image>:# 指定镜像仓库服务
 
 * `<registory>`:  `<域名/IP>[:端口号]`。默认地址是 Docker Hub(`docker.io`)
 
- 列出本机的所有镜像：
+### 列出镜像 
+
+列出本机的所有镜像：
 
 ```
 docker image ls
@@ -324,7 +330,7 @@ docker image ls
 
   
 
-
+### 查看镜像
 
 列出镜像细节：
 
@@ -334,7 +340,9 @@ docker image inspect
 
 
 
- 删除镜像：
+ ### 删除镜像
+
+
 
 ```shell
 docker image rm <image>
@@ -348,7 +356,15 @@ docker image rm <image>
 docker image prune
 ```
 
+### 导出镜像为文件
 
+将指定镜像保存成 tar 文件:
+
+```shell
+docker save -o [file-name].tar  <image>
+```
+
+* `-o `:输出到的文件
 
 ## 镜像服务
 
@@ -547,24 +563,44 @@ docker container run [options] <image> <app>
 ```
 
 * `-i`: 交互式
+
 * `-t`: 终端，`-it`可以将当前终端连接到容器的shell终端上
+
 * `-d`： daemon模式: 在后台运行
+
 * `<app>`: 容器中运行的**主进程**（领头进程）
+
 * `--name [name]`: 给容器起别名
+
 * `-p [host_port:container_port]`: 指定端口映射， 例如`-p 80:8080`将主机的80端口映射到容器的8080端口
+
+* `--network`: 指定容器所属的网络类型：
+
+  * `--net=host`: host网络
+  * `--net=none`: 无网络
+  * `--net=bridge `: bridge网络，这是默认设置
+  * `--net=container:<container>`: 与指定容器共享一个Network Namespace，但其他的namespace还是隔离的
+
+  
 
 
 
  ` <Ctrl PQ>`： detach容器
 
-
-
-
+### 启动已停止运行的容器
 
 启动处于停止（`Exited`）状态的容器：
 
 ```shell
 docker container start
+```
+
+### 重启容器
+
+ 正在运行的容器可以重启:
+
+```shell
+docker container restart <container> 
 ```
 
 
@@ -637,11 +673,79 @@ docker container rm -f $(docker container ls -aq | cut -d " " -f 1)
 
 
 
-### 查看容器信息：
+删除所有Exited的容器:
+
+```shell
+docker container prune       
+```
+
+
+
+### 导出/导入容器的文件系统
+
+将Docker容器里的文件系统作为一个 tar 文件导出到标准输出， 注意与用于序列化镜像的`docker image save`不同：
+
+```shell
+docker container export [OPTIONS] <container>
+```
+
+* `-o`:将输入内容写到文件
+
+
+
+从tar文件中创建镜像:
+
+```shell
+docker import [OPTIONS] [file_name].tar <image>
+```
+
+
+
+### 查看容器信息
 
 ```shell
 docker  container  inspect <container>
 ```
+
+
+
+查看容器重启策略：
+
+```
+docker  container  inspect <container> | grep RestartPolicy -A 20
+```
+
+
+
+查看容器的挂载情况：
+
+```
+docker inspect <container> | grep Mounts -A 20
+```
+
+
+
+
+
+查看端口映射等信息：
+
+```shell
+docker container port <container>
+```
+
+
+
+
+
+### 查看容器日志
+
+查看容器内部的**标准输出**:
+
+```shell
+docker logs -f <container>    
+```
+
+
 
 
 
@@ -849,11 +953,16 @@ journalctl -u docker.service
 查看容器日志：
 
 ```shell
-docker container logs <container-name>
-docker service logs <service-name> # 针对Swarm服务
+docker container logs -f <container-name>
 ```
 
+对于Swarm服务：
 
+```shell
+docker service logs <service-name>
+```
+
+ 
 
 ## daemon日志
 

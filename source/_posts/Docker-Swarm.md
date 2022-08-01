@@ -236,7 +236,7 @@ docker swarm leave
 
 
 
-创建新服务,:
+创建新服务,  
 
 ```shell
 docker service create --name <service-name> \
@@ -245,15 +245,28 @@ docker service create --name <service-name> \
 ```
 
 * `docker service create` 格式与`docker container run` 类似
+
 * `--replicas`: 告知Docker应该总是有n个此服务的副本, 这定义了`期望状态`
   *  默认为1
   * Leader会按要求在Swarm中实例化n个副本,
     * 服务副本使用相同的镜像和配置
     * **Manager也会作为worker运行**
+  
+* `-p, --publish port`：`<host-port>:<container-port>`， 宿主机端口映射到容器端口，由于是swarm模式，该宿主机端口会监听在集群所有节点上
+  
+* 注意，只有**拥有该镜像的节点**才会被调度到运行该服务, 可以从`docker service ps <service>`中看到，某些节点“拒绝了任务调度，因为”：
+  
+  ```
+  No such image: <imaeg>
+  ```
+  
+  
+  
+  
 
 
 
-Swarm会持续确保服务的实际状态和期望状态一致
+Swarm会持续确保服务的实际状态和期望状态一致(也就是K8S中的调协循环)
 
 * Swarm会在后台轮询检查所有服务, 来持续比较服务的实际状态和期望状态
 
@@ -273,18 +286,20 @@ docker service ls
 
 
 
-进一步查看Swarm中某个服务的信息:
+进一步查看Swarm中某个服务的信息, 比如哪些节点在运行该服务实例:
 
 ```shell
-docker service ps <serive>
+docker service ps <service>
 ```
+
+* 在运行任务的节点上运行`docker ps`也能看到这个service对应的容器
 
 
 
 查看服务的详细信息:
 
 ```shell
-docker service inspect
+docker service inspect --pretty <service>
 ```
 
 * `--pretty`:  文本更可读
@@ -320,7 +335,7 @@ docker service update <service>
  对服务副本个数进行增减
 
 ```shell
-docker serivice scale
+docker service scale
 ```
 
 
@@ -330,7 +345,7 @@ docker serivice scale
 删除服务, 该命令不会要求确认
 
 ```shell
-docker serivice rm
+docker service rm
 ```
 
 ## 配置CA
@@ -339,7 +354,18 @@ docker serivice rm
 docker  swarm ca
 ```
 
+## 服务滚动更新
 
+```
+docker service update \
+--image <new-image> \ 
+--update-parallelism <num> \ 
+--update-delay <time> uber-svc \
+<service-to-update>
+```
+
+* `--update-parallelism <num>`： 每次更新`num`个副本
+* `--update-delay <time>` # 每次更新有`time`s 延迟
 
 
 
@@ -348,7 +374,7 @@ docker  swarm ca
   查看服务的日志
 
 ```shell
-docker serivice logs
+docker service logs
 ```
 
 
@@ -526,3 +552,100 @@ error response from daemon: Swarm is encrypted and needs to be unlocked before i
  # 然后会要求你输入解锁码
 ```
 
+# swarm实战
+
+我们要将前端服务`volatile_frontend_svc`(容器监听80端口)部署到集群，对外暴露集群的80端口
+
+## 配置
+
+| 主机名          | 主机ip | 角色                 |
+| --------------- | ------ | -------------------- |
+| lyk阿里云服务器 | **     | master，CICD工作节点 |
+| lyk华为云服务器 | **     | master               |
+| lyk腾讯云服务器 | **     | master               |
+
+3台Master， 3台Worker（ Master也同时作为Worker，因此实际上只有三台主机 ）
+
+
+
+
+
+## 准备
+
+前置准备：所有节点必须打开：
+
+- UDP/4789： 绑定到VTE
+- TCP/2377： Swarm的集群管理默认使用2377端口
+- TCP/7946, UDP/7946: Swarm的节点发现使用7946端口
+
+## 步骤
+
+
+
+1. 先在阿里云主机上创建第一个master节点：
+
+   ```
+   docker  swarm init --advertise-addr **:2377
+   ```
+
+   * 填该master节点的公网ip
+
+2. 生成令节点作为master加入集群的令牌：
+
+   ```
+   docker swarm join-token manager
+   ```
+
+   * 该命令的输出即为令牌
+
+3. 在其他节点上使用上述令牌，使其作为master加入该swarm集群。 成功后执行下述命令，查看集群中的节点：
+
+   ```
+   docker node ls 
+   ```
+
+4. 在任意master上创建overlay网络，名为`volatile`:
+
+   ```
+   docker network create -d overlay volatile
+   ```
+
+5. 在master上基于镜像创建新服务`volatile_frontend_svc`，并使用网络`volatile`:
+
+   ```
+   docker service create --name volatile_frontend_svc --network volatile -p 80:80 --replicas 3 lyklove/volatile_frontend:latest
+   ```
+
+   * 这里设置服务实例数为3
+   * 我们将集群的80端口映射到了容器的80端口。 因此访问集群的任意节点的80端口的流量最终都会被抓发到运行了该服务副本的节点
+
+6. （后续）滚动更新:
+
+   ```shell
+   docker service update --image lyklove/volatile_frontend:new --update-parallelism 2  --update-delay 1s volatile_frontend_svc
+   ```
+
+- 基于新镜像`lyklove/volatile_frontend:new `更新服务，并在其他节点上也进行服务更新
+- 该命令可以在任意拥有该新镜像的master节点上执行
+
+## 集成CICD
+
+可以发现，CICD只需要将服务打包成镜像，然后利用该镜像滚动更新就行了
+
+
+
+Jenkins脚本`jenkinsfile.groovy`:
+
+```java
+// ...
+// 根据代码构建新镜像
+stage("update service by built image"){
+        sh "docker service update --image ${IMAGE_TO_RUN} --update-parallelism 2  --update-delay 2s ${SERVICE_NAME}"
+    }
+```
+
+## 集群使用
+
+通过`[host-ip]:80`访问前端
+
+其中`host-ip`可以是集群中任意节点的ip

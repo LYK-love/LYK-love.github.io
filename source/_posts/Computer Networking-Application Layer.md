@@ -357,23 +357,27 @@ ref: https://blog.csdn.net/zephyr999/article/details/80055420
 
     　　最常用的是GET和POST
 
-* 首部行（请求头部）：
+* 首部行（请求头部， 报文头）：由 key/value 对组成，每行为一对，key 和 value 之间通过冒号(:)分割。请求头的作用主要用于通知服务端有关于客户端的请求信息
 
-  1. User-Agent : 产生请求的浏览器类型
+  1. - User-Agent：生成请求的浏览器类型
+   - Accept：客户端可识别的响应内容类型列表；星号* 用于按范围将类型分组。*/*表示可接受全部类型，type/*表示可接受 type 类型的所有子类型。
+     - Accept-Language: 客户端可接受的自然语言
+   - Accept-Encoding: 客户端可接受的编码压缩格式
+     - Accept-Charset： 可接受的字符集
+     - Host: 请求的主机名，允许多个域名绑定同一 IP 地址
+   - connection：连接方式（close 或 keepalive）
+     - Cookie: 存储在客户端的扩展字段
+   - Content-Type:标识请求内容的类型
+     - Content-Length:标识请求内容的长度
 
-  2. Accept : 客户端希望接受的数据类型，比如 Accept：text/xml（application/json）表示希望接受到的是xml（json）类型
+* 请求体（报文体）: 主要用于 POST 请求，与 POST 请求方法配套的请求头字段一般有 Content-Type和 Content-Length
 
-  3. Content-Type：发送端发送的实体数据的数据类型。
-     比如，Content-Type：text/html（application/json）表示发送的是html类型。
-
-     * Content-Type
-
-       
-
-  4. Host : 请求的主机名，允许多个域名同处一个IP地址，即虚拟主机
-
-* 常见的Content-Type：
-
+  
+  
+  
+  
+  常见的Content-Type：
+  
   | Content-Type                      | 解释                                                         |
   | --------------------------------- | ------------------------------------------------------------ |
   | text/html                         | html格式                                                     |
@@ -387,14 +391,16 @@ ref: https://blog.csdn.net/zephyr999/article/details/80055420
   | application/json                  | POST专用：用来告诉服务端消息主体是序列化后的 JSON 字符串     |
   | text/xml                          | POST专用：发送xml数据                                        |
   | multipart/form-data               | POST专用：下面讲解                                           |
-
+  
    
-
+  
   * **multipart/form-data**
-
+  
   　　用以支持向服务器发送二进制数据，以便可以在 POST 请求中实现文件上传等功能
 
 #### 响应报文
+
+由状态行、响应头、空行、响应内容四部分组成
 
 ![](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.jpg)
 
@@ -406,33 +412,44 @@ ref: https://blog.csdn.net/zephyr999/article/details/80055420
 
 　　比如：HTTP/1.1 200 OK
 
+* 响应头：
+  * Location：服务器返回给客户端，用于重定向到新的位置
+  * Server： 包含服务器用来处理请求的软件信息及版本信息Vary：标识不可缓存的请求头列表
+  * Connection: 连接方式， close 是告诉服务端，断开连接，不用等待后续的请求了。 keep-alive 则是告诉服务端，在完成本次请求的响应后，保持连接
+  * Keep-Alive: 300，期望服务端保持连接多长时间（秒）
+* 空行：(CR or LF )， 位于响应头和响应内容之间
+* 响应内容：服务端返回给请求端的文本信息
+
 #### 状态码
 
 ![](https://img-blog.csdn.net/20180424090604643?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3plcGh5cjk5OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
-* 2XX 成功
+* 1XX：服务器已接收了客户端的请求，客户端可以继续发送请求
+
+* 2XX：服务器已成功接收到请求并进行处理
 
   * 200：OK
   * 202：No Content
   * 206：Partial Content
 
-* 3XX重定向
-
-  3XX表明浏览器需要执行某些特殊的处理以正确处理请求。
+* 3XX：服务器要求客户端重定向， 这表明浏览器需要执行某些特殊的处理以正确处理请求。
 
   * 301：Moved Permanently
 
     * 永久性重定向。 该状态码表示请求的资源已被分配了新的 URI， 以后应使用资源现在所指的 URI。 
-  * 302：Found
-* 临时性重定向。 该状态码表示请求的资源已被分配了新的 URI， 希望用户（本次） 能使用新的 URI 访问。
+  * 302：Found 临时性重定向。 该状态码表示请求的资源已被分配了新的 URI， 希望用户（本次） 能使用新的 URI 访问。
   
-  * 303：See Other
-  * 304：Not Modified
-  * 该状态码表示客户端发送附带条件的请求 2 时， 服务器端允许请求访问资源， 但未满足条件的情况。 304 状态码返回时， 不包含任何响应的主体部分。 304 虽然被划分在 3XX 类别中， 但是和重定向没有关系。
-  * 307：Temporary Redirect
-  * 临时重定向。 该状态码与 302 Found 有着相同的含义。 
-
-* 4.4 4XX 客户端错误
+  * 303：See Other， 表示由于请求对应的资源存在着另一个URI，应使用GET方法定向获取请求的资源。303状态码明确表示客户端应当采用GET方法获取资源，这点与302状态码有区别
+  
+    * 当301、302、303响应状态码返回时，几乎所有的浏览器都会**把POST改成GET，并删除请求报文内的主体，之后请求会自动再次发送**
+  
+  * 304：Not Modified， 请求的资源没有修改过, 304 虽然被划分在 3XX 类别中， 但是和重定向没有关系
+  
+  * 307：Temporary Redirect， 与 302 Found 有着相同的含义，但浏览器不会把307从POST变成GET
+  
+    
+  
+* 4XX 客户端错误
 
   * 400 Bad Request：请求报文中存在语法错误；
   * 401 Unauthorized：该状态码表示发送的请求需要有通过 HTTP 认证（BASIC 认证、DIGEST 认证） 的认证信息。 
@@ -445,8 +462,9 @@ ref: https://blog.csdn.net/zephyr999/article/details/80055420
 
   5XX的响应结果表明服务器本身发生错误
 
-  * 500 Internal Server Error：服务器端在执行请求时发生了错误。 
-  * 503 Service Unavailable ：服务器暂时处于超负载或正在进行停机维护， 现在无法处理请求。 
+  * 500 Internal Server Error：服务器端在执行请求时发生了错误
+  * 502 网关错误 
+  * 503 Service Unavailable ：服务器暂时处于超负载或正在进行停机维护， 现在无法处理请求
 
 ### Cookie
 

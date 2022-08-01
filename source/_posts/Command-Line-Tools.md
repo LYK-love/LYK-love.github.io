@@ -1,6 +1,6 @@
 ---
-title: Shell Tools
-tags: shell
+title: Command-Line Tools
+tags: shell Linux
 categories: Toolkit
 date: 2022-02-08 18:17:19
 ---
@@ -284,8 +284,10 @@ You can run bottom using `btm`.
 
 ### **Network Connections and Config** 
 
-*  [`ss`](https://www.man7.org/linux/man-pages/man8/ss.8.html) lets you monitor incoming and outgoing network packets statistics as well as interface statistics. A common use case of `ss` is figuring out what process is using a given port in a machine. 
-*  For displaying routing, network devices and interfaces you can use [`ip`](http://man7.org/linux/man-pages/man8/ip.8.html). Note that `netstat` and `ifconfig` have been deprecated in favor of the former tools respectively.
+* [`ss`](https://www.man7.org/linux/man-pages/man8/ss.8.html) lets you monitor incoming and outgoing network packets statistics as well as interface statistics. A common use case of `ss` is figuring out what process is using a given port in a machine. 
+
+* For displaying routing, network devices and interfaces you can use [`ip`](http://man7.org/linux/man-pages/man8/ip.8.html). Note that `netstat` and `ifconfig` have been deprecated in favor of the former tools respectively.
+
 *  [`gping`](https://github.com/orf/gping): `ping`, but with a graph.
 
 - **Network Usage** - [`nethogs`](https://github.com/raboof/nethogs) and [`iftop`](http://www.ex-parrot.com/pdw/iftop/) are good interactive CLI tools for monitoring network usage.
@@ -332,3 +334,8 @@ If you want to test these tools you can also artificially impose loads on the ma
 
 A command-line benchmarking tool.
 
+# Calculating
+
+## sc
+
+short for: `scal`

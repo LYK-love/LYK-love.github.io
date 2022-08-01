@@ -227,6 +227,7 @@ volumes:
   * `ports：- target: [target_port] published: [source_port]`: 指定端口映射， 将主机的`published`端口映射到容器的`target`端口
   * `networks：`: 指定容器连接到的网络， 该网络要么已经存在，要么在`networks`**一级**key中指定, 后者会让Docker创建该网络
   * `volumes`:  指定Docker将` [source]`卷挂到容器的` [target]` 卷, 该网络要么已经存在，要么在``volumes`:`**一级**key中指定
+  * `depends_on: <service>`： 指定服务启动时间，但是启动时间早并不能保证后一个服务启动时前一个服务已经启动完成
 
 ## 解释
 

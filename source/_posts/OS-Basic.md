@@ -1,20 +1,11 @@
 ---
-title: OS Introduction
+title: OS Basic
 tags: OS Basic
 categories: Computer Science
 date: 2021-10-05 20:28:21
 ---
 
-**A History and Overview of OS zoo**
-
-
-
-ref：
-
-* *Modern  Operating Systems* 
-* *Operating Systems Three Easy pieces* 
-
-
+My understanding of OS
 
 <!--more-->
 
@@ -45,6 +36,8 @@ On top of the hardware is the software. Most computers have two modes of operati
   * In particular, those instructions that affect control of the machine or do I/O )Input/Output" are forbidden to user-mode programs
 
 * The user interface program, **shell** or **GUI**, is the <u>lowest level of user-mode software</u>, and allows the user to start other programs
+
+  (shell的概念详见*Shell Tools*)
 
 * user mode 和 kernel mode 的区别并不严格
 
@@ -206,14 +199,100 @@ was designed by the English mathematician **Charles Babbage** (1792–1871)
 *  Windows 8
   * Win7的后继，2012发行。
 
-# COMPUTER HARDWARE REVIEW
+# COMPUTER HARDWARE
 
-## PROCESSORS
+![Computer Hardware overview](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Computer%20Hardware%20overview.png)
 
-* basic cycle of CPU: 取指、译指、执行
+
+
+注意，这里只介绍现代计算机的基本结构，没有包括GPU和VRAM等组件， 也没有包括对各种存储介质的介绍( RAM, ROM, Disk)。
+
+GPU的内容(不包括VRAM)详见拙著*GPU*
+
+存储介质(包括Cache)和VRAM的内容详见拙著*Computer Storage*
+
+
+
+## Top-view Example
+
+
+
+假设计算机中存在`hello`程序:`echoh hello,world`
+
+我们以在shell上输入`./hello`来执行`hello`程序为例， 在硬件视角下，程序执行步骤如下:
+
+1. shell程序持续运行，等待用户输入，用户输入通过I/O bus传输到I/O bridge, 再传输到*system bus*, 经过*bus interface*传输到*reister file*. 然后沿上图的方向传输到内存
+
+   ![Top-view Example 1](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Top-view%20Example%201.png)
+
+1. 当用户输入Enter键，shell知道我们停止了输入，就把`hello`程序从磁盘中读到内存:
+
+   ![Top-view Example 2](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Top-view%20Example%202.png)
+
+3. 最后，内存中的数据被读到CPU， CPU执行该程序, 将结果输出到显示设备
+
+   * 这一步(数据从内存传输到CPU)详见下文*Accessing Main Memory*
+
+   ![Top-view Example 3](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Top-view%20Example%203.png)
+
+   
+
+
+我们也可以看到，硬盘到主存的data-movement是很频繁也很耗时间的，因此诞生出了Cache，这是CPU内的存储结构，采用SRAM。
+
+## Buses
+
+* *bus*: 总线。 就是一组传输地址、数据和控制信号的电线。 总线传输数据的基本单位是*word*， 在不同的硬件实现上，*word*的大小也不同，通常是4或8 Byte
+  * 基于不同的总线设计， 数据和地址可以共享总线，也可以使用不同总线。 不同设备也可以共享总线。 总线传递控制信号，来对事务进行同步。
+* 总线的类型：
+  * *system bus*
+  * *memory bus*
+  * *I/O bus*： 被多个I/O设备共享
+
+* original IBM PC最早使用了单总线架构,  为了更快的IO速度和CPU-to-memory traffic，额外的总线被引入。 形成了现代的x86系统
+* This system has many buses (e.g., cache, memory, PCIe, PCI, USB, SATA, and DMI), each with a different transfer rate and function. The operating system must be aware of all of them for configuration and management. 
+
+* The main bus is the **PCIe** (Peripheral Component Interconnect Express) bus.
+
+  * The PCIe bus was invented by Intel as a successor to the older PCI bus, which in turn was a replacement for the original ISA (Industry Standard Architecture) bus. 
+  * 2004年PCIe刚发明时，流行**shared bus architecture**，许多设备用一条线传输数据，因此需要一个arbiter
+  * PCI使用**parallel bus architecture**，即将每个数据字分多条线传输。 比如32-bit数据需要32根并行的线
+  * PCIe使用**serial bus architecture**，把数据包装成一个message， 点对点传输（一次连接称为一个**lane**）。也支持并行，如可以并行地传32个**lane**
+
+
+* the CPU talks to memory over a fast **DDR3** bus, to an external graphics device over PCIe and to all other devices via a **hub** over a **DMI** (Direct Media Interface) bus. The hub in turn connects all the other devices, using the Universal Serial Bus to talk to  USB devices, the SATA bus to interact with hard disks and DVD drives, and PCIe to transfer Ethernet frames.
+  * PCI接口的设备另外放在一个hub processor 内
+* Moreover, each of the cores has a dedicated cache and a much larger cache that is shared between them. Each of these caches introduces another bus. 
+  每个core有一个专用cache，所有core共享一个更大的cache，每个cache拥有自己的总线
+
+* The **USB** (Universal Serial Bus) was invented to attach all the slow I/O devices, such as the keyboard and mouse, to the computer.
+
+* **SCSI** (Small Computer System Interface) bus 用于需要高带宽的设备，如服务器和工作站
+
+* is a high-performance bus intended for fast disks, scanners, and other devices needing considerable bandwidth. Nowadays, we find them mostly in servers and workstations
+
+* Intel 和 MS设计了**plug and play**系统，可以自动收集IO设备信息，集中分配中断优先级和I/O（设备的）寄存器地址
+
+  * 在此之前，这些都要手动分配
+
+## CPU
+
+### Components
+
+CPU是计算机指令的执行单元。 由四部分组成:
+
+1.  *program counter* (PC): 一个 *word-size storage (or register)*，也称为**栈指针**，永远指向当前正在执行的指令的地址
+2. *register file*: 一个small storage device, 由一组word-size registers组成，每个寄存器都有其独特的名字
+3. *arithmetic/logic unit* (ALU)： 用于计算
+4. *bus interface*：一组电路，用于CPU和主存之间的数据传输
+
+
+
+### Features
+
 * 每个CPU都有自己特殊的指令集。ARM处理器不能执行x86程序
 * 由于对内存的存取所花的时间比执行一条指令还要长，CPU内部会有寄存器。
-* 许多寄存器对有用出现**可见**
+* 许多寄存器对用户**可见**
   * PC
   * 栈指针，指向内存中的栈顶。栈含有每个程序的帧。栈帧含有： 输入的参数、局部变量、没有保存进寄存器的临时变量
   * PSW(Program Status Word): 包含状态码位。 用户程序通常能读整个PSW，但仅仅只能写其中的一部分
@@ -228,6 +307,19 @@ was designed by the English mathematician **Charles Babbage** (1792–1871)
   * the  TRAP  instruction switched from user mode to kernel mode and starts the OS.执行结束后，控制会返还到TRAP的下一条指令
   * 计算机的trap不仅有用于执行system call的指令，还有别的
 
+### CPU Operations
+
+basic cycle of CPU: 取指、译指、执行
+
+### CPU Instructions
+
+抽象地说， CPU指令分为四种：
+
+-  *Load:* 从主存中copy一个byte或word到一个寄存器里， 这会覆盖寄存器里该位置上之前的值
+-  *Store:* 从寄存器里copy一个byte或word到主存的某个位置，这会覆盖主存里该位置上之前的值
+- *Operate:* 将两个寄存器里的值copy到ALO， 后者进行算数计算，并将结果存入一个寄存器，这会覆盖该寄存器里该位置上之前的值
+- *Jump:* 该指令含有一个word， 记录了要跳转到的目标指令的位置。 CPU会copy该字段到PC，覆盖PC之前的值
+
 ### Multithread and Multicore Chips
 
 * multithreading: 允许CPU拥有两个线程并且在**纳秒**级的时间里切换。 **多线程并不是并行**，因为同一时间还是只有一个程序在CPU上运行
@@ -236,31 +328,77 @@ was designed by the English mathematician **Charles Babbage** (1792–1871)
 * 许多CPU芯片上还有多个(几十个)processors or **cores**  使用多核芯片需要一个多处理器的OS
 * GPU拥有上千个core, 适用于许多并行执行的小规模计算， 在顺序计算上并不突出。
 
-## MEMORY
 
-内存是分层的
 
-* 最顶层是寄存器，和CPU一样快，因此访问它们没有延迟
-* cache，有L1和L2，差别是timing 。访问L1没有延迟，访问L2有1-2个时钟周期的延迟
-* 主存， the work house of memory system,也被称为RAM
-* ROM: 也是random-access memory，但是是只读的，不属于main memory
-* EEPROM和flash也是非易失性，但有写入次数限制
-* CMOS：记录了时间日期。还记录了一些配置参数，比如该从哪个盘启动。CMOS里自带一个小电池，因此虽然是易失性的，断了电也能工作。
+## Main Memeory 
 
-## Disks
+* *main memory*（OR *system memory* ）：主存。 在冯诺依曼架构中，处理器( 包括ALU和Controller )与存储器进行数据交互。  
 
-普通磁盘就不介绍了
+  * 我们通常就用RAM来指主存。 更精确地说，主存的材质是DRAM
+  * 此外还存在显存(VRAM)， 宽泛地讲， 和CPU交互的是主存，和GPU交互的就是显存
+  * **在通常的语境下，我们说的RAM都是主存，也就是和CPU交互的DRAM**
 
-* SSD(Solid State Disks): 没有移动的磁头，也没有盘片，事实上它使用flash存储数据。它们和磁盘唯一的相似处就是，他们都是非易失的。 **SSD不是磁盘**
-* **虚拟内存**即内存映射，这由CPU的一部分，称为**MMU**( Memory Management Unit )完成
+  
+
+### Accessing Main Memory
+
+数据通过bus( 总线， 见下文 )在CPU和主存间传输。 每一次CPU和主存间的数据传输就是一次*bus transaction*
+
+整个过程的I/O类型是DMA(见下文*I/O Devices -> I/O -> DMA*)
+
+* A *read transaction* transfers data from the main memory to the CPU. 
+* A *write transaction* transfers data from the CPU to the main memory.
+
+
+
+![Example bus structure that connects the CPU and main memory](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Example%20bus%20structure%20that%20connects%20the%20CPU%20and%20main%20memory.png)
+
+上图展示了CPU和主存进行数据传输的基本模型。 包含了三个组件：CPU、 I/O bridge（ 是一个芯片组， 包含了*memory controller*）、主存。 CPU和 I/O bridge通过*system bus*连接，  I/O bridge和主存通过*memory bus*连接。 当然如同之前介绍的,  I/O bridge还会把*system bus*和*memory bus*连接到*I/O bus*，它由I/O设备共享
+
+
+
+考虑如下指令:
+
+```assembly
+movq A,%rax # 将地址A指向的内容赋值给rax
+```
+
+CPU的*bus interface*会开始一个*write transaction*, 步骤为:
+
+1. CPU将地址A放到系统总线上，  I/O bridge将该signal传递给*memory bus*
+
+   ![Accessing Main Memory step 1](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Accessing%20Main%20Memory%20step%201.png)
+
+2. 主存感知到*memory bus*上的信号(地址A)， 从DRAM中读取A处的数据x，写进*memory bus*，  I/O bridge会将其传递给*system bus*
+
+   ![Accessing Main Memory step 2](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Accessing%20Main%20Memory%20step%202.png)
+
+3. 主存感知到*memory bus*上的信号( 数据x )，从*memory bus*读数据，然后copy到%rax
+
+   ![Accessing Main Memory step 3](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Accessing%20Main%20Memory%20step%203.png)
+
+
+
+
+
+
+
+
+
+
+## Disk
+
+* Disk：称为硬盘，是非易失的外部存储设备。
+
+
 
 
 
 ## I/O Devices
 
-#### controller and devices
+### controller and devices
 
-##### controller
+#### controller
 
 OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由两部分组成：控制器和设备本身。
 
@@ -269,13 +407,14 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
     * 比如，OS可能命令“read sector 11,206 from disk 2”。controller需要将将线性的扇区号映射为实际的cylinder, sector, and head，考虑到外侧柱面比内侧多、坏的删区要被重映射为其它山区等等，这个映射会很复杂。
     * 然后controller要决定磁臂停在哪个扇区。 It has to wait until the proper sector has rotated under the head and then start reading and storing the bits as they come off the drive, removing the preamble and computing the checksum. Finally, it has to assemble the incoming bits into words and store them in memory. 
     * To do all this work, controllers often contain small embedded computers that are programmed to do their work.
-##### device
+#### device
 
   * device的接口相当简单，便于标准化。因此any SATA disk controller可以处理any SATA disk. 
 
     * **SATA** stands for Serial ATA and AT A in turn stands for AT Attachment. In case you are curious what AT stands for, this was IBM’s second generation ‘‘Personal Computer Advanced Technology’’ built around the then-extremely-potent 6-MHz 80286 processor that the company introduced in 1984.
     * SATA是目前许多电脑的磁盘标准。由于实际的device interface隐藏在controller interface后， OS只能看到后者，也就无需处理前者的细节
-##### disk driver
+#### disk driver
+
   * 由于controller各不相同，需要软件来控制，每个软件控制一个controller，称为**disk driver**
 
     * driver talks to a controller, giving it commands and accepting responses
@@ -289,7 +428,8 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
         * 使内核和新driver重新连接，然后重启。Many older UNIX systems work like this. 
         * 进入OS文件，告诉它它需要那个driver，然后重启。在启动时，OS找到那个driver然后加载它。 Windows works this way.
         * 许多操作系统都支持在运行时接受新驱动并安装，不需要重启。 热插拔的设备，如USB and IEEE 1394 devices, 需要这种方式
-##### device register
+#### device register
+
 * controller事实上与它的寄存器们（称为**device register**）直接交互. driver从OS得到命令，将其翻译后写入device registers。
 
 * For example, a minimal disk controller might have registers for specifying the disk address, memory address, sector count, and direction (read or write). 
@@ -300,9 +440,9 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
   * 前者不需要特殊的I/O instructions，可以被像普通内存数据一样读写，但是消耗了地址空间（  device registers的地址无法被其他程序使用，因此是安全的 ） 
   * 后者不消耗地址空间（每个寄存器被映射为一个port address）但需要额外的instructions
 
-#### I/O
+### I/O
 
-* IO有三种方式：
+* IO有三种类型：
   1. **busy waiting**：用户程序发起system call,  kernel将其转换为procedure call交给相应的driver. Driver启动IO设备并且对设备轮询。IO结束后，driver将数据（如果有的话）返回，OS将控制返还给调用者
      * 占用了CPU的全部时间
   2. **interrupt**：driver开启设备，要求它在完成时发出中断. At that point the driver returns. The operating system then blocks the caller if need be and looks for other work to do.
@@ -322,39 +462,9 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
 
 * 由于多个中断可能同时发生，每个设备都有（通常是静态的）中断优先级来决定在disable结束后，哪个中断先被接受。
 
-## Buses
-
-
-
-* 单总线架构用于original IBM PC,  为了更快的IO速度和CPU-to-memory traffic，额外的总线被引入。 形成了现代的x86系统
-* This system has many buses (e.g., cache, memory, PCIe, PCI, USB, SATA, and DMI), each with a different transfer rate and function. The operating system must be aware of all of them for configuration and management. 
-
-* The main bus is the **PCIe** (Peripheral Component Interconnect Express) bus.
-
-  * The PCIe bus was invented by Intel as a successor to the older PCI bus, which in turn was a replacement for the original ISA (Industry Standard Architecture) bus. 
-  * 2004年PCIe刚发明时，流行**shared bus architecture**，许多设备用一条线传输数据，因此需要一个arbiter
-  * PCI使用**parallel bus architecture**，即将每个数据字分多条线传输。 比如32-bit数据需要32根并行的线
-  * PCIe使用**serial bus architecture**，把数据包装成一个message， 点对点传输（一次连接称为一个**lane**）。也支持并行，如可以并行地传32个**lane**
-
-
-* the CPU talks to memory over a fast **DDR3** bus, to an external graphics device over PCIe and to all other devices via a **hub** over a **DMI** (Direct Media Interface) bus. The hub in turn connects all the other devices, using the Universal Serial Bus to talk to  USB devices, the SATA bus to interact with hard disks and DVD drives, and PCIe to transfer Ethernet frames.
-	* PCI接口的设备另外放在一个hub processor 内
-* Moreover, each of the cores has a dedicated cache and a much larger cache that is shared between them. Each of these caches introduces another bus. 
-每个core有一个专用cache，所有core共享一个更大的cache，每个cache拥有自己的总线
-
-* The **USB** (Universal Serial Bus) was invented to attach all the slow I/O devices, such as the keyboard and mouse, to the computer.
-
-* **SCSI** (Small Computer System Interface) bus 用于需要高带宽的设备，如服务器和工作站
-
-* is a high-performance bus intended for fast disks, scanners, and other devices needing considerable bandwidth. Nowadays, we find them mostly in servers and workstations
-
-* Intel 和 MS设计了**plug and play**系统，可以自动收集IO设备信息，集中分配中断优先级和I/O（设备的）寄存器地址
-
-  * 在此之前，这些都要手动分配
-
 ## Booting the Computer
 
-计算机启动时，**首先加载**硬件驱动程序，硬件驱动程序有BIOS和UEFI， 这里简要介绍BIOS, 这二者的详细信息参见我的《Linux Hardware Basic》
+计算机启动时，**首先加载**硬件驱动程序，硬件驱动程序有BIOS和UEFI， 这里简要介绍BIOS, 详见拙著*Linux Hardware Basic*
 
 
 
@@ -637,3 +747,11 @@ BIOS对应的磁盘分区格式是MBR
 # Summary
 
 计算机科学的发展日新月异，只有刻苦坚持，才能走在别人前面
+
+
+
+refs：
+
+* *Modern  Operating Systems* 
+* *Operating Systems Three Easy pieces* 
+* *CSAPP*

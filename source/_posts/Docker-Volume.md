@@ -116,15 +116,18 @@ docker volume rm <vol>
 docker命令:
 
 ```shell
-docker container run -dit --name voltainer \                                                                 
+docker container run \
+-dit --name <contaienr> \                                                                 
 --mount source=<vol>,target=<container-mount-point> \
-alpine
+--restart=always \
+<image>
 
 ```
 
 * `--mount`: 挂载卷, **如果没有该卷则会创建**
   * `source`: 要被挂载的docker卷
   * `target`: 卷被挂载到的容器内目录
+* `--restart=always`: 容器总是自动重启，生产环境中建议使用此特性
 
 
 
@@ -134,7 +137,15 @@ Dockerfile:
 VOLUME  <container-mount-point>
 ```
 
-* 这种方案没什么用,因为Dockerfile一般只能指定相对的主机目录, 这就意味着挂载点在不同主机间会不一样, 得每次部署都手动修改主机目录Docker
+* 这个方案没什么用,因为Dockerfile一般只能指定相对的主机目录, 这就意味着挂载点在不同主机间会不一样, 得每次部署都手动修改主机目录Docker
+
+## 查看容器的挂载卷情况
+
+```
+docker inspect <container> | grep Mounts -A 20
+```
+
+
 
 # 示例
 

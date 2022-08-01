@@ -18,6 +18,13 @@ Outline:
 
 # Basic idea
 
+Docker使用了Linux的Namespaces技术来进行资源隔离，如PID Namespace隔离进程，Mount Namespace隔离文件系统，Network Namespace隔离网络等。一个Network Namespace提供了一份独立的网络环境，包括网卡、路由、Iptable规则等. 与其他的Network Namespace隔离
+
+* 因此，一个独立的网络就是一个独立的Network Namespace
+* 因此，严格意义上讲，下文介绍的Host， None根本不算网络，因为他们没有自己的Network Namespace
+
+
+
 ![Docker Network Arch](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Docker%20Network%20Arch.png)
 
 ![Docker Network Layers](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Docker%20Network%20Layers.png)
@@ -84,6 +91,8 @@ Libnetwork支持同时激活多个网络驱动。 这意味着Docker环境可以
 # Commands
 
 ## 创建网络
+
+注意到只能用对应驱动创建网络， 而None，Host， Container这些特殊的“网络”，不需要驱动，也就没法用驱动创建
 
 创建容器网络：
 
@@ -163,6 +172,27 @@ docker container run -it --name <dontainer-name> \
 
 # Networks
 
+None， Host， Containers网络比较特殊，我们一般也不用
+
+## 
+
+## none
+
+就是没有网络，使用此网络的主机没有ip地址，处于完全隔离的状态
+
+## host
+
+Host网络即容器直接使用宿主机的网络，与主机在相同的网络命名空间下，使用相同的网络栈，容器可以直接使用主机的所有端口
+
+即不进行任何网络的虚拟化
+
+## container
+
+container网络下的容器都共享相同的Network Namespace， 但除此之外，其他的namespace依然隔离
+
+* 这意味着容器共享了网络栈
+* 这意味着两个容器可以互相ping通
+
 ## 单机桥接网络
 
 * 单机： 该网络只能在单个主机上运行，且只能连接所在主机上的容器
@@ -178,7 +208,7 @@ docker container run -it --name <dontainer-name> \
 
 linux主机上的bridge网络由Bridge驱动创建， 而Bridge底层基于Linux内核的Linux Bridge技术.
 
-默认的bridge网络被映射到`docker0`Linux网桥
+默认的bridge网络被映射到`docker0`Linux网桥, 容器连接到该网络后，docker就会从docker0子网中分配一个 IP 给容器使用，并设置 docker0 的 IP 地址为容器的**默认网关**
 
 ![bridge principle](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/bridge%20principle.png)
 
@@ -534,6 +564,7 @@ Swarm支持两种服务发布模式：
   * Ingress模式底层是一个**完全图**（ 采用Service Mesh网络 ）
   * Ingree网络会**将流量平均分在所有服务副本之上**
 * Host： Host模式发布的服务只能通过运行服务副本的节点来访问
+  * 这里的host模式不是之前提到的host网络
 
 
 

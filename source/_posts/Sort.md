@@ -6,9 +6,10 @@ date: 2021-06-27 11:33:08
 
 Outline
 
-* `MergeSort`
-* `QuickSort`
-* `HeapSort( and Heap )`
+* Elementary Sort
+* MergeSort
+* QuickSort
+* Priority Queues
 
 <!--more-->
 

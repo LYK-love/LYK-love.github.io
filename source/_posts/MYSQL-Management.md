@@ -108,7 +108,6 @@ MySQL提供了`CREATE USER`语句，允许您创建一个新的用户帐户。 `
 
 ```sql
 CREATE USER user_account IDENTIFIED BY password;
-SQL
 ```
 
 用户帐号(`user_account`)是以`username@hostname`格式跟在`CREATE USER`子句之后。
@@ -118,18 +117,11 @@ SQL
 例如，要创建一个新的用户`dbadmin`，这个用户只允许从`localhost`主机并使用密码为`pwd123`连接到MySQL数据库服务器，使用`CREATE USER`语句，如下所示：
 
 ```sql
-CREATE USER dbadmin@localhost 
-IDENTIFIED BY 'pwd123';
-SQL
+CREATE USER 'lyk'@'%'
+IDENTIFIED BY '';
 ```
 
-如果用户`dbadmin`还可以从IP为`192.168.1.100`的主机连接到MySQL数据库服务器，使用`CREATE USER`语句，如下所示：
-
-```sql
-CREATE USER dbadmin@192.168.1.100 
-IDENTIFIED BY 'pwd123';
-SQL
-```
+* `'[user]@[允许登录的host]'`
 
 要查看用户帐户的权限，请使用`SHOW GRANTS`语句，如下所示：
 
@@ -260,10 +252,26 @@ mysql> source c:\temp\mysqlsampledatabase.sql
 ## 给用户授权
 
 ```mysql
-GRANT ALL ON *.* TO 'super'@'localhost' identified by 'abc123' WITH GRANT OPTION;
+GRANT ALL ON *.* TO 'super'@'localhost' WITH GRANT OPTION;
 ```
 
-`ON *.*`子句表示MySQL中的所有数据库和所有对象。`WITH GRANT OPTION`允许`super@localhost`向其他用户授予权限。
+`ON *.*`子句表示MySQL中的所有数据库和所有对象。`WITH GRANT OPTION`允许`super@localhost`向其他用户授予权限
+
+
+
+```
+flush privileges
+```
+
+刷新权限
+
+## 查看用户权限
+
+```mysql
+show grants for [user]
+```
+
+
 
 ##  修改用户名和密码
 
@@ -438,3 +446,13 @@ INSERT INTO table_name ( field1, field2,...fieldN )
 * 要删除列，使用：
 
   `ALTER TABLE students DROP COLUMN birthday;`
+
+
+
+RENAME用于表的重命名：RENAME <NAME> 或 RENAME TO <NAME>
+
+MODIFY用于字段类型的修改：MODIFY COLUMN  <列名> <类型>
+
+ALTER用于对字段类型、默认值的修改：ALTER COLUMN <列名> <类型>  SET DE***T <默认值>
+
+CHANGE用于对列名及类型的修改：CHANGE COLUMN <旧列名> <新列名> <类型>

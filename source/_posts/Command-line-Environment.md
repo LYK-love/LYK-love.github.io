@@ -9,7 +9,6 @@ date: 2022-02-10 17:30:37
 
 Outline:
 
-* Intro: Shell Session
 * Job control
 * Tmux
 * Aliase
@@ -20,70 +19,7 @@ ref: [MIT lesson](https://missing.csail.mit.edu/2020/command-line/), [tmux tutor
 
 <!--more-->
 
-# Intro of Shell Session
 
-
-
-Shell session 是终端中当前的状态，在终端中只能有一个 session。当我们打开一个新的终端时，总会创建一个新的 shell session。
-
-就进程间的关系来说，session 由一个或多个进程组组成。一般情况下，来自单个登录的所有进程都属于同一个 session。我们可以通过下图来理解进程、进程组和 session 之间的关系：
-
-![Shell Session Archetecture](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Toolkit/Shel%20lSession%20Archetecture)
-
-会话是由会话中的第一个进程创建的，**一般情况下是打开终端时创建的 shell 进程**。该进程也叫 session 的领头进程。Session 中领头进程的 PID 也就是 session 的 SID。我们可以通过下面的命令查看 SID：
-
-```
-ps -o pid,ppid,pgid,sid,tty,comm
-```
-
-```
-    PID    PPID    PGID     SID TT       COMMAND
-   5745    5729    5745    5745 pts/4    zsh
-   5785       1    5784    5745 pts/4    zsh
-   5787       1    5784    5745 pts/4    zsh
-   5789       1    5788    5745 pts/4    zsh
-   5794    5789    5788    5745 pts/4    gitstatusd
-   5844    5745    5844    5745 pts/4    ps
-
-```
-
-Session 中的每个进程组被称为一个 **job**，有一个 job 会成为 session 的前台 job(foreground)，其它的 job 则是后台 job(background)。每个 session 连接一个控制终端(control terminal)，控制终端中的输入被发送给前台 job，从前台 job 产生的输出也被发送到控制终端上。同时由控制终端产生的信号，比如 ctrl + z 等都会传递给前台 job。
-
-一般情况下 session 和终端是一对一的关系，当我们打开多个终端窗口时，实际上就创建了多个 session。
-
-Session 的意义在于多个工作(job)在一个终端中运行，其中的一个为前台 job，它直接接收该终端的输入并把结果输出到该终端。其它的 job 则在后台运行。
-
-## Session 的创建和销毁
-
-session的创建：
-
-* 通常，新的 session 由系统登录程序创建，session 中的领头进程是运行用户登录 shell 的进程。新创建的每个进程都会属于一个进程组，当创建一个进程时，它和父进程在同一个进程组、session 中。
-
-
-
-将进程放入不同 session 的惟一方法是使用 `setsid` 函数使其成为新 session 的领头进程。这还会将 session 领头进程放入一个新的进程组
-
-
-
-session的销毁：
-
-* 当 session 中的所有进程都结束时 session 也就消亡了。实际使用中比如网络断开了，session 肯定是要消亡的。
-* 让 session 的领头进程退出。一般情况下 session 的领头进程是 shell 进程，如果它处于前台，我们可以使用 exit 命令或者是 ctrl + d 让它退出。或者我们可以直接通过 kill 命令杀死 session 的领头进程。
-  * 原理是：当系统检测到挂断(hangup)条件时，内核中的驱动会将 SIGHUP 信号发送到整个 session。通常情况下，这会杀死 session 中的所有进程
-
-
-
-session 与终端的关系：
-
-* 如果 session 关联的是**伪终端**，这个伪终端本身就是随着 session 的建立而创建的，session 结束，那么这个伪终端也会被销毁。
-
-  * 打开终端，会话开始；关闭终端，会话结束，会话内部的进程也会随之终止，不管有没有运行完。
-
-    一个典型的例子就是，[SSH 登录](https://www.ruanyifeng.com/blog/2011/12/ssh_remote_login.html)远程计算机，打开一个远程终端执行命令。这时，网络突然断线，再次登录的时候，是找不回上一次执行的命令的。因为上一次 SSH 会话已经终止了，里面的进程也随之消失了
-
-    为了解决这个问题，会话与窗口可以"解绑"：窗口关闭时，会话并不终止，而是继续运行，等到以后需要的时候，再让会话"绑定"其他窗口（见“ Terminal  Multiplexer”）
-
-* 如果 session 关联的是 **tty**1-6，tty 则不会被销毁。因为该终端设备是在系统初始化的时候创建的，并不是依赖该会话建立的，所以当 session 退出，tty 仍然存在。只是 init 系统在 session 结束后，会重启 getty 来监听这个 tty
 
 ## 控制终端(controlling terminal)
 
@@ -477,12 +413,15 @@ ssh-keygen -t rsa -b 1024 -f yourkeyname -C "备注"
 
    ```shell
    cat .ssh/id_ed25519.pub | ssh foobar@remote 'cat >> ~/.ssh/authorized_keys'
+   ```
    
-   #or 
+   or:
+   
+   ```shell
    ssh-copy-id -i .ssh/id_ed25519.pub foobar@remote
    ```
 
-
+​			
 
 ​		
 
@@ -492,17 +431,35 @@ ssh-keygen -t rsa -b 1024 -f yourkeyname -C "备注"
 
 There are many ways to copy files over ssh:
 
-- `ssh+tee`, the simplest is to use `ssh` command execution and STDIN input by doing `cat localfile | ssh remote_server tee serverfile`. Recall that [`tee`](https://www.man7.org/linux/man-pages/man1/tee.1.html) writes the output from STDIN into a file.
+- `ssh+tee`, 把本地文件传到远程 
+
+  ```shell
+  cat localfile | ssh remote_server "tee serverfile"
+  ```
+
+  * `tee`: 将标准输入写入文件
 
 
 
-- [`scp`](https://www.man7.org/linux/man-pages/man1/scp.1.html) when copying large amounts of files/directories, the secure copy `scp` command is more convenient since it can easily recurse over paths. 
+- [`scp`](https://www.man7.org/linux/man-pages/man1/scp.1.html): 就是ssh + cp 
 
+  
+  把本机文件传到远程：
   ````shell
   scp path/to/local_file remote_host:path/to/remote_file
   ````
+  
+  传远程文件到本机：
+  ```shell
+  scp remote_host:path/to/remote_file path/to/local_file
+  ```
+  
+  * `-r`:传文件夹
+  * scp没穿输完也会生成目标文件，因此断开scp传输后，你依然能在目标主机上看到目标文件，但是切记，这个文件是不完整的
 
+​		
 
+把远程文件传到本机：		
 
 - [`rsync`](https://www.man7.org/linux/man-pages/man1/rsync.1.html) improves upon `scp` by detecting identical files in local and remote, and preventing copying them again. It also provides more fine grained control over symlinks, permissions and has extra features like the `--partial` flag that can resume from a previously interrupted copy. `rsync` has a similar syntax to `scp`.
 

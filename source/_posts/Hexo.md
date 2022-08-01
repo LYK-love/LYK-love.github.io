@@ -64,6 +64,26 @@ Outline
    # 6c40f5ec27e1889c5a0a0a999e847634a33aef1c themes/apollo (heads/master)
    ```
 
+# Appearance
+
+[进阶配置](https://convivae.top/posts/hexo-bo-ke-cai-keng/)
+
+## 版权信息
+
+在Next主题的配置文件`_config.yml`中：
+
+```
+creative_commons:
+ 
+  license: by-nc-sa
+ 
+  sidebar: true
+ 
+  post: true
+```
+
+* 不过版权信息不好看，所以我没加
+
 # 多主机同步
 
 多主机同步主要的坑在于主题的管理
@@ -114,15 +134,13 @@ Ref:
 
 更新后重新提交一遍, 子模块新的跟踪信息便也会记录到仓库中.
 
-]
-
 
 
 ## Bugs
 
 * `hexo g` 会生成静态文件, 但是，如果你的目录下有失效的软链接， 就不会生成文件。 因此请删除所有的失效软链接
   * ref：[ Fixing Hexo Not Generating Files ](https://chrisbergeron.com/2020/12/24/fixing-hexo-not-generating-files/#:~:text=If%20you%E2%80%99re%20having%20trouble%20with%20Hexo%20not%20generating,l%20-exec%20test%20%21%20-e%20%7B%7D%20%3B%20-print)
-* h
+* hexo的markdown源代码避免出现**跨级标题结构**， 这里的*跨级*指的是不能从一个一级标题直接跟三级标题；二级标题后紧跟的子标题级别必须是三级标题
 
 
 

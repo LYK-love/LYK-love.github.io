@@ -63,7 +63,7 @@ Outline ：
   
 * 七层：应用层、表示层、会话层、运输层、网络层、数据链路层、物理层
 
-  ![img](https://www.imperva.com/learn/wp-content/uploads/sites/13/2020/02/OSI-7-layers.jpg.webp)
+  ![OSI 7 layers](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Introduction/OSI%207%20layers.jpeg)
 
 ## 应用层
 
