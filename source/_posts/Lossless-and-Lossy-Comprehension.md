@@ -39,7 +39,7 @@ Outline:
 
 # Comparison Between the two
 
-![img](https://siipo.la/app/uploads/comparing-lossy-and-lossless-compression.png?ver=ce9b57b5)
+![Comparison Between the Lossless and Lossy](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Potpourri/Lossless%20and%20Lossy%20Comprehension/Lossless%20and%20Lossy%20ComprehensionComparison%20Between%20the%20Lossless%20and%20Lossy.png)
 
 如上“可回收图案”有大量连续色块. 用无损压缩PNG压缩到3KB, 其效果远好于无损压缩的JPEG的3KB, 甚至略好于JPEG的24KB.
 

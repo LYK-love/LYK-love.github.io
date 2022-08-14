@@ -248,7 +248,7 @@ Storage Driver: overlay2
 
 docker server就是docker引擎，而引擎架构如下：
 
-![docker engine archetecture](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/docker%20engine%20archetecture.png)
+![docker engine archetecture](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/docker%20engine%20archetecture.png)
 
 * `daemon`: 实现了与docker client通信的REST API.  自身通过`gRPC` 与`containerd`  通信  
 * `containerd`: 用于容器生命周期管理 ---- `start|stop|pause|rm`
@@ -372,7 +372,7 @@ docker save -o [file-name].tar  <image>
 
 可完全类比GitHub
 
-![docker registry](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/docker%20registry.png)
+![docker registry](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/docker%20registry.png)
 
 * docker image存储在镜像仓库服务 Image Registry中，默认是Docker Hub
 * Image Registry包含多个镜像仓库Image Repository,
@@ -411,7 +411,7 @@ Docker Hub 中显示的体积是压缩后的体积
 
 
 
-![docker image layer archetecture](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/docker%20image%20layer%20archetecture.png)
+![docker image layer archetecture](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/docker%20image%20layer%20archetecture.png)
 
 Docker镜像由多个松耦合的只读镜像层组成。Docker负责堆叠这些层，并将它们表示为单个统一的对象
 
@@ -445,7 +445,7 @@ ubuntu:latest
 
 对应的镜像层为：
 
-![docker image layer example](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/docker%20image%20layer%20example.png)
+![docker image layer example](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/docker%20image%20layer%20example.png)
 
 
 
@@ -482,7 +482,7 @@ $ docker image inspect ubuntu:latest
 
 example：假如基于Ubuntu Linux 16.04创建一个新的镜像,这就是新镜像的第一层;如果该镜像中添加Python包,就会在基础镜像层之上创建第二个镜像层;如果继续添加一个安全补丁,就创建第三个镜像层。该镜像当前已经包含3个镜像层：
 
-![docker image layer stack app](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/docker%20image%20layer%20stack%20app.png)
+![docker image layer stack app](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/docker%20image%20layer%20stack%20app.png)
 
 
 
@@ -494,7 +494,7 @@ example：
 
 如下图，在外部看来整个镜像只有6个文件,这是因为最上层中的文件7是文件5的一个更新版本。这种情况下,上层镜像层中的文件覆盖了底层镜像层中的文件。这样就使文件的更新版本作为一个新镜像层添加到镜像当中：
 
-![docker image layer set](/home/lyk/snap/typora/49/.config/Typora/typora-user-images/image-20220213110902720.png)
+![docker image layer set](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/docker%20image%20layer%20set.png)
 
 
 
@@ -502,7 +502,7 @@ Docker通过存储引擎（新版本采用快照机制）来实现镜像层的�
 
 example： 上图三层镜像的对外视图，在外界看来，镜像层是合并的
 
-![docker image layer set view](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/docker%20image%20layer%20set%20view.png)
+![docker image layer set view](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/docker%20image%20layer%20set%20view.png)
 
 
 
@@ -775,11 +775,11 @@ docker volume ls
 
 虚拟机的每个OS都有开销，都需要授权，都需要打补丁
 
-![vm archetecture](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/vm%20archetecture.png)
+![vm archetecture](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/vm%20archetecture.png)
 
 
 
-![container archetecture](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/container%20archetecture.png)
+![container archetecture](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/container%20archetecture.png)
 
 
 
@@ -843,7 +843,7 @@ docker volume ls
 
 Docker使用了大量Linux的安全技术
 
-![Docker Security with Linux](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20%20Intro/Docker%20Security%20with%20Linux.png)
+![Docker Security with Linux](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/Docker%20Security%20with%20Linux.png)
 
 ## Linux Security
 
@@ -930,7 +930,7 @@ Docker很大一部分安全技术都基于Swarm模式, 详见*Docker Swarm*
 
 
 
-![Docker Secret example](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20%20Intro/Docker%20Secret%20example.png)
+![Docker Secret example](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/Docker%20Secret%20example.png)
 
 # Docker Logs
 
