@@ -1126,6 +1126,36 @@ apt list --installed
 
 
 
+* 查看版本:
+
+  ```
+  brew --version
+  ```
+
+  
+
+* 查看安装的软件版本:
+
+  ```
+  brew info [name]
+  ```
+
+* 查看某软件的可安装版本:
+
+  ```
+  brew search [name]
+  ```
+
+  
+
+* brew可以对它安装的软件进行版本切换. 在最新的3.x版本使用`link`:
+
+  ```shell
+  brew unlink go && brew link go@1.13
+  ```
+
+  低版本的brew使用的是`switch`, here is [Doc](https://babygoat.github.io/2019/06/19/Golang-mac%E4%B8%8A%E5%88%87%E6%8F%9B%E5%A4%9A%E5%80%8Bgo%E7%89%88%E6%9C%AC/)
+
 ## pacman
 
 同步存储库数据库，并且更新系统的所有软件包，但不包括不在软件库中的“本地安装的”包：
@@ -1906,18 +1936,6 @@ apt-get install traceroute
 
 
 
-iproute2:
-
-```
-apt install iproute2
-```
-
-Mac:
-
-```
-brew install iproute2mac
-```
-
 
 
 # Dababase
@@ -2080,6 +2098,38 @@ sudo systemctl enable mongodb
 
 
 # DEV
+
+## git
+
+### gitupdate
+
+[gitupdate](https://github.com/nikitavoloboev/gitupdate)是一个工具, 用于Commit and push updated files with file names as commit message:
+
+Install: 
+
+```
+go install github.com/nikitavoloboev/gitupdate@latest
+```
+
+
+
+Usage:
+
+You can either use it by passing it a file path (with git repo) that you want to commit. i.e.
+
+```
+gitupdate /Users/nikivi/src/cli/gitupdate
+```
+
+Or if you are already in the git directory you want to commit, run:
+
+```
+gitupdate .
+```
+
+This will add all files that have changed since last commit and will include all the file names (without extension) as the commit message. [Example use](https://github.com/nikitavoloboev/knowledge/commits/main).
+
+If you want to only consider top level folders for the commit message, use the `--top` (or `-t` for short) flag.
 
 ## maven
 

@@ -1,6 +1,6 @@
 ---
 title: Tips for Building Front-end Projects
-categories: FrontEnd
+categories: Toolkit
 date: 2022-07-30 17:23:43
 ---
 
@@ -205,7 +205,9 @@ require('find');
 
 简言之，先查同名的系统模块，找不到再去`node_modules`中查外部模块
 
-## Commands
+## nvm 
+
+### Commands
 
 
 
@@ -285,7 +287,7 @@ require('find');
 
   
 
-## nvm Installation
+### Installation
 
 以下只演示[macOS上的NVM安装过程](https://tecadmin.net/install-nvm-macos-with-homebrew/#:~:text=%20How%20To%20Install%20NVM%20on%20macOS%20with,ready%20for%20the%20installation.%20Update%20the...%20More%20)， 对于Linux，nvm只要一行命令就可以安装了
 
