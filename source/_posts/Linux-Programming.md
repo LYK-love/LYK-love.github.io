@@ -8,38 +8,11 @@ date: 2022-05-05 03:43:30
 
 Outline：
 
-* 编译链接过程
-* 文件名后缀
 * Linux文件操作api
 
 <!--more-->
 
-# 编译链接过程
 
-
-
-![编译链接全过程](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/Linux/Linux%20Programming/image-20220505005412210.png)
-
-
-
-
-
-![编译链接过程 椭圆图](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/Linux/Linux%20Programming/image-20220505005940840.png) 
-
-
-
-
-
-
-
-![编译链接过程 方块图](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/Linux/Linux%20Programming/image-20220505005950037.png)
-
-过程：
-
-1. gcc预处理，将`.c`, `.h`文件变成`.i`文件
-2. gcc编译，将`.i`文件编译为`.a`文件
-3. assembly将`.a`文件汇编，生成`.o`文件
-4. 和静态链接库链接（`ld`），生成可执行文件
 
 # Linux File
 

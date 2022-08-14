@@ -2,7 +2,7 @@
 title: Static Link && Dynamic Link
 tags: Linux
 categories: Technology
-date: 2022-05-05 01:18:34
+date: 2022-05-05 01:18:34 [Static-Link-Dynamic-Link.md](Static-Link-Dynamic-Link.md) 
 ---
 
 
@@ -18,7 +18,7 @@ Outline:
 
 静态库： `.a`
 
-动态库/共享对象: `.so`
+动态库( aka 共享对象 ): `.so`
 
 ### static link
 

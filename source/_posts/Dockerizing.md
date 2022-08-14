@@ -16,6 +16,8 @@ Outline:
 
 * 多阶段构建
 
+* 构建镜像优化
+
   
 
 介绍了应用的容器化
@@ -52,7 +54,6 @@ Dockerfile:
 * 除了 `#` 开头的注释行之外， 其他的每一行都是一条指令
   * 指令： `INSTRUCTION argument`: 不区分大小写，一般`INSTRUCTION`大写
 * 分为四部分：基础镜像信息、维护者信息、镜像操作指令和容器启动时执行指令
-* 只有一部分指令会新建镜像层
 
 ```
 FROM alpine
@@ -76,26 +77,22 @@ ENTRYPOINT ["node", "./app.js"]
 
 ```
 
+### Options
+
 * `FROM  <image>`： 将指定的镜像的作为要构建的镜像的基础镜像层，一般是OS
 
-
-
 * ` LABEL <tag> <tag>`：添加一些元数据，每个tag都是键值对
-
-
 
 *  `RUN <command>` 或 `RUN ["executable", "param1", "param2"]`：
 
   * 前者将在 shell 终端中运行命令，即 `/bin/sh -c`；后者则使用 `exec` 执行。指定使用其它终端可以通过第二种方式实现，例如 `RUN ["/bin/bash", "-c", "echo hello"]`
+* 每条 `RUN` 指令都会在当前镜像层基础上执行指定命令， 并**新建一个镜像层**
 
-  * 每条 `RUN` 指令都会在当前镜像层基础上执行指定命令， 并**新建一个镜像层**
-    * 因此， 可以用 `&&`连接多个命令或用`\\`换行， 来将多个命令包含在一个` RUN`指令中
+* `ENV <ENV_VARIABLE>=<str>`: 设置环境变量
 
-*   `COPY <src> <dest>`：
+* `COPY <src> <dest>`：
 
   复制本地主机的 `<src>`（为 Dockerfile 所在目录的相对路径，即构建上下文）到容器中的 `<dest>`
-
-
 
 * `WORKDIR  [dir]`: 为Dockerfile中尚未执行的指令设置工作目录
 
@@ -110,13 +107,9 @@ ENTRYPOINT ["node", "./app.js"]
 
   每个 Dockerfile 中只能有一个 `ENTRYPOINT`，当指定多个时，只有最后一个起效。
 
-
-
-* `EXPOSE <port> [<port>...]`：
-
-  告诉 Docker 服务端容器暴露的端口号，供互联系统使用。在启动容器时需要通过 -P，Docker 主机会自动分配一个端口转发到指定的端口
-
-
+* `EXPOSE <port> [<port>...]`：暴露容器端口. 一般不用写这个指令，在启动容器的时候自己映射端口. 写这个指令有如下好处:
+  1. 告诉告诉镜像使用者,该镜像暴露的端口
+  2. 如果使用随机端口映射运行容器，也就是 `docker run -P` ，会自动随机映射 `EXPOSE` 的端口
 
 * `VOLUME ["/data"]`：
 
@@ -225,7 +218,7 @@ docker image build -t web:latest .
 
 
 
-##  推送镜像
+## 推送镜像
 
 push首先需要当前用户登陆dockerhub
 
@@ -454,4 +447,188 @@ CMD ["--spring.profiles.active=postgres"] # 构建出一个精简的镜像
   * 还可以看到，只有最后一个镜像会被命名， 而其余的`FROM`指令生成的镜像都变成了玄虚镜像， 可以直接删除， 非常方便
 
 
+
+
+
+# 构建镜像优化
+
+ref:[如何优化 node 项目的 docker 镜像](https://juejin.cn/post/6991689670027542564), 这篇文章将构建镜像优化到了:
+
+1. **大小从 1.06G 到 73.4M**
+2. **构建速度从 29.6 秒到 1.3 秒**
+
+
+
+我们以文中的[node项目](https://github.com/iamobj/wechat-bot)为例, 最初的Dockerfile如下:
+
+```dockerfile
+FROM node:14.17.3
+
+# 设置环境变量
+ENV NODE_ENV=production
+ENV APP_PATH=/node/app
+
+# 设置工作目录
+WORKDIR $APP_PATH
+
+# 把当前目录下的所有文件拷贝到镜像的工作目录下 .dockerignore 指定的文件不会拷贝
+COPY . $APP_PATH
+
+# 安装依赖
+RUN yarn
+
+# 暴露端口
+EXPOSE 4300
+
+CMD yarn start
+```
+
+## 基本操作
+
+* 对于会新建镜像层的指令, 比如`RUN`, `ENV`.... 因此这些指令最好**写成一行**, 可以用 `&&`连接多个命令或用`\\`换行书写.
+
+  例如:
+
+  ```
+  ENV NODE_ENV=production \
+      APP_PATH=/node/app
+  ```
+
+  
+
+* 由于构建镜像时会逐层检查build cache, 因此最好把不经常变动的层提到前面去, 比如`ENV`
+
+## 使用alpine
+
+基础镜像层可以使用alpine, 这是一个超级小的Linux镜像. 上例的基础镜像层是node, 可以:
+
+1. 对于node等基础软件,使用其alpine版本:
+
+   ```
+   FROM node:14.17.4-alpine
+   ```
+
+   可以去 [dockerhub](https://link.juejin.cn/?target=https%3A%2F%2Fhub.docker.com%2F_%2Fnode%3Ftab%3Ddescription%26page%3D1%26ordering%3Dlast_updated) 查看 node 有哪些版本标签
+
+2. 使用alpine linux作为基础镜像层,然后手动装node等基础软件. 这个效果最显著:
+
+   ```dockerfile
+   FROM alpine:3.14 AS base
+   
+   # 使用 apk 命令安装 nodejs 和 yarn，如果使用 npm 启动，就不需要装 yarn
+   RUN apk add --no-cache --update nodejs=14.17.4-r0 yarn=1.22.10-r0
+   
+   # ... 后面的步骤不变
+   ```
+
+   用户软件( node, yarn等 )最好都要**指定依赖版本**
+
+   alpine版本也一定要指定, **不要选择 latest 版本**( `From alpine:latest`)，因为后面要装的软件版本可能会在 alpine 的 latest 版本没有对应软件的版本号. 
+
+   **我们选择方案2**
+
+## 提前下载依赖
+
+* 对于前端项目, 下载依赖在构建镜像时花了很大时间. 我们可以利用构建缓存, **先将package.json 文件单独提前拷贝到镜像，再装依赖**，执行命令装依赖这层的前一层是拷贝 package.json 文件，因为**安装依赖命令不会变化，所以只要 package.json 文件没变化，就不会重新执行 `yarn` 安装依赖，它会复用之前安装好的依赖**.
+
+  示例:
+
+  ```dockerfile
+  FROM alpine:latest
+  
+  # 使用 apk 命令安装 nodejs 和 yarn，如果使用 npm 启动，就不需要装 yarn
+  RUN apk add --no-cache --update nodejs=14.17.4-r0 yarn=1.22.10-r0
+  
+  # 暴露端口
+  EXPOSE 4300
+  
+  # 设置环境变量
+  ENV NODE_ENV=production \
+      APP_PATH=/node/app
+  
+  # 设置工作目录
+  WORKDIR $APP_PATH
+  
+  # 拷贝 package.json 到工作跟目录下
+  COPY package.json .
+  
+  # 安装依赖
+  RUN yarn
+  
+  # 把当前目录下的所有文件拷贝到镜像的工作目录下 .dockerignore 指定的文件不会拷贝
+  COPY . .
+  
+  # 启动命令
+  CMD yarn start
+  ```
+
+  
+
+## 利用多阶段构建
+
+运行 node 程序只需要生产的依赖和最终 node 可以运行的文件，就是说我们运行项目只需要 package.js 文件里 dependencies 里的依赖，devDependencies 依赖只是编译阶段用的
+
+* 比如 <u>eslint 等这些工具在项目运行时是用不到的</u>，再比如我们项目是用 typescript 写的，node 是不能直接运行 ts 文件，ts 文件需要编译成 js 文件，
+
+<u>运行项目我们只需要编译后的文件和 dependencies 里的依赖就可以运行，也就是说最终镜像只需要我们需要的东西</u>，任何其他东西都可以删掉，下面我们使用多阶段改写 Dockerfile:
+
+```
+# 构建基础镜像
+    FROM alpine:3.14 AS base
+
+    # 设置环境变量
+    ENV NODE_ENV=production \
+        APP_PATH=/node/app
+    
+    # 设置工作目录
+    WORKDIR $APP_PATH
+
+    # 安装 nodejs 和 yarn
+    RUN apk add --no-cache --update nodejs=14.17.4-r0 yarn=1.22.10-r0
+
+# 使用基础镜像 装依赖阶段
+    FROM base AS install
+
+    # 拷贝 package.json 到工作跟目录下
+    COPY package.json ./
+
+    # 安装依赖
+    RUN yarn
+
+# 最终阶段，也就是输出的镜像是这个阶段构建的，前面的阶段都是为这个阶段做铺垫
+    FROM base
+
+    # 拷贝 装依赖阶段 生成的 node_modules 文件夹到工作目录下
+    COPY --from=install $APP_PATH/node_modules ./node_modules
+
+    # 将当前目录下的所有文件（除了.dockerignore排除的路径），都拷贝进入镜像的工作目录下
+    COPY . .
+
+    # 启动
+    CMD yarn start
+```
+
+## github 的 actions 构建镜像问题
+
+github 提供的 actions，每次都是一个干净的实例，什么意思，就是每次执行，都是干净的机器，这会导致一个问题，会导致 docker 没法使用缓存，那有没有解决办法呢，我想到了两种解决办法：
+
+1. [docker 官方提供的 action 缓存方案](https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2Fdocker%2Fbuild-push-action%2Fblob%2Fmaster%2Fdocs%2Fadvanced%2Fcache.md)
+
+   我用的是 Github cache 方案
+
+2. 自托管 actions 运行机器
+
+   相当于 gitlab 的 runner 一样，自己提供运行器，自己提供的就不会每次都是干净的机器，[详情看 actions 官方文档](https://link.juejin.cn?target=https%3A%2F%2Fdocs.github.com%2Fcn%2Factions%2Fhosting-your-own-runners%2Fabout-self-hosted-runners%23requirements-for-self-hosted-runner-machines)
+
+3. 先构建一个已经安装好依赖包的镜像，然后基于此镜像再次构建，相当于多阶段构建，把前两个阶段构建的镜像产物推送到镜像仓库，再以这个镜像为基础去构建后续部分。借助镜像仓库存储基础镜像从而达到缓存的效果（此方案来源于评论里的大佬）
+
+   ```dockerfile
+   # 以这个镜像为基础去构建，这个镜像是已经装好项目依赖的镜像并推送到镜像仓库里，这里从镜像仓库拉下来
+   FROM project-base-image:latest
+   
+   COPY . .
+   
+   CMD yarn start
+   复制代码
+   ```
 

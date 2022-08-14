@@ -57,8 +57,6 @@ Docker Compose是Docker Stack的<u>简化版</u>. 能够在Docker节点上以单
 
 
 
-* 
-
 * `docker-compose`构建应用时也会利用构建缓存，对于已有的镜像、网络、卷，不会再重新创建
 
 

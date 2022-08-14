@@ -1,5 +1,5 @@
 ---
-title: Docker Intro
+title: Docker Basic
 tags: Docker
 categories: Technology
 date: 2022-02-13 16:08:27
@@ -161,17 +161,19 @@ sudo systemctl restart docker
 docker info
 ```
 
-### 
+
 
 ### 换阿里源
 
 如上， 编辑`daemon.json`,  然后更新配置就行了
 
-### alpine linux 换源
+## 插叙: alpine linux
 
-许多容器是alpine的，在其中使用apk命令可能会很慢， 可以进入容器，在容器内换源：
+alpine linux是一个超小的Linux镜像,常用来作为基础镜像层节省空间, 除了纯的alpine linux( e.g. `From alpine:latest`)外, 也可以安装很多用户软件的alpine版本( e.g. `FROM node:14.17.4-alpine`)
 
 
+
+许多容器是alpine的，在alpine中使用apk命令可能会很慢， 可以进入容器，在容器内**换源**：
 
 Alpine 的源文件为：
 
@@ -636,8 +638,6 @@ docker container ls
 
 
 ### 停止容器
-
-
 
 停止容器运行：
 

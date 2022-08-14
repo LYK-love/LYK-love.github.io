@@ -252,25 +252,14 @@ GPU的内容(不包括VRAM)详见拙著*GPU*
 * original IBM PC最早使用了单总线架构,  为了更快的IO速度和CPU-to-memory traffic，额外的总线被引入。 形成了现代的x86系统
 * This system has many buses (e.g., cache, memory, PCIe, PCI, USB, SATA, and DMI), each with a different transfer rate and function. The operating system must be aware of all of them for configuration and management. 
 
-* The main bus is the **PCIe** (Peripheral Component Interconnect Express) bus.
+* The main bus is the **PCIe**  bus.
 
-  * The PCIe bus was invented by Intel as a successor to the older PCI bus, which in turn was a replacement for the original ISA (Industry Standard Architecture) bus. 
-  * 2004年PCIe刚发明时，流行**shared bus architecture**，许多设备用一条线传输数据，因此需要一个arbiter
-  * PCI使用**parallel bus architecture**，即将每个数据字分多条线传输。 比如32-bit数据需要32根并行的线
-  * PCIe使用**serial bus architecture**，把数据包装成一个message， 点对点传输（一次连接称为一个**lane**）。也支持并行，如可以并行地传32个**lane**
 
 
 * the CPU talks to memory over a fast **DDR3** bus, to an external graphics device over PCIe and to all other devices via a **hub** over a **DMI** (Direct Media Interface) bus. The hub in turn connects all the other devices, using the Universal Serial Bus to talk to  USB devices, the SATA bus to interact with hard disks and DVD drives, and PCIe to transfer Ethernet frames.
   * PCI接口的设备另外放在一个hub processor 内
 * Moreover, each of the cores has a dedicated cache and a much larger cache that is shared between them. Each of these caches introduces another bus. 
   每个core有一个专用cache，所有core共享一个更大的cache，每个cache拥有自己的总线
-
-* The **USB** (Universal Serial Bus) was invented to attach all the slow I/O devices, such as the keyboard and mouse, to the computer.
-
-* **SCSI** (Small Computer System Interface) bus 用于需要高带宽的设备，如服务器和工作站
-
-* is a high-performance bus intended for fast disks, scanners, and other devices needing considerable bandwidth. Nowadays, we find them mostly in servers and workstations
-
 * Intel 和 MS设计了**plug and play**系统，可以自动收集IO设备信息，集中分配中断优先级和I/O（设备的）寄存器地址
 
   * 在此之前，这些都要手动分配
@@ -382,10 +371,6 @@ CPU的*bus interface*会开始一个*write transaction*, 步骤为:
 
 
 
-
-
-
-
 ## Disk
 
 * Disk：称为硬盘，是非易失的外部存储设备。
@@ -396,49 +381,7 @@ CPU的*bus interface*会开始一个*write transaction*, 步骤为:
 
 ## I/O Devices
 
-### controller and devices
-
-#### controller
-
-OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由两部分组成：控制器和设备本身。
-
-  * **controller**是一个或一组芯片，位于南桥，向OS提供一个更“简单”（相对直接控制设备而言）的接口
-
-    * 比如，OS可能命令“read sector 11,206 from disk 2”。controller需要将将线性的扇区号映射为实际的cylinder, sector, and head，考虑到外侧柱面比内侧多、坏的删区要被重映射为其它山区等等，这个映射会很复杂。
-    * 然后controller要决定磁臂停在哪个扇区。 It has to wait until the proper sector has rotated under the head and then start reading and storing the bits as they come off the drive, removing the preamble and computing the checksum. Finally, it has to assemble the incoming bits into words and store them in memory. 
-    * To do all this work, controllers often contain small embedded computers that are programmed to do their work.
-#### device
-
-  * device的接口相当简单，便于标准化。因此any SATA disk controller可以处理any SATA disk. 
-
-    * **SATA** stands for Serial ATA and AT A in turn stands for AT Attachment. In case you are curious what AT stands for, this was IBM’s second generation ‘‘Personal Computer Advanced Technology’’ built around the then-extremely-potent 6-MHz 80286 processor that the company introduced in 1984.
-    * SATA是目前许多电脑的磁盘标准。由于实际的device interface隐藏在controller interface后， OS只能看到后者，也就无需处理前者的细节
-#### disk driver
-
-  * 由于controller各不相同，需要软件来控制，每个软件控制一个controller，称为**disk driver**
-
-    * driver talks to a controller, giving it commands and accepting responses
-
-    * 每个controller厂商需要为每个操作系统提供一个driver
-
-    * driver需要被置入OS中，在kernel mode工作。 事实上它能在kernel外工作，windows和linux都对此提供了支持，但大多数driver还是在kernel内。
-
-      * only very few current systems, such as MINIX 3, run all drivers in user space. Drivers in user space must be allowed to access the device in a controlled way, which is not straightforward
-      * 有三种把driver放入OS的方法：
-        * 使内核和新driver重新连接，然后重启。Many older UNIX systems work like this. 
-        * 进入OS文件，告诉它它需要那个driver，然后重启。在启动时，OS找到那个driver然后加载它。 Windows works this way.
-        * 许多操作系统都支持在运行时接受新驱动并安装，不需要重启。 热插拔的设备，如USB and IEEE 1394 devices, 需要这种方式
-#### device register
-
-* controller事实上与它的寄存器们（称为**device register**）直接交互. driver从OS得到命令，将其翻译后写入device registers。
-
-* For example, a minimal disk controller might have registers for specifying the disk address, memory address, sector count, and direction (read or write). 
-
-* To activate the controller, the driver gets a command from the operating system, then translates it into the appropriate values to write into the device registers. The collection of all the device registers forms the **I/O port** space, a subject we will come back to in Chap. 5.
-
-* device registers会被映射到OS的地址空间或者一个特殊的I/O port space
-  * 前者不需要特殊的I/O instructions，可以被像普通内存数据一样读写，但是消耗了地址空间（  device registers的地址无法被其他程序使用，因此是安全的 ） 
-  * 后者不消耗地址空间（每个寄存器被映射为一个port address）但需要额外的instructions
+I/O设备的介绍详见拙著*Computer I/O Device*
 
 ### I/O
 
@@ -448,7 +391,7 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
   2. **interrupt**：driver开启设备，要求它在完成时发出中断. At that point the driver returns. The operating system then blocks the caller if need be and looks for other work to do.
   3. **DMA**(Direct Memory Access): DMA芯片可以在避免CPU持续干预的情况下控制内存和一些controller之间的数据传输
      * CPU启动DMA芯片，告诉它how many bytes to transfer, the device and memory addresses involved, and the direction, and lets it go. 当DMA芯片工作结束时，会发出中断（和方法二一样）
-  
+
 * 中断的过程：
   1. driver通过向contoller的device  registers写入来告诉controller要做什么。controller然后便启动device
   2. When the controller has finished reading or writing the number of bytes it has been told to transfer, it signals the interrupt controller chip **using certain bus lines**
@@ -457,7 +400,7 @@ OS不仅需要管理CPU和Memory，还需要管理I/O devices，I/O devices由�
      * 一旦CPU决定接受中断, PC和PSW会被压栈，CPU会切换到内核态
      * The device number may be used as an index into part of memory to find the address of the interrupt handler for this device. This part of memory is called the **interrupt vector**
      * 一旦 interrupt handler启动，它就将PC和PSW出栈并保存，并向设备询问。当所有的handeller结束后，就退回到终端前执行的程序
-  
+
 * 中断可能会在其它interrupt handler运行时发生。 因此CPU可以disable interrupts and then reenable them later。当CPU disable interrupts时，设备依然持续发出中断信号，但CPU不会接受。 
 
 * 由于多个中断可能同时发生，每个设备都有（通常是静态的）中断优先级来决定在disable结束后，哪个中断先被接受。
