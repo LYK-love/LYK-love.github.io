@@ -66,7 +66,7 @@ creative_commons:
   license: by-nc-sa
   # Available values: big | small
   size: small
-  sidebar: false
+  sidebar: true
   post: false
   # You can set a language value if you prefer a translated version of CC license, e.g. deed.zh
   # CC licenses are available in 39 languages, you can find the specific and correct abbreviation you need on https://creativecommons.org
@@ -96,7 +96,7 @@ open_graph:
 # External url should start with http:// or https://
 menu:
   home: / || fa fa-home
-  about: /about/ || fa fa-user
+  # about: /about/ || fa fa-user
   tags: /tags/ || fa fa-tags
   categories: /categories/ || fa fa-th
   archives: /archives/ || fa fa-archive
@@ -156,7 +156,7 @@ site_state: true
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
   GitHub: https://github.com/LYK-love || fab fa-github
-  E-Mail: 1037400635@qq.com  || fa fa-envelope
+  E-Mail: mailto:191820133@smail.nju.edu.cn  || fa fa-envelope
   #Weibo: https://weibo.com/yourname || fab fa-weibo
   #Google: https://plus.google.com/yourname || fab fa-google
   #Twitter: https://twitter.com/yourname || fab fa-twitter
@@ -389,6 +389,7 @@ back2top:
   scrollpercent: false
 
 # Reading progress bar
+# 五颜六色的,影响观看
 reading_progress:
   enable: false
   # Available values: left | right
@@ -725,11 +726,11 @@ firestore:
 busuanzi_count:
   enable: true
   total_visitors: true
-  total_visitors_icon: user fa-user
+  total_visitors_icon: user
   total_views: true
-  total_views_icon: eye fa-eye
+  total_views_icon: eye
   post_views: true
-  post_views_icon: eye fa-eye
+  post_views_icon: eye
 
 
 # ---------------------------------------------------------------

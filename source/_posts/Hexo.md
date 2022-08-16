@@ -186,12 +186,12 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
     apple_touch_icon: /images/white_flower1.jpg
   ```
 
-* 设置菜单:
+* 设置菜单: 真不知道about页面有啥用
 
   ```yaml
   menu:
     home: / || home
-    about: /about/ || user
+    # about: /about/ || user
     tags: /tags/ || tags
     categories: /categories/ || th
     archives: /archives/ || archive
@@ -250,12 +250,12 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
 
 
-* sidebar社交链接:
+* sidebar社交链接: 邮箱前要加`mailto:`, 这还是我用开发者工具查别人的网站发现的..( 其实mailto是html中发送email的代码 )
 
   ```yaml
   social:
     GitHub: https://github.com/LYK-love || fab fa-github
-    E-Mail: 191820133@smail.nju.edu.cn || fa fa-envelope
+    E-Mail: mailto:191820133@smail.nju.edu.cn || fa fa-envelope
   ```
 
 * sidebar社交链接的图案:
@@ -354,6 +354,8 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
    * Next主题已对百度统计进行配置优化，因此只需要编辑配置文件, 填写`app-id`. 对于更一般的情况, 需要把上面的JS代码添加到网站全部页面的 `</head>` 标签前.
 
 4. 如果代码安装正确，一般20分钟后，可以查看网站分析数据.
+
+
 
 
 
@@ -668,6 +670,29 @@ back2top:
 
 
 
+## 版权
+
+选择`sidebar`, 会在sidebar出现一个小徽章, 不怎么碍眼. 如果选择`post`, 版权信息会出现在文章底部, 很难看.
+
+
+
+```yaml
+# Creative Commons 4.0 International License.
+# See: https://creativecommons.org/about/cclicenses/
+creative_commons:
+  # Available values: by | by-nc | by-nc-nd | by-nc-sa | by-nd | by-sa | cc-zero
+  license: by-nc-sa
+  # Available values: big | small
+  size: small
+  sidebar: true
+  post: false
+  # You can set a language value if you prefer a translated version of CC license, e.g. deed.zh
+  # CC licenses are available in 39 languages, you can find the specific and correct abbreviation you need on https://creativecommons.org
+  language:
+```
+
+
+
 ## 一些不想用的美化
 
 以下美化我都不想用, 只是给出添加方式.
@@ -692,9 +717,17 @@ back2top:
   darkmode: true
   ```
 
+* Reading progress bar: 五颜六色的,影响观看:
+
+  ```yaml
+  reading_progress: Reading progress bar
   
-
-
+    enable: false
+  ```
+  
+  
+  
+  
 
 # 多主机同步
 
@@ -899,15 +932,17 @@ git pull
 
 # Hexo Upgrade
 
+如果想要安装指定版本的Hexo, 网上都没有教程. 我的做法是抄一份指定版本的`package.json`然后`npm install`
+
 1. 查看本地Hexo版本:
 
-   ```
+   ```sh
    hexo version
    ```
 
 2. 查看有哪些落后的版本:
 
-   ```
+   ```sh
    npm outdated
    ```
 
@@ -941,6 +976,8 @@ git pull
 
    
 
+   
+   
    
 
 # NeXt Upgrade

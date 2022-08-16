@@ -441,14 +441,16 @@ node自带了npm，所以安装node后就默认安装了对应版本的npm
   npm install [package] --save-dev
   ```
 
-  * `--save`，简写为`-s`或`-S`：将依赖信息保存至 `package.json`, 默认保存到`dependencies`属性。 这个option后可以跟选项，指定具体的依赖类型
+  * `--save`，简写为`-s`或`-S`：**将依赖信息保存至 `package.json`**, 默认保存到`dependencies`属性. 建议安装依赖总是加`--save`,这样可以纳入版本管理.
+
+     该option后可以跟选项，指定具体的依赖类型
 
     * `--save-dev`，简写为`-d`或`-D`: 指定依赖类型为dev dependency, 依赖信息会被保存在`devDependencies`属性。
 
   * 对于npm > 5.0， 默认会启用`--save`
 
   * `-g`:全局安装
-
+  
     
 
 ## Config
