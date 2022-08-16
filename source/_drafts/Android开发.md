@@ -1,7 +1,7 @@
 ---
 title: Android开发
-tags:Android
-categories:Technology
+tags: Android
+categories: Technology
 ---
 
 Outline:

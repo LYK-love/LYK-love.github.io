@@ -1,7 +1,7 @@
 ---
 title: Mathematical Logic
 tags: Mathematical Logic
-categories ：Mathematic
+categories: Mathematic
 ---
 
 

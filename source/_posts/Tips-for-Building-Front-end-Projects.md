@@ -205,6 +205,25 @@ require('find');
 
 简言之，先查同名的系统模块，找不到再去`node_modules`中查外部模块
 
+## 查看node项目版本
+
+1. 如果项目使用 yarn 和 typescript，可以查看yarn.lock 里的@types/node@ 的 version:
+
+   ```
+   "@types/node@*":
+     version "14.0.20"
+     resolved "https://registry.npmjs.org/@types/node/-/node-14.0.20.tgz#0da05cddbc761e1fa98af88a17244c8c1ff37231"
+     integrity sha512-MRn/NP3dee8yL5QhbSA6riuwkS+UOcsPUMOIOG3KMUQpuor/2TopdRBu8QaaB4fGU+gz/bzyDWt0FtUbeJ8H1A==
+   ```
+
+2. packageJson.engines，第三方模块都会有，自己的项目中有可能有
+
+3. FROM，如果采用 docker 部署，查看基础镜像 Dockerfile 中 node 的版本号
+
+4. 如果以上方式都不可以，那就只能问人或者自己蒙了. 可以查找[nodejs的版本发布表](https://nodejs.org/zh-cn/download/releases/), 根据项目的日期大概能猜出来版本
+
+那只有问人了. **因此强烈建议项目使用yarn + Ts**
+
 ## nvm 
 
 ### Commands

@@ -1,6 +1,5 @@
 ---
 title: Brief Nginx
-tags:查看
 ---
 
 
@@ -8,8 +7,6 @@ tags:查看
 
 
 
-
-l
 
 查看nginx配置文件位置：
 

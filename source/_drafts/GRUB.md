@@ -1,7 +1,6 @@
 ---
 title: GRUB
-tags:这
-这
+tags: 
 ---
 
 

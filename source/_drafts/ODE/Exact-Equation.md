@@ -1,0 +1,4 @@
+---
+title: Exact Equation
+tags:
+---

@@ -3,7 +3,9 @@ title: About
 date: 2021-05-10 13:09:49
 ---
 
-Any idea and consultation:
+承蒙厚爱♡
 
-191820133@smail.nju.edu.cn
+Any suggestion is welcomed: 191820133@smail.nju.edu.cn
+
+
 

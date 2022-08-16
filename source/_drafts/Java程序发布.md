@@ -1,7 +1,7 @@
 ---
 title: Java程序发布
 tags: java
-categories：Language 
+categories: Language 
 ---
 
 # 部署
