@@ -14,9 +14,14 @@ Outline
 
 # Intro
 
+Hexo版本: 6.2.0
+
+Next版本: 8.12.3
+
 * [Hexo官网](https://hexo.io/zh-cn/)
-* [NeXt官网][https://hexo-next.readthedocs.io/zh_CN/latest/], 里面有几乎全部的主题配置教程
+* [NeXt官网](https://hexo-next.readthedocs.io/zh_CN/latest), 里面有几乎全部的主题配置教程
 * [最新版(v8)NeXt仓库](https://github.com/next-theme/hexo-theme-next)
+* [Next官方的博客](https://theme-next.js.org/)
 * [Awesome NexT](https://github.com/theme-next/awesome-next) : 有很多别人的Next博客, 非常值得借鉴
 
 
@@ -24,34 +29,27 @@ Outline
 本文档参考了:
 
 * 比较全的[Hexo + Next搭建教程](https://www.yuque.com/skyrin/coding/tm8yf5#xgq4yz), 其中有些内容有点老了
-* 
 
 
 
 Hexo是流行的静态博客框架, 同类的还有Hugo和Jekyl. Hexo的优点是, 它的Next主题比较好看. 本文介绍Hexo + Next的配置.
 
-主题文件都存放在`<hexo-dir>/themes/`, 例如Next主题就位于`<hexo-dir>/themes/next`.
+主题文件都存放在`<hexo-dir>/themes/`, 例如Next主题就位于`<hexo-dir>/themes/next/_config.yml`. **但是**, 由于下面讲的多主机同步的原因, 实际起作用的主题配置文件是`<hexo>/_cofig.next.yml`
 
 
 
 Hexo的配置文件位于Hexo目录的`_config.yml`
 
-Next的配置目录位于`<hexo-dir>/themes/next/_config.yml`.
+Next的配置目录位于`<hexo>/_cofig.next.yml`.
 
 在主题配置中, 除非特殊说明, 编辑都是主题配置文件. 同理, 对于Hexo的配置, 除非特殊说明, 编辑的都是Hexo配置文件
-
-
-
-
-
-
 
 # Hexo Commands
 
 | 命令                    | 描述                                                         |
 | ----------------------- | ------------------------------------------------------------ |
 | `hexo init [folder]`    | 初始化网站                                                   |
-| `hexo new [layout]`     | 新建文章, 默认是“post”, 我将它设置为新建到“draft”            |
+| `hexo new [layout]`     | 新建文章, 默认是“post”, 我通过`default_layout: draft`设置为新建到“draft” |
 | `hexo publish [layout]` | 发布草稿                                                     |
 | `hexo g[enerate]`       | 生成静态文件.                                                |
 | `hexo s[erver]`         | 启动本地服务器. 服务器会监听文件变化并自动更新               |
@@ -61,8 +59,6 @@ Next的配置目录位于`<hexo-dir>/themes/next/_config.yml`.
 | `hexo version`          | 版本信息                                                     |
 | **`hexo d -g`**         | 生成并部署                                                   |
 |                         |                                                              |
-
-如果, 那么还会部署到远程仓库
 
 # Hexo搭建
 
@@ -164,32 +160,19 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 4. 在控制台设置域名解析，添加 A 记录指向 `151.101.129.147` 即可
 5. 命令行执行`hexo d`发布站点到 GitHub 库，这时在 Git 库应该就能看到 CNAME 文件，至此自定义域名设置完毕，现在使用`xxx.com`即可访问站点
 
+## 写作
 
+* 默认新建文章都是posts, 改成新建为drafts:
+
+  ```yaml
+  default_layout: draft
+  ```
+
+  这样`hexo new`新建的就都是草稿了
 
 # NeXt配置
 
 [进阶配置](https://convivae.top/posts/hexo-bo-ke-cai-keng/)
-
-* 设置头像:
-
-  ```
-  avatar: <avatar-url>
-  ```
-
-  头像必须存放在`<next>/themes/source/images/`
-
-* 设置sidebar头像:
-
-  ```yaml
-  # Sidebar Avatar
-  avatar:
-    # Replace the default image and set the url here.
-    url: /images/white_flower1.jpg
-    # If true, the avatar will be dispalyed in circle.
-    rounded: false
-    # If true, the avatar will be rotated with the cursor.
-    rotated: false
-  ```
 
 * 设置站点图标:
 
@@ -208,7 +191,7 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
   ```yaml
   menu:
     home: / || home
-    #about: /about/ || user
+    about: /about/ || user
     tags: /tags/ || tags
     categories: /categories/ || th
     archives: /archives/ || archive
@@ -216,10 +199,31 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
     #sitemap: /sitemap.xml || sitemap
     #commonweal: /404/ || heartbeat
   
-  # Enable/Disable menu icons.
-  menu_icons:
-    enable: true
+  # Enable / Disable menu icons / item badges.
+  menu_settings:
+    icons: true
+    badges: false
   ```
+
+* 设置sidebar avatar, 并且让图片圆形显示
+
+  ```yaml
+  # Sidebar Avatar
+  avatar:
+    # Replace the default image and set the url here.
+    url: /images/white_flower1.jpg
+    # If true, the avatar will be displayed in circle.
+    # 圆形显示
+    rounded: true
+    # If true, the avatar will be rotated with the cursor.
+    rotated: false
+  ```
+
+  头像必须存放在`<next>/themes/source/images/`
+
+  
+
+  
 
 * Schemes: 目前觉得Mist比较好看
 
@@ -250,8 +254,8 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
   ```yaml
   social:
-    GitHub: https://github.com/your-user-name || fab fa-github
-    E-Mail: your-email || fa fa-envelope
+    GitHub: https://github.com/LYK-love || fab fa-github
+    E-Mail: 191820133@smail.nju.edu.cn || fa fa-envelope
   ```
 
 * sidebar社交链接的图案:
@@ -271,6 +275,22 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
   footer:
     # Specify the date when the site was setup. If not defined, current year will be used.
     since: 2021
+  ```
+
+* 关掉闪烁:
+
+  ```yaml
+  quicklink:
+    enable: false
+  ```
+  
+* Toc: Table of Contents in the Sidebar. 主要是sidebar里面的标题要不要自动进行数字编号. 默认为true. 我不喜欢编号：
+
+  ```yaml
+  toc:
+    enable: true
+    # Automatically add list number to toc.
+    number: false
   ```
 
   
@@ -348,13 +368,24 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 Next还支持两个渲染引擎:
 
 - `hexo-renderer-pandoc`：很好地支持`MathJax`
+- [hexo-renderer-kramed](https://github.com/sun11/hexo-renderer-kramed): 亲测它比`hexo-renderer-pandoc`**快很多很多很多**. 但是有bug, 需要自己配置. 由于它太老了,就不推荐了. [教程在这里](
 - `hexo-renderer-markdown-it-plus/hexo-renderer-markdown-it`：支持`KeTex`
 
- 我们一般选择`hexo-renderer-pandoc`,
+ 我们一般选择`hexo-renderer-pandoc`
 
 
 
-注意: 早年间还有人推荐[hexo-renderer-kramed](https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fsun11%2Fhexo-renderer-kramed), 亲测它比`hexo-renderer-pandoc`**快很多很多很多**. 但是有bug, 需要自己配置. 由于它太老了,就不推荐了. [教程在这里](https://www.jianshu.com/p/7ab21c7f0674)
+> ln far far2 
+> ls -i                                                                       
+
+2536724 far  2536724 far2  //inode number一样
+
+> ln far far2 
+> ls -i                                                                       
+
+2536724 far  2536724 far2  //inode number一样
+
+
 
 ### 支持MathJax
 
@@ -465,12 +496,68 @@ $$x+1\over\sqrt{1-x^2} \tag{i}\label{eq_tag}$$
 
 ## 字体
 
-默认字体对于中文巨丑, 可以将`font`设为true, 至于新字体是啥我也不知道... 总之比原来的好看:
+默认字体(`font: false`)是温软雅黑, 还挺好看的. 当然也可以自己改字体.
 
 ```yaml
 font:
-  enable: true
+  enable: false
 ```
+
+低版本的Next的`font: false`的中文巨丑, 将`font`设为true,之后比原来好看了..
+
+但我也不知道新字体是啥
+
+## 代码块
+
+* 代码高亮: 这个网站可以预览所有高亮效果：[传送门](https://theme-next.js.org/highlight/)
+
+  我使用highlight作为高亮引擎, 高亮用`arduino-light`
+
+* 我没有设置代码块行号
+
+
+
+主题配置文件:
+
+```yaml
+codeblock:
+  # Code Highlight theme
+  # All available themes: https://theme-next.js.org/highlight/
+  theme:
+    # light: default
+    # dark: stackoverflow-dark
+    light: arduino-light
+    dark: arduino-light
+  prism:
+    light: vs
+    dark: vs
+  # Add copy button on codeblock
+  copy_button:
+    enable: true
+    # Available values: default | flat | mac
+    style: flat
+```
+
+
+
+Hexo项目配置文件:
+
+```yaml
+highlight:
+  enable: true
+  line_number: false
+  auto_detect: false
+  tab_replace: ''
+  wrap: true
+  hljs: false
+prismjs:
+  enable: false
+  preprocess: true
+  line_number: true
+  tab_replace: ''
+```
+
+
 
 ## 图像缩放
 
@@ -485,7 +572,19 @@ font:
 mediumzoom: true
 ```
 
-## 文章阅读次数
+## 图像懒加载
+
+```
+npm install hexo-lazyload --save
+```
+
+```
+lazyload: true
+```
+
+
+
+## 访客人数&&文章阅读次数
 
 `NexT`主题已集成了不蒜子的访客人数和文章阅读统计功能:
 
@@ -548,11 +647,26 @@ busuanzi_count:
 
    
 
-## back2top button and scrollpercent
+## back2top button
 
-我没加, 不过看着还行:
+back2top button非常好看, 默认是添加的:
 
-[hexo-cake-moon-menu](https://github.com/jiangtj-lab/hexo-cake-moon-menu): A new style for back2top button and scrollpercent.
+```
+back2top:
+  enable: true
+  # Back to top in sidebar. button默认出现在左下角, 如果这里为true,就会出现在sidebar里面(头像, 目录下面),很难察觉
+  # 所以我设为false
+  sidebar: false
+  # Scroll percent label in b2t button.
+  # 让to-top的小箭头随时显示数值, 我觉得这样破坏阅读体验, 所以为false
+  scrollpercent: false
+```
+
+
+
+这里有个[插件](https://github.com/jiangtj-lab/hexo-cake-moon-menu), 不过已经不需要了. 自带的就很好看.
+
+
 
 ## 一些不想用的美化
 
@@ -590,7 +704,7 @@ Ref:
 
 * [ 在 hexo 中使用 git submodules 管理主题 ](https://juejin.cn/post/6844903751908605965)
 
-## 多主机同步
+## 多分支
 
 在安装插件后,`hexo d`会生成网页文件, 并将其部署到GitHub和GitPage. 但是不会把源文件也push到github. 我们需要:
 
@@ -617,15 +731,8 @@ Ref:
      branch: master
    ```
 
-   
 
-
-
-
-
-
-
-## 多主机同步的主题管理
+## 多主机同步的问题
 
 我们看到, Hexo添加主题的一般流程是 `clone` 主题到对应的 `themes`目录中，然后编辑Hexo的配置文件. 但是, 主题是一个独立的github仓库, 有自己的 `.git` 文件夹, 也就是说**本地的主题项目是嵌套在Hexo项目内的字仓库**. 
 
@@ -639,9 +746,43 @@ Ref:
 
 
 
+事实上,主题文件夹不仅不会被push, 每次主题更新时,都会被overwritten, 所以不要更改主题文件夹到任何内容.
+
+对于**主题配置文件**. Next官方提供[Alternate Theme Config机制](https://theme-next.js.org/docs/getting-started/configuration)来让用户自定义主题配置:
+
+1. 把主题配置文件复制到Hexo项目目录下, 取名为 `_config.[name].yml`. Replace `[name]` with the value of `theme` option in Hexo config file. For NexT theme, the file name is `_config.next.yml` by default
+2. 现在主题的配置文件就会读取Hexo项目目录的`_config.[name].yml`, 而不是主题目录的`_config.yml`. 由于位于Hexo项目目录下, `_config.[name].yml`会随着每次的push被push到Hexo项目的仓库. 不用担心**子项目问题**
+3. 多主机同步时, 新主机只需clone
+
+对于其他文件, 比如CSS之类, 反正我是不会改的, 所以无所谓. 但是images文件存放了我自定义的图像, 所以也得改. 目前看来没有什么解决方案. 只能把图片存放在Hexo项目文件夹,然后每次更新主题, 都把图片copy进主题文件夹内.
+
+下面介文的**@Deprecated 同步步骤**是被废弃的方案, 它使用git modules, 这种方案新建了主题仓库, 然后用git module同步整个主题文件夹, 问题在于这样做就**没法进行主题的更新**了, 因此废弃
+
+## @New 同步步骤
+
+老主机只需`git pull`就行了.
 
 
-### 解决方案
+
+对于本地还没有hexo项目的新主机, 需要:
+
+1. clone自己的Hexo项目并初始化:
+
+   ```shell
+   git clone https://github.com/LYK-love/LYK-love.github.io
+   cd LYK-love.github.io
+   npm install
+   ```
+
+2. 由于下文介绍的Next主题的Alternate Theme Config机制, 主题配置文件已经在Hexo项目文件夹中被我们clone下来了, 也就是说已经同步了, 万事大吉.
+
+3. 但是, images等文件没有同步, 我把images放在Hexo项目文件夹下, 需要手动把它copy到主机文件夹的`source/images`中
+
+   
+
+## @Deprecated 同步步骤
+
+**注: 该方案已经被废弃**
 
 在Hexo多主机同步时, 我们当然希望自己的主题配置文件也同步. 
 
@@ -653,9 +794,7 @@ Ref:
 
 因此, 我们需要**有一个自己的主题项目, 来对主题也进行版本管理**. 可以fork官方主题项目, 但我为了方便, 直接创建了[自己的主题项目](https://github.com/LYK-love/Next).
 
-
-
-#### Old Hosts
+### Old Hosts
 
 对于已经加入多主机同步的主机来说, 如果本地更改了主题. 那么每次除了push Hexo项目文件, 还得把再把主题项目文件也push. 否则主题配置的更改是没法同步到Github的.
 
@@ -687,9 +826,7 @@ cd ./themes/next
 git pull
 ```
 
-
-
-#### New Hosts
+### New Hosts
 
 对于要加入多主机同步的新主机来说, 要把主题文件当作git submodule, 在初始化阶段, 先同步Hexo, 再同步主题.
 
@@ -758,6 +895,8 @@ git pull
 
 * 如果表哥多了行/列,在显示时会很丑
 
+* 极其罕见的Bug, 花了我大半天: Hexo和Next分别更新, 结果Latex不能显示, hexo g巨慢, 页面闪烁, back2top小箭头图表消失等等等等... 最好他居然神奇地好了. 我猜是package.json冲突了. 不过具体原因我也不知道... .气死我了.
+
 # Hexo Upgrade
 
 1. 查看本地Hexo版本:
@@ -778,23 +917,64 @@ git pull
    npm install -g npm-upgrade
    ```
 
-4. 升级hexo:
+4. 升级作为`dependency`的hexo:
 
    ```sh
    npm-upgrade
    ```
 
-5. 注意, 此时Hexo已经更新到了最新版本, 但package.json里的hexo -> version字段依然是老版本, 因此`hexo version`显示的依然是老版本. 需要再修改该字段:
+   此时package.json里的hexo -> version字段依然是老版本, 只有"dependencies"字段是新版本
 
-   ```json
-   "hexo": {
-       "version": "6.2.0"
-     },
+5. 升级hexo:
+
+   ```shell
+   npm install
    ```
+
+6. 查看是否更新成功:
+
+   ```shell
+   hexo version
+   ```
+
+   
+
+   
 
    
 
 # NeXt Upgrade
 
-NeXt的版本好像没办法直接查看, 只能在每次`hexo s/d`时在命令行的输出里查询.
+NexT 每个月都会发布新版本
 
+[安装文档](https://theme-next.js.org/docs/getting-started/installation.html)
+
+NeXt < 8的版本好像没办法查看, 
+
+Next >=8 之后, 每次`hexo s/d`时在命令行的输出里都有Next版本信息. 此外`hexo version`也会显示next版本.
+
+
+
+Next更新步骤: 首先要更新到最新的Hexo
+
+1. 备份old主题文件夹的文件. 由于该文件夹一般什么都不会改,所以不备份也没啥关系
+
+2. 把旧主题文件夹rename为`next-old`
+
+3. clone新的主题仓库:
+
+   ```shell
+   git clone https://github.com/next-theme/hexo-theme-next themes/next
+   ```
+
+
+
+当然, 如果已经采用了Alternate Theme Config的话, 就可以平滑地升级:
+
+```
+git pull
+```
+
+
+
+[https://hexo-next.readthedocs.io/zh_CN/latest]: 

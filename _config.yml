@@ -8,7 +8,7 @@ subtitle: ''
 description: ''
 keywords:
 author: 有多远滚多远
-language: zh-Hans
+language: en
 timezone: UTC
 
 # URL
@@ -45,7 +45,7 @@ relative_link: false
 future: true
 highlight:
   enable: true
-  line_number: true
+  line_number: false
   auto_detect: false
   tab_replace: ''
   wrap: true
@@ -138,3 +138,12 @@ filter_optimize:
   # lower means it will be executed first, default of Hexo is 10
   priority: 12
 
+# moon_menu:
+#   back2top:
+#     enable: true
+#     icon: fas fa-chevron-up
+#     order: -1
+#   back2bottom:
+#     enable: true
+#     icon: fas fa-chevron-down
+#     order: -2
