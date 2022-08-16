@@ -363,29 +363,20 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
 [Next数学公式支持官方文档](https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/MATH.md)
 
-目前Latex的渲染引擎有 [MathJax](https://www.mathjax.org/) 和 [Katex](https://khan.github.io/KaTeX/), `MathJax`好一点.
+目前Latex的渲染引擎有 [MathJax](https://www.mathjax.org/) 和 [Katex](https://khan.github.io/KaTeX/), `MathJax`完美支持Latex, `Katex`速度更快, 但是有些语法不支持. 综合来看还是选择Mathjax.
 
 `NexT`默认使用的markdown渲染引擎是`hexo-renderer-marked`, 它支持`MathJax`, 但支持得不好. 
 
 Next还支持两个渲染引擎:
 
 - `hexo-renderer-pandoc`：很好地支持`MathJax`
-- [hexo-renderer-kramed](https://github.com/sun11/hexo-renderer-kramed): 亲测它比`hexo-renderer-pandoc`**快很多很多很多**. 但是有bug, 需要自己配置. 由于它太老了,就不推荐了. [教程在这里](
+- [hexo-renderer-kramed](https://github.com/sun11/hexo-renderer-kramed): 亲测它比`hexo-renderer-pandoc`**快一点**. 但是有bug, 需要自己配置. 由于它太老了,就不推荐了. 
 - `hexo-renderer-markdown-it-plus/hexo-renderer-markdown-it`：支持`KeTex`
+- [hexo-filter-mathjax](https://github.com/next-theme/hexo-filter-mathjax): 这是个server端端hexo渲染引擎. 要使用它,需要卸载掉其他latex引擎( 当然, 你得保留一个`hexo-renderer-marked` 来渲染markdown ). 它的缺点是有些语法不支持, 而且无法渲染目录里的LaTex.
 
  我们一般选择`hexo-renderer-pandoc`
 
 
-
-> ln far far2 
-> ls -i                                                                       
-
-2536724 far  2536724 far2  //inode number一样
-
-> ln far far2 
-> ls -i                                                                       
-
-2536724 far  2536724 far2  //inode number一样
 
 
 
@@ -397,7 +388,7 @@ Next还支持两个渲染引擎:
 
    ```shell
    npm un hexo-renderer-marked
-   npm i hexo-renderer-pandoc
+   npm i hexo-renderer-pandoc --save
    ```
 
 2. 额外需要安装[pandoc](https://github.com/jgm/pandoc/blob/master/INSTALL.md): for Mac
