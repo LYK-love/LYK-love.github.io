@@ -1,6 +1,6 @@
 ---
 title: Hexo
-Categories: Toolkit
+categories: Toolkit
 date: 2022-03-27 02:28:03
 ---
 
@@ -58,7 +58,6 @@ Next的配置目录位于`<hexo>/_cofig.next.yml`.
 | `hexo list`             | 列出站点信息                                                 |
 | `hexo version`          | 版本信息                                                     |
 | **`hexo d -g`**         | 生成并部署                                                   |
-|                         |                                                              |
 
 # Hexo搭建
 
@@ -299,7 +298,7 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
 使用本地搜索，按以下步骤配置：
 
-1. 安装 hexo-generator-searchdb 插件：
+1. 安装 hexo-generator-searchdb 插件：加了这个之后,博客生成时间要慢好几秒, 不过也是值得的
 
    ```shell
    npm install hexo-generator-searchdb --save
