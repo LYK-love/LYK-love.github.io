@@ -22,6 +22,8 @@ Outline:
 
 * Mega Pixel( "MP" for short ): 百万像素. 比如IPhone13的单相机像素就是[12MP](https://www.technadu.com/iphone-13-camera/301276/#:~:text=Photography-Related%20iPhone%2013%20Camera%20Specs%20%20%20,Aperture%20size%3A%20F1.5%20%202%20more%20rows%20). 
 
+  * 在计算机科学中, Mega一般表示$2^{20}$; 不过这里的Mega是$10^{6}$
+
 * 一般用 [width] x [height] px来衡量图片和屏幕的清晰度, 比如下面的50 x 50 px图片一小格代表一个pixel; 比如常见的1920 x 1080 px屏幕.
 
   * 也可用**总像素数**表示, 50 x 50px也就是2500 px. 

@@ -168,6 +168,25 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
   ```
 
   这样`hexo new`新建的就都是草稿了
+  
+* 往往一片文章会有多个类别标签，有`3`种不同的编写方式
+
+  ```
+  # 第一种
+  categories:
+    - Java
+    - Servlet
+  # 第二种
+  categories: [Java, Servlet]
+  # 第三种
+  categories:
+    -[Java]
+    -[Servlet]
+  ```
+  
+  前一、二种书写方式的作用一致，表示该文章分类于`Java/Servlet`下，起到了子分类的作用
+  
+  第三种书写方式起到了多分类的作用，表示该文章分类于`Java`和`Servlet`下
 
 # NeXt配置
 

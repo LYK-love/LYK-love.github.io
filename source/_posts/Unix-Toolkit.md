@@ -1118,6 +1118,10 @@ apt list --installed
 
 ## brew
 
+brew安装的软件位置千奇百怪, 但都会在`/opt/homebrew/opt`留下软链接
+
+* 事实上, brew可能把
+
 安装：
 
 ```shell
@@ -1126,13 +1130,20 @@ apt list --installed
 
 
 
-* 查看版本:
+
+
+
+
+* 查看brew版本:
 
   ```
   brew --version
   ```
 
-  
+
+---
+
+
 
 * 查看安装的软件版本:
 
@@ -1155,6 +1166,28 @@ apt list --installed
   ```
 
   低版本的brew使用的是`switch`, here is [Doc](https://babygoat.github.io/2019/06/19/Golang-mac%E4%B8%8A%E5%88%87%E6%8F%9B%E5%A4%9A%E5%80%8Bgo%E7%89%88%E6%9C%AC/)
+
+---
+
+
+
+* 查看brew安装的符号路径: 一般都位于`/opt/homebrew/opt`
+
+  ```
+  brew  --prefix <package>
+  ```
+
+
+
+* 查看brew安装的软件的实际路径:
+
+  ```
+  brew list <package>
+  ```
+
+  
+
+
 
 ## pacman
 
@@ -1324,195 +1357,6 @@ npm config set registry https://registry.npm.taobao.org
 
 ```shell
 npm config get registry
-```
-
-
-
-# 开发环境配置
-
-## JDK
-
-### 安装jdk
-
-mac:
-
-mac建议到[oracle官网](https://www.oracle.com/java/technologies/downloads/#java11-mac)下载jdk
-
-
-
-linux一般用命令行安装，因此推荐openjdk
-
-
-
-Ubuntu:
-
-查找合适的openjdk版本:
-
-```shell
-# ubuntu
-apt-cache search openjdk
-```
-
-安装
-
-```shell
-sudo apt-get install openjdk-8-jdk
-```
-
-* 如果search和install都没反应，应该先更新软件源
-
-Manjaro:
-
-查找合适的openjdk版本:
-
-```shell
-yay search jdk
-```
-
-
-
-```shell
-yay install openjdk-8-jdk
-```
-
-
-
-
-
-(3) 配置环境变量, 编辑如下文件:
-
-```
-vim ~/.bashrc
-```
-
-在最后一行加:
-
-```
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-export PATH=$JAVA_HOME/bin:$PATH
-export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-```
-
-## 查找JDK
-
-查看jdk版本：
-
-```shell
-java -version
-```
-
-
-
-查找jdk:
-
-```shell
-whereis java
-```
-
-输出为
-
-```
-java: /usr/bin/java /usr/share/java /usr/share/man/man1/java.1.gz
-```
-
-
-
-查看jdk真实位置（上面的都是软链接）：
-
-```shell
-ls -l /usr/bin/java
-```
-
-输出为：
-
-```
-lrwxrwxrwx 1 root root 22 Mar 30 16:07 /usr/bin/java -> /etc/alternatives/java
-```
-
-
-
-```
-ls -l /etc/alternatives/java
-```
-
-输出为：
-
-```shell
-lrwxrwxrwx 1 root root 46 Mar 30 16:07 /etc/alternatives/java -> /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
-# 以上就是jdk位置
-```
-
-
-
-### 配置jdk环境变量
-
-#### linux
-
-对于linux:  编辑`/etc/profile`, 或 `~/.bashrc`, ` .zshrc`等：
-
-```
-vim /etc/profile # 这里可以选择任意的shell配置文件，
-```
-
-```shell
-export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 # 这里填jdk位置
-export JRE_HOME=${JAVA_HOME}/jre
-export CLASSPATH=./:${JAVA_HOME}/lib:${JRE_HOME}/lib
-export PATH=$PATH:${JAVA_HOME}/bin
-```
-
-
-
-使配置文件生效：
-
-```
-source /etc/profile
-```
-
-
-
-#### mac
-
-mac的jdk安装位置和linux不同
-
-
-
-查询当前的java的安装版本
-
-```shell
-cd /Library/Java/JavaVirtualMachines
-ls
-```
-
-
-
-配置`.zshrc`
-
-```bash
-# jdk 版本切换， on mac
-# jdk-17.0.2.jdk   jdk1.8.0_321.jdk jdk-11.0.14.jdk 
-export JAVA_8_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_321.jdk/Contents/Home
-export JAVA_11_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.14.jdk/Contents/Home
-export JAVA_17_HOME=/Library/Java/JavaVirtualMachines/jdk-17.0.2.jdk/Contents/Home
-
-
-
-alias jdk8='export JAVA_HOME=$JAVA_8_HOME'
-alias jdk11='export JAVA_HOME=$JAVA_11_HOME'
-alias jdk17='export JAVA_HOME=$JAVA_17_HOME'
-```
-
-```shell
-source ~/.bash_profi
-```
-
-
-
-切换jdk版本
-
-```shell
-jdk11
-java -version
 ```
 
 
@@ -2089,7 +1933,7 @@ sudo systemctl stop mongodb
 sudo systemctl daemon-reload
 ```
 
-开机启动:
+设置开机启动:
 
 ```
 sudo systemctl enable mongodb
@@ -2099,7 +1943,269 @@ sudo systemctl enable mongodb
 
 # DEV
 
-## git
+## JDK
+
+### 安装jdk
+
+mac:
+
+mac建议到[oracle官网](https://www.oracle.com/java/technologies/downloads/#java11-mac)下载jdk
+
+
+
+linux一般用命令行安装，因此推荐openjdk
+
+
+
+Ubuntu:
+
+查找合适的openjdk版本:
+
+```shell
+# ubuntu
+apt-cache search openjdk
+```
+
+安装
+
+```shell
+sudo apt-get install openjdk-8-jdk
+```
+
+* 如果search和install都没反应，应该先更新软件源
+
+Manjaro:
+
+查找合适的openjdk版本:
+
+```shell
+yay search jdk
+```
+
+
+
+```shell
+yay install openjdk-8-jdk
+```
+
+
+
+
+
+(3) 配置环境变量, 编辑如下文件:
+
+```
+vim ~/.bashrc
+```
+
+在最后一行加:
+
+```
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+```
+
+### 查找JDK
+
+查看jdk版本：
+
+```shell
+java -version
+```
+
+
+
+查找jdk:
+
+```shell
+whereis java
+```
+
+输出为
+
+```
+java: /usr/bin/java /usr/share/java /usr/share/man/man1/java.1.gz
+```
+
+
+
+查看jdk真实位置（上面的都是软链接）：
+
+```shell
+ls -l /usr/bin/java
+```
+
+输出为：
+
+```
+lrwxrwxrwx 1 root root 22 Mar 30 16:07 /usr/bin/java -> /etc/alternatives/java
+```
+
+
+
+```
+ls -l /etc/alternatives/java
+```
+
+输出为：
+
+```shell
+lrwxrwxrwx 1 root root 46 Mar 30 16:07 /etc/alternatives/java -> /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+# 以上就是jdk位置
+```
+
+
+
+### 配置jdk环境变量
+
+#### linux
+
+对于linux:  编辑`/etc/profile`, 或 `~/.bashrc`, ` .zshrc`等：
+
+```
+vim /etc/profile # 这里可以选择任意的shell配置文件，
+```
+
+```shell
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64 # 这里填jdk位置
+export JRE_HOME=${JAVA_HOME}/jre
+export CLASSPATH=./:${JAVA_HOME}/lib:${JRE_HOME}/lib
+export PATH=$PATH:${JAVA_HOME}/bin
+```
+
+
+
+使配置文件生效：
+
+```
+source /etc/profile
+```
+
+
+
+#### mac
+
+mac的jdk安装位置和linux不同
+
+
+
+查询当前的java的安装版本
+
+```shell
+cd /Library/Java/JavaVirtualMachines
+ls
+```
+
+
+
+配置`.zshrc`
+
+```bash
+# jdk 版本切换， on mac
+# jdk-17.0.2.jdk   jdk1.8.0_321.jdk jdk-11.0.14.jdk 
+export JAVA_8_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_321.jdk/Contents/Home
+export JAVA_11_HOME=/Library/Java/JavaVirtualMachines/jdk-11.0.14.jdk/Contents/Home
+export JAVA_17_HOME=/Library/Java/JavaVirtualMachines/jdk-17.0.2.jdk/Contents/Home
+
+
+
+alias jdk8='export JAVA_HOME=$JAVA_8_HOME'
+alias jdk11='export JAVA_HOME=$JAVA_11_HOME'
+alias jdk17='export JAVA_HOME=$JAVA_17_HOME'
+```
+
+```shell
+source ~/.bash_profi
+```
+
+
+
+切换jdk版本
+
+```shell
+jdk11
+java -version
+```
+
+
+
+## LLVM
+
+这里讲一下Mac OSX怎么安装llvm/clang.
+
+也可以手动编译LLVM/clang: [Doc](https://clang.llvm.org/get_started.html)
+
+
+
+OSX自带了LLVM, 但是是苹果版的, 和开源版本不太一样, 我们希望使用开源版本的LLVM. 
+
+1. 使用brew安装:
+
+   ```sh
+   brew upgrade && brew install llvm
+   ```
+
+   这会安装开源版本的LLVM. 注意, 主机中实际是两个版本的LLVM共存的, 我们不要使用系统的LLVM, 只用brew下载的LLVM.
+
+   Linux中一般直接安装到`/usr/local`了. 但是由于Max也有一个LLVM, 不能把二者混淆, brew就会把LLVM装到别的位置
+
+2. 查看brew安装的LLVM位置:
+
+   ```sh
+   cat $(brew --prefix llvm)
+   ```
+
+   * 这显示的是符号链接的位置(例如, `/opt/homebrew/opt/llvm`),  真实的llvm被安装在形如`/opt/homebrew/Cellar/llvm/14.0.6_1`的位置. 不过无关紧要
+
+3. 把LLVM添加到`PATH`:
+
+   ```sh
+   # LLVM on MAC, mac已经自带了llvm, 但是位置很奇怪  Not Committed Yet
+   MAC_LOCAL_LLVM_VERSION=14.0.6_1
+   export LLVM_MAC_LOCAL_HOME=/opt/homebrew/Cellar/llvm/$MAC_LOCAL_LLVM_VERSION
+   # brew目录下的llvm实际上是指向Mac local LLVM的符号链接, 为了方便, 还是用符号链接的路径吧
+   export LLVM_HOME=/opt/homebrew/opt/llvm
+   export PATH=$PATH:$LLVM_HOME/bin
+   ```
+
+4. 再添加两个环境变量, 让clang能找到LLVM:
+
+   ```sh
+   export LDFLAGS="-L($LLVM_HOME)/lib -Wl,-rpath,($LLVM_HOME)/lib"
+   export CPPFLAGS="-I($LLVM_HOME)/include -I($LLVM_HOME)/include/c++/v1/"
+   ```
+
+5. 再把Clang的环境变量设置一下:
+
+   ```sh
+   export CC := /usr/local/opt/llvm/bin/clang
+   export CXX := $(CC)++
+   ```
+
+   * 更好的办法是添加到`PATH`. 我这样设置, 命令行需要用`$(CC)`来调用clang
+
+6. 测试安装是否成功:
+
+   ```sh
+   llvm-dis --version
+   ```
+
+   
+
+
+
+## 小工具
+
+### tldr
+
+```
+yay -S tldr
+```
+
+
+
+或者用man/info，后者的信息存放在`/usr/info`
 
 ### gitupdate
 
@@ -2131,6 +2237,8 @@ This will add all files that have changed since last commit and will include all
 
 If you want to only consider top level folders for the commit message, use the `--top` (or `-t` for short) flag.
 
+
+
 ## maven
 
 maven配置文件位置： `～/.m2/settings.xml`
@@ -2149,23 +2257,22 @@ maven配置文件位置： `～/.m2/settings.xml`
 
 
 
-### 设置开机自启
+# 常用操作
 
-```sql
-system enable mongodb
+## 剪贴板
+
+`pbcopy` on OSX can Copy data from stdin to the clipboard.
+
+```sh
+nvim a
+# write thoughtful response
+cat a | pbcopy
+# cmd tab
+# paste to slack
+rm a
 ```
 
-# 基本命令
 
-## 查看命令
-
-```
-yay -S tldr
-```
-
-
-
-或者用man/info，后者的信息存放在`/usr/info`
 
 ## clear
 

@@ -1,6 +1,8 @@
 ---
-title: Tips for Building Front-end Projects
-categories: Toolkit
+title: Tips for Building Frontend Projects
+categories: 
+  - [Toolkit]
+  - [Frontend]
 date: 2022-07-30 17:23:43
 ---
 
@@ -438,20 +440,29 @@ node自带了npm，所以安装node后就默认安装了对应版本的npm
 * 下载依赖：
 
   ```
-  npm install [package] --save-dev
+  npm i[nstall] <package> --save-dev
   ```
 
-  * `--save`，简写为`-s`或`-S`：**将依赖信息保存至 `package.json`**, 默认保存到`dependencies`属性. 建议安装依赖总是加`--save`,这样可以纳入版本管理.
+  * `--save`，简写为`-s`或`-S`：**将依赖信息保存至 `package.json`**, 默认保存到`dependencies`属性
 
      该option后可以跟选项，指定具体的依赖类型
 
     * `--save-dev`，简写为`-d`或`-D`: 指定依赖类型为dev dependency, 依赖信息会被保存在`devDependencies`属性。
 
-  * 对于npm > 5.0， 默认会启用`--save`
+  * **对于npm > 5.0， 默认会启用`--save`**
 
   * `-g`:全局安装
   
-    
+* 卸载依赖: 在项目根目录, 即node_modules所在目录运行: **注意, 卸载并不会把依赖从package.json中去掉**( 但是安装会 )
+
+  ```sh
+  npm un[install] <package-name>
+  ```
+
+  *  `-S` 或 `--save` 标志，则此操作还会移除 `package.json` 文件中的引用.
+* 如果程序包是开发依赖项（列在 `package.json` 文件的 devDependencies 中），则必须使用 `-D` 或 `--save-dev` 标志从文件中移除
+  * 如果该软件包是全局安装的，则需要添加 `-g` 或 `--global` 标志：
+  * 可以在系统上的任何位置运行`npm un -g`, 因为当前所在的文件夹无关紧要
 
 ## Config
 
@@ -908,4 +919,3 @@ npm list vue
 ```
 yarn add tailwindcss -D
 ```
-

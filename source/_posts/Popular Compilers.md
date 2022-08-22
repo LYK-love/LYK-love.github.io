@@ -255,7 +255,90 @@ gcc 在编译时查找库文件的顺序：
   >
   > **Important**: Because the ISO C++23 standard is still evolving, GCC's support is **experimental**. No attempt will be made to maintain backward compatibility with implementations of C++23 features that do not reflect the final standard.
 
-  
+
+## LLVM Basic
+
+创建一个C语言文件test.c
+
+```c
+#include <stdio.h>
+int main() {
+  printf("hello world\n");
+  return 0;
+}
+```
+
+
+
+1. 编译生成可执行文件：
+
+   ```sh
+   clang test.c -o test
+   ```
+
+2. 运行可执行文件
+
+3. 生成llvm字节码文件：
+
+   ```sh
+   clang -O1 -emit-llvm test.c -c -o test.bc
+   ```
+
+4. 生成LLVM 的汇编代码 .ll 文件(可视化字节码文件):
+
+   ```sh
+   clang -O1 -emit-llvm test.c -S -o test.ll
+   ```
+
+5. 运行字节码文件：
+
+   ```sh
+   lli test.bc
+   ```
+
+    .ll文件也可以用lli来执行
+
+6. 将 .bc 文件转化为 .ll 文件:
+
+   ```sh
+   llvm-dis test.bc
+   ```
+
+7. 将 .ll 文件转化为 .bc 文件:
+
+   ```sh
+   llvm-as test.ll
+   ```
+
+8. 编译字节码文件为汇编文件：
+
+   ```sh
+   llc test.bc -o test.s
+   ```
+
+9. 将 .bc 或 .ll 文件转化为本机平台的汇编代码：
+
+   ```sh
+   llc test.bc
+   llc test.ll
+   ```
+
+   
+
+
+
+
+
+ ``
+
+
+ ``
+
+
+ ``
+ ``
+
+
 
 
 
