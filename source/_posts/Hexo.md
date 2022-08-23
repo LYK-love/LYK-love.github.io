@@ -169,7 +169,7 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
   这样`hexo new`新建的就都是草稿了
   
-* 往往一片文章会有多个类别标签，有`3`种不同的编写方式
+* 文章能会有多个类别, 分类具有顺序性和层次性, 有`3`种不同的编写方式
 
   ```
   # 第一种
@@ -187,6 +187,18 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
   前一、二种书写方式的作用一致，表示该文章分类于`Java/Servlet`下，起到了子分类的作用
   
   第三种书写方式起到了多分类的作用，表示该文章分类于`Java`和`Servlet`下
+  
+* 标签没有层次性:
+
+  ```
+  categories:
+  - Diary
+  tags:
+  - PS3
+  - Games
+  ```
+
+  
 
 # NeXt配置
 
@@ -381,6 +393,8 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
 [Next数学公式支持官方文档](https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/MATH.md)
 
+[Next Mathjax高级特性](https://theme-next.js.org/docs/third-party-services/math-equations.html?highlight=mathjax#mjx-eqn%3Aeq2)
+
 目前Latex的渲染引擎有 [MathJax](https://www.mathjax.org/) 和 [Katex](https://khan.github.io/KaTeX/), `MathJax`完美支持Latex, `Katex`速度更快, 但是有些语法不支持. 综合来看还是选择Mathjax.
 
 `NexT`默认使用的markdown渲染引擎是`hexo-renderer-marked`, 它支持`MathJax`, 但支持得不好. 
@@ -424,16 +438,15 @@ Next还支持两个渲染引擎:
      # If you set it to true, it will load mathjax / katex script EVERY PAGE.
      every_page: false
    
-     # hexo-renderer-pandoc (or hexo-renderer-kramed) required for full MathJax support.
      mathjax:
        enable: true
-       # See: https://mhchem.github.io/MathJax-mhchem/
-       mhchem: true
+       # Available values: none | ams | all
+       tags: ams # ams: 开启公式自动编号
    ```
-
+   
    * `per_page`: 设置为false, 这样只会渲染添加了`mathjax: true`的文章
      * 在低版本的NeXt,这句话上面的注释是反的, 即“false”只会渲染指定文章. 
-
+   
 4. 在需要渲染Latex的文章的Front-matter里打开mathjax开关，如下：
 
    ```markdown
@@ -445,11 +458,19 @@ Next还支持两个渲染引擎:
    --
    ```
 
-### 高级Mathjax特性
+### 公式自动编号和引用
 
-在新版本的 NexT 主题中，我们加入了公式自动编号和引用功能。下面简要介绍一下如何使用这项功能。
+To enable this feature, you need to set `mathjax.tags` to `ams` in NexT config file.
 
-为了使用这项功能，一般来说，你必须把所使用的 LaTeX 公式放在 `equation` 环境里面，采用旧的方法（也就是说，仅仅把公式的每一边用两个 $ 符号包含起来）是无效的。如何引用公式？你只需要在书写公式的时候给公式一个 `\label{}` 标记（tag），然后在正文中，可以使用 `\ref{}` 或者 `\eqref{}` 命令来引用对应的公式。使用 `\eqref{}` 是推荐的方式，因为如果你使用 `\ref{}`，公式在文中的引用编号将没有圆括号包围。下面介绍几种常见的公式编号例子。
+```
+math:
+  mathjax:
+    enable: true
+    # Available values: none | ams | all
+    tags: ams
+```
+
+为了使用这项功能，一般来说，你必须把所使用的 LaTeX 公式放在 `equation` 环境里面，采用旧的方法（也就是说，仅仅把公式的每一边用两个 $ 符号包含起来）是无效的。如何引用公式？你只需要在书写公式的时候给公式一个 `\label{}` 标记（tag），然后在正文中，可以使用 `\ref{}` 或者 `\eqref{}` 命令来引用对应的公式。使用 `\eqref{}` 是推荐的方式，因为如果你使用 `\ref{}`，公式在文中的引用编号将没有圆括号包围。下面介绍几种常见的公式编号例子.
 
 对于简单的公式，使用下面的方式给公式一个标记，
 
@@ -465,6 +486,8 @@ e=mc^2
 著名的质能方程 $\eqref{eq1}$ 由爱因斯坦提出 ...
 ```
 
+### Multi-line Equations
+
 对于多行公式，在 `equation` 环境中，你可以使用 `aligned` 环境把公式分成多行，
 
 ```
@@ -477,6 +500,8 @@ a &= b + c \\
 \end{equation}$$
 ```
 
+### Multiple Aligned Equations
+
 要对齐多个公式，我们需要使用 `align` 环境。align 环境中的每个公式都有自己的编号：
 
 ```
@@ -486,6 +511,8 @@ x &= yz \label{eq4}\\
 l &= m - n \label{eq5}
 \end{align}$$
 ```
+
+### Exclude Equations from Numbering
 
 在 `align` 环境中，如果你不想给某个或某几个公式编号，那么在这些公式后面使用 [`\nonumber`](https://tex.stackexchange.com/questions/17528/show-equation-number-only-once-in-align-environment) 命令即可。例如：
 
@@ -497,6 +524,8 @@ $$\begin{align}
 \end{align}$$
 ```
 
+### Use `\tag` to Tag Equations
+
 有时，你可能会希望采用更加奇特的方式来标记和引用你的公式，你可以通过使用 `\tag{}` 命令来实现，例如：
 
 ```
@@ -504,6 +533,8 @@ $$x+1\over\sqrt{1-x^2} \tag{i}\label{eq_tag}$$
 ```
 
 如果你想要了解更多信息，请访问 [MathJax 关于公式编号的官方文档](https://docs.mathjax.org/en/latest/input/tex/eqnumbers.html)。同时，你也可以阅读 [这篇文档](https://theme-next.org/docs/third-party-services/math-equations) 来获取更多细节信息。
+
+
 
 ## 字体
 

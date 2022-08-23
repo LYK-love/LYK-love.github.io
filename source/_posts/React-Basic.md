@@ -21,6 +21,8 @@ Outline:
 
 * [Full Stack Tutorial -> Web Development](https://fullstackopen.com/en/#course-contents)
 
+* [How do React hooks really work?](https://www.netlify.com/blog/2019/03/11/deep-dive-how-do-react-hooks-really-work/)
+
 React is a declarative, efficient, and flexible JavaScript library for building user interfaces. It lets you compose complex UIs from small and isolated pieces of code called “components”.
 
 # Components

@@ -157,7 +157,6 @@ $$
    c(1) = K_S( \ m(1) \oplus c(0) \ )
    $$
    
-
 3. 对于第$i$组， 发送方计算c(i):
 
    ```
@@ -203,9 +202,10 @@ AES( Advanced Encryption Standard ): 名为“高级加密标准”。由美国�
 
 ## Public Key System
 
-公钥密码体制 的概念是由斯坦福（Stanford）大学的研究人员Diffie与Hellman于1976年提出的［DIFF76］。公钥密码体制使用不同的加密密钥与解密密钥 。
+公钥密码体制: 使用不同的加密密钥与解密密钥 
 
-公钥密码体制提出不久，人们就找到了三种公钥密码体制。目前最著名的是由美国三位科学家Rivest，Shamir和Adleman于1976年提出并在1978年正式发表的RSA体制 ，它是一种基于数论中的大数分解问题的体制［RIVE78］。”
+* 由斯坦福（Stanford）大学的研究人员Diffie与Hellman于1976年提出［DIFF76]. 
+* 最著名的是RSA.
 
 
 
@@ -222,7 +222,7 @@ AES( Advanced Encryption Standard ): 名为“高级加密标准”。由美国�
    c = E_{PK_{B}}(m)
    $$
    
-
+   
    
 
    B用自己的私钥$SK_{B}$通过D运算进行解密，恢复出明文，即
@@ -230,9 +230,8 @@ AES( Advanced Encryption Standard ): 名为“高级加密标准”。由美国�
    m = D_{SK_{B}}(c) = D_{SK_{B}}( \  E_{PK_{B}}(m) \ )
    $$
    
-
    
-
+   
 3. 虽然在计算机上可以容易地产生成对的$PK_{B}$和$SK_{B}$ ，但从已知的$PK_{B}$实际上不可能推导出$SK_{B}$，即从$PK_{B}$到$SK_{B}$是“计算上不可能的 ”。
 
 4. 虽然公钥可用来加密，但却不能用来解密，即
@@ -240,7 +239,6 @@ AES( Advanced Encryption Standard ): 名为“高级加密标准”。由美国�
    D_{ PK_{B} } (E_{PK_{B}}(m)) \ne m
    $$
    
-
 5. 加密和解密算法本质上只是两个互逆的函数，因此可以对换计算顺序:
    $$
    D_{SK_{B}} (E_{PK_{B}}(m)) = E_{SK_{B}}(D_{PK_{B}}(m)) = m.
@@ -251,6 +249,8 @@ AES( Advanced Encryption Standard ): 名为“高级加密标准”。由美国�
 
 
 ### RSA
+
+
 
 ## Cryptographic Hash Functions
 

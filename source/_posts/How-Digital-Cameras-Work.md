@@ -226,14 +226,18 @@ Outline:
 
 这是对3阶近似的一个改进. 依然需要4个点, 设为$x_{-1},x_0, x_1, x_2$, 假设要求$x_0, x_1$的中间点, $x_0, x_1$中间曲线的三阶近似方程为:
 $$
-f(x) = ax^3 + bx^2 + cx + d \newline
-f'(x) = 3ax^2 + 2bx + c \\
-f'(x) = 3ax^2 + 2bx + c 
+\begin{align}
+f(x) = ax^3 + bx^2 + cx + d \nonumber \\
+f'(x) = 3ax^2 + 2bx + c \nonumber \\
+f'(x) = 3ax^2 + 2bx + c \nonumber
+\end{align}
 $$
 我们已经知道了$f(x_0), f(x_1)$, Catmull-Rom Splines要求设3阶方程在$x_0, x_1$处的斜率分别是直线$x_{-1}x_1, x_0x_2$的斜率. 也就是：
 $$
-f'(x_0) = \frac {y_1 - y_{-1}}{2} \newline
-f'(x_1) = \frac {y_2 - y_0}{2}
+\begin{align}
+f'(x_0) = \frac {y_1 - y_{-1}}{2} \nonumber \newline
+f'(x_1) = \frac {y_2 - y_0}{2} \nonumber
+\end{align}
 $$
 
 
