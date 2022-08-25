@@ -1,16 +1,19 @@
 ---
-title: Compilers REGEX to DFA
+title: REGEX, NFA, DFA
 tags: Compilers
 categories: Computer Science
 mathjax: true
 ---
 
-依序介绍Reg、NFA、DFA及其转化
+Outline:
 
-1. Thompson 构造法：正则表达式 RegExp -> 不确定有限状态机 NFA
-2. 子集构造法：不确定有限状态机 NFA -> 确定有限状态机 DFA
-3. 最小化：最小化确定有限状态机 DFA
-4. 验证：DFA 转换为的等价正则表达式并验证等价
+* Def
+* Common REGEX Regulation
+* REGEX -> NFA
+* NFA -> DFA
+* Minimizing DFA
+* DFA -> REGEX
+* Prove DFA <=> REGEX
 
 <!--more-->
 
@@ -27,7 +30,7 @@ mathjax: true
 
 ## NFA
 
-NFA 是一个五元组 A = (Σ, $S$, $s_0$ , δ, F ):
+NFA( 不确定性有限状态机 ) 是一个五元组 A = (Σ, $S$, $s_0$ , δ, F ):
 
 1. 字母表  Σ (ε $\notin$ Σ)
 
@@ -41,7 +44,7 @@ NFA 是一个五元组 A = (Σ, $S$, $s_0$ , δ, F ):
 
 ## DFA
 
-DFA是一个五元组 A = (Σ, $S$, $s_0$ , δ, F ):
+DFA( 确定性有限状态机 )是一个五元组 A = (Σ, $S$, $s_0$ , δ, F ):
 
 1. 字母表 Σ (ε $\notin$ Σ)
 2. 有穷的状态集合 S
@@ -51,20 +54,81 @@ DFA是一个五元组 A = (Σ, $S$, $s_0$ , δ, F ):
 
 * 约定: 所有没有对应出边的字符默认指向一个不存在的 `dead state`
 
+# Common REGEX Regulation
+
+ 大部分语言的正则语法都差不多, 这里以Python中的为例.
+
+## 精确匹配
+
+* `\d`: 匹配一个数字
+  * `'00\d'`可以匹配`'007'`，但无法匹配`'00A'`；
+  * `'\d\d\d'`可以匹配`'010'`；
+* `\w`: 匹配一个字母或数字.
+  * `'\w\w\d'`可以匹配`'py3'`
+* `.`: 匹配任意字符.
+  - `'py.'`可以匹配`'pyc'`、`'pyo'`、`'py!'`...
+
+---
+
+## 匹配变长字符
+
+* `*`: 任意个字符（包括0个).
+* `+`: 至少一个字符
+* `?`: 0个或1个字符.
+* `{n}`: n个字符，用`{n,m}`表示n-m个字符
 
 
-# Thompson 构造法
 
-[引用][https://blog.csdn.net/weixin_44691608/article/details/110195743]
+来看一个复杂的例子：`\d{3}\s+\d{3,8}`。
 
-* Thompson 构造法的基本思想: **按结构归纳**
+我们来从左到右解读一下：
 
-* Thompson 构造法: **按结构归纳**
-  * 对正则定义的每个规则，分别建立一个图的映射，因此所有正则表达式都可以表现为这些子图的组合
+1. `\d{3}`表示匹配3个数字，例如`'010'`；
+2. `\s`可以匹配一个空格（也包括Tab等空白符），所以`\s+`表示至少有一个空格，例如匹配`' '`，`' '`等；
+3. `\d{3,8}`表示3-8个数字，例如`'1234567'`。
 
-# 子集构造法
+综合起来，上面的正则表达式可以匹配以任意个空格隔开的带区号的电话号码。
 
-[引用][https://blog.csdn.net/weixin_44691608/article/details/110213913]
+如果要匹配`'010-12345'`这样的号码呢？由于`'-'`是特殊字符，在大部分语言的正则表达式中，要用`'\'`转义，所以，上面的正则是`\d{3}\-\d{3,8}`。
+
+但是，仍然无法匹配`'010 - 12345'`，因为带有空格。所以我们需要更复杂的匹配方式。
+
+---
+
+## 范围匹配
+
+要做更精确地匹配，可以用`[]`表示范围.
+
+- `[0-9a-zA-Z\_]`: 匹配一个数字, 字母或者下划线
+- `[0-9a-zA-Z\_]+`: 匹配至少由一个数字、字母或者下划线组成的字符串，比如`'a100'`, `'0_Z'`, `'Py3000'`等等
+- `[a-zA-Z\_][0-9a-zA-Z\_]*`: 匹配由字母或下划线开头. 后接任意个由一个数字、字母或者下划线组成的字符串，也就是Python合法的变量；
+- `[a-zA-Z\_][0-9a-zA-Z\_]{0, 19}`: 限制了变量的长度是1-20个字符（前面1个字符+后面最多19个字符）
+
+* `A|B`: 匹配A或B
+  * 所以`(P|p)ython`可以匹配`'Python'`或者`'python'`
+
+* `^`: 行的开头
+  * `^\d`表示必须以数字开头.
+
+* `$`表示行的结束
+  *  `\d$`表示必须以数字结束.
+  * 你可能注意到了, `py`也可以匹配`'python'`, 但是加上`^py$`就变成了整行匹配, 就只能匹配`'py'`了.
+
+
+
+# REGEX -> NFA
+
+[ref](https://blog.csdn.net/weixin_44691608/article/details/110195743)
+
+使用Thompson 构造法, 基本思想是 **按结构归纳**
+
+* 对正则定义的每个规则，分别建立一个图的映射，因此所有正则表达式都可以表现为这些子图的组合
+
+# NFA -> DFA
+
+用子集构造法
+
+[ref](https://blog.csdn.net/weixin_44691608/article/details/110213913)
 
 ```c
 Subset-Construction(NFA)
@@ -88,9 +152,9 @@ Subset-Construction(NFA)
 
 
 
-# 最小化DFA
+# Minimizing DFA
 
-[引用][https://blog.csdn.net/weixin_44691608/article/details/110440659]
+[ref](https://blog.csdn.net/weixin_44691608/article/details/110440659)
 
 ```C
 Min-DFA(Dtran)
@@ -112,11 +176,11 @@ Min-DFA(Dtran)
 
   若对于组内所有状态，对于所有输入都有相同的输出状态，则称该组`不可再被划分`。
 
-# 验证DFA
+# Prove DFA <=> REGEX
 
-[引用][https://blog.csdn.net/weixin_44691608/article/details/110440659]
+验证DFA和其转化出的REGEX的等价性, 使用Kleene闭包
 
-验证DFA与原来的正则是否等价，使用Kleene闭包
+[ref](https://blog.csdn.net/weixin_44691608/article/details/110440659)
 
 * 符号归约：
 
