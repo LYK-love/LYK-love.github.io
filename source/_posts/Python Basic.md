@@ -8,7 +8,6 @@ Outline:
 
 * Basic
 * Basic Data Types
-* Container Data Types
 * Function
 * Advanced Features
 * OOP
@@ -20,7 +19,23 @@ Outline:
 
 ref: [廖雪峰的教程](https://www.liaoxuefeng.com/wiki/1016959663602400)
 
-# Basic Data Types
+# Data Types
+
+Python3 中有六个标准的数据类型：
+
+- Number（数字）
+- String（字符串）, Python中没有字符类型
+- List（列表）
+- Tuple（元组）
+- Set（集合）
+- Dictionary（字典）
+
+
+
+Python3 的六个标准数据类型中：
+
+- 不可变数据类型：Number, String, Tuple
+- 可变数据类型：List, Dictionary, Set
 
 ## string 
 
@@ -36,7 +51,30 @@ x = b'ABC'
 
 要注意区分`'ABC'`和`b'ABC'`，前者是`str`，后者虽然内容显示得和前者一样，但`bytes`的每个字符都只占用一个字节。
 
+### 编码
 
+* char -> ascii int: `ord()`
+
+* ascii int -> char: `char()`
+
+* str -> ascii:
+
+  ```python
+  text = input("enter a string to convert into ascii values:")
+  ascii_values = []
+  for character in text:
+      ascii_values.append(ord(character))
+  ```
+
+  Or: 列表生成式
+
+  ```python
+  def to_ascii(text):
+      ascii_values = [ord(character) for character in text] 
+      return ascii_values
+  ```
+
+  
 
 
 
@@ -62,7 +100,11 @@ x = b'ABC'
 'Hello, 小明, 成绩提升了 17.1%'
 ```
 
-## int
+## Number
+
+Python3 Number类型的子类型有: int, float, bool, complex( 复数 )
+
+### int
 
 Python不存在整数溢出, 如果数字过大就会自动转换成大整数类型计算. 非常方便
 
@@ -70,9 +112,17 @@ Python不存在整数溢出, 如果数字过大就会自动转换成大整数类
 
 十六进制: `hex()`: 这个函数会把int转成它的十六进制表示, 类型是str
 
-# Container Data Types
+### float
 
-## list
+### bool
+
+### complex
+
+
+
+
+
+## List
 
 * 反转列表:
 
@@ -94,6 +144,12 @@ Python不存在整数溢出, 如果数字过大就会自动转换成大整数类
   ''.join(list, ' ')
   ```
 
+## Tuple
+
+## Set
+
+## Dictionary
+
 
 
 ## Operators
@@ -102,7 +158,7 @@ Python不存在整数溢出, 如果数字过大就会自动转换成大整数类
 
   * `pow(a,n)`: 求a的n次幂, 如果a和n都是int,则返回int
 
-  * `math.pow(a,n)`: 求a的n次幂, 但是会把参数转成浮点数. 这意味着如果数字太大, 运算必定会出错
+  * `math.pow(a,n)`: 求a的n次幂, 但是会把参数转成浮点数进行运算, 浮点运算是会出错的. 对于比较大的数字, 肯定会出错, 所以不要用`math.pow()`
 
     ```
     >>> import math
@@ -1838,33 +1894,6 @@ True
 >>> fn() # 调用fn()与调用obj.power()是一样的
 81
 ```
-
-### 小结
-
-通过内置的一系列函数，我们可以对任意一个Python对象进行剖析，拿到其内部的数据。要注意的是，只有在不知道对象信息的时候，我们才会去获取对象信息。如果可以直接写：
-
-```
-sum = obj.x + obj.y
-```
-
-就不要写：
-
-```
-sum = getattr(obj, 'x') + getattr(obj, 'y')
-```
-
-一个正确的用法的例子如下：
-
-```
-def readImage(fp):
-    if hasattr(fp, 'read'):
-        return readData(fp)
-    return None
-```
-
-假设我们希望从文件流fp中读取图像，我们首先要判断该fp对象是否存在read方法，如果存在，则该对象是一个流，如果不存在，则无法读取。`hasattr()`就派上了用场。
-
-请注意，在Python这类动态语言中，根据鸭子类型，有`read()`方法，不代表该fp对象就是一个文件流，它也可能是网络流，也可能是内存中的一个字节流，但只要`read()`方法返回的是有效的图像数据，就不影响读取图像的功能。
 
 ## 实例属性和类属性
 

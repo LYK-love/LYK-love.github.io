@@ -30,7 +30,7 @@ Outline:
 
 * 进程三状态图：
 
-  ![Thread Status](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/Thread Status.png)
+  ![Thread Status](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Thread%20Status.png)
 
   
 
@@ -189,8 +189,7 @@ hello, I am parent of 7634 (wc: 7634) (pid: 7615)
 
 ## 插叙 Shell
 
-* `fork()`和`exec()`分离，使得程序可以在`fork()`之后，`exec()`之前运行代码
-* 
+* `fork()`和`exec()`分离, 使得程序可以在`fork()`之后, `exec()`之前运行代码.
 
 ## Limited directed execution
 
@@ -219,7 +218,7 @@ OS首先（在启动时）设置`trap table`并开启时钟中断 （都是特�
 
 ## 插叙 中断
 
-![Interruption](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/Interruption.png)
+![Interruption](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Interruption.png)
 
 > 在指令执行周期最后增加一个微操作，以响应中断，CPU在完成执行阶段后，如果允许中断，则进入中断阶段
 
@@ -282,9 +281,9 @@ OS首先（在启动时）设置`trap table`并开启时钟中断 （都是特�
 
 
 
-示例：该地址空间内分为代码、堆、栈三段，然后映射到物理内存
+示例：该地址空间内分为代码, 堆, 栈三段, 然后映射到物理内存
 
-![Segmentation](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/Segmentation.png)
+![Segmentation](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Segmentation.png)
 
 * 假设要引用虚拟地址100（在代码段中），MMU将代码段基址加上偏移量（100）得到实际的地址100 + 32KB = 32868
 * 假设要引用虚拟地址4200（在堆中），因为堆在虚拟地址4K开始，那么物理地址中的偏移量其实是4200 - 4K, 所以物理地址应该是 4200 - 4K + 34KB
@@ -355,11 +354,11 @@ typedef struct node_t
 
 空闲列表就是一个链表，每个节点都记录了一块没有被分配的空间，假设有下面的 30 字节的堆:
 
-![free list heap](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/free list heap.png)
+![free list heap](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20heap.png)
 
 这个堆对应的空闲列表会有两个元素，一个描述第一个 10 字节的空闲区域(字节 0~9)， 一个描述另一个空闲区域(字节 20~29):
 
-![free list 1](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/free list 1.png)
+![free list 1](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%201.png)
 
 很明显，任何大于 10 字节的分配请求都会失败(返回 NULL)，因为 没有足够的连续可用空间。 如果是小于10B的请求，那么就从列表的某个节点（比如第二个）中分割一块内存
 
@@ -367,13 +366,13 @@ typedef struct node_t
 
 但是，对于这个(小)堆，如果应用程序调用 free(10)，归还堆中间的空间，空闲列表会变成：
 
-![free list 2](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/free list 2.png)
+![free list 2](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%202.png)
 
 
 
 尽管整个堆现在完全空闲，但它似乎被分割成了 3 个 10 字节的区域。这时， 如果用户请求 20 字节的空间，简单遍历空闲列表会找不到这样的空闲块，因此返回失败. 为此，空闲列表应该能自动**合并**：
 
-![free list 3](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/free list 3.png)
+![free list 3](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%203.png)
 
 
 
@@ -429,7 +428,7 @@ head -> next = NULL;
 * head 指针指向这块区域的起始地址， 假设**位于16KB**(尽管任何虚拟地址都可以)。堆看起来如图 17.3 所示
 * 假设有一个 100 字节的内存请求。为了满足这个请求，库首先要找到一个足够大小的块。因为目前只有一个 4088 字节的块，所以选中这个块。然后，这个块被分割(split) 为两块:一块足够满足请求(以及头块，如前所述)，一块是剩余的空闲块。假设记录头块为 8 个字节(一个整数记录大小，一个整数记录幻数)，堆中的空间如图 17.4 所示
 
-![free list implementation 1](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/free list implementation 1.png)
+![free list implementation 1](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20implementation%201.png)
 
 
 
@@ -443,7 +442,7 @@ head -> next = NULL;
 
 如果用户程序通过 `free(ptr)`归还一些内存，那无非是让head指向`ptr - 8`,读取8字节的头块，得到要释放的内存信息，然后释放头块+紧跟的内存块：
 
-![free list implementation 2](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/free list implementation 2.png)
+![free list implementation 2](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20implementation%202.png)
 
 * 这个堆堆起始地址是16KB
 * 假设要`free(16500)`（ 即16384( 16KB ) + 前一块的108 ），也就是图上的`sptr`指针, 则令head指向sptr前的头块，得到sptr（开头的）内存块的信息，然后删除头块和sptr内存块
@@ -479,7 +478,7 @@ PTEAddr = PageTableBaseRegister + (VPN + sizeof(PTE));
 
 对于一个虚拟地址，它由两部分组成： VPN + 业内偏移。 只要查询页表，找到PTE（VPN就是PTE的下标），读取PTE，将VPN转换为PFN，再加上业内偏移，就得到了物理地址：
 
-![virtual address to physical address](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/virtual address to physical address.png)
+![virtual address to physical address](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/virtual%20address%20to%20physical%20address.png)
 
 
 
@@ -559,7 +558,7 @@ else
 
 用地址空间的前两位表示段号。假设 00 是未使用的段，01 是代 码段，10 是堆段，11 是栈段。因此，虚拟地址如下所示:
 
-![segment plus page](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/segment plus page.png)
+![segment plus page](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/segment%20plus%20page.png)
 
 当进程正在运行时，每个段的基址寄存器都包含该段的线性页表的物理地址。因此，系统中的每个进程现在都有 3 个与其关联的页表。在上下文切换时，必须更改这些寄存器，以反映新运行进程的页表的位置。
 
@@ -595,7 +594,7 @@ AddressOfPTE = Base[SN] + (VPN * sizeof(PTE))
 
 示例，假设一个 4 页的物理内存和一个 8 页的交换空间。3 个进程(进程 0、进程 1 和进程 2)主动共享物理内存。但 3 个中的每一个， 都只有一部分有效页在内存中，剩下的在硬盘的交换空间中。第 4 个进程(进程 3)的所有页都被交换到硬盘上，很明显它目前没有运行。有一块交换空间是空闲的。可以看出，使用交换空间让系统假装内存比实际物理内存更大：
 
-![swap space](/Users/lyk/Documents/HexoPics/OS Basic/OS Virtualization/swap space.png)
+![swap space](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/swap%20space.png)
 
 ### page fault
 

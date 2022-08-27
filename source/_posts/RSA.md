@@ -164,9 +164,15 @@ $$
    m \equiv c^d \pmod n
    $$
 
-c = 97^(3) mod 15 = 13
 
-m = 13^3 mod 15 = 7
+
+注意到加密函数$E_{(n,e)}(m)  \equiv m^e \pmod n $,  解密函数$D_{(n,d)}(c)  \equiv m^d \pmod n $, 它们其实是一个函数在形式上都是:
+$$
+f(m, n, e) \equiv m^e \pmod n
+$$
+
+
+只是加密和解密时接受的参数不同. 
 
 ## Example
 

@@ -7,13 +7,17 @@ date: 2022-02-10 14:57:00
 
 useful encryption tool
 
-ref: [阮一峰的教程](https://ruanyifeng.com/blog/2013/07/gpg.html)
-
 <!--more-->
 
-# history
+# Intro
 
-1991年，程序员[Phil Zimmermann](https://en.wikipedia.org/wiki/Phil_Zimmermann)为了避开政府监视，开发了加密软件PGP。这个软件非常好用，迅速流传开来，成了许多程序员的必备工具。但是，它是商业软件，不能自由使用。所以，自由软件基金会决定，开发一个PGP的替代品，取名为GnuPG。这就是GPG的由来
+ **Pretty Good Privacy (PGP)** is a nice example of an e-mail encryption scheme written by Phil Zimmermann in 1991 [PGP 2020]. Depending on the version, the PGP soft- ware uses MD5 or SHA for calculating the message digest; CAST, triple-DES, or IDEA for symmetric key encryption; and RSA for the public key encryption.
+
+不过PGP是商用软件, 因此自由软件基金会( FSF )开发了PGP的替代品GnuPG, 也就是GPG. 这两个软件事实上差不多, 我们接下来介绍GPG.
+
+
+
+GPG( or PGP )的实现原理参见拙著[Security in Internet](https://lyk-love.cn/2022/08/28/Security-in-Internet/) --> Application Layer: Securing E-Mail
 
 # install
 
