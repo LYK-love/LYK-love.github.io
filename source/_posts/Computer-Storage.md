@@ -28,14 +28,14 @@ Outline:
 
 * CPU registers: 也就是CPU的 *register file*， 对它的访问没有延迟
 * cache memory: 有L1，L2， L3 ...，差别是timing 。访问L1没有延迟，访问L2有1-2个时钟周期的延迟
-* main memory: 主存， the work house of memory system,也被称为RAM。 （当然更精确的说法是DRAM）
+* main memory: 主存, the work house of memory system, 也被称为RAM.（当然更精确的说法是DRAM）
 * disk: 硬盘，是一种外部存储设备，最慢
 
 越上层速度越快，价格越贵，其容量也就越小
 
 
 
-还有一种*虚拟内存*，这是进程视角下的内存， 包含了主存和一部分从硬盘中置换出来的存储空间, 由**MMU**( Memory Management Unit )完成。总之，虚拟内存是一个抽象的内存概念，和现实的存储结构没有关系。
+还有*虚拟内存* , 这是进程视角下的内存， 包含了主存和一部分从硬盘中置换出来的存储空间, 由**MMU**( Memory Management Unit )完成。总之，虚拟内存是一个抽象的内存概念，和现实的存储结构没有关系。
 
 ## Cache
 
@@ -103,11 +103,23 @@ RAM（ random access memory ）： 是volatile（易失性）的存储材料， 
 
 RAM分为两类：
 
-* SRAM: Static RAM， 更快更贵，一般用作Cache
+* SRAM( Static RAM ):  “静态”是指只要不掉电, 存储在SRAM中的数据就不会丢失
+  * 更快更贵，一般用作Cache
 
-- DRAM: Dynamic RAMS， 比SRAM慢，也更便宜，一般用作主存和显存
+- DRAM( Dynamic RAM ): 在通电时还需要进行周期性的刷新操作, 才能保证数据不丢失
+  * 比SRAM慢，也更便宜，一般用作主存和显存
 
+---
 
+下图总结了SRAM和DRAM的区别： 
+
+![Characteristics of DRAM and SRAM memory](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/Characteristics%20of%20DRAM%20and%20SRAM%20memory.png)
+
+* SRAM的存取比DRAM快
+* SRAM对干扰不敏感
+* SRAM每单元使用更多晶体管，密集度低，比DRAM更贵，功耗更大
+
+---
 
 我们规定RAM芯片的基本存储单位是bit，对应的物理结构称为cell
 
@@ -126,19 +138,17 @@ SRAM 将每个bit存储在一个 *bistable* ( 双稳态 )的cell里。每个cell
 
 上图其实有个地方应该是有偏差的，也就是中间那个状态。原则上来说，当左右两边的作用力相同时，钟摆在垂直的时候也能无限期地保持平衡，但是当左右两边稍微发生一点扰动，这个状态就会变成左稳态或右稳态之一。而且一旦倒下，便不会有机会再站起来。我们称这个状态为亚稳态。
 
-因为SRAM有双稳态的特性，**只要有电，它就会永远的保持它的值**。**即使有干扰来扰乱电压**，当干扰时，电路就会恢复到稳定值。但是没有电的话，双稳态的状态就不能保持了，意味着数据也就丢失了。这就是我们常说，电脑断电后内存数据就会丢失的原因。
+因为SRAM有双稳态的特性，**只要有电，它就会永远的保持它的值, 即使有干扰来扰乱电压, 当干扰时, 电路就会恢复到稳定值.**  
+
+* 也就是说SRAM在通电时不需要刷新就能保存数据
+
+但没有电的话, 双稳态的状态就不能保持了, 意味着数据也就丢失了. 这就是我们常说, 电脑断电后内存数据就会丢失的原因.
 
 ### DRAM
 
-DRAM将每个位存储为对一个电容的充电。DRAM可以制造得非常密集——每个单元由一个电容和一个访问晶体管组成。但是与SRAM不同的是，DRAM存储器的单元对干扰非常敏感。当电容的电压被扰乱之后，它就永远不会恢复了。
+DRAM将每个位存储为对一个电容的充电。DRAM可以制造得非常密集——每个单元由一个电容和一个访问晶体管组成。但是与SRAM不同的是，DRAM存储器的单元对干扰非常敏感.当电容的电压被扰乱之后，它就永远不会恢复了.
 
-下图总结了SRAM和DRAM的区别： 
-
-![Characteristics of DRAM and SRAM memory](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/Characteristics%20of%20DRAM%20and%20SRAM%20memory.png)
-
-* SRAM的存取比DRAM快
-* SRAM对干扰不敏感
-* SRAM每单元使用更多晶体管，密集度低，比DRAM更贵，功耗更大
+* DRAM加电时需要不断刷新, 才能保存数据
 
 #### DRAM Structure
 
@@ -231,14 +241,15 @@ DRAM芯片通过pin来进行信息传输，上图给出了两组pin：
 
 ### SDRAM
 
-* *Synchronous DRAM (SDRAM)*： 传统DRAM， FPM DRAM， EDO DRAM都是以异步方式进行I/O的(使用RAS和CAS两个独立的信号)。 而SDRAM的I/O都在系统时钟的上升沿执行，这使得它可以同步地存取数据。 简言之，SDRAM比传统DRAM快很多
-* SDRAM的材质分为双极性与CMOS。
-* **主板上就用了一个CMOS硬件来记录时间和硬件配置参数**，比如该从哪个盘启动。该硬件很悲催，没有自己的名字，我们就称为CMOS。 CMOS里自带一个小电池，因此虽然是易失性的，断了电也能工作
+* *Synchronous DRAM (SDRAM)*： 传统DRAM, FPM DRAM, EDO DRAM都是以异步方式进行I/O的( 使用RAS和CAS两个独立的信号 ). 而SDRAM的I/O都在系统时钟的上升沿执行，这使得它可以同步地存取数据. 简言之，SDRAM比传统DRAM快很多
+* SDRAM的材质分为双极性与CMOS( Complementary Metal Oxide Semiconductor, 互补金属氧化物半导体 )
+  * CMOS还被用于在数字影像领域. 市面上常见的数码产品, 其感光元件主要就是CCD或者CMOS, 尤其是低端摄像头产品, 而通常高端摄像头都是CCD感光元件.
+* **主板上就用了一个CMOS芯片来记录时间和硬件配置参数**，比如该从哪个盘启动. 该硬件很悲催，没有自己的名字，我们就称为CMOS. CMOS里自带一个小电池, 因此虽然是易失性的，断了电也能工作
 
 ### DDR SDRAM
 
-* *Double Data-Rate Synchronous DRAM (DDR SDRAM)*：DDR SDRAM是SDRAM的增强版，在上升/下降沿都执行I/O
-* 随着 *prefetch buffer*( 预取缓冲区，决定了有效带宽 ) 的大小，DDR已经分为DDR (2 bits), DDR2 (4 bits), DDR3 (8 bits), DDR4(  ) and  DDR5( 16 bits )
+* *Double Data-Rate Synchronous DRAM (DDR SDRAM)*：双通道DDR SDRAM, 是SDRAM的增强版, 在上升/下降沿都执行I/O
+* 随着 *prefetch buffer* ( 预取缓冲区，决定了有效带宽 ) 的增大，DDR已经分为DDR (2 bits), DDR2 (4 bits), DDR3 (8 bits), DDR4(  ) and  DDR5( 16 bits )
   * 注意， DDR4的prefetch和3一样，都是8 bit，但是DDR4提高了核心频率，所以总线速度得以提高
   * DDR的"Double Data-Rate"指的是会在系统时钟的**上升和下降沿都执行I/O**，并不意味着DDR的速度是SDRAM的两倍。 事实上，随着DDR技术的进步，速度差距是越来越大的。
 

@@ -28,7 +28,9 @@ Outline:
 
 感光元件的材料有CCD (charge coupled device), and CMOS (complementary metal oxide semiconductor )
 
+* CMOS作为一种SDRAM,也被用于计算机领域,参见[Computer Storage](https://lyk-love.cn/2022/08/01/Computer-Storage/?highlight=stora)
 
+---
 
 * 对于显示屏来说, 每个像素(感光元件)都是由三个红, 绿, 蓝的单色子像素(子感光元件)组成的. 
 

@@ -29,18 +29,17 @@ Outline:
 网络安全有四大目标:
 
 * *Confidentiality*：只有信息的发送方和接收方才知道信息的内容
-* *Message integrity*：报文完整性. 信息接收方需要确认所收到的信息**没有被人篡改**过.
-  * Message integrity一方面要确保报文完整性报文鉴别, 即对每一个收到的报文都要鉴别报文的发送者
-* *Authentication*: 鉴别. 信息接收方要确保所通信的对象确实是他声明的实体. 鉴别分为两种:
-  * *Message Authentication*: 报文鉴别. 对每一个收到的报文都要鉴别报文的发送者
-    * 很多书( 谢希仁, 自顶而下... 都把报文鉴别也放到 *Message integrity* 的范畴, 我觉得这样会引起混淆. 因此我用自己的分类方式 )
+* *Message integrity*：信息接收方需要确认所收到的信息**没有被人篡改**过.
+* *Authentication*: 鉴别分为两种:
+  * *Message Authentication*: 对报文的鉴别, 即报文是不是对方发的, 是不是别人伪造的
+    * 很多书( 谢希仁, 自顶而下... ) 都把报文鉴别也放到 *Message integrity* 的范畴, 我觉得这样会引起混淆. 因此我用自己的分类方式.
     * 事实上, **实现报文鉴别的方法, 也都实现了报文完整性, 因此我不会单独介绍*Message integrity*和*Message Authentication*, 而是直接介绍实现了这两个特性的方法**: 
       1. **数字签名**
       2. **报文摘要**
-  * *End-point authentication* or *Entity authenticatio*：端点鉴别/实体鉴别. 在整个通信过程内, 对对方只鉴别一次. 
-    * 由于通信是双向的, 所以实体鉴别也是双向的. 报文鉴别只需要单向.
-    * 这里的“实体”鉴别指的是对通信实体, 报文鉴别不包括在内.
-* *Operational security*: 需要确保网络的运行时安全。 几乎所有组织的网络最终都是连到互联网的，所以网络很容易受到攻击。
+  * *End-point authentication* or *Entity authenticatio*: 对所通信的对象的鉴别
+  *  报文鉴别是对每一个报文的, 而实体鉴别是对于通信实体的. 因此实体鉴别只需在通信开始时实行一次.
+    * 一般来说, 实体鉴别是双向的. 
+* *Operational security*: 几乎所有组织的网络最终都是连到互联网的，所以网络很容易受到攻击, 需要确保网络的运行时安全.
 
 ## Problems
 
@@ -66,9 +65,7 @@ Outline:
 
 * *cryptography*: 密码编码学，是密码体制的设计学
   * 加密算法也称为*cypher*
-
 * *cryptanalysis*: 密码分析学，是在未知密钥的情况下从密文推演出明文或密钥的技术
-
 * *cryptology*：密码学， 密码编码学+密码分析学
 
 ---
@@ -114,7 +111,8 @@ $$
 
 * 对称加密系统( symmetric key system ):  $K_A = K_B$ ， 且两个密钥都是保密的.
 * 非对称加密系统( 也称为公钥加密系统 , public key system):  $K_A \ne K_B$ ， 且密钥分为公钥( public key )和私钥( private key ),  公钥对全世界公开， 而私钥只有通信的一方知道.
-  * 非对称加密一般更慢.
+  * 已有的非对称加密算法( RSA等 )相比已有的对称加密算法( DES, AES )都慢得多. 因此很多低时延场景都使用对称加密.  
+    * 比如后文介绍的WIFI网络, 无论是交换密钥还是数据传输都使用对称加密.
 
 
 
@@ -133,9 +131,9 @@ $$
 
 我们先来看看古代的对称加密系统：
 
-* 凯撒加密（ Caesar cipher ）： 选择数字k，把英文文本的每个字母替换成其在字母表上后面第k位的字母
+* 凯撒加密（ Caesar cipher ）： 选择数字k, 把英文文本的每个字母替换成其在字母表上后面第k位的字母
   * 很容易破解
-* 单字母加密( monoalphabetic cipher ): 使用一张明文字母 - 密文字母的映射表，将明文按表加密
+* 单字母加密( monoalphabetic cipher ): 使用一张明文字母 <--> 密文字母的映射表，将明文按表加密
 * 多字母加密( polyalphabetic encryption ): 对明文的每个字母，先后使用多个映射表加密
 
 
@@ -333,17 +331,19 @@ Steps:
 Message Digest实现了报文完整性和报文鉴别, Message Digest通过报文鉴别码MAC实现.
 
 * NB: 局域网中使用的媒体接入控制MAC也是使用这三个字母, 因此在看到MAC时应注意上下文.
-* 报文鉴别码MAC和数字签名的最大区别就是, 数字签名需要对整个报文进行加密, 而MAC只需要对报文的Hash $H$ 进行加密. 而 $H$ 一般远小于整个报文, 因此MAC消耗的资源更少. 当然MAC存在哈希碰撞的问题, 所以可以理解为 MAC 比数字签名“轻”一点, 但是安全性弱一点.
+* **报文鉴别码MAC和数字签名的最大区别**: 数字签名需要对整个报文进行加密, 而MAC只需要对报文的Hash $H$ 进行加密. 而 $H$ 一般远小于整个报文, 因此MAC消耗的资源更少. 当然MAC存在哈希碰撞的问题, 所以可以理解为 MAC 比数字签名“轻”一点, 但是安全性弱一点.
 
-
+## Negative Example
 
 先来看一个反例. 下面给出的简单步骤, 看起来似乎可以实现报文的完整性和报文鉴别:
 
-1. 用户A首先根据自己的明文 $X$计算出散列$H ( X )$（例如，使用MD5）。为方便起见，我们把得出的散列$H ( X )$记为$H$ 。
+1. 用户A首先根据自己的明文 $X$计算出散列 $H ( X )$ ( 例如,使用MD5 ). 为方便起见, 我们把得出的散列$H ( X )$记为$H$ .
 2. 用户A把散列$H$拼接在明文 $X$ 的后面，生成了扩展的报文$(X,H)$, 然后发送给B.
 3. 用户B收到了这个扩展的报文$(X,H)$. 因为散列的长度$H$是早已知道的固定值, 因此可以把收到的散列$H$和明文$X$分离开. B通过散列函数的运算, 计算出收到的明文$X$ 的散列$H ( X )$. 若$H ( X ) = H$, 则B似乎可以相信所收到的明文是A发送过来的.
 
 像上面列举的做法，实际上是**不可行**的 . 设想某个入侵者创建了一个伪造的报文$M$ ，然后也同样地计算出其散列$H ( M )$ , 并且冒充A把拼接有散列的扩展报文发送给B. B收到扩展的报文$(M,H(M))$后，按照上面步骤 (3) 的方法进行验证, 发现一切都是正常的, 就会误认为所收到的伪造报文就是A发送的. 
+
+## Message Authentication Code
 
 解决上面问题的办法并不复杂，就是对散列进行一次加密( 对称和非对称都可以 ):
 
@@ -351,18 +351,18 @@ Message Digest实现了报文完整性和报文鉴别, Message Digest通过报�
 
 
 
-在A从报文$X$导出散列$H$后，就对散列$H$用密钥 $K$ 加密。这样得出的结果叫做**报文鉴别码 MAC**（Message Authentication Code )
+1. 在A从报文$X$导出散列$H$后，就对散列$H$用密钥 $K$ 加密. 这样得出的结果叫做**报文鉴别码 MAC**（Message Authentication Code )
+   * 现在已经有了好几个不同的MAC标准，而使用最广泛的就是HMAC，它可以和MD5或SHA一起使用［RFC 2104, 6151].
+2. A把已加密的报文鉴别码MAC拼接在报文 $X$ 的后面，得到扩展的报文，发送给B.
+3. B收到后把MAC与报文 $X$ 分离出来, 然后用密钥对MAC解密, 得到加密前的散列$H$, 再计算出$X$的散列$H ( X )$, 将$H ( X )$  与 $H$比较. 由于入侵者无法对MAC解密. 
 
-* 现在已经有了好几个不同的MAC标准，而使用最广泛的就是HMAC，它可以和MD5或SHA一起使用［RFC 2104, 6151].
+   * NB: 该这里为了节约计算资源, 没有加密 $X + H$ , 只加密了 $H$ .  $H$ 大小一般远小于 $X$ .
 
+## Usage
 
+在链路层, 大量交换机需要交换报文, 为了实现报文完整性和报文鉴别, 且保证通信速度( Digital Signature太慢了 ), 一般都用Message Digest. 
 
-A把已加密的报文鉴别码MAC拼接在报文 $X$ 的后面，得到扩展的报文，发送给B.
-
-B收到后把MAC与报文 $X$ 分离出来, 然后用密钥对MAC解密, 得到加密前的散列$H$, 再计算出$X$的散列$H ( X )$, 将$H ( X )$  与 $H$比较. 由于入侵者无法对MAC解密. 
-
-* NB: 该方法不会加密整个报文, 只加密$H$, 由于$H$的位数一般远小于整个报文, 这样做节约了计算资源.
-* 例如, 在链路层, 大量交换机需要交换报文, 为了保证报文完整性, 一般都要用这种方法. 既然该方法用到了加密, 就需要密钥分配, 对于链路层这样庞大的系统, 当然不可能手动分配, 一般我们用KAE来自动化密钥分配.
+* Message Digest 使用了加密算法, 也就需要密钥分配, 详见后文*Key Distribution* 
 
 # End-point Authentication 
 
@@ -392,7 +392,7 @@ or Entity Authentication
   1. 入侵者C可以从网络上截获A发给B的报文, C并不需要破译这个报文 ( 因为这可能得花很长时间 ）, 而是直接把这个由A加密的报文发送给B, 使B误认为C就是A. 
   2. 完成“实体鉴别后”, C就和B开始通信, B会向伪装成A的C发送许多本来应当发给A的报文.
 
-* 重放攻击的关键在于, B无不知道他所受到的报文是来自A的, 还是来自攻击者C的playback. 导致B将这些报文视作属于同一个会话的.
+* 重放攻击的关键在于, B不知道他所受到的报文是来自A的, 还是来自攻击者C的playback. 导致B将这些报文视作属于同一个会话的.
 
 * 这个问题和TCP连接时的三报文握手是一样的: 当server遇到一个 SYN segment 时, 它如何判断这个segment是否属于这次连接? 毕竟它也可能属于上一次连接. 
 
@@ -404,9 +404,9 @@ or Entity Authentication
   
     
 
+### nounce
 
-
-在实体鉴别时采用**nonce**( 不重数 )来维护一个“鉴别会话”. 不重数就是一种`seq`, 在每次“鉴别会话”都不相同.. 因此, B和A的鉴别会话, 与B和重放者C的鉴别会话, 拥有不同的nounce, 也就**被视作两个会话**, B不会把A和C混淆.
+在实体鉴别时采用**nonce**( 不重数 )来维护一个“鉴别会话”. nounce就是一种`seq`, 不同连接的nounce的取值范围不相同. 因此, B和A的鉴别会话, 与B和重放者C的鉴别会话, 拥有不同的nounce, 也就**被视作两个会话**, B不会把A和C混淆.
 
 当然, 为了保证鉴别会话的报文不被篡改, 还需要报文加密. 下图给出了采用对称加密的鉴别会话过程:
 
@@ -428,7 +428,7 @@ or Entity Authentication
 
 
 
-对称加密,需要通信双方共享密钥. 为了省去这个麻烦, 似乎可以用非对称加密:
+对称加密需要通信双方共享密钥. 为了省去这个麻烦, 似乎可以用非对称加密:
 
 * 在前面的例子中, B可以用其私钥对不重数 $R_A$ 进行签名后发回给A. A用B的公钥核实签名, 如能得出自己原来发送的不重数 $R_A$ , 就核实了和自己通信的对方的确是B. 同样, A也用自己的私钥对不重数R B 进行签名后发送给B. B用A的公钥核实签名, 鉴别了A的身份.
 
@@ -463,7 +463,8 @@ or Entity Authentication
 密钥分配也是网络安全的重要问题. 
 
 * 对于对称加密, 常见问题是对称密钥的分配很麻烦. 需要一个设施来进行自动化的密钥分配.
-* 对于非对称加密, 常见问题是:**声称拥有某人密钥的人, 在现实中并不是某人** , 这也是**中间人攻击成功的原因**. 其实这是一个网络-现实中的实体鉴别问题. 
+* 对于非对称加密, 常见问题是**声称拥有某人密钥的人, 在现实中并不是某人** , 这也是**中间人攻击成功的原因**. 其实这是一个网络-现实中的实体鉴别问题. 
+  * 由于公钥是公开的, 因此非对称加密的密钥的分配效率不是问题吗不需要“让通信双方共享密钥”. 
   * 实体鉴别只能对通信方在网络上的身份进行鉴别. , 但是,网络上的身份不一定就是现实中的身份, 比如, Trudy声称自己是Bob, 然后使用自己的私钥和Alice通信. 在Alice看来, 一切都是正常的, 实体鉴别也通过了. 问题在她鉴别的“Bob”身份只是网络上的, 在现实中, 这个人是Trudy.  Alice使用了所谓的Bob的密钥, 其实她使用的一直都是Trudy的. 
   * 因此需要有一个机构来在现实中进行鉴别, 建立网络 - 现实身份的映射
 
@@ -484,7 +485,7 @@ or Entity Authentication
 
 1. 每个实体需要持有CA发的证书
 2. 任何人想要获取该实体的公钥, 只需从CA处获取该实体的证书( 或者让该实体自己提供证书也行 ). 这样就能确保对方真的是现实中的那个人.
-   * 比如说, 如果我用了数字签名, 你就可以拿我证书上的公钥和我的公钥比对一下, 这样就能确保我的身份,
+   * 例如, 如果我用了数字签名, 他人就可以拿我证书上的公钥和我的公钥比对, 确保我网络上的身份和我现实中的身份一致.
 
 
 
@@ -515,7 +516,7 @@ We can identify four distinct phases to the process of mutual authentication and
 1. *Discovery.* AP广播其存在, 然后mobile device与其通信. 此时还没有经过鉴别, 也没有生成链路层frame加密的密钥.
 2. *Mutual authentication and shared symmetric key derivation.* : 详细过程在下面的*Mutual Authentication and Shared Symmetric Session Key Derivation*介绍
    1. 为了方便, mobile device都会和AS共享一个密钥( e.g. WIFI密码 )用于鉴别时加密, 双方通过这个密钥, nounce( 避免playback attack )和cryptographic hashing( 报文鉴别, 报文完整性 )来进行双向的实体鉴别. 
-   2. 并且会生成一个对称( 如前所述, 我们一般用对称加密 )的session key, 用于**加密mobile device和AP间传输的链路层frame**.
+   2. 并且会生成一个symmentric session key( ( 如前所述, 我们一般用对称加密 ), 用于**加密mobile device和AP间传输的链路层frame**.
       * 一般而言,对称加密算法是AES
 3. *Shared symmetric session key distribution.* 步骤二中, mobile device和AS都拥有了session key, 此时还需要把session key也传输给AP. ( 不然mobile device和AP通信怎么加密呢.... )
 4. *Encrypted communication between mobile device and a remote host **via the AP**.*
@@ -600,7 +601,7 @@ We can identify four distinct phases to the process of mutual authentication and
 
 ### Changes in 5G
 
-1. 5G的鉴别和加密协议是AKA' , 它继承了4G的AKA 此外, 5G还采用了WIFI中的EAP, 因此报文格式和4G的不同. 并且5G还新增了一个协议用于IoT场景, 该协议不需要$K_{HSS-M}$
+1. 5G的鉴别和加密协议是AKA' , 它继承了4G的AKA. 此外, 5G还采用了WIFI中的EAP, 因此报文格式和4G的不同. 并且5G还新增了一个协议用于IoT场景, 该协议不需要$K_{HSS-M}$ .
 2. 4G的鉴别中, 是被访网络的MME做了mobile device的鉴别决定, 在5G中, 一般都由家庭网络来进行这个鉴别.
 3. 5G中的IMSI是被非对称加密的.
 
@@ -618,7 +619,7 @@ We can identify four distinct phases to the process of mutual authentication and
 
 
 
-使用防火墙, IDS等技术肯定会让网络变慢. 因此一般会把网络划分为不同区域. 需要与外网连接的那些服务器被分到防御较宽松的**demilita- rized zone (DMZ)**, 其他服务器被分到防御更严格的区域:
+防火墙, IDS等肯定会让网络变慢. 因此我们一般把网络划分为不同区域, 需要与外网连接的服务器被分到防御较宽松的**demilita- rized zone (DMZ)**, 其他服务器被分到防御更严格的区域:
 
 ![Operational Security](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Operational%20Security.png)
 
@@ -660,11 +661,12 @@ We can identify four distinct phases to the process of mutual authentication and
 
 #### ACL
 
-* ACL( access control list ): 就是 packet filters 里的过滤规则.  
+* ACL( access control list ): 就是 packet filters 里的过滤规则, ACL其实和路由表长得差不多
   * 比如, 如果想要禁止所有的TCP连接的建立, 只要过滤掉所有ACK = 0的报文 ( 因为TCP中, 只有连接建立时第一个报文的ACK = 0, 此后所有的报文都有ACK =1 )
-  * 如果想要禁止员工看视频, 可以把不必要的UDP报文都过滤掉. 当然DNS之类的服务也使用UDP, 这些不能过滤
+  * 如果想要禁止员工看视频, 可以把<u>不必要的UDP报文</u>都过滤掉. 
+    * 不可能过滤掉全部的UDP报文, 因为DNS之类的服务也使用UDP
 * ACL自顶而下<u>顺序匹配</u>.
-  * When a statement “matches,” no more statements are evaluated. 
+  * When a statement “matches”,  no more statements are evaluated. 
   * The packet is either permitted or denied.
 * There is an implicit “<u>deny any</u>” statement at the end of the ACL. If a packet does not match any of the statements in the ACL, it is dropped. 下面例子的表中显式地给出了这条规则, 
 
@@ -691,10 +693,6 @@ We can identify four distinct phases to the process of mutual authentication and
   2. 接下来两条规则允许所有DNS packets进出网络.
 
   3. 最后一条规则就是deny any, 它是默认的, 禁止了除上述规则匹配的分组之外的所有其他分组.
-
-
-
-* ACL其实和路由表长得差不多
 
 ### Application Gateways
 

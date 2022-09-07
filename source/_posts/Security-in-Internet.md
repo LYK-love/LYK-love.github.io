@@ -20,14 +20,18 @@ Outline:
 
 # Intro
 
-计算机网络的每一层都要提供安全协议. 存在一些误解:
+先指出一些误解:
 
 * “只要在低层, 比如IP层, 提供安全协议, IP层及以上的层就都安全了.” 这是错误的, 因为IP报文的内容安全, 不意味着应用层数据安全. 其他层也是同理.
 * "在高层实现安全后, 底层可以不用实现安全": 这显然是错的. 最简单的例子, 应用层程序只能改变报文内容, 不能改变报文头, 而很多攻击就是针对报文头的. 因此低层协议也有必要实现安全.
 
 
 
-和[Network Security](https://lyk-love.cn/2022/08/28/Network-Security/#more) 一样, 我们以Bob和Alice的通信为例( 第三者Trudy作为攻击者 )
+因此, 需要在计算机网络的每一层都采取措施, 使得该层的通信安全.
+
+## Assumptions
+
+本文和[Network Security](https://lyk-love.cn/2022/08/28/Network-Security/#more) 一样, 以Bob, Alice 和 Trudy 的三角恋为例
 
 # Transport Layer:  TLS
 
@@ -35,7 +39,7 @@ Outline:
 
   * 我们有时候也用SSL指代TLS.
 
-* SSL( or TLS )位于网络层和运输层之间, 对**TCP**做了增强, 从开发者角度, 它属于传输层.
+* SSL( or TLS )位于网络层和运输层之间, 对**TCP**做了增强. 在开发者角度, SSL属于传输层.
 
   ![TLS](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/TLS.png)
 
@@ -67,16 +71,16 @@ TLS协议有三个阶段: *handshake*, *key derivation*, and *data transfer*.
 
    * TCP连接建立后, Bob和Alice就开始正式的TLS连接建立, 它们的数据传输单元就变成了TLS **Record**
 
-2. Bob向Alice发一个message( TLS hello ). Alice以下内容发送给Bob:
+2. Bob向Alice发一个message( TLS hello ). Alice将以下内容发送给Bob:
 
    * 可供选择的非对称加密算法( 例如, RSA with a specific key length ), 用于后续EMS的加解密
    * 可供选择的HMAC算法( 例如SHA-3或MD6 ), 用于后续的HMAC计算
-
-   * 一个nounce, 相当于TCP里的`seq`, 可以避免message reordering等问题, 还可以避免重放攻击.
+* 一个nounce, 相当于TCP里的`seq`. 使用nounce可以避免message reordering等问题, 还可以避免重放攻击. 
+     * 后面通信中的报文都会带有nounce, 为了叙述方便我就省略了.
    * Alice自己的证书, 其中包含了自己的公钥
      * 由于证书由CA颁发, Alice于是就证明了自己确实是Alice
 
-   这一步完成了后续使用的算法协商, 以及Alice的实体鉴别. 当然, 后面的通信中两边的报文都会包括nounce, 就不详细介绍了.
+   这一步完成了算法协商, 以及Alice的实体鉴别. 
 
 3. Bob生成一个Master Secret (MS) (which will only be used for this TLS session), 用Alice的公钥加密成为Encrypted Master Secret (EMS), 然后发给Alice. Alice会用私钥解密EMS, 得到MS. 
 
@@ -99,7 +103,7 @@ Handshake结束后, Bob和Alice都知道MS了.
 
 Bob和Alice各自用自己的MS生成这四个密钥, 由于两人的MS相同, 生成的密钥也是一样的. 这四个密钥中, 两个用于数据加密, 两个用于HMAC.
 
-* 根据MS生成四个密钥的步骤比较复杂
+* 根据MS生成四个密钥的步骤比较复杂, 这里不详细介绍了.
 
 
 
@@ -107,8 +111,8 @@ Bob和Alice各自用自己的MS生成这四个密钥, 由于两人的MS相同, �
 
 数据传输过程依然采用TLS record作为数据传输单元
 
-1. ..  Bob在所传输数据( DATA )后添加一个HMAC
-   * HMAC根据DATA生成, 使用密钥 $\mathrm{M_B}$ 
+1. Bob在要传输的DATA后添加HMAC
+   * HMAC根据DATA, 使用密钥 $\mathrm{M_B}$ 生成
 2. Bob将DATA + HMAC一起用密钥  $\mathrm{E_B}$  加密, 发给Alice
    * 注意, 我们之前学的采用MAC的实体鉴别<u>只会对MAC加密</u>. 但这里把DATA + MAC一起加密了.
 3. Alice收到后, 用 $\mathrm{E_A}$ 解密DATA + HMAC, 再用 $\mathrm{M_A}$ 检查HMAC, 进行报文鉴别和报文完整性检查. 后续Alice向Bob的通信也同理.
@@ -264,17 +268,19 @@ E-Mail安全要实现以下几点:
 
 
 
-安全的E-Mail的发送过程大概如下:
+Secure E-Mail的发送过程大概如下:
 
 ![Securing E-Mail](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/Securing%20E-Mail.png)
 
-1. 首先, Alice使用HMAC计算明文m的报文摘要 $H(m)$ , 然后用自己的私钥$K_A^-$对 $H(M)$ 加密得到 $K_A^-(H(M))$. 把m和 $K_A^-(H(M))$ 连接在一起, 作为一个 preliminary package 
-   * 这一步实现了**发送方鉴别和报文完整性**.  如果Alice身份属实, 那么后面Bob可以用Alice的公钥 $K_A^+$  来解密$K_A^-(H(M))$得到 $H(M)$ , 将其和自己根据m计算的 $H(M)$ 比对. 如果正确, 则既证明了公钥确实属于Alice( 发送方鉴别 ), 也证明了报文完整性.
-2. 接着, Alice随机选择一个数作为session key $K_S$ , 用 $K_S$ 将 preliminary package 加密, 记为$K_S(.)$. 并且用Bob的公钥 $K_B^+$ 加密 $K_S$. 记为$K_B(K_s)$ . 将二者连接在一起, 发给Bob.
-   * 这一步实现了**接收方鉴别和报文加密**. <u>如果Bob身份属实</u>, 那么Bob应该可以用自己的私钥 $K_B^-$  解密得到 session key  $K_S$  , 再用  $K_S$ 解密得到preliminary package . 在进行步骤一中所属的验证, 如果正确, 则证明Alice使用的  $K_B^+$ 确实属于Bob( 接收方鉴别 ). 且也用 $K_S$ 实现了报文加密.
+1. 首先, Alice使用HMAC计算明文m的报文摘要 $H(m)$ , 然后用自己的私钥$K_A^-$ 加密 $H(M)$ , 得到 $K_A^-(H(M))$. 把m和 $K_A^-(H(M))$ 连接在一起, 作为一个 preliminary package 
+   * 这一步实现了**发送方鉴别和报文完整性**.  <u>如果Alice身份属实</u>, 那么后面Bob可以用Alice的公钥 $K_A^+$  来解密$K_A^-(H(M))$得到 $H(M)$ , 将其和自己根据m计算的 $H(M)$ 比对. 如果正确, 则既证明了 $K_A^+$  确实属于Alice( 发送方鉴别 ), 也证明了报文完整性.
+2. 接着, Alice随机选择一个数作为session key $K_S$ , 用 $K_S$ 将 preliminary package 加密, 记为 $K_S(.)$ . 并且用Bob的公钥 $K_B^+$ 加密 $K_S$ . 记为 $K_B(K_s)$ . 将二者连接在一起, 发给Bob.
+   * 这一步实现了**接收方鉴别和报文加密**. <u>如果Bob身份属实</u>, 那么Bob应该可以用自己的私钥 $K_B^-$  解密得到 session key  $K_S$  , 再用  $K_S$ 解密得到preliminary package . 再进行步骤一所述的验证, 如果正确, 则既证明了  $K_B^+$ 确实属于Bob( 接收方鉴别 ), 又使用 $K_S$ 实现了报文加密.
 
-上述过程使用了非对称加密, 对于E-Mail使用者, 要获得对方的密钥, 可以去CA查. 当然很多人没有去CA申请过证书, 因此也可以自己生成个公钥, 把它放在个人主页上.
+上述过程使用了非对称加密, 对于E-Mail使用者, 可以自己生成公钥, 把它放在个人主页上. 当然也可以去CA注册得到证书, 对方要获得自己的公钥可以去CA查. 
 
 
 
-目前常用的安全的E-Mail实现是GPG(  GPG是GNU的开源软件, 参考自功能相同的商业软件PGP ), 它的发送步骤和上面所述的差不多.
+
+
+目前常用的Secure E-Mail实现是[GPG](https://lyk-love.cn/2022/02/10/GPG/)(  GPG是GNU的开源软件, 参考自功能相同的商业软件PGP ), 它的逻辑和上面所述的差不多.

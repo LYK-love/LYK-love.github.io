@@ -99,6 +99,7 @@ ref: [讲总线的文章](https://www.cnblogs.com/liuzhengliang/p/5548451.html)
   * PCIe使用**serial bus architecture**，把数据包装成一个message， 点对点传输（一次连接称为一个**lane**）。
   * PICe也支持并行传输，按lane( 通道 )的个数可分为 x1 x2 x4 x8 x16 x32（最大可支持32个通道）
     * 如果PCI e x1接口的网卡插x16的插槽， 只占用一条lane
+  * 微星的B450主板支持的就是PCI-E 3.0, B550支持PCI-E 4.0
   * 现在的PCIe 5.0 已经支持132GB/s 了
   * 此外，PCIe还对应着同名的传输协议( PCIe )
 

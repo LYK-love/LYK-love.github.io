@@ -9,7 +9,7 @@ date: 2022-07-31 22:02:07
 Outline:
 
 * Preface：Graphic Card
-* Basic Ideas
+* Basic Concepts
 * Components of GPU
 
 <!--more-->
@@ -18,37 +18,54 @@ Outline:
 
 [很详细的介绍显卡的文章](https://zhuanlan.zhihu.com/p/156083352)
 
-* **显卡**( Video card、Display card、Graphics card )：由 GPU 、电路板（PCB）、显存、金手指、供电 & 显示接口以及散热等构成
+* **显卡**( Video card、Display card、Graphics card ): 由 GPU, 电路板( PCB ), 显存, 金手指, 供电 & 显示接口以及散热等构成
+  * 因为显卡最重要的就是GPU, 我们也可以把二者混为一谈. 比如后文提到的集显和核显, 其实就是两块纯的GPU,  为了方便我们还是说成显卡.
 
 ![Graphic Card Arch](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/GPU/Graphic%20Card%20Arch.png)
 
-* 集显( 集成显卡,  严格地讲是“**集成CPU** ( Integretd CPU ),  因为不存在独立的显卡了)：指被和CPU被封装在一起的GPU。 GPU和CPU共享散热器和系统RAM。
-
-  * 注意到集显下GPU没有独立的RAM，只能将系统RAM的一部分作为VRAM( 显而易见这很慢 )
-
-* 独显( 独立显卡 )：顾名思义就是可插拔的独立的显卡。 通过插槽插入计算机的主板，并且通常需要比通过卡插槽提供的更多的功率。因此，它也可能有来自计算机电源的专用电源连接。
 
 
+# Basic Concepts
 
-# Basic Ideas
+* Graphic Processing Unit, aka GPU: 为了处理图形计算任务而专门开发的硬件, 是一种特殊的CPU. 
+* GPU就是特殊的CPU, 这意味着电脑可以没有GPU，用普通的CPU也可以处理图形任务. 不过性能嘛... 给个例子， 顶级CPU 3990X 性能撕裂者勉强带得动前几代的《孤岛危机》
 
-Graphic Card( or Graphic Processing Unit, aka GPU)是专门用于绘制图像和处理图元数据的特定芯片，后来渐渐加入了其它很多功能 
+* 因此, GPU对于现代计算机是必要的. 没有外置显卡就用核显, 没有核显就用主板的集显, 连集显都没有那电脑可以入土了
 
-* GPU是显卡的核心部分， GPU + 散热器+各种元件就构成了显卡。 当然我们经常把二者混为一谈
-* 其实GPU就是为了处理图形计算任务而专门开发的硬件，是一种特殊的CPU。 电脑可以没有GPU，用普通的CPU也可以处理图形任务。 不过性能嘛。。。 给个例子， 顶级CPU 3990X 性能撕裂者勉强带得动前几代的《孤岛危机》
-* 因此，GPU对于现代计算机是必要的
+## 集显
+
+* 集显( 集成显卡 )：**集成在主板**北桥的GPU. 能和CPU共享散热器和系统RAM等资源
+  * 集显下GPU没有独立的RAM，只能将系统RAM的一部分作为VRAM( 显而易见这很慢 )
+  * 因为就集成在主板上把它叫做“板载显卡”
+* 早期的主板很多都带集显, 集显性能都还很垃圾. 现在的显卡都不带集显了( 比如b550m ), 不过集显的概念没有消失, 现在很多人都用“核显”
+
+## 核显
+
+* 核显:被封装到[CPU Package](https://lyk-love.cn/2022/09/08/CPU/)中的GPU, 甚至有核显是**刻在CPU的Die里面**的
+  * 其目的和集显一样, 都为了和CPU共享散热器和系统RAM等资源, 因此也可以把核显认为是集显的一种
+  * 因为CPU和GPU放在一块, 也可以把这种CPU叫做**APU**( 按AMD的说法 )
+
+* AMD的[R5 5600G](https://www.amd.com/en/products/apu/amd-ryzen-5-5600g)就自带了*UHD750*显卡( 刻在了Die里面.... )它的性能相对5600G这块CPU很垃圾, 但也能在1080P中高画质上60帧数上运行诸如LOL的游戏了:
+
+  | Graphics Model   | Graphics Core Count | Graphics Frequency |
+  | ---------------- | ------------------- | ------------------ |
+  | Radeon™ Graphics | 7                   | 1900 MHz           |
+
+## 独显
+
+* 独显( 独立显卡 )：顾名思义就是可插拔的独立的显卡.  通过插槽插入计算机的主板，并且通常需要比通过卡插槽提供的更多的功率。因此，它也可能有来自计算机电源的专用电源连接。
 
 
 
 ## GPU和CPU的区别
 
-1. CPU被设计用于通用计算。 而GPU被设计为专门用于图形计算， 这些专用的功能会被直接集成到硬件中(起码在目前依然是这样)
+1. CPU被设计用于通用计算. 而GPU被设计为专门用于图形计算, 这些专用的功能会被直接集成到硬件中(起码在目前依然是这样)
 2. CPU被设计为高效地执行**单线程**代码( SMT / Hyper-Threading等技术也改进了CPU的多线程能力 )； 而GPU天然被设计为高效地执行**多线程**代码。 也就是说，面对需要多线程的worload时，GPU的效率远高于CPU
 3. GPU通过堆叠核心来扩展多线程性能, 所以核心数肯定比COU多。 AMD的高端CPU Epyc CPU是64核/128线程； 而Nvidia的最低端Pascal GPU就有384个内核。 
 
 ## GPU的性能度量
 
-* GPU的性能和架构的关系很大。 因此不同架构的CPU之间，不能单凭核心数来比较性能。 
+* GPU的性能和架构的关系很大.  因此不同架构的GPU之间，不能单凭核心数来比较性能。 
 
 * 只有同一厂商的同一系列的GPU，才可以只用核心数比较。比如GTX 3070 和 GTX 3080 和 GTX 3080 Ti； 以及 [RX 5700 XT 和 RX 6700 XT]
 
