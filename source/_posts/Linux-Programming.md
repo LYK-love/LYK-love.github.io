@@ -265,7 +265,7 @@ Change: 2021-11-26 21:59:32.375301046 +0800
       8. SIGSTOP停止执行（此信号不能被捕获或忽略）
       9. SIGTSTP终端挂起
 
-# io系统调用
+# I/O系统调用
 
 ### open/creat Function
 

@@ -126,7 +126,6 @@ gcc [option] [file]
 | -mshort                | 将int类型作为16位处理，相当于short int                       |
 | -mrtd                  | 强行将函数参数固定的函数用ret NUM返回，节省调用函数的一条指令 |
 | -mcpu=type             | 针对不同的CPU使用相应的CPU指令。可选择的type有i386、i486、pentium、i686等 |
-|                        |                                                              |
 
 
 
