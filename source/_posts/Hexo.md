@@ -6,9 +6,7 @@ date: 2022-03-27 02:28:03
 
 Outline
 
-* Feateues
-* 多主机同步
-* Bugs
+Hexo, Next, Markdown
 
 <!--more-->
 
@@ -1054,4 +1052,85 @@ git pull
 
 
 
-[https://hexo-next.readthedocs.io/zh_CN/latest]: 
+# Markdown
+
+## 页面内跳转
+
+Markdown的一个标题会被渲染成:
+
+```
+// in markdown:
+# Ha ha
+dadads
+```
+
+```
+//in html
+<id = "ha-ha">
+<h1>dadads</h1>
+```
+
+* 空格会被转换为连字符, 大写会被转换为小写
+
+---
+
+如果有重名的标题(即使处于不同的标题层次), 就会在html的标签的id属性中予以区分:
+
+```
+// in markdown:
+# haha
+dadads
+
+# Heihei
+## Haha //重名了
+asa
+```
+
+```
+//in html
+<id = "haha-1">
+<h1>dadads</h1>
+
+<id = "haha-2"> //用数字后缀区分了
+<h1>asa</h1>
+```
+
+
+
+因此, 只需要在markdown中写:
+
+```
+[显示的内容](#标题)
+```
+
+生成的Html是:
+
+```
+<a href="标题">显示的内容</a>
+```
+
+这就引用了对应的标题:
+
+```
+# 标题
+```
+
+
+
+可以看到, 这是基于Html的标签id匹配的, 而Markdown标题生成的Html标签的id和标题级别没有关系, 只和标题名字有关系. 所以
+
+
+
+```
+[显示的内容](#KKK)
+```
+
+可以引用到:
+
+```
+# Haha
+## KKK
+```
+
+的二级标题`KKK`
+

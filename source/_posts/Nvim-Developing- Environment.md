@@ -1,14 +1,17 @@
 ---
 title: Nvim Developing Environment
+tags: 
+- Linux
+- Editor
 categories: Toolkit
 date: 2022-08-17 22:52:46
-tags:
 ---
 
 
 Outline:
 
 * Nvim
+* Nvim Config
 * LspInstall
 * Dap
 * Keybinds
@@ -17,13 +20,53 @@ Outline:
 
 # Nvim
 
+## Nvim vs VSCode
+
+Nvim和VSCode是两个主流的编辑器/IDE. 
+
+* VS Code’s use of [Electron](https://www.electronjs.org/) makes it available on all major platforms. This is how [GitHub Codespaces](https://github.com/features/codespaces) or [Gitpod](https://www.gitpod.io/) can access to the entire VS Code ecosystem. See [our interview with GitPod’s Chief Architect / Head of Engineering](https://console.dev/interviews/gitpod-christian-weichel/) about how important this has been.
+  * 虽然微软团队对VSCode的Electron做了很多魔改, 极大地提升了性能, 但依然使得我个人感觉很不舒服
+* Nvim更快
+
+## Features
+
+- **Performance:** 🚀 Very fast.
+- **Syntax highlighting:** Neovim 0.5 now includes [Treesitter](https://github.com/nvim-treesitter/nvim-treesitter) and supports  [LSP](https://github.com/neovim/nvim-lspconfig), but still requires some config.
+- **Customizable:** ✅ Large ecosystem of plugins and themes.
+- **Cross-platform:** Linux ✅ Windows ✅ macOS ✅
+
+## Config
+
+* Neovim设置全局配置文件,需要在`/etc/profile`添加：
+
+  ```shell
+  export VIM=/usr/share/nvim
+  export PATH="$PATH:$VIM/sysinit.vim"
+  ```
+
+* 有可能会出现这种情况：
+
+  > 直接使用 nvim ... 打开文件时一切正常，配置也生效;
+  > 但当你使用 sudo nvim ... 打开文件时，配置文件并没有生效
+
+  出现这种情况的原因是：当你使用 sudo命令的时候，用户的身份切换了（默认是root）,此时你的环境变量也被重置了，系统当然就找不到你的配置文件。
+
+  解决的方案大致有2种：
+
+  1. 使用 sudo -E nvim ... 打开文件 （最快速的方法，不过每次都需要加上 -E, 有点麻烦）
+  2. 修改 sudo 的配置文件: /etc/sudoers(如果用nvim打开是空文件的话，可以试一下用vim 或者 visudo打开，后面就不细说了，超纲了)
+
+
+
+# Nvim Config
+
 使用[ayamir的Nvim配置](https://github.com/ayamir/nvimdots/),  它集成了大量插件, 包括Nvim + LSP + Dap.
 
 其配置文件位于`~/.config/nvim/lua`
 
 
 
-## Install
+## Config Install
 
 https://github.com/ayamir/nvimdots/wiki/Prerequisites
 
@@ -37,8 +80,6 @@ git clone git@github.com:ayamir/nvimdots.git ~/.config/nvim
 # sync plugins(maybe need multiple times)
 nvim +PackerSync
 ```
-
-
 
 
 
