@@ -7,6 +7,12 @@ mathjax: true
 
 # Intro
 
+![image-20220912173407252](/Users/lyk/Library/Application Support/typora-user-images/image-20220912173407252.png)
+
+* Base Station:  A base station is responsible for sending and receiving data (e.g., packets) to and from a wireless host that is associated with that base station.  **Cell towers** in cellular networks and **access points** in 802.11 wireless LANs are examples of base stations.
+
+   the base station is connected to the larger network (e.g., the Internet, corporate or home network), thus functioning as a link-layer relay between the wireless host and the rest of the world with which the host communicates.
+
 # Wireless Links and Network Characteristics
 
 ## CDMA/CA
