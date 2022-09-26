@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Basic Module Scope Searching Path Common Modules">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Module">
+<meta property="og:url" content="http://lyk-love.cn/2022/08/25/Python-Module/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Basic Module Scope Searching Path Common Modules">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-08-24T21:50:32.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.938Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/08/25/Python-Module/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/08/25/Python-Module/","path":"2022/08/25/Python-Module/","title":"Python Module"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Python Module | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic"><span class="nav-text">Basic</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Usage"><span class="nav-text">Usage</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Module-Scope"><span class="nav-text">Module Scope</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Searching-Path"><span class="nav-text">Searching Path</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Common-Modules"><span class="nav-text">Common Modules</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pandas"><span class="nav-text">pandas</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dataframe"><span class="nav-text">Dataframe</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#argparse"><span class="nav-text">argparse</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text"></span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/08/25/Python-Module/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Python Module | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python Module
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-24 21:50:32" itemprop="dateCreated datePublished" datetime="2022-08-24T21:50:32Z">2022-08-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Basic</li>
+<li>Module Scope</li>
+<li>Searching Path</li>
+<li>Common Modules</li>
+</ul>
+<span id="more"></span>
+<h1 id="Basic"><a class="header-anchor" href="#Basic"></a>Basic</h1>
+<ul>
+<li>
+<p>一个<code>.py</code>文件就是一个模块（Module）</p>
+</li>
+<li>
+<p>模块可以避免代码的名冲突，因此命名模块时，应尽量不要与内置函数名字冲突</p>
+<ul>
+<li>最好先查看系统是否已存在该模块，检查方法是在Python交互环境执行<code>import abc</code>，若成功则说明系统存在此模块。</li>
+</ul>
+</li>
+<li>
+<p>一个文件夹下有<code>__init__.py</code>，该文件夹就成为了一个包，而<code>__init__.py</code>本身就是一个模块，它的模块名就是包名</p>
+</li>
+<li>
+<p>可以通过包来组织模块</p>
+</li>
+</ul>
+<h1 id="Usage"><a class="header-anchor" href="#Usage"></a>Usage</h1>
+<p>Python本身就内置了很多非常有用的模块，只要安装完毕，这些模块就可以立刻使用。</p>
+<p>我们以内建的<code>sys</code>模块为例，编写一个<code>hello</code>的模块：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/usr/bin/env python3</span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">&#x27; a test module &#x27;</span><br><span class="line"></span><br><span class="line">__author__ = &#x27;Michael Liao&#x27;</span><br><span class="line"></span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">def test():</span><br><span class="line">    args = sys.argv</span><br><span class="line">    if len(args)==1:</span><br><span class="line">        print(&#x27;Hello, world!&#x27;)</span><br><span class="line">    elif len(args)==2:</span><br><span class="line">        print(&#x27;Hello, %s!&#x27; % args[1])</span><br><span class="line">    else:</span><br><span class="line">        print(&#x27;Too many arguments!&#x27;)</span><br><span class="line"></span><br><span class="line">if __name__==&#x27;__main__&#x27;:</span><br><span class="line">    test()</span><br></pre></td></tr></table></figure>
+<p>第1行和第2行是标准注释，第1行注释可以让这个<code>hello.py</code>文件直接在Unix/Linux/Mac上运行，第2行注释表示.py文件本身使用标准UTF-8编码；</p>
+<p>第4行是一个字符串，表示模块的文档注释，任何模块代码的第一个字符串都被视为模块的文档注释；</p>
+<p>第6行使用<code>__author__</code>变量把作者写进去，这样当你公开源代码后别人就可以瞻仰你的大名；</p>
+<p>以上就是Python模块的标准文件模板，当然也可以全部删掉不写，但是，按标准办事肯定没错。</p>
+<p>后面开始就是真正的代码部分。</p>
+<p>你可能注意到了，使用<code>sys</code>模块的第一步，就是导入该模块：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">import sys</span><br></pre></td></tr></table></figure>
+<p>导入<code>sys</code>模块后，我们就有了变量<code>sys</code>指向该模块，利用<code>sys</code>这个变量，就可以访问<code>sys</code>模块的所有功能。</p>
+<p><code>sys</code>模块有一个<code>argv</code>变量，用list存储了命令行的所有参数。<code>argv</code>至少有一个元素，因为第一个参数永远是该.py文件的名称，例如：</p>
+<p>运行<code>python3 hello.py</code>获得的<code>sys.argv</code>就是<code>['hello.py']</code>；</p>
+<p>运行<code>python3 hello.py Michael</code>获得的<code>sys.argv</code>就是<code>['hello.py', 'Michael']</code>。</p>
+<p>最后，注意到这两行代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if __name__==&#x27;__main__&#x27;:</span><br><span class="line">    test()</span><br></pre></td></tr></table></figure>
+<p>当我们在命令行运行<code>hello</code>模块文件时，Python解释器把一个特殊变量<code>__name__</code>置为<code>__main__</code>，而如果在其他地方导入该<code>hello</code>模块时，<code>if</code>判断将失败，因此，这种<code>if</code>测试可以让一个模块通过命令行运行时执行一些额外的代码，最常见的就是运行测试。</p>
+<p>我们可以用命令行运行<code>hello.py</code>看看效果：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ python3 hello.py</span><br><span class="line">Hello, world!</span><br><span class="line">$ python hello.py Michael</span><br><span class="line">Hello, Michael!</span><br></pre></td></tr></table></figure>
+<p>如果启动Python交互环境，再导入<code>hello</code>模块：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ python3</span><br><span class="line">Python 3.4.3 (v3.4.3:9b73f1c3e601, Feb 23 2015, 02:52:03) </span><br><span class="line">[GCC 4.2.1 (Apple Inc. build 5666) (dot 3)] on darwin</span><br><span class="line">Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.</span><br><span class="line">&gt;&gt;&gt; import hello</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<p>导入时，没有打印<code>Hello, word!</code>，因为没有执行<code>test()</code>函数。</p>
+<p>调用<code>hello.test()</code>时，才能打印出<code>Hello, word!</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; hello.test()</span><br><span class="line">Hello, world!</span><br></pre></td></tr></table></figure>
+<h1 id="Module-Scope"><a class="header-anchor" href="#Module-Scope"></a>Module Scope</h1>
+<p>在一个模块中，我们可能会定义很多函数和变量，但有的函数和变量我们希望给别人使用，有的函数和变量我们希望仅仅在模块内部使用。在Python中，是通过<code>_</code>前缀来实现的。</p>
+<p>正常的函数和变量名是公开的（public），可以被直接引用，比如：<code>abc</code>，<code>x123</code>，<code>PI</code>等；</p>
+<p>类似<code>__xxx__</code>这样的变量是特殊变量，可以被直接引用，但是有特殊用途，比如上面的<code>__author__</code>，<code>__name__</code>就是特殊变量，<code>hello</code>模块定义的文档注释也可以用特殊变量<code>__doc__</code>访问，我们自己的变量一般不要用这种变量名；</p>
+<p>类似<code>_xxx</code>和<code>__xxx</code>这样的函数或变量就是非公开的（private），不应该被直接引用，比如<code>_abc</code>，<code>__abc</code>等；</p>
+<p>之所以我们说，private函数和变量“不应该”被直接引用，而不是“不能”被直接引用，是因为Python并没有一种方法可以完全限制访问private函数或变量，但是，从编程习惯上不应该引用private函数或变量。</p>
+<p>private函数或变量不应该被别人引用，那它们有什么用呢？请看例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def _private_1(name):</span><br><span class="line">    return &#x27;Hello, %s&#x27; % name</span><br><span class="line"></span><br><span class="line">def _private_2(name):</span><br><span class="line">    return &#x27;Hi, %s&#x27; % name</span><br><span class="line"></span><br><span class="line">def greeting(name):</span><br><span class="line">    if len(name) &gt; 3:</span><br><span class="line">        return _private_1(name)</span><br><span class="line">    else:</span><br><span class="line">        return _private_2(name)</span><br></pre></td></tr></table></figure>
+<p>我们在模块里公开<code>greeting()</code>函数，而把内部逻辑用private函数隐藏起来了，这样，调用<code>greeting()</code>函数不用关心内部的private函数细节，这也是一种非常有用的代码封装和抽象的方法，即：</p>
+<p>外部不需要引用的函数全部定义成private，只有外部需要引用的函数才定义为public。</p>
+<h1 id="Searching-Path"><a class="header-anchor" href="#Searching-Path"></a>Searching Path</h1>
+<p>当我们试图加载一个模块时，Python会在指定的路径下搜索对应的.py文件，如果找不到，就会报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; import mymodule</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;</span><br><span class="line">ImportError: No module named mymodule</span><br></pre></td></tr></table></figure>
+<p>默认情况下，Python解释器会搜索当前目录、所有已安装的内置模块和第三方模块，搜索路径存放在<code>sys</code>模块的<code>path</code>变量中：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.path</span><br><span class="line">[&#x27;&#x27;, &#x27;/Library/Frameworks/Python.framework/Versions/3.6/lib/python36.zip&#x27;, &#x27;/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6&#x27;, ..., &#x27;/Library/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages&#x27;]</span><br></pre></td></tr></table></figure>
+<p>如果我们要添加自己的搜索目录，有两种方法：</p>
+<p>一是直接修改<code>sys.path</code>，添加要搜索的目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; import sys</span><br><span class="line">&gt;&gt;&gt; sys.path.append(&#x27;/Users/michael/my_py_scripts&#x27;)</span><br></pre></td></tr></table></figure>
+<p>这种方法是在运行时修改，运行结束后失效。</p>
+<p>第二种方法是设置环境变量<code>PYTHONPATH</code>，该环境变量的内容会被自动添加到模块搜索路径中。设置方式与设置Path环境变量类似。注意只需要添加你自己的搜索路径，Python自己本身的搜索路径不受影响。</p>
+<h1 id="Common-Modules"><a class="header-anchor" href="#Common-Modules"></a>Common Modules</h1>
+<h2 id="pandas"><a class="header-anchor" href="#pandas"></a>pandas</h2>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yeyuzhuanjia/p/14817744.html">read_csv()/read_table()文本文件的读取</a></p>
+<h3 id="Dataframe"><a class="header-anchor" href="#Dataframe"></a>Dataframe</h3>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/pandas/pandas-dataframe.html">Pandas 数据结构 - DataFrame</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/14c054225f03">Pandas.DataFrame 的 iterrows()方法详解</a></p>
+<h2 id="argparse"><a class="header-anchor" href="#argparse"></a>argparse</h2>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/edc3001/article/details/113788716">argparse模块使用教程</a></p>
+<h1 id=""><a class="header-anchor" href="#"></a></h1>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/25/Python-OOP-Advanced/" rel="prev" title="Python OOP Advanced">
+                  <i class="fa fa-chevron-left"></i> Python OOP Advanced
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/26/CAP-Theory/" rel="next" title="CAP Theory">
+                  CAP Theory <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Terminal Emulators Zsh Ohmyzsh Zsh Theme General Terminal Emulater Config">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Terminal">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/13/Terminal/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Terminal Emulators Zsh Ohmyzsh Zsh Theme General Terminal Emulater Config">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-13T14:58:22.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.941Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Terminal">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/13/Terminal/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/13/Terminal/","path":"2022/09/13/Terminal/","title":"Terminal"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Terminal | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Terminal-Emulators"><span class="nav-text">Terminal Emulators</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Konsole"><span class="nav-text">Konsole</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iTerms2"><span class="nav-text">iTerms2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Alacritty"><span class="nav-text">Alacritty</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Features"><span class="nav-text">Features</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Config"><span class="nav-text">Config</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Zsh"><span class="nav-text">Zsh</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install"><span class="nav-text">Install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-Switch"><span class="nav-text">Shell Switch</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ohmyzsh"><span class="nav-text">Ohmyzsh</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Plugins-Installation"><span class="nav-text">Plugins Installation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Plugins"><span class="nav-text">Plugins</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#autosuggestion-highlighting"><span class="nav-text">autosuggestion &amp;&amp; highlighting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#fasd-autojump"><span class="nav-text">fasd &amp; autojump</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Zsh-Theme"><span class="nav-text">Zsh Theme</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#p10k-Fonts"><span class="nav-text">p10k Fonts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Manual-font-installation"><span class="nav-text">Manual font installation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Notes"><span class="nav-text">Notes</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#General-Terminal-Emulater-Config"><span class="nav-text">General Terminal Emulater Config</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Color-Dracula"><span class="nav-text">Color: Dracula</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/13/Terminal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Terminal | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Terminal
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-13 14:58:22" itemprop="dateCreated datePublished" datetime="2022-09-13T14:58:22Z">2022-09-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Terminal Emulators</li>
+<li>Zsh</li>
+<li>Ohmyzsh</li>
+<li>Zsh Theme</li>
+<li>General Terminal Emulater Config</li>
+</ul>
+<span id="more"></span>
+<h1 id="Terminal-Emulators"><a class="header-anchor" href="#Terminal-Emulators"></a>Terminal Emulators</h1>
+<p>MacOS常用的终端模拟器是iTerms2, 而Linux KDE使用Konsole. 这两个<strong>都不能跨平台</strong>, 并且iTerms2相比Konsole很垃圾.</p>
+<p>因此, 可以把终端换成跨平台的Alacritty</p>
+<h2 id="Konsole"><a class="header-anchor" href="#Konsole"></a>Konsole</h2>
+<p>Linux上无敌, 可惜MacOS不能用</p>
+<h2 id="iTerms2"><a class="header-anchor" href="#iTerms2"></a>iTerms2</h2>
+<p>和MacOS无缝集成, 开箱即用. 但是它也不能跨平台, 所以<strong>没必要对它进行过度的配置</strong>.</p>
+<h2 id="Alacritty"><a class="header-anchor" href="#Alacritty"></a>Alacritty</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/alacritty/alacritty">Github Repo</a>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/alacritty/alacritty#installation">Installation</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/alacritty/alacritty#configuration">Configuration</a></li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://jwilm.io/blog/announcing-alacritty/">作者的Blog</a></li>
+</ul>
+<h3 id="Features"><a class="header-anchor" href="#Features"></a>Features</h3>
+<ul>
+<li><strong>跨平台</strong></li>
+<li>可定制性强, 并且由于是跨平台的, 不用担心换平台之后, Alacritty用不了, 定制打水漂的问题
+<ul>
+<li>使用配置文件来配置, 意味着可以使用版本管理, 换台电脑clone一下就能用原来的配置了</li>
+</ul>
+</li>
+<li><strong>可以在MacOS的OpenInTerminal里配置, 太爽了!</strong> 一键打开! 我就是因为Warp不能这么做才放弃了Warp</li>
+<li>uses GPU acceleration (OpenGL in Rust), <strong>Performance天下第一</strong></li>
+<li><a target="_blank" rel="noopener" href="https://jwilm.io/blog/announcing-alacritty/">specifically written to correctly render applications like Vim</a>, Alacritty + Nvim是天然搭档</li>
+</ul>
+<h3 id="Config"><a class="header-anchor" href="#Config"></a>Config</h3>
+<p><a target="_blank" rel="noopener" href="https://github.com/alacritty/alacritty#configuration">Github Configuration Official Doc</a></p>
+<ul>
+<li>
+<p>配置文件位置:</p>
+<p>Alacritty <u>doesn’t create the config file for you</u>, but it looks for one in the following locations:</p>
+<ol>
+<li><code>$XDG_CONFIG_HOME/alacritty/alacritty.yml</code></li>
+<li><code>$XDG_CONFIG_HOME/alacritty.yml</code></li>
+<li><code>$HOME/.config/alacritty/alacritty.yml</code>: 我用这个</li>
+<li><code>$HOME/.alacritty.yml</code></li>
+</ol>
+</li>
+<li>
+<p>字体: 由于我的Zsh主题是p10k, 使用的默认字体是Meslo Nerd Font, 而Alacritty默认使用的不是Meslo Nerd Font, 因此Alacritty中很多图标无法正常显示. 所以需要[安装字体](# p10k Fonts)</p>
+</li>
+<li>
+<p>这一步我之前的[p10k字体配置]里</p>
+</li>
+<li>
+<p>配色: 使用下文所述的[Dracula](# Color: Dracula), 配色文件是一个符号链接, 指向dotfile, 纳入了版本管理</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s /Users/lyk/Projects/MyOfficialProjects/dotfiles/dracula.yml ~/.config/alacritty/dracula.yml</span><br></pre></td></tr></table></figure>
+<p>当然还可以用别的<a target="_blank" rel="noopener" href="https://github.com/eendroroy/alacritty-theme">方案</a></p>
+</li>
+<li>
+<p>Alacritty 本身不提供窗口拆分、Session 管理等功能, 所以需要安装[Tmux](# Terminal Multiplexer). 并且对于MacOS来说, 每次使用<code>&lt;Ctrl+b&gt;</code>实在是太繁琐了. 可以使用改键, 改成<code>Cmd</code>, 具体参考 <a target="_blank" rel="noopener" href="https://www.joshmedeski.com/">Josh Medeski</a> 的这篇『<a target="_blank" rel="noopener" href="https://www.joshmedeski.com/posts/macos-keyboard-shortcuts-for-tmux">macOS Keyboard Shortcuts for tmux</a>』:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># alacritty.yml</span></span><br><span class="line"><span class="attr">key_bindings:</span></span><br><span class="line">  <span class="bullet">-</span> &#123; <span class="attr">key:</span> <span class="string">T</span>, <span class="attr">mods:</span> <span class="string">Command</span>, <span class="attr">chars:</span> <span class="string">&quot;\x02\x63&quot;</span> &#125;</span><br></pre></td></tr></table></figure>
+<p><code>\x02\x63</code>就是<code>&lt;Ctrl+b&gt; + c</code>的十六进制表示, 可以用[<code>xxd -ps</code>](# xxd )验证</p>
+</li>
+<li>
+<p>I have also been playing with <a target="_blank" rel="noopener" href="https://zellij.dev/">Zellij</a>, a full terminal workspace manager that combines the best of tmux with native tabs and scrollback.</p>
+</li>
+</ul>
+<h1 id="Zsh"><a class="header-anchor" href="#Zsh"></a>Zsh</h1>
+<h2 id="Install"><a class="header-anchor" href="#Install"></a>Install</h2>
+<p>安装zsh shell</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install zsh</span><br></pre></td></tr></table></figure>
+<p>切换shell</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">chsh -s /bin/zsh</span><br></pre></td></tr></table></figure>
+<h2 id="Shell-Switch"><a class="header-anchor" href="#Shell-Switch"></a>Shell Switch</h2>
+<p>检查当前可用的shell:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /etc/shells</span><br></pre></td></tr></table></figure>
+<p>or:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chsh -l</span><br></pre></td></tr></table></figure>
+<p>查看当前使用的shell:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo $SHELL</span><br></pre></td></tr></table></figure>
+<p>set one shell  as default for your user:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chsh -s full-path-to-shell</span><br></pre></td></tr></table></figure>
+<h1 id="Ohmyzsh"><a class="header-anchor" href="#Ohmyzsh"></a>Ohmyzsh</h1>
+<ol>
+<li>
+<p>clone mirror:</p>
+<p>github安装oh-my-zsh（很慢）</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sh -c &quot;$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)&quot;</span><br></pre></td></tr></table></figure>
+<p>gitee安装oh-my-zsh: (国内用这个 )</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>执行<code>install.sh</code></p>
+</li>
+<li>
+<p>如果发现install很慢，可以修改为gitee：<br>
+<code>vim install.sh</code><br>
+找到以下部分：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Default settings</span></span><br><span class="line">ZSH=$&#123;ZSH:-~/.oh-my-zsh&#125;</span><br><span class="line">REPO=$&#123;REPO:-ohmyzsh/ohmyzsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://github.com/$&#123;REPO&#125;.git&#125;</span><br><span class="line">BRANCH=$&#123;BRANCH:-master&#125;</span><br></pre></td></tr></table></figure>
+<p>将中间两行改为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">REPO=$&#123;REPO:-mirrors/oh-my-zsh&#125;</span><br><span class="line">REMOTE=$&#123;REMOTE:-https://gitee.com/$&#123;REPO&#125;.git&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Plugins-Installation"><a class="header-anchor" href="#Plugins-Installation"></a>Plugins Installation</h2>
+<ul>
+<li>
+<p>如果使用brew, yay等包管理工具安装插件, 会把插件安装在<code>$ZSH/plugins</code>,这些插件被称为&quot;“standard plugins”</p>
+</li>
+<li>
+<p>如果使用git clone安装插件, 则这些插件被称为&quot;custom plugins&quot;, 需要被clone到<code>$ZSH_CUSTOM/plugins</code> (默认位置是 <code>~/.oh-my-zsh/custom/plugins</code>)</p>
+</li>
+<li>
+<p>所有插件在安装完毕后,都需要在<code>~/.zshrc</code>的<code>plugins</code>中配置:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">plugins=( [custom plugins...] zsh-syntax-highlighting autosuggestion)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>修改完配置文件后记得<code>source ~/.zshrc</code>, 然后重新启动shell</p>
+</li>
+</ul>
+<h2 id="Plugins"><a class="header-anchor" href="#Plugins"></a>Plugins</h2>
+<h3 id="autosuggestion-highlighting"><a class="header-anchor" href="#autosuggestion-highlighting"></a>autosuggestion &amp;&amp; highlighting</h3>
+<ul>
+<li>
+<p>安装<code> autosuggestion</code>：( github非常慢，改用gitee ) (这里直接用环境变量+重定向，不需要在指定目录下clone了)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://gitee.com/phpxxo/zsh-autosuggestions.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-autosuggestions</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装<code>syntax-highlighting</code>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syn tax-highlighting</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="fasd-autojump"><a class="header-anchor" href="#fasd-autojump"></a>fasd &amp; autojump</h3>
+<ul>
+<li>
+<p>安装<code>fasd</code>: 它将文件和目录<strong>按最近最常用</strong>算法排序, 并提供各种操作</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yay -S fasd</span><br></pre></td></tr></table></figure>
+<p>安装后需要配置<code>~/.zshrc</code>:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">alias a=&#x27;fasd -a&#x27;        # any</span><br><span class="line">alias s=&#x27;fasd -si&#x27;       # show / search / select</span><br><span class="line">alias d=&#x27;fasd -d&#x27;        # directory</span><br><span class="line">alias f=&#x27;fasd -f&#x27;        # file</span><br><span class="line">alias sd=&#x27;fasd -sid&#x27;     # interactive directory selection</span><br><span class="line">alias sf=&#x27;fasd -sif&#x27;     # interactive file selection</span><br><span class="line">alias z=&#x27;fasd_cd -d&#x27;     # cd, same functionality as j in autojump</span><br><span class="line">alias zz=&#x27;fasd_cd -d -i&#x27; # cd with interactive selection</span><br></pre></td></tr></table></figure>
+<p>alias使用:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">a foo 列出最近操作的路径匹配 &#x27;foo&#x27; 的文件与目录</span><br><span class="line">f foo 列出最近操作的路径匹配 &#x27;foo&#x27; 的文件</span><br><span class="line">d foo 列出最近操作的路径匹配 &#x27;foo&#x27; 的目录</span><br><span class="line">s foo 列出最近操作的路径匹配 &#x27;foo&#x27; 的文件与目录，并可以通过序号选择</span><br><span class="line">sf foo 列出最近操作的路径匹配&#x27;foo&#x27;的文件，并可以通过序号选择</span><br><span class="line">sd foo 列出最近操作的路径匹配&#x27;foo&#x27;的目录，并可以通过序号选择</span><br><span class="line">z foo cd到最近操作的匹配&#x27;foo&#x27;并且得分最高的目录</span><br><span class="line">zz foo 列出最近操作的路径匹配&#x27;foo&#x27;的目录，通过序号选择，然后cd进目录</span><br></pre></td></tr></table></figure>
+<p>e.g. If you often go to  <code>~/files/cool_project</code> you can simply use <code>z cool</code> to jump there.</p>
+</li>
+<li>
+<p><code>autojump</code>提供了<code>j</code>命令, 效果和<code>fasd</code>的<code>z</code>命令一样, 可以作为<code>fasd</code>的替代品:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yay -S autojump</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Zsh-Theme"><a class="header-anchor" href="#Zsh-Theme"></a>Zsh Theme</h1>
+<p>目前用<a target="_blank" rel="noopener" href="https://github.com/romkatv/powerlevel10k/blob/master/README.md">powlevel10k</a>， 主页上给了中国大陆的下载方式, oh-my-zsh下：</p>
+<ol>
+<li>
+<p>Clone the repository:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git $&#123;ZSHz</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Set <code>ZSH_THEME=&quot;powerlevel10k/powerlevel10k&quot;</code> in <code>~/.zshrc</code></p>
+</li>
+<li>
+<p>source一下配置文件</p>
+</li>
+<li>
+<p>开启主题配置：<code>p10k configure</code></p>
+</li>
+<li>
+<p>后续可以继续用<code>p10k configure</code>重新开始配置， 或者手动更改配置文件：<code>~/.p10k.zsh</code></p>
+<ul>
+<li>注意, 我使用了符号链接.  <code>~/.p10k.zsh</code>实际是指向<code>/Users/lyk/Projects/MyOfficialProjects/dotfiles/.p10k.zsh</code>的符号链接. 因此每次<code>p10k configure</code>后, 都不能正确地在<code>~/.p10k.zsh</code>生成配置文件,<strong>需要手动修</strong>改.</li>
+</ul>
+</li>
+</ol>
+<h2 id="p10k-Fonts"><a class="header-anchor" href="#p10k-Fonts"></a>p10k Fonts</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k">For Details Go To Github</a></p>
+<blockquote>
+<p>Powerlevel10k doesn’t require custom fonts but can take advantage of them if they are available. It works well with <a target="_blank" rel="noopener" href="https://github.com/ryanoasis/nerd-fonts">Nerd Fonts</a>, <a target="_blank" rel="noopener" href="https://github.com/adobe-fonts/source-code-pro">Source Code Pro</a>, <a target="_blank" rel="noopener" href="https://fontawesome.com/">Font Awesome</a>, <a target="_blank" rel="noopener" href="https://github.com/powerline/fonts">Powerline</a>, and even the default system fonts. The full choice of style options is available only when using <a target="_blank" rel="noopener" href="https://github.com/ryanoasis/nerd-fonts">Nerd Fonts</a>.</p>
+<p>👇 <strong>Recommended font</strong>: Meslo Nerd Font patched for Powerlevel10k. 👇</p>
+</blockquote>
+<p>If you are using iTerm2 or Termux, <code>p10k configure</code> can <strong>install the recommended font for you.</strong> Simply answer <code>Yes</code> when asked whether to install <em>Meslo Nerd Font</em>.</p>
+<h3 id="Manual-font-installation"><a class="header-anchor" href="#Manual-font-installation"></a>Manual font installation</h3>
+<ol>
+<li>
+<p>Download these four ttf files:</p>
+<ul>
+<li>[MesloLGS NF Regular.ttf](<a target="_blank" rel="noopener" href="https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS">https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS</a> NF Regular.ttf)</li>
+<li>[MesloLGS NF Bold.ttf](<a target="_blank" rel="noopener" href="https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS">https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS</a> NF Bold.ttf)</li>
+<li>[MesloLGS NF Italic.ttf](<a target="_blank" rel="noopener" href="https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS">https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS</a> NF Italic.ttf)</li>
+<li>[MesloLGS NF Bold Italic.ttf](<a target="_blank" rel="noopener" href="https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS">https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS</a> NF Bold Italic.ttf)</li>
+</ul>
+</li>
+<li>
+<p>Double-click on each file and click “Install”. This will make <code>MesloLGS NF</code> font available to all applications on your system.</p>
+</li>
+<li>
+<p>Configure your terminal to use this font:</p>
+<ul>
+<li>
+<p><strong>iTerm2</strong>: Type <code>p10k configure</code> and answer <code>Yes</code> when asked whether to install <em>Meslo Nerd Font</em>. Alternatively, open <em>iTerm2 → Preferences → Profiles → Text</em> and set <em>Font</em> to <code>MesloLGS NF</code>.</p>
+</li>
+<li>
+<p><strong>Visual Studio Code</strong>: Open <em>File → Preferences → Settings</em> (PC) or <em>Code → Preferences → Settings</em> (Mac), enter <code>terminal.integrated.fontFamily</code> in the search box at the top of <em>Settings</em> tab and set the value below to <code>MesloLGS NF</code>. Consult <a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/romkatv/powerlevel10k-media/389133fb8c9a2347929a23702ce3039aacc46c3d/visual-studio-code-font-settings.jpg">this screenshot</a> to see how it should look like or see <a target="_blank" rel="noopener" href="https://github.com/romkatv/powerlevel10k/issues/671">this issue</a> for extra information.</p>
+</li>
+<li>
+<p><strong>Alacritty</strong>: Create or open</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">~/.config/alacritty/alacritty.yml</span><br></pre></td></tr></table></figure>
+<p>and add the following section to it:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">font:</span></span><br><span class="line">  <span class="attr">normal:</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">&quot;MesloLGS NF&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Notes"><a class="header-anchor" href="#Notes"></a>Notes</h2>
+<ul>
+<li>
+<p>Linux上默认配置不开启username@hostname 的显示，参加官方文档的“How do I add username and/or hostname to prompt?”. 也可以将这行注释掉：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Don<span class="string">&#x27;t show context unless running with privileges or in SSH.</span></span></span><br><span class="line">typeset -g POWERLEVEL9K_CONTEXT_&#123;DEFAULT,SUDO&#125;_&#123;CONTENT,VISUAL_IDENTIFIER&#125;_EXPANSION=</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="General-Terminal-Emulater-Config"><a class="header-anchor" href="#General-Terminal-Emulater-Config"></a>General Terminal Emulater Config</h1>
+<h2 id="Color-Dracula"><a class="header-anchor" href="#Color-Dracula"></a>Color: Dracula</h2>
+<p><a target="_blank" rel="noopener" href="https://draculatheme.com/">Dracula</a>: 该网站收集了很多终端模拟器的Dracula主题配色方案</p>
+<ul>
+<li>
+<p>iTerms2:</p>
+<ol>
+<li>
+<p>Install:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/dracula/iterm.git</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>启用该配色：</p>
+<ol>
+<li><em>iTerm2 &gt; Preferences &gt; Profiles &gt; Colors Tab</em></li>
+<li>Open the <em>Color Presets…</em> drop-down in the bottom right corner</li>
+<li>Select <em>Import…</em> from the list</li>
+<li>Select the <code>Dracula.itermcolors</code> file</li>
+<li>Select the <em>Dracula</em> from <em>Color Presets…</em></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p>Alacritty:</p>
+<ol>
+<li>
+<p>Install: Download using the <a target="_blank" rel="noopener" href="https://github.com/dracula/alacritty/archive/master.zip">GitHub .zip download</a> option.</p>
+</li>
+<li>
+<p>You just have to import <code>dracula.yml</code> in <code>~/.config/alacritty/alacritty.yml</code>.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment">## Dracula Color Theme</span></span><br><span class="line"><span class="comment">## It&#x27;s a symlink to my dotfile</span></span><br><span class="line"><span class="attr">import:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">~/.config/alacritty/dracula.yml</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Terminal/" rel="tag"># Terminal</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Tmux/" rel="prev" title="Tmux">
+                  <i class="fa fa-chevron-left"></i> Tmux
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Traditional-Unix-CLI-Tools/" rel="next" title="Traditional Unix CLI Tools">
+                  Traditional Unix CLI Tools <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Intro UDP TCP 可靠传输 TCP Flow Conteol TCP Congestion Conteol">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Transport Layer">
+<meta property="og:url" content="http://lyk-love.cn/2022/07/06/Computer%20Networking%20Transport-Layer/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Intro UDP TCP 可靠传输 TCP Flow Conteol TCP Congestion Conteol">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/Transport%20Layer.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/Transport%20Layer%20in%20Network%20Arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/UDP%20communication%20prodedure.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/UDP%20Diagram.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20Procedure.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20Segment.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%203-way%20handshake.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%204-way%20wavehand.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/stop-wait%20protocal%20without%20error.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/stop-wait%20protocal%20RTO.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/stop-wait%20protocal%20with%20SYNACK%20loss.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/stop-wait%20protocal%20with%20SYNACK%20late.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/ARQ%20sliding%20window.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20sliding%20window.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20cache%20and%20sliding%20window.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20SACK.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20flow%20control%20with%20sliding%20window.png">
+<meta property="article:published_time" content="2022-07-05T16:47:03.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.927Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Computer Networking">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/Transport%20Layer.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/07/06/Computer%20Networking%20Transport-Layer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/07/06/Computer%20Networking%20Transport-Layer/","path":"2022/07/06/Computer Networking Transport-Layer/","title":"Transport Layer"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Transport Layer | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%BE%93%E5%B1%82%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">运输层的作用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%BE%93%E5%B1%82%E7%9A%84%E5%8D%8F%E8%AE%AE"><span class="nav-text">运输层的协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Socket-port"><span class="nav-text">Socket &amp;&amp; port</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UDP"><span class="nav-text">UDP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#UDP%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B"><span class="nav-text">UDP通信过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UDP-Diagram"><span class="nav-text">UDP Diagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84UDP%E7%A8%8B%E5%BA%8F"><span class="nav-text">常用的UDP程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-text">Example</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP-Client"><span class="nav-text">UDP Client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP-Server"><span class="nav-text">UDP Server</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP"><span class="nav-text">TCP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E8%BF%9E%E6%8E%A5"><span class="nav-text">TCP连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93"><span class="nav-text">TCP数据传输</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-Segment"><span class="nav-text">TCP Segment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86"><span class="nav-text">TCP连接管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B"><span class="nav-text">TCP连接建立</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%8A%A5%E6%96%87"><span class="nav-text">第一个报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%8A%A5%E6%96%87"><span class="nav-text">第二个报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E4%B8%AA%E6%8A%A5%E6%96%87"><span class="nav-text">第三个报文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E8%BF%9E%E6%8E%A5%E9%87%8A%E6%94%BE"><span class="nav-text">TCP连接释放</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%8A%A5%E6%96%87-2"><span class="nav-text">第一个报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%8A%A5%E6%96%87-2"><span class="nav-text">第二个报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E4%B8%AA%E6%8A%A5%E6%96%87-2"><span class="nav-text">第三个报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E4%B8%AA%E6%8A%A5%E6%96%87"><span class="nav-text">第四个报文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-2"><span class="nav-text">Example</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Client"><span class="nav-text">TCP Client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Server"><span class="nav-text">TCP Server</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SYN-Flood-Attack"><span class="nav-text">SYN Flood Attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93"><span class="nav-text">可靠传输</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE"><span class="nav-text">可靠传输协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E7%AD%89%E5%BE%85%E5%8D%8F%E8%AE%AE"><span class="nav-text">停止等待协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A0%E5%B7%AE%E9%94%99%E6%83%85%E5%86%B5"><span class="nav-text">无差错情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BA%E7%8E%B0%E5%B7%AE%E9%94%99"><span class="nav-text">出现差错</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A1%AE%E8%AE%A4%E4%B8%A2%E5%A4%B1%E5%92%8C%E7%A1%AE%E8%AE%A4%E8%BF%9F%E5%88%B0"><span class="nav-text">确认丢失和确认迟到</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%A1%E9%81%93%E5%88%A9%E7%94%A8%E7%8E%87"><span class="nav-text">信道利用率</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E7%BB%ADARQ%E5%8D%8F%E8%AE%AE"><span class="nav-text">连续ARQ协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-text">TCP可靠传输的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="nav-text">滑动窗口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%8E%E7%BC%93%E5%AD%98"><span class="nav-text">滑动窗口与缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B6%85%E6%97%B6%E9%87%8D%E4%BC%A0%E6%97%B6%E9%97%B4%E7%9A%84%E9%80%89%E6%8B%A9"><span class="nav-text">超时重传时间的选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E7%A1%AE%E8%AE%A4SACK"><span class="nav-text">选择确认SACK</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-Flow-Control"><span class="nav-text">TCP Flow Control</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%AE%9E%E7%8E%B0%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="nav-text">利用滑动窗口实现流量控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E7%9A%84%E4%BC%A0%E8%BE%93%E6%95%88%E7%8E%87"><span class="nav-text">TCP的传输效率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-Congestion-Control"><span class="nav-text">TCP Congestion Control</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-text">拥塞控制的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-text">TCP拥塞控制的方法</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/07/06/Computer%20Networking%20Transport-Layer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Transport Layer | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Transport Layer
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-07-05 16:47:03" itemprop="dateCreated datePublished" datetime="2022-07-05T16:47:03Z">2022-07-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Intro</li>
+<li>UDP</li>
+<li>TCP</li>
+<li>可靠传输</li>
+<li>TCP Flow Conteol</li>
+<li>TCP Congestion Conteol</li>
+</ul>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<p>网络层(IP)为<strong>主机</strong>之间提供了逻辑通信， 而运输层为<strong>进程</strong>之间提供了端到端的逻辑通信</p>
+<ul>
+<li>逻辑通信就是好像两个对等实体(无论是网络层的实体(主机)还是运输层的实体(进程))之间有一条水平方向的信道</li>
+<li>运输层的端到端通信， 是<strong>进程</strong>间的通信</li>
+</ul>
+<h2 id="运输层的作用"><a class="header-anchor" href="#运输层的作用"></a>运输层的作用</h2>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/Transport%20Layer.png" alt="Transport Layer"></p>
+<ul>
+<li>复用( multiplexing )：client的不同进程都可以使用同一个运输层协议发送数据到网络层</li>
+<li>分用( demultiplexing ): server的运输层在从网络层收到发送给各进程的数据后，可以分别交付给目的进程， 即server的不同进程可以用同一个运输层协议接收数据</li>
+<li>对报文进行差错检测</li>
+</ul>
+<h2 id="运输层的协议"><a class="header-anchor" href="#运输层的协议"></a>运输层的协议</h2>
+<p>运输层协议主要有面向连接的TCP和无连接的UDP。 两种协议在协议栈中的位置：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/Transport%20Layer%20in%20Network%20Arch.png" alt="Transport Layer in Network Arch"></p>
+<ul>
+<li>
+<p>TCP的数据传输单元称为TCP报文段( TCP Segment )</p>
+</li>
+<li>
+<p>UDP的数据传输单元称为UDP用户数据报( UDP Diagram )</p>
+</li>
+</ul>
+<p>以下给出应用层协议主要使用的运输层协议:</p>
+<table>
+<thead>
+<tr>
+<th>应用</th>
+<th>应用层协议</th>
+<th>运输层协议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>域名 — IP 映射</td>
+<td>DNS</td>
+<td>UDP</td>
+</tr>
+<tr>
+<td>文件传送</td>
+<td>TFTP</td>
+<td>UDP</td>
+</tr>
+<tr>
+<td>路由选择</td>
+<td>RIP（Router Informatio Protocal）</td>
+<td>UDP</td>
+</tr>
+<tr>
+<td>IP分配</td>
+<td>DHCP</td>
+<td>UDP</td>
+</tr>
+<tr>
+<td>远程文件服务器</td>
+<td>NFS( Network File System )</td>
+<td>UDP</td>
+</tr>
+<tr>
+<td>多播</td>
+<td>IGMP</td>
+<td>UDP</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>SMTP</td>
+<td>TCP</td>
+</tr>
+<tr>
+<td>远程终端接入</td>
+<td>TELNET</td>
+<td>TCP</td>
+</tr>
+<tr>
+<td>万维网</td>
+<td>HTTP</td>
+<td>TCP</td>
+</tr>
+<tr>
+<td>文件传送</td>
+<td>FTP</td>
+<td>TCP</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Socket-port"><a class="header-anchor" href="#Socket-port"></a>Socket &amp;&amp; port</h2>
+<ul>
+<li>
+<p>套接字( Socket ): 网络通信中的进程的唯一标识， 格式为<code>( IP : port )</code></p>
+</li>
+<li>
+<p>协议端口号( protocal port number ): 简称端口( port )，用来唯一标识一个本机的（应用层）进程</p>
+<ul>
+<li>数据通过IP发送到对应的主机， 主机上的运输层协议再通过端口来找到对应的应用层进程, 即: <strong>端口是本机的应用层进程和运输层协议交互的一种地址</strong></li>
+<li>在本机中，进程也可以通过PID标识，不同的OS拥有不同格式的PID，格式无法统一，因此无法用于运输层与应用层的交互</li>
+<li>这里的“端口”是软件端口， 与用于硬件设备交互的硬件端口不同</li>
+</ul>
+</li>
+<li>
+<p>端口有16位, 即 0 ~ 65535， 可分为:</p>
+<ul>
+<li>server port: 0 ~ 49151
+<ul>
+<li>well-known port: 0 ~ 1023, 被保留用于一些常见的程序，如HTTP(80), FTP(21)</li>
+<li>register port: 1024 ~ 49151，被用于没有well-known port的程序</li>
+</ul>
+</li>
+<li>client port: 49152 ~ 65535xs</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>端口号</th>
+<th>服务进程</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>echo</td>
+<td>将收到的数据报送到服务器</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Discard</td>
+<td>丢弃任何收到的数据报</td>
+</tr>
+<tr>
+<td>21</td>
+<td>FTP</td>
+<td>活跃的用户</td>
+</tr>
+<tr>
+<td>25</td>
+<td>SMTP</td>
+<td>简单邮件传输协议</td>
+</tr>
+<tr>
+<td>53</td>
+<td>DNS</td>
+<td></td>
+</tr>
+<tr>
+<td>69</td>
+<td>HTTP</td>
+<td></td>
+</tr>
+<tr>
+<td>161</td>
+<td>SNMP</td>
+<td></td>
+</tr>
+<tr>
+<td>443</td>
+<td>HTTPS</td>
+<td></td>
+</tr>
+<tr>
+<td>23</td>
+<td>Telnet</td>
+<td>虚拟终端网络</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h1 id="UDP"><a class="header-anchor" href="#UDP"></a>UDP</h1>
+<p>Features:</p>
+<ol>
+<li>无连接</li>
+<li>不可靠传输</li>
+<li>面向报文：即将报文剥去/添加UDP头后转交给上/下层， 不进行任何的合并/拆分。这意味着进程必须选择合适大小的报文，若报文过长，IP层会进行分片；若报文太短，则会使得IP数据报的首部的相对长度较大，两种情况都会降低IP层效率</li>
+<li>没有拥塞控制</li>
+<li>首部开销小，只有 8 Byte</li>
+</ol>
+<h2 id="UDP通信过程"><a class="header-anchor" href="#UDP通信过程"></a>UDP通信过程</h2>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/UDP%20communication%20prodedure.png" alt="UDP communication prodedure"></p>
+<h2 id="UDP-Diagram"><a class="header-anchor" href="#UDP-Diagram"></a>UDP Diagram</h2>
+<p>UDP Diagram分为Header和Dara两部分</p>
+<ul>
+<li>Header是固定的8 Byte</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/UDP%20Diagram.png" alt="UDP Diagram"></p>
+<p>Header各字段如下:</p>
+<ol>
+<li>
+<p>源端口：源端口号；在需要对方回信时选用；不需要时用全0</p>
+</li>
+<li>
+<p>目的端口：目的端口号；在终点交付报文时必须使用</p>
+</li>
+<li>
+<p>长度：UDP用户数据报的长度，最小值是8(仅有首部)</p>
+</li>
+<li>
+<p>checksum：检测UDP用户数据报在传输过程中是否有错。有就丢弃</p>
+<ul>
+<li>在计算checksum时，需要在UDP报文之前增加12 Byte的&quot;伪首部&quot;( 其结构和内容见上图 ), 伪首部不是报文的一部分，只是在计算checksum时临时添加的</li>
+</ul>
+<p>​</p>
+</li>
+</ol>
+<p>如果Receiver的UDP发现收到的报文中的目的端口号非法( 比如，没有进程监听该端口 ), 就会丢弃该报文并由ICMP发送一个&quot;port unreachable&quot;差错报文（ type=3, code=3）给Sender</p>
+<h2 id="常用的UDP程序"><a class="header-anchor" href="#常用的UDP程序"></a>常用的UDP程序</h2>
+<h2 id="Example"><a class="header-anchor" href="#Example"></a>Example</h2>
+<p>流程图见上文&quot;UDP通信过程&quot;</p>
+<h3 id="UDP-Client"><a class="header-anchor" href="#UDP-Client"></a>UDP Client</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line">serverName = <span class="string">&#x27;localhost&#x27;</span> <span class="comment"># 服务器地址，可以是IP或者域名，如果是域名，则会进行DNS lookup</span></span><br><span class="line">serverPort = <span class="number">12000</span> <span class="comment"># 服务器指定的端口</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建Client Socker</span></span><br><span class="line"><span class="comment"># AF_INET：表明IP采用IPv4</span></span><br><span class="line"><span class="comment"># SOCK_DGRAM:表明这是个UDP Socket</span></span><br><span class="line">clientSocket = socket(AF_INET, SOCK_DGRAM) <span class="comment"># 创建UDP套接字，使用IPv4协议</span></span><br><span class="line"></span><br><span class="line">message = <span class="built_in">input</span>(<span class="string">&#x27;Input lowercase sentence:&#x27;</span>).encode() <span class="comment"># 用户输入信息，并编码为bytes以便发送</span></span><br><span class="line">clientSocket.sendto(message, (serverName, serverPort)) <span class="comment"># 将信息发送到服务器</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从服务器接收信息，同时也能得到服务器地址(当然，其实Client已经知道了Server IP，因此这个信息是多余的)</span></span><br><span class="line"><span class="comment"># 缓存长度2048</span></span><br><span class="line">modifiedMessage, serverAddress = clientSocket.recvfrom(<span class="number">2048</span>) </span><br><span class="line"><span class="built_in">print</span>(modifiedMessage.decode()) <span class="comment"># 显示信息</span></span><br><span class="line">clientSocket.close() <span class="comment"># 关闭套接字</span></span><br></pre></td></tr></table></figure>
+<h3 id="UDP-Server"><a class="header-anchor" href="#UDP-Server"></a>UDP Server</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line">serverPort = <span class="number">12000</span> <span class="comment"># 服务器指定的端口</span></span><br><span class="line">serverSocket = socket(AF_INET, SOCK_DGRAM) <span class="comment"># 创建UDP套接字，使用IPv4协议</span></span><br><span class="line">serverSocket.bind((<span class="string">&#x27;&#x27;</span>,serverPort)) <span class="comment"># 将套接字绑定到之前指定的端口</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The server is ready to receive&quot;</span>)</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>: <span class="comment"># 服务器将一直接收UDP报文</span></span><br><span class="line">	message, clientAddress = serverSocket.recvfrom(<span class="number">2048</span>) <span class="comment"># 接收客户端信息，同时获得客户端地址</span></span><br><span class="line">	modifiedMessage = message.upper() <span class="comment"># 将客户端发来的字符串变为大写</span></span><br><span class="line">	serverSocket.sendto(modifiedMessage, clientAddress) <span class="comment"># 通过已经获得的client地址，将修改后的字符串发回client户端</span></span><br></pre></td></tr></table></figure>
+<h1 id="TCP"><a class="header-anchor" href="#TCP"></a>TCP</h1>
+<p>Featues:</p>
+<ol>
+<li>
+<p>面向连接，且连接是<strong>点对点</strong> 即以Socket为进程的地址，一对一通信)的</p>
+<ul>
+<li>TCP无法提供多播</li>
+</ul>
+</li>
+<li>
+<p>可靠传输</p>
+</li>
+<li>
+<p>全双工通信</p>
+</li>
+<li>
+<p>面向字节流：虽然进程与TCP的交互以数据块（大小不等）为单位， 但TCP将应用层的数据仅仅看成无结构的字节流。 发送方的进程把数据写入TCP的<strong>发送缓存</strong>，接收方的进程从TCP的<strong>接收缓存</strong>中读取字节流</p>
+<ul>
+<li>发送缓存实际上是发送窗口的超集，二者的关系详见下文<em>滑动窗口与缓存</em></li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20Procedure.png" alt="TCP Procedure"></p>
+</li>
+</ol>
+<h2 id="TCP连接"><a class="header-anchor" href="#TCP连接"></a>TCP连接</h2>
+<ul>
+<li>
+<p>TCO连接的端点就是Socket，每条TCP连接唯一地被两个端点确定：</p>
+<p>TCP连接::={socket1,socket2} = {(IP1:port1),(IP2:port2)}</p>
+</li>
+</ul>
+<h2 id="TCP数据传输"><a class="header-anchor" href="#TCP数据传输"></a>TCP数据传输</h2>
+<p>当TCP连接建立后，两个进程就可以发送数据了</p>
+<ul>
+<li>
+<p>发送缓存：应用程序将要发送的数据通过Socket传递给TCP，TCP将数据引导到该连接的发送缓存，<strong>发送缓存</strong>大小是在三阶段握手的过程中确定的；之后TCP将时不时地从该缓存中拿出数据，封装成报文段进行发送</p>
+<ul>
+<li>TCP规范中<strong>没有规定TCP应该在何时发送缓存里的数据</strong>，描述为“TCP应该在它方便的时候以报文段的形式发送数据”。 关于TCP如何控制发送报文段的时机，见下文<em>TCP的传输效率</em></li>
+</ul>
+</li>
+<li>
+<p>接收缓存：当TCP Segment到达接收端时，便进入了接收端的缓存，等待被应用程序读取</p>
+<ul>
+<li>TCP连接的每一端都有发送和接收缓存</li>
+</ul>
+</li>
+<li>
+<p>MSS(Maximum Segment Size)： TCP每次可以从缓存中发送的最大数据长度</p>
+<ul>
+<li>
+<p>一般来说，MSS+TCP/IP首部的长度要小于等于链路的MTU（即链路层最大帧长度Maximum Transport Unit）</p>
+</li>
+<li>
+<p>MSS的名字很让人误解， 事实上MSS指的只是Segment的Data部分的最大长度，而不是整个Segment的长度</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="TCP-Segment"><a class="header-anchor" href="#TCP-Segment"></a>TCP Segment</h2>
+<p>TCP Segment分为Header和Data两部分</p>
+<ul>
+<li>Header前20Byte固定，后面跟$4n$个可选的Byte，因此Header占$20 + 4n$ Byte</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20Segment.png" alt="TCP Segment"></p>
+<p>Header各字段如下：</p>
+<ol>
+<li>源端口和目的端口：各占2字节，分别是源端口号和目的端口号</li>
+<li><strong>序号</strong>：占4字节, 序号范围$[0,2^{32}-1]$。TCP中传输的数据流中的每一字节都按顺序编号。序号字段的值是<strong>本报文段所发送的数据的第一个字节的序号</strong></li>
+<li><strong>确认号</strong>：占4字节，是<strong>期望收到对方下一个报文段的第一个数据字节的序号</strong>。 例如B正确收到了A发送过来的一个Segment。序号为501，而数据长度是200Byte，这表明B正确收到了A发送的到序号700为止的数据。 因此B期望收到A的下一个数据序号是701， 于是B在发送给A的Segment中把确认号置为701
+<ul>
+<li>若确认号=$N$，则表明到序号$N-1$为止所有数据都正确收到</li>
+</ul>
+</li>
+<li><strong>数据偏移</strong>：占4位，指出TCP报文段的数据起始处与TCP报文段的起始处的距离，也就是<strong>Header的长度</strong></li>
+<li>保留：占6位，保留为今后使用，目前应置为0</li>
+<li>紧急URG：当URG=1时，表明紧急指针字段有效，告诉系统此报文中有紧急数据，应尽快传送，而不采用原来的按排队顺序来传送</li>
+<li>确认<strong>ACK</strong>：仅当ACK=1时确认号字段有效，TCP规定，在<strong>连接建立后</strong>所有数据报文段都把ACK置为1</li>
+<li>推送PSH：当收到PSH=1的报文时，就尽快交付接收应用进程，而不再等到整个缓存都填满后再向上交付</li>
+<li>复位RST：当RST=1时，表明TCP连接中出现严重差错，必须释放连接，然后重新建立连接。 RST=1还用来咀嚼一个非法的Segment或拒绝打开一个连接。 RST也称为重置位</li>
+<li>同步<strong>SYN</strong>：<strong>在连接建立时用来同步序号；当SYN=1而ACK=0时，表明这是一个连接请求报文，对方若同意建立连接，则应在响应报文中使SYN=1，ACK=1</strong>（称为SYNACK）。 因此，SYN=1就表明这是一个连接请求( SYN Segment )或连接接受报文( SYNACK Segment )</li>
+<li>终止<strong>FIN</strong>：用来释放一个连接，当FIN=1时，表示此报文段的发送方已经发送完毕，并要求释放连接</li>
+<li><strong>窗口</strong>：占2字节，指的是<strong>发送本报文段的一方的接收窗口</strong>（而不是自己的发送窗口 ）。 例如，A是Sender， B是Receiver， A的窗口值作为A让对方设置其发送窗口（ B虽然是Receiver， 但也会向A发送数据 ）的依据；窗口字段明确指出了<strong>从本Sement Header的确认号算起，A目前允许B发送的数据量（以字节为单位）</strong>，窗口值经常动态变化
+<ul>
+<li>例如，A发送给B一个Segment，确认号是701，窗口字段是1000， 这就是告诉B：“从701算起，我的接收缓存空间还可接收1000Byte数据，你在给我发送数据时，必须考虑到这点”</li>
+</ul>
+</li>
+<li>校验和：占2字节，检验和字段检验的范围包括首部和数据两部分。 在计算校验和是，需要在Header前面加上12Byte的伪首部</li>
+<li>紧急指针：占2字节，在URG=1时才有意义，指出本报文段中的紧急数据的字节数</li>
+<li>选项：长度可变，最长40Byte。 当没有使用任何选项时， Header长度是20Byte。 最后的填充字段仅仅是为了使整个TCP首部长度是4Byte的整数倍
+<ul>
+<li>MSS就是选项之一</li>
+</ul>
+</li>
+</ol>
+<h2 id="TCP连接管理"><a class="header-anchor" href="#TCP连接管理"></a>TCP连接管理</h2>
+<h2 id="TCP连接建立"><a class="header-anchor" href="#TCP连接建立"></a>TCP连接建立</h2>
+<p>我们将主动发起连接建立的进程称为client， 被动等待连接建立的进程称为server。 记A为client， B为Server， 连接建立过程为三报文握手：</p>
+<ul>
+<li>一般将其称作“三次握手”，但严谨地说，TCP连接建立只是“在一次握手中报文交换三次”，因此称为“三报文握手”</li>
+<li>注意，<strong>只有SYN和SYNACK报文段会被超时重传， ACK报文段是不会被重传的</strong></li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%203-way%20handshake.png" alt="TCP 3-way handshake"></p>
+<p>起初，A和B都为CLOSED状态。在通信开始前，双方都得创建各自的传输控制块（TCB）。B创建完TCB后便进入LISTEN状态，此时准备接收A发来的连接请求。</p>
+<h3 id="第一个报文"><a class="header-anchor" href="#第一个报文"></a>第一个报文</h3>
+<p>client向server发送连接请求报文段。该报文段没有Data部分, Header中:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SYN=1，ACK=0，seq = client_isn</span><br></pre></td></tr></table></figure>
+<p>该Segment称为<strong>SYN Segment</strong></p>
+<p>请求发送后，client便进入SYN-SENT状态</p>
+<ul>
+<li>SYN=1，ACK=0表示该报文段为连接请求报文。</li>
+<li><code>client_isn</code>为本次TCP通信的字节流的初始序号， TCP规定：SYN=1的报文段不能有数据部分，但要<strong>消耗掉一个序号</strong></li>
+<li><code>client_isn</code>和后文的<code>server_isn</code>可以随机选择，也可以（为了避免网络攻击）使用算法生成</li>
+</ul>
+<h3 id="第二个报文"><a class="header-anchor" href="#第二个报文"></a>第二个报文</h3>
+<p>服务端收到连接请求报文段后，如果同意连接，则会发送一个应答：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SYN=1，ACK=1，seq=server_isn，ack=client_isn + 1</span><br></pre></td></tr></table></figure>
+<p>该Segment称为<strong>SYNACK Segment</strong></p>
+<p>该应答发送完成后，server便进入SYN-RCVD（同步收到）状态</p>
+<ul>
+<li>SYN=1，ACK=1表示该segment为连接同意的应答报文</li>
+<li>seq=<code>server_isn</code>表示server作为sender时，发送字节流的初始序号. 这个序号也可以是随机选取的</li>
+<li>ack=<code>client_isn</code>+1表示服务端希望下一个数据报发送序号从<code>client_isn</code>+1开始的字节</li>
+<li>TCP规定: <strong>SYNACK Segment要消耗一个序号，也就是B向A发送的下一个Segment的起始序号是<code>server_isn</code>+1</strong></li>
+</ul>
+<h3 id="第三个报文"><a class="header-anchor" href="#第三个报文"></a>第三个报文</h3>
+<p>当客户端收到连接同意的应答后，还要向服务端发送一个确认报文段，表示：server发来的SYNACK已经成功收到。<br>
+该报文段的头部为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ACK=1，seq=client_isn + 1，ack=server_isn+1</span><br></pre></td></tr></table></figure>
+<p>该Sement称为<strong>ACK Segment</strong></p>
+<p>client发完这个segment后便进入ESTABLISHED状态，server收到这个应答后也进入ESTABLISHED状态，此时连接建立完成</p>
+<ul>
+<li>SYN = 0， ACK = 1 标识该segment为连接建立确认报文。 由于client发送完这个报文后就处于连接建立状态，因此SYN=0</li>
+<li>TCP规定：ACK Segment可以携带数据，<strong>但如果不携带数据则不消耗序号</strong>，此时，<strong>A向B发送的下一个Segment的起始序号仍然是<code>client_isn</code> + 1</strong></li>
+</ul>
+<hr>
+<p><strong>为什么连接建立需要发送第三个报文？</strong></p>
+<p>防止失效的连接请求报文段被服务端接收，从而产生错误</p>
+<p>考虑如下情况：我们采用两报文握手， A给B发送SYN Segment， 但因该报文丢失而没有收到确认（ SYNACK ），于是A再重传一次SYN Segment。 后来A收到了确认，建立了连接。通信结束后释放连接。 A总共发送了两个报文段，第一个丢失了，第二个正确到达了B，没有“失效的”报文段。这是正常情况。</p>
+<p>现在假设一种异常情况， 即A发出的第一个SYN Segment没有丢失，而是迟到了，以致在<strong>连接释放后</strong>才到达B， 这是个<strong>已经失效的Segment</strong>，B收到该SYN Segment后，误以为A又发出了一次新的连接请求，于是就向A发送SYNACK Segment，同意建立连接， <strong>由于这是“两报文握手”， B发送SYNACK后就进入了ESTABLISHED状态</strong>。 但此时A早已进入CLOSED状态， A会直接丢弃这个SYNACK，也不会给B发数据，更不会通知B，B会一直等待下去，持续地浪费其资源。</p>
+<hr>
+<p><strong>如果第三个报文握手丢失怎么办？</strong></p>
+<p>problem：如果第三个报文握手丢失，A处于ESTABLISHED状态，向B发送数据，而B仍然处于SYN_RECV状态，无法响应连接。</p>
+<p>solution：B在发送SYNACK后，会根据 TCP的超时重传机制，等待3秒、6秒、12秒后重新发送SYN+ACK包，以便Client重新发送ACK包。</p>
+<h2 id="TCP连接释放"><a class="header-anchor" href="#TCP连接释放"></a>TCP连接释放</h2>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%204-way%20wavehand.png" alt="TCP 4-way wavehand"></p>
+<p>起初，A和B都为ESTABLISHED状态</p>
+<h3 id="第一个报文-2"><a class="header-anchor" href="#第一个报文-2"></a>第一个报文</h3>
+<p>若A认为数据发送完成，则它需要向B发送连接释放请求。该Segment只有Header，其中：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FIN=1，seq=u</span><br></pre></td></tr></table></figure>
+<p>此时，A将进入FIN-WAIT-1状态</p>
+<ul>
+<li>FIN=1表示该报文段是一个连接释放请求</li>
+<li>seq=u，u-1是A向B发送的最后一个字节的序号</li>
+<li>TCP规定： FIN 报文段总是会消耗一个序号</li>
+</ul>
+<h3 id="第二个报文-2"><a class="header-anchor" href="#第二个报文-2"></a>第二个报文</h3>
+<p>B收到连接释放请求后，会通知高层进程：<strong>A向B这个方向的连接已经释放</strong>。此时B进入CLOSE-WAIT状态，并向A发送连接释放的应答，Header包含：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ACK=1，seq=v，ack=u+1</span><br></pre></td></tr></table></figure>
+<p>A收到该应答，进入FIN-WAIT-2状态，等待B发送连接释放请求。</p>
+<ul>
+<li>ACK=1：除TCP连接请求和链接释放请求报文段以外，<strong>TCP通信过程中所有数据报的ACK都为</strong>1，表示应答。</li>
+<li>seq=v，v-1是B向A发送的最后一个字节的序号。</li>
+<li>ack=u+1表示希望收到从第u+1个字节开始的报文段，并且已经成功接收了前u个字节。（因为第一个报文序号为u，且会消耗一个序号，因此ack = u+1）A收到该应答，进入FIN-WAIT-2状态，等待B发送连接释放请求</li>
+</ul>
+<p>第二次挥手完成后，A到B方向的连接已经释放，B不会再接收数据，A也不会再发送数据。但<strong>B到A方向的连接仍然存在，B可以继续向A发送数据</strong>， 此时连接处于**“半关闭”状态**</p>
+<h3 id="第三个报文-2"><a class="header-anchor" href="#第三个报文-2"></a>第三个报文</h3>
+<p>当B向A发完所有数据后，向A发送连接释放请求，Header包含：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FIN=1，ACK=1，seq=w，ack=u+1</span><br></pre></td></tr></table></figure>
+<p>B然后进入LAST-ACK状态。</p>
+<ul>
+<li>seq=w： B在半关闭状态可能又发送了一些数据，现在起始序号为w</li>
+</ul>
+<h3 id="第四个报文"><a class="header-anchor" href="#第四个报文"></a>第四个报文</h3>
+<p>A收到释放请求后，向B发送确认应答，Header包含：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FIN=1，ACK=1，seq=w，ack=u+1</span><br></pre></td></tr></table></figure>
+<p>此时A进入TIME-WAIT状态，此时连接还没有释放掉，必须经过时间等待计时器( TIME-WAIT timer )设置的时间 2MSL 后，且该时间段内没有B的重发请求的话，A才会进入CLOSED状态，撤销TCB。当B收到确认应答后，也会进入CLOSED状态，撤销TCB。</p>
+<ul>
+<li>最长报文段寿命MSL( Maximum Segment Lifetime ): 这个值是从工程上考虑的，一般是2min。 因此从A进入TIME-WAIT状态后，最少需要4min才能进入CLOSED</li>
+</ul>
+<p><strong>为什么A要先进入TIME-WAIT状态，等待时间后才进入CLOSED状态？</strong></p>
+<p>为了保证B能收到A的确认应答。<br>
+若A发完确认应答后直接进入CLOSED状态，那么如果该应答丢失，B等待超时后就会重新发送连接释放请求，但此时A已经关闭了，不会作出任何响应，因此B永远无法正常关闭。</p>
+<h2 id="Example-2"><a class="header-anchor" href="#Example-2"></a>Example</h2>
+<h3 id="TCP-Client"><a class="header-anchor" href="#TCP-Client"></a>TCP Client</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line">serverName = <span class="string">&#x27;localhost&#x27;</span> <span class="comment"># 指定服务器地址</span></span><br><span class="line">serverPort = <span class="number">12000</span></span><br><span class="line">clientSocket = socket(AF_INET, SOCK_STREAM) <span class="comment"># 建立TCP套接字，使用IPv4协议</span></span><br><span class="line">clientSocket.connect((serverName,serverPort)) <span class="comment"># 向服务器发起连接</span></span><br><span class="line"></span><br><span class="line">sentence = <span class="built_in">input</span>(<span class="string">&#x27;Input lowercase sentence:&#x27;</span>).encode() <span class="comment"># 用户输入信息，并编码为bytes以便发送</span></span><br><span class="line">clientSocket.send(sentence) <span class="comment"># 将信息发送到服务器</span></span><br><span class="line">modifiedSentence = clientSocket.recvfrom(<span class="number">1024</span>) <span class="comment"># 从服务器接收信息</span></span><br><span class="line"><span class="built_in">print</span>(modifiedSentence[<span class="number">0</span>].decode()) <span class="comment"># 显示信息</span></span><br><span class="line">clientSocket.close() <span class="comment"># 关闭套接字</span></span><br></pre></td></tr></table></figure>
+<h3 id="TCP-Server"><a class="header-anchor" href="#TCP-Server"></a>TCP Server</h3>
+<p>和Servlet类似，TCP Server实际上会先打开一个&quot;欢迎套接字&quot;来等待client连接，当client请求请求到来后， server通过“欢迎套接字”创建一个新的连接套接字(<code>serverSocket.accept()</code>)，由后者进行与该client的连接</p>
+<ul>
+<li>Client Socket与Server的Connection Socket(而不是欢迎套接字)建立了TCP连接</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> socket <span class="keyword">import</span> *</span><br><span class="line">serverPort = <span class="number">12000</span></span><br><span class="line">serverSocket = socket(AF_INET, SOCK_STREAM) <span class="comment"># 创建TCP欢迎套接字，使用IPv4协议</span></span><br><span class="line">serverSocket.bind((<span class="string">&#x27;&#x27;</span>,serverPort)) <span class="comment"># 将TCP欢迎套接字绑定到指定端口</span></span><br><span class="line">serverSocket.listen(<span class="number">1</span>) <span class="comment"># 最大连接数为1</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;The server in ready to receive&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">	connectionSocket, addr = serverSocket.accept() <span class="comment"># 接收到客户连接请求后，建立新的TCP连接套接字</span></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;Accept new connection from %s:%s...&#x27;</span> % addr)</span><br><span class="line">	sentence = connectionSocket.recv(<span class="number">1024</span>) <span class="comment"># 获取客户发送的字符串</span></span><br><span class="line">	capitalizedSentence = sentence.upper() <span class="comment"># 将字符串改为大写</span></span><br><span class="line">	connectionSocket.send(capitalizedSentence) <span class="comment"># 向用户发送修改后的字符串</span></span><br><span class="line">	connectionSocket.close() <span class="comment"># 关闭TCP连接套接字</span></span><br></pre></td></tr></table></figure>
+<h2 id="SYN-Flood-Attack"><a class="header-anchor" href="#SYN-Flood-Attack"></a>SYN Flood Attack</h2>
+<p>在TCP三报文握手中，server为了响应一个SYN，会分配一些资源（初始化一些变量和缓存），然后发送一个SYNACK， 并等待client的ACK Segment。 如果client不发送ACK， 最终server将终止该半开连接并回收资源</p>
+<p>SYN洪泛攻击( SYN flood attack ): 是一种经典DoS攻击, 在这种攻击中，攻击者发送大量的TCP SYN，而不对返回的SYNACK进行ACK。 随着大量SYN的到来，server会不停地新建半开连接并分配资源，导致server的资源耗尽</p>
+<p>流行的解决方法称为SYN cookie， 过程为：</p>
+<ol>
+<li>
+<p>当服务器接收到一个SYN报文段时，其并不知道该报文段来自一个合法用户还是要进行SYN洪泛攻击的攻击者，因此服务器不会为该报文段生成一个半开的连接（即<strong>不会分配资</strong>源） 。 服务器返回的SYNACK中的<code>server_isn</code>由hash生成：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server_isn = hash(srcIP,srcPort,dstIP,dstPort, magic)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>magic</code>是只有server知道的一个秘密数字</li>
+<li>server不会记住该<code>server_isn</code>及其相关的任何信息</li>
+</ul>
+</li>
+<li>
+<p>如果client是合法的，则它将返回一个ACK Segment， 其中<code>ack = server_isn+1</code>， server收到该报文后只要根据IP、端口和自己的<code>magic</code>重新计算<code>new_server_isn</code>，并比较:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if new_server_isn == ack - 1</span><br></pre></td></tr></table></figure>
+<p>判定该client是否合法。  如果合法，server会生成一个全开连接</p>
+</li>
+<li>
+<p>如果客户没有返回一个ACK报文段，则说明之前的SYN报文段属于要进行SYN洪泛攻击的攻击者，但其并没有对服务器造成任何危害，因为服务器没有为它分配任何资源</p>
+</li>
+</ol>
+<h1 id="可靠传输"><a class="header-anchor" href="#可靠传输"></a>可靠传输</h1>
+<p>理想的传输条件：</p>
+<ol>
+<li>传输信道不产生差错</li>
+<li>不管发送方以多快的速度发送数据，接收方总是来得及处理收到的数据</li>
+</ol>
+<p>在以上网络条件( 也可以说是<strong>网络层条件</strong> )下，不需要任何措施就可以实现可靠传输。 然而实际的网络都不具备以上理想条件（IP层就是不可靠的），因此要采用一些可靠传输协议来确保可靠传输。</p>
+<p>基本上，可靠传输要用到以下机制：</p>
+<ul>
+<li>计时器（超时重传）</li>
+<li>序号</li>
+</ul>
+<h2 id="可靠传输协议"><a class="header-anchor" href="#可靠传输协议"></a>可靠传输协议</h2>
+<p>我们这里讨论抽象的可靠传输协议，其实现不一定局限于应用层。 我们把传输的数据都称为分组，而不考虑数据实际上是在哪一层发送的。</p>
+<h3 id="停止等待协议"><a class="header-anchor" href="#停止等待协议"></a>停止等待协议</h3>
+<p>对于全双工通信，双方既是Sender又是Receiver。 为了简化问题，我们仅考虑A为Sender， B为Receiver的情况。</p>
+<ul>
+<li>停止等待： 每发送完一个分组就停止发送，等待对方的确认，在收到确认后再发送下一个分组</li>
+</ul>
+<h4 id="无差错情况"><a class="header-anchor" href="#无差错情况"></a>无差错情况</h4>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/stop-wait%20protocal%20without%20error.png" alt="stop-wait protocal without error"></p>
+<h4 id="出现差错"><a class="header-anchor" href="#出现差错"></a>出现差错</h4>
+<p>以下是传输过程中出现差错的情况：</p>
+<ol>
+<li>B在接收M1时检测出差错，就丢弃M1，什么也不做（不通知A收到有差错的分组）
+<ul>
+<li>B当然可以在检测出差错后给A发送错误报文，但这种方法很复杂，实践中一般不采用</li>
+</ul>
+</li>
+<li>M1在传输过程中就丢失了，B什么也不知道</li>
+</ol>
+<p>在这两种情况下，B都不会发送任何信息。 而可靠传输协议规定，如果A超过一段时间依然没有收到确认，就会重传前面发送过的分组，这就是<strong>超时重传</strong>。</p>
+<ul>
+<li>超时重传需要在每发送一个分组后设置超时计时器，如果在计时器在到期之前收到了确认，就重置计时器</li>
+</ul>
+<p>注意:</p>
+<ol>
+<li>A发送完一个分组后，必须暂时保留已发送分组的副本，只有在收到相应确认后才删除</li>
+<li>分组和确认都需要编号，才能明确哪个分组收到确认，哪个没收到</li>
+<li>超时计时器的重传时间应比数据在分组传输的平均往返时间更长一些</li>
+</ol>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/stop-wait%20protocal%20RTO.png" alt="stop-wait protocal RTO"></p>
+<h4 id="确认丢失和确认迟到"><a class="header-anchor" href="#确认丢失和确认迟到"></a>确认丢失和确认迟到</h4>
+<p>假设M1的传输正常，但B对M1的确认丢失了，A在没有收到确认后会超时重传M1，B会：</p>
+<ol>
+<li>丢弃这么重复的分组</li>
+<li>向A发送确认</li>
+</ol>
+<p>​        <img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/stop-wait%20protocal%20with%20SYNACK%20loss.png" alt="stop-wait protocal with SYNACK loss"></p>
+<p>​</p>
+<p>还有一种情况，B对M1对确认没有丢失，而是迟到了。 A超时重传后，B会收到重复的M1，并将其丢弃，并重传确认分组， A会受=收到该重复的确认分组。，并丢弃该确认:</p>
+<p>​        <img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/stop-wait%20protocal%20with%20SYNACK%20late.png" alt="stop-wait protocal with SYNACK late"></p>
+<h4 id="信道利用率"><a class="header-anchor" href="#信道利用率"></a>信道利用率</h4>
+<p>上述的停止等待协议使用了超时重传，因此也被称为ARQ( Automatic Repeat reQuest )， ARQ的缺点是大部分的时间都浪费在等待确认上面，信道利用率低</p>
+<p>为了提高信道利用率，可以用<em>流水线传输</em>来取代<em>停止等待传输</em>，流水线传输协议包括了连续ARQ协议和滑动窗口协议， 其中滑动窗口协议比较复杂，被TCP所采用，放到<em>TCP可靠传输的实现</em>一节</p>
+<ul>
+<li>“滑动窗口协议”一般指TCP所采用的滑动窗口协议， 尽管连续ARQ协议也采用了滑动窗口</li>
+</ul>
+<h3 id="连续ARQ协议"><a class="header-anchor" href="#连续ARQ协议"></a>连续ARQ协议</h3>
+<p>发送方维持<strong>发送窗口</strong>，位于发送窗口内的分组都可以连续发送出去，而不需要等待对方确认，这样信道利用率就提高了</p>
+<p>工作原理：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/ARQ%20sliding%20window.png" alt="ARQ sliding window"></p>
+<p>ARQ规定，发送方每收到一个确认，就把发送窗口滑动一个分组位置，接收方采用<strong>累积确认</strong>方式，在收到几个分组后，对<strong>按序到达的最后一个分组发送确认</strong></p>
+<ul>
+<li>优点：容易实现，确认丢失也不必重传</li>
+<li>缺点：不能向发送方反映出接收方已经正确收到的所有分组信息
+<ul>
+<li>例如，若Sennder发送了前五个分组，而中间的第三个分组丢失了，这时接收方只能对前两个分组发出确认。 Sender无法知道后面三个分组的下落，只能把后面三个分组再重传一次，这就叫做 <strong>Go-back-N</strong>. 表示需要再退回来重传已发送过的N个分组。 可见当网络质量不好时，连续ARQ协议的效率很低。</li>
+</ul>
+</li>
+</ul>
+<h2 id="TCP可靠传输的实现"><a class="header-anchor" href="#TCP可靠传输的实现"></a>TCP可靠传输的实现</h2>
+<p>我们假定数据传输只在一个方向进行，即A为Sender， B为Receiver</p>
+<h3 id="滑动窗口"><a class="header-anchor" href="#滑动窗口"></a>滑动窗口</h3>
+<p>TCP滑动窗口<strong>以字节为单位</strong>。 假设A收到了B发来的ACK Segment，其中窗口是20Byte，确认号是31（表明B期望收到的下一个序号是31），A根据B的报文构造自己的发送窗口：</p>
+<ul>
+<li>之前提到了，除了连接请求和连接释放请求, TCP通信过程中的所有Segment均含有<code>ACK=1</code>,这里是传输数据的Segment，也不例外</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20sliding%20window.png" alt="TCP sliding window"></p>
+<ul>
+<li>
+<p>发送窗口表示：<strong>在没有收到B的确认时，A可以连续把窗口内的数据都发送出去</strong>。 凡是已发送的数据，在未收到确认之前必须暂时保留，以便在超时重传时使用</p>
+</li>
+<li>
+<p>发送窗口中的序号表示允许发送的序号，窗口越大，发送方就可以在收到对方确认前连续发送更多的数据，因此可能获得更高的传输效率。</p>
+<ul>
+<li>发送方的发送窗口大小一定不能超过接收方的接受窗口(这里是20)</li>
+</ul>
+</li>
+<li>
+<p>发送窗口的后沿的后面部分表示：已发送且已经收到了确认的序号（显然这部分不需要保留）。 前沿的前面部分部分表示：不允许发送的序号。 发送窗口的位置由前沿和后沿决定</p>
+</li>
+<li>
+<p>后沿变化的情况有两种：</p>
+<ol>
+<li>不动（没有收到新的确认）</li>
+<li>前移（收到了新的确认）
+<ul>
+<li>注： 由于不能撤销已收到的确认，因此后沿不能向后移动</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>前沿变化的情况有两种：</p>
+<ol>
+<li>
+<p>前移， 这是一般情况</p>
+</li>
+<li>
+<p>不变，这包含两种情况：</p>
+<ol>
+<li>没有收到新的确认，且对方通知的窗口大小也不变</li>
+<li>收到了新的确认，但对方通知的窗口缩小了，使得前沿正好不懂</li>
+</ol>
+<ul>
+<li>注意，发送窗口前沿不能向后移动，虽然实践上可以，但TCP标准强烈不建议这样做</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>注意，A的发送窗口是根据B的接受窗口设置的，此外还要考虑到网络情况和拥塞控制等等，因此A的发送窗口不一定和B的接受窗口一样大</p>
+</li>
+</ul>
+<h3 id="滑动窗口与缓存"><a class="header-anchor" href="#滑动窗口与缓存"></a>滑动窗口与缓存</h3>
+<p>TCP的缓存和窗口的关系：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20cache%20and%20sliding%20window.png" alt="TCP cache and sliding window"></p>
+<p>发送缓存存放：</p>
+<ul>
+<li>
+<p>发送应用程序发送给发送方TCP准备发送的数据</p>
+</li>
+<li>
+<p>TCP已发送出但尚未收到确认的数据</p>
+</li>
+</ul>
+<p>发送窗口只是发送缓存的一部分，已被确认的数据应当从发送缓存中删除，因此发送缓存和发送窗口的后沿是重合的。 发送方进程最后写入发送缓存的字节减去最后被确认的字节，就是还保留在<strong>发送缓存</strong>中的被写入的字节数。 <u>这些（发送缓存中的）字节在发送窗口内的部分，可以被一次性发送</u></p>
+<p>接收缓存存放：</p>
+<ul>
+<li>
+<p>按序到达的、但尚未被接受应用程序读取的数据</p>
+</li>
+<li>
+<p>未按序到达的数据</p>
+</li>
+</ul>
+<h3 id="超时重传时间的选择"><a class="header-anchor" href="#超时重传时间的选择"></a>超时重传时间的选择</h3>
+<p>TCP连接建立时， 发送方如果在规定时间内没有收到确认， 就会超时重传已发送的报文，。为了得到标准的超时重传时间， 我们定义:</p>
+<ul>
+<li>
+<p>RTT: 报文段的往返时间， 注意，每个报文的RTT都不一样</p>
+</li>
+<li>
+<p>RTTs：报文段的加权平均往返时间， 's’表示Smoothed， 因为使用了加权平均，所以得到的结果更平滑, 算法为:<br>
+$$<br>
+\mathrm{新的RTT_S} = (1 - \alpha) \times (\mathrm{旧的RTT_S}) + \alpha \times(\mathrm{RTT_S} - \mathrm{新的RTT样本})<br>
+$$</p>
+<ul>
+<li>$\alpha$一般为0.125</li>
+</ul>
+</li>
+<li>
+<p>$\mathrm{RTT_D}$: RTT的偏差的加权平均值， 它与RTTs和新的RTT样本之差有关。 RFC规定，在第一次测量时，$\mathrm{RTT_D}$为测量到的RTT样本值的一半，在以后的测量中，则是用下式计算$\mathrm{RTT_D}$:<br>
+$$<br>
+\mathrm{新的RTT_D} = (1 - \beta) \times (\mathrm{旧的RTT_D}) + \beta \times|\mathrm{RTT_S} - \mathrm{新的RTT样本}|<br>
+$$</p>
+<ul>
+<li>$\beta$一般为0.25</li>
+</ul>
+</li>
+<li>
+<p>RTO( Retransmission Time-Out ): <strong>超时重传时间</strong>，算法为<br>
+$$<br>
+\mathrm{RTO}=\mathrm{RTT_S}+4*\mathrm{RTT_D}<br>
+$$</p>
+</li>
+</ul>
+<p>RTT的定义是“报文往返时间”， 那么如何判定收到的确认报文是对第一次发送的Segment的曲确认，还是对之后超时重传的Segment的确认？</p>
+<p>解决方案之一是Karn算法：</p>
+<p><em>在计算加权平均RTTs时，只要报文段重传了，就不采用其往返时间样本，这样得出的加权平均RTTs和RTO就较准确</em></p>
+<p>然而Karn算法也不太合理（自行百度），实践中一般采用改进的Karn算法。 总之，RTO的选择是很复杂的。</p>
+<h3 id="选择确认SACK"><a class="header-anchor" href="#选择确认SACK"></a>选择确认SACK</h3>
+<p>如果收到的报文段无差错，只是中间缺少了一些序号。 选择确认( Selective ACK, aka SACK ) 可以让发送方只传送缺少的数据，而不是重传所有数据</p>
+<p>示例：</p>
+<p>假设TCP的接收方收到了序号1 ~ 1000, 1501 ~ 3000, 3501 ~ 4500, 其余序号都没有收到，如果所有序号的范围都在接收窗口内，则接收方会收下这些数据，并把已收到序号的“边界”告诉对方，让对方不要再重传这些数据。 对于本例，“边界”就是$[1,1001)$,$[1501,3001)$, $[3501, 4501)$， 注意边界的右界是序号的最右端 + 1</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20SACK.png" alt="TCP SACK"></p>
+<p>显然，TCP 首部中没有哪个字段是用来存放边界的， 因此边界信息都存放在首部“选项”字段。 由于首部选项最多只有40Byte， 而每个字节块有两个边界， 每个边界4Byte（因为序号用4byte表示）， 所以一个字节块就要用8Byte。 选项中还需要指明“启用SACK”（1Byte）和“SACK选项占用的字节数”（1Byte）， 对于n个字节块，一共会在选项字段占用：<br>
+$$<br>
+8n + 2<br>
+$$<br>
+字节， 很容易就超过了选项字段40Byte的上限， 再加上SACK文档没有对发送方怎样响应SACK做规定， 因此SACK没有被广泛采用。 一般的实现还是重传所有数据块。</p>
+<p>​</p>
+<h1 id="TCP-Flow-Control"><a class="header-anchor" href="#TCP-Flow-Control"></a>TCP Flow Control</h1>
+<ul>
+<li>流量控制( Flow Control ):  让发送方发送速率不要太快，使接收方来得及接收。 这是<strong>端到端</strong>通信量的控制( 接收端控制发送端 )，</li>
+</ul>
+<h2 id="利用滑动窗口实现流量控制"><a class="header-anchor" href="#利用滑动窗口实现流量控制"></a>利用滑动窗口实现流量控制</h2>
+<p>TCP利用滑动窗口实现流量控制，示例：</p>
+<p>我们假设A向B发送数据，且：</p>
+<ul>
+<li>开始时B告诉A： “我的接受窗口rwnd=400”( rwnd = received window )</li>
+<li>每个报文段长100字节</li>
+<li>数据报文段的序号初始值为1</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20flow%20control%20with%20sliding%20window.png" alt="TCP flow control with sliding window"></p>
+<p>我们看到，上图中B一共进行了三次流量控制。 第一次把窗口减小到rwnd = 300； 第二次把窗口减小到rwnd =100；第三次把窗口减小到rwnd = 0， 即不允许发送方再发送数据了，该状态持续到B重新发出新的窗口值为止。</p>
+<ul>
+<li>这三个报文段的ACK均为1， 仅当ACK = 1时， 确认号字段才有意义</li>
+<li>显然，发送方的发送窗口不能大于接收方给出的接收窗口( rwnd )</li>
+</ul>
+<p>假设B在发送rwnd = 0， 其接收窗口又有了一些空间， 然后B向A发送了rwnd = 400的报文段，但是这个报文段丢失了， 则A会一直等待B发送的非零窗口的报文段， B也在等待A传来的数据，形成死锁。</p>
+<ul>
+<li>注意，B如果不继续收到A的报文段，自己是不会再次主动通知A的 （ 因为“通知”是ACK ， 而ACK报文段不会被重传）</li>
+</ul>
+<p>为此，需要对TCP连接设置<strong>持续计时器</strong>：只要TCP连接的一方收到对方的零窗口通知，就启动持续计时器，若计时器到期，就发送一个零窗口<strong>探测报文段</strong>，而对方就在确认这个报文段时给出了现在的窗口值，若窗口值仍是零，那么收到报文的一方就重新设置持续计时器，若不是零，那么死锁就被打破</p>
+<h2 id="TCP的传输效率"><a class="header-anchor" href="#TCP的传输效率"></a>TCP的传输效率</h2>
+<p>进程把数据传送到TCP发送缓存后，就由TCP来控制数据的发送。 TCP需要控制报文的发送时机，来得到最大的数据传输效率。 目前的TCP实现中广泛采用Nagle算法</p>
+<ul>
+<li>Nagle算法：若进程要把数据逐个字节地送到TCP发送缓存，则发送方就把第一个数据字节先发送出去，把后面到达的数据字节都缓存起来。当发送方收到对第一个数据字符的确认后，再把发送缓存中的所有数据组装成一个报文发送出去，同时继续对后到达的数据进行缓存。只有在收到对前一个报文段的确认后才继续发送下一个报文段</li>
+</ul>
+<h1 id="TCP-Congestion-Control"><a class="header-anchor" href="#TCP-Congestion-Control"></a>TCP Congestion Control</h1>
+<ul>
+<li>拥塞( congestion ): 网络中对资源的需求 &gt; 可用资源</li>
+<li>拥塞控制( congestion control ): 防止过多的数据注入到网络中，使网络中的路由器或链路不致过载。 拥塞控制是一个<strong>全局的</strong>过程，面向整个网络</li>
+</ul>
+<h2 id="拥塞控制的原理"><a class="header-anchor" href="#拥塞控制的原理"></a>拥塞控制的原理</h2>
+<p>拥塞控制可分为开环控制和闭环控制</p>
+<ul>
+<li>开环控制：在设计网络时事先将有关发生拥塞的因素考虑周到，力求网络在工作时不发生拥塞</li>
+<li>闭环控制：基于反馈回路概念；检测网络系统以便检测到拥塞在何时、何处发生；把拥塞发生的信息传送到可采取行动的地方；调整网络系统的运行以解决出现的问题</li>
+<li>检测网络拥塞的指标：
+<ul>
+<li>由于缺少缓存空间而被丢弃的分组的百分数</li>
+<li>平均队列长度</li>
+<li>超时重传分组数</li>
+<li>平均分组时延</li>
+</ul>
+</li>
+</ul>
+<h2 id="TCP拥塞控制的方法"><a class="header-anchor" href="#TCP拥塞控制的方法"></a>TCP拥塞控制的方法</h2>
+<p>TCP的拥塞控制方法有四种：</p>
+<ol>
+<li>慢开始</li>
+<li>拥塞避免</li>
+<li>快重传</li>
+<li>快恢复</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Networking/" rel="tag"># Computer Networking</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/27/Dependabot/" rel="prev" title="Dependabot">
+                  <i class="fa fa-chevron-left"></i> Dependabot
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/07/31/Tips-for-Building-Frontend-Projects/" rel="next" title="Tips for Building Frontend Projects">
+                  Tips for Building Frontend Projects <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

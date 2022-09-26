@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  SELECT ORDER BY …  Mysql语法简介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL Data Manipulation">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/26/MySQL%20Data%20Manipulation/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  SELECT ORDER BY …  Mysql语法简介">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2021/07/MySQL-Where.svg">
+<meta property="og:image" content="http://lyk-love.cn/home/lyk/Pictures/assets_for_hexo/DataBase/DISTINCT">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/mysql-join-left-join.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/mysql-join-right-join.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2021/07/MySQL-Group-By.svg">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2021/07/MySQL-Having.svg">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2013/02/MySQL-subquery-exists.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2009/12/MySQL-UNION-vs-JOIN.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2018/09/MySQL-INSERT-dates-into-table.png">
+<meta property="og:image" content="http://www.yiibai.com/uploads/images/201707/1907/437150722_21821.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/employees.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-cascade.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-update-cascade-.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-delete-cascade.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-delete-cascade.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-set-null.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-set-null.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-on-delete-set-null.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/09/MySQL-Foreign-Key-drop-foreign-key-constraint.png">
+<meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/09/MySQL-Foreign-Key-after-drop-foreign-key-constraint.png">
+<meta property="article:published_time" content="2022-09-26T06:39:34.934Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.934Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Database">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.mysqltutorial.org/wp-content/uploads/2021/07/MySQL-Where.svg">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/26/MySQL%20Data%20Manipulation/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/26/MySQL%20Data%20Manipulation/","path":"2022/09/26/MySQL Data Manipulation/","title":"MySQL Data Manipulation"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MySQL Data Manipulation | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MYSQL-DATA-MANIPULATION"><span class="nav-text">MYSQL DATA MANIPULATION</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SELECT"><span class="nav-text">SELECT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Returning-n-Random-Records-from-a-Table"><span class="nav-text">Returning n Random Records from a Table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transforming-Nulls-into-Real-Values"><span class="nav-text">Transforming Nulls into Real Values</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ORDER-BY"><span class="nav-text">ORDER BY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WHERE"><span class="nav-text">WHERE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BETWEEN"><span class="nav-text">BETWEEN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LIKE"><span class="nav-text">LIKE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IN"><span class="nav-text">IN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IS-NULL"><span class="nav-text">IS NULL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LIMIT"><span class="nav-text">LIMIT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IS-NULL-2"><span class="nav-text">IS NULL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SELECT-DISTINCT"><span class="nav-text">SELECT DISTINCT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Alias"><span class="nav-text">Alias</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JOIN"><span class="nav-text">JOIN</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#INNER-JOIN"><span class="nav-text">INNER JOIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LEFT-JOINmysql-join-left-join"><span class="nav-text">LEFT JOIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RIGHT-JOIN"><span class="nav-text">RIGHT JOIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CROSS-JOIN"><span class="nav-text">CROSS JOIN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Self-Join"><span class="nav-text">Self Join</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GROUP-BY"><span class="nav-text">GROUP BY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HAVING"><span class="nav-text">HAVING</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROLLUP"><span class="nav-text">ROLLUP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Subquery"><span class="nav-text">Subquery</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WHERE-2"><span class="nav-text">WHERE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IN-NOT-IN"><span class="nav-text">IN &amp; NOT IN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FROM"><span class="nav-text">FROM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#correlated-subquery"><span class="nav-text">correlated subquery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXISTS-NOT-EXISTS"><span class="nav-text">EXISTS &amp; NOT EXISTS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Derived-Tables"><span class="nav-text">Derived Tables</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%AD%90"><span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EXISTS"><span class="nav-text">EXISTS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UNION"><span class="nav-text">UNION</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MINUS"><span class="nav-text">MINUS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INSERT"><span class="nav-text">INSERT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#insert-using-default-value"><span class="nav-text">insert using default value</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inserting-dates"><span class="nav-text">Inserting dates</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Insert-Into-Select"><span class="nav-text">Insert Into Select</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UPDATE"><span class="nav-text">UPDATE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CASE"><span class="nav-text">CASE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Simple-CASE-expression"><span class="nav-text">Simple CASE expression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Searched-CASE-expression"><span class="nav-text">Searched CASE expression</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DERIVED-TABLE"><span class="nav-text">DERIVED TABLE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FUNCTION"><span class="nav-text">FUNCTION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ROUND"><span class="nav-text">ROUND</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROUND-X-D"><span class="nav-text">ROUND(X,D)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IFNULL"><span class="nav-text">IFNULL</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Aggregate-Functions"><span class="nav-text">Aggregate Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AVG"><span class="nav-text">AVG()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#COUNT"><span class="nav-text">COUNT()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SUM"><span class="nav-text">SUM()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MAX"><span class="nav-text">MAX()</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CONSTRAINTS"><span class="nav-text">CONSTRAINTS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Primary-Key"><span class="nav-text">Primary Key</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Define-a-PRIMARY-KEY-constraint-in-CREATE-TABLE"><span class="nav-text">1) Define a PRIMARY KEY constraint in CREATE TABLE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Foreign-Key"><span class="nav-text">Foreign Key</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Self-referencing-foreign-key"><span class="nav-text">Self-referencing foreign key</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-FOREIGN-KEY-syntax"><span class="nav-text">MySQL FOREIGN KEY syntax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL-FOREIGN-KEY-examples"><span class="nav-text">MySQL FOREIGN KEY examples</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RESTRICT-NO-ACTION-actions"><span class="nav-text">RESTRICT &amp; NO ACTION actions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CASCADE-action"><span class="nav-text">CASCADE action</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET-NULL-action"><span class="nav-text">SET NULL action</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Drop-MySQL-foreign-key-constraints"><span class="nav-text">Drop MySQL foreign key constraints</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disabling-foreign-key-checks"><span class="nav-text">Disabling foreign key checks</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DATA-TYPES"><span class="nav-text">DATA TYPES</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GLOBALIZARION"><span class="nav-text">GLOBALIZARION</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IMPORT-EXPORT"><span class="nav-text">IMPORT &amp; EXPORT</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Retrieving-records"><span class="nav-text">Retrieving records</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/26/MySQL%20Data%20Manipulation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MySQL Data Manipulation | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MySQL Data Manipulation
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-26 06:39:34" itemprop="dateCreated datePublished" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>SELECT</li>
+<li>ORDER BY</li>
+<li>…</li>
+</ul>
+<p>Mysql语法简介</p>
+<span id="more"></span>
+<h1 id="MYSQL-DATA-MANIPULATION"><a class="header-anchor" href="#MYSQL-DATA-MANIPULATION"></a>MYSQL DATA MANIPULATION</h1>
+<h2 id="SELECT"><a class="header-anchor" href="#SELECT"></a>SELECT</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT select_list</span><br><span class="line">FROM table_name;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>;</code>是可选的，表明一条语句的结束</li>
+<li>SQL是大小写不敏感的，因此<code>SELECT0</code>，<code>FROM</code>这些关键字可大写可小写</li>
+<li><code>SELECT</code>的结果称为一个结果集</li>
+<li>如果SELECT的参数是空行（连NULL都没有)，会返回NULL。</li>
+</ul>
+<h3 id="Returning-n-Random-Records-from-a-Table"><a class="header-anchor" href="#Returning-n-Random-Records-from-a-Table"></a>Returning n Random Records from a Table</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select ename, job</span><br><span class="line">	from emp</span><br><span class="line">order by rand() limit 5</span><br></pre></td></tr></table></figure>
+<h3 id="Transforming-Nulls-into-Real-Values"><a class="header-anchor" href="#Transforming-Nulls-into-Real-Values"></a>Transforming Nulls into Real Values</h3>
+<p>Use the function COALESCE to substitute real values for nulls:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select coalesce(comm, 0)</span><br><span class="line">	from emp</span><br></pre></td></tr></table></figure>
+<p>COALESCE 接受至少一个参数，返回第一个非空参数。 如果comm为null,则返回0</p>
+<p>或者：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select case</span><br><span class="line">		when comm is not null then comm</span><br><span class="line">		else 0</span><br><span class="line">		end</span><br><span class="line">	from emp</span><br></pre></td></tr></table></figure>
+<h2 id="ORDER-BY"><a class="header-anchor" href="#ORDER-BY"></a>ORDER BY</h2>
+<p>默认是<code>ASC</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">   select_list</span><br><span class="line">FROM </span><br><span class="line">   table_name</span><br><span class="line">ORDER BY </span><br><span class="line">   column1 [ASC|DESC], </span><br><span class="line">   column2 [ASC|DESC],</span><br><span class="line">   ...;</span><br></pre></td></tr></table></figure>
+<p>ORDER BY的参数一般是字段，当然也可以是列号， 但后一种方式不推荐</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    CONCAT(firstName,&#x27; &#x27;,lastName) fullname</span><br><span class="line">FROM</span><br><span class="line">    employees </span><br><span class="line">UNION SELECT </span><br><span class="line">    CONCAT(contactFirstName,&#x27; &#x27;,contactLastName)</span><br><span class="line">FROM</span><br><span class="line">    customers</span><br><span class="line">ORDER BY 1; # 采用列号（第一列）</span><br></pre></td></tr></table></figure>
+<h2 id="WHERE"><a class="header-anchor" href="#WHERE"></a>WHERE</h2>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2021/07/MySQL-Where.svg" alt=" MySQL WHERE"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    select_list</span><br><span class="line">FROM</span><br><span class="line">    table_name</span><br><span class="line">WHERE</span><br><span class="line">    search_condition;</span><br></pre></td></tr></table></figure>
+<p>The <code>search_condition</code> is a combination of one or more expressions using the logical operator <code>AND</code>, <code>OR</code> and <code>NOT</code>.</p>
+<p>In MySQL, a predicate is a Boolean expression that evaluates to <code>TRUE</code>, <code>FALSE</code>, or <code>UNKNOWN</code>.</p>
+<p>The <code>SELECT</code> statement will include any row that satisfies the <code>search_condition</code> in the result set.</p>
+<p>Besides the <code>SELECT</code> statement, you can use the <code>WHERE</code> clause in the <code>UPDATE</code> or <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-delete-statement.aspx"><code>DELETE</code></a> statement to specify which rows to update or delete.</p>
+<p>When executing a <code>SELECT</code> statement with a <code>WHERE</code> clause, MySQL evaluates the <code>WHERE</code> clause after the <code>FROM</code> clause and before the <code>SELECT</code> and <code>ORDER BY</code> clauses:</p>
+<h3 id="BETWEEN"><a class="header-anchor" href="#BETWEEN"></a>BETWEEN</h3>
+<p><code>expression BETWEEN low AND high</code></p>
+<h3 id="LIKE"><a class="header-anchor" href="#LIKE"></a>LIKE</h3>
+<p>The <code>LIKE</code> operator evaluates to <code>TRUE</code> if a value matches a specified pattern.</p>
+<p>To form a pattern, you use the <code>%</code> and <code>_</code> wildcards.</p>
+<ul>
+<li><strong>The <code>%</code> wildcard matches any string of zero or more characters</strong></li>
+<li><strong>the <code>_</code> wildcard matches any single character.</strong></li>
+</ul>
+<p>The following query finds the employees whose last names end with the string <code>'son'</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    firstName, </span><br><span class="line">    lastName</span><br><span class="line">FROM</span><br><span class="line">    employees</span><br><span class="line">WHERE</span><br><span class="line">    lastName LIKE &#x27;%son&#x27;</span><br><span class="line">ORDER BY firstName;</span><br></pre></td></tr></table></figure>
+<h3 id="IN"><a class="header-anchor" href="#IN"></a>IN</h3>
+<p>The <code>IN</code> operator returns <code>TRUE</code> if a value matches any value in a list.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">value IN (value1, value2,...)</span><br></pre></td></tr></table></figure>
+<p>The following example uses the <code>WHERE</code> clause with the <code>IN</code> operator to find employees who locate in the office with office code 1.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    firstName, </span><br><span class="line">    lastName, </span><br><span class="line">    officeCode</span><br><span class="line">FROM</span><br><span class="line">    employees</span><br><span class="line">WHERE</span><br><span class="line">    officeCode IN (1 , 2, 3)</span><br><span class="line">ORDER BY </span><br><span class="line">    officeCode;</span><br></pre></td></tr></table></figure>
+<h3 id="IS-NULL"><a class="header-anchor" href="#IS-NULL"></a>IS NULL</h3>
+<p>To check if a value is <code>NULL</code> or not, you use the <code>IS NULL</code> operator, not the equal operator (<code>=</code>). The <code>IS NULL</code> operator returns <code>TRUE</code> if a value is <code>NULL</code>.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">value IS NULLCode language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>In the database world, <code>NULL</code> is a marker that indicates that a value is missing or unknown. And NULL is not equivalent to the number 0 or an empty string.</p>
+</blockquote>
+<p>对应的，还有<code>IS NOT NULL</code></p>
+<h2 id="LIMIT"><a class="header-anchor" href="#LIMIT"></a>LIMIT</h2>
+<p>注意： <code>limit</code>作用于结果集产生的最后，在<code>order by</code>之后，所以要先<code>order by</code>, 再 <code>lmit</code></p>
+<p>The <code>LIMIT</code> clause is used in the <code>SELECT</code> statement to constrain the number of rows to return.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    select_list</span><br><span class="line">FROM</span><br><span class="line">    table_name</span><br><span class="line">LIMIT [offset,] row_count; ( OR LIMIT row_count OFFSET offset; )</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>The <code>offset</code> specifies the offset of the first row to return. OFFSET从0开始计数，缺省也为0</p>
+</li>
+<li>
+<p>The <code>row_count</code> specifies the maximum number of rows to return.</p>
+</li>
+<li>
+<p><code>LIMIT</code>子句对于超过其范围的行，会返回空行而不是<code>NULL</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select salary from `Employee` limit 1 offset 1</span><br><span class="line"># 如果Employee只有一行，则该查询返回空行：</span><br><span class="line">+--------+</span><br><span class="line">| salary |</span><br><span class="line">+--------+</span><br><span class="line">+--------+</span><br><span class="line"># 不会返回null</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>可以和<code>ORDER BY</code>结合：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    select_list</span><br><span class="line">FROM </span><br><span class="line">    table_name</span><br><span class="line">ORDER BY </span><br><span class="line">    sort_expression</span><br><span class="line">LIMIT offset, row_count;</span><br></pre></td></tr></table></figure>
+<p>示例： get the highest or lowest rows</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    customerNumber, </span><br><span class="line">    customerName, </span><br><span class="line">    creditLimit</span><br><span class="line">FROM</span><br><span class="line">    customers</span><br><span class="line">ORDER BY creditLimit DESC</span><br><span class="line">LIMIT 5;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>First, the <code>ORDER BY</code> clause sorts the customers by credits in high to low.</li>
+<li>Then, the <code>LIMIT</code> clause returns the first 5 rows.</li>
+</ul>
+<h2 id="IS-NULL-2"><a class="header-anchor" href="#IS-NULL-2"></a>IS NULL</h2>
+<p>To test whether a value is <code>NULL</code> or not, you use the  <code>IS NULL</code> operator. Here’s the basic syntax of the <code>IS NULL</code> operator:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">value IS NULLCode language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>If the value is <code>NULL</code>, the expression returns true. Otherwise, it returns false.</p>
+<p>Note that MySQL does not have a built-in <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-boolean/"><code>BOOLEAN</code></a> type. It uses the <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-int/"><code>TINYINT(1)</code></a> to represent the <code>BOOLEAN</code> values i.e.,  true means 1 and false means 0.</p>
+<p>Because the <code>IS NULL</code> is a comparison operator, you can use it anywhere that an operator can be used e.g., in the <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-select-statement-query-data.aspx"><code>SELECT</code></a> or <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-where/"><code>WHERE</code></a> clause.</p>
+<p>See the following example:</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="number">1</span> <span class="keyword">IS</span> <span class="keyword">NULL</span>,  <span class="comment">-- 0</span></span><br><span class="line">       <span class="number">0</span> <span class="keyword">IS</span> <span class="keyword">NULL</span>,  <span class="comment">-- 0</span></span><br><span class="line">       <span class="keyword">NULL</span> <span class="keyword">IS</span> <span class="keyword">NULL</span>; <span class="comment">-- 1Code language: SQL (Structured Query Language) (sql)</span></span><br></pre></td></tr></table></figure>
+<p>To check if a value is not <code>NULL</code>, you use <code>IS NOT NULL</code> operator:</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">value</span> <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
+<p>This expression returns true (1) if the value is not <code>NULL</code>. Otherwise, it returns false (0).</p>
+<p>Consider the following example:</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="number">1</span> <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>, <span class="comment">-- 1</span></span><br><span class="line">       <span class="number">0</span> <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>, <span class="comment">-- 1</span></span><br><span class="line">       <span class="keyword">NULL</span> <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>; <span class="comment">-- 0Code language: SQL (Structured Query Language) (sql)</span></span><br></pre></td></tr></table></figure>
+<h2 id="SELECT-DISTINCT"><a class="header-anchor" href="#SELECT-DISTINCT"></a>SELECT DISTINCT</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT DISTINCT</span><br><span class="line">    select_list</span><br><span class="line">FROM</span><br><span class="line">    table_name</span><br><span class="line">WHERE </span><br><span class="line">    search_condition</span><br><span class="line">ORDER BY </span><br><span class="line">    sort_expression;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>DISTINCT</code>:   从选出的行中选择唯一的</li>
+<li>如果<code>DISTINCT</code>后面跟多个字段，就会将这些字段作为一个整体来判断唯一性</li>
+<li>MYSQL认为所有NULL都是相等的，因此多个NULL在DISTINCT后只剩下一个</li>
+</ul>
+<p><img data-src="/home/lyk/Pictures/assets_for_hexo/DataBase/DISTINCT" alt="distinct"></p>
+<h2 id="Alias"><a class="header-anchor" href="#Alias"></a>Alias</h2>
+<p><strong>在一次查询中重复引用一个表名会引发ERROR</strong>， 因此要定义别名</p>
+<p>列别名：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">   [column_1 | expression] [AS] descriptive_name</span><br><span class="line">FROM table_name;</span><br><span class="line"></span><br><span class="line">//如果别名有空格，需要用引号括起来：‘descriptive name’</span><br></pre></td></tr></table></figure>
+<p>表达式别名：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT</span><br><span class="line">   CONCAT_WS(&#x27;, &#x27;, lastName, firstname) [AS] `Full name`</span><br><span class="line">FROM</span><br><span class="line">   employees;</span><br></pre></td></tr></table></figure>
+<p>表别名：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">table_name [AS] table_alias</span><br></pre></td></tr></table></figure>
+<h2 id="JOIN"><a class="header-anchor" href="#JOIN"></a>JOIN</h2>
+<p>A join is a method of linking data between one (<a target="_blank" rel="noopener" href="http://www.mysqltutorial.org/mysql-self-join/">self-join</a>) or more tables based on values of the common column between the tables.</p>
+<p>MySQL supports the following types of joins:</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-inner-join.aspx">Inner join</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-left-join.aspx">Left join</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-right-join/">Right join</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-cross-join/">Cross join</a></li>
+</ol>
+<p>To join tables, you use the cross join, inner join, left join, or right join clause. The join clause is used in the <code>SELECT</code> statement appeared after the <code>FROM</code> clause.</p>
+<p>Note that MySQL hasn’t supported the <code>FULL OUTER JOIN</code> yet.</p>
+<p>Join会创建一个包含原本两方所有字段的新行，并加入结果集</p>
+<h3 id="INNER-JOIN"><a class="header-anchor" href="#INNER-JOIN"></a>INNER JOIN</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT column_list</span><br><span class="line">FROM table_1</span><br><span class="line">INNER JOIN table_2 ON join_condition;</span><br></pre></td></tr></table></figure>
+<p>The inner join clause compares each row from the first table with every row from the second table.</p>
+<p>将左边的每一行与右边的所有行匹配</p>
+<p>只有两边的行同时满足，才会被join</p>
+<p>如果两张表中作为条件来比较的字段相同，那么可以用<code> USING</code>来替代<code>ON</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">using(id)</span><br><span class="line">#  等价于</span><br><span class="line">on a.id=b.id</span><br></pre></td></tr></table></figure>
+<h3 id="LEFT-JOINmysql-join-left-join"><a class="header-anchor" href="#LEFT-JOINmysql-join-left-join"></a>LEFT JOIN<img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/mysql-join-left-join.png" alt="mysql join - left join"></h3>
+<p>对于左边的一行，如果右边的行都不满足条件，依然会创建出新行，只不过新行中，原来的右边的行的字段的对应值为NULL</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    c.customerNumber, </span><br><span class="line">    c.customerName, </span><br><span class="line">    o.orderNumber, </span><br><span class="line">    o.status</span><br><span class="line">FROM</span><br><span class="line">    customers c</span><br><span class="line">LEFT JOIN orders o </span><br><span class="line">    ON c.customerNumber = o.customerNumber</span><br><span class="line">WHERE</span><br><span class="line">    orderNumber IS NULL;</span><br></pre></td></tr></table></figure>
+<h3 id="RIGHT-JOIN"><a class="header-anchor" href="#RIGHT-JOIN"></a>RIGHT JOIN</h3>
+<p>从右边的行中选择，将右边的每一行与左边的所有行匹配。 如果左边的所有行都不满足条件，那么依然创建出新行，新行中左边行的字段值为NULL</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT column_list </span><br><span class="line">FROM table_1 </span><br><span class="line">RIGHT JOIN table_2 ON join_condition;</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/mysql-join-right-join.png" alt="mysql join - right join"></p>
+<h3 id="CROSS-JOIN"><a class="header-anchor" href="#CROSS-JOIN"></a>CROSS JOIN</h3>
+<p>没有查询条件，产生笛卡尔积</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT select_list</span><br><span class="line">FROM table_1</span><br><span class="line">CROSS JOIN table_2;</span><br></pre></td></tr></table></figure>
+<h3 id="Self-Join"><a class="header-anchor" href="#Self-Join"></a>Self Join</h3>
+<p>一个表和自己做join, 因为同一次查询中不能重复引用同一张表，因此必须定义别名</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    CONCAT(m.lastName, &#x27;, &#x27;, m.firstName) AS Manager,</span><br><span class="line">    CONCAT(e.lastName, &#x27;, &#x27;, e.firstName) AS &#x27;Direct report&#x27;</span><br><span class="line">FROM</span><br><span class="line">    employees e</span><br><span class="line">INNER JOIN employees m ON </span><br><span class="line">    m.employeeNumber = e.reportsTo</span><br><span class="line">ORDER BY </span><br><span class="line">    Manager;</span><br></pre></td></tr></table></figure>
+<h2 id="GROUP-BY"><a class="header-anchor" href="#GROUP-BY"></a>GROUP BY</h2>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2021/07/MySQL-Group-By.svg" alt="MySQL GROUP BY"></p>
+<p>The <code>GROUP BY</code> clause <strong>returns one row for each group</strong>.</p>
+<p>可以和聚合函数结合。 不结合聚合函数的<code>GROUP BY</code>和<code>SELECT DISTINCT</code>是类似的</p>
+<p>MYSQL8.0后不会对<code>GROUP BY</code>的结果集进行排序</p>
+<p>The <code>GROUP BY</code> clause is often used with an aggregate function to perform calculations and return a single value for each subgroup.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    status, </span><br><span class="line">    SUM(quantityOrdered * priceEach) AS amount</span><br><span class="line">FROM</span><br><span class="line">    orders</span><br><span class="line">INNER JOIN orderdetails </span><br><span class="line">    USING (orderNumber)</span><br><span class="line">GROUP BY </span><br><span class="line">    status;</span><br></pre></td></tr></table></figure>
+<p>可以按多个字段<code>group by</code>，用逗号分隔:</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> </span><br><span class="line">    gender, university,</span><br><span class="line">    <span class="built_in">count</span>(device_id) <span class="keyword">as</span> user_num,</span><br><span class="line">    <span class="built_in">avg</span>(active_days_within_30) <span class="keyword">as</span> avg_active_days,</span><br><span class="line">    <span class="built_in">avg</span>(question_cnt) <span class="keyword">as</span> avg_question_cnt</span><br><span class="line"><span class="keyword">from</span> user_profile</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> gender, university # 多个字段</span><br></pre></td></tr></table></figure>
+<h2 id="HAVING"><a class="header-anchor" href="#HAVING"></a>HAVING</h2>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2021/07/MySQL-Having.svg" alt="MySQL Having"></p>
+<p>The <code>HAVING</code> clause is often used with the <code>GROUP BY</code> clause to filter groups based on a specified condition. If you omit the <code>GROUP BY</code> clause, the <code>HAVING</code> clause behaves like the <code>WHERE</code> clause.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    select_list</span><br><span class="line">FROM </span><br><span class="line">    table_name</span><br><span class="line">WHERE </span><br><span class="line">    search_condition</span><br><span class="line">GROUP BY </span><br><span class="line">    group_by_expression</span><br><span class="line">HAVING </span><br><span class="line">    group_condition;</span><br></pre></td></tr></table></figure>
+<h2 id="ROLLUP"><a class="header-anchor" href="#ROLLUP"></a>ROLLUP</h2>
+<h2 id="Subquery"><a class="header-anchor" href="#Subquery"></a>Subquery</h2>
+<p>子查询必须用括号括起来， 可以作为表达式，用在任何需要表达式的地方</p>
+<p>子查询如果用在<code>FROM</code>子句，则返回的结果集是一张临时表，被称为“导出表”， 导出表一定要有别名， 好作为一张表被引用</p>
+<h3 id="WHERE-2"><a class="header-anchor" href="#WHERE-2"></a>WHERE</h3>
+<p>子查询用在<code>WHERE</code>子句， 一般是和聚合函数的结合， 将聚合函数的结果返回， 然后在WHERE中进行<code>条件运算</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    customerNumber, </span><br><span class="line">    checkNumber, </span><br><span class="line">    amount</span><br><span class="line">FROM</span><br><span class="line">    payments</span><br><span class="line">WHERE</span><br><span class="line">    amount = (SELECT MAX(amount) FROM payments);</span><br></pre></td></tr></table></figure>
+<h4 id="IN-NOT-IN"><a class="header-anchor" href="#IN-NOT-IN"></a>IN &amp; NOT IN</h4>
+<p>如果子查询返回不止一个结果（即不止一行）， 那还可以用来作为<code>[NOT] IN</code>的参数，在<code>WHERE</code>子句中进行条件运算</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    customerName</span><br><span class="line">FROM</span><br><span class="line">    customers</span><br><span class="line">WHERE</span><br><span class="line">    customerNumber NOT IN (SELECT DISTINCT</span><br><span class="line">            customerNumber</span><br><span class="line">        FROM</span><br><span class="line">            orders);</span><br></pre></td></tr></table></figure>
+<h3 id="FROM"><a class="header-anchor" href="#FROM"></a>FROM</h3>
+<p>子查询作为派生表，必须要有别名</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    MAX(items), </span><br><span class="line">    MIN(items), </span><br><span class="line">    FLOOR(AVG(items))</span><br><span class="line">FROM</span><br><span class="line">    (SELECT </span><br><span class="line">        orderNumber, COUNT(orderNumber) AS items</span><br><span class="line">    FROM</span><br><span class="line">        orderdetails</span><br><span class="line">    GROUP BY orderNumber) AS lineitems;</span><br></pre></td></tr></table></figure>
+<h3 id="correlated-subquery"><a class="header-anchor" href="#correlated-subquery"></a>correlated subquery</h3>
+<p>子查询可以是独立的，一共只执行一次；也可以是关联的， 外层查询的每处理一行就执行一次：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    productname, </span><br><span class="line">    buyprice</span><br><span class="line">FROM</span><br><span class="line">    products p1</span><br><span class="line">WHERE</span><br><span class="line">    buyprice &gt; (SELECT </span><br><span class="line">            AVG(buyprice)</span><br><span class="line">        FROM</span><br><span class="line">            products</span><br><span class="line">        WHERE</span><br><span class="line">            productline = p1.productline)</span><br></pre></td></tr></table></figure>
+<h3 id="EXISTS-NOT-EXISTS"><a class="header-anchor" href="#EXISTS-NOT-EXISTS"></a>EXISTS &amp; NOT EXISTS</h3>
+<p>子查询就是表达式，因此用在<code>[NOT] EXISTS</code> 子句中时，子查询只会返回一个BOOL值：</p>
+<ul>
+<li>只要子查询返回至少一行，就返回TRUE,否则返回FALSE</li>
+<li>一般而言，作为<code>EXISTS</code>参数的子查询都是关联查询，这样才能和外层查询联系起来， 否则如果是独立查询， 每次计算时都返回固定的BOOL值，没什么意义</li>
+</ul>
+<p>The following query finds sales orders whose total values are greater than 60K.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    orderNumber, </span><br><span class="line">    SUM(priceEach * quantityOrdered) total</span><br><span class="line">FROM</span><br><span class="line">    orderdetails</span><br><span class="line">        INNER JOIN</span><br><span class="line">    orders USING (orderNumber)</span><br><span class="line">GROUP BY orderNumber</span><br><span class="line">HAVING SUM(priceEach * quantityOrdered) &gt; 60000;</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2013/02/MySQL-subquery-exists.png" alt="img"></p>
+<p>It returns 3 rows, meaning that there are three sales orders whose total values are greater than 60K.</p>
+<p>You can use the query above as a correlated subquery to find customers who placed at least one sales order with the total value greater than 60K by using the <code>EXISTS</code> operator:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    customerNumber, </span><br><span class="line">    customerName</span><br><span class="line">FROM</span><br><span class="line">    customers</span><br><span class="line">WHERE</span><br><span class="line">    EXISTS( SELECT </span><br><span class="line">            orderNumber, SUM(priceEach * quantityOrdered)</span><br><span class="line">        FROM</span><br><span class="line">            orderdetails</span><br><span class="line">                INNER JOIN</span><br><span class="line">            orders USING (orderNumber)</span><br><span class="line">        WHERE</span><br><span class="line">            customerNumber = customers.customerNumber</span><br><span class="line">        GROUP BY orderNumber</span><br><span class="line">        HAVING SUM(priceEach * quantityOrdered) &gt; 60000);</span><br></pre></td></tr></table></figure>
+<h2 id="Derived-Tables"><a class="header-anchor" href="#Derived-Tables"></a>Derived Tables</h2>
+<p>派生表就是用在<code>SELECT</code>子句的子查询， 该子查询返回一张表（属于临时表）， 并一定具有别名以被引用</p>
+<h3 id="例子"><a class="header-anchor" href="#例子"></a>例子</h3>
+<p>Suppose you have to classify the customers who bought products in 2003 into 3 groups: <code>platinum</code>, <code>gold</code>, and <code>silver</code>. And you need to know the number of customers in each group with the following conditions:</p>
+<ul>
+<li>Platinum customers who have orders with the volume greater than 100K.</li>
+<li>Gold customers who have orders with the volume between 10K and 100K.</li>
+<li>Silver customers who have orders with the volume less than 10K.</li>
+</ul>
+<p>To form this query, you first need to put each customer into the respective group using <code>CASE</code> expression and <code>GROUP BY</code> clause as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    customerNumber,</span><br><span class="line">    ROUND(SUM(quantityOrdered * priceEach)) sales,</span><br><span class="line">    (CASE</span><br><span class="line">        WHEN SUM(quantityOrdered * priceEach) &lt; 10000 THEN &#x27;Silver&#x27;</span><br><span class="line">        WHEN SUM(quantityOrdered * priceEach) BETWEEN 10000 AND 100000 THEN &#x27;Gold&#x27;</span><br><span class="line">        WHEN SUM(quantityOrdered * priceEach) &gt; 100000 THEN &#x27;Platinum&#x27;</span><br><span class="line">    END) customerGroup</span><br><span class="line">FROM</span><br><span class="line">    orderdetails</span><br><span class="line">        INNER JOIN</span><br><span class="line">    orders USING (orderNumber)</span><br><span class="line">WHERE</span><br><span class="line">    YEAR(shippedDate) = 2003</span><br><span class="line">GROUP BY customerNumber;</span><br></pre></td></tr></table></figure>
+<p>The following is the output of the query:</p>
+<p>Then, you can use this query as the derived table and perform grouping as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    customerGroup, </span><br><span class="line">    COUNT(cg.customerGroup) AS groupCount</span><br><span class="line">FROM</span><br><span class="line">    (SELECT </span><br><span class="line">        customerNumber,</span><br><span class="line">            ROUND(SUM(quantityOrdered * priceEach)) sales,</span><br><span class="line">            (CASE</span><br><span class="line">                WHEN SUM(quantityOrdered * priceEach) &lt; 10000 THEN &#x27;Silver&#x27;</span><br><span class="line">                WHEN SUM(quantityOrdered * priceEach) BETWEEN 10000 AND 100000 THEN &#x27;Gold&#x27;</span><br><span class="line">                WHEN SUM(quantityOrdered * priceEach) &gt; 100000 THEN &#x27;Platinum&#x27;</span><br><span class="line">            END) customerGroup</span><br><span class="line">    FROM</span><br><span class="line">        orderdetails</span><br><span class="line">    INNER JOIN orders USING (orderNumber)</span><br><span class="line">    WHERE</span><br><span class="line">        YEAR(shippedDate) = 2003</span><br><span class="line">    GROUP BY customerNumber) cg</span><br><span class="line">GROUP BY cg.customerGroup;    </span><br></pre></td></tr></table></figure>
+<p>The query returns the customer groups and the number of customers in each.</p>
+<h2 id="EXISTS"><a class="header-anchor" href="#EXISTS"></a>EXISTS</h2>
+<p>The <code>EXISTS</code> operator is a Boolean operator that returns either true or false. The <code>EXISTS</code> operator is often used to test for the existence of rows returned by the <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-subquery/">subquery</a>.</p>
+<p>The following illustrates the basic syntax of the <code>EXISTS</code> operator:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    select_list</span><br><span class="line">FROM</span><br><span class="line">    a_table</span><br><span class="line">WHERE</span><br><span class="line">    [NOT] EXISTS(subquery);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>If the subquery returns at least one row, the <code>EXISTS</code> operator returns true, otherwise, it returns false.</p>
+<p>In addition, the <code>EXISTS</code> operator terminates further processing immediately once it finds a matching row, which can help improve the performance of the query.</p>
+<p>The <code>NOT</code> operator negates the <code>EXISTS</code> operator. In other words, the <code>NOT EXISTS</code> returns true if the subquery returns no row, otherwise it returns false.</p>
+<p>Note that you can use <code>SELECT *</code>, <code>SELECT column</code>, <code>SELECT a_constant</code>, or anything in the subquery. The results are the same because MySQL ignores the select list appeared in the <code>SELECT</code> clause.</p>
+<h2 id="UNION"><a class="header-anchor" href="#UNION"></a>UNION</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT column_list</span><br><span class="line">UNION [DISTINCT | ALL]</span><br><span class="line">SELECT column_list</span><br><span class="line">UNION [DISTINCT | ALL]</span><br><span class="line">SELECT column_list</span><br></pre></td></tr></table></figure>
+<p><code>UNION</code>的参数也是一张表（由<code>SELECT</code>子句产生），但不是派生表，因此不需要别名</p>
+<p><code>UNION</code>将两张表垂直地并起来， 而<code>JOIN</code>将两张表水平地并起来：</p>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2009/12/MySQL-UNION-vs-JOIN.png" alt="MySQL UNION vs JOIN"></p>
+<p>要将多张表<code>UNION</code>起来，作为<code>UNION</code>主语的SELECT和宾语的SELECT子句的对应字段的数量和顺序必须相同， 类型也必须相容</p>
+<p>比如：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    firstName, # 最终结果集的字段名，使用的是<span class="keyword">UNION</span>主语的<span class="keyword">SELECT</span>子句的字段名</span><br><span class="line">    lastName</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    employees </span><br><span class="line"><span class="keyword">UNION</span> </span><br><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    contactFirstName, # 字段名不同无所谓，但是类型，顺序，数量必须相同</span><br><span class="line">    contactLastName</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    customers;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>UNION</code>默认是<code>UNION DISTINCT</code>； 要保留重复的行，需要使用<code>UNION ALL</code></p>
+</li>
+<li>
+<p><code>UNION</code>后产生的大表的字段名用的是<code>UNION</code>主语的<code>SELECT</code>的字段名</p>
+</li>
+<li>
+<p>使用<code>ORDER BY</code>对产生的大表的行进行排序</p>
+<ul>
+<li>注意， UNION宾语的那张子表里不需要排序</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    concat(firstName,&#x27; &#x27;,lastName) fullname</span><br><span class="line">FROM</span><br><span class="line">    employees </span><br><span class="line">UNION SELECT </span><br><span class="line">    concat(contactFirstName,&#x27; &#x27;,contactLastName)</span><br><span class="line">FROM</span><br><span class="line">    customers</span><br><span class="line">ORDER BY fullname;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="MINUS"><a class="header-anchor" href="#MINUS"></a>MINUS</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT select_list1 </span><br><span class="line">FROM table_name1</span><br><span class="line">MINUS </span><br><span class="line">SELECT select_list2 </span><br><span class="line">FROM table_name2;</span><br></pre></td></tr></table></figure>
+<p>Unfortunately, MySQL does not support <code>MINUS</code> operator. However, you can use <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-join/">join</a> to emulate it.</p>
+<p>To emulate the <code>MINUS</code> of two queries, you use the following syntax:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    select_list</span><br><span class="line">FROM </span><br><span class="line">    table1</span><br><span class="line">LEFT JOIN table2 </span><br><span class="line">    ON join_predicate</span><br><span class="line">WHERE </span><br><span class="line">    table2.column_name IS NULL; </span><br></pre></td></tr></table></figure>
+<h2 id="INSERT"><a class="header-anchor" href="#INSERT"></a>INSERT</h2>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">table</span>(c1,c2,...)</span><br><span class="line"><span class="keyword">VALUES</span> (v1,v2,...);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>The number of columns and values must be the same. In addition, the positions of columns must be corresponding with the positions of their values</li>
+</ul>
+<p>To <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-insert-multiple-rows/">insert multiple rows</a> into a table using a single <code>INSERT</code> statement, you use the following syntax:</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="keyword">table</span>(c1,c2,...)</span><br><span class="line"><span class="keyword">VALUES</span> </span><br><span class="line">   (v11,v12,...),</span><br><span class="line">   (v21,v22,...),</span><br><span class="line">    ...</span><br><span class="line">   (vnn,vn2,...);</span><br></pre></td></tr></table></figure>
+<h3 id="insert-using-default-value"><a class="header-anchor" href="#insert-using-default-value"></a>insert using default value</h3>
+<p>If you want to insert a default value into a column, you have two ways:</p>
+<ul>
+<li>Ignore both the column name and value in the <code>INSERT</code> statement.</li>
+<li>Specify the column name in the <code>INSERT INTO</code> clause and use the <code>DEFAULT</code> keyword in the <code>VALUES</code> clause.</li>
+</ul>
+<p>The following example demonstrates the second way:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO tasks(title,priority)</span><br><span class="line">VALUES(&#x27;Understanding DEFAULT keyword in INSERT statement&#x27;,DEFAULT);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>In this example, we specified the <code>priority</code> column and the  <code>DEFAULT</code> keyword.</p>
+<p>Because the default value for the column <code>priority</code> is 3 as declared in the table definition:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">priority TINYINT NOT NULL DEFAULT 3Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>MySQL uses the number 3 to insert into the <code>priority</code> column.</p>
+<h3 id="Inserting-dates"><a class="header-anchor" href="#Inserting-dates"></a>Inserting dates</h3>
+<p>To insert a literal date value into a column, you use the following format:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;YYYY-MM-DD&#x27;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>In this format:</p>
+<ul>
+<li><code>YYYY</code> represents a four-digit year e.g., 2018.</li>
+<li><code>MM</code> represents a two-digit month e.g., 01, 02, and 12.</li>
+<li><code>DD</code> represents a two-digit day e.g., 01, 02, 30.</li>
+</ul>
+<p>The following statement inserts a new row to the <code>tasks</code> table with the start and due date values:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO tasks(title, start_date, due_date)</span><br><span class="line">VALUES(&#x27;Insert date into table&#x27;,&#x27;2018-01-09&#x27;,&#x27;2018-09-15&#x27;);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>The following picture shows the contents of the <code>tasks</code> table after the insert:</p>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2018/09/MySQL-INSERT-dates-into-table.png" alt="MySQL INSERT dates into table"></p>
+<p>It is possible to use expressions in the <code>VALUES</code> clause. For example, the following statement adds a new task using the current date for start date and due date columns:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO tasks(title,start_date,due_date)</span><br><span class="line">VALUES(&#x27;Use current date for the task&#x27;,CURRENT_DATE(),CURRENT_DATE())Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>In this example, we used the <code>CURRENT_DATE()</code> function as the values for the <code>start_date</code> and <code>due_date</code> columns. Note that the <code>CURRENT_DATE()</code> function is a <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-date-functions/">date function</a> that returns the current system date.</p>
+<h2 id="Insert-Into-Select"><a class="header-anchor" href="#Insert-Into-Select"></a>Insert Into Select</h2>
+<p>In the previous tutorial, you learned how to insert one or more rows into a table using the <code>INSERT</code> statement with a list of column values specified in the <code>VALUES</code> clause.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO table_name(c1,c2,...)</span><br><span class="line">VALUES(v1,v2,..);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>Besides using row values in the <code>VALUES</code> clause, you can use the result of a <code>SELECT</code> statement as the data source for the <code>INSERT</code> statement.</p>
+<p>The following illustrates the syntax of the <code>INSERT INTO SELECT</code> statement:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO table_name(column_list)</span><br><span class="line">SELECT </span><br><span class="line">   select_list </span><br><span class="line">FROM </span><br><span class="line">   another_table</span><br><span class="line">WHERE</span><br><span class="line">   condition;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>In this syntax, instead of using the <code>VALUES</code> clause, you can use a <code>SELECT</code> statement. The <code>SELECT</code> statement can retrieve data from one or more tables.</p>
+<p>The <code>INSERT INTO SELECT</code> statement is very useful when you want to copy data from other tables to a table or to summary data from multiple tables into a table.</p>
+<h2 id="UPDATE"><a class="header-anchor" href="#UPDATE"></a>UPDATE</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">UPDATE salary</span><br><span class="line">SET</span><br><span class="line">    sex = CASE sex</span><br><span class="line">        WHEN &#x27;m&#x27; THEN &#x27;f&#x27;</span><br><span class="line">        ELSE &#x27;m&#x27;</span><br><span class="line">    END;</span><br></pre></td></tr></table></figure>
+<h2 id="CASE"><a class="header-anchor" href="#CASE"></a>CASE</h2>
+<p><code>CASE</code>返回一个字段值</p>
+<p>case和when的参数字段都不要加别名， 别名要加在整个case子句后面，也就是<code>END</code>后面</p>
+<h3 id="Simple-CASE-expression"><a class="header-anchor" href="#Simple-CASE-expression"></a>Simple CASE expression</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CASE case_value</span><br><span class="line">   WHEN when_value1 THEN statements</span><br><span class="line">   WHEN when_value2 THEN statements</span><br><span class="line">   ...</span><br><span class="line">   [ELSE else-statements]</span><br><span class="line">END CASE;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果没有任何一个<code>WHEN</code>子句被匹配，则进入<code>ELSE</code>子句。 <code>ELSE</code>子句是可选的， 如果省略了<code>ELSE</code>子句，则不匹配任何when时，直接返回<code>NULL</code></li>
+</ul>
+<p>例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    first_name,</span><br><span class="line">    last_name,</span><br><span class="line">    CASE</span><br><span class="line">        WHEN salary &lt; 3000 THEN &#x27;Low&#x27;</span><br><span class="line">        WHEN salary &gt;= 3000 AND salary &lt;= 5000 THEN &#x27;Average&#x27;</span><br><span class="line">        WHEN salary &gt; 5000 THEN &#x27;High&#x27;</span><br><span class="line">    END evaluation</span><br><span class="line">FROM</span><br><span class="line">    employees;</span><br></pre></td></tr></table></figure>
+<h3 id="Searched-CASE-expression"><a class="header-anchor" href="#Searched-CASE-expression"></a>Searched CASE expression</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CASE</span><br><span class="line">WHEN boolean_expression_1 THEN</span><br><span class="line">	result_1</span><br><span class="line">WHEN boolean_expression_2 THEN</span><br><span class="line">	result_2</span><br><span class="line">WHEN boolean_expression_3 THEN</span><br><span class="line">	result_3</span><br><span class="line">ELSE</span><br><span class="line">	else_result</span><br><span class="line">END;</span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    first_name,</span><br><span class="line">    last_name,</span><br><span class="line">    CASE</span><br><span class="line">        WHEN salary &lt; 3000 THEN &#x27;Low&#x27;</span><br><span class="line">        WHEN salary &gt;= 3000 AND salary &lt;= 5000 THEN &#x27;Average&#x27;</span><br><span class="line">        WHEN salary &gt; 5000 THEN &#x27;High&#x27;</span><br><span class="line">    END evaluation</span><br><span class="line">FROM</span><br><span class="line">    employees;</span><br></pre></td></tr></table></figure>
+<h2 id="DERIVED-TABLE"><a class="header-anchor" href="#DERIVED-TABLE"></a>DERIVED TABLE</h2>
+<p>派生表是从<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/select-statement-query-data.html">SELECT语句</a>返回的虚拟表。派生表类似于临时表，但是在<code>SELECT</code>语句中使用派生表比<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/temporary-table.html">临时表</a>简单得多，因为它不需要创建临时表的步骤。</p>
+<p>**术语:***派生表*和<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/subquery.html">子查询</a>通常可互换使用。当<code>SELECT</code>语句的<code>FROM</code>子句中使用独立子查询时，我们将其称为派生表。</p>
+<p>以下说明了使用派生表的查询：</p>
+<p><img data-src="http://www.yiibai.com/uploads/images/201707/1907/437150722_21821.png" alt="img"></p>
+<blockquote>
+<p>请注意，独立子查询是一个子查询，可独立于包含该语句的执行语句。</p>
+</blockquote>
+<p>与子查询不同，派生表必须具有<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/alias.html">别名</a>，以便稍后在查询中引用其名称。 如果派生表没有别名，MySQL将发出以下错误：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Every derived table must have its own alias.</span><br><span class="line">Shell</span><br></pre></td></tr></table></figure>
+<p>以下说明了使用派生表的SQL语句：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    column_list</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    (<span class="keyword">SELECT</span> </span><br><span class="line">        column_list</span><br><span class="line">    <span class="keyword">FROM</span></span><br><span class="line">        table_1) derived_table_name;</span><br><span class="line"><span class="keyword">WHERE</span> derived_table_name.c1 <span class="operator">&gt;</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>aA12345678</p>
+<h2 id="FUNCTION"><a class="header-anchor" href="#FUNCTION"></a>FUNCTION</h2>
+<h3 id="ROUND"><a class="header-anchor" href="#ROUND"></a>ROUND</h3>
+<h3 id="ROUND-X-D"><a class="header-anchor" href="#ROUND-X-D"></a>ROUND(X,D)</h3>
+<p>​	此函数返回x舍入到最接近的整数。如果第二个参数，D有提供，则函数返回x四舍五入至第D位小数点。D必须是正数</p>
+<h3 id="IFNULL"><a class="header-anchor" href="#IFNULL"></a>IFNULL</h3>
+<p>MySQL <code>IFNULL</code>函数是MySQL控制流函数之一，它接受两个参数，如果不是<code>NULL</code>，则返回第一个参数。 否则，<code>IFNULL</code>函数返回第二个参数。</p>
+<p>两个参数可以是文字值或表达式。</p>
+<p>以下说明了<code>IFNULL</code>函数的语法：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">IFNULL(expression_1,expression_2);</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
+<p>如果<code>expression_1</code>不为<code>NULL</code>，则<code>IFNULL</code>函数返回<code>expression_1</code>; 否则返回<code>expression_2</code>的结果。</p>
+<p><code>IFNULL</code>函数根据使用的上下文返回字符串或数字。</p>
+<p>如果要返回基于<code>TRUE</code>或<code>FALSE</code>条件的值，而不是<code>NULL</code>，则应使用<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/if-function.html">IF函数</a>。</p>
+<h1 id="Aggregate-Functions"><a class="header-anchor" href="#Aggregate-Functions"></a>Aggregate Functions</h1>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">function_name(<span class="keyword">DISTINCT</span> <span class="operator">|</span> <span class="keyword">ALL</span> expression)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>use <code>DISTINCT</code> if you want to calculate based on distinct values or <code>ALL</code> in case you want to calculate all values including duplicates. The default is <code>ALL</code></li>
+<li>The aggregate functions are often used with the <code>GROUP BY</code> clause to calculate an aggregate value for each group</li>
+</ul>
+<h2 id="AVG"><a class="header-anchor" href="#AVG"></a>AVG()</h2>
+<p>The <code>AVG()</code> function calculates the average value of a set of values. It ignores NULL in the calculation.</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="built_in">AVG</span>(expression)</span><br></pre></td></tr></table></figure>
+<h2 id="COUNT"><a class="header-anchor" href="#COUNT"></a>COUNT()</h2>
+<p>The <code>COUNT()</code> function returns the number of the value in a set.</p>
+<p>For example, you can use the <code>COUNT()</code> function to get the number of products in the <code>products</code> table as shown in the following query:</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    <span class="built_in">COUNT</span>(<span class="operator">*</span>) <span class="keyword">AS</span> total</span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line">    products;</span><br></pre></td></tr></table></figure>
+<h2 id="SUM"><a class="header-anchor" href="#SUM"></a>SUM()</h2>
+<p>The <code>SUM()</code> function returns the sum of values in a set. The <code>SUM()</code> function ignores <code>NULL</code>. If no matching row found, the <code>SUM()</code> function returns NULL.</p>
+<p>To get the total order value of each product, you can use the <code>SUM()</code> function in conjunction with the <code>GROUP BY</code> clause as follows:</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    productCode, </span><br><span class="line">    <span class="built_in">SUM</span>(priceEach <span class="operator">*</span> quantityOrdered) total</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    orderDetails</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> productCode</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> total <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="MAX"><a class="header-anchor" href="#MAX"></a>MAX()</h2>
+<p>The <code>MAX()</code> function returns the maximum value in a set.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MAX(expression)Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>For example, you can use the <code>MAX()</code> function to get the highest buy price from the <code>products</code> table as shown in the following query:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">     MAX(buyPrice) highest_price</span><br><span class="line">FROM </span><br><span class="line">     products;</span><br></pre></td></tr></table></figure>
+<h1 id="CONSTRAINTS"><a class="header-anchor" href="#CONSTRAINTS"></a>CONSTRAINTS</h1>
+<h2 id="Primary-Key"><a class="header-anchor" href="#Primary-Key"></a>Primary Key</h2>
+<p>When you define a primary key for a table, MySQL automatically <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-index/mysql-create-index/">creates an index</a> called <code>PRIMARY</code></p>
+<h3 id="1-Define-a-PRIMARY-KEY-constraint-in-CREATE-TABLE"><a class="header-anchor" href="#1-Define-a-PRIMARY-KEY-constraint-in-CREATE-TABLE"></a>1) Define a <code>PRIMARY KEY</code> constraint in <code>CREATE TABLE</code></h3>
+<p>Typically, you define the primary key for a table in the <code>CREATE TABLE</code> statement.</p>
+<p>If the primary key has one column, you can use the <code>PRIMARY KEY</code> constraint as a column constraint:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE table_name(</span><br><span class="line">    primary_key_column datatype PRIMARY KEY,</span><br><span class="line">    ...</span><br><span class="line">);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>When the primary key has more than one column, you must use the <code>PRIMARY KEY</code> constraint as a table constraint.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE table_name(</span><br><span class="line">    primary_key_column1 datatype,</span><br><span class="line">    primary_key_column2 datatype,</span><br><span class="line">    ...,</span><br><span class="line">    PRIMARY KEY(column_list)</span><br><span class="line">);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>In this syntax, you separate columns in the <code>column_list</code> by commas (,).</p>
+<p>The <code>PRIMARY KEY</code> table constraint can be used when the primary key has one column:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE table_name ( </span><br><span class="line">    primary_key_column datatype, </span><br><span class="line">    ... ,</span><br><span class="line">    PRIMARY KEY(primary_key_column)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<h2 id="Foreign-Key"><a class="header-anchor" href="#Foreign-Key"></a>Foreign Key</h2>
+<p>A foreign key is a column or group of columns in a table that links to a column or group of columns in another table. The foreign key places constraints on data in the related tables, which allows MySQL to maintain referential integrity.</p>
+<p>Once a foreign key constraint is in place, the foreign key columns from the child table must have the corresponding row in the parent key columns of the parent table or values in these foreign key column must be <code>NULL</code> (see the <code>SET NULL</code> action example below).</p>
+<h3 id="Self-referencing-foreign-key"><a class="header-anchor" href="#Self-referencing-foreign-key"></a>Self-referencing foreign key</h3>
+<p>Sometimes, the child and parent tables may refer to the same table. In this case, the foreign key references back to the primary key within the same table.</p>
+<p>See the following <code>employees</code> table from the <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-sample-database.aspx">sample database</a>.</p>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/employees.png" alt="img"></p>
+<p>The <code>reportTo</code> column is a foreign key that refers to the <code>employeeNumber</code> column which is the primary key of the <code>employees</code> table.</p>
+<p>This relationship allows the <code>employees</code> table to store the reporting structure between employees and managers. Each employee reports to zero or one employee and an employee can have zero or many subordinates.</p>
+<p>The foreign key on the column <code>reportTo</code> is known as a <em>recursive</em> or <em>self-referencing</em> foreign key.</p>
+<h2 id="MySQL-FOREIGN-KEY-syntax"><a class="header-anchor" href="#MySQL-FOREIGN-KEY-syntax"></a>MySQL <code>FOREIGN KEY</code> syntax</h2>
+<p>Here is the basic syntax of defining a foreign key constraint in the <code>CREATE TABLE</code> or <code>ALTER TABLE</code> statement:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[CONSTRAINT constraint_name]</span><br><span class="line">FOREIGN KEY [foreign_key_name] (column_name, ...)</span><br><span class="line">REFERENCES parent_table(colunm_name,...)</span><br><span class="line">[ON DELETE reference_option]</span><br><span class="line">[ON UPDATE reference_option]Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>In this syntax:</p>
+<p>First, specify the name of foreign key constraint that you want to create after the <code>CONSTRAINT</code> keyword. If you omit the constraint name, MySQL automatically generates a name for the foreign key constraint.</p>
+<p>Second, specify a list of comma-separated foreign key columns after the <code>FOREIGN KEY</code> keywords. The foreign key name is also optional and is generated automatically if you skip it.</p>
+<p>Third, specify the parent table followed by a list of comma-separated columns to which the foreign key columns reference.</p>
+<p>Finally, specify how foreign key maintains the referential integrity between the child and parent tables by using the <code>ON DELETE</code> and <code>ON UPDATE</code> clauses. The <code>reference_option</code> determines action which MySQL will take when values in the parent key columns are deleted (<code>ON DELETE</code>) or updated (<code>ON UPDATE</code>).</p>
+<p>MySQL has five reference options: <code>CASCADE</code>, <code>SET NULL</code>, <code>NO ACTION</code>, <code>RESTRICT</code>, and <code>SET DEFAULT</code>.</p>
+<ul>
+<li><code>CASCADE</code>: if a row from the parent table is deleted or updated, the values of the matching rows in the child table automatically deleted or updated.</li>
+<li><code>SET NULL</code>: if a row from the parent table is deleted or updated, the values of the foreign key column (or columns) in the child table are set to <code>NULL</code>.</li>
+<li><code>RESTRICT</code>: if a row from the parent table has a matching row in the child table, MySQL rejects deleting or updating rows in the parent table.</li>
+<li><code>NO ACTION</code>: is the same as <code>RESTRICT</code>.</li>
+<li><code>SET DEFAULT</code>: is recognized by the MySQL parser. However, this action is rejected by both InnoDB and NDB tables.</li>
+</ul>
+<p>In fact, MySQL fully supports three actions: <code>RESTRICT</code>, <code>CASCADE</code> and <code>SET NULL</code>.</p>
+<p>If you don’t specify the <code>ON DELETE</code> and <code>ON UPDATE</code> clause, the default action is <code>RESTRICT</code>.</p>
+<h2 id="MySQL-FOREIGN-KEY-examples"><a class="header-anchor" href="#MySQL-FOREIGN-KEY-examples"></a>MySQL <code>FOREIGN KEY</code> examples</h2>
+<p>Let’s <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-create-database/">create a new database</a> called <code>fkdemo</code> for the demonstration.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE DATABASE fkdemo;</span><br><span class="line"></span><br><span class="line">USE fkdemo;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<h3 id="RESTRICT-NO-ACTION-actions"><a class="header-anchor" href="#RESTRICT-NO-ACTION-actions"></a><code>RESTRICT</code> &amp; <code>NO ACTION</code> actions</h3>
+<p>Inside the <code>fkdemo</code> database, create two tables <code>categories</code> and <code>products</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE categories(</span><br><span class="line">    categoryId INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    categoryName VARCHAR(100) NOT NULL</span><br><span class="line">) ENGINE=INNODB;</span><br><span class="line"></span><br><span class="line">CREATE TABLE products(</span><br><span class="line">    productId INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    productName varchar(100) not null,</span><br><span class="line">    categoryId INT,</span><br><span class="line">    CONSTRAINT fk_category</span><br><span class="line">    FOREIGN KEY (categoryId) </span><br><span class="line">        REFERENCES categories(categoryId)</span><br><span class="line">) ENGINE=INNODB;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>The <code>categoryId</code> in the <code>products</code> table is the foreign key column that refers to the <code>categoryId</code> column in the <code>categories</code> table.</p>
+<p>Because we don’t specify any <code>ON UPDATE</code> and <code>ON DELETE</code> clauses, the default action is <code>RESTRICT</code> for both update and delete operation.</p>
+<p>The following steps illustrate the <code>RESTRICT</code> action.</p>
+<p>\1) <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-insert-multiple-rows/">Insert two rows</a> into the <code>categories</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO categories(categoryName)</span><br><span class="line">VALUES</span><br><span class="line">    (&#x27;Smartphone&#x27;),</span><br><span class="line">    (&#x27;Smartwatch&#x27;);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>\2) <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-select-statement-query-data.aspx">Select</a> data from the <code>categories</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table.png" alt="img"></p>
+<p>\3) <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-insert-statement.aspx">Insert a new row</a> into the <code>products</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO products(productName, categoryId)</span><br><span class="line">VALUES(&#x27;iPhone&#x27;,1);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>It works because the <code>categoryId</code> 1 exists in the <code>categories</code> table.</p>
+<p>\4) Attempt to insert a new row into the <code>products</code> table with a <code>categoryId</code> value does not exist in the <code>categories</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO products(productName, categoryId)</span><br><span class="line">VALUES(&#x27;iPad&#x27;,3);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>MySQL issued the following error:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`fkdemo`.`products`, CONSTRAINT `fk_category` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`) ON DELETE RESTRICT ON UPDATE RESTRICT)Code language: JavaScript (javascript)</span><br></pre></td></tr></table></figure>
+<p>\5) Update the value in the <code>categoryId</code> column in the <code>categories</code> table to <code>100</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">UPDATE categories</span><br><span class="line">SET categoryId = 100</span><br><span class="line">WHERE categoryId = 1;</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>MySQL issued this error:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`fkdemo`.`products`, CONSTRAINT `fk_category` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`) ON DELETE RESTRICT ON UPDATE RESTRICT)Code language: JavaScript (javascript)</span><br></pre></td></tr></table></figure>
+<p>Because of the <code>RESTRICT</code> option, you cannot delete or update <code>categoryId 1</code> since it is referenced by the <code>productId</code> <code>1</code> in the <code>products</code> table.</p>
+<h3 id="CASCADE-action"><a class="header-anchor" href="#CASCADE-action"></a><code>CASCADE</code> action</h3>
+<p>These steps illustrate how <code>ON UPDATE CASCADE</code> and <code>ON DELETE CASCADE</code> actions work.</p>
+<p>\1) <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-drop-table">Drop</a> the <code>products</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DROP TABLE products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>\2) Create the <code>products</code> table with the <code>ON UPDATE CASCADE</code> and <code>ON DELETE CASCADE</code> options for the foreign key:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE products(</span><br><span class="line">    productId INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    productName varchar(100) not null,</span><br><span class="line">    categoryId INT NOT NULL,</span><br><span class="line">    CONSTRAINT fk_category</span><br><span class="line">    FOREIGN KEY (categoryId) </span><br><span class="line">    REFERENCES categories(categoryId)</span><br><span class="line">        ON UPDATE CASCADE</span><br><span class="line">        ON DELETE CASCADE</span><br><span class="line">) ENGINE=INNODB;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>\3) Insert four rows into the <code>products</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO products(productName, categoryId)</span><br><span class="line">VALUES</span><br><span class="line">    (&#x27;iPhone&#x27;, 1), </span><br><span class="line">    (&#x27;Galaxy Note&#x27;,1),</span><br><span class="line">    (&#x27;Apple Watch&#x27;,2),</span><br><span class="line">    (&#x27;Samsung Galary Watch&#x27;,2);</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>\4) Select data from the <code>products</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table.png" alt="img"></p>
+<p>\5) Update <code>categoryId</code> 1 to 100 in the <code>categories</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">UPDATE categories</span><br><span class="line">SET categoryId = 100</span><br><span class="line">WHERE categoryId = 1;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>\6) Verify the update:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-cascade.png" alt="img"></p>
+<p>\7) Get data from the <code>products</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-update-cascade-.png" alt="img"></p>
+<p>As you can see, two rows with value <code>1</code> in the <code>categoryId</code> column of the <code>products</code> table were automatically updated to <code>100</code> because of the <code>ON UPDATE CASCADE</code> action.</p>
+<p>\8) Delete <code>categoryId</code> 2 from the <code>categories</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DELETE FROM categories</span><br><span class="line">WHERE categoryId = 2;</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>\9) Verify the deletion:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-delete-cascade.png" alt="img"></p>
+<p>\10) Check the <code>products</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-delete-cascade.png" alt="img"></p>
+<p>All products with <code>categoryId</code> 2 from the <code>products</code> table were automatically deleted because of the <code>ON DELETE CASCADE</code> action.</p>
+<h3 id="SET-NULL-action"><a class="header-anchor" href="#SET-NULL-action"></a><code>SET NULL</code> action</h3>
+<p>These steps illustrate how the <code>ON UPDATE SET NULL</code> and <code>ON DELETE SET NULL</code> actions work.</p>
+<p>\1) Drop both <code>categories</code> and <code>products</code> tables:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DROP TABLE IF EXISTS categories;</span><br><span class="line">DROP TABLE IF EXISTS products;</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>\2) Create the <code>categories</code> and <code>products</code> tables:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE categories(</span><br><span class="line">    categoryId INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    categoryName VARCHAR(100) NOT NULL</span><br><span class="line">)ENGINE=INNODB;</span><br><span class="line"></span><br><span class="line">CREATE TABLE products(</span><br><span class="line">    productId INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    productName varchar(100) not null,</span><br><span class="line">    categoryId INT,</span><br><span class="line">    CONSTRAINT fk_category</span><br><span class="line">    FOREIGN KEY (categoryId) </span><br><span class="line">        REFERENCES categories(categoryId)</span><br><span class="line">        ON UPDATE SET NULL</span><br><span class="line">        ON DELETE SET NULL </span><br><span class="line">)ENGINE=INNODB;</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>The foreign key in the <code>products</code> table changed to <code>ON UPDATE SET NULL</code> and <code>ON DELETE SET NULL</code> options.</p>
+<p>\3) Insert rows into the <code>categories</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO categories(categoryName)</span><br><span class="line">VALUES</span><br><span class="line">    (&#x27;Smartphone&#x27;),</span><br><span class="line">    (&#x27;Smartwatch&#x27;);</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>\4) Insert rows into the <code>products</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO products(productName, categoryId)</span><br><span class="line">VALUES</span><br><span class="line">    (&#x27;iPhone&#x27;, 1), </span><br><span class="line">    (&#x27;Galaxy Note&#x27;,1),</span><br><span class="line">    (&#x27;Apple Watch&#x27;,2),</span><br><span class="line">    (&#x27;Samsung Galary Watch&#x27;,2);</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>\5) Update <code>categoryId</code> from 1 to 100 in the <code>categories</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">UPDATE categories</span><br><span class="line">SET categoryId = 100</span><br><span class="line">WHERE categoryId = 1;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>\6) Verify the update:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-set-null.png" alt="img"></p>
+<p>\7) Select data from the <code>products</code> table:</p>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-set-null.png" alt="img"></p>
+<p>The rows with the <code>categoryId</code> 1 in the <code>products</code> table were automatically set to <code>NULL</code> due to the <code>ON UPDATE SET NULL</code> action.</p>
+<p>\8) Delete the <code>categoryId</code> 2 from the <code>categories</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DELETE FROM categories </span><br><span class="line">WHERE categoryId = 2;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>\9) Check the <code>products</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-on-delete-set-null.png" alt="img"></p>
+<p>The values in the <code>categoryId</code> column of the rows with <code>categoryId</code> 2 in the <code>products</code> table were automatically set to <code>NULL</code> due to the <code>ON DELETE SET NULL</code> action.</p>
+<h2 id="Drop-MySQL-foreign-key-constraints"><a class="header-anchor" href="#Drop-MySQL-foreign-key-constraints"></a>Drop MySQL foreign key constraints</h2>
+<p>To drop a foreign key constraint, you use the <code>ALTER TABLE</code> statement:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ALTER TABLE table_name </span><br><span class="line">DROP FOREIGN KEY constraint_name;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>In this syntax:</p>
+<ul>
+<li>First, specify the name of the table from which you want to drop the foreign key after the <code>ALTER TABLE</code> keywords.</li>
+<li>Second, specify the constraint name after the <code>DROP FOREIGN KEY</code> keywords.</li>
+</ul>
+<p>Notice that <code>constraint_name</code> is the name of the foreign key constraint specified when you created or added the foreign key constraint to the table.</p>
+<p>To obtain the generated constraint name of a table, you use the <code>SHOW CREATE TABLE</code> statement:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW CREATE TABLE table_name;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>For example, to see the foreign keys of the <code>products</code> table, you use the following statement:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW CREATE TABLE products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>The following is the output of the statement:</p>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/09/MySQL-Foreign-Key-drop-foreign-key-constraint.png" alt="img"></p>
+<p>As you can see clearly from the output, the table <code>products</code> table has one foreign key constraint: <code>fk_category</code></p>
+<p>And this statement drops the foreign key constraint of the <code>products</code> table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ALTER TABLE products </span><br><span class="line">DROP FOREIGN KEY fk_category;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>To ensure that the foreign key constraint has been dropped, you can view the structure of the products table:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW CREATE TABLE products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/09/MySQL-Foreign-Key-after-drop-foreign-key-constraint.png" alt="MySQL Foreign Key - after drop foreign key constraint"></p>
+<h2 id="Disabling-foreign-key-checks"><a class="header-anchor" href="#Disabling-foreign-key-checks"></a>Disabling foreign key checks</h2>
+<p>Sometimes, it is very useful to disable foreign key checks e.g., when you <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/import-csv-file-mysql-table/">import data from a CSV file into a table</a>. If you don’t disable foreign key checks, you have to load data into a proper order i.e., you have to load data into parent tables first and then child tables, which can be tedious. However, if you disable the foreign key checks, you can load data into tables in any order.</p>
+<p>To disable foreign key checks, you use the following statement:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SET foreign_key_checks = 0;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>And you can enable it by using the following statement:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SET foreign_key_checks = 1;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<p>In this tutorial, you have learned about the MySQL foreign key and how to create a foreign key constraint with various reference options.</p>
+<h1 id="DATA-TYPES"><a class="header-anchor" href="#DATA-TYPES"></a>DATA TYPES</h1>
+<h1 id="GLOBALIZARION"><a class="header-anchor" href="#GLOBALIZARION"></a>GLOBALIZARION</h1>
+<h1 id="IMPORT-EXPORT"><a class="header-anchor" href="#IMPORT-EXPORT"></a>IMPORT &amp; EXPORT</h1>
+<h1 id="Retrieving-records"><a class="header-anchor" href="#Retrieving-records"></a>Retrieving records</h1>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/26/L8-logn-search/" rel="prev" title="L8 logn search">
+                  <i class="fa fa-chevron-left"></i> L8 logn search
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/26/Python%20Basic/" rel="next" title="Python Basic">
+                  Python Basic <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

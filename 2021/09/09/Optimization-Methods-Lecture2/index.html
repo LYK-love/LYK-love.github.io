@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline：  Norms Analysis Functions Derivatives Linear Algebra">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Optimization-Methods-Lecture2">
+<meta property="og:url" content="http://lyk-love.cn/2021/09/09/Optimization-Methods-Lecture2/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline：  Norms Analysis Functions Derivatives Linear Algebra">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-08T18:34:11.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.937Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Optimization Methods">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/09/09/Optimization-Methods-Lecture2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/09/09/Optimization-Methods-Lecture2/","path":"2021/09/09/Optimization-Methods-Lecture2/","title":"Optimization-Methods-Lecture2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Optimization-Methods-Lecture2 | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Norms"><span class="nav-text">Norms</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Inner-product"><span class="nav-text">Inner product</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Norms-2"><span class="nav-text">Norms</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Analysis"><span class="nav-text">Analysis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Functions"><span class="nav-text">Functions</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Derivatives"><span class="nav-text">Derivatives</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradient"><span class="nav-text">Gradient</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%87%B8%E5%87%BD%E6%95%B0"><span class="nav-text">常见凸函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%87%B9%E5%87%BD%E6%95%B0"><span class="nav-text">常见凹函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F%E7%9A%84%E6%9C%9F%E6%9C%9B"><span class="nav-text">随机变量的期望</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83-%E6%AD%A3%E6%80%81%E5%88%86%E5%B8%83"><span class="nav-text">高斯分布&#x2F;正态分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B7%E5%90%88%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83"><span class="nav-text">混合高斯分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E9%98%85%E8%AF%BB"><span class="nav-text">推荐阅读</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/09/09/Optimization-Methods-Lecture2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Optimization-Methods-Lecture2 | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Optimization-Methods-Lecture2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-08 18:34:11" itemprop="dateCreated datePublished" datetime="2021-09-08T18:34:11Z">2021-09-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Mathematics/" itemprop="url" rel="index"><span itemprop="name">Mathematics</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline：</p>
+<ul>
+<li><strong>Norms</strong></li>
+<li><strong>Analysis</strong></li>
+<li><strong>Functions</strong></li>
+<li><strong>Derivatives</strong></li>
+<li><strong>Linear Algebra</strong></li>
+</ul>
+<span id="more"></span>
+<h1 id="Norms"><a class="header-anchor" href="#Norms"></a><strong>Norms</strong></h1>
+<h2 id="Inner-product"><a class="header-anchor" href="#Inner-product"></a>Inner product</h2>
+<ul>
+<li>
+<p>Inner product on R^n^<br>
+$$<br>
+&lt;x,y&gt;=x^Ty=\sum\limits_{i=1}^{n}x_iy_i \in R^n<br>
+$$</p>
+</li>
+<li>
+<p>Euclidean norm, or $l_2$ - norm<br>
+$$<br>
+||x||_2=(x^Tx)^{1/2}=(x_1^2+\dots+x_n^2)^{1/2}, x \in R^n<br>
+$$</p>
+</li>
+<li>
+<p>Cauchy-Schwartz inequality</p>
+</li>
+</ul>
+<p>$$<br>
+|x^Ty| \leq ||x||_2||y||_2,x,y \in R^n<br>
+$$</p>
+<ul>
+<li>
+<p>Angle between nonzero vectors $x,y \in R^n$<br>
+$$<br>
+\angle (x,y) = cos^{-1}(\frac {x^Ty}{||x||_2||y||_2}),x,y \in R^n,\angle (x,y) \in (0,\pi<br>
+$$</p>
+</li>
+<li>
+<p>Inner product on $R^{m\times n}, X,Y \in R^{m\times n} $​<br>
+$$<br>
+&lt;X,Y&gt;=\tr (X^TY)=\sum\limits_{i=1}^{m}\sum\limits_{j=1}^{n}X_{ij}Y_{ij}<br>
+$$<br>
+Here $\tr()$ denotes trace of a matrix</p>
+</li>
+<li>
+<p>Frobenius norm of a matrix $x \in R^{m \times n}$​ 和向量的二范数对应<br>
+$$<br>
+||X||<em>F = (\tr(X^TX))^{1/2}=(\sum\limits</em>{i=1}^{m}\sum\limits_{j=1}^{n}X_{ij}^2)^{1/2}<br>
+$$</p>
+</li>
+<li>
+<p>Inner product on $S^n$<br>
+$$<br>
+&lt;X,Y&gt;=tr(XY)=\sum\limits_{i=1}^{n}\sum\limits_{j=1}^{n}X_{ij}Y_{ij} = \sum\limits_{i=1}^{n}X_{ii}Y_{ii} + 2 \sum\limits_{i&lt;j}X_{ij}Y_{ij}<br>
+$$<br>
+Here $S^n$​ denotes symmetrical matrices on $R^{n \times n}$</p>
+</li>
+</ul>
+<hr>
+<h2 id="Norms-2"><a class="header-anchor" href="#Norms-2"></a>Norms</h2>
+<ul>
+<li>
+<p><strong>A function</strong> $f: R^n \rarr R$  <strong>with dom</strong> $f = R^n$​ <strong>is called a norm if</strong></p>
+<ul>
+<li>$f$ is nonnegative: $f(x) \geq 0$  for all $x \in R^n$</li>
+<li>$f$ is definite( 正定的 ): $f(x)=0$  only if $x=0$</li>
+<li>$f$​ is homogeneous( 同质的 ): $f(tx)=|t|f(x)$ , for all $x \in R^n$​ and $t \in R$​</li>
+<li>$f$ satisfies the triangle inequality: $f(x+y) \leq f(x) + f(y)$ , for all $x,y \in R^n$​</li>
+</ul>
+</li>
+<li>
+<p><strong>Distance</strong></p>
+<ul>
+<li>Between vectors $x$ and $y$ as the length of their difference, i.e.,<br>
+$$<br>
+\mathrm {dist}(x,y) = ||x-y||<br>
+$$</li>
+</ul>
+<p>没有加下标， 表示抽象的范数</p>
+<hr>
+</li>
+<li>
+<p><strong>Unit ball</strong></p>
+<ul>
+<li>
+<p>The set of all vectors with norm less than or equal to one,<br>
+$$<br>
+\Beta = {x \in R^n \mid ||x|| \leq 1}<br>
+$$<br>
+is called the unit ball of the norm $||\cdot||$  ( 单位球不唯一， 还需要指定一个范数 )</p>
+</li>
+<li>
+<p>The unit ball satisfies the following properties:</p>
+<ul>
+<li>$\Beta$ is symmetric about the origin, i.e., $x \in \Beta$ if and only if $ -x \in \Beta $</li>
+<li>$\Beta$ is convex</li>
+<li>$\Beta$ is closed, bounded, and has nonempty interior</li>
+</ul>
+</li>
+<li>
+<p>Conversely, if $C \subseteq R^n$​​​ is any set satisfying these three conditions, then it is the unit ball of a norm:<br>
+$$<br>
+||x|| = (\sup{t \geq 0 | tx \in C})^{-1}<br>
+$$</p>
+</li>
+</ul>
+<hr>
+</li>
+<li>
+<p>Spme common norms on $R^n$</p>
+<ul>
+<li>
+<p>Sum-absolute-value, or $l_1$ - norm<br>
+$$<br>
+||x||_1 = |x|_1 + \dots + |x|_n, x \in R^n<br>
+$$</p>
+</li>
+<li>
+<p>Chebyshev or $l_\infty$ - norm<br>
+$$<br>
+||x||_{\infty} = \max{|x_1|, \dots, |x_n|}<br>
+$$</p>
+</li>
+<li>
+<p>$l_p$ - norm, $p \geq 1$<br>
+$$<br>
+||x||_p = (|x_1|^p + \dots + |x_n|^p)^{1/p}<br>
+$$</p>
+</li>
+<li>
+<p>For $P \in S_{++}^n$ ( 对称的 $n \times n$ 的正定矩阵 ), $P$ - quadratic norm is<br>
+$$<br>
+||x||_P = (x^TPx)^{1/2}=||P^{1/2}x||_2<br>
+$$</p>
+</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<hr>
+<ul>
+<li>
+<p>Some common norms on $R^{m \times n}$</p>
+<ul>
+<li>
+<p>Sum-absolute-value norm 对应向量的一范数</p>
+<p>$||X||<em>\mathrm{sav} = \sum\limits</em>{i=1}^m\sum\limits_{j=1}^n |X_{ij}|$​</p>
+</li>
+<li>
+<p>Maximum-absolute-value norm 对应向量的无穷范数<br>
+$$<br>
+||X||<em>{\mathrm{mav}} = \max{ |X</em>{ij}| \mid i=1, \dots,m,j=1,\dots,n }<br>
+$$</p>
+</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<hr>
+<ul>
+<li>
+<p><strong>Equivalence of norms</strong></p>
+<ul>
+<li>
+<p>Suppose that $||\cdot||_a$ and $||\cdot||_b$  are norms on $R^n$ ,  there exist positive constants $\alpha$ and $\beta$ ,  for all $x \in R^n$<br>
+$$<br>
+\alpha ||x||_a \leq ||x||_b \leq ||x||_a<br>
+$$</p>
+</li>
+<li>
+<p>if $||\cdot||$  is any norm on $R^n$ ,  then there exists a quadratic norm $||\cdot||_P$ for which<br>
+$$<br>
+||\cdot||_P \leq ||x|| \leq \sqrt{n}{ ||x||_P }<br>
+$$</p>
+</li>
+</ul>
+<p>holds for all $x$</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<p><strong>Operator norms</strong>  算子范数</p>
+<ul>
+<li>
+<p>Suppose $||\cdot||_a$ and $||\cdot||_b$  are norms on $R^m$ and $R^n$ ,  respectively. Operator norm of $X \in R^{m \times n}$ induced by  $||\cdot||_a$ and $||\cdot||<em>b$​​​  is<br>
+$$<br>
+||X||</em>{a,b}=\sup{||Xu||_a \mid ||u|| \leq 1}<br>
+$$</p>
+</li>
+<li>
+<p>When $||\cdot||_a$   and $||\cdot||_b$  are Euclidean norms, the operator norm of $X$ is its maximum singular value ( 最大奇异值 ) ， and is denoted  $||X||<em>2$<br>
+$$<br>
+||X||<em>2 = \sigma</em>{\max}(X) = ( \lambda</em>{\max}{ X^TX } )^1/2<br>
+$$</p>
+</li>
+</ul>
+<p><strong>Spectral norm</strong>( 谱范数 ) or <strong>$l_2$​ - norm</strong></p>
+<ul>
+<li>
+<p>The norm induced by the $l_{\infty}$​​ - norm on $R^m$​ and $R^n$​​  ,   denoted $||X||<em>\infty$​ is the max-row-sum norm,<br>
+$$<br>
+||X||</em>\infty = \sup{ ||Xu||<em>\infty \mid ||u||</em>\infty \leq 1 } = \max_{i=1,\dots,m}\sum\limits_{j=1}^{n}|X_{ij}|<br>
+$$</p>
+</li>
+<li>
+<p>The norm induced by the $l_1$​​​ - norm on $R^m$​​​ and $R^n$​​​  ,   denoted $||X||<em>1$​​​​ is the max-column-sum norm,<br>
+$$<br>
+||X||<em>1 = \max</em>{j=1,\dots,n}\sum\limits</em>{i=1}^{m}|X_{ij}|<br>
+$$</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Dual norm</strong> 对偶范数</p>
+<ul>
+<li>
+<p>Let $$||\cdot||$$ be a norm $R^n$</p>
+</li>
+<li>
+<p>The associated dual norm, denoted $||\cdot||<em>*$ ,  is defined as<br>
+$$<br>
+||z||</em>* = \sup { z^Tx \mid  ||x|| \leq 1 }<br>
+$$</p>
+</li>
+<li>
+<p>We have the <strong>inequality</strong><br>
+$$<br>
+z^Tx \leq ||x|| ||z||<em>* \<br>
+\because z^T \frac{x}{||x||} \leq \sup { z^Tx \mid ||x|| \leq 1 } = ||z||</em>* \<br>
+\therefore z^Tx=z^T \frac {x}{||x||}\cdot||x|| \leq ||z||_*||x||<br>
+$$</p>
+</li>
+<li>
+<p>The dual of Euclidean norm 二范数互为对偶<br>
+$$<br>
+\sup {z^Tx \mid ||x||_2 \leq 1 } = ||z||_2<br>
+$$</p>
+</li>
+<li>
+<p>The dual norm of the $l_{\infty}$ norm 无穷范数的对偶是一范数， 反之亦然<br>
+$$<br>
+\sup {z^Tx \mid ||x||_{\infty} \leq 1 } = ||z||_1<br>
+$$</p>
+</li>
+<li>
+<p>The  dual norm of  the dual norm 对偶范数的对偶范数是其本身<br>
+$$<br>
+||\cdot||<em>{*</em>{*}} = ||\cdot||<br>
+$$</p>
+</li>
+<li>
+<p>The dual norm of $l_p$ - norm is the $l_q$ - norm such that<br>
+$$<br>
+\frac {1}{p} + \frac {1}{q} = 1<br>
+$$</p>
+</li>
+<li>
+<p>The dual of the $l_2$ - norm on $R^{m \times n}$​ is the <strong>nuclear norm</strong>( 核范数 )<br>
+$$<br>
+||Z||_{2*} = \sup {\tr(Z^TX) \mid ||Z|| \leq 1} \<br>
+= \sigma_1(Z) + \dots + \sigma_r(Z) = \tr[ (Z^TZ)^{1/2} ]<br>
+$$</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Analysis"><a class="header-anchor" href="#Analysis"></a>Analysis</h1>
+<ul>
+<li>
+<p><strong>Interior and Open Set</strong></p>
+<ul>
+<li>
+<p>An element $x \in C \subseteq R^n$ is called an interior point of $C$ if there exists an $\varepsilon &gt; 0$ for which<br>
+$$<br>
+{y \mid ||y-x||_2 \leq \varepsilon} \subseteq C<br>
+$$<br>
+i.e., there exists a ball centered at $$x$$ that lies entirely in $C$​ ( 可以用任意范数，只要找到一个范数满足即可 )</p>
+</li>
+<li>
+<p>The set of all points interior to $C$ is called the interior of $C$ and is denoted $\mathrm{int}C$</p>
+</li>
+<li>
+<p>A set $C$ is open if $\mathrm{int}C=C $</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Closed Set and Boundary</strong></p>
+<ul>
+<li>
+<p>A set $C \subseteq R^n$  is closed if its complement is open<br>
+$$<br>
+R^n \setminus C = { x \in R^n \mid x \notin C }<br>
+$$</p>
+</li>
+<li>
+<p>The closure of a set $C$ is defined as<br>
+$$<br>
+\mathrm{cl \ } {C} = R^n \setminus \mathrm{int \ }(R^n \setminus C)<br>
+$$</p>
+</li>
+<li>
+<p>The boundary of the set $C$ is defined as<br>
+$$<br>
+\mathrm {bd \ C} = \mathrm { cl \ } C \setminus \mathrm {int \ } C<br>
+$$</p>
+<ul>
+<li>$C$ is closed if it contains its boundary. It is open if it contains no boundary points</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<p><strong>Supremun and infimum</strong></p>
+<ul>
+<li>
+<p>The least upper bound or supremum of the set $C$ is denoted $\sup {C}$</p>
+</li>
+<li>
+<p>The greatest upper bound or infimum of the set $C$​ is denoted $\inf {C}$​</p>
+</li>
+</ul>
+<p>$$<br>
+\inf C = -(\sup (-C))<br>
+$$</p>
+</li>
+</ul>
+<h1 id="Functions"><a class="header-anchor" href="#Functions"></a>Functions</h1>
+<ul>
+<li>
+<p><strong>Notation</strong><br>
+$$<br>
+f: A \rarr B<br>
+$$</p>
+<ul>
+<li>$\mathrm {dom} f \subseteq A$</li>
+</ul>
+</li>
+<li>
+<p><strong>Continuity</strong></p>
+<ul>
+<li>A function $f:R^n \rarr R^m $​ is continuous at $𝑥 \in \mathrm{dom} \ f$​ if for all $\varepsilon &gt; 0$​ there exists a $\delta$​ such that<br>
+   𝑓</li>
+<li>is continuous if it is continuous at every point</li>
+</ul>
+</li>
+<li>
+<p><strong>Closed functions</strong></p>
+<ul>
+<li>A function $f:R^n \rarr R $​  is closed if, for each$\alpha \in R$, the sublevel set<br>
+$$<br>
+{x \in<br>
+\mathrm{dom}f \mid f(x) \leq \alpha}<br>
+$$<br>
+is closed. This is equivalent to $\mathrm{epi}f={ (x,t) \in R^{n+1} \mid x \in \mathrm{dom}f, f(x) \leq t }$ is closed</li>
+</ul>
+</li>
+</ul>
+<h1 id="Derivatives"><a class="header-anchor" href="#Derivatives"></a>Derivatives</h1>
+<ul>
+<li>
+<p><strong>Def</strong></p>
+<ul>
+<li>Suppose $f:R^n \rarr R $​  and $x \in \mathrm {int} \ \mathrm {dom}\ f$​​. The function $f$​ is <strong>differentiable</strong>( 可微的 ) at $x$​​ if there exists a matrix $Df(x) \in R^{m \times n}$​​ that satisfies<br>
+$$<br>
+\lim\limits_{z \in \mathrm{dom}f, z \neq x, z\rarr x} \frac {||f(z)-f(x)-Df(x)(z-x)||_2}{||z-x||_2}=0<br>
+$$<br>
+in which case we refer to $Df(x)$ <strong>derivative</strong> (or Jacobian) of $f$ at $x$</li>
+</ul>
+</li>
+<li>
+<p>$f$ is <strong>differentiable</strong> if $\mathrm{dom}f$  is open, and it is differentiable at every point</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<p><strong>Def</strong></p>
+<ul>
+<li>The affine function( 仿射函数 ) of $z$​ given by<br>
+$$<br>
+f(x) + Df(x)(z-x)<br>
+$$<br>
+is called the <strong>first-order approximation</strong> of $f$​ at (or near)  $x$<br>
+$$<br>
+Df(x)_{ij}= \frac{\partial f_i(x)}{\partial x_j} , i=1,\dots,m,j=1,\dots,n<br>
+$$</li>
+</ul>
+</li>
+</ul>
+<h2 id="Gradient"><a class="header-anchor" href="#Gradient"></a>Gradient</h2>
+<ul>
+<li>
+<p>When <em>f</em> is real-valued (i.e., $ f:R^n \rarr R $)  the derivative $Df(x)$ is a $1 \times n$​ matrix (it is a row vector). Its transpose is called the <strong>gradient</strong> of the function:</p>
+<p>$$<br>
+\nabla f(x)=Df(x)^T<br>
+$$<br>
+which is a column vector (in $R^n$). Its components are the partial derivatives of 𝑓:<br>
+$$<br>
+\nabla f(x)_i=\frac{ \partial f(x) }{\partial x_i}, i=1,\dots,n<br>
+$$</p>
+</li>
+<li>
+<p>The <strong>first-order approximation</strong> of $f$​​​​ at a point $x \in \mathrm {\ {int \mathrm {\ {dom  \ x}}}} $ can be expressed as ( the affine function of $z$​ )<br>
+$$<br>
+f(x) + \nabla f(x)^T(z-x)<br>
+$$</p>
+</li>
+</ul>
+<h2 id="常见凸函数"><a class="header-anchor" href="#常见凸函数"></a>常见凸函数</h2>
+<p>$$</p>
+<p>$$</p>
+<h2 id="常见凹函数"><a class="header-anchor" href="#常见凹函数"></a>常见凹函数</h2>
+<ul>
+<li>$log$</li>
+</ul>
+<h2 id="随机变量的期望"><a class="header-anchor" href="#随机变量的期望"></a>随机变量的期望</h2>
+<p>概率密度函数pdf概率质量函数pmf</p>
+<h2 id="高斯分布-正态分布"><a class="header-anchor" href="#高斯分布-正态分布"></a>高斯分布/正态分布</h2>
+<p>$$<br>
+x ~ N(\miu, \sigma^2)<br>
+$$</p>
+<h2 id="混合高斯分布"><a class="header-anchor" href="#混合高斯分布"></a>混合高斯分布</h2>
+<p>GMM</p>
+<p>样本X的每个维度$X_i$服从一个高斯分布， 假设各个维度间独立同分布</p>
+<p>那么我们有混合高斯分布$Z = {Z_1, Z_2, \dots, Z_n}$， 每次从中属性中选择一个维度，计算其高斯分布， 最后计算出所有高斯分布，线性组合起来</p>
+<p>两步法：</p>
+<h2 id="推荐阅读"><a class="header-anchor" href="#推荐阅读"></a>推荐阅读</h2>
+<p>《Convex optimization》</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Optimization-Methods/" rel="tag"># Optimization Methods</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/08/Optimization-Methods-Lecture1/" rel="prev" title="Optimization Methods- Lecture1">
+                  <i class="fa fa-chevron-left"></i> Optimization Methods- Lecture1
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/17/Neuroscience-L2/" rel="next" title="Neuroscience L2">
+                  Neuroscience L2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

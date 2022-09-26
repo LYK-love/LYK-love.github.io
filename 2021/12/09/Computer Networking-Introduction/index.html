@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline ：  互联网的组成 计算机网络的提及结构 计算机网络的性能指标 计算机网络基本工具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Computer Networking Introduction">
+<meta property="og:url" content="http://lyk-love.cn/2021/12/09/Computer%20Networking-Introduction/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline ：  互联网的组成 计算机网络的提及结构 计算机网络的性能指标 计算机网络基本工具">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Introduction/OSI%207%20layers.jpeg">
+<meta property="article:published_time" content="2021-12-08T16:56:56.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.927Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Computer Networking">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Introduction/OSI%207%20layers.jpeg">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/12/09/Computer%20Networking-Introduction/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/12/09/Computer%20Networking-Introduction/","path":"2021/12/09/Computer Networking-Introduction/","title":"Computer Networking Introduction"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Computer Networking Introduction | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-text">互联网的组成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E6%A0%B8%E5%BF%83%E9%83%A8%E5%88%86"><span class="nav-text">互联网核心部分</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-text">计算机网络的体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82"><span class="nav-text">应用层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%BE%93%E5%B1%82"><span class="nav-text">运输层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="nav-text">数据链路层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E5%B1%82"><span class="nav-text">物理层</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="nav-text">计算机网络性能指标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%9E%E5%90%90%E9%87%8F"><span class="nav-text">吞吐量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E5%BB%B6"><span class="nav-text">时延</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RTT"><span class="nav-text">RTT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E7%8E%87"><span class="nav-text">利用率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tracerouter"><span class="nav-text">tracerouter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wireshark"><span class="nav-text">wireshark</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/12/09/Computer%20Networking-Introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Computer Networking Introduction | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Computer Networking Introduction
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-12-08 16:56:56" itemprop="dateCreated datePublished" datetime="2021-12-08T16:56:56Z">2021-12-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline ：</p>
+<ul>
+<li>互联网的组成</li>
+<li>计算机网络的提及结构</li>
+<li>计算机网络的性能指标</li>
+<li>计算机网络基本工具</li>
+</ul>
+<span id="more"></span>
+<h1 id="互联网的组成"><a class="header-anchor" href="#互联网的组成"></a>互联网的组成</h1>
+<p>互联网拓扑结构：</p>
+<ul>
+<li>边缘部分： 用户直接使用的主机。
+<ul>
+<li>主机<code>host</code>也称为端系统<code>end system</code></li>
+</ul>
+</li>
+<li>核心部分：大量网络和连接这些网络的路由器。为边缘部分提供服务（ 连通性和交换 ）</li>
+</ul>
+<h2 id="互联网核心部分"><a class="header-anchor" href="#互联网核心部分"></a>互联网核心部分</h2>
+<ul>
+<li>路由器： 分组交换</li>
+<li>交换：按照某种方式动态地分配传输线路的资源
+<ul>
+<li>电路交换：建立连接- 通话 - 释放连接
+<ul>
+<li>通话的全部时间内，通话用户始终占据端到端的全部资源</li>
+</ul>
+</li>
+<li>报文交换：整个报文线传送到相邻节点，全部存储下来后查找转发表，转发到下一个节点</li>
+<li>分组交换： 单个分组（整个报文的一部分）传送到相邻节点，全部存储下来后查找转发表，转发到下一个节点
+<ul>
+<li>分组交换和报文交换不需要预先分配传输带宽， 数据在哪条链路上传送才占用该链路</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="计算机网络的体系结构"><a class="header-anchor" href="#计算机网络的体系结构"></a>计算机网络的体系结构</h1>
+<ul>
+<li>
+<p>[网络]<strong>协议</strong>：控制两个对等<strong>实体</strong>进行通信的规则的集合</p>
+<ul>
+<li>语法：数据与控制信息的结构或格式</li>
+<li>语义即需要发出何种控制信息，完成何种动作以及做出何种相应</li>
+<li>同步：即事件实现顺序的详细说明</li>
+</ul>
+</li>
+<li>
+<p><strong>实体</strong>： 任何可发送或接受信息的硬件或软件进程</p>
+</li>
+<li>
+<p>在协议的控制下，来自各个<code>peer entity</code>间的通信时的本层能够向上一层提供服务。 要实现本层协议，还要使用下一层提供的<strong>服务</strong></p>
+</li>
+<li>
+<p>协议与服务不同：</p>
+<ul>
+<li>协议的实现保证了能够向上一层提供服务。 使用本层服务的实体只能看见服务而无法看见下面的协议
+<ul>
+<li>下面的协议对上面的实体是<strong>透明的</strong></li>
+</ul>
+</li>
+<li>协议是“<strong>水平的</strong>”，服务是“<strong>垂直的</strong>”
+<ul>
+<li>服务是下层向上层提供层间借口实现的</li>
+<li>只有被高层实体<strong>看得见</strong>的功能才称之为服务（即，并非在层内完成的全部功能都称为服务）</li>
+<li>上层使用下层所提供的服务必须通过与下层交换一些命令，称为“服务原语”</li>
+</ul>
+</li>
+<li>协议数据单元<code>PDU( Protocol Data Unit )</code>： 对等层次之间传送的数据单元</li>
+<li>服务数据单元<code>SDU( Service Data Unit )</code>: 层与层之间交换的数据单元</li>
+</ul>
+</li>
+<li>
+<p>五层协议的体系结构：应用层、运输层、网络层、数据链路层、物理层</p>
+<ul>
+<li>本文采用五层结构</li>
+</ul>
+</li>
+<li>
+<p>七层：应用层、表示层、会话层、运输层、网络层、数据链路层、物理层</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Introduction/OSI%207%20layers.jpeg" alt="OSI 7 layers"></p>
+</li>
+</ul>
+<h2 id="应用层"><a class="header-anchor" href="#应用层"></a>应用层</h2>
+<ul>
+<li>数据单元：报文<code>message</code></li>
+<li>作用：提供进程间交互</li>
+</ul>
+<h2 id="运输层"><a class="header-anchor" href="#运输层"></a>运输层</h2>
+<ul>
+<li>作用： 为两台主机中线程间的通信提供<strong>通用</strong>的数据传输服务</li>
+<li>协议：
+<ul>
+<li>TCP：面向连接的，可靠的
+<ul>
+<li>数据单元： 报文段<code>segment</code></li>
+</ul>
+</li>
+<li>UDP:无连接的，尽最大努力的
+<ul>
+<li>数据单元：用户数据报</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="网络层"><a class="header-anchor" href="#网络层"></a>网络层</h2>
+<ul>
+<li>作用：将运输层产生的报文段或用户数据报封装成<strong>分组</strong><code> packet</code>或<strong>包</strong>进行传送，分组也称为**[IP]数据报**
+<ul>
+<li>其实，不管哪一层的数据单元，都可称为“分组”</li>
+</ul>
+</li>
+<li>互联网是由大量的异构网络通过<code>router</code>连接起来的</li>
+<li>一个<code>packet</code>经过的一系列链路和叫哈u年纪称为通过该网络的<code>route</code></li>
+</ul>
+<h2 id="数据链路层"><a class="header-anchor" href="#数据链路层"></a>数据链路层</h2>
+<ul>
+<li>将网络层的IP数据报组装成<code>frame</code>,每一帧包括数据和一些控制信息</li>
+</ul>
+<h2 id="物理层"><a class="header-anchor" href="#物理层"></a>物理层</h2>
+<ul>
+<li>数据单元：<code>bit</code></li>
+<li>传递信息所利用的物理媒体并不属于物理层</li>
+</ul>
+<h1 id="计算机网络性能指标"><a class="header-anchor" href="#计算机网络性能指标"></a>计算机网络性能指标</h1>
+<h2 id="吞吐量"><a class="header-anchor" href="#吞吐量"></a>吞吐量</h2>
+<ul>
+<li>吞吐量<code>throughput</code>: 单位时间内通过某个网络的实际的数据量</li>
+</ul>
+<h2 id="时延"><a class="header-anchor" href="#时延"></a>时延</h2>
+<ul>
+<li>时延<code>latenty</code>：数据从网络的一端传送到另一端的时间
+<ul>
+<li>发送时延：主机或<code>router</code>发送数据帧所需要的时间
+<ul>
+<li>= 数据帧长度 / 发送速率</li>
+</ul>
+</li>
+<li>传播时延：电磁波在信道中传播一定的距离需要花费的时间
+<ul>
+<li>= 心道长度 / 电磁波在信道中的传播速率</li>
+</ul>
+</li>
+<li>处理时延：主机或<code>router</code>处理收到的分组的时间</li>
+<li>排队时延：分组在<code>router</code>的输入队列中排队等待处理
+<ul>
+<li>丢包：分组如果到达一个满的队列，<code>router</code>将<code>drop</code>该分组</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>总时延 = 发送时延 + 传播时延 + 处理时间 + 排队时延
+<ul>
+<li>我们一般只能提高发送时延， “光线比铜线快”指的是可以用很快的速率向光纤信道发送数据，光纤信道上的<em>传播速率</em>实际上比铜线慢</li>
+</ul>
+</li>
+</ul>
+<h2 id="RTT"><a class="header-anchor" href="#RTT"></a>RTT</h2>
+<ul>
+<li>往返时间<code>RTT(Round-Trip Time)</code></li>
+</ul>
+<h2 id="利用率"><a class="header-anchor" href="#利用率"></a>利用率</h2>
+<ul>
+<li>利用率：
+<ul>
+<li>信道利用率： 信道有百分之几的时间是被利用的</li>
+<li>网络利用率：全网络的信道利用率的加权平均</li>
+</ul>
+</li>
+<li>$D = \frac{D_0}{1-U}$ ( $D$:  网络当前时延，  $D_0$:空闲时延， $U$: 利用率 )</li>
+</ul>
+<h1 id="工具"><a class="header-anchor" href="#工具"></a>工具</h1>
+<h2 id="tracerouter"><a class="header-anchor" href="#tracerouter"></a>tracerouter</h2>
+<ul>
+<li><code>traceroute [参数选项] hostname，域名或 IP地址</code>
+<ul>
+<li>向目的地发送几个特殊的分组</li>
+<li>得到路由信息（路由器名、路由器地址、时延…）</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">traceroute www.baidu.com                               ✔  9s   base  </span><br><span class="line">traceroute to www.baidu.com (180.101.49.11), 30 hops max, 60 byte packets</span><br><span class="line"> 1  _gateway (172.31.0.1)  2.660 ms  2.634 ms  2.625 ms</span><br><span class="line"> 2  * * *</span><br><span class="line"> 3  * * *</span><br><span class="line"> 4  211.65.206.9 (211.65.206.9)  3.018 ms  3.196 ms  3.748 ms</span><br><span class="line"> 5  * * *</span><br><span class="line"> 6  * 211.65.207.73 (211.65.207.73)  4.098 ms 211.65.206.77 (211.65.206.77)  4.287 ms</span><br><span class="line"> 7  101.4.116.98 (101.4.116.98)  3.681 ms  4.070 ms  3.939 ms</span><br><span class="line"> 8  101.4.112.42 (101.4.112.42)  19.784 ms  20.044 ms  20.090 ms</span><br><span class="line"> 9  202.97.19.13 (202.97.19.13)  13.871 ms  10.297 ms  10.219 ms</span><br><span class="line">10  202.97.60.217 (202.97.60.217)  10.447 ms 202.97.87.129 (202.97.87.129)  11.395 ms 202.97.62.77 (202.97.62.77)  10.188 ms</span><br><span class="line">11  202.97.66.198 (202.97.66.198)  16.129 ms 202.97.66.62 (202.97.66.62)  17.719 ms 202.97.29.114 (202.97.29.114)  15.325 ms</span><br><span class="line">12  58.213.94.106 (58.213.94.106)  23.529 ms 58.213.95.150 (58.213.95.150)  15.693 ms 58.213.94.98 (58.213.94.98)  15.408 ms</span><br><span class="line">13  * * *</span><br><span class="line">14  58.213.96.58 (58.213.96.58)  37.227 ms 58.213.96.126 (58.213.96.126)  40.246 ms 58.213.96.66 (58.213.96.66)  39.501 ms</span><br><span class="line">15  * * *</span><br><span class="line">16  * * *</span><br><span class="line">17  * * *</span><br><span class="line">18  * * *</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>记录按序列号从1开始，每个纪录就是一跳 ，每跳表示一个网关，我们看到每行有三个时间，单位是 ms，其实就是-q的默认参数。探测数据包向每个网关发送三个数据包后，网关响应后返回的时间；如果您用 traceroute -q 4 <a target="_blank" rel="noopener" href="http://www.baidu.com">www.baidu.com</a> ，表示向每个网关发送4个数据包。</li>
+<li>有时会看到有一些行是以星号表示的。出现这样的情况，可能是防火墙封掉了ICMP的返回信息，所以我们得不到什么相关的数据包返回数据。</li>
+<li>有时在某一网关处延时比较长，有可能是某台网关比较阻塞，也可能是物理设备本身的原因。当然如果某台DNS出现问题时，不能解析主机名、域名时，也会 有延时长的现象；您可以加-n 参数来避免DNS解析，以IP格式输出数据。</li>
+</ul>
+<h2 id="wireshark"><a class="header-anchor" href="#wireshark"></a>wireshark</h2>
+<ul>
+<li>分组嗅探器：观察执行实体之间交换的报文之间的基本工具</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Networking/" rel="tag"># Computer Networking</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/07/OS-Distributed%20System/" rel="prev" title="OS Distributed System">
+                  <i class="fa fa-chevron-left"></i> OS Distributed System
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/17/%E4%BA%BA%E4%BD%93%E7%BB%93%E6%9E%84%E4%B8%8E%E7%96%BE%E7%97%85/" rel="next" title="人体结构与疾病">
+                  人体结构与疾病 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

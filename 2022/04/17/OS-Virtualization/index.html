@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  CPU虚拟化 内存虚拟化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS Virtualization">
+<meta property="og:url" content="http://lyk-love.cn/2022/04/17/OS-Virtualization/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  CPU虚拟化 内存虚拟化">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Thread%20Status.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Interruption.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Segmentation.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20heap.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%201.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%202.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%203.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20implementation%201.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20implementation%202.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/virtual%20address%20to%20physical%20address.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/segment%20plus%20page.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/swap%20space.png">
+<meta property="article:published_time" content="2022-04-16T22:38:59.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.936Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Thread%20Status.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/04/17/OS-Virtualization/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/04/17/OS-Virtualization/","path":"2022/04/17/OS-Virtualization/","title":"OS Virtualization"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OS Virtualization | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="nav-text">CPU虚拟化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-text">进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8BAPI"><span class="nav-text">进程API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fork%EF%BC%88%EF%BC%89"><span class="nav-text">fork（）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wait%EF%BC%88%EF%BC%89"><span class="nav-text">wait（）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exec%EF%BC%88%EF%BC%89"><span class="nav-text">exec（）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%8F%99-Shell"><span class="nav-text">插叙 Shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Limited-directed-execution"><span class="nav-text">Limited directed execution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OS%E9%87%8D%E8%8E%B7CPU%E6%8E%A7%E5%88%B6%E6%9D%83"><span class="nav-text">OS重获CPU控制权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#context-switch"><span class="nav-text">context switch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%8F%99-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">插叙 系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%8F%99-%E4%B8%AD%E6%96%AD"><span class="nav-text">插叙 中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread-Scheduling"><span class="nav-text">Thread Scheduling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="nav-text">内存虚拟化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Address-Space"><span class="nav-text">Address Space</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Address-Space-of-Linux-process"><span class="nav-text">Address Space of Linux process</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Segmaentation"><span class="nav-text">Segmaentation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB"><span class="nav-text">共享</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Free-Space-Management"><span class="nav-text">Free Space Management</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B2%E5%88%97%E8%A1%A8"><span class="nav-text">空闲列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E5%9D%97"><span class="nav-text">头块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E5%9D%97-%E7%A9%BA%E9%97%B2%E5%88%97%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-text">头块 + 空闲列表的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paging"><span class="nav-text">Paging</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TLB"><span class="nav-text">TLB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F"><span class="nav-text">段页式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="nav-text">多级页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E9%A1%B5%E8%A1%A8"><span class="nav-text">反向页表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-text">虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E7%A9%BA%E9%97%B4"><span class="nav-text">交换空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#page-fault"><span class="nav-text">page fault</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4"><span class="nav-text">内核虚拟内存空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#page-scheduling"><span class="nav-text">page scheduling</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/04/17/OS-Virtualization/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OS Virtualization | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS Virtualization
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-16 22:38:59" itemprop="dateCreated datePublished" datetime="2022-04-16T22:38:59Z">2022-04-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>CPU虚拟化</li>
+<li>内存虚拟化</li>
+</ul>
+<span id="more"></span>
+<h1 id="CPU虚拟化"><a class="header-anchor" href="#CPU虚拟化"></a>CPU虚拟化</h1>
+<h2 id="进程"><a class="header-anchor" href="#进程"></a>进程</h2>
+<ul>
+<li>
+<p><strong>进程是虚拟化的CPU</strong></p>
+</li>
+<li>
+<p>进程映像包括:</p>
+<ul>
+<li>进程控制块( PCB)</li>
+<li>进程程序块</li>
+<li>进程数据块</li>
+<li>内核栈
+<ul>
+<li>在<code>x86</code>上，执行<code>TRAP</code>时， CPU会将一些寄存器保存到该进程的内核栈上， 从<code>TRAP</code>返回将弹出这些值，并恢复<code>user mode</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>进程三状态图：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Thread%20Status.png" alt="Thread Status"></p>
+</li>
+<li>
+<p>Linux父进程与子进程在终止时没有相互依赖关系。即爹死了儿子也可以活着, 只是其父进程变为<code>init</code>进程( init 进程是系统的第一个进程，PID=1)</p>
+</li>
+</ul>
+<h2 id="进程API"><a class="header-anchor" href="#进程API"></a>进程API</h2>
+<p>注意，<code>fork()</code>和<code>exec()</code>是分离的，这使得程序可以在<code>fork()</code>之后，<code>exec()</code>之前运行代码，最典型的例子是shell的workflow，参见<em>Using Shell</em></p>
+<h3 id="fork（）"><a class="header-anchor" href="#fork（）"></a>fork（）</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//5_1.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;hello world (pid: %d)\n&quot;</span>, (<span class="type">int</span>) getpid()  );</span><br><span class="line">    <span class="type">int</span> rc = fork();</span><br><span class="line">    <span class="keyword">if</span>(rc &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>( <span class="built_in">stderr</span>, <span class="string">&quot;fork failed \n&quot;</span> );</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(rc == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;hello, I am child (pid: %d)\n&quot;</span>, (<span class="type">int</span>)getpid());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;hello, I am parent of %d (pid: %d)\n&quot;</span>, rc, (<span class="type">int</span>)getpid() );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hello world (pid: 5951)</span><br><span class="line">hello, I am child (pid: 5957)</span><br><span class="line">hello, I am parent of 5957 (pid: 5951)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>fork()</code>创建进程</p>
+</li>
+<li>
+<p>子进程不会从<code> main()</code>开始执行，而是从<code>fork()</code>处返回，就像它自己调用了<code>fork()</code></p>
+</li>
+<li>
+<p>子进程几乎完全拷贝了父进程，拥有和父进程相同的地址空间，寄存器，PC等，但它从<code>fork()</code>获得的返回值不同</p>
+</li>
+<li>
+<p><code>fork()</code>返回值：</p>
+<ul>
+<li>
+<p>ERRORS： -1</p>
+</li>
+<li>
+<p>子进程： 0</p>
+</li>
+<li>
+<p>父进程：  新创建的子进程的PID</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="wait（）"><a class="header-anchor" href="#wait（）"></a>wait（）</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//5_2.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;hello world (pid: %d)\n&quot;</span>, (<span class="type">int</span>) getpid()  );</span><br><span class="line">    <span class="type">int</span> rc=fork();</span><br><span class="line">    <span class="keyword">if</span>(rc &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>( <span class="built_in">stderr</span>, <span class="string">&quot;fork failed \n&quot;</span> );</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(rc == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;hello, I am child (pid: %d)\n&quot;</span>, (<span class="type">int</span>)getpid());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="type">int</span> wc = wait(<span class="literal">NULL</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;hello, I am parent of %d (wc: %d) (pid: %d)\n&quot;</span>, rc, wc, (<span class="type">int</span>)getpid() );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hello world (pid: 6747)</span><br><span class="line">hello, I am child (pid: 6762)</span><br><span class="line">hello, I am parent of 6762 (wc: 6762) (pid: 6747)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>wait()</code>会在子进程运行结束后才返回</li>
+<li>如果父进程先运行，它会马上调用<code>wait()</code></li>
+</ul>
+<h3 id="exec（）"><a class="header-anchor" href="#exec（）"></a>exec（）</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//5_3.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;hello world (pid: %d)\n&quot;</span>, (<span class="type">int</span>) getpid()  );</span><br><span class="line">    <span class="type">int</span> rc = fork();</span><br><span class="line">    <span class="keyword">if</span>(rc &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>( <span class="built_in">stderr</span>, <span class="string">&quot;fork failed \n&quot;</span> );</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(rc == <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;hello, I am child (pid: %d)\n&quot;</span>, (<span class="type">int</span>)getpid());</span><br><span class="line">        <span class="type">char</span> *myargs[<span class="number">3</span>];</span><br><span class="line">        myargs[<span class="number">0</span>] = strdup(<span class="string">&quot;wc&quot;</span>);<span class="comment">//program: &quot;wc&quot;(word count)</span></span><br><span class="line">        myargs[<span class="number">1</span>] = strdup(<span class="string">&quot;5_3.c&quot;</span>);<span class="comment">//argument: file to count</span></span><br><span class="line">        myargs[<span class="number">2</span>] = <span class="literal">NULL</span>; <span class="comment">// marks end of array</span></span><br><span class="line">        execvp( myargs[<span class="number">0</span>], myargs );</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;this shouldn&#x27;t print put&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="type">int</span> wc = wait(<span class="literal">NULL</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;hello, I am parent of %d (wc: %d) (pid: %d)\n&quot;</span>, rc, wc, (<span class="type">int</span>)getpid() );</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hello world (pid: 7615)</span><br><span class="line">hello, I am child (pid: 7634)</span><br><span class="line"> 32  98 810 5_3.c</span><br><span class="line">hello, I am parent of 7634 (wc: 7634) (pid: 7615)</span><br></pre></td></tr></table></figure>
+<p><code>exec()</code>:  replaces the current process image with a new process imag. 将当前进程的内容替换为不同的程序（<code>wc</code>）</p>
+<ul>
+<li>对<code>exec()</code>的成功调用永远不会返回，因为子进程的内容是新的程序</li>
+<li><code>execvp(const char *file, char *const argv[])</code>: one of <code>exec()</code> family
+<ul>
+<li>The initial argument for these functions is the name of a file that is to be executed.</li>
+<li>The <strong>char</strong> *<strong>const</strong> <strong>argv[]</strong> argument is an array of pointers to null-terminated strings that represent the argument list available to  the new  program.  The first argument, by convention, should point to the <u>filename associated with the file being executed</u>.  The array of pointers <strong>must</strong> be terminated by a null pointer.( 因此有<code>arg[2] = NULL</code> )</li>
+</ul>
+</li>
+</ul>
+<h2 id="插叙-Shell"><a class="header-anchor" href="#插叙-Shell"></a>插叙 Shell</h2>
+<ul>
+<li><code>fork()</code>和<code>exec()</code>分离, 使得程序可以在<code>fork()</code>之后, <code>exec()</code>之前运行代码.</li>
+</ul>
+<h2 id="Limited-directed-execution"><a class="header-anchor" href="#Limited-directed-execution"></a>Limited directed execution</h2>
+<p>OS首先（在启动时）设置<code>trap table</code>并开启时钟中断 （都是特权操作），然后仅在受限模式下运行进程。 只在执行特权操作，或者当进程需要切换时，才需要OS干预</p>
+<h3 id="OS重获CPU控制权"><a class="header-anchor" href="#OS重获CPU控制权"></a>OS重获CPU控制权</h3>
+<p>如果一个进程在CPU上运行，那么OS无法运行。 因此OS需要重获CPU的控制权</p>
+<ul>
+<li>等待系统调用： 进程通过<code>syscall</code>主动放弃CPU, 比如<code>yield</code></li>
+<li>时钟中断： 时钟设备可以产生中断，产生中断时，当前进程停止，OS中的 interrupt handler运行，此时OS重获CPU控制权
+<ul>
+<li>硬件在发生中断时需要为当前进程保存状态</li>
+</ul>
+</li>
+</ul>
+<h3 id="context-switch"><a class="header-anchor" href="#context-switch"></a>context switch</h3>
+<p>上下文切换（ <code>context switch</code>）: OS获得控制权后，需要觉得是否切换进程，如果要切换，那么需要上下文切换</p>
+<ul>
+<li>OS为当前进程保存状态，并为即将执行的进程恢复状态
+<ul>
+<li>“状态”: 寄存器，在该进程的内核栈中</li>
+<li>事实上，除了寄存器，cache, TLB和其他硬件的状态也被切换，因此context switch的成本可能非常高昂</li>
+</ul>
+</li>
+<li>本质上是为了确保最后从陷阱返回时，不是返回到之前运行的进程，而是继续执行另一个进程</li>
+</ul>
+<h2 id="插叙-系统调用"><a class="header-anchor" href="#插叙-系统调用"></a>插叙 系统调用</h2>
+<ul>
+<li>我们对系统调用的调用，实际上是对C lib中对应函数的函数调用，这些函数遵循了内核的调用约定（如将参数推到栈，执行<code>TRAP</code>，返回控制权等）实现了系统调用。 当然，这些C lib中的函数是汇编写的</li>
+</ul>
+<h2 id="插叙-中断"><a class="header-anchor" href="#插叙-中断"></a>插叙 中断</h2>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Interruption.png" alt="Interruption"></p>
+<blockquote>
+<p>在指令执行周期最后增加一个微操作，以响应中断，CPU在完成执行阶段后，如果允许中断，则进入中断阶段</p>
+</blockquote>
+<p>中断处理过程：</p>
+<ol>
+<li>保护CPU状态</li>
+<li>分析被中断进程的PSW中断码字段，识别中断源</li>
+<li>分别处理发生的中断事件</li>
+</ol>
+<h2 id="Thread-Scheduling"><a class="header-anchor" href="#Thread-Scheduling"></a>Thread Scheduling</h2>
+<p>详见<em>OS Thread Sheduling Algorithm</em></p>
+<h1 id="内存虚拟化"><a class="header-anchor" href="#内存虚拟化"></a>内存虚拟化</h1>
+<p>我们的编写和编译程序时假定内存从0开始，事实上，程序执行时，OS会决定其在物理内存中的实际加载地址</p>
+<ul>
+<li>前者称为地址空间（虚拟空间），后者称为物理空间</li>
+</ul>
+<h2 id="Address-Space"><a class="header-anchor" href="#Address-Space"></a>Address Space</h2>
+<h3 id="Address-Space-of-Linux-process"><a class="header-anchor" href="#Address-Space-of-Linux-process"></a>Address Space of Linux process</h3>
+<ul>
+<li>
+<p><code>ld</code>, <code>ls</code>等命令实际上会调用<code>execve( /usr/bin/COMMAND )</code></p>
+<ul>
+<li><code>execve()</code>只接受绝对路径</li>
+</ul>
+</li>
+<li>
+<p>进程的地址空间 == 内存中若干连续的“段”</p>
+</li>
+<li>
+<p><code>mmap</code>可以将内存中的某一段映射到文件中的某一段</p>
+<ul>
+<li>
+<p>进程中的代码和数据是<code>mmap</code>从内存中映射的</p>
+</li>
+<li>
+<p>可以接受文件描述符</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> *<span class="title function_">mmap</span><span class="params">(<span class="type">void</span> *addr, <span class="type">size_t</span> len, <span class="type">int</span> prot, <span class="type">int</span> flags,</span></span><br><span class="line"><span class="params">           <span class="type">int</span> fildes, <span class="type">off_t</span> off)</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>查看进程的地址空间： <code>pmap</code></p>
+<ul>
+<li>动态链接的程序比静态链接的小，并且链接得快， 用<code>pmap</code>分别查看其内容:
+<ul>
+<li>静态链接程序的地址空间中有其链接库的内容（二进制文件的代码、数据、bss等）</li>
+<li>动态链接程序的地址空间中只有其链接库的指针</li>
+<li>可以看到地址空间的高位有三个段：<code>vvar</code>, <code>vdso</code>, <code>vsyscall</code>，用于<code>virtual system call</code>
+<ul>
+<li><code>virtual system call</code>: 不陷入内核的系统调用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>pmap</code>实际上打印了<code>/proc/PID/maps</code>的一部分信息
+<ul>
+<li>通过<code>strace pmap XX</code>可以看到<code>pmap</code>调用了<code>openat( XX, \proc\PID\maps )</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Segmaentation"><a class="header-anchor" href="#Segmaentation"></a>Segmaentation</h2>
+<p>在MMU中引入不止一个基址/界限寄存器对，而是给每个逻辑段一对，这可以将每个段独立地载入物理内存。 由于只有已用的内存才在物理内存中分配空间，因此可以容纳巨大的地址空间</p>
+<ul>
+<li>段：在内存空间中的一段连续定长（段有段界限）区域</li>
+<li>引用非法地址就会引发段错误</li>
+<li>分段会造成外部碎片</li>
+</ul>
+<p>示例：该地址空间内分为代码, 堆, 栈三段, 然后映射到物理内存</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Segmentation.png" alt="Segmentation"></p>
+<ul>
+<li>假设要引用虚拟地址100（在代码段中），MMU将代码段基址加上偏移量（100）得到实际的地址100 + 32KB = 32868</li>
+<li>假设要引用虚拟地址4200（在堆中），因为堆在虚拟地址4K开始，那么物理地址中的偏移量其实是4200 - 4K, 所以物理地址应该是 4200 - 4K + 34KB</li>
+<li>硬件还需要知道段的增长方向，因为有些段，如栈就是反向增长的。（哪些段会往哪边增长，这可以通过增加标记位，也可以约定俗成）假设要引用虚拟地址15KB（在栈中），地址空间中的偏移是1KB，这意味着栈增长了1KB，而物理内存中栈基址是28KB，增长1KB（反向地）就是27KB。因此对应物理内存27KB</li>
+<li>访问非法的地址就会报segmentation fault</li>
+</ul>
+<p>示例：按如上的计算方式，我们需要知道段段基址，那自然就需要先知道段号，一般会在地址空间中分出高位表示段号。 假设地址空间为14位，前两位表示段号</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"># 段号掩码，二进制<span class="number">11</span>刚好过滤出前两位段号</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_MASK 0x3000</span></span><br><span class="line"></span><br><span class="line"># 段内偏移所在的位数</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SEG_SHIFT 12</span></span><br><span class="line"></span><br><span class="line"># 段内偏移的掩码，二进制的<span class="number">0xFFF</span>刚好过滤出后十二位的段内偏移</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> OFFSET_MASK 0xFFF</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> Bound[]; # 段界限寄存器</span><br><span class="line"><span class="type">int</span> Base[]; # 段基址寄存器</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//得到段号</span></span><br><span class="line">SegmentNum = ( VirtualAddress &amp; SEG_MASK ) &gt;&gt; SEG_SHIFT;</span><br><span class="line"></span><br><span class="line"><span class="comment">//得到段内偏移</span></span><br><span class="line">Offset = VirtualAddress &amp; OFFSET_MASK;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( Offset &gt;=  Bound[ SegmentNum ]  )</span><br><span class="line">&#123;</span><br><span class="line">    RaiseException（ PROTECTION_FAULT ）；</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">  	<span class="comment">//得到物理地址</span></span><br><span class="line">    PhysicalAddr = Base[ Segment ] + Offset;</span><br><span class="line">  	<span class="comment">//访问该地址</span></span><br><span class="line">    Register = AccessMemory( PhysicalAddr );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="共享"><a class="header-anchor" href="#共享"></a>共享</h3>
+<p>可以增加几位保护位，来表示段的权限，比如可以将代码段标记为只读， 同样的代码就可以被多个进程共享</p>
+<h2 id="Free-Space-Management"><a class="header-anchor" href="#Free-Space-Management"></a>Free Space Management</h2>
+<p>由于分段会把内存分为不同大小的单元（即不规则的<strong>内存块</strong>），造成外部碎片，因此需要空闲空间管理算法对内存进行管理</p>
+<ul>
+<li>这里我们只讨论解决外部碎片（即分段）的空闲空间管理算法，假定算法管理的是一块块连续的字节区域（即内存块）</li>
+<li>这里只考虑堆中的内存分配，即<code>malloc</code>，<code>free</code>操作</li>
+</ul>
+<h3 id="空闲列表"><a class="header-anchor" href="#空闲列表"></a>空闲列表</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">node_t</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> size;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">node_t</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;<span class="type">node_t</span>;</span><br></pre></td></tr></table></figure>
+<p>空闲列表就是一个链表，每个节点都记录了一块没有被分配的空间，假设有下面的 30 字节的堆:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20heap.png" alt="free list heap"></p>
+<p>这个堆对应的空闲列表会有两个元素，一个描述第一个 10 字节的空闲区域(字节 0~9)， 一个描述另一个空闲区域(字节 20~29):</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%201.png" alt="free list 1"></p>
+<p>很明显，任何大于 10 字节的分配请求都会失败(返回 NULL)，因为 没有足够的连续可用空间。 如果是小于10B的请求，那么就从列表的某个节点（比如第二个）中分割一块内存</p>
+<p>但是，对于这个(小)堆，如果应用程序调用 free(10)，归还堆中间的空间，空闲列表会变成：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%202.png" alt="free list 2"></p>
+<p>尽管整个堆现在完全空闲，但它似乎被分割成了 3 个 10 字节的区域。这时， 如果用户请求 20 字节的空间，简单遍历空闲列表会找不到这样的空闲块，因此返回失败. 为此，空闲列表应该能自动<strong>合并</strong>：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%203.png" alt="free list 3"></p>
+<h3 id="头块"><a class="header-anchor" href="#头块"></a>头块</h3>
+<p>头块：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">header_t</span>&#123;</span></span><br><span class="line">    <span class="type">int</span> size;</span><br><span class="line">    <span class="type">int</span> magic;</span><br><span class="line">&#125;<span class="type">header_t</span>;</span><br></pre></td></tr></table></figure>
+<p><code>free(void* ptr)</code>函数没有指定块大小的参数，因为它假定，对于给定的指针，内存分配库可以确定要释放空间的大小，从而将其放回free list</p>
+<ul>
+<li>
+<p>一般这通过分配<strong>头块</strong>来实现。 每次分配内存块时，在其前面分配一个头块，保存额外信息，这样在（通过指针，也就是内存块起始位置）释放该内存块的时候，通过查询指针前面的头块，就知道了内存块的信息，比如大小，然后根据这些信息来释放内存块（头块也顺便被释放）</p>
+<ul>
+<li>当然，这意味着malloc/free时，分配/释放的的内存大小，是想要分配/释放给用户的内存大小 + 头块大小</li>
+</ul>
+<p>整体逻辑如下（假定内存从低位向高位分配，所以头块在内存块的前面）：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">free</span><span class="params">(<span class="type">void</span> *ptr)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">header_t</span> *header_ptr = (<span class="type">void</span>*)ptr - <span class="keyword">sizeof</span>(<span class="type">header_t</span>); <span class="comment">// 根据分配给用户的内存指针，减去头块大小，获得头块的指针</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//读取头块的信息</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//释放头块和内存块</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="头块-空闲列表的实现"><a class="header-anchor" href="#头块-空闲列表的实现"></a>头块 + 空闲列表的实现</h3>
+<p>假定要管理4KB的内存块，它是个堆，先初始化堆，加入空闲列表的头节点（free list的节点大小是8B）：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">node_t</span> *head = mmap( <span class="literal">NULL</span>, <span class="number">4096</span>, PRPT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, <span class="number">-1</span>, <span class="number">0</span> );</span><br><span class="line">head -&gt; size = <span class="number">4096</span> - <span class="keyword">sizeof</span>(<span class="type">node_t</span>);</span><br><span class="line">head -&gt; next = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>执行这段代码之后，free list的状态只有一个节点，记录的空闲大小为 4088（因为已经分配了一个free list的节点，占了8B）</li>
+<li>head 指针指向这块区域的起始地址， 假设<strong>位于16KB</strong>(尽管任何虚拟地址都可以)。堆看起来如图 17.3 所示</li>
+<li>假设有一个 100 字节的内存请求。为了满足这个请求，库首先要找到一个足够大小的块。因为目前只有一个 4088 字节的块，所以选中这个块。然后，这个块被分割(split) 为两块:一块足够满足请求(以及头块，如前所述)，一块是剩余的空闲块。假设记录头块为 8 个字节(一个整数记录大小，一个整数记录幻数)，堆中的空间如图 17.4 所示</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20implementation%201.png" alt="free list implementation 1"></p>
+<p>至此，对于 100 字节的请求，库从原有的一个空闲块中分配了 <strong>108</strong> 字节，返回指向它的一个指针(在上图中用 ptr 表示)，并在其之前连续的 8 字节中记录头块信息，供未来的 free()函数使用。同时将列表中的空闲节点缩小为 3980 字节(4088−108)。</p>
+<p>之后的内存分配以此类推</p>
+<p>如果用户程序通过 <code>free(ptr)</code>归还一些内存，那无非是让head指向<code>ptr - 8</code>,读取8字节的头块，得到要释放的内存信息，然后释放头块+紧跟的内存块：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20implementation%202.png" alt="free list implementation 2"></p>
+<ul>
+<li>这个堆堆起始地址是16KB</li>
+<li>假设要<code>free(16500)</code>（ 即16384( 16KB ) + 前一块的108 ），也就是图上的<code>sptr</code>指针, 则令head指向sptr前的头块，得到sptr（开头的）内存块的信息，然后删除头块和sptr内存块</li>
+</ul>
+<h2 id="Paging"><a class="header-anchor" href="#Paging"></a>Paging</h2>
+<p>分页将一个进程的地址空间分割成固定大小的单元，称为page, 并将物理内存也分割成相同的固定大小的单元，称为frame, 每个frame装一个page, 将page和frame编号</p>
+<ul>
+<li>虚拟页号（ virtual page number, VPN ）， 因为地址空间都属于虚拟内存（虚拟空间），因此称为“虚拟”页号</li>
+<li>物理帧号（ physical  ）：因为帧都处于物理内存（物理空间）中，因此称为“物理”帧号</li>
+</ul>
+<p><strong>每个进程都有一个页表(page table)</strong>, 页表就是页表项的列表。 每个页表项( page table entry, PTE )存储了一个page到 frame 的映射（即虚拟页号到物理页号到映射）</p>
+<ul>
+<li>页表项的索引就等于VPN， 比如VPN为2， 那就对应着页表中下标为2的PFN</li>
+</ul>
+<p>页表基址寄存器（ page table base register ）: 存储了页表的起始位置的物理地址，用于访问PTE：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 得到VPN</span></span><br><span class="line">VPN = ( VirtualAddress &amp; VPN_MASK ) &gt;&gt; SHIFT;</span><br><span class="line"></span><br><span class="line"><span class="comment">// VPN就是PTE的索引，得到PTE在页表中的偏移，加上页表的起始地址，就是该PTE的物理地址</span></span><br><span class="line">PTEAddr = PageTableBaseRegister + (VPN + <span class="keyword">sizeof</span>(PTE));</span><br></pre></td></tr></table></figure>
+<p>对于一个虚拟地址，它由两部分组成： VPN + 业内偏移。 只要查询页表，找到PTE（VPN就是PTE的下标），读取PTE，将VPN转换为PFN，再加上业内偏移，就得到了物理地址：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/virtual%20address%20to%20physical%20address.png" alt="virtual address to physical address"></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">offset = VirtualAddress &amp; OFFSET_MASK PhysAddr = (PFN &lt;&lt; SHIFT) | offset</span><br><span class="line"><span class="comment">// Extract the VPN from the virtual address</span></span><br><span class="line">VPN = (VirtualAddress &amp; VPN_MASK) &gt;&gt; SHIFT</span><br><span class="line"></span><br><span class="line"><span class="comment">// Form the address of the page-table entry (PTE)</span></span><br><span class="line">PTEAddr = PTBR + (VPN * <span class="keyword">sizeof</span>(PTE))</span><br><span class="line"></span><br><span class="line"><span class="comment">// Fetch the PTE</span></span><br><span class="line">PTE = AccessMemory(PTEAddr)</span><br><span class="line">  </span><br><span class="line"><span class="comment">// Check if process can access the page </span></span><br><span class="line"><span class="keyword">if</span> (PTE.Valid == False)</span><br><span class="line">	RaiseException(SEGMENTATION_FAULT)</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (CanAccess(PTE.ProtectBits) == False)</span><br><span class="line">    RaiseException(PROTECTION_FAULT)</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="comment">// Access is OK: form physical address and fetch it offset = VirtualAddress &amp; OFFSET_MASK</span></span><br><span class="line">	PhysAddr = (PTE.PFN &lt;&lt; PFN_SHIFT) | offset</span><br><span class="line">	Register = AccessMemory(PhysAddr)</span><br></pre></td></tr></table></figure>
+<h3 id="TLB"><a class="header-anchor" href="#TLB"></a>TLB</h3>
+<p><em>Translation Look_aside Buffer</em></p>
+<p>可以把部分PTE存入TLB，对每次内存访问，先查看TLB，看是否有期望的转换映射，有的话（TLB hit）就直接得到了PFN，不需要查页表。 没有的话(.TLB miss )就继续<strong>查页表，得到PTE，然后将该PTE写入TLB，再重试查TLB的指令</strong>，这次会命中(hit)，得到PFN</p>
+<p>TLB存放了PTE集合，PTE只对页表有效，页表只对所属的进程有效，因此TLB只对所属进程有效。 context switch时，要刷新TLB</p>
+<ul>
+<li>刷新TLB会导致每次上下午切换后，都会有大量TLB miss， 为此，TLB实际上会存储多个进程（即多个页表）的PTE，并增加一个地址空间标识符字段（相当于PID），不同进程的PTE就用地址空间标识符来区分</li>
+<li>除此之外，TLB项还有一些其他的控制位，比如有效位
+<ul>
+<li>TLB的有效位和页表的有效位不同，如果PTE无效，表面该页没有被进程申请使用，访问该页是非法的；而TLB项无效，仅仅表明该TLB项不是有效的地址映射</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">VPN = (VirtualAddress &amp; VPN_MASK) &gt;&gt; SHIFT </span><br><span class="line">(Success, TlbEntry) = TLB_Lookup(VPN)</span><br><span class="line"><span class="keyword">if</span> (Success == True) <span class="comment">// TLB Hit</span></span><br><span class="line">	<span class="keyword">if</span> (CanAccess(TlbEntry.ProtectBits) == True) <span class="comment">//查TLB控制位，看该TLB项是否有效</span></span><br><span class="line">		Offset = VirtualAddress &amp; OFFSET_MASK </span><br><span class="line">		PhysAddr = (TlbEntry.PFN &lt;&lt; SHIFT) | Offset 		<span class="comment">//得到物理地址</span></span><br><span class="line">		AccessMemory(PhysAddr)</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line"> 		RaiseException(PROTECTION_FAULT) <span class="number">10</span> <span class="comment">//该TLB项无效，进入异常处理程序，其实一般就是进入下一步的页表读取步骤</span></span><br><span class="line"> 	</span><br><span class="line"><span class="comment">// TLB Miss，进入常规的页表读取步骤</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	PTEAddr = PTBR + (VPN * <span class="keyword">sizeof</span>(PTE)) </span><br><span class="line">  PTE = AccessMemory(PTEAddr)</span><br><span class="line">	<span class="keyword">if</span> (PTE.Valid == False) </span><br><span class="line">	RaiseException(SEGMENTATION_FAULT)</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (CanAccess(PTE.ProtectBits) == False) </span><br><span class="line">		RaiseException(PROTECTION_FAULT)</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		TLB_Insert(VPN, PTE.PFN, PTE.ProtectBits) RetryInstruction()</span><br></pre></td></tr></table></figure>
+<h3 id="段页式"><a class="header-anchor" href="#段页式"></a>段页式</h3>
+<p>段页式就是将分段和分页结合，给进程的每个逻辑段分配一个页表。 此时段基址寄存器指向的就不是段的物理基址，而是段对应的页表的物理基址</p>
+<p>示例， 假设 32 位虚拟地址空间包含 4KB 页面，并且地址空间分为 4 个段。在这个例子中，我们只使用 3 个段:代码，堆，栈</p>
+<p>用地址空间的前两位表示段号。假设 00 是未使用的段，01 是代 码段，10 是堆段，11 是栈段。因此，虚拟地址如下所示:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/segment%20plus%20page.png" alt="segment plus page"></p>
+<p>当进程正在运行时，每个段的基址寄存器都包含该段的线性页表的物理地址。因此，系统中的每个进程现在都有 3 个与其关联的页表。在上下文切换时，必须更改这些寄存器，以反映新运行进程的页表的位置。</p>
+<p>在 TLB 未命中时(假设硬件管理的 TLB，即硬件负责处理 TLB 未命中)，硬件使用分段位(SN)来确定段号（也确定了要用哪个基址和界限寄存器对）。然后硬件将段基址寄存器中的物理地址（就是页表的物理地址）与 VPN 结合起来， 形成页表项(PTE)的地址:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">SN = (VirtualAddress &amp; SEG_MASK) &gt;&gt; SN_SHIFT </span><br><span class="line">VPN = (VirtualAddress &amp; VPN_MASK) &gt;&gt; VPN_SHIFT </span><br><span class="line">AddressOfPTE = Base[SN] + (VPN * <span class="keyword">sizeof</span>(PTE))</span><br></pre></td></tr></table></figure>
+<h3 id="多级页表"><a class="header-anchor" href="#多级页表"></a>多级页表</h3>
+<p>多级页表就是把页表本身也分页，每个页就是页表的sublist.对页表页，用页目录(.page directory )来管理，页目录的每一项就是页目录项（.page directory entry， PDE ）, 它存储了<strong>虚拟页号 - 页帧号的</strong>映射，以及对应页表页的有效位。 我们只讨论两级页表，更高级的页表可以以此类推</p>
+<ul>
+<li>注意，这里“虚拟页号 - 页帧号映射“中的页帧号，指的是<strong>页表页的所在的页帧号</strong>。因为页表分页了，每一页自然就是物理内存中的物理帧，PDE就是将虚拟页号转换成页表页的物理帧号，根据虚拟页号来读取页表页。 因此，实际上<strong>PDE是“VPN - 页表页”的映射</strong></li>
+<li>“有效位”是面向页表页的，而一个页表页“有效”，指的是该页表页（就是PTE的集合）中至少一个PTE有效。 反之，一个无效的页表页就是所有PTE都无效，该页表页会被分配PDE，但不会再</li>
+<li>好处是，假设一个页表有100项，可以每10项一页，分10页， 其中有七页都无效（即70个PTE都为空），按照传统的页表，我依然要分配100项的空间，但是按照多级页表，只需要为三页（30项）分配空间</li>
+</ul>
+<h3 id="反向页表"><a class="header-anchor" href="#反向页表"></a>反向页表</h3>
+<p>传统页表是每个进程一个，而反向页表是整个系统一个。每个PTE带有所属进程的标识符。 要搜索反向页表，需要借助散列表等数据结构</p>
+<h2 id="虚拟内存"><a class="header-anchor" href="#虚拟内存"></a>虚拟内存</h2>
+<p>通过设置交换空间，可以将内存容量（在逻辑上）扩大，用户看到的不是实际内存大小，而是虚拟内存大小</p>
+<h3 id="交换空间"><a class="header-anchor" href="#交换空间"></a>交换空间</h3>
+<p>可以在磁盘上分配一块空间用于用于物理页的移入和移出，这称为swap space，当然我们会假设OS以页为单位对swap space读取/写入</p>
+<p>示例，假设一个 4 页的物理内存和一个 8 页的交换空间。3 个进程(进程 0、进程 1 和进程 2)主动共享物理内存。但 3 个中的每一个， 都只有一部分有效页在内存中，剩下的在硬盘的交换空间中。第 4 个进程(进程 3)的所有页都被交换到硬盘上，很明显它目前没有运行。有一块交换空间是空闲的。可以看出，使用交换空间让系统假装内存比实际物理内存更大：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/swap%20space.png" alt="swap space"></p>
+<h3 id="page-fault"><a class="header-anchor" href="#page-fault"></a>page fault</h3>
+<p>页错误实际上不算错误，页错误意思是找到的页不在物理内存中，需要从磁盘中换出来，但这个访问本身对用户来说是合法的。 Anyway，页错误的处理流程是：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">PFN = FindFreePhysicalPage()</span><br><span class="line"><span class="keyword">if</span> (PFN == <span class="number">-1</span>) <span class="comment">// no free page found</span></span><br><span class="line">	PFN = EvictPage() <span class="comment">// os必须为将要换入的页找到一个物理帧，如果没有这样的物理帧，我们将踢出一些 物理页 </span></span><br><span class="line">DiskRead(PTE.DiskAddr, pfn) <span class="comment">// sleep (waiting for I/O)</span></span><br><span class="line">PTE.present = True</span><br><span class="line">PTE.PFN = PFN</span><br><span class="line">RetryInstruction()</span><br><span class="line"></span><br><span class="line"><span class="comment">// update page table with present // bit and translation (PFN)</span></span><br><span class="line"><span class="comment">// retry instruction</span></span><br></pre></td></tr></table></figure>
+<h3 id="内核虚拟内存空间"><a class="header-anchor" href="#内核虚拟内存空间"></a>内核虚拟内存空间</h3>
+<p><strong>内核虚拟空间是每个用户地址空间的一部分</strong></p>
+<p>可以把一部分页表放在内核的虚拟内存中，不会随着context switch而刷新，这样就提升了速度，也减少了用户空间的内存压力</p>
+<ul>
+<li>放在内核虚拟空间的页表不会被切换，这也意味着其寄存器（基址/界限寄存器）不会被刷新</li>
+</ul>
+<h2 id="page-scheduling"><a class="header-anchor" href="#page-scheduling"></a>page scheduling</h2>
+<p>详见<em>OS Page Sheduling Algorithm</em></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/14/Spring-Boot-Basic/" rel="prev" title="Spring Boot Intro">
+                  <i class="fa fa-chevron-left"></i> Spring Boot Intro
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/04/17/OS-Page-Sheduling-Algorithm/" rel="next" title="OS Page Sheduling Algorithm">
+                  OS Page Sheduling Algorithm <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

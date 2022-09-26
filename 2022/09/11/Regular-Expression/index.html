@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Intro Def Extension">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Regular Expression">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/11/Regular-Expression/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Intro Def Extension">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-10T23:58:50.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.939Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Compilers">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/11/Regular-Expression/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/11/Regular-Expression/","path":"2022/09/11/Regular-Expression/","title":"Regular Expression"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Regular Expression | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Def"><span class="nav-text">Def</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-text">Example</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Extension"><span class="nav-text">Extension</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E6%AD%A3%E5%88%99"><span class="nav-text">扩展正则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">扩展运算符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-2"><span class="nav-text">Example</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/11/Regular-Expression/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Regular Expression | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Regular Expression
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-10 23:58:50" itemprop="dateCreated datePublished" datetime="2022-09-10T23:58:50Z">2022-09-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Intro</li>
+<li>Def</li>
+<li>Extension</li>
+</ul>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<ul>
+<li>
+<p>每个正则表达式$r$可以描述一个语言$L®$, 也即其定义的正则集合( Regular Set)</p>
+<ul>
+<li>例如, C语言标识符的语言, 可以用如下正则表达式来表示:<br>
+$$<br>
+\mathrm{letter} _ (\mathrm{letter}|\mathrm{digit})*<br>
+$$</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>正则表达式不仅是数学工具, 也被各种编程语言所支持. 绝大部分语言的正则语法都差不多</li>
+</ul>
+<h1 id="Def"><a class="header-anchor" href="#Def"></a>Def</h1>
+<p>给定字母表 $\sum$,  $\sum$ 上的正则表达式由且仅由以下规则定义:</p>
+<ol>
+<li>$\epsilon$是正则表达式,它描述了语言$L(\epsilon) = { \epsilon }$</li>
+<li>$\forall a \in \sum$ , $a$是正则表达式, 它描述了语言$L(a) = { a }$</li>
+<li>选择: $® | (s)$ 是正则表达式, $L(® | (s))=L® \cup L(s)$</li>
+<li>连接: $®(s)$ 是正则表达式, $L(®(s))=L®L(s)$</li>
+<li>闭包: $®^<em>$ 是正则表达式 , $L(®^</em>)=(L®)^*$</li>
+<li>括号: $®$ 是正则表达式, $L(®)=L®$</li>
+</ol>
+<p>运算的优先级: $*$ &gt; 连接符 &gt; $|$</p>
+<ul>
+<li>$(a)|((b)<em>©)$可以改写为 $a|b</em>c$</li>
+</ul>
+<h2 id="Example"><a class="header-anchor" href="#Example"></a>Example</h2>
+<p>C语言的标识符集合:</p>
+<ul>
+<li>$\mathrm{letter}$: $A|B|\dots|Z|a|b|\dots|z|_ $</li>
+<li>$\mathrm{digit}$: $0|1|\dots|9$</li>
+<li>$\mathrm{id}$: $\mathrm{letter} _ (\mathrm{letter} _ |\mathrm{digit})^*$</li>
+</ul>
+<p>Pascal无符号数集合, 例如:1946, 11.28, 63.6E8, 1.99E−6</p>
+<ul>
+<li>$\mathrm{digit}$: $0|1|\dots|9$</li>
+<li>$\mathrm{digits}$: $\mathrm{digit} \ \mathrm{digit}^*$</li>
+<li>$\mathrm{optional _ fraction}$: $. \mathrm{digits} | \epsilon$</li>
+<li>$\mathrm{optional _ exponent}$: $(\mathrm{E} ( + | − | \epsilon ) \ \mathrm{digits} ) \ | \ \epsilon$</li>
+<li>$\mathrm{num}$: $\mathrm{optional _ fraction}\  \mathrm{optional _ exponent}$</li>
+</ul>
+<h1 id="Extension"><a class="header-anchor" href="#Extension"></a>Extension</h1>
+<h2 id="扩展正则"><a class="header-anchor" href="#扩展正则"></a>扩展正则</h2>
+<p>为了方便, 可以用现有的正则来匹配一些常见的语言:</p>
+<ul>
+<li><code>\d</code>: 匹配一个数字
+<ul>
+<li><code>'00\d'</code>可以匹配<code>'007'</code>，但无法匹配<code>'00A'</code>；</li>
+<li><code>'\d\d\d'</code>可以匹配<code>'010'</code>；</li>
+</ul>
+</li>
+<li><code>\w</code>: 匹配一个字母或数字.
+<ul>
+<li><code>'\w\w\d'</code>可以匹配<code>'py3'</code></li>
+</ul>
+</li>
+<li><code>.</code>: 匹配任意字符.
+<ul>
+<li><code>'py.'</code>可以匹配<code>'pyc'</code>、<code>'pyo'</code>、<code>'py!'</code>…</li>
+</ul>
+</li>
+<li><code>\s</code>可以匹配一个空格(也包括Tab等空白符), 所以<code>\s+</code>表示至少有一个空格, 例如匹配<code>' '</code>，<code>' '</code>等；</li>
+<li><code>\ws</code> = <code>(blank | tab | newline)+</code></li>
+</ul>
+<h2 id="扩展运算符"><a class="header-anchor" href="#扩展运算符"></a>扩展运算符</h2>
+<ul>
+<li>一个或多个: $r^+$ , 等价于$rr^*$</li>
+<li>零个或一个: $r?$ 等价于$\epsilon | r$</li>
+<li>字符类:
+<ul>
+<li>字符<code>c</code>的字面值: <code>\c</code>
+<ul>
+<li>只写<code>c</code>会被认为是一个正则</li>
+</ul>
+</li>
+<li>$[abc]$等价于$a|b|c$ , 即字符串$abc$中的任意一个字符</li>
+<li>$[a - z]$等价于$a|b|\dots|z$
+<ul>
+<li><code>[0-9a-zA-Z\_]</code>: 匹配一个数字, 字母或者下划线</li>
+<li><code>[0-9a-zA-Z\_]+</code>: 匹配至少由一个数字, 字母或者下划线组成的字符串，比如<code>'a100'</code>, <code>'0_Z'</code>, <code>'Py3000'</code>等等</li>
+<li><code>[a-zA-Z\_][0-9a-zA-Z\_]*</code>: 匹配由字母或下划线开头. 后接任意个由一个数字、字母或者下划线组成的字符串，也就是Python合法的变量</li>
+</ul>
+</li>
+<li><code>^s</code>: 不在串$s$中的任意一个字符</li>
+</ul>
+</li>
+<li>$r{n}$: n个$r$
+<ul>
+<li><code>\d&#123;3&#125;</code>表示匹配3个数字, 例如<code>'010'</code></li>
+</ul>
+</li>
+<li>$r{m,n}$: 最少m个, 最多n个$r$的连接
+<ul>
+<li><code>\d&#123;3,8&#125;</code>: 匹配3-8个数字</li>
+</ul>
+</li>
+<li><code>^</code>: 行的开头
+<ul>
+<li><code>^\d</code>表示必须以数字开头.</li>
+</ul>
+</li>
+<li><code>$</code>表示行的结束
+<ul>
+<li><code>\d$</code>表示必须以数字结束.</li>
+<li>你可能注意到了, <code>py</code>也可以匹配<code>'python'</code>, 但是加上<code>^py$</code>就变成了整行匹配, 就只能匹配<code>'py'</code>了.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Example-2"><a class="header-anchor" href="#Example-2"></a>Example</h2>
+<p>前面的例子的简化表示:</p>
+<ul>
+<li>
+<p>$\mathrm{letter}$: $[\mathrm{A}-\mathrm{Z} \mathrm{a}-\mathrm{z}] $</p>
+</li>
+<li>
+<p>$\mathrm{digit}$: $[0-9]$</p>
+</li>
+<li>
+<p>$\mathrm{id}$: $\mathrm{letter} _ (\mathrm{letter} _ |\mathrm{digit})^*$</p>
+</li>
+<li>
+<p>$\mathrm{digit}$: $[0-9]$</p>
+</li>
+<li>
+<p>$\mathrm{digits}$: $\mathrm{digit}?$</p>
+</li>
+<li>
+<p>$\mathrm{num}$: $\mathrm{digits} \ (. \mathrm{digits})? \ (\mathrm{E}[±]? \ \mathrm{digits})?$</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Compilers/" rel="tag"># Compilers</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/08/CPU/" rel="prev" title="CPU">
+                  <i class="fa fa-chevron-left"></i> CPU
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/11/Finite-Machine/" rel="next" title="Finite Machine">
+                  Finite Machine <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

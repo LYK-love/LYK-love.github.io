@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Lossless and Lossy Compression Comparison Between the two PNG AVIF WebP JPEG XL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lossless and Lossy Comprehension">
+<meta property="og:url" content="http://lyk-love.cn/2022/08/15/Lossless-and-Lossy-Comprehension/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Lossless and Lossy Compression Comparison Between the two PNG AVIF WebP JPEG XL">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Potpourri/Lossless%20and%20Lossy%20Comprehension/Lossless%20and%20Lossy%20ComprehensionComparison%20Between%20the%20Lossless%20and%20Lossy.png">
+<meta property="article:published_time" content="2022-08-14T21:21:32.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.933Z">
+<meta property="article:author" content="有多远滚多远">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Potpourri/Lossless%20and%20Lossy%20Comprehension/Lossless%20and%20Lossy%20ComprehensionComparison%20Between%20the%20Lossless%20and%20Lossy.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/08/15/Lossless-and-Lossy-Comprehension/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/08/15/Lossless-and-Lossy-Comprehension/","path":"2022/08/15/Lossless-and-Lossy-Comprehension/","title":"Lossless and Lossy Comprehension"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Lossless and Lossy Comprehension | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Lossless-and-Lossy-Compression"><span class="nav-text">Lossless and Lossy Compression</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Comparison-Between-the-two"><span class="nav-text">Comparison Between the two</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PNG"><span class="nav-text">PNG</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%AD%A5%E9%AA%A4"><span class="nav-text">优化步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AVIF"><span class="nav-text">AVIF</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%AD%A5%E9%AA%A4"><span class="nav-text">压缩步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WebP"><span class="nav-text">WebP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%AD%A5%E9%AA%A4-2"><span class="nav-text">压缩步骤</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JPEG-XL"><span class="nav-text">JPEG XL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%AD%A5%E9%AA%A4-3"><span class="nav-text">压缩步骤</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/08/15/Lossless-and-Lossy-Comprehension/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Lossless and Lossy Comprehension | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Lossless and Lossy Comprehension
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-14 21:21:32" itemprop="dateCreated datePublished" datetime="2022-08-14T21:21:32Z">2022-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Potpourri/" itemprop="url" rel="index"><span itemprop="name">Potpourri</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Lossless and Lossy Compression</li>
+<li>Comparison Between the two</li>
+<li>PNG</li>
+<li>AVIF</li>
+<li>WebP</li>
+<li>JPEG XL</li>
+</ul>
+<span id="more"></span>
+<h1 id="Lossless-and-Lossy-Compression"><a class="header-anchor" href="#Lossless-and-Lossy-Compression"></a>Lossless and Lossy Compression</h1>
+<ul>
+<li>
+<p>Lossless Comporession: 就是可逆的压缩, 压缩文件可以被解压为原文件</p>
+<ul>
+<li>
+<p>流行的无损压缩方法:</p>
+<ul>
+<li>普通文件: ZIP, RAR</li>
+<li>Web中的JS和CSS文件: GZIP</li>
+<li>图像: <strong>PNG</strong></li>
+</ul>
+</li>
+<li>
+<p>无损压缩适合:logos, screenshots, charts, and graphics.</p>
+<p>因为这些图片都有着<strong>连续的色块</strong>, 可以用类似<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Run-length_encoding">Run-Length Encoding (RLE)</a>的算法来压缩.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Lossy Comporession: 在压缩时会损失一些信息, 但是压缩效果比无损压缩好很多</p>
+<ul>
+<li>流行的有损压缩方法:
+<ul>
+<li>JPEG,  lossy WebP</li>
+</ul>
+</li>
+<li>有损压缩适合处理照片. 因为损失一些细节并不能被用户看出. 但是它不适合图表( graphics )之类的有连续色块的图像, 在这些图像上损失一点细节都会被用户察觉</li>
+</ul>
+</li>
+</ul>
+<h1 id="Comparison-Between-the-two"><a class="header-anchor" href="#Comparison-Between-the-two"></a>Comparison Between the two</h1>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Potpourri/Lossless%20and%20Lossy%20Comprehension/Lossless%20and%20Lossy%20ComprehensionComparison%20Between%20the%20Lossless%20and%20Lossy.png" alt="Comparison Between the Lossless and Lossy"></p>
+<p>如上“可回收图案”有大量连续色块. 用无损压缩PNG压缩到3KB, 其效果远好于无损压缩的JPEG的3KB, 甚至略好于JPEG的24KB.</p>
+<p>这证明了对于Graphics等图片, 无损压缩的优势</p>
+<h1 id="PNG"><a class="header-anchor" href="#PNG"></a>PNG</h1>
+<ul>
+<li>PNG ( <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Portable_Network_Graphics">Portable Network Graphics</a> ): 最古老的图像格式之一. 基于<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Deflate">DEFLATE compression algorithm</a>, 并且有一个颜色筛选器.
+<ul>
+<li>可以把PNG的DEFLATE算法替换成Google的 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Zopfli">Zopfli</a>算法, 后者压缩效果更好, 但消耗时间更长</li>
+<li>PNG format is supported by all browsers.</li>
+</ul>
+</li>
+<li>背景: 1996年发布, 旨在取代GIF. PNG拥有24-bit color (8 bits per channel) and an alpha channel. 而 GIF 只有24种颜色和一个透明度值</li>
+</ul>
+<h2 id="优化步骤"><a class="header-anchor" href="#优化步骤"></a>优化步骤</h2>
+<p>有许多<a target="_blank" rel="noopener" href="https://www.cyberciti.biz/faq/linux-unix-optimize-lossless-png-images-with-optipng-command/">PNG优化工具</a>: <a target="_blank" rel="noopener" href="http://advsys.net/ken/utils.htm">PNGOUT</a>, <a target="_blank" rel="noopener" href="http://optipng.sourceforge.net/">OptiPNG</a>, and Rust-based <a target="_blank" rel="noopener" href="https://github.com/shssoichiro/oxipng">OxiPNG</a></p>
+<ol>
+<li>
+<p>I compressed PNG files using OxiPNG v5.0.0, using the maximum possible optimization level with the following command:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">oxipng /path/to/input/image.png --out /path/to/output/image.png --opt max --strip safe</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>I also optimized the same set of images using the Zopfli compression which takes a really long time but results in even smaller files.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">oxipng /path/to/input/image.png --out /path/to/output/image.png --opt max --strip safe --zopfli</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>PNG优化效果很一般, OXIPNG能优化12%左右. 开启<code>--zopfli</code>后优化时间大幅提升, 但最终效果也只有18%. 总的来说, PNG除了支持度比较高之外没什么优势. 要降低图片大小, 与其使用PMG + 优化, 不如直接使用其他图片格式( 无损的WebP和无损的JPEG XL )</p>
+<h1 id="AVIF"><a class="header-anchor" href="#AVIF"></a>AVIF</h1>
+<ul>
+<li>AVIF( <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/AV1#AV1_Image_File_Format_(AVIF)">AV1 Image File Format</a> ): 基于AV1 video codec( codec = encoder + decoder, 编解码器 )的新图像格式. <strong>同时支持无损和有损压缩</strong></li>
+<li>AVIF is supported in recent versions of Google Chrome and can be enabled in Firefox by using a configuration flag.</li>
+<li>AVIF有许多advanced features: high bit depth, HDR …</li>
+</ul>
+<h2 id="压缩步骤"><a class="header-anchor" href="#压缩步骤"></a>压缩步骤</h2>
+<p>压缩工具是avifenc from <a target="_blank" rel="noopener" href="https://github.com/AOMediaCodec/libavif">libavif</a></p>
+<p>With avifencv0.9.1I, used the lowest possible speed to get the best compression.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">avifenc --lossless --speed 0 /path/to/input/image.png /path/to/output/image.avif</span><br></pre></td></tr></table></figure>
+<p>无损和有损的AVIF压缩效果都很一般,不推荐</p>
+<h1 id="WebP"><a class="header-anchor" href="#WebP"></a>WebP</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/WebP">WebP</a>:  Google在2008年发布了基于VP8 video codec的有损WebP; 又在2012年发布了不基于VP8 video codec的无损WebP0.3</li>
+<li>While lossy WebP is limited to 4:2:0 Chroma subsampling which discards some color information, lossless WebP will retain all original image data.</li>
+<li>WebP is now supported by all major browsers <u>except Safari</u></li>
+</ul>
+<h2 id="压缩步骤-2"><a class="header-anchor" href="#压缩步骤-2"></a>压缩步骤</h2>
+<p>For WebP, I used the official cwebp tool, version 1.2.0. For best compression, I defined quality of 100 and method 6.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cwebp /path/to/input/image.png -o /path/to/output/image.webp -q 100 -m 6 -lossless</span><br></pre></td></tr></table></figure>
+<p>Lossless WebP压缩效果暴打PMG, 其大小能降低大约41%, 压缩速度也很快. WebP的支持度也很高. <strong>强烈推荐使用WebP</strong></p>
+<h1 id="JPEG-XL"><a class="header-anchor" href="#JPEG-XL"></a>JPEG XL</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/JPEG_XL">JPEG XL</a>:  JPEG XL是JPEG( aka JPG )格式的后继, 它相当于两种图像格式的结合: <a target="_blank" rel="noopener" href="https://github.com/google/pik">Pik</a> developed by Google  +  <a target="_blank" rel="noopener" href="https://github.com/cloudinary/fuif">FUIF</a> (Free Universal Image Format) developed by Cloudinary. <strong>同时支持无损和有损压缩</strong></li>
+<li>JPEG XL is supported in Chrome and Firefox, but it’s not enabled by default. Support for the format must be enabled by using a feature flag.</li>
+</ul>
+<h2 id="压缩步骤-3"><a class="header-anchor" href="#压缩步骤-3"></a>压缩步骤</h2>
+<p>Pik使用的CLI tool是<code>cjxl</code>, 再开启<code>--modular</code>选项就可以添加FUIF格式</p>
+<p>To compress JPEG XL files, I used the official cjxl tool, version 0.3.7_1.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cjxl /path/to/input/image.png /path/to/output/image.jxl --modular --quality 100 --speed 9 -E 3 </span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-E</code> flag: means “extra arguments”, I used the value 3, which is recommended for best compression. Using this option shaved off a few kilobytes from the file size while the image took a bit longer to compress.</li>
+</ul>
+<p>JEPG XL的压缩效果略好于WebP, 二者详细对比见<a target="_blank" rel="noopener" href="https://nginx-v5qibj75pa-ew.a.run.app/blog/is-webp-really-better-than-jpeg">这篇文章</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/14/My-Programming-Principles/" rel="prev" title="My Programming Principles">
+                  <i class="fa fa-chevron-left"></i> My Programming Principles
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/18/Nvim-Developing-%20Environment/" rel="next" title="Nvim Developing Environment">
+                  Nvim Developing Environment <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

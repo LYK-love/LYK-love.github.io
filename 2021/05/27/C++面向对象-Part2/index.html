@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:   多态   操作符重载">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++面向对象 Part2">
+<meta property="og:url" content="http://lyk-love.cn/2021/05/27/C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-Part2/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:   多态   操作符重载">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-26T19:04:52.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.925Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/05/27/C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-Part2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/05/27/C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-Part2/","path":"2021/05/27/C++面向对象-Part2/","title":"C++面向对象 Part2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>C++面向对象 Part2 | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E6%80%81"><span class="nav-text">多态</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-text">操作符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%8C%B9%E9%85%8D"><span class="nav-text">函数匹配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD-2"><span class="nav-text">操作符重载</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E4%B8%BA%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD"><span class="nav-text">作为成员函数重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E4%B8%BA%E5%85%A8%E5%B1%80%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD"><span class="nav-text">作为全局函数重载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-text">&lt;&lt;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E7%9B%AE%E6%93%8D%E4%BD%9C%E7%AC%A6%E9%87%8D%E8%BD%BD"><span class="nav-text">双目操作符重载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E5%BA%A6%E8%AE%BE%E8%AE%A1-%E9%94%99%E8%AF%AF%E8%AE%BE%E8%AE%A1"><span class="nav-text">过度设计 &#x3D; 错误设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#a-%E5%92%8C-a"><span class="nav-text">a++ 和 ++a</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-2"><span class="nav-text">&#x3D;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-3"><span class="nav-text">[]</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BB%B4%E6%95%B0%E7%BB%84"><span class="nav-text">多维数组</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-4"><span class="nav-text">()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-5"><span class="nav-text">&amp;</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="nav-text">函数调用操作符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="nav-text">类型转换运算符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-6"><span class="nav-text">-&gt;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new-%E3%80%81delete"><span class="nav-text">new 、delete</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E8%BD%BDnew"><span class="nav-text">重载new</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E8%BD%BD-delete"><span class="nav-text">重载 delete</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/05/27/C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-Part2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="C++面向对象 Part2 | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++面向对象 Part2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-05-26 19:04:52" itemprop="dateCreated datePublished" datetime="2021-05-26T19:04:52Z">2021-05-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>
+<p>多态</p>
+</li>
+<li>
+<p>操作符重载</p>
+</li>
+</ul>
+<span id="more"></span>
+<h1 id="多态"><a class="header-anchor" href="#多态"></a>多态</h1>
+<ul>
+<li>同一论域中一个元素可有多种解释</li>
+<li>提高语言灵活性</li>
+<li>程序设计语言
+<ul>
+<li>一名多用  ----   函数重载</li>
+<li>类属    ----  template</li>
+<li>OO程序设计  ----    虚函数</li>
+</ul>
+</li>
+</ul>
+<h1 id="操作符重载"><a class="header-anchor" href="#操作符重载"></a>操作符重载</h1>
+<ul>
+<li>
+<p>函数重载( 见下文&quot;函数匹配&quot; )</p>
+<ul>
+<li>名同， 参数不同</li>
+<li>静态绑定
+<ul>
+<li>歧义控制
+<ul>
+<li>顺序</li>
+<li>更好匹配</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>操作符重载</p>
+</li>
+<li>
+<p>动机</p>
+<p>操作符语义</p>
+<ul>
+<li><code>built_in</code>类型</li>
+<li>自定义数据类型</li>
+</ul>
+</li>
+<li>
+<p>作用</p>
+<ul>
+<li>提高可读性</li>
+<li>提高可扩展性</li>
+</ul>
+</li>
+</ul>
+<h2 id="函数匹配"><a class="header-anchor" href="#函数匹配"></a>函数匹配</h2>
+<p>在大多数情况下我们都能确定某次调用应该选择哪个重载函数。然而当几个重载函数的形参数量相等，以及某些形参的类型可以由其他类型转换得来时，这项工作就不那么容易了。以下面这组函数及其调用为例：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">int</span>, <span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">(<span class="type">double</span>, <span class="type">double</span>=<span class="number">3.14</span>)</span></span>;</span><br><span class="line"><span class="built_in">f</span>(<span class="number">5.6</span>);</span><br></pre></td></tr></table></figure>
+<p>确定候选函数和可行函数</p>
+<p>函数匹配的第一步是选定本次调用对应的重载函数集，集合中的函数成为候选函数。候选函数具备两个特征：一是与被调用的函数<strong>同名</strong>，二是其声明在调用点<strong>可见</strong>。在这个例子中，有4个名为f的候选函数。</p>
+<p>第二步考察本次调用提供的实参，然后从候选函数中选出能被这组实参调用的函数，这些新选出的函数称为可行函数。可行函数也有两个特征：一是其形参数量与本次调用提供的实参<strong>数量相等</strong>。二是每个实参的类型与对应的形参<strong>类型相同，或者能转换成形参的类型</strong>。</p>
+<p>我们能根据实参的数量从候选函数中排除掉两个。不使用形参的函数和使用两个<code>int</code>形参的函数显然都不适合本次调用，这是因为我们的调用只提供了一个实参，而它们分别有0个和2个形参。</p>
+<p>使用一个<code>int</code>形参的函数和使用两个<code>double</code>形参的函数是可行的，它们都能用一个实参调用。其中最后那个函数本应该接受两个<code>double</code>值，但是因为它含有一个默认实参，所以只用一个实参也能调用它。</p>
+<p>在使用实参数量初步判别了候选函数后，接下来考察实参的类型是否与形参匹配。和一般的函数调用类似，实参与形参的含义可能是它们具有相同的类型，也可能是实参类型和形参类型满足转换规则。在上面的例子中，剩下的两个函数都是可行的：</p>
+<p><code>f(int)</code>是可行的，因为实参类型double能转换成形参类型<code>int</code><br>
+　　<code>f(double,double)</code>是可行的，因为它的第二个形参提供了默认值，而第一个形参的类型正好是double，与函数使用的实参类型完全一致。</p>
+<p>寻找最佳匹配（如果有的话）</p>
+<p>函数匹配的第三步是从可行函数中选择与本次调用最匹配的函数。在这一过程中，逐一检查函数调用提供的实参，寻找形参类型与实参类型最匹配的那个可行函数。最匹配的基本思想是，实参类型与形参类型越接近，它们匹配得越好。在我们的例子中，调用只提供了一个实参，它的类型是double。如果调用<code>f(int)</code>，实参将不得不从<code>double</code>转换成<code>int</code>。另一个可行函数<code>f(double,double)</code>则与实参精确匹配。精确匹配比需要类型转换的匹配更好。因此，编译器把f(6.5)解析成对含有两个<code>double</code>形参的函数的调用，并使用默认值填补我们未提供的第二个实参。</p>
+<p>含有多个形参的函数匹配<br>
+　　当实参的数量有两个或更多时，函数匹配就比较复杂了。对于前面那些名为f的函数，我们来分析如下的调用会发生什么情况：</p>
+<p>​                          <code>f(42, 2.56);</code></p>
+<p>选择可行函数的方法和只有一个实参的一样，编译器选择那些形参数量满足要求且实参类型和形参类型能够匹配的函数。此例中，可行函数包括<code>f(int, int)</code>和<code>f(double, double)</code>。接下来，编译器依次检查每个实参以确定哪个函数是最佳匹配。如果有且只有一个函数满足下列条件，则匹配成功：</p>
+<ul>
+<li>该函数每个实参的匹配都不劣于其他可行函数需要的匹配</li>
+<li>只有一个实参的匹配优于其他可行函数提供的匹配</li>
+</ul>
+<p>如果在检测了所以实参之后没有任何一个函数脱颖而出，则该调用是错误的。编译器将报告二义性调用的信息。</p>
+<p>在上面的调用中，只考虑第一个实参时我们发现函数<code>f(int, int)</code>能精确匹配；要想匹配第二个函数，<code>int</code>类型必须转换成<code>double</code>类型。显然需要内置类型转换的匹配劣于 精确匹配，因此仅就第一个实参来说，<code>f(int, int)</code>比<code>f(double, double)</code>更好。</p>
+<p>接下来考虑第二个实参，此时<code>f(double, double)</code>是精确匹配，要想调用<code>f(int, int)</code>必须将2.56从<code>double</code>类型转换成<code>int</code>类型，因此仅就第二个实参来说，<code>f(double, double)</code>更好。</p>
+<p>编译器最终将因为这个调用具有二义性而拒绝其请求：因为每个函数函数各自在一个实参上实现了更好的匹配，从整体上无法匹配孰优孰劣。看起来我们似乎可以通过强制类型转换其中的一个实参来实参函数的匹配，但是在设计良好的系统中，不应该对实参进行强制类型转换。</p>
+<p>实参类型转换<br>
+　　为了确定最佳匹配，编译器将实参类型到形参类型的转换划分成几个等级，具体排序如下所示：<br>
+1.<strong>精确匹配</strong>，包括以下情况：<br>
+　　实参类型和形参类型相同<br>
+　　实参从数组类型或函数类型转换成对应的指针类型<br>
+　　向实参添加顶层<code>const</code>或者从实参中删除顶层<code>const</code><br>
+2.通过<code>const</code>转换实现的匹配<br>
+3.通过类型提升实现的匹配<br>
+4.通过算术类型转换或指针转换实现的匹配<br>
+5.通过类类型转换实现的匹配</p>
+<p>需要类型提升和算术类型转换的匹配<br>
+　　内置类型的提升和转换可能在函数匹配时产生意想不到的结果，幸运的是，在设计良好的系统中函数很少会含有下面例子类似的形参。<br>
+　　分析函数前，我们应该知道小整型一般都会提升到<code>int</code>类型或更大的整数类型。假设有两个函数，一个接受<code>int</code>，另一个接受<code>short</code>，则只有当调用的是<code>short</code>类型的值时才会选择short版本的函数。有时候，即使实参是一个很小的整数值，也会直接将它提升成<code>int</code>类型；此时使用<code>short</code>版本反而会导致类型转换：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">ff</span><span class="params">(<span class="type">int</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ff</span><span class="params">(<span class="type">short</span>)</span></span>;</span><br><span class="line"><span class="built_in">ff</span>(<span class="string">&#x27;a&#x27;</span>);  <span class="comment">//char提升成int，调用ff(int)</span></span><br></pre></td></tr></table></figure>
+<p>所有的算术类型转换的级别都一样。例如，从<code>int</code>向<code>unsigned int</code>的转换并不比<code>int</code>向<code>double</code>的转换级别高：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">mainip</span><span class="params">(<span class="type">long</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">mainip</span><span class="params">(<span class="type">float</span>)</span></span>;</span><br><span class="line"><span class="built_in">mainip</span>(<span class="number">3.14</span>);  <span class="comment">//错误，二义性调用</span></span><br></pre></td></tr></table></figure>
+<p>字面值3.14的类型是double，它既能转换成long也能转换成float。因为存在两种可能的算术类型转换，所以该调用具有二义性。</p>
+<p>函数匹配和<code>const</code>实参<br>
+　　如果重载函数的区别在于它们的引用类型的形参是否引用了<code>const</code>，或者指针类型的形参是否指向<code>const</code>，则当调用发生时编译器通过实参是否是常量来决定选择哪个函数：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">Record <span class="title">lookup</span><span class="params">(Account &amp;)</span></span>;    <span class="comment">//函数的参数是Account的引用</span></span><br><span class="line"><span class="function">Record <span class="title">lookup</span><span class="params">(<span class="type">const</span> Account &amp;)</span></span>;  <span class="comment">//函数的参数是一个常量引用</span></span><br><span class="line"><span class="type">const</span> Account a;</span><br><span class="line">Account b;</span><br><span class="line"></span><br><span class="line"><span class="built_in">lookup</span>(a);  <span class="comment">//调用Record lookup(const Account &amp;);</span></span><br><span class="line"><span class="built_in">lookup</span>(b);  <span class="comment">//调用Record lookup(Account &amp;);</span></span><br></pre></td></tr></table></figure>
+<p>在第一个调用中，我们传入的是<code>const</code>对象a。因为不能把普通引用绑定到<code>const</code>对象上，所以此例中唯一可行的函数是以常量引用作为形参的那个函数，并且调用该函数与实参a精确匹配。<br>
+　　在第二个调用中，我们传入的是非常量对象b。对于这个调用来说，两个函数都是可行的，因为我们既可以使用b初始化常量引用也可以用它初始化非常量引用。然而，用非常量对象初始化常量引用需要类型转换，接受非常量形参的版本则与b精确匹配。因此，应该选用非常量版本的函数。<br>
+　　指针类型的形参也类似，如果两个函数的唯一区别是它的指针形参指向常量或非常量，则编译器能通过实参是否是常量决定选用哪个函数：如果实参是指向常量的指针，调用形参是<code>const*</code>的函数；如果实参是指向非常量的值，调用形参是普通指针函数。</p>
+<h2 id="操作符重载-2"><a class="header-anchor" href="#操作符重载-2"></a>操作符重载</h2>
+<ul>
+<li>
+<p>可以作为成员函数重载</p>
+</li>
+<li>
+<p>也可以作为全局函数重载</p>
+</li>
+<li>
+<p>重载时,必须至少包含一个用户自定义类型的操作数( 否则你就会更改编译器定义的操作符语义,这是不允许的 )</p>
+</li>
+<li>
+<p>不可重载的操作符</p>
+<ul>
+<li><code>.</code> <code>.*</code> <code>::</code> <code>?:</code></li>
+</ul>
+</li>
+<li>
+<p>基本原则</p>
+</li>
+<li>
+<p>方式</p>
+<ul>
+<li>类成员函数</li>
+<li><strong>带有类参数</strong>的全局函数</li>
+</ul>
+</li>
+<li>
+<p>遵循原有语法</p>
+<ul>
+<li>单目/双目</li>
+<li>优先级</li>
+<li>结合性</li>
+</ul>
+</li>
+</ul>
+<p>笨蛋写法:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span>  <span class="title class_">Complex</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> real, imag;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Complex</span>()</span><br><span class="line">    &#123; real = <span class="number">0</span> ; imag = <span class="number">0</span>; &#125;</span><br><span class="line">    <span class="built_in">Complex</span>( <span class="type">double</span> r , <span class="type">double</span> i ) &#123; real = r; imag = i; &#125;</span><br><span class="line">    <span class="function">Complex <span class="title">add</span><span class="params">( Complex &amp;x )</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">Complex <span class="title">a</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>)</span>,<span class="title">b</span><span class="params">(<span class="number">2</span>,<span class="number">4</span>)</span>,c</span>;</span><br><span class="line">    c = a.<span class="built_in">add</span>(b);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="作为成员函数重载"><a class="header-anchor" href="#作为成员函数重载"></a>作为成员函数重载</h3>
+<ul>
+<li>
+<p>将运算符重载函数声明为类的成员函数时，二元运算符的参数只有一个，一元运算符不需要参数。之所以少一个参数，是因为这个参数是隐含的。</p>
+</li>
+<li>
+<p>一般是内联函数</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Complex</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> real, imag;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Complex</span>()</span><br><span class="line">    &#123; real = <span class="number">0</span> ; imag = <span class="number">0</span>; &#125;</span><br><span class="line">    <span class="built_in">Complex</span>( <span class="type">double</span> r , <span class="type">double</span> i ) &#123; real = r; imag = i; &#125;</span><br><span class="line">    Complex <span class="keyword">operator</span>+ ( Complex &amp;x)</span><br><span class="line">    &#123;</span><br><span class="line">        Complex temp;</span><br><span class="line">        temp.real = real + x.real;</span><br><span class="line">		temp.real = imag + x.imag;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> temp;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//重载一元负号，不需要参数</span></span><br><span class="line">     complex <span class="keyword">operator</span> -()    </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">complex</span>(-real, -image);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">Complex <span class="title">a</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>)</span>,<span class="title">b</span><span class="params">(<span class="number">2</span>,<span class="number">4</span>)</span>,c</span>;</span><br><span class="line">    c = a + b; <span class="comment">//作为成员函数重载时, 左式会被转换为  c = a.operator+(b);</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="作为全局函数重载"><a class="header-anchor" href="#作为全局函数重载"></a>作为全局函数重载</h3>
+<p>将运算符重载函数声明为全局函数时，二元操作符就需要两个参数，一元操作符需要一个参数( 因为没有<code>this</code> ) . 而且其中必须有一个参数是自定义类型，好让编译器区分这是程序员自定义的运算符，防止程序员修改用于内置类型的运算符的性质。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Complex</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> real, imag;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Complex</span>()</span><br><span class="line">    &#123; real = <span class="number">0</span> ; imag = <span class="number">0</span>; &#125;</span><br><span class="line">    <span class="built_in">Complex</span>( <span class="type">double</span> r , <span class="type">double</span> i ) &#123; real = r; imag = i; &#125;</span><br><span class="line">    <span class="keyword">friend</span> Complex <span class="keyword">operator</span>+ ( Complex &amp;x , Complex &amp;y ); <span class="comment">//友元函数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Complex <span class="keyword">operator</span>+ ( Complex &amp;x , Complex &amp;y )</span><br><span class="line">&#123;</span><br><span class="line">    Complex temp;</span><br><span class="line">    temp.real = x.real + y.real;</span><br><span class="line">    temp.imag = x.imag + y.imag;</span><br><span class="line">    <span class="keyword">return</span> temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">Complex <span class="title">a</span><span class="params">(<span class="number">1</span>,<span class="number">2</span>)</span>,<span class="title">b</span><span class="params">(<span class="number">2</span>,<span class="number">4</span>)</span>,c</span>;</span><br><span class="line">    c = a + b; <span class="comment">//作为全局函数重载时,会被转换为 +(a,b)</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id=""><a class="header-anchor" href="#"></a><code>&lt;&lt;</code></h4>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Point</span>()&#123;&#125;;</span><br><span class="line">    <span class="built_in">Point</span> (<span class="type">int</span> x, <span class="type">int</span> y): <span class="built_in">x</span>(x),<span class="built_in">y</span>(y) &#123;&#125;;</span><br><span class="line">    <span class="keyword">friend</span> ostream &amp;<span class="keyword">operator</span>&lt;&lt;(ostream &amp;out , <span class="type">const</span> Point &amp;a);  </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> x,y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ostream &amp;<span class="keyword">operator</span>&lt;&lt;(ostream &amp;out , <span class="type">const</span> Point &amp;a)&#123;</span><br><span class="line">    out &lt;&lt; <span class="string">&quot;&lt;Point&gt;( &quot;</span> &lt;&lt; a.x &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; a.y &lt;&lt; <span class="string">&quot;)&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> out;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">Point <span class="title">a</span><span class="params">(<span class="number">2</span>,<span class="number">4</span>)</span>,<span class="title">b</span><span class="params">(<span class="number">5</span>,<span class="number">3</span>)</span></span>;</span><br><span class="line">    Point c = a + b;</span><br><span class="line">    cout &lt;&lt; c &lt;&lt; endl;    <span class="comment">//转换为 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>&lt;&lt;</code>只能作为<strong>全局函数</strong>重载, 因为如果作为成员函数重载, 那么它的第一个参数必定是<code>this</code>,这显然是不合理的, <code>&lt;&lt;</code>的第一个参数应该是<code>cout</code>. 比如说, 对于<code>cout &lt;&lt; c </code> ,如果<code>&lt;&lt;</code>作为成员函数重载 , 那么应该会写成<code>c &lt;&lt; cout</code>  这种形式,这是很离谱的.</p>
+<p><code>&gt;&gt;</code>同理, <code>&lt;&lt;</code>和&gt;&gt;都只能作为全局函数重载</p>
+<ul>
+<li>注： 模板的<code>&lt;&lt;</code>重载， 只要加上<code>泛型参数</code>就行了</li>
+</ul>
+<h3 id="双目操作符重载"><a class="header-anchor" href="#双目操作符重载"></a>双目操作符重载</h3>
+<ul>
+<li>
+<p>类成员函数</p>
+<ul>
+<li>
+<p>格式</p>
+<p><code>&lt;ret type&gt; operator#( &lt;arg&gt; )</code></p>
+</li>
+<li>
+<p><code>this</code>隐含</p>
+</li>
+<li>
+<p>使用</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">&lt;<span class="keyword">class</span> <span class="title class_">name</span>&gt; a, b;</span><br><span class="line">a <span class="meta"># b;</span></span><br><span class="line">a.<span class="keyword">operator</span>#(b); <span class="comment">//等价</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>全局函数</p>
+<ul>
+<li>
+<p>友元<code>friend &lt;ret type&gt; operator#( &lt;arg1&gt;, &lt;arg2&gt;)</code></p>
+</li>
+<li>
+<p>格式<code>&lt;ret type&gt; operator#( &lt;arg1&gt;, &lt;arg2&gt;)</code></p>
+</li>
+<li>
+<p>推荐所有的双目操作符都以<strong>全局函数</strong>重载, 因为可以实现交换律:</p>
+</li>
+<li>
+<p>通常只将那些不需要实现交换律的二元运算符重载为<strong>成员函数</strong>. 比如 赋值和复合赋值运算符<code>=</code>,<code>+=</code> , <code>-=</code> , <code>*=</code>, <code>/=</code>, <code>&amp;=</code> . 因为其左操作数( 成为宿主对象 ) 和右操作数( 成为参数对象 ) 的作用不相同, 在这些操作符中, 左操作数扮演的角色与右操作数不同. 左操作数代表左值, 右操作数代表右值, 操作的返回值一般为产生副作用后的宿主对象的值.</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CL</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> count;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">friend</span> CL <span class="keyword">operator</span>+ ( <span class="type">int</span> i , CL &amp; a );</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">friend</span> CL <span class="keyword">operator</span>+ ( CL &amp; a , <span class="type">int</span> i );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以实现交换律</span></span><br><span class="line">obj + <span class="number">10</span>;</span><br><span class="line"><span class="number">10</span> + obj;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>限制</p>
+<ul>
+<li><code>=</code> <code>()</code> <code>[]</code>  不能作为全局函数重载,只能作为成员函数重载
+<ul>
+<li>原因:
+<ul>
+<li>对于<code>()</code> <code>[]</code>, 它们都需要先计算出左边对象的类型,再计算函数. 为了确保这件事,编译器规定这两个操作符只能作为成员函数重载( <code>this</code>总是优先被计算出 )</li>
+<li>对于<code>=</code> 由于以拷贝的方式初始化一个对象时，会调用拷贝构造函数；当给一个对象赋值时，会调用重载过的赋值运算符。因此<code>=</code>不能作为成员函数重载</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>永远不要重载<code>&amp;&amp;</code>和<code>||</code> , 重载后无法实现短路</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="过度设计-错误设计"><a class="header-anchor" href="#过度设计-错误设计"></a>过度设计 = 错误设计</h3>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Rational</span>&#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    	<span class="built_in">Rational</span>(<span class="type">int</span>,<span class="type">int</span>);</span><br><span class="line">    <span class="type">const</span> Ration&amp; <span class="keyword">operator</span>*(<span class="type">const</span> Rational &amp;r) <span class="type">const</span>;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> n , d;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//operator* 的函数体</span></span><br><span class="line"><span class="comment">// 尝试1,这是一个栈区的构造函数,错在不能返回一个局部变量的引用或指针</span></span><br><span class="line"><span class="keyword">return</span> <span class="built_in">Rational</span>( n* (r.n), d* ( r.d ));</span><br><span class="line"></span><br><span class="line"><span class="comment">//尝试2,这样是错的,因为对于 w = a*b*c ;  a*b的返回的对象是个匿名对象,再也找不到了,会造成内存泄漏. 也就是说,不能支持链式调用</span></span><br><span class="line">Rational *result = <span class="keyword">new</span> <span class="built_in">Rational</span>( n*(r.n), d*(r.d) );</span><br><span class="line"><span class="keyword">return</span> *result; </span><br><span class="line"></span><br><span class="line"><span class="comment">//尝试3,用一个类静态变量,实现支持链式调用,这样也是错的,因为</span></span><br><span class="line"><span class="comment">//if( (a*b) == (c*d) ) 对于这种写法来说是永真式,返回的永远是同一个</span></span><br><span class="line"><span class="type">static</span> Rational result; <span class="comment">//设置一个类静态变量</span></span><br><span class="line">result.n = n*(r.n);</span><br><span class="line">result.d = d*(r.d);</span><br><span class="line"><span class="keyword">return</span> result;</span><br></pre></td></tr></table></figure>
+<p>可以看到,对于<code>const Ration&amp; operator*(const Rational &amp;r) const;</code>这种写法,实际上是错误的, 所以操作符重载的标准写法一直都是<code>Ration operator*(const Rational &amp;r) </code>, 结尾的<code>const</code>没什么意义,所以也省略了.</p>
+<h3 id="a-和-a"><a class="header-anchor" href="#a-和-a"></a><code>a++</code> 和 <code>++a</code></h3>
+<ul>
+<li><code>后缀运算符</code>返回的是<code>右值</code>, <code>前缀运算符</code>返回的是<code>左值</code>( 返回的就是a, prefix ++等价于a = a+1 )</li>
+</ul>
+<p>为区别前置和后置运算符，C++编译器要求，需要在<strong>后缀运算符重载函数中加参数</strong><code>int</code>，这个类型在此除了以示区别之外并不代表任何实际含义, 被称为哑整型参数<code>dummy interger parameter</code>；如果不加，编译器无法区分是前置++，还是后置++，导致报错。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Counter</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">Counter</span>() &#123;value = <span class="number">0</span> &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//前置++运算符，需要引用返回，不需要参数。返回自增后的值，且返回的是一个左值 </span></span><br><span class="line">        Counter&amp; <span class="keyword">operator</span>++() <span class="comment">//++a</span></span><br><span class="line">        &#123;</span><br><span class="line">            value++;</span><br><span class="line">            <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//后置++，不需要引用返回，需要参数区分。返回自增前的值，且返回的是一个右值</span></span><br><span class="line">  </span><br><span class="line">        Counter <span class="keyword">operator</span> ++(<span class="type">int</span>) <span class="comment">//a++ //dummy argument</span></span><br><span class="line">        &#123;</span><br><span class="line">            Counter tmp = *<span class="keyword">this</span>;</span><br><span class="line">            value++;</span><br><span class="line">            <span class="keyword">return</span> tmp;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>前缀运算符</p>
+<ul>
+<li>返回更改后的宿主对象( 宿主对象不能是常量 ), 这意味着我们不应该创建新对象, 而是应该更改宿主对象, 并返回宿主对象, 这意味着我们可以通过<strong>引用返回</strong>, C++允许级联这个运算符( <code>++++x</code> 和 <code>----x</code> ), 这意味着返回对象不能是常量, 必须是<strong>左值</strong></li>
+</ul>
+</li>
+<li>
+<p>后缀运算符</p>
+<ul>
+<li>
+<p>需要哑元参数, 哑元参数的作用是创建一个唯一的前面来区分前缀和后缀运算符, 这在程序中被忽略</p>
+</li>
+<li>
+<p>返回对象是在更改前创建的临时对象,这意味着我们不能通过引用返回该对象. <strong>返回的对象是常量( 右值 )</strong> , 因为C++ 不允许级联操作, 例如 a+±- 或 a----</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="-2"><a class="header-anchor" href="#-2"></a><code>=</code></h3>
+<ul>
+<li>当我们没有自己设计等号运算符的重载函数，编译器会自动生成一个<strong>浅拷贝</strong>的赋值运算符的重载函数。</li>
+<li><strong>浅拷贝</strong>：只是简单地将一个对象的内存数据赋值给另一个对象，如果这个对象成员变量引用了外部资源时（new），那么这两个对象的成员变量都指向这个空间，当这两个对象生存周期结束时，进行析构，那么就会崩溃，对同一块内存我们delete了两次</li>
+<li>逐个成员赋值( member-wise assignment )</li>
+<li>对含有对象成员的类, 该定义是递归的</li>
+<li>赋值操作符重载不能被继承</li>
+</ul>
+<p>对于如下代码,存在许多问题</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> x,y;</span><br><span class="line">    <span class="type">char</span> *p;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">A</span>( <span class="type">int</span> i , <span class="type">int</span> j , <span class="type">char</span> *s )</span><br><span class="line">        :<span class="built_in">x</span>(i),<span class="built_in">y</span>(j)</span><br><span class="line">        &#123;</span><br><span class="line">            p = <span class="keyword">new</span> <span class="type">char</span>[ <span class="built_in">strlen</span>(s) + <span class="number">1</span> ];</span><br><span class="line">            <span class="built_in">strcpy</span>(p,s);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">virtual</span> ~<span class="built_in">A</span>() &#123; <span class="keyword">delete</span>[] p; &#125;</span><br><span class="line">        </span><br><span class="line">        A&amp; <span class="keyword">operator</span> =( A &amp;a )</span><br><span class="line">        &#123;</span><br><span class="line">            x = a.x;</span><br><span class="line">            y = a.y;</span><br><span class="line">            <span class="keyword">delete</span>[] p;</span><br><span class="line">            p = <span class="keyword">new</span> <span class="type">char</span>[ <span class="built_in">strlen</span>(a.p) + <span class="number">1</span> ];</span><br><span class="line">            <span class="built_in">strcpy</span>( p, a.p );</span><br><span class="line">            <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题一,对于:</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">A a,b;</span><br><span class="line">b = a;</span><br></pre></td></tr></table></figure>
+<p>由于<code>new</code>会抛异常,当<code>new</code>发生错误的时候, 按理来说<code>b</code>是不变的, 但现在<code>b</code>的成员指针成为了空指针.</p>
+<ul>
+<li>问题二, 无法支持自我赋值<code>s = s</code>, 这样会报错(  对于 <code>strcpy( p, a.p )</code>, <code>p</code> 和<code>a.p</code>都被删了 )</li>
+</ul>
+<p>安全的写法是:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">char</span> *p2 = <span class="keyword">new</span> <span class="type">char</span>[ <span class="built_in">strlen</span>(a.p) + <span class="number">1</span>  ];</span><br><span class="line"><span class="built_in">strcpy</span>(p2,a.p);</span><br><span class="line"><span class="keyword">delete</span> p;</span><br><span class="line">p = p2;</span><br><span class="line"><span class="keyword">return</span> *<span class="keyword">this</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>赋值是一种不对称操作, 左操作数是一个接受操作副作用的佐治对象, 右操作数是一个不应该再处理过程中更改的右值对象. 必须指出, <strong>要使用此操作符, 左操作数和右操作数必须已经存在.</strong> 换言之, 此运算符不同于<code>拷贝构造函数</code>, 后者从现有对象创建新对象. 对于赋值运算符, 两个对象都必须存在. 我们只更改左对象, 使右对象是右对象的精确副本.</li>
+<li>重载辅助运算符需要验证<strong>宿主对象和参数对象不是同一个对象(地址不同)</strong>. 如果对象是在堆中创建的, 这一点尤其重要. 由于在复制参数对象之前必须删除宿主对象, 如果两个对象相同, 则参数对象( 与宿主对象的物理地址相同 ) 也被删除了. 从而没有了要复制的内容.</li>
+<li>赋值运算符是右向左结合的. 换言之,有 <code>z = y = x</code>, 这被解释为<code> z = ( y = x )</code> . 但是,C++要求z被看作对y的引用, 这就是返回的对象必须通过引用返回的原因.</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">A &amp;A:: <span class="keyword">operator</span> =( <span class="type">const</span> A &amp;right )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>( *<span class="keyword">this</span> != right ) <span class="comment">//检查二者是不是同一个对象</span></span><br><span class="line">    &#123;</span><br><span class="line">        number = right.number; <span class="comment">// number是A的成员</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="-3"><a class="header-anchor" href="#-3"></a><code>[]</code></h3>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"> <span class="keyword">class</span> <span class="title class_">string</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="type">char</span> *p;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">string</span>( <span class="type">char</span> *p1 )</span><br><span class="line">        &#123;</span><br><span class="line">            p = <span class="keyword">new</span> <span class="type">char</span>[ <span class="built_in">strlen</span>(p1) + <span class="number">1</span> ];</span><br><span class="line">            <span class="built_in">strcpy</span>( p, p1 );</span><br><span class="line">        &#125;</span><br><span class="line">     </span><br><span class="line">     <span class="comment">//更改器函数</span></span><br><span class="line">     	<span class="type">char</span>&amp; <span class="keyword">operator</span> [](<span class="type">int</span> i)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> p[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">//访问器函数</span></span><br><span class="line">        <span class="type">const</span>  <span class="type">char</span> <span class="keyword">operator</span> [](<span class="type">int</span> i) <span class="type">const</span> <span class="comment">// const string * const this</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> p[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">virtual</span> ~<span class="built_in">string</span>()&#123;</span><br><span class="line">            <span class="keyword">delete</span>[] p;</span><br><span class="line">        &#125;</span><br><span class="line"> &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//匹配 char&amp; operator [](int i)</span></span><br><span class="line"><span class="function">string <span class="title">s</span><span class="params">( <span class="string">&quot;aacd&quot;</span> )</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//匹配 const char operator [](int i) const</span></span><br><span class="line"><span class="function"><span class="type">const</span> string <span class="title">cs</span><span class="params">(<span class="string">&quot;const&quot;</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">s[<span class="number">2</span>] = <span class="string">&#x27;b&#x27;</span>;</span><br><span class="line">cout &lt;&lt; cs[<span class="number">0</span>];</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>在下标操作符的重载中,由于不知道用户会调用哪个版本,所以应当<strong>始终重载两个版本</strong></p>
+</li>
+<li>
+<p>由于函数末尾<code>const</code>的作用实际上是改变参数列表( 将<code>string * const this</code> 更改为<code>const string * const this</code>),所以编译器函数匹配时会精准匹配</p>
+</li>
+</ul>
+<h4 id="多维数组"><a class="header-anchor" href="#多维数组"></a>多维数组</h4>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Array2D</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Arr1D</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">public</span>:</span><br><span class="line">        <span class="built_in">Array1D</span>( <span class="type">int</span> *p ) &#123; <span class="keyword">this</span> -&gt; p = p; &#125;</span><br><span class="line">        <span class="type">int</span>&amp; <span class="keyword">operator</span>[](<span class="type">int</span> index) <span class="type">const</span> &#123; <span class="keyword">return</span> p[index]; &#125;</span><br><span class="line">        <span class="keyword">private</span>:</span><br><span class="line">        <span class="type">int</span> *p;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="built_in">Array2D</span>( <span class="type">int</span> n1, <span class="type">int</span> n2 ) &#123; p = <span class="keyword">new</span> <span class="type">int</span>[n1 * n2] ; num1 = n1; num2 = n2; &#125;</span><br><span class="line">    <span class="keyword">virtual</span> ~<span class="built_in">Array2D</span>() &#123; <span class="keyword">delete</span>[] p; &#125;</span><br><span class="line">    Array1D <span class="keyword">operator</span>[] ( <span class="type">int</span> index ) &#123; <span class="keyword">return</span> p+ index * num2; &#125; <span class="comment">//隐式转换, 将 int* 转换为 Array1D</span></span><br><span class="line">    <span class="type">const</span> Array1D <span class="keyword">operator</span>[] ( <span class="type">int</span> index ) <span class="type">const</span> &#123;<span class="keyword">return</span> p + index * num2; &#125;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> *p;</span><br><span class="line">    <span class="type">int</span> num1, num2;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>如果构造函数只有一个参数, 那这个参数就可以用来隐式转换. 前提是构造函数前面没有<code>explicit</code>关键字 ,如果加了, 就代表这个构造函数只能显式调用, 不能隐式转换.</p>
+<h3 id="-4"><a class="header-anchor" href="#-4"></a><code>()</code></h3>
+<p><code>()</code>有三个用途: <code>优先级声明</code>, <code>函数调用</code>, <code>类型转换</code>. 后两者都可以重载</p>
+<h3 id="-5"><a class="header-anchor" href="#-5"></a><code>&amp;</code></h3>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">	A* <span class="keyword">operator</span>&amp;()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">const</span> A* <span class="keyword">operator</span>&amp;() <span class="type">const</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="函数调用操作符"><a class="header-anchor" href="#函数调用操作符"></a>函数调用操作符</h4>
+<ul>
+<li>实现了<code>函数对象</code>, 相当于更高级的函数指针. 函数对象可以<strong>保存状态</strong></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Function</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">double</span> para;</span><br><span class="line">    <span class="type">int</span> lowerBound, upperBound;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">operator</span><span class="params">()</span> <span class="params">( <span class="type">double</span> , <span class="type">int</span>, <span class="type">int</span> )</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Func f;</span><br><span class="line"><span class="built_in">f</span>( <span class="number">2.4</span>, <span class="number">0</span> ,<span class="number">8</span> ) <span class="comment">//函数对象</span></span><br></pre></td></tr></table></figure>
+<h4 id="类型转换运算符"><a class="header-anchor" href="#类型转换运算符"></a>类型转换运算符</h4>
+<ul>
+<li>减少混合计算中需要定义的操作符重载函数的数量</li>
+<li>重载数值型，如<code>int</code></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Rational</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span>：</span><br><span class="line">        <span class="built_in">Rational</span>( <span class="type">int</span> n1, <span class="type">int</span> n2 )</span><br><span class="line">        &#123;</span><br><span class="line">            n = n1;</span><br><span class="line">            d = n2;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//什么都不返回，没有返回值</span></span><br><span class="line"><span class="comment">//只能转换对象本身，所以不需要参数。因为只能对调用它的对象做类型转换，</span></span><br><span class="line"><span class="comment">//只能作为成员函数</span></span><br><span class="line">        <span class="function"><span class="keyword">operator</span> <span class="title">double</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> (<span class="type">double</span>) (n/d);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="type">int</span> n,d;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="-6"><a class="header-anchor" href="#-6"></a><code>-&gt;</code></h3>
+<ul>
+<li>
+<p><code>-&gt;</code>智能指针</p>
+<ul>
+<li>
+<p><code>-&gt;</code>为二元运算符 , <strong>重载的时候按一元操作符重载描述</strong>, 编译器会在描述后对它重写.</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">A a;</span><br><span class="line">A -&gt; <span class="built_in">f</span>();</span><br><span class="line">a.<span class="keyword">operator</span>-&gt;( f ); <span class="comment">// ?????</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//编译器会将它改写为</span></span><br><span class="line">a.<span class="keyword">operator</span> -&gt;() -&gt;<span class="built_in">f</span>();</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>首先, 按照一元操作符描述, <code>a.operator-&gt;( f );</code> 会被描述为``a.operator -&gt;()<code>. 实际上</code>a.operator -&gt;()<code> 返回的是</code>a的指针<code>, 然后编译器将其改写, 再加上不重载的</code> -&gt; f()`</p>
+</li>
+<li>
+<p>实际上<code>a.operator -&gt;()</code>可以返回一个也重载了<code>-&gt;</code>的对象, 然后<code>-&gt; f()</code>再进行重载… 你可以这么写, 但是非常蠢</p>
+</li>
+</ul>
+<h3 id="new-、delete"><a class="header-anchor" href="#new-、delete"></a><code>new</code> 、<code>delete</code></h3>
+<ul>
+<li><code>new</code>, <code>delete</code>
+<ul>
+<li>频繁调用系统的存储管理, 影响效率( 实际上分配内存降低了系统的很大效率 )</li>
+<li>程序自身管理内存, 提高效率</li>
+<li>方法
+<ul>
+<li>调用系统存储分配, 申请一块较大的内存</li>
+<li>针对该内存, 自己管理存储分配, 去配</li>
+<li>通过重载<code>new</code>与<code>delete</code>来实现</li>
+<li>重载的<code>new</code>和<code>delete</code>是静态成员. 由于它们肯定是静态的, 所以可加可不加<code>static</code>关键字</li>
+<li>重载的<code>new</code>和<code>delete</code>遵循类的访问控制,可继承</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="重载new"><a class="header-anchor" href="#重载new"></a>重载<code>new</code></h4>
+<ul>
+<li>
+<p><code>void *operator new( size_t size, ...)</code></p>
+<ul>
+<li>名: <code>operator new</code></li>
+<li>返回类型: <code>void*</code></li>
+<li>第一个参数: <code>size_t ( unsigned int )</code>
+<ul>
+<li>系统自动计算对象的大小, 并传值给<code>size</code></li>
+</ul>
+</li>
+<li>其他参数: 可有可无
+<ul>
+<li><code>A *p = new(...) A</code>, 表示传给new的其他实参</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>new</code>的重载可以有多个</p>
+</li>
+<li>
+<p>如果重载了<code>new</code>, 那么通过<code>new</code>动态创建该类的对象时将不再调用内置的(预定义的)new</p>
+</li>
+<li>
+<p>调用全局<code>new</code>:  <code>:: operator new</code></p>
+</li>
+<li>
+<p>定位<code>new</code>: 在栈上new出一块空间, 这样可以复用栈区地址</p>
+</li>
+</ul>
+<h3 id="重载-delete"><a class="header-anchor" href="#重载-delete"></a>重载 <code>delete</code></h3>
+<ul>
+<li><code>void operator delete( void*p, size_t size )</code>
+<ul>
+<li>名: <code>operator delete</code></li>
+<li>返回类型: <code>void</code></li>
+<li>第一个参数: <code>void *</code>
+<ul>
+<li>被撤销对象的地址</li>
+</ul>
+</li>
+<li>第二个参数: 可有可无; 如果有,则必须是<code> size _t</code>类型
+<ul>
+<li>被撤销对象的<strong>实际</strong>大小</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>delete</code>的重载只能有一个</li>
+<li>如果重载了<code>delete</code>,那么通过<code>delete</code>撤销对象时将不再调用内置的(预定义的<code>delete</code>)</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/18/%E5%B0%BC%E9%87%91%E6%96%AF%E5%9F%BA%E6%89%8B%E8%AE%B0/" rel="prev" title="尼金斯基手记">
+                  <i class="fa fa-chevron-left"></i> 尼金斯基手记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/17/Software%20Construction/" rel="next" title="Software Construction">
+                  Software Construction <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

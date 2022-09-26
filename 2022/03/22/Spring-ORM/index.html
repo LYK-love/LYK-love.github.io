@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  object-relational mapping Hibernate、MyBatis JPA (Java Persistence API) APPENDIX： 一些好用的ORM Tips  ref: Spring In Action">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring ORM">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/22/Spring-ORM/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  object-relational mapping Hibernate、MyBatis JPA (Java Persistence API) APPENDIX： 一些好用的ORM Tips  ref: Spring In Action">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-21T23:12:27.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.940Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/03/22/Spring-ORM/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/03/22/Spring-ORM/","path":"2022/03/22/Spring-ORM/","title":"Spring ORM"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spring ORM | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hibernate"><span class="nav-text">Hibernate</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E6%BA%90%E7%AD%89"><span class="nav-text">配置数据源等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SessionFactory"><span class="nav-text">SessionFactory</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2"><span class="nav-text">查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Repository-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">@Repository 的作用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MyBatis"><span class="nav-text">MyBatis</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-2"><span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E6%BA%90%E7%AD%89-2"><span class="nav-text">配置数据源等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SqlSessionFactory"><span class="nav-text">SqlSessionFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mapper"><span class="nav-text">Mapper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MapperScan"><span class="nav-text">@MapperScan</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mapper%E8%AF%AD%E6%B3%95"><span class="nav-text">Mapper语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SELECT"><span class="nav-text">SELECT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#INSERT"><span class="nav-text">INSERT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UPDATE"><span class="nav-text">UPDATE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DELETE"><span class="nav-text">DELETE</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Mapper"><span class="nav-text">使用Mapper</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JPA"><span class="nav-text">JPA</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-3"><span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E6%BA%90%E7%AD%89-3"><span class="nav-text">配置数据源等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EntityManagerFactory"><span class="nav-text">EntityManagerFactory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JpaTransactionManager"><span class="nav-text">JpaTransactionManager</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Data-JPA"><span class="nav-text">Spring Data JPA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E6%9F%A5%E8%AF%A2%E6%96%B9%E6%B3%95"><span class="nav-text">编写自定义的查询方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E4%BD%93%E7%B1%BB"><span class="nav-text">实体类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Appendex"><span class="nav-text">Appendex</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL%E4%B8%8EJAVA%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB"><span class="nav-text">MySQL与JAVA数据类型对应关系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MYSQL%E5%AD%98URL%E6%9C%80%E4%BD%B3%E7%B1%BB%E5%9E%8B"><span class="nav-text">MYSQL存URL最佳类型</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/22/Spring-ORM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spring ORM | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring ORM
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-21 23:12:27" itemprop="dateCreated datePublished" datetime="2022-03-21T23:12:27Z">2022-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>object-relational mapping</li>
+<li>Hibernate、MyBatis</li>
+<li>JPA (Java Persistence API)</li>
+<li>APPENDIX： 一些好用的ORM Tips</li>
+</ul>
+<p>ref: <em>Spring In Action</em></p>
+<span id="more"></span>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">JDBC</th>
+<th style="text-align:left">Hibernate</th>
+<th style="text-align:left">JPA</th>
+<th style="text-align:left">MyBatis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">DataSource</td>
+<td style="text-align:left">SessionFactory</td>
+<td style="text-align:left">EntityManagerFactory</td>
+<td style="text-align:left">SqlSessionFactory</td>
+</tr>
+<tr>
+<td style="text-align:left">Connection</td>
+<td style="text-align:left">Session</td>
+<td style="text-align:left">带有<code>@PersistenceContext</code>注解的<br><code>EntityManager</code>代理类</td>
+<td style="text-align:left">SqlSession</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Hibernate"><a class="header-anchor" href="#Hibernate"></a>Hibernate</h1>
+<h2 id="配置"><a class="header-anchor" href="#配置"></a>配置</h2>
+<ul>
+<li>
+<p>获得<code>org.hibernate.Session</code>接口的实现类, 这需要我们创建一个<code>LocalSessionFactoryBean</code>，它会自动创建一个<code>SessionFactory</code></p>
+<ul>
+<li>
+<p>在Hibernate中，<code>Session</code>是封装了一个JDBC <code>Connection</code>的实例，而<code>SessionFactory</code>是封装了JDBC <code>DataSource</code>的实例，即<code>SessionFactory</code>持有连接池，每次需要操作数据库的时候，<code>SessionFactory</code>创建一个新的<code>Session</code>，相当于从连接池获取到一个新的<code>Connection</code></p>
+</li>
+<li>
+<p>在hibernate4，我们一般用：<code>org.springframework.orm.hibernate4.LocalSessionFactoryBean</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Hibernate作为ORM框架，可以替代<code>JdbcTemplate</code>，但Hibernate仍然需要JDBC驱动，所以，我们需要引入JDBC驱动、连接池，以及Hibernate本身， 并配置DataSource</p>
+</li>
+<li>
+<p>定义映射关系：XML、注解（JPA、Hibernate）</p>
+</li>
+</ul>
+<h3 id="配置数据源等"><a class="header-anchor" href="#配置数据源等"></a>配置数据源等</h3>
+<p>创建DataSource、引入JDBC配置文件，以及启用声明式事务：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span></span><br><span class="line"><span class="meta">@PropertySource(&quot;jdbc.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AppConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    DataSource <span class="title function_">createDataSource</span><span class="params">()</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="SessionFactory"><a class="header-anchor" href="#SessionFactory"></a>SessionFactory</h3>
+<p>使用<code>org.springframework.orm.hibernate4.LocalSessionFactoryBean</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">LocalSessionFactoryBean <span class="title function_">createSessionFactory</span><span class="params">(<span class="meta">@Autowired</span> DataSource dataSource)</span> &#123;</span><br><span class="line">    <span class="type">var</span> <span class="variable">props</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();<span class="comment">//hibernateProperties属性配置了Hibernate如何进行操作的细节</span></span><br><span class="line">    props.setProperty(<span class="string">&quot;hibernate.hbm2ddl.auto&quot;</span>, <span class="string">&quot;update&quot;</span>); <span class="comment">// 表示自动创建数据库的表结构，生产环境不要使用</span></span><br><span class="line">    props.setProperty(<span class="string">&quot;hibernate.dialect&quot;</span>, <span class="string">&quot;org.hibernate.dialect.HSQLDialect&quot;</span>);<span class="comment">//指示Hibernate使用的数据库是HSQLDB</span></span><br><span class="line">    props.setProperty(<span class="string">&quot;hibernate.show_sql&quot;</span>, <span class="string">&quot;true&quot;</span>); <span class="comment">//让Hibernate打印执行的SQL，这对于调试非常有用</span></span><br><span class="line">    <span class="type">var</span> <span class="variable">sessionFactoryBean</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">LocalSessionFactoryBean</span>();</span><br><span class="line">    sessionFactoryBean.setDataSource(dataSource);</span><br><span class="line">    <span class="comment">// 扫描指定的package获取所有entity class:</span></span><br><span class="line">    sessionFactoryBean.setPackagesToScan(<span class="string">&quot;com.itranswarp.learnjava.entity&quot;</span>);</span><br><span class="line">    sessionFactoryBean.setHibernateProperties(props);</span><br><span class="line">    <span class="keyword">return</span> sessionFactoryBean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="查询"><a class="header-anchor" href="#查询"></a>查询</h2>
+<p>三类查询：</p>
+<ul>
+<li>
+<p>HQL:hibernate query language，即hibernate提供的面向对象的查询语言</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">select/update/delete…… from …… where …… group by …… having …… order by …… asc/desc</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>QBC查询: query by criteria 完全面向对象的查询</p>
+</li>
+<li>
+<p>本地SQL查询</p>
+</li>
+</ul>
+<h2 id="Repository-的作用"><a class="header-anchor" href="#Repository-的作用"></a>@Repository 的作用</h2>
+<ul>
+<li>
+<p><code>@Component</code></p>
+</li>
+<li>
+<p>转换成Spring的统一异常</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">  <span class="keyword">public</span> BeanPostProcessor <span class="title function_">persistenceTranslation</span><span class="params">()</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PersistenceExceptionTranslationPostProcessor</span>();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="MyBatis"><a class="header-anchor" href="#MyBatis"></a>MyBatis</h1>
+<ul>
+<li>
+<p>MyBatis是半自动的ORM，只负责把ResultSet自动映射到Java Bean，或者自动填充Java Bean参数，但仍需自己写出SQL</p>
+</li>
+<li>
+<p>可以用注解或XML配置， 后者比较繁琐，不介绍了</p>
+</li>
+<li>
+<p><code>application-**.yml</code>中的配置</p>
+<ul>
+<li>配置数据源</li>
+<li><code>mapper-locations</code>指定</li>
+</ul>
+</li>
+<li>
+<p>定义接口（使用注解<code>@Mapper</code>）</p>
+</li>
+<li>
+<p><code>mapper/***Mapper.xml</code></p>
+</li>
+</ul>
+<h2 id="配置-2"><a class="header-anchor" href="#配置-2"></a>配置</h2>
+<h3 id="配置数据源等-2"><a class="header-anchor" href="#配置数据源等-2"></a>配置数据源等</h3>
+<h3 id="SqlSessionFactory"><a class="header-anchor" href="#SqlSessionFactory"></a>SqlSessionFactory</h3>
+<p>使用MyBatis的核心就是创建<code>SqlSessionFactory</code>，这里我们需要创建的是<code>SqlSessionFactoryBean</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Bean</span><br><span class="line">SqlSessionFactoryBean createSqlSessionFactoryBean(@Autowired DataSource dataSource) &#123;</span><br><span class="line">    var sqlSessionFactoryBean = new SqlSessionFactoryBean();</span><br><span class="line">    sqlSessionFactoryBean.setDataSource(dataSource);</span><br><span class="line">    return sqlSessionFactoryBean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为MyBatis可以直接使用Spring管理的声明式事务，因此，创建事务管理器和使用JDBC是一样的：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Bean</span><br><span class="line">PlatformTransactionManager createTxManager(@Autowired DataSource dataSource) &#123;</span><br><span class="line">    return new DataSourceTransactionManager(dataSource);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Mapper"><a class="header-anchor" href="#Mapper"></a>Mapper</h3>
+<p>和Hibernate不同的是，MyBatis使用Mapper来实现映射，而且Mapper必须是接口。我们以User类为例，在User类和users表之间映射的UserMapper编写如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">public interface UserMapper &#123;</span><br><span class="line">	@Select(&quot;SELECT * FROM users WHERE id = #&#123;id&#125;&quot;)</span><br><span class="line">	User getById(@Param(&quot;id&quot;) long id);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="MapperScan"><a class="header-anchor" href="#MapperScan"></a>@MapperScan</h3>
+<p>Mybatis将Mapper接口动态代理，生成实现类。 要识别到Mapper接口，有两种方法：</p>
+<ul>
+<li>
+<p>使用<code>@Mapper</code>标识Mapper接口， 比较繁琐：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserDAO</span> &#123;</span><br><span class="line">   <span class="comment">//代码</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>在某个配置类中启用<code>@MapperScan()</code>，并指定Mapper接口所在的包， 该包下的所有接口都会被动态代理：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@MapperScan(&quot;com.itranswarp.learnjava.mapper&quot;)</span><br><span class="line">...其他注解...</span><br><span class="line">public class AppConfig &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以扫描多个包： <code>@MapperScan(&#123;&quot;com.kfit.demo&quot;,&quot;com.kfit.user&quot;&#125;)  </code></li>
+<li>这个注解实际上会生成<code>MapperFactoryBean</code>，后者会自动创建包下所有Mapper的实现类</li>
+</ul>
+</li>
+</ul>
+<p>：</p>
+<h2 id="Mapper语法"><a class="header-anchor" href="#Mapper语法"></a>Mapper语法</h2>
+<p>在定义了接口方法后，还需要明确写出查询的SQL, SQL的每个参数都与方法参数按名称对应</p>
+<ul>
+<li>
+<p>例如，方法参数id的名字通过注解<code>@Param()</code>标记为<code>id</code>，则SQL语句里将来替换的占位符就是<code>#&#123;id&#125;</code></p>
+</li>
+<li>
+<p>如果有多个参数，那么每个参数命名后直接在SQL中写出对应的占位符即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Select(&quot;SELECT * FROM users LIMIT #&#123;offset&#125;, #&#123;maxResults&#125;&quot;)</span><br><span class="line">List&lt;User&gt; getAll(@Param(&quot;offset&quot;) int offset, @Param(&quot;maxResults&quot;) int maxResults);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="SELECT"><a class="header-anchor" href="#SELECT"></a>SELECT</h3>
+<p>MyBatis将ResultSet的每一行转换为Domain实例， 转换规则当然是按列名和属性名对应。如果列名和属性名不同, 需要用别名：</p>
+<ul>
+<li>
+<p>对于SELECT语句：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 列名是created_time，属性名是createdAt:</span></span><br><span class="line"><span class="keyword">SELECT</span> id, name, email, created_time <span class="keyword">AS</span> createdAt <span class="keyword">FROM</span> users</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="INSERT"><a class="header-anchor" href="#INSERT"></a>INSERT</h3>
+<p>MyBatis插入时， 需要将对象的属性转换成列：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Insert(&quot;INSERT INTO users (email, password, name, createdAt) VALUES (#&#123;user.email&#125;, #&#123;user.password&#125;, #&#123;user.name&#125;, #&#123;user.createdAt&#125;)&quot;)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(<span class="meta">@Param(&quot;user&quot;)</span> User user)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在SQL中以<code>#&#123;obj.property&#125;</code>的方式写占位符</li>
+</ul>
+<p>如果表的id是自增主键，那么，我们在SQL中不传入id，但希望获取插入后的主键，需要再加一个<code>@Options</code>注解：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Options(useGeneratedKeys = true, keyProperty = &quot;id&quot;, keyColumn = &quot;id&quot;)</span></span><br><span class="line"><span class="meta">@Insert(&quot;INSERT INTO users (email, password, name, createdAt) VALUES (#&#123;user.email&#125;, #&#123;user.password&#125;, #&#123;user.name&#125;, #&#123;user.createdAt&#125;)&quot;)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">insert</span><span class="params">(<span class="meta">@Param(&quot;user&quot;)</span> User user)</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>keyProperty</code>：JavaBean 的属性</li>
+<li><code>keyColumn</code>： 数据库的主键列名</li>
+</ul>
+<h3 id="UPDATE"><a class="header-anchor" href="#UPDATE"></a>UPDATE</h3>
+<p>执行UPDATE和DELETE语句相对比较简单，我们定义方法如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Update(&quot;UPDATE users SET name = #&#123;user.name&#125;, createdAt = #&#123;user.createdAt&#125; WHERE id = #&#123;user.id&#125;&quot;)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">update</span><span class="params">(<span class="meta">@Param(&quot;user&quot;)</span> User user)</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="DELETE"><a class="header-anchor" href="#DELETE"></a>DELETE</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Delete(&quot;DELETE FROM users WHERE id = #&#123;id&#125;&quot;)</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">deleteById</span><span class="params">(<span class="meta">@Param(&quot;id&quot;)</span> <span class="type">long</span> id)</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="使用Mapper"><a class="header-anchor" href="#使用Mapper"></a>使用Mapper</h2>
+<p>在Service层直接注入Mapper, 使用Mapper提供的方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserService</span> &#123;</span><br><span class="line">    <span class="comment">// 注入UserMapper:</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    UserMapper userMapper;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> User <span class="title function_">getUserById</span><span class="params">(<span class="type">long</span> id)</span> &#123;</span><br><span class="line">        <span class="comment">// 调用Mapper方法:</span></span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> userMapper.getById(id);</span><br><span class="line">        <span class="keyword">if</span> (user == <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;User not found by id.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> user;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="JPA"><a class="header-anchor" href="#JPA"></a>JPA</h1>
+<ul>
+<li>JPA的宗旨是为POJO提供持久化标准规范</li>
+<li>JPQL（Java Persistence Query Language)</li>
+<li>JPQL就是一种查询语言，具有与 SQL 相类似的特征</li>
+<li>JPA语法大全</li>
+</ul>
+<h2 id="配置-3"><a class="header-anchor" href="#配置-3"></a>配置</h2>
+<p>步骤：</p>
+<ol>
+<li>配置数据源等</li>
+<li>创建<code>EntityManagerFactoryBean</code>， 它会生成一个<code>SessionFactory</code></li>
+<li>将<code>SessionFactory</code>注入到<code>JpaTransactionManager</code>， 以实现声明式事务</li>
+</ol>
+<ul>
+<li>
+<p>使用Hibernate时，我们需要创建一个<code>LocalSessionFactoryBean</code>，并让它再自动创建一个<code>SessionFactory</code>。使用JPA也是类似的，我们需要创建一个<code>EntityManagerFactoryBean</code>，并让它再自动创建一个<code>EntityManagerFactory</code>，</p>
+<ul>
+<li><code>EntityManagerFactory</code>:  是个工厂Bean, 会创建创建<code>EntityManager</code>
+<ul>
+<li><code>org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean</code></li>
+<li>``org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter`</li>
+</ul>
+</li>
+<li><code>javax.persistence.EntityManager</code></li>
+</ul>
+</li>
+<li>
+<p><code>EntityManager</code>不是线程安全的， Spring遇到标注了<code>@PersistenceContext</code>的<code>EntityManager</code>会自动注入代理，该代理会在必要的时候自动打开<code>EntityManager</code>。换句话说，多线程引用的<code>EntityManager</code>虽然是同一个代理类，但该代理类内部针对不同线程会创建不同的<code>EntityManager</code>实例。因此，标注了<code>@PersistenceContext</code>的<code>EntityManager</code>可以被多线程安全地共享。</p>
+<ul>
+<li><code>@PersistenceUnit</code></li>
+<li><code>@PersistenceContext</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="配置数据源等-3"><a class="header-anchor" href="#配置数据源等-3"></a>配置数据源等</h3>
+<p>在<code>AppConfig</code>中启用声明式事务管理，创建<code>DataSource</code>：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ComponentScan</span></span><br><span class="line"><span class="meta">@EnableTransactionManagement</span></span><br><span class="line"><span class="meta">@PropertySource(&quot;jdbc.properties&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AppConfig</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    DataSource <span class="title function_">createDataSource</span><span class="params">()</span> &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="EntityManagerFactory"><a class="header-anchor" href="#EntityManagerFactory"></a>EntityManagerFactory</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line">LocalContainerEntityManagerFactoryBean <span class="title function_">createEntityManagerFactory</span><span class="params">(<span class="meta">@Autowired</span> DataSource dataSource)</span> &#123;</span><br><span class="line">    <span class="type">var</span> <span class="variable">entityManagerFactoryBean</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">LocalContainerEntityManagerFactoryBean</span>();</span><br><span class="line">    <span class="comment">// 设置DataSource:</span></span><br><span class="line">    entityManagerFactoryBean.setDataSource(dataSource);</span><br><span class="line">    <span class="comment">// 扫描指定的package获取所有entity class:</span></span><br><span class="line">    entityManagerFactoryBean.setPackagesToScan(<span class="string">&quot;com.itranswarp.learnjava.entity&quot;</span>);</span><br><span class="line">    <span class="comment">// 指定JPA的提供商是Hibernate:</span></span><br><span class="line">    <span class="type">JpaVendorAdapter</span> <span class="variable">vendorAdapter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HibernateJpaVendorAdapter</span>();</span><br><span class="line">    entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);</span><br><span class="line">    <span class="comment">// 设定特定提供商自己的配置:</span></span><br><span class="line">    <span class="type">var</span> <span class="variable">props</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">    props.setProperty(<span class="string">&quot;hibernate.hbm2ddl.auto&quot;</span>, <span class="string">&quot;update&quot;</span>);</span><br><span class="line">    props.setProperty(<span class="string">&quot;hibernate.dialect&quot;</span>, <span class="string">&quot;org.hibernate.dialect.HSQLDialect&quot;</span>);</span><br><span class="line">    props.setProperty(<span class="string">&quot;hibernate.show_sql&quot;</span>, <span class="string">&quot;true&quot;</span>);</span><br><span class="line">    entityManagerFactoryBean.setJpaProperties(props);</span><br><span class="line">    <span class="keyword">return</span> entityManagerFactoryBean;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="JpaTransactionManager"><a class="header-anchor" href="#JpaTransactionManager"></a>JpaTransactionManager</h3>
+<h2 id="Spring-Data-JPA"><a class="header-anchor" href="#Spring-Data-JPA"></a>Spring Data JPA</h2>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.data<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-data-jpa<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.3.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>加注解<code>@EnableJpaRepositories</code>
+<ul>
+<li>会扫描<code>org.springframework.data.repository.Repository</code>接口</li>
+</ul>
+</li>
+<li>继承接口<code>org.springframework.data.jpa.repository.JpaRepository</code></li>
+</ul>
+<h2 id="编写自定义的查询方法"><a class="header-anchor" href="#编写自定义的查询方法"></a>编写自定义的查询方法</h2>
+<ul>
+<li>定义查询方法，无需实现
+<ul>
+<li>领域特定语言（domain-specific language，DSL)，spring data的命名约定</li>
+<li>查询动词 + 主题 + 断言</li>
+<li>查询动词：get、read、find、count</li>
+</ul>
+</li>
+<li>声明自定义查询<br>
+不符合方法命名约定时，或者命名太长时： <code>@Query(“select ...”)</code></li>
+<li>使用EntityManager直接低层实现
+<ul>
+<li>接口名+Impl的实现类</li>
+</ul>
+</li>
+</ul>
+<h1 id="实体类"><a class="header-anchor" href="#实体类"></a>实体类</h1>
+<p>需要添加注解来告诉ORM如何把实体类映射到表记录</p>
+<ul>
+<li><strong>作为映射使用的JavaBean，所有属性都使用包装类型而不是基本类型</strong>（ Mybatis是个例外，这是因为它不是全ORM框架 ）</li>
+<li>如果一个JavaBean被用于映射，我们就标记一个<code>@Entity</code>。默认情况下，实体类User映射的表名是<code>user</code>，如果实际的表名不同，例如实际表名是<code>users</code>，可以追加一个<code>@Table(name=&quot;users&quot;)</code>表示</li>
+<li>对于主键，还需要用<code>@Id</code>标识，自增主键再追加一个<code>@GeneratedValue</code>，以便Hibernate能读取到自增主键的值</li>
+<li>每个属性到数据库列的映射用<code>@Column()</code>标识，<code>nullable</code>指示列是否允许为<code>NULL</code>，<code>updatable</code>指示该列是否允许被用在<code>UPDATE</code>语句，<code>length</code>指示<code>String</code>类型的列的长度（如果没有指定，默认是<code>255</code>）</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123; <span class="comment">//映射到表名user</span></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue(strategy = GenerationType.IDENTITY)</span></span><br><span class="line">    <span class="meta">@Column(nullable = false, updatable = false)</span></span><br><span class="line">    <span class="keyword">public</span> Long <span class="title function_">getId</span><span class="params">()</span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(nullable = false, unique = true, length = 100)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getEmail</span><span class="params">()</span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(nullable = false, length = 100)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getPassword</span><span class="params">()</span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(nullable = false, length = 100)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123; ... &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(nullable = false, updatable = false)</span></span><br><span class="line">    <span class="keyword">public</span> Long <span class="title function_">getCreatedAt</span><span class="params">()</span> &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Appendex"><a class="header-anchor" href="#Appendex"></a>Appendex</h1>
+<h2 id="MySQL与JAVA数据类型对应关系"><a class="header-anchor" href="#MySQL与JAVA数据类型对应关系"></a>MySQL与JAVA数据类型对应关系</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">These MySQL Data Types</th>
+<th style="text-align:left">Can always be converted to these Java types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>CHAR, VARCHAR, BLOB, TEXT, ENUM, and SET</code></td>
+<td style="text-align:left"><code>java.lang.String, java.io.InputStream, java.io.Reader, java.sql.Blob, java.sql.Clob</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>FLOAT, REAL, DOUBLE PRECISION, NUMERIC, DECIMAL, TINYINT, SMALLINT, MEDIUMINT, INTEGER, BIGINT</code></td>
+<td style="text-align:left"><code>java.lang.String, java.lang.Short, java.lang.Integer, java.lang.Long, java.lang.Double, java.math.BigDecimal</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>DATE, TIME, DATETIME, TIMESTAMP</code></td>
+<td style="text-align:left"><code>java.lang.String, java.sql.Date, java.sql.Timestamp</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="MYSQL存URL最佳类型"><a class="header-anchor" href="#MYSQL存URL最佳类型"></a>MYSQL存URL最佳类型</h2>
+<p>MySQL 5.0.3及更高版本中VARCHAR的有效最大长度受最大行大小（65,535字节，在所有列之间共享）和使用的字符集的限制。</p>
+<p>所以，存储url最佳类型为：</p>
+<ul>
+<li><code>&lt; MySQL 5.0.3 use TEXT</code></li>
+<li><code>&gt;= MySQL 5.0.3 use VARCHAR(2083)</code></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/22/Spring-Cache/" rel="prev" title="Spring Cache">
+                  <i class="fa fa-chevron-left"></i> Spring Cache
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/22/Spring-JDBC-and-data-source-config/" rel="next" title="Spring JDBC and data source config">
+                  Spring JDBC and data source config <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

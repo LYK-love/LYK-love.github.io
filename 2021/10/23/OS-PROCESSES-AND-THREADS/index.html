@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Processes Programs &#x3D;&#x3D; Processes Threads(  只写到这两部分  ) Interprocess Communication Scheduling Classical IPC problems Summary  ref:  Modern Operation Systems OS Lesson — 蒋炎岩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS PROCESSES AND THREADS">
+<meta property="og:url" content="http://lyk-love.cn/2021/10/23/OS-PROCESSES-AND-THREADS/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Processes Programs &#x3D;&#x3D; Processes Threads(  只写到这两部分  ) Interprocess Communication Scheduling Classical IPC problems Summary  ref:  Modern Operation Systems OS Lesson — 蒋炎岩">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-22T17:13:42.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.935Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/10/23/OS-PROCESSES-AND-THREADS/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/10/23/OS-PROCESSES-AND-THREADS/","path":"2021/10/23/OS-PROCESSES-AND-THREADS/","title":"OS PROCESSES AND THREADS"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OS PROCESSES AND THREADS | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Processes"><span class="nav-text">Processes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-Creation"><span class="nav-text">Process Creation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Process-Termination"><span class="nav-text">Process Termination</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-Hierarchies"><span class="nav-text">Process Hierarchies</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-States"><span class="nav-text">Process States</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementation-of-Processes"><span class="nav-text">Implementation of Processes</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Programs"><span class="nav-text">Programs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ELF%E6%96%87%E4%BB%B6"><span class="nav-text">ELF文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90ELF%E6%96%87%E4%BB%B6"><span class="nav-text">解析ELF文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gdb%E8%B0%83%E8%AF%95"><span class="nav-text">gdb调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strace"><span class="nav-text">strace</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gcc"><span class="nav-text">gcc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GUI"><span class="nav-text">GUI</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Threads"><span class="nav-text">Threads</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread-Usage"><span class="nav-text">Thread Usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Classical-Thread-Model"><span class="nav-text">The Classical Thread Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POSIX-Threads"><span class="nav-text">POSIX Threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementing-Threads-in-User-Space"><span class="nav-text">Implementing Threads in User Space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Implementing-Threads-in-the-Kernel"><span class="nav-text">Implementing Threads in the Kernel</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hybrid-Implementations"><span class="nav-text">Hybrid Implementations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scheduler-Activations"><span class="nav-text">Scheduler Activations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pop-Up-Threads"><span class="nav-text">Pop-Up Threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Making-Single-Threaded-Code-Multithreaded"><span class="nav-text">Making Single-Threaded Code Multithreaded</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Interprocess-Communication"><span class="nav-text">Interprocess Communication</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Scheduling"><span class="nav-text">Scheduling</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Classical-IPC-problems"><span class="nav-text">Classical IPC problems</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Summary"><span class="nav-text">Summary</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/10/23/OS-PROCESSES-AND-THREADS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OS PROCESSES AND THREADS | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS PROCESSES AND THREADS
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-22 17:13:42" itemprop="dateCreated datePublished" datetime="2021-10-22T17:13:42Z">2021-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Processes</li>
+<li>Programs == Processes</li>
+<li>Threads(  只写到这两部分  )</li>
+<li>Interprocess Communication</li>
+<li>Scheduling</li>
+<li>Classical IPC problems</li>
+<li>Summary</li>
+</ul>
+<p>ref:</p>
+<ul>
+<li><em>Modern Operation Systems</em></li>
+<li><em>OS Lesson — 蒋炎岩</em></li>
+</ul>
+ <span id="more"></span>
+<h1 id="Processes"><a class="header-anchor" href="#Processes"></a>Processes</h1>
+<ul>
+<li>
+<p><strong>multiprogramming</strong>: CPU switch from program to program</p>
+</li>
+<li>
+<p>difference between a <strong>process</strong> and a <strong>program</strong> : 想象一个厨师做菜:</p>
+<ul>
+<li>program: recipe. That is, an algorithm expressed in some suitable notation.</li>
+<li>processor: the chef</li>
+<li>input data: the ingredients</li>
+<li>process: the activity consisting of the chef reading the recipe, fetching the ingredients, and making the food</li>
+</ul>
+</li>
+<li>
+<p>一个程序若运行两次，那么就是两个进程</p>
+</li>
+</ul>
+<h2 id="Process-Creation"><a class="header-anchor" href="#Process-Creation"></a>Process Creation</h2>
+<ul>
+<li>
+<p>Four principle events cause processes to be created：</p>
+<ol>
+<li>System initialization
+<ul>
+<li>进程可分为foreground和background，前者与用户交互，后者又称为<strong>daemon</strong>,运行在后台</li>
+</ul>
+</li>
+<li>Execution of a process-creation system call by a running process</li>
+<li>A user request to create a new process
+<ul>
+<li>在交互式系统中，用户输入命令或者点击图标，都能创造进程并在里面运行程序</li>
+</ul>
+</li>
+<li>Initiation of a batch job
+<ul>
+<li>只针对批处理系统，用户向系统提交batch jobs,系统若有空余资源，则接受任务，创建一个新进程来运行它，自身则继续接受输入队列中的下一个任务</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>UNIX中，进程创建只有一种办法： <code>fork</code>. fork后父子进程拥有相同的资源（包括memory image, environment strings, open files）. 子进程然后执行<code>execve</code>或其他系统调用来改变自身的memory image 并运行新的程序。</p>
+<ul>
+<li><code>fork</code> - <code>execve</code>分两步的目的是让子进程在<code>fork</code>后，<code>execve</code>前将父进程的输入和输出重定向</li>
+</ul>
+</li>
+<li>
+<p>Win中， <code>CreateProcess</code>完成了<code>fork</code> - <code>execve</code>这两步</p>
+</li>
+<li>
+<p>进程创建后，父子进程各自的address  space独立</p>
+<ul>
+<li>UNIX：子进程的initial address space 是父进程的copy,然而这块内存是<strong>copy-on-write</strong>的。 每当二者之一要改变该内存，这块内存都会先copy,以确保改变只针对各自进程的private memory</li>
+<li>WIN：父子进程的 address space 一开始就是不同的</li>
+</ul>
+</li>
+</ul>
+<h3 id="Process-Termination"><a class="header-anchor" href="#Process-Termination"></a>Process Termination</h3>
+<ul>
+<li>Four conditions:
+<ol>
+<li>Normal exit(voluntary)
+<ul>
+<li>当进程结束其任务时，会发起系统调用通知OS来结束它</li>
+<li>GUI进程被点击X而关闭也属于这类</li>
+</ul>
+</li>
+<li>Error exit(voluntary)
+<ul>
+<li>输入错误，比如没找到文件</li>
+</ul>
+</li>
+<li>Fatal error(involuntary)
+<ul>
+<li>程序错误</li>
+</ul>
+</li>
+<li>Killed by another process(involuntary)
+<ul>
+<li><code>kill</code> in UNIX. killer需要对killee有一定权限</li>
+<li>在有些系统中，杀死进程会将其所有子进程也杀死，UNIX和WIN都不这么做</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="Process-Hierarchies"><a class="header-anchor" href="#Process-Hierarchies"></a>Process Hierarchies</h2>
+<ul>
+<li>UNIX：a process and all of its children and further descendants together form a process group.
+<ul>
+<li>e.g.  一个keyboard signal会发给与这个keyboard相关的process group的所有成员，每个成员可以独立地处理signal</li>
+<li>当UNIX开机时， 一个<code>init</code>进程会存在于boot image,<code>init</code>读取一个记录了有多少terminal的文件，为每个terminal <code>fork</code>一个新进程，新进程等待用户login in,若login in成功，则该进程执行一个shell等待用户输入命令，命令又会创建新的进程。 整个系统的所有进程就形成了以<code>init</code>为根节点的树</li>
+</ul>
+</li>
+<li>WINDOWS：不存在进程层次结构。 父进程会拥有子进程的<strong>handler</strong>，它可用来控制子进程，但handler可被自由传递，因此不存在层次结构</li>
+</ul>
+<h2 id="Process-States"><a class="header-anchor" href="#Process-States"></a>Process States</h2>
+<ul>
+<li>进程等待输入时，会被block</li>
+<li>3 states：
+<ol>
+<li>Running( actually using the CPU at that instant )</li>
+<li>Ready( runnable; temporarily stopped to let another process to run )</li>
+<li>Blocked( unable to run until some external event happens)
+<ul>
+<li>当所需的事件发生时，会转为Ready</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>OS的Process model（只是逻辑上的）:
+<ul>
+<li>Schedule: 位于最底层，处理所有的中断和进程处理细节</li>
+<li>Processes: 位于Scheduler之上。OS的其余部分都被组织为process形式</li>
+</ul>
+</li>
+</ul>
+<h2 id="Implementation-of-Processes"><a class="header-anchor" href="#Implementation-of-Processes"></a>Implementation of Processes</h2>
+<ul>
+<li>
+<p>To implement process model, the OS maintains a <strong>process table</strong>, with one entry per process.   每个entry存储了该进程被切换后要恢复所需的全部信息</p>
+</li>
+<li>
+<p>每个I/O类都对应一个<strong>interrupt vector</strong>，指向其handler的地址</p>
+</li>
+<li>
+<p>中断发生时，先由硬件来保存pc，等信息，然后计算机跳转到interrupt vector指向的内存，硬件的工作至此结束。接下来是软件的工作，先用汇编程序保存寄存器，设置栈指针，然后C程序执行相应的任务（for the specific interrupt type)，当其工作结束后，一些进程应该已经进入ready（因为它们所需的event发生了），接下来调度器决定接下来运行哪个进程。然后控制交还给汇编程序，加载新的进程：</p>
+<ol>
+<li>Hardware stacks program counter, etc.</li>
+<li>Hardware loads new program counter from interrupt vector</li>
+<li>.Assembly-language procedure saves registers</li>
+<li>Assembly-language procedure sets up new stack]</li>
+<li>C interrupt service runs( typically reads and buffs input )</li>
+<li>Scheduler decides which process is to run next.</li>
+<li>C procedures returns to the assembly code.</li>
+<li>Assembly-language procedure starts up new current process.</li>
+</ol>
+</li>
+<li>
+<p>CPU usage: ( probabilistic view ):</p>
+<p>CPU utilization = $1 - p^n$</p>
+<ul>
+<li><em>p</em>: CPU用于I/O等待的时间占比</li>
+<li><em>n</em>: 进程数</li>
+<li>$p^n$: <em>n</em>个进程全都等待I/O的概率</li>
+<li>假设电脑拥有8GB内存，2GB用于OS, 每个user program占2GB， CPU I/O等待概率为80%， 则其CPU使用率为$1 - 0.8^3 $</li>
+</ul>
+</li>
+</ul>
+<h1 id="Programs"><a class="header-anchor" href="#Programs"></a>Programs</h1>
+<ul>
+<li>
+<p>程序就是可执行的二进制文件</p>
+<ul>
+<li>
+<p>Linux支持多种可执行文件格式</p>
+</li>
+<li>
+<p>ELF( Executable Linkable Format)是其中最常用的</p>
+<ul>
+<li>.o .out都是ELF</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim a.c                                                                     </span><br><span class="line">gcc -c a.c  // 汇编并编译                                 </span><br><span class="line">file a.o                                                                   </span><br><span class="line">a.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped //可见.o是ELF</span><br><span class="line">gcc a.o  //链接                                </span><br><span class="line">file ./a.out                               </span><br><span class="line">./a.out: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=e37d8d4cf587a2d3d1a245cbd8443a8fe4f0a453, for GNU/Linux 4.4.0, not stripped</span><br><span class="line">//可见.oou是ELF</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="ELF文件"><a class="header-anchor" href="#ELF文件"></a>ELF文件</h2>
+<p>我们主要讨论ELF文件</p>
+<p>查看当前所有进程：</p>
+<p><code>ps -ax  | less</code></p>
+<ul>
+<li>
+<p>linux的所有面临都是文件，<code>vim /bin/ls</code> ,可以看到其内容（二进制部分显示异常，但可以看到字符串常量， 命令的说明都是字符串常量）</p>
+</li>
+<li>
+<p><code>xxd</code>可以看到文件以“7f 45 4c 46”（即 x7f ELF）开头</p>
+<p>i.e. <code>xxd /bin/ls | less  </code></p>
+</li>
+</ul>
+<h3 id="解析ELF文件"><a class="header-anchor" href="#解析ELF文件"></a>解析ELF文件</h3>
+<ul>
+<li>
+<p><code>readelf</code></p>
+<ul>
+<li><code>-h</code>：查看header（元数据）</li>
+<li><code>-l</code>：查看程序运行</li>
+<li>如果需要用代码解析，<code>/usr/include/elf.h 提供了定义 </code></li>
+</ul>
+</li>
+<li>
+<p>尝试写一段最小的不依赖标准库的代码</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span> <span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> <span class="comment">//hello.c</span></span></span><br><span class="line">  <span class="number">2</span> <span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">  3 &#123;</span><br><span class="line">  <span class="number">4</span>     <span class="built_in">printf</span>(<span class="string">&quot;Hello world!\n&quot;</span>);                                                                                    </span><br><span class="line">  <span class="number">5</span> &#125;     </span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>如果<code>gcc -o hello.out hello.c</code>（编译并链接）， 再<code> ./hello.out</code>，能正常输出结果。</p>
+</li>
+<li>
+<p>如果</p>
+<p><code>gcc -c hello.c</code> 后</p>
+<p><code>ld hello.o  </code>,会报错：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ld: warning: cannot find entry symbol _start; defaulting to 0000000000401000</span><br><span class="line">ld: hello.o: in function `main&#x27;:</span><br><span class="line">hello.c:(.text+0xf): undefined reference to `puts&#x27;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>首先， <code>puts</code>函数是编译器优化的结果（我们没有用<code>puts</code>，用的是<code>printf</code>）</p>
+<ul>
+<li>编译器在<code>-o0</code>下依然会进行一些编译优化：</li>
+</ul>
+</li>
+<li>
+<p><code>_start</code>是linker默认的入口，入口可以用<code>-e</code>指定，如<code>ld -e main hello.o</code>，就不会有<code>——start</code>的报错</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>如果</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span>                                                                                              </span></span><br><span class="line"> <span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line"> &#123;&#125;</span><br><span class="line">          </span><br></pre></td></tr></table></figure>
+<p><code>gcc -c hello.c  </code></p>
+<p><code>objdump -d hello.o</code>（查看二进制代码）</p>
+<p><code>ld -e main hello.o </code>，没有报错，链接成功</p>
+<p><code>file a.out</code>，得到<code>a.out: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), statically linked, not stripped</code>，确实是ELF文件</p>
+<p><code>./a.out  </code>，得到<code>segmentation fault</code>，还是报错。</p>
+<p><strong>因为标准库为我们做了很多工作！</strong></p>
+</li>
+</ul>
+<h3 id="gdb调试"><a class="header-anchor" href="#gdb调试"></a>gdb调试</h3>
+<ul>
+<li>
+<p>gdb调试</p>
+<ul>
+<li>
+<p><code>r</code>: 运行</p>
+</li>
+<li>
+<p><code>starti</code>从第一条指令开始执行程序</p>
+</li>
+<li>
+<p><code>layout asm</code>更方便地查看汇编</p>
+</li>
+<li>
+<p><code>si</code>单步执行</p>
+</li>
+<li>
+<p><code>bt</code>（backtrace），查看调用栈</p>
+</li>
+<li>
+<p><code>info register</code>查看寄存器状态</p>
+</li>
+<li>
+<p><code>info inferiors</code>:显示所有进程</p>
+</li>
+<li>
+<p><code>!cat /proc/[pid]/maps</code>: 内存映射信息</p>
+</li>
+<li>
+<p><code>！ [instruction]</code>:执行shell命令</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>objdump -d a.out</code>： <code>0000000000401000 &lt;main&gt;:</code>，</p>
+<p><code>readelf -a hello.out | less </code>： <code> Entry point address:        0x401000</code></p>
+<p>二者一致</p>
+</li>
+<li>
+<p>OS<strong>加载程序，并初始化运行环境</strong>，从<code>_start</code>开始运行</p>
+<p><code>starti</code>: <code>0x00007ffff7fce090 in _start () from /lib64/ld-linux-x86-64.so.2</code>,这个库是OS的</p>
+<p><code>info inferiors</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> Num  Description       Connection           Executable        </span><br><span class="line">* 1    process 7669      1 (native)           /home//a.out </span><br></pre></td></tr></table></figure>
+<p><code>!pmap 7669</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">7669:   /home/a.out</span><br><span class="line">0000555555554000      4K r---- a.out</span><br><span class="line">0000555555555000      4K r-x-- a.out</span><br><span class="line">0000555555556000      4K r---- a.out</span><br><span class="line">0000555555557000      8K rw--- a.out   //加载好了a.out</span><br><span class="line">00007ffff7fc7000     16K r----   [ anon ]</span><br><span class="line">00007ffff7fcb000      8K r-x--   [ anon ]</span><br><span class="line">00007ffff7fcd000      4K r---- ld-2.33.so</span><br><span class="line">00007ffff7fce000    144K r-x-- ld-2.33.so</span><br><span class="line">00007ffff7ff2000     36K r---- ld-2.33.so</span><br><span class="line">00007ffff7ffb000     16K rw--- ld-2.33.so //加载好了ld-2.33.so</span><br><span class="line">00007ffffffde000    132K rw---   [ stack ]</span><br><span class="line">ffffffffff600000      4K --x--   [ anon ]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>OS先加载好了a.out，<a target="_blank" rel="noopener" href="http://xn--ld-2-fy8f00dhw5t.33.so">再加载ld-2.33.so</a>，ld-2.33.so是OS提供的最初始的加载器，它会加载libc，再调用libc的初始化，再调用main</p>
+</li>
+<li>
+<p>main的开始/结束并不是程序的开始/结束！</p>
+<p>利用gcc的<code>__attribute__</code>:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span> <span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span> <span class="comment">//a.c</span></span></span><br><span class="line">  <span class="number">2</span> </span><br><span class="line">  <span class="number">3</span> __attribute__((constructor))<span class="type">void</span> <span class="title function_">hello</span><span class="params">()</span>&#123;</span><br><span class="line">  <span class="number">4</span>     <span class="built_in">printf</span>(<span class="string">&quot;Hello,World!\n&quot;</span>);                                                                                    </span><br><span class="line">  <span class="number">5</span> &#125;</span><br><span class="line">  <span class="number">6</span> </span><br><span class="line">  <span class="number">7</span> __attribute__((destructor))<span class="type">void</span> <span class="title function_">goodbye</span><span class="params">()</span>&#123;</span><br><span class="line">  <span class="number">8</span>     <span class="built_in">printf</span>(<span class="string">&quot;Bye,cruel OS World!\n&quot;</span>);</span><br><span class="line">  <span class="number">9</span> &#125;</span><br><span class="line"> <span class="number">10</span> </span><br><span class="line"> <span class="number">11</span> <span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;&#125;</span><br><span class="line">                      </span><br></pre></td></tr></table></figure>
+<p><code>gcc a.c</code></p>
+<p><code>./a.out</code></p>
+<p>得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello,World!</span><br><span class="line">Bye,cruel OS World!</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="strace"><a class="header-anchor" href="#strace"></a>strace</h3>
+<p>strace - trace system calls and signals</p>
+<ul>
+<li>
+<p><code>strace ./a.out</code></p>
+</li>
+<li>
+<p><code>strace</code> 在系统调用执行之前就能显示它</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">write(1, &quot;Hello,World!\n&quot;, 13Hello,World!)          = 13</span><br></pre></td></tr></table></figure>
+<p>后面的“Hello,World!”是系统调用的结果</p>
+</li>
+</ul>
+<p>用<code>strace</code>查看之前的a.c</p>
+<ul>
+<li>
+<p><code>strace</code>输出到标准错误输出， 可以用<code>strace ./a.out &gt; /dev/null </code>将标准输出丢弃（这样就不会看到系统调用<code>write</code>的结果）可以看到</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">write(1, &quot;Hello,World!\nBye,cruel OS World!&quot;..., 33) = 33</span><br></pre></td></tr></table></figure>
+<p>两个<code>write</code>合成了一个</p>
+<ul>
+<li><code>/dev/null</code>下的所有文件都会被丢弃</li>
+</ul>
+</li>
+</ul>
+<h3 id="gcc"><a class="header-anchor" href="#gcc"></a>gcc</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.c --&gt; (preprocess) ---&gt; .i ---&gt; (compile) ---&gt; .s ---&gt;(assembly) ---&gt; .o ---&gt; (link) ---&gt; .out</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>strace -f gcc a.c 2&gt;&amp;1 | grep execve  </code>查看<code>execve</code>系统调用</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//太长了</span><br></pre></td></tr></table></figure>
+<p>gcc：</p>
+<ol>
+<li>
+<p>先调用<code>cc1</code>（编译器，c到汇编）</p>
+</li>
+<li>
+<p>再调用<code>as</code>（汇编器，实际上gcc会检索多个as，找到可用的那个）</p>
+</li>
+<li>
+<p>再调用<code>collect2</code>（收集构造函数和析构函数，并生成它们的调用函数; 然后负责链接）</p>
+</li>
+<li>
+<p>再调用<code>ld</code></p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="GUI"><a class="header-anchor" href="#GUI"></a>GUI</h3>
+<ul>
+<li>GUI和普通程序没什么不同
+<ul>
+<li>使用 <code>strace xedit \bin\ls</code>，鼠标不断移动，看系统调用栈的变化</li>
+</ul>
+</li>
+</ul>
+<h1 id="Threads"><a class="header-anchor" href="#Threads"></a>Threads</h1>
+<ul>
+<li>进程可拥有多个线程，所有线程共享进程的address space</li>
+<li>进程是竞争关系，线程是合作关系</li>
+</ul>
+<h2 id="Thread-Usage"><a class="header-anchor" href="#Thread-Usage"></a>Thread Usage</h2>
+<ul>
+<li>
+<p>线程的优势：</p>
+<ul>
+<li>线程可以共享进程的address space</li>
+<li>线程比进程更轻量，创建和摧毁也更容易</li>
+</ul>
+</li>
+<li>
+<p>（单核下）Web server中， 一个dispatcher负责接受请求，并分发给相应的worker thread, 当worker thread被阻塞时（比如等待磁盘操作），其他线程可以执行，比如dispatcher,它可以继续接受请求</p>
+</li>
+<li>
+<p>3 Designs to construct a server</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Characteristics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Threads</td>
+<td>Parallelism, blocking system calls</td>
+</tr>
+<tr>
+<td>Single-threaded process</td>
+<td>No parallelism, blocking system calls( 系统在阻塞时无法接受请求 )</td>
+</tr>
+<tr>
+<td>Finite-state machine</td>
+<td>Parallelism, nonblocking system calls ,interrupts</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="The-Classical-Thread-Model"><a class="header-anchor" href="#The-Classical-Thread-Model"></a>The Classical Thread Model</h2>
+<ul>
+<li>
+<p>The  Thread Model is based on 2 independent concepts: <strong>resource grouping</strong> and <strong>execution</strong></p>
+</li>
+<li>
+<p>Process用于资源分组， 而 Thread用于执行</p>
+<ul>
+<li>当一个线程打开一个文件，其他线程可以使用该文件。 这是合理的，因为进程才是资源分配的单位，这些线程都在一个进程下</li>
+<li>each thread has its own stack</li>
+</ul>
+</li>
+</ul>
+<h2 id="POSIX-Threads"><a class="header-anchor" href="#POSIX-Threads"></a>POSIX Threads</h2>
+<ul>
+<li>UNIX 线程标准库: <strong>Pthreads</strong></li>
+</ul>
+<h2 id="Implementing-Threads-in-User-Space"><a class="header-anchor" href="#Implementing-Threads-in-User-Space"></a>Implementing Threads in User Space</h2>
+<p>有两种实现线程的方式：user space and the kernel</p>
+<p>将线程放入user  space，kernel不知道线程的存在，kernel只面对单线程的进程</p>
+<ul>
+<li>
+<p>可以在不支持多线程的OS上运行，因为kernel面对的都是单线程的进程</p>
+</li>
+<li>
+<p>每个进程拥有run-time system,which is a collection of procedures that manage threads. 每个进程拥有各自的 <strong>thread table</strong></p>
+</li>
+<li>
+<p>进程运行在run-time system上层</p>
+</li>
+<li>
+<p>thread table在run-time system内</p>
+</li>
+<li>
+<p>当线程执行可能使其阻塞的任务时，它会发起run-time system procedure，后者查看该进=线程是否应该被阻塞，若是，则保存其（线程自己的）寄存器，并在thread table里找到并加载新的ready的线程，并新线程的寄存器载入机器的寄存器。 这些都在用户层进行，避免了陷入内核层的开销</p>
+</li>
+<li>
+<p>缺点：</p>
+<ul>
+<li>阻塞式系统调用很难实现
+<ul>
+<li><strong>没看懂</strong></li>
+</ul>
+</li>
+<li>当一个进程发生<strong>page fault</strong>( 数据在硬盘中，而不在内存中 )时，OS会阻塞整个进程（因为OS眼中进程都是单线程的，它认为是这个线程发生了page fault），此时其他线程都无法运行</li>
+<li>在一个线程中没有clock signal( interrupt )， 因此无法对线程的使用时间进行调度，因此除非一个运行时的线程主动退出，否则其他线程无法运行</li>
+</ul>
+</li>
+</ul>
+<h2 id="Implementing-Threads-in-the-Kernel"><a class="header-anchor" href="#Implementing-Threads-in-the-Kernel"></a>Implementing Threads in the Kernel</h2>
+<p>没有run-time system, kernel有一个thread table记录<strong>所有线程</strong>（而非每个进程一个thread table），新线程的创建需要system call</p>
+<ul>
+<li>
+<p>所有可能阻塞线程的调用都被实现为系统调用</p>
+<ul>
+<li>当一个线程阻塞时，kernel可以运行该进程下的另一个线程，<strong>也可以运行其他进程的线程</strong>。 而在user space版的实现中，一个run-time system只能运行其自己的进程下的进程</li>
+</ul>
+</li>
+<li>
+<p>由于创建和摧毁线程的代价高昂，在这个视线里广泛采用线程复用技术</p>
+<ul>
+<li>当线程被摧毁时，它只是被标记为 not runnable, 它的结构体没有被销毁</li>
+</ul>
+</li>
+<li>
+<p>当一个线程发生page fault,OS可以切换到该进程的另一个线程</p>
+</li>
+</ul>
+<h2 id="Hybrid-Implementations"><a class="header-anchor" href="#Hybrid-Implementations"></a>Hybrid Implementations</h2>
+<ul>
+<li>kernel面对kernel-level线程，而这些线程可能拥有多个user-level线程</li>
+<li>可以在不支持多线程的OS上运行</li>
+</ul>
+<h2 id="Scheduler-Activations"><a class="header-anchor" href="#Scheduler-Activations"></a>Scheduler Activations</h2>
+<p>让Threads in the user space拥有in kernel的功能，又能不失去太多性能的方案之一</p>
+<ul>
+<li>
+<p>当一个thread阻塞时，没有必要通知内核，由run-time system处理</p>
+</li>
+<li>
+<p>为每个进程分配一个虚拟cpu,让run-time system将线程分配给虚拟cpu</p>
+</li>
+<li>
+<p>当kernel知道一个thread阻塞时，它会告知run-time system, 让后者进行线程切换。 当线程又恢复到ready， kernel也会告知run-time system</p>
+<ul>
+<li>“告知”机制被称为<strong>upcall</strong></li>
+</ul>
+</li>
+<li>
+<p>该方法的问题在于：upcall的原理是下层使用了上层的服务，违反了OS分层的原则</p>
+</li>
+</ul>
+<h2 id="Pop-Up-Threads"><a class="header-anchor" href="#Pop-Up-Threads"></a>Pop-Up Threads</h2>
+<ul>
+<li>当分布式系统接收到一个message时，它会创建一个 brand new thread来处理该message
+<ul>
+<li>传统方法是，令一个thread一直等待请求。 而pop-up让OS直接创建新Thread,新进程<strong>没有任何数据</strong>，因此创建的开销非常小</li>
+</ul>
+</li>
+</ul>
+<h2 id="Making-Single-Threaded-Code-Multithreaded"><a class="header-anchor" href="#Making-Single-Threaded-Code-Multithreaded"></a>Making Single-Threaded Code Multithreaded</h2>
+<p>我们假设采用in user space的实现方案</p>
+<ul>
+<li>
+<p>困难：</p>
+<ul>
+<li>
+<p>全局变量的数据竞争</p>
+</li>
+<li>
+<p>库函数不全都是reentrant. 比如假设向一块buffer内写入数据，此时切换到另一个thread,修改了buffer,在回到原tread,此时就会发生错误。write函数并不确保可重入</p>
+<ul>
+<li>方案
+<ol>
+<li>重写库函数， 不是个good idea</li>
+<li>对每个procedure传入一个jacket,用一些位数来表明正在被使用的库函数。如果要切换到的新进程要使用原进程的库函数，而原进程的库函数还没有结束，该切换就被禁止。 这个方案极大地限制了并行</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>线程各自的stack的管理， 由于kernel不知道多thread的存在（它们都在user space），那么很难在内存中正确地管理各个thread的stack</p>
+</li>
+</ul>
+</li>
+<li>
+<p>以上困难并非不可克服，但它们揭示了：在已有系统内加入多线程机制而不对系统本身做出改变是不可能的</p>
+</li>
+</ul>
+<h1 id="Interprocess-Communication"><a class="header-anchor" href="#Interprocess-Communication"></a>Interprocess Communication</h1>
+<p>TODO 急的话请催一催我QAQ</p>
+<h1 id="Scheduling"><a class="header-anchor" href="#Scheduling"></a>Scheduling</h1>
+<h1 id="Classical-IPC-problems"><a class="header-anchor" href="#Classical-IPC-problems"></a>Classical IPC problems</h1>
+<h1 id="Summary"><a class="header-anchor" href="#Summary"></a>Summary</h1>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/21/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F%E7%B1%BB%E5%9E%8B/" rel="prev" title="商业模式类型">
+                  <i class="fa fa-chevron-left"></i> 商业模式类型
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/25/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F%E7%94%BB%E5%B8%83/" rel="next" title="商业模式画布">
+                  商业模式画布 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

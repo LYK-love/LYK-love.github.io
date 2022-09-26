@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Intro：  多处理器编程的困难 用状态机理解并发算法 并发控制：互斥、同步   概念： 互斥 并发与状态机 Threading API Lock Concurrent Data Structure based on Lock Conditional Variable 信号量 常见并发问题 基于事件的并发  Ref：  Operating Systems Three Easy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS Concurrency">
+<meta property="og:url" content="http://lyk-love.cn/2021/12/20/OS-Concurrency/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Intro：  多处理器编程的困难 用状态机理解并发算法 并发控制：互斥、同步   概念： 互斥 并发与状态机 Threading API Lock Concurrent Data Structure based on Lock Conditional Variable 信号量 常见并发问题 基于事件的并发  Ref：  Operating Systems Three Easy">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Concurrency/shared%20memory.png">
+<meta property="article:published_time" content="2021-12-20T00:58:36.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.935Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Concurrency/shared%20memory.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/12/20/OS-Concurrency/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/12/20/OS-Concurrency/","path":"2021/12/20/OS-Concurrency/","title":"OS Concurrency"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OS Concurrency | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E4%BB%BB%E5%8A%A1OS%E7%9A%84%E5%B9%B6%E5%8F%91"><span class="nav-text">多任务OS的并发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">并发与并行的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B"><span class="nav-text">线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%A4%84%E7%90%86%E5%99%A8%E7%BC%96%E7%A8%8B%E7%9A%84%E5%9B%B0%E9%9A%BE"><span class="nav-text">多处理器编程的困难</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%9C%AF%E8%AF%AD"><span class="nav-text">并发术语</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5%EF%BC%9A%E4%BA%92%E6%96%A5"><span class="nav-text">概念：互斥</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E4%B8%8A%E4%BA%92%E6%96%A5%E7%9A%84%E5%9B%B0%E9%9A%BE"><span class="nav-text">共享内存上互斥的困难</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-text">并发与状态机</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F-%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA-%E6%9C%89%E5%90%91%E5%9B%BE"><span class="nav-text">程序 &#x3D; 有限状态机 &#x3D; 有向图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%9C%BA%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%BA%94%E7%94%A8"><span class="nav-text">状态机模型：应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Time-Travel-Debugging"><span class="nav-text">Time - Travel Debugging</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Record-Replay"><span class="nav-text">Record &amp; Replay</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1ITC"><span class="nav-text">线程间通信ITC</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%90%8C%E8%BF%9B%E7%A8%8B"><span class="nav-text">相同进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8D%E5%90%8C%E8%BF%9B%E7%A8%8B"><span class="nav-text">不同进程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Threading-API"><span class="nav-text">Threading API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA"><span class="nav-text">线程创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%8C%E6%88%90"><span class="nav-text">线程完成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%81"><span class="nav-text">锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="nav-text">条件变量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lock"><span class="nav-text">Lock</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E4%BB%B7%E9%94%81"><span class="nav-text">评价锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E4%B8%AD%E6%96%AD"><span class="nav-text">控制中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#test-and-set"><span class="nav-text">test-and-set</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8test-and-set%E5%AE%9E%E7%8E%B0%E9%94%81"><span class="nav-text">用test-and-set实现锁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#compare-and-exchange"><span class="nav-text">compare-and-exchange</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fetch-and-add"><span class="nav-text">fetch-and-add</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E6%97%8B%E8%BF%87%E5%A4%9A%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-text">自旋过多的解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80-yield"><span class="nav-text">方案一  yield</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C-%E4%BD%BF%E7%94%A8%E9%98%9F%E5%88%97%EF%BC%9A-%E4%BC%91%E7%9C%A0%E4%BB%A3%E6%9B%BF%E8%87%AA%E6%97%8B"><span class="nav-text">方案二 使用队列： 休眠代替自旋</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Concurrent-Data-Structure-Based-on-Lock"><span class="nav-text">Concurrent Data Structure Based on Lock</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="nav-text">并发计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%B9%B6%E5%8F%91%E8%AE%A1%E6%95%B0%E5%99%A8"><span class="nav-text">扩展并发计数器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E9%93%BE%E8%A1%A8"><span class="nav-text">并发链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E9%93%BE%E8%A1%A8"><span class="nav-text">扩展链表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E9%98%9F%E5%88%97"><span class="nav-text">并发队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%95%A3%E5%88%97%E8%A1%A8"><span class="nav-text">并发散列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Conclusion"><span class="nav-text">Conclusion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Conditional-Variable"><span class="nav-text">Conditional Variable</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%EF%BC%88%E6%9C%89%E7%95%8C%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%89%E9%97%AE%E9%A2%98"><span class="nav-text">生产者&#x2F;消费者（有界缓冲区）问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%A4%E4%B8%AA%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="nav-text">使用两个条件变量</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E7%BB%88%E7%89%88%E6%9C%AC"><span class="nav-text">最终版本</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A6%86%E7%9B%96%E6%9D%A1%E4%BB%B6"><span class="nav-text">覆盖条件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-text">信号量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%80%BC%E4%BF%A1%E5%8F%B7%E9%87%8F%EF%BC%88%E9%94%81%EF%BC%89"><span class="nav-text">二值信号量（锁）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%94%A8%E4%BD%9C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="nav-text">信号量用作条件变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%EF%BC%88%E6%9C%89%E7%95%8C%E7%BC%93%E5%86%B2%E5%8C%BA%EF%BC%89%E9%97%AE%E9%A2%98-2"><span class="nav-text">生产者&#x2F;消费者（有界缓冲区）问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BB%E8%80%85-%E2%80%94-%E5%86%99%E8%80%85%E9%94%81"><span class="nav-text">读者 — 写者锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%B0%B1%E9%A4%90%E9%97%AE%E9%A2%98"><span class="nav-text">哲学家就餐问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="nav-text">如何实现信号量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98"><span class="nav-text">常见并发问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E6%AD%BB%E9%94%81%E7%BC%BA%E9%99%B7"><span class="nav-text">非死锁缺陷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%BB%E9%94%81%E7%BC%BA%E9%99%B7"><span class="nav-text">死锁缺陷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E7%AD%89%E5%BE%85"><span class="nav-text">循环等待</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%81%E6%9C%89%E5%B9%B6%E7%AD%89%E5%BE%85"><span class="nav-text">持有并等待</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%9E%E6%8A%A2%E5%8D%A0"><span class="nav-text">非抢占</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%92%E6%96%A5"><span class="nav-text">互斥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%B0%83%E5%BA%A6%E9%81%BF%E5%85%8D%E6%AD%BB%E9%94%81"><span class="nav-text">通过调度避免死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E5%92%8C%E6%81%A2%E5%A4%8D"><span class="nav-text">检查和恢复</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%B9%B6%E5%8F%91%EF%BC%88Advanced%EF%BC%89"><span class="nav-text">基于事件的并发（Advanced）</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/12/20/OS-Concurrency/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OS Concurrency | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS Concurrency
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-12-20 00:58:36" itemprop="dateCreated datePublished" datetime="2021-12-20T00:58:36Z">2021-12-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Intro：
+<ul>
+<li>多处理器编程的困难</li>
+<li>用状态机理解并发算法</li>
+<li>并发控制：互斥、同步</li>
+</ul>
+</li>
+<li>概念： 互斥</li>
+<li>并发与状态机</li>
+<li>Threading API</li>
+<li>Lock</li>
+<li>Concurrent Data Structure based on Lock</li>
+<li>Conditional Variable</li>
+<li>信号量</li>
+<li>常见并发问题</li>
+<li>基于事件的并发</li>
+</ul>
+<p>Ref：</p>
+<ul>
+<li>Operating Systems Three Easy pieces</li>
+<li>JYY OS</li>
+</ul>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<p>Concurrent：exsiting, happening, or done at the <em>same</em> time. 程序的不同部分可以按不同顺序执行，且最终得到正确的结果</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//t0.c</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;pthread.h&gt;</span><span class="comment">// pthread 库不是 Linux 系统默认的库，连接时需要使用静态库 libpthread.a // 在编译中要加 -lpthread参数</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span>  *<span class="title function_">mythread</span><span class="params">( <span class="type">void</span> *arg )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, arg);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">( <span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">pthread_t</span>  p1,p2;</span><br><span class="line">    <span class="type">int</span> rc;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;main:begin\n&quot;</span> );</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span>* ch1 = <span class="string">&quot;A&quot;</span>;</span><br><span class="line">    <span class="type">char</span>* ch2 = <span class="string">&quot;B&quot;</span>;</span><br><span class="line">    rc = pthread_create( &amp;p1, <span class="literal">NULL</span>, mythread, ch1 ); assert(rc==<span class="number">0</span>); <span class="comment">//C语言编译器允许隐含性的将一个通用指针转换为任意类型的指针，包括const *而C＋＋不允许将const 转换为非const*，所以不能直接传入&quot;A&quot;</span></span><br><span class="line">    rc = pthread_create( &amp;p2, <span class="literal">NULL</span>, mythread, ch2 ); assert(rc==<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    rc= pthread_join( p1,<span class="literal">NULL</span> );</span><br><span class="line">    rc= pthread_join( p2,<span class="literal">NULL</span> );</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;main:end\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>该程序打印结果为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:begin</span><br><span class="line">A</span><br><span class="line">B</span><br><span class="line">main:end</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:begin</span><br><span class="line">B</span><br><span class="line">A</span><br><span class="line">main:end</span><br></pre></td></tr></table></figure>
+<p>两次运行结果不一样</p>
+<h2 id="多任务OS的并发"><a class="header-anchor" href="#多任务OS的并发"></a>多任务OS的并发</h2>
+<p>（假设系统只有一个CPU）</p>
+<p>OS可以同时加载多个进程</p>
+<ul>
+<li>
+<p>每个进程都是独立的进程，互不干扰</p>
+<ul>
+<li>即使是root权限的进程，也不能直接访问操作系统内核的内存</li>
+</ul>
+</li>
+<li>
+<p>每隔一段时间，就切换到另一个进程</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>并发性的来源： <strong>进程会调用OS的API</strong>
+<ul>
+<li><code>write（fd,buf,11 TiB）</code>（<code>TiB</code>宏）</li>
+<li><code>write</code>的实现是OS的一部分</li>
+<li><code>x86-64</code>应用程序执行<code>syscall</code>后就进入OS执行
+<ul>
+<li>类似中断处理程序</li>
+</ul>
+</li>
+<li>此时OS允许<code>write</code>的同时，让另一个进程执行
+<ul>
+<li>如：另一个进程执行了<code>read(fd,buf,512 MiB)</code>读取同一文件</li>
+<li><strong>OS代码并发了</strong>： <code>OS API</code>实现需要考虑并发
+<ul>
+<li>虽然进程在地址空间中是独立的，但是OS中的对象是被进程共享的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="并发与并行的区别"><a class="header-anchor" href="#并发与并行的区别"></a>并发与并行的区别</h2>
+<ul>
+<li>并发： 多个执行流可以不按照一个特定的顺序执行</li>
+<li>并行：允许多个执行流真正地同时执行
+<ul>
+<li>需要多个处理器</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>处理器数量</th>
+<th>共享内存？</th>
+<th>典型的并发OS</th>
+<th>并发？并行？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>单</td>
+<td>共享内存</td>
+<td>OS内核/多线程程序</td>
+<td>并发不并行</td>
+</tr>
+<tr>
+<td>多</td>
+<td>共享内存</td>
+<td>OS内核/多线程程序/GPU Kernel</td>
+<td>并发、并行</td>
+</tr>
+<tr>
+<td>多</td>
+<td>不共享内存</td>
+<td>分布式系统（消息通信）</td>
+<td>并发、并行</td>
+</tr>
+</tbody>
+</table>
+<h2 id="线程"><a class="header-anchor" href="#线程"></a>线程</h2>
+<p>线程： A single process can contain multiple threads, all of  which  are  executing  the same  program.   These  threads <strong>share</strong> the same global memory (data and heap segments), but each thread has its own stack (automatic variables).</p>
+<p>多个执行流并发/并行执行，且<strong>共享内存</strong></p>
+<ul>
+<li>两个执行流共享代码和所有全局变量（数据区、堆区）
+<ul>
+<li>i.e. C++中，数据区就是全局/静态区</li>
+</ul>
+</li>
+<li>线程间指令的执行顺序是不确定（<em>non-deterministic</em>）的</li>
+<li>共享：共享代码区(当前进程的代码)、数据区和堆，但不共享寄存器和栈</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//t1.c</span></span><br><span class="line"><span class="comment">//共享全局变量的后果</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;mythreads.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">static</span> <span class="keyword">volatile</span> <span class="type">int</span> counter = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> * <span class="title function_">mythread</span><span class="params">( <span class="type">void</span>*arg )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;%s: begin\n&quot;</span>, (<span class="type">char</span>*)arg );</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>( <span class="type">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">1e7</span>; i++ )</span><br><span class="line">        counter++;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s: done\n&quot;</span>, (<span class="type">char</span>*)arg);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">( <span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">pthread_t</span>  p1,p2;</span><br><span class="line">    <span class="type">int</span> rc;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;main:begin ( counter = %d )\n&quot;</span>, counter );</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span>* ch1 = <span class="string">&quot;A&quot;</span>;</span><br><span class="line">    <span class="type">char</span>* ch2 = <span class="string">&quot;B&quot;</span>;</span><br><span class="line">    Pthread_create( &amp;p1, <span class="literal">NULL</span>, mythread, ch1 ); <span class="comment">//C语言编译器允许隐含性的将一个通用指针转换为任意类型的指针，包括const *而C＋＋不允许将const 转换为非const*，所以不能直接传入&quot;A&quot;</span></span><br><span class="line">    Pthread_create( &amp;p2, <span class="literal">NULL</span>, mythread, ch2 ); </span><br><span class="line"></span><br><span class="line">    Pthread_join( p1,<span class="literal">NULL</span> );</span><br><span class="line">    Pthread_join( p2,<span class="literal">NULL</span> );</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;main:done with both ( counter = %d )\n&quot;</span>, counter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//mythreads.h</span></span><br><span class="line"><span class="comment">//把API封装起来，易于使用</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="comment">// #include&lt;assert.h&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Pthread_create</span> <span class="params">(<span class="type">pthread_t</span> *__restrict __newthread,</span></span><br><span class="line"><span class="params">			   <span class="type">const</span> <span class="type">void</span>* __attr,</span></span><br><span class="line"><span class="params">			   <span class="type">void</span> *(*__start_routine) (<span class="type">void</span> *),</span></span><br><span class="line"><span class="params">			   <span class="type">void</span> *__restrict __arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    pthread_create( __newthread, __attr, __start_routine, __arg );</span><br><span class="line">&#125;</span><br><span class="line"> <span class="type">void</span> <span class="title function_">Pthread_join</span><span class="params">(<span class="type">pthread_t</span> __th, <span class="type">void</span> **__thread_return)</span></span><br><span class="line"> &#123;</span><br><span class="line">     pthread_join( __th, __thread_return );</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="type">void</span> *<span class="title function_">Malloc</span><span class="params">(<span class="type">unsigned</span> size)</span></span><br><span class="line"> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">malloc</span>(size);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:begin ( counter = 0 )</span><br><span class="line">A: begin</span><br><span class="line">B: begin</span><br><span class="line">A: done</span><br><span class="line">B: done</span><br><span class="line">main:done with both ( counter = 12275324 )</span><br></pre></td></tr></table></figure>
+<p>可以看到结果不是200000, 而是12275324</p>
+<p>再运行一次：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:begin ( counter = 0 )</span><br><span class="line">A: begin</span><br><span class="line">B: begin</span><br><span class="line">B: done</span><br><span class="line">A: done</span><br><span class="line">main:done with both ( counter = 10467369 )</span><br></pre></td></tr></table></figure>
+<p><strong>两次运行的结果都不一样！</strong></p>
+<h2 id="多处理器编程的困难"><a class="header-anchor" href="#多处理器编程的困难"></a>多处理器编程的困难</h2>
+<ul>
+<li>原子性： 即使是<code>i++</code>，也会被分成几个指令</li>
+<li>顺序性：<strong>代码</strong>的编译器优化</li>
+<li>可见性： <strong>CPU</strong>可以不按顺序执行指令。没有前后依赖就会被优化（并行执行）</li>
+</ul>
+<h3 id="并发术语"><a class="header-anchor" href="#并发术语"></a>并发术语</h3>
+<ul>
+<li>临界区( <code>critical section</code> )： 访问共享资源的一段代码</li>
+<li>竞态条件( <code>race condition</code> )： 多个执行线程大致同时进入进阶区时，都试图更新共享资源的情况</li>
+<li>不确定性( <code>indeterminate</code> )： 程序含有竞态条件，其输出不确定</li>
+<li>同步原语( <code>synchronization primitive</code> ):硬件提供指令，在其上构建同步原语,实现<strong>原子性</strong></li>
+<li>互斥原语( <code>mutual exclusion</code> )： 线程应该使用互斥原语，以保证只有一个线程进入临界区，从而避免出现竞态，并产生确定的程序输出</li>
+</ul>
+<h1 id="概念：互斥"><a class="header-anchor" href="#概念：互斥"></a>概念：互斥</h1>
+<p>互斥（mutual exclusion）</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">...</span><br><span class="line">&#125;lock_tl</span><br><span class="line"><span class="type">void</span> <span class="title function_">lock</span><span class="params">(<span class="type">lock_t</span> *lk)</span>;<span class="comment">//试图获得锁的独占访问，成功获得后返回</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">unlock</span><span class="params">(<span class="type">lock_t</span> *lk)</span>;<span class="comment">//释放锁的独占空间</span></span><br></pre></td></tr></table></figure>
+<p>我们假设CPU有三种指令：</p>
+<ol>
+<li>load： mem -&gt; reg</li>
+<li>store: reg -&gt; mem</li>
+<li>本地计算： 线程的寄存器做一些计算，结果存入寄存器</li>
+</ol>
+<h2 id="共享内存上互斥的困难"><a class="header-anchor" href="#共享内存上互斥的困难"></a>共享内存上互斥的困难</h2>
+<ul>
+<li>
+<p>load和store的缺陷（一个只能看，一个只能写）</p>
+</li>
+<li>
+<p>现代处理器load/store可能在执行时被乱序</p>
+</li>
+</ul>
+<h1 id="并发与状态机"><a class="header-anchor" href="#并发与状态机"></a>并发与状态机</h1>
+<h2 id="程序-有限状态机-有向图"><a class="header-anchor" href="#程序-有限状态机-有向图"></a>程序 = 有限状态机 = 有向图</h2>
+<p>图论是理解程序的重要工具</p>
+<p>不确定(non-deterministic)的指令可能有多个状态</p>
+<ul>
+<li>
+<p>获取处理器的”时间戳“用于精确定时</p>
+<ul>
+<li><code>rdtsc/rdtscp</code></li>
+</ul>
+</li>
+<li>
+<p>机器提供的”真“随机数</p>
+<ul>
+<li><code>rdrand</code></li>
+</ul>
+</li>
+<li>
+<p><code>syscall</code></p>
+<ul>
+<li>一般用于唯一不确定性的来源</li>
+<li><code>read</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="状态机模型：应用"><a class="header-anchor" href="#状态机模型：应用"></a>状态机模型：应用</h2>
+<ul>
+<li>在硬件上的应用： 高性能处理器实现
+<ul>
+<li>超标量处理器
+<ul>
+<li>同一时间执行多条指令</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Time-Travel-Debugging"><a class="header-anchor" href="#Time-Travel-Debugging"></a>Time - Travel Debugging</h3>
+<ul>
+<li>
+<p>程序执行随时间渐进：$s_0 \rarr s_1 \rarr \dots$​</p>
+</li>
+<li>
+<p>记录所有$s_i$的开销太大（$s_i$​由内存和寄存器组成）</p>
+</li>
+<li>
+<p><strong>记录初始状态，和每条指令前后状态的diff</strong></p>
+</li>
+<li>
+<p><code>si/rsi</code></p>
+</li>
+</ul>
+<h3 id="Record-Replay"><a class="header-anchor" href="#Record-Replay"></a>Record &amp; Replay</h3>
+<p>确定的程序不需要任何记录，只需要再执行一次</p>
+<ul>
+<li>只需记录non-deterministic指令的<strong>效果</strong>（side-effect），就可实现重放</li>
+</ul>
+<h1 id="线程间通信ITC"><a class="header-anchor" href="#线程间通信ITC"></a>线程间通信ITC</h1>
+<p>(1)通信线程位于同一个进程中，共享相同的地址空间</p>
+<p>(2)通信线程位于不同的进程中，拥有不同的地址空间</p>
+<h2 id="相同进程"><a class="header-anchor" href="#相同进程"></a>相同进程</h2>
+<p>对于情况(1)，线程间的通信可以直接通过<em>访问共享的地址空间</em>实现信息交换</p>
+<h2 id="不同进程"><a class="header-anchor" href="#不同进程"></a>不同进程</h2>
+<p>对于情况(2), 采用进程间通信IPC</p>
+<p>• IPC机制主要包括:信号(Signal)、管道(Pipe)、信号量、共享内存(Shared Memory)、消息队列(Message Queue)、套接字(Socket)</p>
+<p>• 与线程间通信机制不同，进程间通信机制需要打破进程间地址空间的隔离</p>
+<p>某些OS发行版(.其实就是欧拉 )增加的IPC机制：共享内存， 消息通信</p>
+<ul>
+<li>共享内存是一种在进程间高效地传递大量信息的通信方式。但在共享内存机制下，信息的发送方不关心信息由谁接收，而信息的接收方也不关心信息是由谁发送的，这存在安全隐患。</li>
+<li>消息传递允许进程不必通过共享内存区来实现通信，而是通过交换消息的方式来实现通信。消息 传递关注信息的发送者不接收者，通过使用内核拷贝传递的信息，完成进程间的信息传递</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Concurrency/shared%20memory.png" alt="image-20220408144852516"></p>
+<h1 id="Threading-API"><a class="header-anchor" href="#Threading-API"></a>Threading API</h1>
+<p><code>man  -k pthread</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//p212, 线程API</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;mythreads.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">myarg_t</span>&#123;</span></span><br><span class="line">    <span class="type">int</span> a;</span><br><span class="line">    <span class="type">int</span> b;</span><br><span class="line">&#125;<span class="type">myarg_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">myret_t</span>&#123;</span></span><br><span class="line">    <span class="type">int</span> x;</span><br><span class="line">    <span class="type">int</span> y;</span><br><span class="line">&#125;<span class="type">myret_t</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> * <span class="title function_">mythread</span><span class="params">( <span class="type">void</span>*arg )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">myarg_t</span> *m = (<span class="type">myarg_t</span> *)arg;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;args: %d %d\n&quot;</span>,  m -&gt; a, m -&gt; b );</span><br><span class="line">    <span class="type">myret_t</span> *r = Malloc(<span class="keyword">sizeof</span>( <span class="type">myret_t</span> ));</span><br><span class="line">    r -&gt; x = <span class="number">1</span>;</span><br><span class="line">    r -&gt; y = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> (<span class="type">void</span>*) r;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">( <span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">pthread_t</span>  p;</span><br><span class="line">    <span class="type">int</span> rc;</span><br><span class="line">    <span class="type">myret_t</span> *m; <span class="comment">//将返回值打包</span></span><br><span class="line">    <span class="type">myarg_t</span> args;<span class="comment">//将参数打包</span></span><br><span class="line"></span><br><span class="line">    args.a = <span class="number">10</span>;</span><br><span class="line">    args.b = <span class="number">20</span>;</span><br><span class="line">    Pthread_create( &amp;p, <span class="literal">NULL</span>, mythread, &amp;args ); </span><br><span class="line">    Pthread_join( p, ( <span class="type">void</span> **) &amp;m );<span class="comment">//将线程返回值赋给m</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;returned: %d %d\n&quot;</span>, m -&gt; x, m -&gt; y );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">args: 10 20</span><br><span class="line">returned: 1 2</span><br></pre></td></tr></table></figure>
+<h2 id="线程创建"><a class="header-anchor" href="#线程创建"></a>线程创建</h2>
+<p><code> &lt;pthread.h&gt;</code></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Create a new thread, starting with execution of START-ROUTINE</span></span><br><span class="line"><span class="comment">   getting passed ARG.  Creation attributed come from ATTR.  The new</span></span><br><span class="line"><span class="comment">   handle is stored in *NEWTHREAD.  */</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> <span class="title function_">pthread_create</span> <span class="params">(<span class="type">pthread_t</span> *__restrict __newthread, <span class="comment">//线程的指针</span></span></span><br><span class="line"><span class="params">			   <span class="type">const</span> <span class="type">pthread_attr_t</span> *__restrict __attr, <span class="comment">//线程具有的属性，包括栈大小，优先级等。 一般传入NULL</span></span></span><br><span class="line"><span class="params">			   <span class="type">void</span> *(*__start_routine) (<span class="type">void</span> *),<span class="comment">//线程要运行的函数的指针，接受void*参数，返回 void* //可以自由更改参数/返回类型</span></span></span><br><span class="line"><span class="params">			   <span class="type">void</span> *__restrict __arg)</span> __THROWNL __<span class="title function_">nonnull</span> <span class="params">((<span class="number">1</span>, <span class="number">3</span>))</span>;<span class="comment">//函数的参数，可传入结构体，以实现传入多个参数</span></span><br></pre></td></tr></table></figure>
+<h2 id="线程完成"><a class="header-anchor" href="#线程完成"></a>线程完成</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Make calling thread wait for termination of the thread TH.  The</span></span><br><span class="line"><span class="comment">   exit status of the thread is stored in *THREAD_RETURN, if THREAD_RETURN</span></span><br><span class="line"><span class="comment">   is not NULL.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   This function is a cancellation point and therefore not marked with</span></span><br><span class="line"><span class="comment">   __THROW.  */</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> <span class="title function_">pthread_join</span> <span class="params">(<span class="type">pthread_t</span> __th, <span class="type">void</span> **__thread_return)</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">第一个参数是线程的指针</span></span><br><span class="line"><span class="comment">第二个参数是线程运行的函数的返回值的指针</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<h2 id="锁"><a class="header-anchor" href="#锁"></a>锁</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//上锁和解锁</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> <span class="title function_">pthread_mutex_lock</span> <span class="params">(<span class="type">pthread_mutex_t</span> *__mutex)</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> <span class="title function_">pthread_mutex_unlock</span> <span class="params">(<span class="type">pthread_mutex_t</span> *__mutex)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//锁必须初始化，两种方式</span></span><br><span class="line"><span class="type">pthread_mutex_t</span> lock = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line">pthread_mutex_init(*lock, <span class="literal">NULL</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//锁使用完后必须销毁</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> <span class="title function_">pthread_mutex_destroy</span> <span class="params">(<span class="type">pthread_mutex_t</span> *__mutex)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//mythread.h</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;assert.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">pthread_cond_t</span> <span class="type">cond_t</span>;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">pthread_mutex_t</span> <span class="type">mutex_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Pthread_create</span> <span class="params">(<span class="type">pthread_t</span> *__restrict __newthread,</span></span><br><span class="line"><span class="params">			   <span class="type">const</span> <span class="type">void</span>* __attr,</span></span><br><span class="line"><span class="params">			   <span class="type">void</span> *(*__start_routine) (<span class="type">void</span> *),</span></span><br><span class="line"><span class="params">			   <span class="type">void</span> *__restrict __arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> rc = pthread_create( __newthread, __attr, __start_routine, __arg );</span><br><span class="line">    assert( rc == <span class="number">0</span> );</span><br><span class="line">&#125;</span><br><span class="line"> <span class="type">void</span> <span class="title function_">Pthread_join</span><span class="params">(<span class="type">pthread_t</span> __th, <span class="type">void</span> **__thread_return)</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="type">int</span> rc = pthread_join( __th, __thread_return );</span><br><span class="line">     assert( rc == <span class="number">0</span> );</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="type">void</span> *<span class="title function_">Malloc</span><span class="params">(<span class="type">unsigned</span> size)</span></span><br><span class="line"> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">malloc</span>(size);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="type">void</span> <span class="title function_">Pthread_mutex_lock</span><span class="params">( <span class="type">pthread_mutex_t</span> *mutex )</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="type">int</span> rc = pthread_mutex_lock(mutex);</span><br><span class="line">     assert( rc == <span class="number">0</span> );</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Pthread_mutex_unlock</span><span class="params">( <span class="type">pthread_mutex_t</span> *mutex )</span></span><br><span class="line"> &#123;</span><br><span class="line">     <span class="type">int</span> rc = pthread_mutex_unlock(mutex);</span><br><span class="line">     assert( rc == <span class="number">0</span> );</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Pthread_mutex_init</span><span class="params">( <span class="type">pthread_mutex_t</span> *__mutex,</span></span><br><span class="line"><span class="params">			       <span class="type">const</span> <span class="type">void</span>*__mutexattr )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> rc = pthread_mutex_init(__mutex, <span class="literal">NULL</span>);</span><br><span class="line">     assert( rc == <span class="number">0</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Pthread_mutex_destroy</span><span class="params">( <span class="type">pthread_mutex_t</span> *__mutex )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> rc = pthread_mutex_destroy(__mutex);</span><br><span class="line">     assert( rc == <span class="number">0</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Pthread_cond_init</span><span class="params">( <span class="type">pthread_cond_t</span> *__restrict __cond,</span></span><br><span class="line"><span class="params">			      <span class="type">const</span> <span class="type">void</span>*__restrict __cond_attr )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> rc = pthread_cond_init( __cond, __cond_attr);</span><br><span class="line">     assert( rc == <span class="number">0</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">cond_destroy</span><span class="params">( <span class="type">pthread_cond_t</span> *__restrict __cond )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> rc = pthread_cond_destroy(__cond);</span><br><span class="line">     assert( rc == <span class="number">0</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Pthread_cond_wait</span><span class="params">(<span class="type">pthread_cond_t</span> *__restrict __cond,</span></span><br><span class="line"><span class="params">			      <span class="type">pthread_mutex_t</span> *__restrict __mutex)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> rc = pthread_cond_wait(__cond, __mutex);</span><br><span class="line">    assert(rc ==<span class="number">0</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Pthread_cond_signal</span><span class="params">(<span class="type">pthread_cond_t</span> *__cond)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> rc = pthread_cond_signal(__cond);</span><br><span class="line">    assert( rc==<span class="number">0</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用锁：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">pthread_mutex_t</span> lock;</span><br><span class="line">Pthread_mutex_init( &amp;lock ,<span class="literal">NULL</span> );<span class="comment">//初始化锁</span></span><br><span class="line"></span><br><span class="line">Pthread_mutex_lock( &amp;lock );<span class="comment">//上锁， 如果锁已经被其他线程持有，那么该调用不会返回，直到获得该锁（意味着持有该锁的线程已经将锁释放）</span></span><br><span class="line">x = x +<span class="number">1</span>;</span><br><span class="line">Pthread_mutex_unlock( &amp;lock );</span><br></pre></td></tr></table></figure>
+<h2 id="条件变量"><a class="header-anchor" href="#条件变量"></a>条件变量</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* Wait for condition variable COND to be signaled or broadcast.</span></span><br><span class="line"><span class="comment">   MUTEX is assumed to be locked before.</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">   This function is a cancellation point and therefore not marked with</span></span><br><span class="line"><span class="comment">   __THROW.  */</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> <span class="title function_">pthread_cond_wait</span> <span class="params">(<span class="type">pthread_cond_t</span> *__restrict __cond,</span></span><br><span class="line"><span class="params">			      <span class="type">pthread_mutex_t</span> *__restrict __mutex)</span>;</span><br><span class="line">			      </span><br><span class="line"><span class="comment">/* Wake up one thread waiting for condition variable COND.  */</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> <span class="title function_">pthread_cond_signal</span> <span class="params">(<span class="type">pthread_cond_t</span> *__cond)</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//条件变量也必须初始化，与锁类似，两种方式： </span></span><br><span class="line"><span class="type">pthread_cond_t</span> cond = PTHREAD_COND_INITIALIZER;</span><br><span class="line">pthread_cond_init( __cond, __cond_attr);</span><br><span class="line">    </span><br><span class="line"><span class="comment">//销毁也类似</span></span><br><span class="line"><span class="comment">/* Destroy condition variable COND.  */</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> <span class="title function_">pthread_cond_destroy</span> <span class="params">(<span class="type">pthread_cond_t</span> *__cond)</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//mythreads.h</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">Pthread_cond_init</span><span class="params">( <span class="type">pthread_cond_t</span> *__restrict __cond,</span></span><br><span class="line"><span class="params">			      <span class="type">const</span> <span class="type">void</span>*__restrict __cond_attr )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> rc = pthread_cond_init( __cond, __cond_attr);</span><br><span class="line">     assert( rc == <span class="number">0</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">cond_destroy</span><span class="params">( <span class="type">pthread_cond_t</span> *__restrict __cond )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> rc = pthread_cond_destroy(__cond);</span><br><span class="line">     assert( rc == <span class="number">0</span> );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Lock"><a class="header-anchor" href="#Lock"></a>Lock</h1>
+<ul>
+<li>
+<p>锁的状态：</p>
+<ul>
+<li><code>available</code></li>
+<li><code>acquired</code></li>
+</ul>
+</li>
+<li>
+<p>方法：</p>
+<ul>
+<li><code>lock()</code>: 尝试获取锁，如果锁是<code>available</code>，则获取锁，进入临界区</li>
+<li><code>unlock()</code>: 使锁<code>available</code></li>
+</ul>
+</li>
+<li>
+<p>锁提供了最小程度的调度控制</p>
+<ul>
+<li>线程由OS调度， 锁让程序员获得了一些控制权</li>
+</ul>
+</li>
+<li>
+<p>通常用不同的锁保护不同的数据（ 细粒度的方案 ）</p>
+</li>
+</ul>
+<h2 id="评价锁"><a class="header-anchor" href="#评价锁"></a>评价锁</h2>
+<ul>
+<li>有效性： 提供互斥</li>
+<li>公平性<code>fairness</code>:  当锁可用时，是否每一个竞争线程有公平的机会抢到锁
+<ul>
+<li>是否有竞争锁的线程会饿死<code>starve</code>?</li>
+</ul>
+</li>
+<li>性能<code> performance</code></li>
+</ul>
+<h2 id="控制中断"><a class="header-anchor" href="#控制中断"></a>控制中断</h2>
+<p>最早提供的互斥解决方案之一，就是在临界区关闭中断：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">lock</span><span class="params">()</span>&#123;</span><br><span class="line">	DisableInterrupts();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">unlock</span><span class="params">()</span>&#123;</span><br><span class="line">    EnableInterrupts();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>假设在单CPU系统上，这段代码在临界区关闭中断，从而原子地执行，结束后又重新打开中断</p>
+<ul>
+<li>
+<p>缺点：</p>
+<ul>
+<li>需要允许所有线程执行特权操作（开关中断）
+<ul>
+<li>即，需要信任机制不被滥用</li>
+</ul>
+</li>
+<li>不支持多处理器
+<ul>
+<li>中断的开关只是对CPU而言，如果一个多个线程运行在不同CPU上，其中一个CPU关闭中断，其他CPU依然响应中断，在其上的线程依然能进入临界区</li>
+</ul>
+</li>
+<li>关中断导致<strong>中断丢失</strong>，可能导致严重的系统问题
+<ul>
+<li>比如磁盘完成了读取请求，但CPU错失了该消息</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>因此，用<strong>关中断来实现互斥原语</strong>的情况很有限</p>
+<ul>
+<li>有些情况下OS自身会采用关中断的方式来保证访问数据的原子性，此时该用法是可行的，因为OS内部不存在信任问题</li>
+</ul>
+</li>
+<li>
+<p>很多人热衷于研究不依赖硬件实现的锁机制，事实证明，只需很少的硬件支持，实现锁就会容易很多</p>
+</li>
+</ul>
+<h2 id="test-and-set"><a class="header-anchor" href="#test-and-set"></a>test-and-set</h2>
+<ul>
+<li>
+<p><code>test-and-set instruction</code>,  也称为<code>atomic exchange</code>,  由硬件支持</p>
+</li>
+<li>
+<p>先实现一个不依赖它的锁：</p>
+</li>
+</ul>
+  <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//想法是： 用一个flag来表示锁是否被占用</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span>  <span class="title function_">lock_t</span><span class="params">( <span class="type">int</span> flag; )</span> <span class="type">lock_t</span>;</span><br><span class="line"> </span><br><span class="line"><span class="type">void</span> <span class="title function_">init</span><span class="params">( <span class="type">lock_t</span> *mutex )</span></span><br><span class="line">&#123;</span><br><span class="line">    mutex -&gt; flag = <span class="number">0</span>; <span class="comment">// 0 -&gt; lock is available</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">lock</span><span class="params">( <span class="type">lock_t</span> *mutex )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span>( mutex -&gt; flag == <span class="number">1</span> )</span><br><span class="line">        ; <span class="comment">// spin-wait( do nothing )</span></span><br><span class="line">    mutex -&gt; flag = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">unlock</span><span class="params">( <span class="type">lock_t</span> *mutex )</span></span><br><span class="line">&#123;</span><br><span class="line">    mutex -&gt; flag = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>这段代码有两个问题：</p>
+<ul>
+<li>
+<p>正确性：</p>
+<table>
+<thead>
+<tr>
+<th>Thread`</th>
+<th>Thread2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>( 初始时，flag == 0 )  call lock()</td>
+<td></td>
+</tr>
+<tr>
+<td>while( flag == 1 )</td>
+<td></td>
+</tr>
+<tr>
+<td>interrupt: switch to Thread2</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>call lock()</td>
+</tr>
+<tr>
+<td></td>
+<td>while( flag == 1 )</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>flag = 1;</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>interrupt: switch to Thread 1</td>
+</tr>
+<tr>
+<td><strong>flag = 1( too ! )</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>性能问题：</p>
+<ul>
+<li>这个锁是<strong>自旋</strong>的，一个线程自旋等待另一个线程释放锁，浪费时间
+<ul>
+<li>对于单CPU，因为同一时间只有一个线程，且自旋的线程永远不会放弃CPU,本线程自旋时，持有锁的线程根本无法运行，也不可能释放锁
+<ul>
+<li>需要抢占式的调度器（ <code> preemptive scheduler</code> , 即不断通过时钟中断一个线程，运行其他线程 )</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="用test-and-set实现锁"><a class="header-anchor" href="#用test-and-set实现锁"></a>用test-and-set实现锁</h3>
+<ul>
+<li>在x86上称为 <code>xchg</code>指令，</li>
+</ul>
+<pre><code><figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">TestAndSet</span><span class="params">( <span class="type">int</span> *old_ptr, <span class="type">int</span> new )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> old = *old_ptr;</span><br><span class="line">    *old_ptr = new;</span><br><span class="line">    <span class="keyword">return</span> old;</span><br><span class="line">&#125;<span class="comment">// 返回old_ptr指向的旧值，将old_ptr指向新值</span></span><br></pre></td></tr></table></figure>
+
+硬件保证，上述操作是原子的
+</code></pre>
+<ul>
+<li>
+<p>可以理解为：一个厕所门上挂着钥匙(<code>0</code>)，两个用户都有一个名牌(<code>1</code>)，用户每次进出厕所，需要拿手上的东西和门上的东西交换，用户需要拿到钥匙才能进厕所。</p>
+<ul>
+<li>
+<p>用户一拿名牌和钥匙交换，拿着钥匙进了厕所</p>
+</li>
+<li>
+<p>用户二拿名牌交换，此时门上是名牌，用户二没有拿到钥匙，无法进厕所</p>
+<ul>
+<li>
+<p>他会一直交换：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>( TestAndSet( &amp;lock -&gt; flag, <span class="number">1</span> ) == <span class="number">1</span> )</span><br><span class="line">	; <span class="comment">//spin</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>用户一从厕所出来，拿名牌和手上的钥匙交换，此时门上又有钥匙了</p>
+</li>
+</ul>
+</li>
+<li>
+<p>缺点：</p>
+<ul>
+<li>如上述</li>
+</ul>
+</li>
+<li>
+<p>评价自旋锁：</p>
+<ul>
+<li>有效性：OK
+<ul>
+<li>公平性：不提供任何公平性保证( 对<code>test-and-set</code>而言 )</li>
+<li>性能： 单核下很差，多核下还不错</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="compare-and-exchange"><a class="header-anchor" href="#compare-and-exchange"></a>compare-and-exchange</h2>
+<ul>
+<li>
+<p>某些系统提供了另一个硬件原语: <code>compare-and-exchange</code>( on x86 )</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//返回ptr指向的旧值，将ptr指向新值（如果旧值与期望值相等的话）</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">CompareAndExchange</span><span class="params">(  <span class="type">int</span> *ptr, <span class="type">int</span> expected, <span class="type">int</span> new )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> actual = *ptr;</span><br><span class="line">    <span class="keyword">if</span>( actual == expected )</span><br><span class="line">        *ptr = new;</span><br><span class="line">    <span class="keyword">return</span> actual;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该指令比<code>test-and-set</code>更强大</p>
+</li>
+</ul>
+<h2 id="fetch-and-add"><a class="header-anchor" href="#fetch-and-add"></a>fetch-and-add</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">FetchAndAdd</span><span class="params">( <span class="type">int</span> *ptr )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> old = *ptr;</span><br><span class="line">    *ptr = old + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> old;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">lock_t</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">int</span> ticket;</span><br><span class="line">    <span class="type">int</span> turn;</span><br><span class="line">&#125; <span class="type">lock_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">lock_init</span><span class="params">( <span class="type">lock_t</span> *lock )</span></span><br><span class="line">&#123;</span><br><span class="line">    lock -&gt; ticket = <span class="number">0</span>;</span><br><span class="line">    lock -&gt; turn = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">lock</span><span class="params">(<span class="type">lock_t</span> *lock)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> myturn = FetchAndAdd( &amp;lock-&gt;ticket );</span><br><span class="line">    <span class="keyword">while</span>( lock-&gt; turn != myturn )</span><br><span class="line">        ; <span class="comment">//spin</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">unlock</span><span class="params">( <span class="type">lock_t</span> *lock )</span></span><br><span class="line">&#123;</span><br><span class="line">    FetchAndAdd( &amp;lock-&gt; turn );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>解释：<code>ticket</code>是一个全局的号码，<code>turn</code>是全局的轮次。 每个用户从ticket得到自己的<code>turn</code>， 每交易一次，<code>ticket++</code>. 只有到达自己的turn的用户才能进入临界区，每当一个用户从临界区出来， <code>turn++</code></p>
+<ul>
+<li><code>myturn &lt; turn</code>的用户只能自旋</li>
+</ul>
+</li>
+<li>
+<p>本方法能保证所有线程都能抢到锁，只要一个线程获得了<code>ticket</code>，就能被调度</p>
+<ul>
+<li><code>test-and-set</code>无法保证</li>
+</ul>
+</li>
+</ul>
+<h2 id="自旋过多的解决方案"><a class="header-anchor" href="#自旋过多的解决方案"></a>自旋过多的解决方案</h2>
+<ul>
+<li>我们已经实现了有效、公平（ 借助<code>ticket</code>）的锁，但自旋会导致性能降低
+<ul>
+<li>自旋会重复检查一个不会改变的值，浪费CPU时间</li>
+</ul>
+</li>
+</ul>
+<h3 id="方案一-yield"><a class="header-anchor" href="#方案一-yield"></a>方案一  yield</h3>
+<ul>
+<li>在要自旋的时候，放弃CPU</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">lock</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">while</span>( TestAndSet(&amp;flag, <span class="number">1</span> ) == <span class="number">1</span> )</span><br><span class="line">		yield(); <span class="comment">//give up the CPU</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>假定OS提供原语<code>yield()</code>，可以让线程从<code>running</code>变为<code>ready</code>
+<ul>
+<li>本质上，就是<code>deschedule</code></li>
+</ul>
+</li>
+<li>假设100个线程竞争1个锁，该方案会<code>yield</code>99次，比自旋99次好，但仍不够完美</li>
+</ul>
+<h3 id="方案二-使用队列：-休眠代替自旋"><a class="header-anchor" href="#方案二-使用队列：-休眠代替自旋"></a>方案二 使用队列： 休眠代替自旋</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>    <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">lock_t</span> &#123;</span></span><br><span class="line"><span class="number">2</span>        <span class="type">int</span> flag;</span><br><span class="line"><span class="number">3</span>        <span class="type">int</span> guard;</span><br><span class="line"><span class="number">4</span>        <span class="type">queue_t</span> *q;</span><br><span class="line"><span class="number">5</span>    &#125; <span class="type">lock_t</span>;</span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span>    <span class="type">void</span> <span class="title function_">lock_init</span><span class="params">(<span class="type">lock_t</span> *m)</span> &#123;</span><br><span class="line"><span class="number">8</span>        m-&gt;flag = <span class="number">0</span>;</span><br><span class="line"><span class="number">9</span>        m-&gt;guard = <span class="number">0</span>;</span><br><span class="line"><span class="number">10</span>       queue_init(m-&gt;q);</span><br><span class="line"><span class="number">11</span>   &#125;</span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="number">13</span>   <span class="type">void</span> <span class="title function_">lock</span><span class="params">(<span class="type">lock_t</span> *m)</span> &#123;</span><br><span class="line"><span class="number">14</span>       <span class="keyword">while</span> (TestAndSet(&amp;m-&gt;guard, <span class="number">1</span>) == <span class="number">1</span>)</span><br><span class="line"><span class="number">15</span>           ; <span class="comment">//acquire guard lock by spinning</span></span><br><span class="line"><span class="number">16</span>       <span class="keyword">if</span> (m-&gt;flag == <span class="number">0</span>) &#123;</span><br><span class="line"><span class="number">17</span>           m-&gt;flag = <span class="number">1</span>; <span class="comment">// lock is acquired</span></span><br><span class="line"><span class="number">18</span>           m-&gt;guard = <span class="number">0</span>;</span><br><span class="line"><span class="number">19</span>       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="number">20</span>           queue_add(m-&gt;q, gettid());</span><br><span class="line"><span class="number">21</span>           m-&gt;guard = <span class="number">0</span>;</span><br><span class="line"><span class="number">22</span>           park();</span><br><span class="line"><span class="number">23</span>       &#125;</span><br><span class="line"><span class="number">24</span>   &#125;</span><br><span class="line"><span class="number">25</span></span><br><span class="line"><span class="number">26</span>   <span class="type">void</span> <span class="title function_">unlock</span><span class="params">(<span class="type">lock_t</span> *m)</span> &#123;</span><br><span class="line"><span class="number">27</span>       <span class="keyword">while</span> (TestAndSet(&amp;m-&gt;guard, <span class="number">1</span>) == <span class="number">1</span>)</span><br><span class="line"><span class="number">28</span>           ; <span class="comment">//acquire guard lock by spinning</span></span><br><span class="line"><span class="number">29</span>       <span class="keyword">if</span> (queue_empty(m-&gt;q))</span><br><span class="line"><span class="number">30</span>           m-&gt;flag = <span class="number">0</span>; <span class="comment">// let go of lock; no one wants it</span></span><br><span class="line"><span class="number">31</span>       <span class="keyword">else</span></span><br><span class="line"><span class="number">32</span>           unpark(queue_remove(m-&gt;q)); <span class="comment">// hold lock (for next thread!)</span></span><br><span class="line"><span class="number">33</span>       m-&gt;guard = <span class="number">0</span>;</span><br><span class="line"><span class="number">34</span>   &#125;</span><br></pre></td></tr></table></figure>
+<p>看不懂QAQ,为啥unpark的时候不把flag设为0啊，这样所有其他进程都无法获得锁</p>
+<h1 id="Concurrent-Data-Structure-Based-on-Lock"><a class="header-anchor" href="#Concurrent-Data-Structure-Based-on-Lock"></a>Concurrent Data Structure Based on Lock</h1>
+<ul>
+<li>通过锁使得数据<code>thread safe</code></li>
+<li>可扩展性： 理想状态下的多线程的每个线程就和单线程一样快，二者的比值就是并发方法的<strong>扩展性</strong></li>
+</ul>
+<h2 id="并发计数器"><a class="header-anchor" href="#并发计数器"></a>并发计数器</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>    <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">counter_t</span> &#123;</span></span><br><span class="line"><span class="number">2</span>        <span class="type">int</span>            value;</span><br><span class="line"><span class="number">3</span>        <span class="type">pthread_mutex_t</span> lock;</span><br><span class="line"><span class="number">4</span>    &#125; <span class="type">counter_t</span>;</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span>    <span class="type">void</span> <span class="title function_">init</span><span class="params">(<span class="type">counter_t</span> *c)</span> &#123;</span><br><span class="line"><span class="number">7</span>        c-&gt;value = <span class="number">0</span>;</span><br><span class="line"><span class="number">8</span>        Pthread_mutex_init(&amp;c-&gt;lock,  <span class="literal">NULL</span>);</span><br><span class="line"><span class="number">9</span>    &#125;</span><br><span class="line"><span class="number">10</span></span><br><span class="line"><span class="number">11</span>   <span class="type">void</span> <span class="title function_">increment</span><span class="params">(<span class="type">counter_t</span> *c)</span> &#123;</span><br><span class="line"><span class="number">12</span>       Pthread_mutex_lock(&amp;c-&gt;lock);</span><br><span class="line"><span class="number">13</span>       c-&gt;value++;</span><br><span class="line"><span class="number">14</span>       Pthread_mutex_unlock(&amp;c-&gt;lock);</span><br><span class="line"><span class="number">15</span>   &#125;</span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="number">17</span>   <span class="type">void</span> <span class="title function_">decrement</span><span class="params">(<span class="type">counter_t</span> *c)</span> &#123;</span><br><span class="line"><span class="number">18</span>       Pthread_mutex_lock(&amp;c-&gt;lock);</span><br><span class="line"><span class="number">19</span>       c-&gt;value--;</span><br><span class="line"><span class="number">20</span>       Pthread_mutex_unlock(&amp;c-&gt;lock);</span><br><span class="line"><span class="number">21</span>   &#125;</span><br><span class="line"><span class="number">22</span></span><br><span class="line"><span class="number">23</span>   <span class="type">int</span> <span class="title function_">get</span><span class="params">(<span class="type">counter_t</span> *c)</span> &#123;</span><br><span class="line"><span class="number">24</span>       Pthread_mutex_lock(&amp;c-&gt;lock);</span><br><span class="line"><span class="number">25</span>       <span class="type">int</span> rc = c-&gt;value;</span><br><span class="line"><span class="number">26</span>       Pthread_mutex_unlock(&amp;c-&gt;lock);</span><br><span class="line"><span class="number">27</span>       <span class="keyword">return</span> rc;</span><br><span class="line"><span class="number">28</span>   &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>性能一般</li>
+</ul>
+<h2 id="扩展并发计数器"><a class="header-anchor" href="#扩展并发计数器"></a>扩展并发计数器</h2>
+<ul>
+<li>
+<p>懒惰计数器<code>sloopy counter</code>:  例如，在4CPU机器上，有四个局部计数器和一个全局计数器，每个计数器有一把锁。</p>
+<ul>
+<li>不同CPU上的计数器不会竞争</li>
+<li>为了保持全局计数器更新，如果局部值大于阈值S，局部值就要转移到全局值（此时要获取全局锁）
+<ul>
+<li>阈值越大，可扩展性越好，但计时器精度更低</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>    <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">counter_t</span> &#123;</span></span><br><span class="line"><span class="number">2</span>        <span class="type">int</span>             global;            <span class="comment">// global count</span></span><br><span class="line"><span class="number">3</span>        <span class="type">pthread_mutex_t</span> glock;             <span class="comment">// global lock</span></span><br><span class="line"><span class="number">4</span>        <span class="type">int</span>             local[NUMCPUS];    <span class="comment">// local count (per cpu)</span></span><br><span class="line"><span class="number">5</span>        <span class="type">pthread_mutex_t</span> llock[NUMCPUS];    <span class="comment">// ... and locks</span></span><br><span class="line"><span class="number">6</span>        <span class="type">int</span>             threshold;         <span class="comment">// update frequency</span></span><br><span class="line"><span class="number">7</span>    &#125; <span class="type">counter_t</span>;</span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">9</span>    <span class="comment">// init: record threshold, init locks, init values</span></span><br><span class="line"><span class="number">10</span>   <span class="comment">//       of all local counts and global count</span></span><br><span class="line"><span class="number">11</span>   <span class="type">void</span> <span class="title function_">init</span><span class="params">(<span class="type">counter_t</span> *c, <span class="type">int</span> threshold)</span> &#123;</span><br><span class="line"><span class="number">12</span>       c-&gt;threshold = threshold;</span><br><span class="line"><span class="number">13</span></span><br><span class="line"><span class="number">14</span>       c-&gt;global = <span class="number">0</span>;</span><br><span class="line"><span class="number">15</span>       pthread_mutex_init(&amp;c-&gt;glock,  <span class="literal">NULL</span>);</span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="number">17</span>       <span class="type">int</span> i;</span><br><span class="line"><span class="number">18</span>       <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; NUMCPUS; i++) &#123;</span><br><span class="line"><span class="number">19</span>           c-&gt;local[i] = <span class="number">0</span>;</span><br><span class="line"><span class="number">20</span>           pthread_mutex_init(&amp;c-&gt;llock[i],  <span class="literal">NULL</span>);</span><br><span class="line"><span class="number">21</span>       &#125;</span><br><span class="line"><span class="number">22</span>   &#125;</span><br><span class="line"><span class="number">23</span></span><br><span class="line"><span class="number">24</span>   <span class="comment">// update: usually, just grab local lock and update local amount</span></span><br><span class="line"><span class="number">25</span>   <span class="comment">//        once local count has risen by &#x27;threshold&#x27;, grab global</span></span><br><span class="line"><span class="number">26</span>   <span class="comment">//        lock and transfer local values to it</span></span><br><span class="line"><span class="number">27</span>   <span class="type">void</span> <span class="title function_">update</span><span class="params">(<span class="type">counter_t</span> *c, <span class="type">int</span> threadID, <span class="type">int</span> amt)</span> &#123;</span><br><span class="line"><span class="number">28</span>       pthread_mutex_lock(&amp;c-&gt;llock[threadID]);</span><br><span class="line"><span class="number">29</span>       c-&gt;local[threadID] += amt;               <span class="comment">// assumes amt &gt; 0</span></span><br><span class="line"><span class="number">30</span>       <span class="keyword">if</span> (c-&gt;local[threadID] &gt;= c-&gt;threshold) &#123; <span class="comment">// 局部值大于阈值，transfer to global</span></span><br><span class="line"><span class="number">31</span>           pthread_mutex_lock(&amp;c-&gt;glock);</span><br><span class="line"><span class="number">32</span>           c-&gt;global += c-&gt;local[threadID];</span><br><span class="line"><span class="number">33</span>           pthread_mutex_unlock(&amp;c-&gt;glock);</span><br><span class="line"><span class="number">34</span>           c-&gt;local[threadID] = <span class="number">0</span>;<span class="comment">//本地值清0, 注意到不会与其他cpu上的线程竞争，因此是安全的</span></span><br><span class="line"><span class="number">35</span>       &#125;</span><br><span class="line"><span class="number">36</span>       pthread_mutex_unlock(&amp;c-&gt;llock[threadID]);</span><br><span class="line"><span class="number">37</span>   &#125;</span><br><span class="line"><span class="number">38</span></span><br><span class="line"><span class="number">39</span>   <span class="comment">// get: just return global amount (which may not be perfect)</span></span><br><span class="line"><span class="number">40</span>   <span class="type">int</span> <span class="title function_">get</span><span class="params">(<span class="type">counter_t</span> *c)</span> &#123;</span><br><span class="line"><span class="number">41</span>       pthread_mutex_lock(&amp;c-&gt;glock);</span><br><span class="line"><span class="number">42</span>       <span class="type">int</span> val = c-&gt;global;</span><br><span class="line"><span class="number">43</span>       pthread_mutex_unlock(&amp;c-&gt;glock);</span><br><span class="line"><span class="number">44</span>       <span class="keyword">return</span> val; <span class="comment">// only approximate!</span></span><br><span class="line"><span class="number">45</span>   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="并发链表"><a class="header-anchor" href="#并发链表"></a>并发链表</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>    <span class="comment">// basic node structure，单链表</span></span><br><span class="line"><span class="number">2</span>    <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">node_t</span> &#123;</span></span><br><span class="line"><span class="number">3</span>        <span class="type">int</span>                key;</span><br><span class="line"><span class="number">4</span>        <span class="class"><span class="keyword">struct</span>  <span class="title">node_t</span>        *<span class="title">next</span>;</span></span><br><span class="line"><span class="number">5</span>    &#125; <span class="type">node_t</span>;</span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span>    <span class="comment">// basic list structure (one used per list)</span></span><br><span class="line"><span class="number">8</span>    <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">list_t</span> &#123;</span></span><br><span class="line"><span class="number">9</span>        <span class="type">node_t</span>                *head;</span><br><span class="line"><span class="number">10</span>       <span class="type">pthread_mutex_t</span>    lock;</span><br><span class="line"><span class="number">11</span>   &#125; <span class="type">list_t</span>;</span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="number">13</span>   <span class="type">void</span> <span class="title function_">List_Init</span><span class="params">(<span class="type">list_t</span> *L)</span> &#123;</span><br><span class="line"><span class="number">14</span>       L-&gt;head = <span class="literal">NULL</span>;</span><br><span class="line"><span class="number">15</span>       pthread_mutex_init(&amp;L-&gt;lock,  <span class="literal">NULL</span>);</span><br><span class="line"><span class="number">16</span>   &#125;</span><br><span class="line"><span class="number">17</span></span><br><span class="line"><span class="number">18</span>   <span class="type">int</span> <span class="title function_">List_Insert</span><span class="params">(<span class="type">list_t</span> *L, <span class="type">int</span> key)</span> &#123;</span><br><span class="line"><span class="number">19</span>       pthread_mutex_lock(&amp;L-&gt;lock);</span><br><span class="line"><span class="number">20</span>       <span class="type">node_t</span> *new = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">node_t</span>));</span><br><span class="line"><span class="number">21</span>       <span class="keyword">if</span> (new == <span class="literal">NULL</span>) &#123;</span><br><span class="line"><span class="number">22</span>           perror(<span class="string">&quot;malloc&quot;</span>);</span><br><span class="line"><span class="number">23</span>           pthread_mutex_unlock(&amp;L-&gt;lock); <span class="comment">//malloc失败，记得释放锁！</span></span><br><span class="line"><span class="number">24</span>           <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// fail</span></span><br><span class="line"><span class="number">25</span>       &#125;</span><br><span class="line"><span class="number">26</span>       new-&gt;key = key;</span><br><span class="line"><span class="number">27</span>       new-&gt;next = L-&gt;head;</span><br><span class="line"><span class="number">28</span>       L-&gt;head = new;</span><br><span class="line"><span class="number">29</span>       pthread_mutex_unlock(&amp;L-&gt;lock);</span><br><span class="line"><span class="number">30</span>       <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// success</span></span><br><span class="line"><span class="number">31</span>   &#125;</span><br><span class="line"><span class="number">32</span></span><br><span class="line"><span class="number">33</span>   <span class="type">int</span> <span class="title function_">List_Lookup</span><span class="params">(<span class="type">list_t</span> *L, <span class="type">int</span> key)</span> &#123;</span><br><span class="line"><span class="number">34</span>       pthread_mutex_lock(&amp;L-&gt;lock);</span><br><span class="line"><span class="number">35</span>       <span class="type">node_t</span> *curr = L-&gt;head;</span><br><span class="line"><span class="number">36</span>       <span class="keyword">while</span> (curr) &#123;</span><br><span class="line"><span class="number">37</span>           <span class="keyword">if</span> (curr-&gt;key == key) &#123;</span><br><span class="line"><span class="number">38</span>               pthread_mutex_unlock(&amp;L-&gt;lock); <span class="comment">//在意外退出时unlock</span></span><br><span class="line"><span class="number">39</span>               <span class="keyword">return</span> <span class="number">0</span>; <span class="comment">// success</span></span><br><span class="line"><span class="number">40</span>           &#125;</span><br><span class="line"><span class="number">41</span>           curr = curr-&gt;next;</span><br><span class="line"><span class="number">42</span>       &#125;</span><br><span class="line"><span class="number">43</span>       pthread_mutex_unlock(&amp;L-&gt;lock);</span><br><span class="line"><span class="number">44</span>       <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// failure</span></span><br><span class="line"><span class="number">45</span>   &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在开头lock,结尾unlock, 注意到<code>malloc</code>失败后也要记得unlock
+<ul>
+<li>这种在代码中多次unlock的写法很丑陋！ 应该修改
+<ul>
+<li>要么出错的地方不要放在临界区</li>
+<li>要么出错时break到主循环，在主循环内统一unlock</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>这是粗粒度的写法，可以更细粒度地优化：</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="number">18</span>   <span class="type">int</span> <span class="title function_">List_Insert</span><span class="params">(<span class="type">list_t</span> *L, <span class="type">int</span> key)</span> &#123;</span><br><span class="line"><span class="number">19</span>      <span class="comment">//local的数据，不需要锁保护</span></span><br><span class="line"><span class="number">20</span>       <span class="type">node_t</span> *new = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">node_t</span>));</span><br><span class="line"><span class="number">21</span>       <span class="keyword">if</span> (new == <span class="literal">NULL</span>) &#123;</span><br><span class="line"><span class="number">22</span>           perror(<span class="string">&quot;malloc&quot;</span>);</span><br><span class="line"><span class="number">23</span>           pthread_mutex_unlock(&amp;L-&gt;lock); <span class="comment">//出错时不在临界区，无需unlock</span></span><br><span class="line"><span class="number">24</span>           <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line"><span class="number">25</span>       &#125;</span><br><span class="line"><span class="number">26</span>       new-&gt;key = key;</span><br><span class="line"><span class="number">27</span>    	<span class="comment">//just lock critical section !!!!!</span></span><br><span class="line"><span class="number">28</span>       pthread_mutex_lock(&amp;L-&gt;lock);</span><br><span class="line"><span class="number">29</span>       new-&gt;next = L-&gt;head;</span><br><span class="line"><span class="number">30</span>       L-&gt;head = new;</span><br><span class="line"><span class="number">31</span>       pthread_mutex_unlock(&amp;L-&gt;lock);</span><br><span class="line"><span class="number">32</span>       <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line"><span class="number">33</span>   &#125;</span><br><span class="line"></span><br><span class="line"><span class="number">33</span>   <span class="type">int</span> <span class="title function_">List_Lookup</span><span class="params">(<span class="type">list_t</span> *L, <span class="type">int</span> key)</span> &#123;</span><br><span class="line">    	 <span class="type">int</span> rv = <span class="number">-1</span>;<span class="comment">// success / failure</span></span><br><span class="line"><span class="number">34</span>       pthread_mutex_lock(&amp;L-&gt;lock);</span><br><span class="line"><span class="number">35</span>       <span class="type">node_t</span> *curr = L-&gt;head;</span><br><span class="line"><span class="number">36</span>       <span class="keyword">while</span> (curr) &#123;</span><br><span class="line"><span class="number">37</span>           <span class="keyword">if</span> (curr-&gt;key == key) &#123;</span><br><span class="line"><span class="number">38</span>               rv=<span class="number">0</span>;</span><br><span class="line"><span class="number">39</span>               <span class="keyword">break</span>; <span class="comment">// 跳出主循环，在主循环内统一unlock ！！！</span></span><br><span class="line"><span class="number">40</span>           &#125;</span><br><span class="line"><span class="number">41</span>           curr = curr-&gt;next;</span><br><span class="line"><span class="number">42</span>       &#125;</span><br><span class="line"><span class="number">43</span>       pthread_mutex_unlock(&amp;L-&gt;lock);</span><br><span class="line"><span class="number">44</span>       <span class="keyword">return</span> rv; <span class="comment">// now both success and failure</span></span><br><span class="line"><span class="number">45</span>   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="扩展链表"><a class="header-anchor" href="#扩展链表"></a>扩展链表</h2>
+<ul>
+<li>过手锁<code>hand-overohand locking</code>: 每个节点都有一个锁，替代之前整个链表一个锁，遍历链表时，首先抢占下一个节点的锁，然后释放当前节点的锁
+<ul>
+<li>开销巨大，未必比单锁快</li>
+</ul>
+</li>
+<li>注意控制流的变化导致函数返回和退出，这种情况下要<strong>记得释放锁</strong></li>
+</ul>
+<h2 id="并发队列"><a class="header-anchor" href="#并发队列"></a>并发队列</h2>
+<p>粗粒度的锁很简单，接下来使用细粒度的锁</p>
+<ul>
+<li>对队列头和尾各设置一个锁
+<ul>
+<li>因为出队只访问<code>head</code>锁， 入队只访问<code>tail</code>锁， 两把锁使得出队和入对可以并发执行</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>    <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">node_t</span> &#123;</span></span><br><span class="line"><span class="number">2</span>        <span class="type">int</span>                 value;</span><br><span class="line"><span class="number">3</span>        <span class="class"><span class="keyword">struct</span>  <span class="title">node_t</span>     *<span class="title">next</span>;</span></span><br><span class="line"><span class="number">4</span>    &#125; <span class="type">node_t</span>;</span><br><span class="line"><span class="number">5</span></span><br><span class="line"><span class="number">6</span>    <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">queue_t</span> &#123;</span></span><br><span class="line"><span class="number">7</span>        <span class="type">node_t</span>            *head;</span><br><span class="line"><span class="number">8</span>        <span class="type">node_t</span>            *tail;</span><br><span class="line"><span class="number">9</span>        <span class="type">pthread_mutex_t</span>    headLock;</span><br><span class="line"><span class="number">10</span>       <span class="type">pthread_mutex_t</span>    tailLock;</span><br><span class="line"><span class="number">11</span>   &#125; <span class="type">queue_t</span>;</span><br><span class="line"><span class="number">12</span></span><br><span class="line"><span class="number">13</span>   <span class="type">void</span> <span class="title function_">Queue_Init</span><span class="params">(<span class="type">queue_t</span> *q)</span> &#123;</span><br><span class="line"><span class="number">14</span>       <span class="type">node_t</span> *tmp = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">node_t</span>));</span><br><span class="line"><span class="number">15</span>       tmp-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line"><span class="number">16</span>       q-&gt;head = q-&gt;tail = tmp;</span><br><span class="line"><span class="number">17</span>       pthread_mutex_init(&amp;q-&gt;headLock,  <span class="literal">NULL</span>);</span><br><span class="line"><span class="number">18</span>       pthread_mutex_init(&amp;q-&gt;tailLock,  <span class="literal">NULL</span>);</span><br><span class="line"><span class="number">19</span>   &#125;</span><br><span class="line"><span class="number">20</span></span><br><span class="line"><span class="number">21</span>   <span class="type">void</span> <span class="title function_">Queue_Enqueue</span><span class="params">(<span class="type">queue_t</span> *q, <span class="type">int</span> value)</span> &#123;</span><br><span class="line"><span class="number">22</span>       <span class="type">node_t</span> *tmp = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="type">node_t</span>));</span><br><span class="line"><span class="number">23</span>       assert(tmp != <span class="literal">NULL</span>);</span><br><span class="line"><span class="number">24</span>       tmp-&gt;value = value;</span><br><span class="line"><span class="number">25</span>       tmp-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line"><span class="number">26</span></span><br><span class="line"><span class="number">27</span>       pthread_mutex_lock(&amp;q-&gt;tailLock);<span class="comment">//入队只访问`tail`锁</span></span><br><span class="line"><span class="number">28</span>       q-&gt;tail-&gt;next = tmp;</span><br><span class="line"><span class="number">29</span>       q-&gt;tail = tmp;</span><br><span class="line"><span class="number">30</span>       pthread_mutex_unlock(&amp;q-&gt;tailLock);</span><br><span class="line"><span class="number">31</span>   &#125;</span><br><span class="line"><span class="number">32</span></span><br><span class="line"><span class="number">33</span>   <span class="type">int</span> <span class="title function_">Queue_Dequeue</span><span class="params">(<span class="type">queue_t</span> *q, <span class="type">int</span> *value)</span> &#123;</span><br><span class="line"><span class="number">34</span>       pthread_mutex_lock(&amp;q-&gt;headLock);<span class="comment">//出队只访问`head`锁</span></span><br><span class="line"><span class="number">35</span>       <span class="type">node_t</span> *tmp = q-&gt;head;</span><br><span class="line"><span class="number">36</span>       <span class="type">node_t</span> *newHead = tmp-&gt;next;</span><br><span class="line"><span class="number">37</span>       <span class="keyword">if</span> (newHead == <span class="literal">NULL</span>) &#123;</span><br><span class="line"><span class="number">38</span>           pthread_mutex_unlock(&amp;q-&gt;headLock);</span><br><span class="line"><span class="number">39</span>           <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// queue was empty，这种写法（在子控制流unlock）很丑陋，应该像之前《重写并发链表》的 List_Lookup() 一样改造</span></span><br><span class="line"><span class="number">40</span>       &#125;</span><br><span class="line"><span class="number">41</span>       *value = newHead-&gt;value;</span><br><span class="line"><span class="number">42</span>       q-&gt;head = newHead;</span><br><span class="line"><span class="number">43</span>       pthread_mutex_unlock(&amp;q-&gt;headLock);</span><br><span class="line"><span class="number">44</span>       <span class="built_in">free</span>(tmp);</span><br><span class="line"><span class="number">45</span>       <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="number">46</span>   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="并发散列表"><a class="header-anchor" href="#并发散列表"></a>并发散列表</h2>
+<ul>
+<li>每个元素都是一个并发链表，也称为“散列桶”
+<ul>
+<li>每个散列桶都有一个锁</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>    <span class="meta">#<span class="keyword">define</span> BUCKETS (101)</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span>    <span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>  <span class="title">hash_t</span> &#123;</span></span><br><span class="line"><span class="number">4</span>        <span class="type">list_t</span> lists[BUCKETS];</span><br><span class="line"><span class="number">5</span>    &#125; <span class="type">hash_t</span>;</span><br><span class="line"><span class="number">6</span></span><br><span class="line"><span class="number">7</span>    <span class="type">void</span> <span class="title function_">Hash_Init</span><span class="params">(<span class="type">hash_t</span> *H)</span> &#123;</span><br><span class="line"><span class="number">8</span>        <span class="type">int</span> i;</span><br><span class="line"><span class="number">9</span>        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; BUCKETS; i++) &#123;</span><br><span class="line"><span class="number">10</span>           List_Init(&amp;H-&gt;lists[i]);</span><br><span class="line"><span class="number">11</span>       &#125;</span><br><span class="line"><span class="number">12</span>   &#125;</span><br><span class="line"><span class="number">13</span></span><br><span class="line"><span class="number">14</span>   <span class="type">int</span> <span class="title function_">Hash_Insert</span><span class="params">(<span class="type">hash_t</span> *H, <span class="type">int</span> key)</span> &#123;</span><br><span class="line"><span class="number">15</span>       <span class="type">int</span> bucket = key % BUCKETS;</span><br><span class="line"><span class="number">16</span>       <span class="keyword">return</span> List_Insert(&amp;H-&gt;lists[bucket], key);</span><br><span class="line"><span class="number">17</span>   &#125;</span><br><span class="line"><span class="number">18</span></span><br><span class="line"><span class="number">19</span>   <span class="type">int</span> <span class="title function_">Hash_Lookup</span><span class="params">(<span class="type">hash_t</span> *H, <span class="type">int</span> key)</span> &#123;</span><br><span class="line"><span class="number">20</span>       <span class="type">int</span> bucket = key % BUCKETS;</span><br><span class="line"><span class="number">21</span>       <span class="keyword">return</span> List_Lookup(&amp;H-&gt;lists[bucket], key);</span><br><span class="line"><span class="number">22</span>   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Conclusion"><a class="header-anchor" href="#Conclusion"></a>Conclusion</h2>
+<ul>
+<li>Knuth定律： <strong>避免不成熟的优化</strong>
+<ul>
+<li>先最简单的方案，也就是加大锁（ <code>big kernel lock, BKL. in linux kernel</code> ）开始， 如果有性能问题再改进</li>
+</ul>
+</li>
+<li>控制流变化时记得获取和释放锁</li>
+<li>增加并发并不一定能提高性能
+<ul>
+<li>过手锁</li>
+</ul>
+</li>
+</ul>
+<h1 id="Conditional-Variable"><a class="header-anchor" href="#Conditional-Variable"></a>Conditional Variable</h1>
+<ul>
+<li>
+<p>条件变量： 一个显式<strong>队列</strong>， 当<code>condition</code>不满足时，线程把自己加入队列，<code>waiting</code>该条件。 当另外某个线程改变该<code>condition</code>时，就可以<strong>唤醒</strong><code>signal</code>一个或者多个（假唤醒）等待线程，让它们继续执行</p>
+<ul>
+<li>
+<p><code>wait(  mutex )</code>: 该函数假定在<code>wait()</code>时， <code>mutex</code>是上锁状态。 <code>wait()</code>的职责是释放锁， 并让调用进程休眠（原子地）。 当线程被唤醒时（在另外某个线程<code>signal</code>它之后）它重新获取锁，再返回调用者</p>
+<ul>
+<li>
+<p>这样使得<code>wait()</code>写起来很方便：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"> Pthread_mutex_lock(&amp;m);</span><br><span class="line"> <span class="keyword">while</span>(done==<span class="number">0</span>)</span><br><span class="line">    Pthread_cond_wait(&amp;c,&amp;m);<span class="comment">//wait释放锁，线程进入休眠。 当被signal时，wait获取锁，再返回调用者。 不用手写unlock\lock了</span></span><br><span class="line">Pthread_mutex_unlock(&amp;m);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>总结：<code>signal</code>和<code>wait</code>时总是持有锁 + 需要状态变量</p>
+<ul>
+<li><code>wait()</code>的语义强制要求调用时已经持有锁，因此不需要操心</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;mythreads.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> done = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">pthread_mutex_t</span> m = PTHREAD_MUTEX_INITIALIZER;</span><br><span class="line"><span class="type">pthread_cond_t</span> c = PTHREAD_COND_INITIALIZER;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="type">void</span> <span class="title function_">thr_exit</span><span class="params">()</span></span><br><span class="line"> &#123;</span><br><span class="line">     Pthread_mutex_lock(&amp;m);</span><br><span class="line">     done = <span class="number">1</span>;</span><br><span class="line">     Pthread_cond_signal(&amp;c);</span><br><span class="line">     Pthread_mutex_unlock(&amp;m);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="type">void</span> <span class="title function_">thr_join</span><span class="params">()</span></span><br><span class="line"> &#123;</span><br><span class="line">     Pthread_mutex_lock(&amp;m);</span><br><span class="line">     <span class="keyword">while</span>(done==<span class="number">0</span>)<span class="comment">// 推荐使用while循环而不是if,原因之后解释</span></span><br><span class="line">        Pthread_cond_wait(&amp;c,&amp;m);</span><br><span class="line">    Pthread_mutex_unlock(&amp;m);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> * <span class="title function_">child</span><span class="params">( <span class="type">void</span>*arg )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>( <span class="string">&quot;child\n&quot;</span> );</span><br><span class="line">    thr_exit();</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">( <span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">pthread_t</span>  p;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;parent: begin\n&quot;</span>);</span><br><span class="line">    Pthread_create(&amp;p, <span class="literal">NULL</span>,child, <span class="literal">NULL</span>);</span><br><span class="line">    thr_join();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;parent: end\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>情况一： parent创建出子进程后，自己继续运行（假设单核），然后马上调用<code>thr_join()</code> 等待子进程，此时它会先获取锁，检查子进程是否完成（还没有），然后调用<code>wait()</code>，让自己休眠。 子线程最终得以运行，打印出“child”， 并调用<code>thr_exit()</code>唤醒父进程， 而<code>exit()</code>原子地设置<code>done</code>，向父进程<code>signal</code>， 最后父进程会运行，从<code>wait()</code>返回并持有锁， 释放锁， 打印出“parent: end”</li>
+<li>情况二：子进程创建后立刻运行， 设置<code>done = 1</code>， 调用<code>signal()</code>唤醒其他线程（这里没有其他线程），然后结束。 副进程运行后，调用<code>thr_join()</code>时，发现<code>done</code>已经为1了，就直接返回</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">parent: begin</span><br><span class="line">child</span><br><span class="line">parent: end</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>状态变量<code>done</code>是<strong>必要</strong>的</p>
+<p>假如没有：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">thr_exit</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    Pthread_mutex_lock(&amp;m);</span><br><span class="line">    Pthread_cond_signal(&amp;c);</span><br><span class="line">    Pthread_mutex_unlock(&amp;m);</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="type">void</span> <span class="title function_">thr_join</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">   Pthread_mutex_lock(&amp;m);</span><br><span class="line">   Pthread_cond_wait(&amp;c,&amp;m);</span><br><span class="line">   Pthread_mutex_unlock(&amp;m);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>假如子线程立刻运行，且调用<code>thr_exit</code>，此时子进程<code>signal()</code>，条件变量上没有睡眠的线程。 父线程运行时，就会调用<code>wait（）</code>并卡在这里，没有线程会<code>signal（）</code>它</li>
+</ul>
+</li>
+<li>
+<p>发信号和等待时加锁也是必要的</p>
+<p>假如没有：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">thr_exit</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    done = <span class="number">1</span>;</span><br><span class="line">    Pthread_cond_signal(&amp;c);</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="type">void</span> <span class="title function_">thr_join</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">while</span>(done==<span class="number">0</span>)<span class="comment">// 推荐使用while循环而不是if,原因之后解释</span></span><br><span class="line">       Pthread_cond_wait(&amp;c,&amp;m);</span><br><span class="line">&#125;</span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果父进程调用<code>thr_join()</code>,检查<code>done = 0</code>，试图睡眠，然而在调用<code>wait（）</code>前被中断（因为没有锁，此时其它进程就可以操纵临界区）， 子进程修改变量为1,发出<code>signal（）</code>，此时没有睡眠进程。 父进程再次运行时，就会卡在<code>wait()</code>，没有线程可以唤醒它</li>
+</ul>
+</li>
+</ul>
+<h2 id="生产者-消费者（有界缓冲区）问题"><a class="header-anchor" href="#生产者-消费者（有界缓冲区）问题"></a>生产者/消费者（有界缓冲区）问题</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//30_7.c</span></span><br><span class="line"><span class="type">cond_t</span> cond;</span><br><span class="line"><span class="type">mutex_t</span> mutex;</span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> *<span class="title function_">producer</span><span class="params">(<span class="type">void</span> *arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>( i=<span class="number">0</span>; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        Pthread_mutex_lock(&amp;mutex);</span><br><span class="line">        <span class="keyword">if</span>(count == <span class="number">1</span>)</span><br><span class="line">            Pthread_cond_wait(&amp;cond,&amp;mutex);</span><br><span class="line">        put(i);</span><br><span class="line">        Pthread_cond_signal(&amp;cond);</span><br><span class="line">        Pthread_mutex_unlock(&amp;mutex);       </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">consumer</span><span class="params">( <span class="type">void</span> *arg )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>; </span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">        <span class="keyword">while</span>( count == <span class="number">0</span> )<span class="comment">//必须用while,不能用if</span></span><br><span class="line">            pthread_cond_wait(&amp;cond,&amp;mutex);</span><br><span class="line">        <span class="type">int</span> tmp = get();</span><br><span class="line">        Pthread_cond_signal(&amp;cond);</span><br><span class="line">        Pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">        ptrintf(<span class="string">&quot;%d\n&quot;</span>,tmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>假设使用<code>if</code>:  假设有两个消费者$T_{c1}$和，$T_{c2}$ 生产者$T_{p}$,
+<ul>
+<li>若$T_{c1}$先运行，卡在<code>wait</code>， 接着$T_p$运行，在缓冲区放一个数字，然后<code>signal</code>唤醒$T_{c1}$， 生产者继续循环，直到发现缓冲区满后睡眠</li>
+<li>此时如果$T_{c2}$抢先执行，消费了缓冲区里的值，然后$T_{c1}$从<code>wait</code>处恢复运行，调用<code>get</code>，此时发生error！</li>
+<li>原因在于，生产者<code>signal</code>唤醒了$T_{c1}$， 但是没有保证$T_{c1}$立即执行 （或者说，没有保证$T_{c1}$执行之前，缓冲区没有再发生变化）
+<ul>
+<li><code>signal</code>的这种语义称为<code>Mesa</code>语义</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>解决方案是： <strong>始终使用<code>while</code></strong>，这样当$T_{c1}$醒来时，会再次检查<code>count==0</code>，发现为缓冲区0则继续<code>wait</code>。这样就避免了error</li>
+</ul>
+<h3 id="使用两个条件变量"><a class="header-anchor" href="#使用两个条件变量"></a>使用两个条件变量</h3>
+<ul>
+<li>上述代码依然有问题： 假设$T_{c1}$和$T_{c2}$先运行，都卡在<code>wait</code>， $T_{p}$开始运行，往缓冲区放入一个值，发出<code>signal</code>， 继续循环，直到发现缓冲区满后睡眠</li>
+<li>$T_{c1}$醒来，消费了这个值，然后在该条件上<code>signal</code>，注意，此时理应唤醒$T_{p}$， 但事实上有可能唤醒$T_{c2}$</li>
+<li>假如唤醒$T_{c2}$，因为缓冲区为空， 它会卡在<code>wait</code>，<strong>此时三个线程都处于睡眠</strong></li>
+<li>原因在于， <strong><code>signal</code>没有指向性</strong>， 消费者不应唤醒消费者，只应该唤醒生产者</li>
+<li>解决方案：使用两个条件变量， 生产者睡在<code>empty</code>， 消费者睡在<code>fill</code>
+<ul>
+<li>由此也看出，<strong>线程唤醒需要满足什么条件，它就应该睡在哪个条件变量上</strong>，这是<strong>条件变量的命名方式</strong>
+<ul>
+<li>比如消费者需要缓冲区<code>fill</code>才能醒来，因此该条件变量就命名为<code>fill</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//30_8.c</span></span><br><span class="line"><span class="type">cond_t</span> empty,fill;</span><br><span class="line"><span class="type">mutex_t</span> mutex;</span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> *<span class="title function_">producer</span><span class="params">(<span class="type">void</span> *arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>( i=<span class="number">0</span>; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        Pthread_mutex_lock(&amp;mutex);</span><br><span class="line">        <span class="keyword">if</span>(count == <span class="number">1</span>)</span><br><span class="line">            Pthread_cond_wait(&amp;empty,&amp;mutex);</span><br><span class="line">        put(i);</span><br><span class="line">        Pthread_cond_signal(&amp;fill);</span><br><span class="line">        Pthread_mutex_unlock(&amp;mutex);       </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">consumer</span><span class="params">( <span class="type">void</span> *arg )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>; </span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">        <span class="keyword">while</span>( count == <span class="number">0</span> )</span><br><span class="line">            pthread_cond_wait(&amp;fill,&amp;mutex);</span><br><span class="line">        <span class="type">int</span> tmp = get();</span><br><span class="line">        Pthread_cond_signal(&amp;empty);</span><br><span class="line">        Pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">        ptrintf(<span class="string">&quot;%d\n&quot;</span>,tmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="最终版本"><a class="header-anchor" href="#最终版本"></a>最终版本</h4>
+<ul>
+<li>这是最终版本，生产者只有缓冲区满了的时候才会睡眠
+<ul>
+<li>因此信号量命名为<code>empty</code>有点名不符实（ <code>fill</code>也是如此，事实上缓冲区有一个值就可以唤醒消费者了 ）</li>
+<li>对<code>get()</code>和<code>put()</code>的调用保证上了锁</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//30_9.c  生产者消费者问题最终版</span></span><br><span class="line"><span class="type">int</span> buffer[MAX];</span><br><span class="line"><span class="type">int</span> fill_ptr = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> use_ptr = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">put</span><span class="params">(<span class="type">int</span> value)</span></span><br><span class="line">&#123;</span><br><span class="line">    buffer[fill_ptr] = value;</span><br><span class="line">    fill_ptr = (fill_ptr+<span class="number">1</span>)%MAX;</span><br><span class="line">    count++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">get</span><span class="params">()</span><span class="comment">//拿取use_ptr指向的值，use_ptr++</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> tmp = buffer[use_ptr];</span><br><span class="line">    use_ptr = (use_ptr+<span class="number">1</span>)%MAX;</span><br><span class="line">    count--;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">cond_t</span> empty,fill;</span><br><span class="line"><span class="type">mutex_t</span> mutex;</span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> *<span class="title function_">producer</span><span class="params">(<span class="type">void</span> *arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>( i=<span class="number">0</span>; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        Pthread_mutex_lock(&amp;mutex);</span><br><span class="line">        <span class="keyword">if</span>(count == MAX)</span><br><span class="line">            Pthread_cond_wait(&amp;empty,&amp;mutex);</span><br><span class="line">        put(i);</span><br><span class="line">        Pthread_cond_signal(&amp;fill);</span><br><span class="line">        Pthread_mutex_unlock(&amp;mutex);       </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">consumer</span><span class="params">( <span class="type">void</span> *arg )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>; </span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">        <span class="keyword">while</span>( count == <span class="number">0</span> )</span><br><span class="line">            pthread_cond_wait(&amp;fill,&amp;mutex);</span><br><span class="line">        <span class="type">int</span> tmp = get();</span><br><span class="line">        Pthread_cond_signal(&amp;empty);</span><br><span class="line">        Pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">        ptrintf(<span class="string">&quot;%d\n&quot;</span>,tmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="覆盖条件"><a class="header-anchor" href="#覆盖条件"></a>覆盖条件</h2>
+<ul>
+<li><code>signal</code>只会唤醒一个线程</li>
+<li>考虑一个内存分配程序。 当没有空闲内存时， $T_{c1}$和$T_{c2}$各自<code>allocate</code>1000和10字节。 它们都因此卡在<code>wait</code>
+<ul>
+<li>此时$T_{p}$ <code>free</code>了50字节，它发出signal，此时有可能唤醒的是$T_{c1}$， 后者因为内存不够，依然继续睡眠</li>
+<li>上述代码因此无法正常工作</li>
+</ul>
+</li>
+<li>解决方案是采用广播的signal, 即<code>pthread_cond_broadcast()</code> 代替<code>pthread_cond_signal</code>,唤醒所有等待线程，这个条件变量称为<strong>广播条件<code>covering condition</code></strong>
+<ul>
+<li>会影响性能</li>
+<li>该方案虽然很笨，但有时很有用</li>
+<li>当然，<code>30_8.c</code>的代码也可以采用此解决方案。 但我当时有更好的办法（用两个条件变量）</li>
+</ul>
+</li>
+</ul>
+<h1 id="信号量"><a class="header-anchor" href="#信号量"></a>信号量</h1>
+<ul>
+<li>
+<p>def： 有一个整数值的对象，可以用<code>sem_wait()</code>和<code>sem_post()</code>操作（ in Posix ）</p>
+<ul>
+<li>因此要初始化</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"><span class="type">sem_t</span> s;</span><br><span class="line">sem_init(&amp;s, <span class="number">0</span> , <span class="number">0</span>); 第二个参数一般设为<span class="number">0</span>,表示该信号量在同一个进程的多个线程内贡献</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">sem_wait</span><span class="params">(<span class="type">sem_t</span> *s)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//decrement the value of semaphore s by one</span></span><br><span class="line">    <span class="comment">//wait if value of semaphore s is a negative</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">sem_post</span><span class="params">(<span class="type">sem_t</span> *s)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//increment the value of semaphore s by one</span></span><br><span class="line">    <span class="comment">//if there are one or more threads waiting, wake one</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>在这个实现中， 信号量的值为负数时，该值就是等待线程的个数</p>
+</li>
+<li>
+<p><strong>信号量有时很难设计，此时还是使用条件变量更靠谱</strong></p>
+</li>
+</ul>
+<h2 id="二值信号量（锁）"><a class="header-anchor" href="#二值信号量（锁）"></a>二值信号量（锁）</h2>
+<ul>
+<li>可以把信号量作为锁(<strong>其值设为1</strong>)</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">sem_t</span> m;</span><br><span class="line">sem_init(&amp;m, <span class="number">0</span>, <span class="number">1</span>); <span class="comment">//下文解释为何是1</span></span><br><span class="line"></span><br><span class="line">sem_wait(&amp;m);</span><br><span class="line"><span class="comment">//critical section</span></span><br><span class="line">sem_post(&amp;m);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>假设有两个线程，$T_{1}$调用<code>sem_wait()</code>，将信号量值减为0, 因为0不是负数，因此$T_{c1}$从<code>wait</code>返回并继续，它可以自由进入临界区， 若没有其他线程尝试获取锁，当$T_{1}$调用<code>sem_post()</code>时，会将信号重置为1</li>
+<li>如果$T_{1}$持有锁时，$T_{2}$尝试获取锁（即调用<code>sem_wait()</code>），此时它会将信号量减为<code>-1</code>。然后卡在这里。 $T_{1}$再次运行，执行<code>sem_post()</code>，  将信号量值增加到0,唤醒等待的线程（$T_{2}$），然后$T_{2}$就能获取锁
+<ul>
+<li>当$T_{2}$执行结束时，执行<code>sem_post()</code>，  将信号量值增加到1</li>
+</ul>
+</li>
+</ul>
+<h2 id="信号量用作条件变量"><a class="header-anchor" href="#信号量用作条件变量"></a>信号量用作条件变量</h2>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">sem_t</span> s;</span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> *<span class="title function_">child</span><span class="params">(<span class="type">void</span> *arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;child\n&quot;</span>);</span><br><span class="line">    sem_post(&amp;s);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> *argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    sem_init( &amp;s, <span class="number">0</span>, <span class="number">0</span> );<span class="comment">//信号量设为0</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;parent: begin\n&quot;</span>);</span><br><span class="line">    <span class="type">pthread_t</span> c;</span><br><span class="line">    Pthread_create(c, <span class="literal">NULL</span>, child, <span class="literal">NULL</span>);</span><br><span class="line">    sem_wait(&amp;s); <span class="comment">// wait here for child</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;parent: end\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>输出为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">parent: begin</span><br><span class="line">child</span><br><span class="line">parent: end</span><br></pre></td></tr></table></figure>
+<ul>
+<li>考虑两种情况：
+<ol>
+<li>子进程没有先运行，父进程先调用<code>sem_wait()</code>,将信号量减为-1,父进程卡在<code>wait</code>， 然后子进程运行，调用<code>sem_post()</code>，信号量增加为0,唤醒父线程</li>
+<li>子线程在父线程调用<code>sem_post()</code>之前就运行结束，结果正常</li>
+</ol>
+</li>
+</ul>
+<h2 id="生产者-消费者（有界缓冲区）问题-2"><a class="header-anchor" href="#生产者-消费者（有界缓冲区）问题-2"></a>生产者/消费者（有界缓冲区）问题</h2>
+<p>考虑用信号量实现生产者/消费者问题：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> buffer[MAX];</span><br><span class="line"><span class="type">int</span> fill_ptr = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> use_ptr = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">put</span><span class="params">(<span class="type">int</span> value)</span></span><br><span class="line">&#123;</span><br><span class="line">    buffer[fill_ptr] = value;</span><br><span class="line">    fill_ptr = (fill_ptr+<span class="number">1</span>)%MAX;</span><br><span class="line">    count++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">get</span><span class="params">()</span><span class="comment">//拿取use_ptr指向的值，use_ptr++</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> tmp = buffer[use_ptr];</span><br><span class="line">    use_ptr = (use_ptr+<span class="number">1</span>)%MAX;</span><br><span class="line">    count--;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">sem_t</span> empty,fill;</span><br><span class="line"><span class="comment">// mutex_t mutex;</span></span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> *<span class="title function_">producer</span><span class="params">(<span class="type">void</span> *arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>( i=<span class="number">0</span>; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        </span><br><span class="line">        sem_wait(&amp;empty);</span><br><span class="line">        put(i);</span><br><span class="line">        sem_post(&amp;fill);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">consumer</span><span class="params">( <span class="type">void</span> *arg )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>; </span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        sem_wait(&amp;fill);</span><br><span class="line">        <span class="type">int</span> tmp = get();</span><br><span class="line">        sem_post(&amp;empty);</span><br><span class="line">        ptrintf(<span class="string">&quot;%d\n&quot;</span>,tmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这段代码的问题在于： 对假设MAX大于1,此时可以有两个生产者（$T_1$, $T_2$）同时调用<code>put()</code>，如果$T_1$先放入数据，然后在更新计时器时中断，$T_2$运行，它会在该位置再放入一个值，发生error
+<ul>
+<li>这是因为在MAX&gt;1时，信号量的使用不能保证<code>put（）</code>的原子性</li>
+</ul>
+</li>
+<li>解决方案：上锁</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> buffer[MAX];</span><br><span class="line"><span class="type">int</span> fill_ptr = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> use_ptr = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">put</span><span class="params">(<span class="type">int</span> value)</span></span><br><span class="line">&#123;</span><br><span class="line">    buffer[fill_ptr] = value;</span><br><span class="line">    fill_ptr = (fill_ptr+<span class="number">1</span>)%MAX;</span><br><span class="line">    count++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">get</span><span class="params">()</span><span class="comment">//拿取use_ptr指向的值，use_ptr++</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> tmp = buffer[use_ptr];</span><br><span class="line">    use_ptr = (use_ptr+<span class="number">1</span>)%MAX;</span><br><span class="line">    count--;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">sem_t</span> empty,fill,mutex;</span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> *<span class="title function_">producer</span><span class="params">(<span class="type">void</span> *arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>( i=<span class="number">0</span>; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        sem_wait(&amp;mutex);</span><br><span class="line">        sem_wait(&amp;empty);</span><br><span class="line">        put(i);</span><br><span class="line">        sem_post(&amp;mutex);</span><br><span class="line">        sem_post(&amp;fill);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">consumer</span><span class="params">( <span class="type">void</span> *arg )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>; </span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        sem_wait(&amp;mutex);</span><br><span class="line">        sem_wait(&amp;fill);</span><br><span class="line">        <span class="type">int</span> tmp = get();</span><br><span class="line">        sem_post(&amp;empty);</span><br><span class="line">        sem_post(&amp;mutex);</span><br><span class="line">        ptrintf(<span class="string">&quot;%d\n&quot;</span>,tmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    sem_init(&amp;empty, <span class="number">0</span>, MAX);</span><br><span class="line">    sem_init(&amp;fill, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    sem_init(&amp;mutex, <span class="number">0</span>, <span class="number">1</span>);<span class="comment">// mutex = 1 because it is a lock</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>这段代码依然有问题： 因为在<code>fill</code>和<code>empty</code>上睡着时没有释放锁（传统的<code>pthread_wait</code>是会释放锁的，但是这里是用信号量实现的锁）。 因此消费者在<code>fill</code>上睡着时，二值信号量锁<code>mutex</code>没有释放，生产者试图对<code>mutex</code>调用<code>sem_wait</code>也被卡住。</p>
+<ul>
+<li>消费者等待在<code>full</code>，持有<code>mutex</code>， 生产者可以signal <code>fill</code>，却在等待<code>mutex</code>，发生了<strong>死锁</strong></li>
+</ul>
+</li>
+<li>
+<p>解决方案： 把对<code>mutex</code>的获取和释放调整为紧挨着临界区</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> buffer[MAX];</span><br><span class="line"><span class="type">int</span> fill_ptr = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> use_ptr = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">put</span><span class="params">(<span class="type">int</span> value)</span></span><br><span class="line">&#123;</span><br><span class="line">    buffer[fill_ptr] = value;</span><br><span class="line">    fill_ptr = (fill_ptr+<span class="number">1</span>)%MAX;</span><br><span class="line">    count++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">get</span><span class="params">()</span><span class="comment">//拿取use_ptr指向的值，use_ptr++</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> tmp = buffer[use_ptr];</span><br><span class="line">    use_ptr = (use_ptr+<span class="number">1</span>)%MAX;</span><br><span class="line">    count--;</span><br><span class="line">    <span class="keyword">return</span> tmp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">sem_t</span> empty,fill,mutex;</span><br><span class="line"><span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line"><span class="type">void</span> *<span class="title function_">producer</span><span class="params">(<span class="type">void</span> *arg)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i;</span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>( i=<span class="number">0</span>; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        sem_wait(&amp;empty);</span><br><span class="line">        sem_wait(&amp;mutex);</span><br><span class="line">        put(i);</span><br><span class="line">        sem_post(&amp;mutex);</span><br><span class="line">        sem_post(&amp;fill)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> *<span class="title function_">consumer</span><span class="params">( <span class="type">void</span> *arg )</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> i = <span class="number">0</span>; </span><br><span class="line">    <span class="type">int</span> loops = (<span class="type">int</span>) arg;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span> ; i &lt; loops; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        sem_wait(&amp;fill);</span><br><span class="line">        sem_wait(&amp;mutex);</span><br><span class="line">        <span class="type">int</span> tmp = get();</span><br><span class="line">        sem_post(&amp;mutex);</span><br><span class="line">        sem_post(&amp;empty);</span><br><span class="line">        ptrintf(<span class="string">&quot;%d\n&quot;</span>,tmp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    sem_init(&amp;empty, <span class="number">0</span>, MAX);</span><br><span class="line">    sem_init(&amp;fill, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    sem_init(&amp;mutex, <span class="number">0</span>, <span class="number">1</span>);<span class="comment">// mutex = 1 because it is a lock</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="读者-—-写者锁"><a class="header-anchor" href="#读者-—-写者锁"></a>读者 — 写者锁</h2>
+<ul>
+<li>读写锁更加灵活，因为查找操作不会更改临界区</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">rwlock_t</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">sem_t</span> lock; <span class="comment">// binary sephamore, basic lock</span></span><br><span class="line">    <span class="type">sem_t</span> writelock;<span class="comment">//used to allow ONE writer or MANY readers</span></span><br><span class="line">    <span class="type">int</span> readers;<span class="comment">// count of readers reading in critical section</span></span><br><span class="line">&#125;<span class="type">rwlock_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">rwlock_init</span><span class="params">( <span class="type">rwlock_t</span> *rw )</span></span><br><span class="line">&#123;</span><br><span class="line">    rw -&gt; readers = <span class="number">0</span>;</span><br><span class="line">    sem_init( &amp;rw -&gt; lock, <span class="number">0</span>, <span class="number">1</span> );</span><br><span class="line">    sem_init( &amp;rw -&gt; writelock, <span class="number">0</span>, <span class="number">1</span> );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">rwlock_acquire_readlock</span><span class="params">(<span class="type">rwlock_t</span> *rw)</span></span><br><span class="line">&#123;</span><br><span class="line">    sem_wait(&amp;rw-&gt;lock);</span><br><span class="line">    rw -&gt; readers++;</span><br><span class="line">    <span class="keyword">if</span>(rw-&gt;readers == <span class="number">1</span>)</span><br><span class="line">        sem_post( &amp;rw -&gt;writelock ); <span class="comment">// last reader releases writelock</span></span><br><span class="line">    sem_post(&amp;rw -&gt; lock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">rwlock_release_readlock</span><span class="params">(<span class="type">rwlock_t</span> *rw)</span></span><br><span class="line">&#123;</span><br><span class="line">    sem_wait(&amp;rw-&gt;lock);</span><br><span class="line">    rw -&gt; readers--;</span><br><span class="line">    <span class="keyword">if</span>( rw -&gt; readers == <span class="number">0</span> )</span><br><span class="line">        sem_post( rw -&gt; writelock );<span class="comment">// last reader releases writelock</span></span><br><span class="line">    sem_post(&amp;rw-&gt;lock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">rwlock_acquire_writelock</span><span class="params">(<span class="type">rwlock_t</span> *rw)</span></span><br><span class="line">&#123;</span><br><span class="line">    sem_wait(&amp;rw-&gt; writelock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">rwlock_release_writelock</span><span class="params">(<span class="type">rwlock_t</span> *rw )</span></span><br><span class="line">&#123;</span><br><span class="line">    sem_post(&amp;rw -&gt; writelock);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>想要获取写锁的进程，需要等待所有的读者都结束</li>
+<li>缺点：读者很容易饿死写者</li>
+</ul>
+<h2 id="哲学家就餐问题"><a class="header-anchor" href="#哲学家就餐问题"></a>哲学家就餐问题</h2>
+<p>最简单的解决方案：破除依赖， 就是修改某个哲学家的取餐叉顺序</p>
+<h2 id="如何实现信号量"><a class="header-anchor" href="#如何实现信号量"></a>如何实现信号量</h2>
+<p>用锁和条件变量实现信号量：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&quot;mythreads.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;semaphore.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">Zem_t</span>&#123;</span></span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">    <span class="type">pthread_cond_t</span> cond;</span><br><span class="line">    <span class="type">pthread_mutex_t</span> lock;</span><br><span class="line">&#125;Zem_t;</span><br><span class="line"></span><br><span class="line"><span class="comment">//only one thread can call this</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">Zem_init</span><span class="params">(Zem_t *s, <span class="type">int</span> value)</span></span><br><span class="line">&#123;</span><br><span class="line">    s -&gt; value = value;</span><br><span class="line">    Pthread_cond_init(&amp;s-&gt;cond,<span class="literal">NULL</span>);</span><br><span class="line">    Pthread_mutex_init(&amp;s-&gt;lock,<span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Zem_wait</span><span class="params">(Zem_t *s)</span></span><br><span class="line">&#123;</span><br><span class="line">    Pthread_mutex_lock(&amp;s-&gt;lock);</span><br><span class="line">    <span class="keyword">while</span>( s-&gt;value &lt;=<span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        Pthread_cond_wait( &amp;s-&gt;cond, &amp;s-&gt;lock );</span><br><span class="line">    &#125;</span><br><span class="line">    s -&gt;value--;<span class="comment">//注意到这里是先检查是否为非正数，再递减</span></span><br><span class="line">    Pthread_mutex_unlock(&amp;s-&gt;lock);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">void</span> <span class="title function_">Zem_post</span><span class="params">(Zem_t *s)</span></span><br><span class="line">&#123;</span><br><span class="line">    Pthread_mutex_lock(&amp;s-&gt;lock);</span><br><span class="line">    s -&gt; value++;</span><br><span class="line">    Pthread_cond_signal( &amp;s -&gt; cond );</span><br><span class="line">    Pthread_mutex_unlock(&amp;s-&gt;lock);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意到<code>wait</code>是先检查是否为非正数，再递减，这使得信号量值永远不会小于0
+<ul>
+<li>这也是linux的实现</li>
+</ul>
+</li>
+<li>用信号量来实现锁和条件变量相当困难</li>
+</ul>
+<h1 id="常见并发问题"><a class="header-anchor" href="#常见并发问题"></a>常见并发问题</h1>
+<h2 id="非死锁缺陷"><a class="header-anchor" href="#非死锁缺陷"></a>非死锁缺陷</h2>
+<ul>
+<li>
+<p>违反原子性缺陷：给共享变量的访问加锁</p>
+</li>
+<li>
+<p>违反顺序缺陷：使用条件变量，强制顺序：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"> <span class="comment">//...</span></span><br><span class="line">Pthread_mutex_lock(&amp;mutex);</span><br><span class="line"><span class="keyword">while</span>( inited == = )</span><br><span class="line">    Pthread_Cond_wait( &amp;cond, &amp;mutex );</span><br><span class="line"><span class="comment">//operations to critical section</span></span><br><span class="line">Pthread_mutex_unlock(&amp;mutex);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="死锁缺陷"><a class="header-anchor" href="#死锁缺陷"></a>死锁缺陷</h2>
+<ul>
+<li>模块化和锁不是很契合</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>T1</th>
+<th>T2</th>
+<th>T3</th>
+<th>T4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>系统形成死锁的四个必要条件
+<ol>
+<li>互斥条件(mutual exclusion):系统中存在临界资源,进程应互斥地使用这些资源</li>
+<li>占有和等待条件(hold and wait):进程请求资源得不到满足而等待时,不释放已占有的资源</li>
+<li>不剥夺条件(no preemption):已被占用的资源只能由属主释放,不允许被其它进程剥夺</li>
+<li>循环等待条件(circular wait):存在循环等待链,其中,每个进程都在链中等待下一个进程所持有的资源,造成这组进程永远等待</li>
+</ol>
+</li>
+</ul>
+<h3 id="循环等待"><a class="header-anchor" href="#循环等待"></a>循环等待</h3>
+<ul>
+<li>细致地设计锁策略，有序加锁</li>
+</ul>
+<h3 id="持有并等待"><a class="header-anchor" href="#持有并等待"></a>持有并等待</h3>
+<ul>
+<li>任何线程抢锁之前要先抢一个全局锁，这样保证了抢锁的原子性(抢锁时不会有其他进程切入)
+<ul>
+<li>如：假如线程1需要<code>lock1</code>和<code>lock2</code>， 而线程二需要<code>lock2</code>和<code>lock1</code>。线程1获得<code>lock1</code>后不会被打断，能继续获得<code> lock2</code>，执行完毕，释放这两个锁，线程二继续执行。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">lock(prevection);<span class="comment">//global lock</span></span><br><span class="line">lock(L1);</span><br><span class="line">lock(L2);</span><br><span class="line">...</span><br><span class="line">unlock(prevention);</span><br></pre></td></tr></table></figure>
+<h3 id="非抢占"><a class="header-anchor" href="#非抢占"></a>非抢占</h3>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">top:</span><br><span class="line">lock(L1);</span><br><span class="line"><span class="keyword">if</span>(trylock(L2)==<span class="number">-1</span>)</span><br><span class="line">   &#123;</span><br><span class="line">       unlock(L1);</span><br><span class="line">	<span class="keyword">goto</span>(top);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>同样是实现了原子地抢占锁
+<ul>
+<li>如果<code>L2</code>没抢到，那么会释放<code>L1</code></li>
+</ul>
+</li>
+<li>会导致活锁（ <code>livelock</code>）
+<ul>
+<li>两个线程可能一直重复这一序列，又同时都抢锁失败
+<ul>
+<li>假如线程1持有<code>lock1</code>，等待<code>lock2</code>( 因此该线程一直try - fail)， 而线程二持有<code>lock2</code>，等待<code>lock1</code>,线程1在试图获得<code>lock2</code>时被中断，线程2获得<code>lock2</code>，试图获得<code>lock1</code>，此时发生活锁</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="互斥"><a class="header-anchor" href="#互斥"></a>互斥</h3>
+<ul>
+<li>通过无等待（wait-free）数据结构避免互斥</li>
+</ul>
+<h3 id="通过调度避免死锁"><a class="header-anchor" href="#通过调度避免死锁"></a>通过调度避免死锁</h3>
+<p>线程对锁的需求：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>T1</th>
+<th>T2</th>
+<th>T3</th>
+<th>T4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+<td>N</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>只要T1和T2不同时运行就不会发生死锁
+<ul>
+<li>T3只用到一把锁，因此可以和其它线程并发执行，不会死锁</li>
+</ul>
+</li>
+<li>可以强制T2在T1之后运行</li>
+<li>这种保守的方案很明显会降低性能</li>
+</ul>
+<h3 id="检查和恢复"><a class="header-anchor" href="#检查和恢复"></a>检查和恢复</h3>
+<ul>
+<li>允许死锁偶尔发生，检查到死锁时再采取行动（重启电脑）</li>
+<li>太摆烂了。。。</li>
+</ul>
+<h1 id="基于事件的并发（Advanced）"><a class="header-anchor" href="#基于事件的并发（Advanced）"></a>基于事件的并发（Advanced）</h1>
+<p>事件循环：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">    events = getEvents();</span><br><span class="line">    <span class="keyword">for</span>( e in events )</span><br><span class="line">    &#123;</span><br><span class="line">        processEvent(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>因为事件是原子的，一次只处理一个事件不需要考虑线程切换。 而且如上所见，我们可以对事件调度进行<strong>显式控制</strong></li>
+<li>这意味着事件是阻塞的，有巨大的性能开销，需要引入异步的事件处理，再加上多CPU时，并行的事件处理复杂度相当于多线程。 因此给予事件的并发并不比基于线程的简单。</li>
+<li>这部分内容很庞大，我不想在C编程上倾注太多时间，因此放在JAVA等语言的并发中讲。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/17/%E4%BA%BA%E4%BD%93%E7%BB%93%E6%9E%84%E4%B8%8E%E7%96%BE%E7%97%85/" rel="prev" title="人体结构与疾病">
+                  <i class="fa fa-chevron-left"></i> 人体结构与疾病
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/29/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F%E8%AE%BE%E8%AE%A1%E6%B5%81%E7%A8%8B/" rel="next" title="商业模式设计流程">
+                  商业模式设计流程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

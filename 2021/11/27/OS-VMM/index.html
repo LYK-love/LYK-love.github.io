@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  虚拟化CPU 虚拟化内存 总结  ref: Operating Systems Three Easy pieces">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS VMM">
+<meta property="og:url" content="http://lyk-love.cn/2021/11/27/OS-VMM/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  虚拟化CPU 虚拟化内存 总结  ref: Operating Systems Three Easy pieces">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-26T21:12:17.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.936Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/11/27/OS-VMM/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/11/27/OS-VMM/","path":"2021/11/27/OS-VMM/","title":"OS VMM"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OS VMM | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%8C%96CPU"><span class="nav-text">虚拟化CPU</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%EF%BC%9A-traditional"><span class="nav-text">执行系统调用： traditional</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%EF%BC%9Awith-Virtualization"><span class="nav-text">执行系统调用：with  Virtualization</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%8C%96%E5%86%85%E5%AD%98"><span class="nav-text">虚拟化内存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TLB%E6%9C%AA%E5%91%BD%E4%B8%AD%E6%B5%81%E7%A8%8B%EF%BC%9A-traditional"><span class="nav-text">TLB未命中流程： traditional</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLB%E6%9C%AA%E5%91%BD%E4%B8%AD%E6%B5%81%E7%A8%8B%EF%BC%9A-with-Virtualization"><span class="nav-text">TLB未命中流程： with  Virtualization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E7%AE%A1%E7%90%86%E7%9A%84TLB"><span class="nav-text">硬件管理的TLB</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/11/27/OS-VMM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OS VMM | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS VMM
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-11-26 21:12:17" itemprop="dateCreated datePublished" datetime="2021-11-26T21:12:17Z">2021-11-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>虚拟化CPU</li>
+<li>虚拟化内存</li>
+<li>总结</li>
+</ul>
+<p>ref: <em>Operating Systems Three Easy pieces</em></p>
+<span id="more"></span>
+<h1 id="虚拟化CPU"><a class="header-anchor" href="#虚拟化CPU"></a>虚拟化CPU</h1>
+<ul>
+<li>
+<p>VMM采用<code>limited directed execction</code>来运行虚拟机</p>
+<ul>
+<li>即： VMM跳转到第一条指令的地址，并让OS开始运行</li>
+</ul>
+</li>
+<li>
+<p>多个虚拟机在一个CPU上<code>multiplexing</code>，需要执行<code>machine switch</code>，这类似进程的<code>context switch</code></p>
+<ul>
+<li><code>machine switch</code>流程：VMM必须
+<ol>
+<li>保存整个OS的机器状态（ incluing registers, PC, 并且和上下文切换不同， VMM还要保存所有的特权硬件的状态 ）</li>
+<li>恢复待运行OS的机器状态</li>
+<li>然后跳转到待运行OS的PC</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p>特权指令直接控制机器，因此VMM不允许OS直接执行特权指令。事实上VMM会先接受系统调用，然后将该系统调用<strong>转发</strong>给OS，后者返回后前者也随之返回。</p>
+<ol>
+<li>
+<p>当user program发出系统调用时，由于VMM控制了机器，因此VMM会陷入kernel mode</p>
+</li>
+<li>
+<p>VMM跳转到OS的<code>trap handler</code>，并让OS处理该system call</p>
+<ul>
+<li>VMM知道OS的<code>trap handler</code>的位置，因为OS启动时会通过特权指令来安装自己的<code>trap handler</code>，因此会陷入VMM,此时VMM会记录该<code>trap handler</code>在内存中的位置</li>
+</ul>
+</li>
+<li>
+<p>OS完成后会通过<code>return</code>返回,这也是system call, 因此VMM真正从<code>trap</code>返回</p>
+<ul>
+<li><code>return</code>: 在X86上是<code>iret</code></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>由于guest OS不可以无限制地访问硬件，因此它不能处于kernel mode。 一般而言，guest OS会处于某种特权更小的kernel mode</p>
+</li>
+</ul>
+<h2 id="执行系统调用：-traditional"><a class="header-anchor" href="#执行系统调用：-traditional"></a>执行系统调用： traditional</h2>
+<ol>
+<li>进程： 发出system call，陷入OS</li>
+<li>硬件： 切换到kernel mode,跳转到<code>trap handler</code>
+<ul>
+<li>如前所述，OS启动时，会利用特权指令安装<code>trap handler</code>，因此硬件知道<code>trap handler</code>的地址</li>
+</ul>
+</li>
+<li>OS： 在kernel mode处理system call, 从<code>trap</code>返回</li>
+<li>硬件：切换到user mode</li>
+<li>进程：继续执行</li>
+</ol>
+<h2 id="执行系统调用：with-Virtualization"><a class="header-anchor" href="#执行系统调用：with-Virtualization"></a>执行系统调用：with  Virtualization</h2>
+<ol>
+<li>进程： 发出system call，陷入OS</li>
+<li>VMM：事实上进程陷入的是VMM, VMM将该system call转发给guest OS的<code>trap handler</code></li>
+<li>OS： 在kernel mode处理system call, 从<code>trap</code>返回（调用特权指令）</li>
+<li>VMM：知道OS尝试返回，VMM真正从<code>trap</code>返回</li>
+<li>进程：继续执行</li>
+</ol>
+<h1 id="虚拟化内存"><a class="header-anchor" href="#虚拟化内存"></a>虚拟化内存</h1>
+<ul>
+<li>
+<p>OS将物理内存抽象为地址空间，使得每个进程有自己私有地址空间的假象</p>
+<ul>
+<li>OS 页表： VPN to PFN</li>
+</ul>
+</li>
+<li>
+<p>VMM将机器内存抽象为物理内存，使OS有自己完全掌握机器内存的假象</p>
+<ul>
+<li>
+<p>即： VMM管理OS的物理到机器内存映射</p>
+</li>
+<li>
+<p>VMM页表：PFN to MFN（ 机器帧号 ）</p>
+</li>
+</ul>
+</li>
+<li>
+<p>硬件TLB： 当TLB未命中时，OS必须参与处理未命中</p>
+</li>
+</ul>
+<h2 id="TLB未命中流程：-traditional"><a class="header-anchor" href="#TLB未命中流程：-traditional"></a>TLB未命中流程： traditional</h2>
+<ul>
+<li>OS TLB和VMM TLB都是TLB的软件管理程序，这里所指的TLB是硬件TLB</li>
+</ul>
+<ol>
+<li>进程： 从内存加载。 TLB未命中。 <code>TRAP</code></li>
+<li>OS：OS TLB 未命中处理程序：
+<ul>
+<li>从VA提取VPN</li>
+<li>查找页表</li>
+<li>如果存在且有效，则取得PFN,更新TLB</li>
+<li>从<code>TRAP返回</code></li>
+</ul>
+</li>
+<li>进程： 继续执行，返回到导致<code>trap</code>的PC. 指令重试，导致TLB命中</li>
+</ol>
+<h2 id="TLB未命中流程：-with-Virtualization"><a class="header-anchor" href="#TLB未命中流程：-with-Virtualization"></a>TLB未命中流程： with  Virtualization</h2>
+<ul>
+<li>由于VMM是机器的所有者，因此TLB未命中时， VMM会<code>TRAP</code>，它会立即跳转到OS TLB未命中处理程序。</li>
+<li>OS TLB查找页表，并<strong>尝试</strong>在TLB中安装VPN - PFN映射。 这也是一种特权指令，导致又一次<code>TRAP</code>VMM.</li>
+<li>此时，VMM给TLB事实上安装 <strong>VPM - MFN</strong> 映射（ 而不是 VPN - PFN映射）</li>
+</ul>
+<hr>
+<ol>
+<li>进程： 从内存加载。 TLB未命中。 <code>TRAP</code></li>
+<li>VMM ： ：事实上进程陷入的是VMM,。 VMM TLB未命中处理程序调用OS TLB 未命中处理程序</li>
+<li>OS：OS TLB 未命中处理程序：
+<ul>
+<li>从VA提取VPN</li>
+<li>查找页表</li>
+<li>如果存在且有效，则取得PFN,更新TLB，这是特权操作，导致<code>TRAP</code></li>
+</ul>
+</li>
+<li>VMM：OS TLB陷入VMM, VMM用 VPM - MFN映射来更新TLB。 跳回OS</li>
+<li>OS： 从<code>TRAP</code>返回</li>
+<li>VMM：看到OS返回的特权指令， VMM真正返回</li>
+<li>进程： 继续执行，返回到导致<code>trap</code>的PC. 指令重试，导致TLB命中</li>
+</ol>
+<h2 id="硬件管理的TLB"><a class="header-anchor" href="#硬件管理的TLB"></a>硬件管理的TLB</h2>
+<p>之前讲的都是软件管理的TLB，之前文章提到，也有硬件管理的TLB</p>
+<ul>
+<li>硬件管理TLB时，硬件在TLB miss时遍历页表并更新TLB ， VMM没有机会参与其中，因此无法在此时建立VPM - MFN映射</li>
+<li>作为替代，VMM必须监视OS对每个页表的更改，并保留一个影子页表<code>shadow page table</code>. 它维护进程的<strong>虚拟地址到机器地址</strong>的映射。 每当os尝试安装进程的OS级页表时，VMM就会安装进程的影子页表，然后硬件将虚拟地址转换为机器地址，OS注意不到上述替换的发生
+<ul>
+<li>也就是：OS页表里面存的是<code>VPN - MFN</code>映射。 硬件根据这个映射去物理内存（事实上是机器内存）寻找。</li>
+<li>之前软件管理TLB时， <code>VPN - MFN</code>映射存在TLB上， 硬件根据这个映射去物理内存（事实上是机器内存）寻找。</li>
+</ul>
+</li>
+</ul>
+<h1 id="总结"><a class="header-anchor" href="#总结"></a>总结</h1>
+<ul>
+<li>
+<p>VMM的关键是<strong>扩展<code>limited directed execction</code>概念，让VMM能够介入TRAP</strong></p>
+</li>
+<li>
+<p>VMM能够完全控制机器资源的分配方式</p>
+</li>
+<li>
+<p>之前《现代操作系统》提到，VMM事实上<strong>将物理资源直接分配给内存，没有任何抽象</strong>。这话也没错。 在内存虚拟化层面，VMM偷偷把物理地址替换为了机器地址，OS确实在对物理硬件进行操作（他只是不知道这个映射; CPU虚拟化层面也类似。</p>
+<ul>
+<li>
+<p>相比OS将物理硬件抽象为文件系统等漂亮的API, VMM仅仅将硬件资源抽象为虚拟的硬件资源，</p>
+<p>这两种资源使用上是一样的，因此“不是那么抽象”</p>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/15/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F%E6%88%98%E7%95%A5/" rel="prev" title="商业模式战略">
+                  <i class="fa fa-chevron-left"></i> 商业模式战略
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/03/OS-lab3/" rel="next" title="OS lab3">
+                  OS lab3 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

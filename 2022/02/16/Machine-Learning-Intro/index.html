@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline  基本术语 模型评估和选择">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning Intro">
+<meta property="og:url" content="http://lyk-love.cn/2022/02/16/Machine-Learning-Intro/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline  基本术语 模型评估和选择">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/%E6%95%B0%E6%8D%AE%E9%9B%86.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/confusion%20matrix.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/P-R%20curve.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/AUC%20curve.png">
+<meta property="article:published_time" content="2022-02-15T21:27:44.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.934Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/%E6%95%B0%E6%8D%AE%E9%9B%86.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/02/16/Machine-Learning-Intro/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/02/16/Machine-Learning-Intro/","path":"2022/02/16/Machine-Learning-Intro/","title":"Machine Learning Intro"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Machine Learning Intro | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Term"><span class="nav-text">Basic Term</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Data"><span class="nav-text">Data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Task"><span class="nav-text">Task</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Goal"><span class="nav-text">Goal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%81%87%E8%AE%BE%E7%A9%BA%E9%97%B4"><span class="nav-text">假设空间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NFL%E5%AE%9A%E7%90%86"><span class="nav-text">NFL定理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0%E4%B8%8E%E9%80%89%E6%8B%A9"><span class="nav-text">模型评估与选择</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%B7%AE"><span class="nav-text">误差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88-%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="nav-text">过拟合&amp; 欠拟合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95"><span class="nav-text">评估方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F"><span class="nav-text">性能度量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E7%8E%87%E5%92%8C%E7%B2%BE%E5%BA%A6"><span class="nav-text">错误率和精度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E5%87%86%E7%8E%87%EF%BC%8C%E6%9F%A5%E5%85%A8%E7%8E%87%E5%92%8CF1"><span class="nav-text">查准率，查全率和F1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ROC"><span class="nav-text">ROC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AUC"><span class="nav-text">AUC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E4%BB%B7%E9%94%99%E8%AF%AF%E6%95%8F%E6%84%9F%E7%8E%87"><span class="nav-text">代价错误敏感率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E4%BB%B7%E6%9B%B2%E7%BA%BF"><span class="nav-text">代价曲线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E6%A3%80%E9%AA%8C"><span class="nav-text">比较检验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E9%A1%B9%E6%A3%80%E9%AA%8C"><span class="nav-text">二项检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#T%E6%A3%80%E9%AA%8C"><span class="nav-text">T检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81-T-%E6%A3%80%E9%AA%8C"><span class="nav-text">交叉验证 T-检验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%81%8F%E5%B7%AE%E4%B8%8E%E6%96%B9%E5%B7%AE"><span class="nav-text">偏差与方差</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/02/16/Machine-Learning-Intro/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Machine Learning Intro | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Machine Learning Intro
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-15 21:27:44" itemprop="dateCreated datePublished" datetime="2022-02-15T21:27:44Z">2022-02-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Artificial-Intelligence/" itemprop="url" rel="index"><span itemprop="name">Artificial Intelligence</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline</p>
+<ul>
+<li>基本术语</li>
+<li>模型评估和选择</li>
+</ul>
+<span id="more"></span>
+<h1 id="Basic-Term"><a class="header-anchor" href="#Basic-Term"></a>Basic Term</h1>
+<h2 id="Data"><a class="header-anchor" href="#Data"></a>Data</h2>
+<p>令$D = { x_1,x_2,…,x_m }$表示包含m个示例的数据集，每个示例由d个属性描述，则每个示例$x_i={ x_{i1}, x_{i2}, \dots, x_{id} }$是d维样本空间中的一个向量，$x_i \in \chi$, 其中$x_{ij}$是样本$x_i$在第j个属性的取值</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/%E6%95%B0%E6%8D%AE%E9%9B%86.png" alt="data set"></p>
+<ul>
+<li>
+<p>上面的每条record就是一个<strong>示例</strong>（instance）或<strong>样本</strong>（ sample ）</p>
+</li>
+<li>
+<p>上面的每个field称为一个<strong>属性</strong>（ attribute ）或<strong>特征</strong>（ feature ）,属性的取值就是属性值</p>
+</li>
+<li>
+<p><strong>属性空间</strong>（attribute value）、<strong>样本空间</strong>( sample  space )、<strong>输入空间</strong>： 属性张成的空间，记为$\chi$</p>
+</li>
+<li>
+<p><strong>标记空间</strong>、<strong>输出空间</strong>： 标记张成的空间，记为 $\gamma $</p>
+</li>
+<li>
+<p>如果把属性作为坐标轴，每个示例都对应特征空间的一个点，称为<strong>特征向量</strong>（  feature  vector ）， 属性个数就是样本维度</p>
+</li>
+<li>
+<p>样例（  Example ）:  示例+标记, 用$(x_i,y_i)$表示第i个样例，其中$y_i \in \gamma$是示例$x_i$的标记， $\gamma $ 是所有标记的集合，也就是输出空间</p>
+<ul>
+<li>如果把标记看作对象本身的一部分，那么示例也可以看作样本</li>
+</ul>
+</li>
+<li>
+<p>训练集: 一组训练样例</p>
+</li>
+<li>
+<p>测试集: 一组测试样例</p>
+</li>
+</ul>
+<h2 id="Task"><a class="header-anchor" href="#Task"></a>Task</h2>
+<p>根据标记的取值情况</p>
+<ul>
+<li>分类任务:标记为离散值
+<ul>
+<li>二分类:例如(好瓜,坏瓜)(正类,反类)(+1,-1)</li>
+<li>多分类:例如(冬瓜,南瓜,西瓜)</li>
+</ul>
+</li>
+<li>回归任务:标记为连续值
+<ul>
+<li>例如,瓜的成熟度S</li>
+</ul>
+</li>
+<li>聚类任务:标记为空值,对示例进行自动分组( 即，要分的组也不知道)
+<ul>
+<li>例如,本地瓜,外地瓜</li>
+</ul>
+</li>
+</ul>
+<p>建立一个从输入空间 $\chi$到输出空间$\gamma$的映射：$f : \ x \rightarrow y$, 对二分类任务，通常令$\gamma = {-1,+1}$  或${0,1}$；对多分类任务，   $|\gamma|=2$; 对回归任务， $\gamma = R$</p>
+<p>根据标记的完整情况</p>
+<ul>
+<li>(有)监督学习:所有示例都有标记
+<ul>
+<li>分类、回归</li>
+</ul>
+</li>
+<li>无监督学习:所有示例都没有标记
+<ul>
+<li>聚类</li>
+</ul>
+</li>
+<li>半监督学习:少量示例有标记,大量示例没标记</li>
+<li>噪音标记学习:标记有,但是不完全准确</li>
+</ul>
+<h2 id="Goal"><a class="header-anchor" href="#Goal"></a>Goal</h2>
+<p>机器学习技术的根本目标就是泛化能力</p>
+<p>最理想的机器学习技术是学习到<strong>概念</strong>(人类学习,可理解的)</p>
+<ul>
+<li>比如，“好瓜是某种色泽，某种根蒂，某种敲声的瓜“这样的<strong>概念</strong>，但是，未来是不确定的，你可能遇到没见过的瓜</li>
+</ul>
+<p>但是现实中很困难,因此很多时候机器学习采用的是黑盒模型</p>
+<h2 id="假设空间"><a class="header-anchor" href="#假设空间"></a>假设空间</h2>
+<ul>
+<li>
+<p>假设空间( hypothesis space )：所有假设组成的空间。</p>
+<ul>
+<li>学习就是在假设空间中搜索的过程，搜索目标是找到与训练集匹配的假设</li>
+</ul>
+</li>
+<li>
+<p>版本空间（ version space ）： 假设空间的子集，与训练集一致的假设集合</p>
+</li>
+<li>
+<p>归纳偏好：学习过程中对某种类型假设的偏好称作归纳偏好</p>
+<ul>
+<li>”到底从版本空间中选择哪一个假设“</li>
+<li>可以认为是假设空间（事实上是版本空间）中对假设进行选择的启发式方法</li>
+<li>真实假设可以不在版本空间中，因为版本空间只是符合了训练集的假设</li>
+</ul>
+</li>
+</ul>
+<h2 id="NFL定理"><a class="header-anchor" href="#NFL定理"></a>NFL定理</h2>
+<p>No Free Lunch： 因为未来数据是不知道的,总有一种未来数据的分布让你失败</p>
+<h1 id="模型评估与选择"><a class="header-anchor" href="#模型评估与选择"></a>模型评估与选择</h1>
+<h2 id="误差"><a class="header-anchor" href="#误差"></a>误差</h2>
+<p>“错误率”： 分类错误的样本数占样本总数的比例</p>
+<p>精度： ，1 - 错误率</p>
+<p>误差： 学习器的实际预测输出与样本的真实输出之间的差异</p>
+<p>训练误差或<strong>经验误差</strong>： 学习器在训练集上的误差</p>
+<p>测试误差或<strong>泛化误差</strong>： 学习器在新样本上的误差</p>
+<h2 id="过拟合-欠拟合"><a class="header-anchor" href="#过拟合-欠拟合"></a>过拟合&amp; 欠拟合</h2>
+<ul>
+<li>
+<p>过拟合： 模型把训练样本学得“太好”时，把训练样本自身的一些特点当作了所有潜在样本都会具有的一般性质。这样会致使泛化性能的下降</p>
+</li>
+<li>
+<p>欠拟合：对训练样本的一般性质尚未学好。</p>
+</li>
+</ul>
+<h2 id="评估方法"><a class="header-anchor" href="#评估方法"></a>评估方法</h2>
+<p>我们可以通过实验测试来对学习器的泛化误差进行评估并进而做出选择。 为此要选出测试集，然后以测试集上的“测试误差”来作为泛化误差的近似。 测试集要尽可能与训练集互斥</p>
+<p>数据集规模有限，要分为训练集和测试集，有如下划分方法：</p>
+<ul>
+<li>
+<p>留出法： 直接将数据集划分为两个互斥集合</p>
+<ul>
+<li>测试/训练集要尽可能保持数据分布的一致性</li>
+</ul>
+</li>
+<li>
+<p>交叉验证法</p>
+</li>
+<li>
+<p>自助法</p>
+</li>
+</ul>
+<h2 id="性能度量"><a class="header-anchor" href="#性能度量"></a>性能度量</h2>
+<p>性能度量是衡量模型泛化能力的评价标准，反映了任务需求</p>
+<p>回归任务：</p>
+<ul>
+<li>均方误差</li>
+</ul>
+<p>分类任务：</p>
+<ul>
+<li>错误率，精度</li>
+<li>查准率，查全率</li>
+</ul>
+<p>下面主要介绍回归任务的性能度量</p>
+<h3 id="错误率和精度"><a class="header-anchor" href="#错误率和精度"></a>错误率和精度</h3>
+<ul>
+<li>错误率是分类错误的样本数占样本总数的比例， 精度相反</li>
+</ul>
+<h3 id="查准率，查全率和F1"><a class="header-anchor" href="#查准率，查全率和F1"></a>查准率，查全率和F1</h3>
+<p>查准率：预测出来的正例中正确的比率（分母是被认为为真的样例数）</p>
+<p>查全率：正例被预测出来的比率（ 分母是确实为真的样例数 ）</p>
+<p>混淆矩阵：真实标记和预测结果的组合：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/confusion%20matrix.png" alt="confusion matrix"></p>
+<p>注意FP被认为是正例，实际是反例</p>
+<p>可以根据学习器的预测结果对样例进行排序，并逐个把样本作为正例进行预测，则可以得到查准率-查全率曲线，简称“P-R”曲线</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/P-R%20curve.png" alt="P-R curve"></p>
+<p>如果一个学习器的P-R曲线被另一个的完全包住，我们可以认为前者的性能小于后者，但有时会发生曲线交叉的情况，此时需要设计综合考虑P,R的度量，比如“平衡点”</p>
+<p>平衡点（Break-Even Point）是曲线上“查准率=查全率”时的取值，可用于度量P-R曲线有交叉的分类器性能高低</p>
+<p>BEP太简单，更常用的是F1度量：</p>
+<p>$$<br>
+F1 = \frac{2 \times P \times R}{P + R}<br>
+$$</p>
+<p>比F1更一般形式的 $F_{\beta}$:<br>
+$$<br>
+F_{\beta} = \frac{ 1 + \beta^2 \times P \times R}{ ( \beta^2 \times P ) + R }<br>
+$$<br>
+$\beta$是启发值，可以表示模型对查准/查全率的偏好</p>
+<ul>
+<li>$\beta = 1$: 标准 F1</li>
+<li>$\beta &gt; 1$:偏重查全率</li>
+<li>$\beta 《 1$: 偏重查准率</li>
+</ul>
+<h3 id="ROC"><a class="header-anchor" href="#ROC"></a>ROC</h3>
+<p>ROC曲线纵轴是“真正例率”，横轴是“假正例率”<br>
+$$<br>
+TPR = \frac{ TP }{TP + FN} \<br>
+FPR = \frac{FP}{TN + FP}<br>
+$$</p>
+<p>如果一个学习器的ROC曲线被另一个的完全包住，我们可以认为前者的性能小于后者，但有时会发生曲线交叉的情况，此时可以根据曲线下的面积大小进行比较，也就是<strong>AUC</strong>( Area Under Curve )</p>
+<h3 id="AUC"><a class="header-anchor" href="#AUC"></a>AUC</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/AUC%20curve.png" alt="AUC curve"></p>
+<p>假设AUC曲线由${(x_1,y_1), (x_2,y_2), \dots, (x_m,y_m) }$   的点按序连接而形成，则AUC可估算为：<br>
+$$<br>
+\mathrm{AUC} = \frac{1}{2} \sum\limits_{i=1}^{m-1}(x_{i+1} - x_i)(y_i + y_{i+1})<br>
+$$<br>
+AUC 衡量了样本预测的排序质量<br>
+$$<br>
+\mathrm{AUC} = 1 - l_{rank}<br>
+$$</p>
+<h3 id="代价错误敏感率"><a class="header-anchor" href="#代价错误敏感率"></a>代价错误敏感率</h3>
+<p>为了权衡不同类型错误所造成的不同损失，为错误赋予“非均等代价”（unequal cost）：</p>
+<p>以二分类为例：可设定一个代价矩阵（cost matrix）</p>
+<table>
+<thead>
+<tr>
+<th>真实类别</th>
+<th>预测 第0类</th>
+<th>结果 第1类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第0类</td>
+<td>0</td>
+<td>$cost_{01}$</td>
+</tr>
+<tr>
+<td>第1类</td>
+<td>$cost_{10}$</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>其中用$cost_{ij}$表示将第$i$类预测为第$j$类的代价</p>
+<p>在非均等代价下，我们所希望的不再是简单地最小化错误的次数，而是希望最小化<strong>总体代价</strong>（total cost）</p>
+<p>（以上面二分类为例0为正例，1为负例）<strong>代价敏感率</strong>（cost-sensitive）错误率为：</p>
+<p>$$<br>
+E(f ; D ; \cos t)=\frac{1}{m}\left{\sum_{x_{i} \in D^{+}}\left|\left(f\left(x_{i}\right) !=y_{i}\right)^{*} \cos t_{01}+\sum_{x_{i} \in D^{-}}\right|\left(f\left(x_{i}\right)==y_{i}\right) * \cos t_{10}\right}<br>
+$$<br>
+$D$:数据集      $D^+$ ：正样本数据集    $D^-$:负样本数据集</p>
+<p>若令$cost_{ij}$的取值不限于0,1,则可以定义出多任务分类的代价敏感性能度量</p>
+<h3 id="代价曲线"><a class="header-anchor" href="#代价曲线"></a>代价曲线</h3>
+<p>在非均等代价下，ROC曲线不能直接反映出学习器的期望总体代价，可以用“<strong>代价曲线</strong>”</p>
+<p>代价曲线图的横轴是取值为[0, 1]的正例概率代价,<br>
+$$<br>
+P(+) \cos t=\frac{p^{<em>} \cos t_{01}}{p^{</em>} \cos t_{01}+(1-p) \cos t_{10}}<br>
+$$<br>
+$p$：样例为正例的概率</p>
+<p>纵轴为取值[0, 1]的归一化代价:<br>
+$$<br>
+\operatorname{cost}<em>{n o r m}=\frac{F N R * P * \cos t</em>{01}+F P R <em>(1-P) * \cos t_{10}}{p^{</em>} \cos t_{01}+(1-p) * \cos t_{10}}<br>
+$$</p>
+<h2 id="比较检验"><a class="header-anchor" href="#比较检验"></a>比较检验</h2>
+<h3 id="二项检验"><a class="header-anchor" href="#二项检验"></a>二项检验</h3>
+<h3 id="T检验"><a class="header-anchor" href="#T检验"></a>T检验</h3>
+<h3 id="交叉验证-T-检验"><a class="header-anchor" href="#交叉验证-T-检验"></a>交叉验证 T-检验</h3>
+<h3 id="偏差与方差"><a class="header-anchor" href="#偏差与方差"></a>偏差与方差</h3>
+<p>对测试样本x,令$y_D$为$x$在数据集中的标记，$y$为$x$的真实标记, $f(x;D)$为训练集 $D$上学得模型$$在$x$上的预测输出。 以回归任务为例，学习期望为：<br>
+$$<br>
+\bar f(x) = E_D [ f(x;D) ] \<br>
+$$<br>
+使用样本数目相同的不同训练集产生的方差为：<br>
+$$<br>
+var(x) = E_D [ ( f(x;D) - \bar f(x) )^2]<br>
+$$<br>
+噪声为：<br>
+$$<br>
+\epsilon^2 = E_D [ (y_D - y)^2 ]<br>
+$$<br>
+偏差定义为期望输出与真实标记的差别： $bias^2 = ( \bar f(x) - y )^2$, 为方便讨论，我们假设噪声的期望为0 ， 即$E_D [ (y_D - y)^2 ] = 0$. 对泛化误差分解：<br>
+$$<br>
+\begin{aligned}<br>
+E(f ; D)=&amp; \mathbb{E}<em>{D}\left[\left(f(\boldsymbol{x} ; D)-y</em>{D}\right)^{2}\right] \<br>
+=&amp; \mathbb{E}<em>{D}\left[\left(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x})+\bar{f}(\boldsymbol{x})-y</em>{D}\right)^{2}\right] \<br>
+=&amp; \mathbb{E}<em>{D}\left[(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x}))^{2}\right]+\mathbb{E}</em>{D}\left[\left(\bar{f}(\boldsymbol{x})-y_{D}\right)^{2}\right] \<br>
+&amp;+\mathbb{E}<em>{D}\left[2(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x}))\left(\bar{f}(\boldsymbol{x})-y</em>{D}\right)\right] \<br>
+=&amp; \mathbb{E}<em>{D}\left[(f(\boldsymbol{x} ; D)-\bar{f}(\boldsymbol{x}))^{2}\right]+\mathbb{E}</em>{D}\left[\left(\bar{f}(\boldsymbol{x})-y_{D}\right)^{2}\right]<br>
+\end{aligned}<br>
+$$</p>
+<p>我们看到，<strong>泛化误差 = 方差 + 偏差 + 噪声</strong></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/02/15/Docker-Compose/" rel="prev" title="Docker Compose">
+                  <i class="fa fa-chevron-left"></i> Docker Compose
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/02/19/Linux-Basic/" rel="next" title="Linux Basic">
+                  Linux Basic <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

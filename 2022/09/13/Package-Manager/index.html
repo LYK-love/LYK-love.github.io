@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  For Linux For OSX For Languages">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Package Manager">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/13/Package-Manager/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  For Linux For OSX For Languages">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-13T14:58:06.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.937Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/13/Package-Manager/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/13/Package-Manager/","path":"2022/09/13/Package-Manager/","title":"Package Manager"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Package Manager | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#For-Linux"><span class="nav-text">For Linux</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#apt"><span class="nav-text">apt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pacman"><span class="nav-text">pacman</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conda"><span class="nav-text">conda</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%A2%E6%BA%90"><span class="nav-text">换源</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#For-OSX"><span class="nav-text">For OSX</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#brew"><span class="nav-text">brew</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#For-Languages"><span class="nav-text">For Languages</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pip3"><span class="nav-text">pip3</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%A2%E6%BA%90-2"><span class="nav-text">换源</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npm"><span class="nav-text">npm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%A2%E6%BA%90-3"><span class="nav-text">换源</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/13/Package-Manager/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Package Manager | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Package Manager
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-13 14:58:06" itemprop="dateCreated datePublished" datetime="2022-09-13T14:58:06Z">2022-09-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>For Linux</li>
+<li>For OSX</li>
+<li>For Languages</li>
+</ul>
+<span id="more"></span>
+<h1 id="For-Linux"><a class="header-anchor" href="#For-Linux"></a>For Linux</h1>
+<h2 id="apt"><a class="header-anchor" href="#apt"></a>apt</h2>
+<p>更新软件源</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get upgrade</span><br></pre></td></tr></table></figure>
+<p>查看系统已安装的包：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt list --installed </span><br></pre></td></tr></table></figure>
+<h2 id="pacman"><a class="header-anchor" href="#pacman"></a>pacman</h2>
+<p>同步存储库数据库，并且更新系统的所有软件包，但不包括不在软件库中的“本地安装的”包：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pacman -Syu</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>S</code> 代表同步</li>
+<li><code>y</code> 代表更新本地存储库</li>
+<li><code>u</code> 代表系统更新</li>
+</ul>
+<h2 id="conda"><a class="header-anchor" href="#conda"></a>conda</h2>
+<p>推荐<code>miniconda</code>， 直接去NJU MIRROR下载：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>清华源</li>
+</ul>
+<p>然后安装：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bash /path/to/miniconda</span><br></pre></td></tr></table></figure>
+<p>重启终端，检查安装是否成功：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda -V</span><br></pre></td></tr></table></figure>
+<h3 id="换源"><a class="header-anchor" href="#换源"></a>换源</h3>
+<p>conda换源建议用nju源  （清华源早就不行了，建议别用）， <a target="_blank" rel="noopener" href="https://mirrors.nju.edu.cn/help/anaconda">具体指导</a></p>
+<ol>
+<li>
+<p>先执行 <code>conda config --set show_channel_urls yes</code> 生成用户目录下的 <code>.condarc</code> 文件</p>
+</li>
+<li>
+<p>编辑该文件：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br></pre></td></tr></table></figure>
+<p>即可添加 Anaconda Python 免费仓库。</p>
+</li>
+<li>
+<p>运行 <code>conda clean -i</code> 清除索引缓存，保证用的是镜像站提供的索引。</p>
+</li>
+<li>
+<p>运行 <code>conda create -n myenv numpy</code> 测试一下吧</p>
+</li>
+</ol>
+<h1 id="For-OSX"><a class="header-anchor" href="#For-OSX"></a>For OSX</h1>
+<h2 id="brew"><a class="header-anchor" href="#brew"></a>brew</h2>
+<p>brew安装的软件位置千奇百怪, 但都会在<code>/opt/homebrew/opt</code>留下软链接</p>
+<ul>
+<li>事实上, brew可能把</li>
+</ul>
+<p>安装：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">/bin/zsh -c &quot;$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)&quot;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>查看brew版本:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew --version</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<p>查看安装的软件版本:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew info [name]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>查看某软件的可安装版本:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew search [name]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>brew可以对它安装的软件进行版本切换. 在最新的3.x版本使用<code>link</code>:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew unlink go &amp;&amp; brew link go@1.13</span><br></pre></td></tr></table></figure>
+<p>低版本的brew使用的是<code>switch</code>, here is <a target="_blank" rel="noopener" href="https://babygoat.github.io/2019/06/19/Golang-mac%E4%B8%8A%E5%88%87%E6%8F%9B%E5%A4%9A%E5%80%8Bgo%E7%89%88%E6%9C%AC/">Doc</a></p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<p>查看brew安装的符号路径: 一般都位于<code>/opt/homebrew/opt</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew  --prefix &lt;package&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>查看brew安装的软件的实际路径:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew list &lt;package&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="For-Languages"><a class="header-anchor" href="#For-Languages"></a>For Languages</h1>
+<h2 id="pip3"><a class="header-anchor" href="#pip3"></a>pip3</h2>
+<p>pip是python的一个包管理工具，python2:使用<code>pip</code>, python3使用<code>pip3</code></p>
+<ul>
+<li>( Python3下使用<code>pip</code> 默认用的是<code>pip3</code> )</li>
+</ul>
+<h3 id="安装"><a class="header-anchor" href="#安装"></a>安装</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yay -S pip3</span><br></pre></td></tr></table></figure>
+<p>mac用户：<code>brew intall pip3</code>相当卡， 因此要用：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl bootstrap.pypa.io/get-pip.py | python3</span><br></pre></td></tr></table></figure>
+<p>检查安装是否成功：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pip3 --version</span><br></pre></td></tr></table></figure>
+<h3 id="换源-2"><a class="header-anchor" href="#换源-2"></a>换源</h3>
+<p>在 pip 命令中使用 <strong>-i</strong> 参数来指定镜像地址</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">pip3 install numpy -i https://mirrors.aliyun.com/pypi/simple/</span><br></pre></td></tr></table></figure>
+<p>如果需要配置全局的镜像地址，需要修改配置文件:</p>
+<p>Linux/Mac os 环境中，配置文件在 ~/.pip/pip.conf（如不存在创建该目录和文件）：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">mkdir ~/.pip</span><br></pre></td></tr></table></figure>
+<p>打开配置文件 <strong>~/.pip/pip.conf</strong>，修改如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">[install]</span><br><span class="line">trusted-host = https://mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+<p>查看镜像地址：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">pip3 config <span class="built_in">list</span>  </span><br></pre></td></tr></table></figure>
+<h2 id="npm"><a class="header-anchor" href="#npm"></a>npm</h2>
+<h3 id="换源-3"><a class="header-anchor" href="#换源-3"></a>换源</h3>
+<p>国内优秀npm镜像：</p>
+<p>淘宝npm镜像</p>
+<ul>
+<li>搜索地址：<a target="_blank" rel="noopener" href="https://link.jianshu.com?t=http://npm.taobao.org/">http://npm.taobao.org/</a></li>
+<li>registry地址：<a target="_blank" rel="noopener" href="https://link.jianshu.com?t=http://registry.npm.taobao.org/">http://registry.npm.taobao.org/</a></li>
+</ul>
+<p>cnpmjs镜像</p>
+<ul>
+<li>搜索地址：<a target="_blank" rel="noopener" href="https://link.jianshu.com?t=http://cnpmjs.org/">http://cnpmjs.org/</a></li>
+<li>registry地址：<a target="_blank" rel="noopener" href="https://link.jianshu.com?t=http://r.cnpmjs.org/">http://r.cnpmjs.org/</a></li>
+</ul>
+<p>1.临时使用</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">npm install express --registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+<p>2.持久使用</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+<p>配置后可通过下面方式来验证是否成功:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm config get registry</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Unix-CLI-Tools/" rel="prev" title="Unix CLI Tools">
+                  <i class="fa fa-chevron-left"></i> Unix CLI Tools
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Tmux/" rel="next" title="Tmux">
+                  Tmux <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

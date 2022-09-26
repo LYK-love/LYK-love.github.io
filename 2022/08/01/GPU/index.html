@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Preface：Graphic Card Basic Concepts Components of GPU">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPU">
+<meta property="og:url" content="http://lyk-love.cn/2022/08/01/GPU/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Preface：Graphic Card Basic Concepts Components of GPU">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/GPU/Graphic%20Card%20Arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/GPU/SM%20of%20Pascal%20Multiprocessor.png">
+<meta property="article:published_time" content="2022-07-31T22:02:07.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.930Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Hardware">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/GPU/Graphic%20Card%20Arch.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/08/01/GPU/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/08/01/GPU/","path":"2022/08/01/GPU/","title":"GPU"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GPU | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Preface%EF%BC%9AGraphic-Card"><span class="nav-text">Preface：Graphic Card</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Concepts"><span class="nav-text">Basic Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E6%98%BE"><span class="nav-text">集显</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E6%98%BE"><span class="nav-text">核显</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8B%AC%E6%98%BE"><span class="nav-text">独显</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU%E5%92%8CCPU%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">GPU和CPU的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPU%E7%9A%84%E6%80%A7%E8%83%BD%E5%BA%A6%E9%87%8F"><span class="nav-text">GPU的性能度量</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Components-of-GPU"><span class="nav-text">Components of GPU</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%8D%95%E5%85%83%EF%BC%9A-SM-CU"><span class="nav-text">基本单元： SM&#x2F;CU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Core"><span class="nav-text">Core</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TMU"><span class="nav-text">TMU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROP"><span class="nav-text">ROP</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/08/01/GPU/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="GPU | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GPU
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-07-31 22:02:07" itemprop="dateCreated datePublished" datetime="2022-07-31T22:02:07Z">2022-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Preface：Graphic Card</li>
+<li>Basic Concepts</li>
+<li>Components of GPU</li>
+</ul>
+<span id="more"></span>
+<h1 id="Preface：Graphic-Card"><a class="header-anchor" href="#Preface：Graphic-Card"></a>Preface：Graphic Card</h1>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/156083352">很详细的介绍显卡的文章</a></p>
+<ul>
+<li><strong>显卡</strong>( Video card、Display card、Graphics card ): 由 GPU, 电路板( PCB ), 显存, 金手指, 供电 &amp; 显示接口以及散热等构成
+<ul>
+<li>因为显卡最重要的就是GPU, 我们也可以把二者混为一谈. 比如后文提到的集显和核显, 其实就是两块纯的GPU,  为了方便我们还是说成显卡.</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/GPU/Graphic%20Card%20Arch.png" alt="Graphic Card Arch"></p>
+<h1 id="Basic-Concepts"><a class="header-anchor" href="#Basic-Concepts"></a>Basic Concepts</h1>
+<ul>
+<li>
+<p>Graphic Processing Unit, aka GPU: 为了处理图形计算任务而专门开发的硬件, 是一种特殊的CPU.</p>
+</li>
+<li>
+<p>GPU就是特殊的CPU, 这意味着电脑可以没有GPU，用普通的CPU也可以处理图形任务. 不过性能嘛… 给个例子， 顶级CPU 3990X 性能撕裂者勉强带得动前几代的《孤岛危机》</p>
+</li>
+<li>
+<p>因此, GPU对于现代计算机是必要的. 没有外置显卡就用核显, 没有核显就用主板的集显, 连集显都没有那电脑可以入土了</p>
+</li>
+</ul>
+<h2 id="集显"><a class="header-anchor" href="#集显"></a>集显</h2>
+<ul>
+<li>集显( 集成显卡 )：<strong>集成在主板</strong>北桥的GPU. 能和CPU共享散热器和系统RAM等资源
+<ul>
+<li>集显下GPU没有独立的RAM，只能将系统RAM的一部分作为VRAM( 显而易见这很慢 )</li>
+<li>因为就集成在主板上把它叫做“板载显卡”</li>
+</ul>
+</li>
+<li>早期的主板很多都带集显, 集显性能都还很垃圾. 现在的显卡都不带集显了( 比如b550m ), 不过集显的概念没有消失, 现在很多人都用“核显”</li>
+</ul>
+<h2 id="核显"><a class="header-anchor" href="#核显"></a>核显</h2>
+<ul>
+<li>
+<p>核显:被封装到<a href="https://lyk-love.cn/2022/09/08/CPU/">CPU Package</a>中的GPU, 甚至有核显是<strong>刻在CPU的Die里面</strong>的</p>
+<ul>
+<li>其目的和集显一样, 都为了和CPU共享散热器和系统RAM等资源, 因此也可以把核显认为是集显的一种</li>
+<li>因为CPU和GPU放在一块, 也可以把这种CPU叫做<strong>APU</strong>( 按AMD的说法 )</li>
+</ul>
+</li>
+<li>
+<p>AMD的<a target="_blank" rel="noopener" href="https://www.amd.com/en/products/apu/amd-ryzen-5-5600g">R5 5600G</a>就自带了<em>UHD750</em>显卡( 刻在了Die里面… )它的性能相对5600G这块CPU很垃圾, 但也能在1080P中高画质上60帧数上运行诸如LOL的游戏了:</p>
+<table>
+<thead>
+<tr>
+<th>Graphics Model</th>
+<th>Graphics Core Count</th>
+<th>Graphics Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Radeon™ Graphics</td>
+<td>7</td>
+<td>1900 MHz</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="独显"><a class="header-anchor" href="#独显"></a>独显</h2>
+<ul>
+<li>独显( 独立显卡 )：顾名思义就是可插拔的独立的显卡.  通过插槽插入计算机的主板，并且通常需要比通过卡插槽提供的更多的功率。因此，它也可能有来自计算机电源的专用电源连接。</li>
+</ul>
+<h2 id="GPU和CPU的区别"><a class="header-anchor" href="#GPU和CPU的区别"></a>GPU和CPU的区别</h2>
+<ol>
+<li>CPU被设计用于通用计算. 而GPU被设计为专门用于图形计算, 这些专用的功能会被直接集成到硬件中(起码在目前依然是这样)</li>
+<li>CPU被设计为高效地执行<strong>单线程</strong>代码( SMT / Hyper-Threading等技术也改进了CPU的多线程能力 )； 而GPU天然被设计为高效地执行<strong>多线程</strong>代码。 也就是说，面对需要多线程的worload时，GPU的效率远高于CPU</li>
+<li>GPU通过堆叠核心来扩展多线程性能, 所以核心数肯定比COU多。 AMD的高端CPU Epyc CPU是64核/128线程； 而Nvidia的最低端Pascal GPU就有384个内核。</li>
+</ol>
+<h2 id="GPU的性能度量"><a class="header-anchor" href="#GPU的性能度量"></a>GPU的性能度量</h2>
+<ul>
+<li>
+<p>GPU的性能和架构的关系很大.  因此不同架构的GPU之间，不能单凭核心数来比较性能。</p>
+</li>
+<li>
+<p>只有同一厂商的同一系列的GPU，才可以只用核心数比较。比如GTX 3070 和 GTX 3080 和 GTX 3080 Ti； 以及 [RX 5700 XT 和 RX 6700 XT]</p>
+</li>
+</ul>
+<h1 id="Components-of-GPU"><a class="header-anchor" href="#Components-of-GPU"></a>Components of GPU</h1>
+<p>GPU由核心( Core )、纹理映射单元( Texture Mapping Unit, TMU )、渲染输出( Render OutPut, ROP )和 显存( Video Random Access Memory, VRAM ) 组成。 粗略地说， GPU的最小功能单元是计算资源的块( block of computing resources )</p>
+<p>VRAM在拙著<em>Computer Storage</em>介绍</p>
+<p>GPU可以用如下标准来表示: [ 核心数 ]:[ 纹理映射单元数  ]:[ 渲染输出数 ]</p>
+<ul>
+<li>比如4096:160:64</li>
+</ul>
+<h2 id="基本单元：-SM-CU"><a class="header-anchor" href="#基本单元：-SM-CU"></a>基本单元： SM/CU</h2>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/GPU/SM%20of%20Pascal%20Multiprocessor.png" alt="SM of "></p>
+<p>( 这是一个AMD的Pascal Multiprocessor (SM) )</p>
+<ul>
+<li>GPU被构造成blocks of computing resources，block“可以看作”GPU的最小功能单元
+<ul>
+<li>Nvidia calls these blocks an <strong>SM</strong> (Streaming Multiprocessor), while AMD refers to them as a <strong>CU</strong>( Compute Unit ) .</li>
+<li>严格地讲，block并没有涵盖GPU所有的功能 ---- 比如 video decode engines, render outputs required for actually drawing an image on-screen, and the memory interfaces used to communicate with onboard VRAM。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Core"><a class="header-anchor" href="#Core"></a>Core</h2>
+<ul>
+<li>
+<p>GPU的核心( <strong>Core</strong> )是block的集合，比如AMD的APU( having 8 or 11 Vega Compute Units ), 这就拥有GPU的大多数功能了</p>
+</li>
+<li>
+<p>Each block contains a group of cores, a <strong>scheduler</strong>, a r<strong>egister file</strong>, <strong>instruction cache</strong>, <strong>texture</strong> and <strong>L1 cach</strong>e, and <strong>texture mapping units</strong>.</p>
+</li>
+</ul>
+<h2 id="TMU"><a class="header-anchor" href="#TMU"></a>TMU</h2>
+<ul>
+<li><strong>纹理映射单元</strong>（<strong>Texture mapping unit</strong>，TMU）是GPU的一个部件，用于 纹理映射</li>
+<li>TMU的数量决定了GPU对于纹理映射workload的吞吐量和处理速度</li>
+<li>TMU曾就是一个独立的物理部件，现在已经集成到着色器中</li>
+</ul>
+<h2 id="ROP"><a class="header-anchor" href="#ROP"></a>ROP</h2>
+<ul>
+<li>渲染输出( <strong>Render OutPut</strong>, ROP )（有时也称为光栅操作管线）是GPU的一个部件。 它将GPU的输出组装成图像在显示器上显示。</li>
+<li>ROP的数量乘以GPU的时钟速度可以控制像素填充率。ROPs的数量越多，意味着可以同时输出更多的像素。</li>
+<li>ROPs还可以处理抗锯齿</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hardware/" rel="tag"># Hardware</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/31/Tips-for-Building-Frontend-Projects/" rel="prev" title="Tips for Building Frontend Projects">
+                  <i class="fa fa-chevron-left"></i> Tips for Building Frontend Projects
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/01/Computer-Storage/" rel="next" title="Computer Storage">
+                  Computer Storage <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  需求⼯程 需求基础 需求分类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Software Requirement Basic">
+<meta property="og:url" content="http://lyk-love.cn/2021/06/28/Software%20Requirement%20Basic/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  需求⼯程 需求基础 需求分类">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-28T00:05:48.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.940Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Software Engineering Methodology">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/06/28/Software%20Requirement%20Basic/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/06/28/Software%20Requirement%20Basic/","path":"2021/06/28/Software Requirement Basic/","title":"Software Requirement Basic"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Software Requirement Basic | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E2%BC%AF%E7%A8%8B"><span class="nav-text">需求⼯程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%BC%80%E5%8F%91"><span class="nav-text">需求开发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E8%8E%B7%E5%8F%96"><span class="nav-text">需求获取</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E8%8E%B7%E5%8F%96%E7%9A%84%E5%B8%B8%E2%BB%85%E5%9B%B0%E9%9A%BE"><span class="nav-text">需求获取的常⻅困难</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%BD%A4%E6%88%B7%E9%9C%80%E6%B1%82%E8%8E%B7%E5%8F%96%E7%9A%84%E2%BD%85%E6%B3%95"><span class="nav-text">⽤户需求获取的⽅法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90"><span class="nav-text">需求分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E8%A7%84%E6%A0%BC%E8%AF%B4%E6%98%8E"><span class="nav-text">需求规格说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E9%AA%8C%E8%AF%81"><span class="nav-text">需求验证</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E7%AE%A1%E7%90%86"><span class="nav-text">需求管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%9F%BA%E7%A1%80"><span class="nav-text">需求基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82"><span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E7%9A%84%E5%B1%82%E6%AC%A1%E6%80%A7"><span class="nav-text">需求的层次性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%9A%E5%8A%A1%E9%9C%80%E6%B1%82"><span class="nav-text">业务需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%BD%A4%E6%88%B7%E9%9C%80%E6%B1%82"><span class="nav-text">⽤户需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E9%9C%80%E6%B1%82"><span class="nav-text">系统需求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%88%86%E7%B1%BB"><span class="nav-text">需求分类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E8%B0%B1%E7%B3%BB"><span class="nav-text">需求谱系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E9%9C%80%E6%B1%82"><span class="nav-text">功能需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%8A%9F%E8%83%BD%E9%9C%80%E6%B1%82"><span class="nav-text">非功能需求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E9%9C%80%E6%B1%82"><span class="nav-text">性能需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7"><span class="nav-text">质量属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E5%A4%96%E6%8E%A5%E5%8F%A3"><span class="nav-text">对外接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BA%A6%E6%9D%9F"><span class="nav-text">约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9C%80%E6%B1%82"><span class="nav-text">数据需求</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/06/28/Software%20Requirement%20Basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Software Requirement Basic | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Software Requirement Basic
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-28 00:05:48" itemprop="dateCreated datePublished" datetime="2021-06-28T00:05:48Z">2021-06-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Software-Engineering/" itemprop="url" rel="index"><span itemprop="name">Software Engineering</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>需求⼯程</li>
+<li>需求基础</li>
+<li>需求分类</li>
+</ul>
+<span id="more"></span>
+<h1 id="需求⼯程"><a class="header-anchor" href="#需求⼯程"></a>需求⼯程</h1>
+<ul>
+<li>
+<p>单纯的软件系统是不能解决问题的，它只有 和现实世界之间形成有效互动才能实现问题 的解决</p>
+</li>
+<li>
+<p>需求工程的概念：</p>
+<ul>
+<li>所有需求处理活动的总和。它<strong>收集</strong>信息、<strong>分析</strong>问题、<strong>整合</strong>观点、<strong>记录</strong>需求并<strong>验证</strong>其正确性，最终描述出软件被应⽤后与其环境互动形成的期望效应。</li>
+</ul>
+</li>
+<li>
+<p>三个主要任务：</p>
+<ul>
+<li>需求⼯程必须说明软件系统将被应⽤的应⽤环境及其<strong>⽬标</strong>，说明⽤来达成这些⽬标的软件功能，也即要同时说明软件需要“<strong>做什么</strong>”和“<strong>为什么</strong>”需要做。</li>
+<li>需求⼯程必须将⽬标和功能反映到软件系统当中，映射为<strong>可⾏的软件⾏为</strong>，并对软件⾏为进⾏准确的<strong>规格说明</strong>。<br>
+• 现实世界是<strong>不断变化</strong>的世界，因此需求⼯程还需要妥善处理⽬标和功能随着时间演化的变动情况。</li>
+</ul>
+</li>
+</ul>
+<h2 id="需求开发"><a class="header-anchor" href="#需求开发"></a>需求开发</h2>
+<h3 id="需求获取"><a class="header-anchor" href="#需求获取"></a>需求获取</h3>
+<ul>
+<li>从⼈、⽂档或者环境当中获取需求的过程</li>
+<li>要利⽤各种⽅法和技术来“<u>发现</u>”需求</li>
+<li>⽬标分析
+<ol>
+<li>根据<strong>问题</strong>确定⽬标</li>
+<li>通过分析<strong>利害关系⼈</strong>确定⽬标</li>
+</ol>
+</li>
+</ul>
+<h4 id="需求获取的常⻅困难"><a class="header-anchor" href="#需求获取的常⻅困难"></a>需求获取的常⻅困难</h4>
+<ul>
+<li>⽤户和开发⼈员的背景不同，⽴场不同
+<ul>
+<li>“床边B超,肝胆胰脾”</li>
+</ul>
+</li>
+<li>普通⽤户缺乏概括性、综合性的表述能⼒
+<ul>
+<li>不聪明的记者</li>
+</ul>
+</li>
+<li>⽤户存在认知困境
+<ul>
+<li>平板电脑</li>
+</ul>
+</li>
+<li>⽤户越俎代庖
+<ul>
+<li>双机热备</li>
+<li>我们就是要求系统能够。。。，⾄于怎么实现是你开发者的事</li>
+</ul>
+</li>
+<li>缺乏⽤户参与
+<ul>
+<li>不愿参与的医⽣</li>
+</ul>
+</li>
+</ul>
+<h4 id="⽤户需求获取的⽅法"><a class="header-anchor" href="#⽤户需求获取的⽅法"></a>⽤户需求获取的⽅法</h4>
+<ul>
+<li>⾯谈</li>
+<li>问卷</li>
+<li>⽂档分析</li>
+<li>头脑⻛暴</li>
+<li>专题讨论</li>
+<li>原型</li>
+</ul>
+<h3 id="需求分析"><a class="header-anchor" href="#需求分析"></a>需求分析</h3>
+<ul>
+<li>
+<p>通过<strong>建模</strong>来整合各种信息，以使得⼈们更好的理解问题。</p>
+</li>
+<li>
+<p>为问题定义出⼀个需求集合，这个集合能够为问题界定⼀个有效的<strong>解决⽅案</strong>。</p>
+</li>
+<li>
+<p><strong>检查</strong>需求当中存在的错误、遗漏、不⼀致等各种缺陷，并加以修正。</p>
+</li>
+<li>
+<p>⼀、边界分析</p>
+<ul>
+<li>定义项⽬的范围</li>
+<li>系统边界的定义要保证系统能够和周围环境形成有效的互动</li>
+<li>系统⽤例图和上下文图通常被⽤来定义系统的边界</li>
+</ul>
+</li>
+<li>
+<p>⼆、需求建模</p>
+<ul>
+<li>建模是为展现和解释信息⽽进⾏的抽象描述活动</li>
+<li>常⽤的技术包括类图、顺序图、状态图等建模技术</li>
+</ul>
+</li>
+</ul>
+<h3 id="需求规格说明"><a class="header-anchor" href="#需求规格说明"></a>需求规格说明</h3>
+<ul>
+<li>在系统⽤户之间交流需求信息</li>
+<li>要<strong>简洁、精确、⼀致和易于理解</strong></li>
+<li>需求⼯程师在这个阶段的重要⼯作包括:
+<ul>
+<li>⼀、定制⽂档模版</li>
+<li>⼆、编写⽂档</li>
+</ul>
+</li>
+</ul>
+<h3 id="需求验证"><a class="header-anchor" href="#需求验证"></a>需求验证</h3>
+<ul>
+<li>需求规格说明⽂档⾄少要满⾜下面⼏个标准：
+<ul>
+<li>⽂档内每条需求都正确、准确的反映了⽤户的<strong>意图</strong>；</li>
+<li>⽂档记录的需求集在整体上具有<strong>完整性和⼀致性</strong>；</li>
+<li>⽂档的组织⽅式和需求的书写⽅式具有可读性和可修改性</li>
+</ul>
+</li>
+<li>验证的⽅法
+<ul>
+<li>同级评审</li>
+<li>原型</li>
+<li>模拟</li>
+</ul>
+</li>
+</ul>
+<h2 id="需求管理"><a class="header-anchor" href="#需求管理"></a>需求管理</h2>
+<ul>
+<li>保证需求作⽤的持续、稳定和有效发挥
+<ul>
+<li>在需求开发活动之后，设计、测试、实现等后续的软件系统开发活动都需要围绕需求开展⼯作</li>
+</ul>
+</li>
+<li>进⾏变更控制
+<ul>
+<li>纳⼊和实现合理的变更请求，拒绝不合理的变更请求，控制变更的成本和 影响范围</li>
+</ul>
+</li>
+</ul>
+<h1 id="需求基础"><a class="header-anchor" href="#需求基础"></a>需求基础</h1>
+<h2 id="需求"><a class="header-anchor" href="#需求"></a>需求</h2>
+<ul>
+<li>
+<p>IEEE对需求的定义为<code>[IEEE610.12-1990]</code>：</p>
+<ol>
+<li><strong>⽤户</strong>为了解决问题或达到某些⽬标所需要的条件或能⼒；</li>
+<li><strong>系统</strong>或系统部件为了满⾜合同、标准、规范或其它正式⽂档所规定的要求⽽需要具备的条件或能⼒；</li>
+<li>对⑴或⑵中的⼀个条件或⼀种能⼒的⼀种⽂档化表述。</li>
+</ol>
+</li>
+<li>
+<p>需求的表述</p>
+<ul>
+<li>作为⼀种<strong>期望</strong>，需求通常被表述为“<strong>系统应该…</strong>”、“在…时，系统应该…”、 “⽤户可以通过系统…”等，例如R1。</li>
+<li>R1：系统应该允许顾客退回已经购买的产品。</li>
+</ul>
+</li>
+</ul>
+<h2 id="需求的层次性"><a class="header-anchor" href="#需求的层次性"></a>需求的层次性</h2>
+<h3 id="业务需求"><a class="header-anchor" href="#业务需求"></a>业务需求</h3>
+<ul>
+<li>
+<p>系统建⽴的战略出发点，表现为⾼层次的⽬标（Objective），它描述了组织 为什么要开发系统</p>
+</li>
+<li>
+<p>为了满⾜⽤户的业务需求，需求⼯程师需要描述系统⾼层次的解决⽅案，定义<strong>系统应该具备的特性</strong>（Feature）</p>
+</li>
+<li>
+<p>参与各⽅必须要对⾼层次的解决⽅案达成⼀致，以建⽴⼀个共同的前景 （Vision）</p>
+</li>
+<li>
+<p>特性说明了系统为⽤户提供的各项功能，它限定了系统的范围（Scope）</p>
+</li>
+<li>
+<p>案例</p>
+<ul>
+<li>R2：在系统使⽤3个⽉后，销售额度应该提⾼20%</li>
+<li>可以建⽴⾼层次的解决⽅案，其<code>系统特性</code>如SF1～SF4所示。
+<ul>
+<li>SF1：管理VIP顾客信息。</li>
+<li>SF2：提供VIP顾客服务，增加回头率。</li>
+<li>SF3：使⽤多样化的特价⽅案，吸引顾客购买，增加销售额。</li>
+<li>SF4：使⽤多样化的赠送⽅案，吸引顾客购买，增加销售额</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="⽤户需求"><a class="header-anchor" href="#⽤户需求"></a>⽤户需求</h3>
+<ul>
+<li>
+<p>执⾏实际⼯作的⽤户对系统所<strong>能完成的具体任务的期望</strong>，描述了系统能够帮助⽤户做些什么</p>
+<ul>
+<li>直接⽤户</li>
+<li>间接⽤户（通⽤软件的销售⼈员和售后⽀持⼈员）</li>
+</ul>
+</li>
+<li>
+<p>对所有的⽤户需求，都应该有<strong>充分的问题域知识</strong>作为背景⽀持</p>
+</li>
+<li>
+<p>特性</p>
+<ul>
+<li>模糊、不清晰（允许适度的⽤形容词和副词）</li>
+<li>多特性混杂 （功能和⾮功能的混杂） • 多逻辑混杂 （⼀个任务需要多次系统交互才能完成）</li>
+<li>多逻辑混杂 （⼀个任务需要多次系统交互才能完成）</li>
+</ul>
+</li>
+<li>
+<p>案例</p>
+<ul>
+<li>SF1：管理VIP顾客信息</li>
+<li>针对每⼀个系统特性，都可以建⽴⼀组⽤户需求。例如对SF1，可以建⽴⽤户需求组如UR1.1～UR1.7，它们中每⼀条都是⽤户完成具体任务所需要的功能：
+<ul>
+<li>UR1.1：系统应该允许客户经理添加、修改或者删除会员个⼈信息</li>
+<li>UR1.2：系统应该记录会员的购买信息。</li>
+<li>UR1.3：系统应该允许客户经理查看会员的个⼈信息和购买信息。</li>
+<li>UR1.4：系统应该允许客户经理查看所有会员的统计信息</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>补充问题域知识</p>
+<ul>
+<li>⽤户需求表达了⽤户对系统的期望，但是要透彻和全⾯的了解⽤户的真正意 途，仅仅拥有期望是不够的，还需要知道期望所来源的背景知识。</li>
+<li>因此，对所有的⽤户需求，都应该有充分的问题域知识作为背景⽀持</li>
+<li><code>UR1.1</code>：系统应该允许客户经理添加、修改或者删除会员个⼈信息。</li>
+<li>例如对<code>UR1.1</code>，需要补充问题域知识如下：
+<ul>
+<li>会员的个⼈信息有：客户编号、姓名、联系⽅式、积分</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="系统需求"><a class="header-anchor" href="#系统需求"></a>系统需求</h3>
+<ul>
+<li>⽤户对系统⾏为的期望，<strong>每个系统级需求反映了⼀次外界与系统的交互⾏为，或者系统的⼀个实现细节</strong></li>
+<li>描述了开发⼈员需要实现什么</li>
+<li>将⽤户需求转化为系统需求的过程是⼀个复杂的过程
+<ul>
+<li>⾸先需要分析问题领域及其特性，从中发现问题域和计算机系统的共享知识，建⽴系统的知 识模型；</li>
+<li>然后将⽤户需求部署到系统模型当中，即定义系列的系统⾏为，让它们联合起来实现⽤户需求，每⼀个系统⾏为即为⼀个系统需求。</li>
+<li>该过程就是需求⼯程当中最为重要的<strong>需求分析</strong>活动，⼜称建模与分析活动。</li>
+</ul>
+</li>
+<li>案例
+<ul>
+<li>UR1.3：系统应该允许客户经理查看会员的个⼈信息和购买信息。</li>
+<li>对⽤户需求UR1.3，可以依据任务中的交互细节将之转化为系统级需求SR1.3.1～ SR1.3.4。
+<ul>
+<li>SR1.3.1在接到客户经理的请求后，系统应该为客户经理提供所有会员的个⼈信息。</li>
+<li>SR1.3.2在客户经理输⼊会员的客户编号时，系统要提供该会员的个⼈信息。</li>
+<li>SR1.3.3在客户经理选定⼀个会员并申请查看购买信息时，系统要提供该会员的历史购 买记录。</li>
+<li>SR1.3.4经理可以通过键盘输⼊客户编号，也可以通过读卡器输⼊客户编号。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="需求分类"><a class="header-anchor" href="#需求分类"></a>需求分类</h1>
+<h2 id="需求谱系"><a class="header-anchor" href="#需求谱系"></a>需求谱系</h2>
+<ul>
+<li>
+<p>需求</p>
+<ul>
+<li>项目需求</li>
+<li>过程需求</li>
+<li>系统需求
+<ul>
+<li><strong>软件需求</strong></li>
+<li>硬件需求</li>
+<li>其他需求</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>不切实际的期望</p>
+</li>
+<li>
+<p><strong>软件需求</strong>的分类</p>
+<ul>
+<li>功能需求（Functional Requirement）：( 除此之外都是非功能需求 )
+<ul>
+<li>和系统主要⼯作相关的需求，即在不考虑物理约束的情况下，⽤户希望系统所能够执⾏的活动，这些活动可以帮助⽤户完成任务。功能需求主要表现为系统和环境之间的⾏为交互。</li>
+</ul>
+</li>
+<li>性能需求（Performance Requirement）：
+<ul>
+<li>系统整体或系统组成部分应该拥有的性能特征，例如CPU使⽤率、内存使⽤率等。</li>
+</ul>
+</li>
+<li>质量属性（Quality Attribute）：
+<ul>
+<li>系统完成⼯作的质量，即系统需要在⼀个“好的程度”上实现功能需求，例如可靠性程度、可维护性程度等。</li>
+</ul>
+</li>
+<li>对外接⼝（External Interface）：
+<ul>
+<li>系统和环境中其他系统之间需要建⽴的接⼝，包括硬件接⼝、软件接⼝、数据库接⼝等等。</li>
+</ul>
+</li>
+<li>约束 • 进⾏系统构造时需要遵守的约束，例如编程语⾔、硬件设施等</li>
+</ul>
+</li>
+</ul>
+<h2 id="功能需求"><a class="header-anchor" href="#功能需求"></a>功能需求</h2>
+<ul>
+<li>
+<p>最常⻅、最主要和最重要的需求</p>
+</li>
+<li>
+<p>能够为⽤户带来业务价值的系统⾏为</p>
+</li>
+<li>
+<p>最需要按照三个抽象层次进⾏展开</p>
+</li>
+<li>
+<p>软件产品产⽣价值的基础</p>
+</li>
+<li>
+<p><strong>需求的灵活性</strong></p>
+<ul>
+<li>PR6：98％的查询不能超过10秒。</li>
+<li>PR7：
+<ul>
+<li>（最低标准）在200个⽤户并发时，系统不能崩溃；</li>
+<li>（⼀般标准）在200个⽤户并发时，系统应该在80％的时间内能正常⼯作；</li>
+<li>（理想标准）在200个⽤户并发时，系统应该能保持正常的⼯作状态</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="非功能需求"><a class="header-anchor" href="#非功能需求"></a>非功能需求</h2>
+<h3 id="性能需求"><a class="header-anchor" href="#性能需求"></a>性能需求</h3>
+<ul>
+<li>需要进⾏专⻔模拟和测试
+<ul>
+<li>速度（Speed），系统完成任务的时间，例如PR1。
+<ul>
+<li>PR1：所有的⽤户查询都必须在10秒内完成。</li>
+</ul>
+</li>
+<li>容量（Capacity），系统所能存储的数据量，例如PR2。
+<ul>
+<li>PR2：系统应该能够存储⾄少100万个销售信息。</li>
+</ul>
+</li>
+<li>吞吐量（Throughput），系统在连续的时间内完成的事务数量，例如PR3。
+<ul>
+<li>PR3：解释器每分钟应该⾄少解析5000条没有错误的语句。</li>
+</ul>
+</li>
+<li>负载（Load），系统可以承载的并发⼯作量，例如PR4。
+<ul>
+<li>PR4：系统应该允许50个营业服务器同时从集中服务器上进⾏数据的上传或下载。</li>
+</ul>
+</li>
+<li>实时性（Time-Critical），严格的实时要求，例如PR5。
+<ul>
+<li>PR5：监测到病⼈异常后，监控器必须在0.5秒内发出警报。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="质量属性"><a class="header-anchor" href="#质量属性"></a>质量属性</h3>
+<ul>
+<li>
+<p>系统为了满⾜规定的及隐含的所有要求⽽需要具备的要素称为质量</p>
+</li>
+<li>
+<p>质量属性是为了度量质量要素⽽选⽤的特征 • 质量模型就是能够为质量需求的描述和评价提供⼯作基础的特征集及特征之间的联系 • 质量属性的重要性 • 对设计的影响很⼤</p>
+</li>
+<li>
+<p>对越复杂的系统越为重要</p>
+</li>
+<li>
+<p><code>[Robert19901] </code>：真实的现实系统中，在决定系统的成功或失败的因素中，满⾜⾮功能属性往往比满⾜功能性需求更为重要。</p>
+</li>
+<li>
+<p>常⻅质量属性</p>
+<ul>
+<li>
+<p><strong>可靠性</strong>（Reliability）：在规格时间间隔内和规定条件下，系统或部件执⾏所要求能⼒的能⼒。</p>
+<ul>
+<li>QA1：在进⾏数据的下载和上传中，如果⽹络故障，系统不能出现故障。</li>
+</ul>
+</li>
+<li>
+<p><strong>可⽤性</strong>（Availability）：软件系统在投⼊使⽤时可操作和可访问的程度或能实现其指定系统功能的概率。</p>
+<ul>
+<li>QA2：系统的可⽤性要达到98%。</li>
+</ul>
+</li>
+<li>
+<p><strong>安全性</strong>（Security）：软件阻⽌对其程序和数据进⾏未授权访问的能⼒，未授权的访问可能是有意，也可能是⽆意的。</p>
+<ul>
+<li>
+<p>QA3：VIP顾客只能查看⾃⼰的个⼈信息和购买记录；</p>
+</li>
+<li>
+<p>收银员只能查看，不能修改、删除VIP顾客的信息。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>可维护性（Maintainability）：软件系统或部件能修改以排除故障、改进性能或其他属性或适应变更了的环 境的容易程度，包括可修改性（Modifiability）和可扩展性（Extensibility）。</p>
+<ul>
+<li>QA4：如果系统要增加新的特价类型，要能够在2个⼈⽉内完成。</li>
+</ul>
+</li>
+<li>
+<p>可移植性（Portability）：系统或部件能从⼀种硬件或软件环境转换⾄另外⼀种环境的特性。</p>
+<ul>
+<li>QA5：集中服务器要能够在1⼈⽉内从Window 7操作系统更换到Solaris 10操作系统。</li>
+</ul>
+</li>
+<li>
+<p>易⽤性（Usability）：与⽤户使⽤软件所花费的努⼒及其对使⽤的评价相关的特性。</p>
+<ul>
+<li>QA6：使⽤系统1个⽉的收银员进⾏销售处理的效率要达到10件商品/分钟。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>质量属性的开发</p>
+<ul>
+<li>⽤户并不能明确地提出他们对产品质量的期望
+<ul>
+<li>并不了解软件系统的开发过程，也就⽆从判断哪些质量属性会在怎样的程度上给设计带来多⼤ 的影响，也⽆法将他们对软件系统的质量要求细化成⼀组组的可量化的质量属性</li>
+</ul>
+</li>
+<li>需求⼯程师
+<ul>
+<li><code>质量属性</code>⼤都是和<code>功能需求</code>联系在⼀起的，因此需要对照软件的质量属性检查每⼀项功能需 求，尽⼒去判断质量属性存在的可能性 • 形容词和副词通常意味着质量属性的存在</li>
+<li>对于⼀些不和任何功能需求相联系的<strong>全局性质量属性</strong>，需求⼯程师要在碰到特定的实例时意识到它们的存在</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="对外接口"><a class="header-anchor" href="#对外接口"></a>对外接口</h3>
+<ul>
+<li>系统和环境中其他系统之间的软硬件接⼝, 包括<code>用户界面</code>, 硬件接口, 软件接口, 网络通信接口等.  对系统之间的软硬件接口和通信接口需要说明以下内容:
+<ul>
+<li>接⼝的⽤途</li>
+<li>接⼝的输⼊输出</li>
+<li>数据格式</li>
+<li>命令格式</li>
+<li>异常处理要求</li>
+<li>⽤户界⾯</li>
+</ul>
+</li>
+</ul>
+<h3 id="约束"><a class="header-anchor" href="#约束"></a>约束</h3>
+<ul>
+<li>总体上限制了开发⼈员设计和构建系统时的选择范围
+<ul>
+<li>系统开发及运⾏的环境 • 包括⽬标机器、操作系统、⽹络环境、编程语⾔、数据库管理系统等
+<ul>
+<li>C1：系统要使⽤Java语⾔进⾏开发。</li>
+</ul>
+</li>
+<li>问题域内的相关标准
+<ul>
+<li>包括法律法规、⾏业协定、企业规章等。</li>
+</ul>
+</li>
+<li>商业规则
+<ul>
+<li>⽤户在任务执⾏中的⼀些潜在规则也会限制开发⼈员设计和构建系统的选择范围</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据需求"><a class="header-anchor" href="#数据需求"></a>数据需求</h3>
+<ul>
+<li>功能需求的补充
+<ul>
+<li>如果在功能需求部分明确定义了相关的数据结构，那么就不需要再⾏定义数据需求</li>
+</ul>
+</li>
+<li>数据需求是需要在数据库、⽂件或者其他介质中存储的数据描述，通常包括下列内容：
+<ul>
+<li>各个功能使⽤的数据信息；</li>
+<li>使⽤频率；</li>
+<li>可访问性要求；</li>
+<li>数据实体及其关系；</li>
+<li>完整性约束；</li>
+<li>数据保持要求。</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Software-Engineering-Methodology/" rel="tag"># Software Engineering Methodology</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/28/Project%20Management%20Basic/" rel="prev" title="Project Management Basic">
+                  <i class="fa fa-chevron-left"></i> Project Management Basic
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/28/Software%20Reuqirement%20Analysis%20Method/" rel="next" title="Software Requirement Analysis Method">
+                  Software Requirement Analysis Method <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

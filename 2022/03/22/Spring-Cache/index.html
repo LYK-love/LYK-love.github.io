@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Basic Idea 启用Spring缓存支持 提供缓存管理器 应用缓存  ref: Spring In Action">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Cache">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/22/Spring-Cache/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Basic Idea 启用Spring缓存支持 提供缓存管理器 应用缓存  ref: Spring In Action">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-21T21:40:40.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.940Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/03/22/Spring-Cache/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/03/22/Spring-Cache/","path":"2022/03/22/Spring-Cache/","title":"Spring Cache"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spring Cache | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Idea"><span class="nav-text">Basic Idea</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%AF%E7%94%A8Spring%E7%BC%93%E5%AD%98%E6%94%AF%E6%8C%81"><span class="nav-text">启用Spring缓存支持</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AECacheManager"><span class="nav-text">配置CacheManager</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EhCache"><span class="nav-text">EhCache</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ehCache%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-text">ehCache配置文件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Redis"><span class="nav-text">Redis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA%E7%BC%93%E5%AD%98%E7%AE%A1%E7%90%86%E5%99%A8"><span class="nav-text">使用多个缓存管理器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%BC%93%E5%AD%98"><span class="nav-text">应用缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cacheable"><span class="nav-text">@Cacheable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CachePut"><span class="nav-text">@CachePut</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CacheEvict"><span class="nav-text">@CacheEvict</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CacheConfig"><span class="nav-text">@CacheConfig</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8XML%E9%85%8D%E7%BD%AE%E7%BC%93%E5%AD%98"><span class="nav-text">用XML配置缓存</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/22/Spring-Cache/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spring Cache | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring Cache
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-21 21:40:40" itemprop="dateCreated datePublished" datetime="2022-03-21T21:40:40Z">2022-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Basic Idea</li>
+<li>启用Spring缓存支持</li>
+<li>提供缓存管理器</li>
+<li>应用缓存</li>
+</ul>
+<p>ref: <em>Spring In Action</em></p>
+ <span id="more"></span>
+<h1 id="Basic-Idea"><a class="header-anchor" href="#Basic-Idea"></a>Basic Idea</h1>
+<p>缓存实际上是一种面向切面的行为。Spring将缓存实现为一个切面。</p>
+<ul>
+<li>在使用XML声明缓存规则时,这一点非常明显:我们必须要将缓存通知绑定到一个切点上</li>
+</ul>
+<p>缓存编程步骤：</p>
+<ol>
+<li>启用Spring缓存支持（java方式）： 提供缓存配置类，加上<code>@EnableCaching</code></li>
+<li>提供缓存管理器：给配置类提供一个CacheManager`</li>
+<li>应用缓存：给需要缓存的方法加上对应的注解</li>
+</ol>
+<!--more-->
+<h1 id="启用Spring缓存支持"><a class="header-anchor" href="#启用Spring缓存支持"></a>启用Spring缓存支持</h1>
+<p>Spring启用缓存支持有两种方式:</p>
+<ul>
+<li>
+<p>注解驱动的缓存：在一个配置类上添加 <code> @EnableCaching</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.cache.CacheManager;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cache.annotation.EnableCaching;</span><br><span class="line"><span class="keyword">import</span> org.springframework.cache.concurrent.ConcurrentMapCacheManager;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableCaching</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CachingConfig</span> &#123;</span><br><span class="line">      <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> CacheManager <span class="title function_">cacheManager</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ConcurrentMapCacheManager</span>(); <span class="comment">//这里还声明了一个ConcurrentMapCacheManager的Bean</span></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li>当你在配置类(@Configuration)上使用@EnableCaching注解时，会触发一个post processor，这会扫描<strong>每一个</strong>spring bean，查看是否已经存在注解对应的缓存。如果找到了，就会自动创建一个代理拦截方法调用，使用缓存的bean执行处理。. <a target="_blank" rel="noopener" href="https://javabeat.net/enablecaching-spring/#:~:text=%40EnableCaching%20in%20Spring%20Framework.%20When%20you%20annotate%20your,method%20call%20and%20handle%20the%20caching%20behavior%20accordingly">参见</a>.</li>
+</ul>
+</li>
+<li>
+<p>XML声明的缓存： 用Spring cache命名空间中的<code>&lt;cache:annotation-driven&gt;</code>元素来启用注解驱动的缓<br>
+存</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">    xmlns:cache=&quot;http://www.springframework.org/schema/cache&quot;</span><br><span class="line">    xsi:schemaLocation=&quot;</span><br><span class="line">        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd</span><br><span class="line">        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">        &lt;cache:annotation-driven /&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>本质上,<code>@EnableCaching</code>和<code>&lt;cache:annotation-driven&gt;</code>的工作方式是相同的。它们都会创建一个切面(aspect)并<br>
+触发Spring缓存注解的切点(pointcut)</p>
+<h1 id="配置CacheManager"><a class="header-anchor" href="#配置CacheManager"></a>配置CacheManager</h1>
+<p>Spring 内置的缓存管理器：</p>
+<ul>
+<li><code>SimpleCacheManager</code></li>
+<li><code>NoOpCacheManager</code></li>
+<li><code>ConcurrentMapCacheManager</code></li>
+<li><code>CompositeCacheManager</code></li>
+<li><code>EhCacheCacheManager</code></li>
+</ul>
+<p>Spring Data的缓存管理器：</p>
+<ul>
+<li><code>RedisCacheManager</code>(来自于Spring Data Redis项目)</li>
+<li><code>GemfireCacheManager</code></li>
+</ul>
+<h2 id="EhCache"><a class="header-anchor" href="#EhCache"></a>EhCache</h2>
+<p>对比Redis, 跑在同一个进程上， 速度更快</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> net.sf.ehcache.CacheManager; <span class="comment">//ehcache提供的CacheManager</span></span><br><span class="line"><span class="keyword">import</span> org.springframework.cache.ehcache.EhCacheCacheManager;<span class="comment">//Spring提供的EhCacheCacheManager</span></span><br><span class="line"><span class="keyword">import</span> org.springframework.cache.ehcache.EhCacheManagerFactoryBean;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableCaching</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CachingConfig</span> &#123;</span><br><span class="line"><span class="comment">//      @Bean</span></span><br><span class="line"><span class="comment">//    public CacheManager cacheManager() &#123;</span></span><br><span class="line"><span class="comment">//        return new ConcurrentMapCacheManager();</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="comment">//将ehCache提供的CacheManager注入到Spring的EhCacheManager</span></span><br><span class="line">  <span class="keyword">public</span> EhCacheCacheManager <span class="title function_">cacheManager</span><span class="params">(CacheManager cm)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">EhCacheCacheManager</span>(cm);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span> <span class="comment">//这是个工厂Bean, 用来生成 Ehcache的CacheManager实例 ，后者被注入到cacheManager（Cacaemanager cm）</span></span><br><span class="line">  <span class="keyword">public</span> EhCacheManagerFactoryBean <span class="title function_">ehcache</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">EhCacheManagerFactoryBean</span> <span class="variable">ehCacheFactoryBean</span> <span class="operator">=</span></span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">EhCacheManagerFactoryBean</span>();</span><br><span class="line">    ehCacheFactoryBean.setConfigLocation(</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">ClassPathResource</span>(<span class="string">&quot;spittr/cache/ehcache.xml&quot;</span>));</span><br><span class="line">    <span class="keyword">return</span> ehCacheFactoryBean;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>cacheManager()</code>方法通过传入Ehcache的<code>CacheManager</code>实例， 创建了一个<code>EhCacheCacheManager</code>实例
+<ul>
+<li>Spring和ehcache都定义了<code>CacheManager</code>类型，我们需要将 ehcache的<code>CacheManager</code>注入到Spring的<code>EhCacheCacheManager</code></li>
+<li>Spring提供了<code>EhCacheManagerFactoryBean</code>来生成EhCache的<code>CacheManager</code>。方法<code>ehcache()</code>会创建并返回一<code>EhCacheManagerFactoryBean</code>实例。因为它是一个工<strong>厂bean</strong>(即实现了Spring的<code>FactoryBean</code>接口),所以<strong>注册在Spring应用上下文中的并不是EhCacheManagerFactoryBean的实例,而是Ehcache的CacheManager的实例</strong>, 后者被注入到<code>EhCacheCacheManager</code>之中</li>
+</ul>
+</li>
+<li><code>EhCache</code>自身也需要配置（通过XML）， 我们在创建<code>EhCacheManagerFactoryBean</code>的过程中, 通过<code>setConfigLocation()</code>方法,传入<code>ClassPath-Resource</code>,来指定<code>EhCache</code> XML配置文件相对于根类路径(classpath)的位置。</li>
+</ul>
+<h3 id="ehCache配置文件"><a class="header-anchor" href="#ehCache配置文件"></a>ehCache配置文件</h3>
+<p><a target="_blank" rel="noopener" href="http://ehcache.org/documentation/configuration">ehCache官方文档</a></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ehcache</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">cache</span> <span class="attr">name</span>=<span class="string">&quot;spittleCache&quot;</span> //<span class="attr">声明了一个名为spittleCache的缓存</span></span></span><br><span class="line"><span class="tag">          <span class="attr">maxBytesLocalHeap</span>=<span class="string">&quot;50m&quot;</span> //<span class="attr">最大的堆存储为50MB</span></span></span><br><span class="line"><span class="tag">          <span class="attr">timeToLiveSeconds</span>=<span class="string">&quot;100&quot;</span>&gt;</span> // 存活时间为100秒</span><br><span class="line">  <span class="tag">&lt;/<span class="name">cache</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ehcache</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Redis"><a class="header-anchor" href="#Redis"></a>Redis</h2>
+<p>优点：</p>
+<ul>
+<li>
+<p>对比EhCache， 可以实现跨进程的缓存</p>
+</li>
+<li>
+<p>缓存的条目是键值对,其中key描述了产生value的操作和参数。因此, Redis作为key-value存储,非常适合存储缓存</p>
+</li>
+</ul>
+<p>Spring Data Redis提供了<code>RedisCacheManager</code>, 它与一个Redis Server协作,并通过<code>RedisTemplate</code>将缓存条目存储到Redis中</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableCaching</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CacheConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> CacheManager <span class="title function_">cacheManager</span><span class="params">(RedisTemplate redisTemplate)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RedisCacheManager</span>(redisTemplate); <span class="comment">//Redis缓存管理器Bean</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span> <span class="comment">//Redis连接工厂Bean， 这也是一个工厂Bean</span></span><br><span class="line">    <span class="keyword">public</span> RedisConnectionFactory <span class="title function_">redisCF</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">JedisConnectionFactory</span>(); <span class="comment">//这里的工厂Bean的底层实现用的是JedisConnectionFactory</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span> <span class="comment">//Redis Template Bean</span></span><br><span class="line">    <span class="keyword">public</span> RedisTemplate&lt;String, String&gt; <span class="title function_">redisTemplate</span><span class="params">(RedisConnectionFactory cf)</span> &#123;</span><br><span class="line">        RedisTemplate&lt;String, String&gt; redis = <span class="keyword">new</span> <span class="title class_">RedisTemplate</span>&lt;&gt;();</span><br><span class="line">        redis.setConnectionFactory(cf);</span><br><span class="line">        <span class="keyword">return</span> redis;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>cacheManager()</code>方法通过传入<code>RedisTemplate</code>实例， 创建了一个<code>RedisCacheManager</code>实例</li>
+<li>为了使用<code>RedisCacheManager</code>,我们需要<code>RedisTemplate</code>及<code>RedisConnection</code> Bean, 这同样用工厂Bean实现</li>
+</ul>
+<h2 id="使用多个缓存管理器"><a class="header-anchor" href="#使用多个缓存管理器"></a>使用多个缓存管理器</h2>
+<p>可以用Spring的<code>CompositeCacheManager</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> CacheManager <span class="title function_">cacheManager</span><span class="params">(net.sf.ehcache.CacheManager cm, </span></span><br><span class="line"><span class="params">		RedisTemplate&lt;String, Object&gt; redisTemplate)</span> &#123;</span><br><span class="line">	</span><br><span class="line">	<span class="type">CompositeCacheManager</span> <span class="variable">compositeCacheManager</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CompositeCacheManager</span>();</span><br><span class="line">	List&lt;CacheManager&gt; managers = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;CacheManager&gt;();</span><br><span class="line">	managers.add(<span class="keyword">new</span> <span class="title class_">EhCacheCacheManager</span>(cm));</span><br><span class="line">	managers.add(<span class="keyword">new</span> <span class="title class_">RedisCacheManager</span>(redisTemplate));</span><br><span class="line">	compositeCacheManager.setCacheManagers(managers);<span class="comment">//添加缓存管理器，按添加顺序查找，没找到再往下找</span></span><br><span class="line">	<span class="keyword">return</span> compositeCacheManager;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>会从<code>EhCacheCacheManager</code>检查Ehcache, 然后从<code>RedisCacheManager</code>检查Redis</p>
+<h1 id="应用缓存"><a class="header-anchor" href="#应用缓存"></a>应用缓存</h1>
+<p>这里主要介绍用注解配置缓存</p>
+<h2 id="Cacheable"><a class="header-anchor" href="#Cacheable"></a>@Cacheable</h2>
+<p><code>@Cacheable(  cache_name )</code></p>
+<p>方法的结果会被存到指定的缓存中，下次采用<u>相同的参数</u>进行方法调用时，会使用缓存中的结果<br>
+例如：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Cacheable(&quot;spittleCache&quot;)</span></span><br><span class="line">  Spittle <span class="title function_">findOne</span><span class="params">(<span class="type">long</span> id)</span>;<span class="meta">@Cacheable(&quot;books&quot;)</span></span><br></pre></td></tr></table></figure>
+<p>当findOne()被调用时,缓存切面会拦截调用并在缓存中查找之前<br>
+以名spittleCache存储的返回值。缓存的key是传递<br>
+到findOne()方法中的id参数。如果按照这个key能够找到值的话,<br>
+就会返回找到的值,方法不会再被调用。如果没有找到值的话,那么<br>
+就会调用这个方法,并将返回值放到缓存之中,为下一次调<br>
+用findOne()方法做好准备</p>
+<p><strong>可以加到接口的方法上</strong>， 这会导致所有实现该接口的类的对应方法都应用该注解</p>
+<p><strong>默认key生成：</strong><br>
+默认key的生成按照以下规则：<br>
+- 如果没有参数,则使用0作为key<br>
+- 如果只有一个参数，使用该参数作为key<br>
+- 如果又多个参数，使用包含所有参数的hashCode作为key</p>
+<p><strong>自定义key的生成：</strong><br>
+当目标方法参数有多个时，有些参数并不适合缓存逻辑<br>
+比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Cacheable(&quot;books&quot;)</span><br><span class="line">public Book findBook(ISBN isbn, boolean checkWarehouse, boolean includeUsed)</span><br></pre></td></tr></table></figure>
+<p>其中checkWarehouse，includeUsed并不适合当做缓存的key.针对这种情况，Cacheable 允许指定生成key的关键属性，并且支持支持SpringEL表达式。（推荐方法）<br>
+再看一些例子：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Cacheable(cacheNames=&quot;books&quot;, key=&quot;#isbn&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Book <span class="title function_">findBook</span><span class="params">(ISBN isbn, <span class="type">boolean</span> checkWarehouse, <span class="type">boolean</span> includeUsed)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Cacheable(cacheNames=&quot;books&quot;, key=&quot;#isbn.rawNumber&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Book <span class="title function_">findBook</span><span class="params">(ISBN isbn, <span class="type">boolean</span> checkWarehouse, <span class="type">boolean</span> includeUsed)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Cacheable(cacheNames=&quot;books&quot;, key=&quot;T(someType).hash(#isbn)&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Book <span class="title function_">findBook</span><span class="params">(ISBN isbn, <span class="type">boolean</span> checkWarehouse, <span class="type">boolean</span> includeUsed)</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Cacheable(cacheNames=&quot;books&quot;, key=&quot;#map[&#x27;bookid&#x27;].toString()&quot;)</span></span><br><span class="line"><span class="keyword">public</span> Book <span class="title function_">findBook</span><span class="params">(Map&lt;String, Object&gt; map)</span></span><br></pre></td></tr></table></figure>
+<p><strong>缓存的同步 sync：</strong><br>
+在多线程环境下，某些操作可能使用相同参数同步调用。默认情况下，缓存不锁定任何资源，可能导致多次计算，而违反了缓存的目的。对于这些特定的情况，属性 sync 可以指示底层将缓存锁住，使只有一个线程可以进入计算，而其他线程堵塞，直到返回结果更新到缓存中。<br>
+例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Cacheable(cacheNames=&quot;foos&quot;, sync=&quot;true&quot;)</span><br><span class="line">public Foo executeExpensiveOperation(String id) &#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>属性condition：</strong><br>
+有时候，一个方法可能不适合一直缓存（例如：可能依赖于给定的参数）。属性condition支持这种功能，通过SpEL 表达式来指定可求值的boolean值，为true才会缓存（在方法执行之前进行评估）。<br>
+例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Cacheable(cacheNames=&quot;book&quot;, condition=&quot;#name.length &lt; 32&quot;)</span><br><span class="line">public Book findBook(String name)</span><br></pre></td></tr></table></figure>
+<p>此外，还有一个unless 属性可以用来是决定是否添加到缓存。与condition不同的是，unless表达式是在方法调用之后进行评估的。如果返回false，才放入缓存（与condition相反）。 #result指返回值 例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@Cacheable(cacheNames=&quot;book&quot;, condition=&quot;#name.length &lt; 32&quot;, unless=&quot;#result.name.length &gt; 5&quot;&quot;)</span><br><span class="line">public Book findBook(String name)</span><br></pre></td></tr></table></figure>
+<h2 id="CachePut"><a class="header-anchor" href="#CachePut"></a>@CachePut</h2>
+<p>@CachePut标注的方法在执行前<strong>不会去检查缓存中是否存在之前执行过的结果，而是每次都会执行该方法，并将执行结果以键值对的形式存入指定的缓存中</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@CachePut(cacheNames=&quot;book&quot;, key=&quot;#isbn&quot;)</span><br><span class="line">public Book updateBook(ISBN isbn, BookDescriptor descriptor)</span><br></pre></td></tr></table></figure>
+<p>注意：应该避免@CachePut 和 @Cacheable同时使用的情况。</p>
+<h2 id="CacheEvict"><a class="header-anchor" href="#CacheEvict"></a>@CacheEvict</h2>
+<p>移除缓存条目</p>
+<p>@CacheEvict要求指定一个或多个缓存，使之都受影响。此外，还提供了一个额外的参数allEntries 。表示是否需要清除缓存中的所有元素。默认为false，表示不需要。当指定了allEntries为true时，Spring Cache将忽略指定的key。有的时候我们需要Cache一下清除所有的元素。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@CacheEvict(cacheNames=&quot;books&quot;, allEntries=true)</span><br><span class="line">public void loadBooks(InputStream batch)</span><br></pre></td></tr></table></figure>
+<p>清除操作默认是在对应方法成功执行之后触发的，即方法如果因为抛出异常而未能成功返回时也不会触发清除操作。使用beforeInvocation可以改变触发清除操作的时间，当我们指定该属性值为true时，Spring会在调用该方法之前清除缓存中的指定元素。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@CacheEvict(cacheNames=&quot;books&quot;, beforeInvocation=true)</span><br><span class="line">public void loadBooks(InputStream batch)</span><br></pre></td></tr></table></figure>
+<h2 id="CacheConfig"><a class="header-anchor" href="#CacheConfig"></a>@CacheConfig</h2>
+<p>有时候一个类中可能会有多个缓存操作，而这些缓存操作可能是重复的。这个时候可以使用@CacheConfig</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">@CacheConfig(&quot;books&quot;)</span><br><span class="line">public class BookRepositoryImpl implements BookRepository &#123;</span><br><span class="line"></span><br><span class="line">    @Cacheable</span><br><span class="line">    public Book findBook(ISBN isbn) &#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@CacheConfig是一个类级别的注解，允许共享缓存的名称、KeyGenerator、CacheManager 和CacheResolver。<br>
+该操作会被覆盖。</p>
+<h2 id="用XML配置缓存"><a class="header-anchor" href="#用XML配置缓存"></a>用XML配置缓存</h2>
+<p>就是在XML里面指定缓存规则要应用到哪些方法， 避免在源代码里写<code>@Cacheable()</code>,  比较晦涩，不好用</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/19/Training-Day/" rel="prev" title="Training Day">
+                  <i class="fa fa-chevron-left"></i> Training Day
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/22/Spring-ORM/" rel="next" title="Spring ORM">
+                  Spring ORM <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

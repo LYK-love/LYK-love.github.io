@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  How to Compare Two Algorithms Brute  Force  by Iteration Brute  Force  by Recursion">
+<meta property="og:type" content="article">
+<meta property="og:title" content="L2 Asymptotics">
+<meta property="og:url" content="http://lyk-love.cn/2021/07/13/L2-Asymptotics/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  How to Compare Two Algorithms Brute  Force  by Iteration Brute  Force  by Recursion">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-13T08:54:12.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.932Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Algorithm design and analysis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/07/13/L2-Asymptotics/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/07/13/L2-Asymptotics/","path":"2021/07/13/L2-Asymptotics/","title":"L2 Asymptotics"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>L2 Asymptotics | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#How-to-Compare-Two-Algorithms"><span class="nav-text">How to Compare Two Algorithms</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Relative-Growth-Rate"><span class="nav-text">Relative Growth Rate</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Brute-Force-by-Iteration"><span class="nav-text">Brute  Force  by Iteration</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Brute-Force-by-Recursion"><span class="nav-text">Brute  Force  by Recursion</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/07/13/L2-Asymptotics/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="L2 Asymptotics | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          L2 Asymptotics
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-13 08:54:12" itemprop="dateCreated datePublished" datetime="2021-07-13T08:54:12Z">2021-07-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li><strong>How to Compare Two Algorithms</strong></li>
+<li><strong>Brute  Force  by Iteration</strong></li>
+<li><strong>Brute  Force  by Recursion</strong></li>
+</ul>
+<span id="more"></span>
+<h1 id="How-to-Compare-Two-Algorithms"><a class="header-anchor" href="#How-to-Compare-Two-Algorithms"></a>How to Compare Two Algorithms</h1>
+<ul>
+<li>Algorithm analysis, with <i>simplification</i>
+<ul>
+<li>Measure the cost by the number of <strong>critical operations</strong></li>
+<li>Large input size only</li>
+<li>Essential part only
+<ul>
+<li>Only the leading term in$ f(n)$ is considered</li>
+<li>Constant coefficients are ignored</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Capturing the essential part in the cost in a mathematical way
+<ul>
+<li>Asymptotic <strong>growth rate</strong> of $f(n)$</li>
+</ul>
+</li>
+</ul>
+<h2 id="Relative-Growth-Rate"><a class="header-anchor" href="#Relative-Growth-Rate"></a>Relative Growth Rate</h2>
+<ul>
+<li>
+<p>$O(g):$​​ functions that grows no faster than $g$​</p>
+<ul>
+<li>$O(g(n))={f(n): 存在常数c&gt;0和n_0&gt;0,满足0\leq f(n) \leq cg(n)对所有n \geq n_0均成立}$​</li>
+<li>$f(n)=O(g(n)) \quad iff \quad \lim\limits_{n \rarr \infty} \frac{f(n)}{g(n)}=c&lt;\infty$</li>
+</ul>
+</li>
+<li>
+<p>$o(g)$: 不快于$g$且与$g$有层次上的差距</p>
+<ul>
+<li>$o(g(n))={f(n): 对任意常数c&gt;0, 均存在常数n_0&gt;0,满足0\leq f(n) &lt; cg(n)对所有n \geq n_0均成立}$​​​</li>
+<li>$f(n)=o(g(n)) \quad iff \quad \lim\limits_{n \rarr \infty} \frac{f(n)}{g(n)}=0$​</li>
+</ul>
+</li>
+<li>
+<p>$\Omega(g)$: functions that grow at least as fast as $g$​</p>
+<ul>
+<li>$\Omega(g(n))={f(n): 存在常数c&gt;0和n_0&gt;0,满足0 \leq cg(n)\leq f(n) 对所有n \geq n_0均成立}$</li>
+<li>$f(n)=\Omega(g(n)) \quad iff \quad \lim\limits_{n \rarr \infty} \frac{f(n)}{g(n)}=c&gt;0(c也可以为\infty)$​</li>
+</ul>
+</li>
+<li>
+<p>$\omega$: 不慢于$g$且与$g$有层次上的差距</p>
+<ul>
+<li>$\omega(g(n))={f(n): 对任意常数c&gt;0,均存在常数n_0&gt;0,满足0 \leq cg(n) &lt; f(n) 对所有n \geq n_0均成立}$​</li>
+<li>$f(n)=\omega(g(n)) \quad iff \quad \lim\limits_{n \rarr \infty} \frac{f(n)}{g(n)}=\infty$​​</li>
+</ul>
+</li>
+<li>
+<p>$\Theta(g):$​​ … the same rate as $g$​​. (处于同一水平) ( $O$和$\Omega$的交集 )</p>
+<ul>
+<li>$\Theta(g(n))={f(n): 存在常数c_1&gt;0,c_2&gt;0和n_0&gt;0,满足0 \leq c_1g(n)\leq f(n) \leq c_2g(n) 对所有n \geq n_0均成立}$</li>
+<li>$f(n)=\Theta(g(n)) \quad iff \quad \lim\limits_{n \rarr \infty} \frac{f(n)}{g(n)}=c&gt;0(0&lt;c&lt;\infty)$​​</li>
+</ul>
+</li>
+<li>
+<p>$\theta$: 不存在， $o$​和$\omega$​的交集是空集</p>
+</li>
+</ul>
+<h1 id="Brute-Force-by-Iteration"><a class="header-anchor" href="#Brute-Force-by-Iteration"></a>Brute  Force  by Iteration</h1>
+<ul>
+<li>
+<p>Max-sum Subsequence</p>
+<ul>
+<li>
+<p>蛮力是$O(n^3)$,  改进一下是$O（n^2）$​，用分治改进是$O（nlogn）$</p>
+</li>
+<li>
+<p>A linear Algorithm: O(n)</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">ThisSum = MaxSum = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>( j = <span class="number">0</span> ; j &lt; N ; j++ )</span><br><span class="line">&#123;</span><br><span class="line">	ThisSum += A[j];</span><br><span class="line">	<span class="keyword">if</span>( ThisSum &gt; MaxSum )</span><br><span class="line">		MaxSum = ThisSum;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>( ThisSum &lt; <span class="number">0</span> )</span><br><span class="line">		ThisSum = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">Return MaxSum</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Brute-Force-by-Recursion"><a class="header-anchor" href="#Brute-Force-by-Recursion"></a>Brute  Force  by Recursion</h1>
+<ul>
+<li>
+<p>蛮力策略大智若愚，可以以此为跳板进行改进</p>
+</li>
+<li>
+<p><strong>Job Scheduling</strong></p>
+<ul>
+<li>Brute force recursion
+<ul>
+<li>Select job ‘a’</li>
+<li>Case 1: the result does not contain ‘a’
+<ul>
+<li>Recursion on $J \setminus {a}$​​</li>
+</ul>
+</li>
+<li>Case 2: the result contains ‘a’
+<ul>
+<li>Recursion on  $J \setminus {a} \setminus {$​ tasks overlapping with $ a}$​</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Further improvements
+<ul>
+<li>Dynamic programming(L16)</li>
+<li>Greedy algorithms( L14 )</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Matrix Chain Multiplication</strong></p>
+<ul>
+<li>Solutions
+<ul>
+<li>Brute force recursion(L16)
+<ul>
+<li>BF1</li>
+<li>BF2</li>
+</ul>
+</li>
+<li>Dynamic programming(L16)
+<ul>
+<li>Based on brute force recursion 2</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm-design-and-analysis/" rel="tag"># Algorithm design and analysis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/13/L1-Model-of-Computation/" rel="prev" title="L1 Model of Computation">
+                  <i class="fa fa-chevron-left"></i> L1 Model of Computation
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/15/L3-Recursion/" rel="next" title="L3 Recursion">
+                  L3 Recursion <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

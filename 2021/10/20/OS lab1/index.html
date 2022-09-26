@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline：  汇编问答 调用约束 汇编避坑  NASM tutorial NASM教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS lab1">
+<meta property="og:url" content="http://lyk-love.cn/2021/10/20/OS%20lab1/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline：  汇编问答 调用约束 汇编避坑  NASM tutorial NASM教程">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-10-20T13:37:22.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.935Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/10/20/OS%20lab1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/10/20/OS%20lab1/","path":"2021/10/20/OS lab1/","title":"OS lab1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OS lab1 | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E9%97%AE%E7%AD%94"><span class="nav-text">汇编问答</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E7%BA%A6%E6%9D%9F"><span class="nav-text">调用约束</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-text">Tips</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E9%81%BF%E5%9D%91"><span class="nav-text">汇编避坑</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/10/20/OS%20lab1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OS lab1 | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS lab1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-20 13:37:22" itemprop="dateCreated datePublished" datetime="2021-10-20T13:37:22Z">2021-10-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline：</p>
+<ul>
+<li>汇编问答</li>
+<li>调用约束</li>
+<li>汇编避坑</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://cee.github.io/NASM-Tutorial/">NASM tutorial</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.bytekits.com/nasm/find-address-and-move.html">NASM教程</a></p>
+<span id="more"></span>
+<h1 id="汇编问答"><a class="header-anchor" href="#汇编问答"></a>汇编问答</h1>
+<p>用于OS第一次作业</p>
+<ol>
+<li>
+<p>请简述 80x86 系列的发展历史</p>
+<ul>
+<li>1978年6月,intel推出第一款16位微处理器8086,采用20位地址线</li>
+<li>1982年发布80286,主频提高至12MHz</li>
+<li>1985年发布80386,处理器变为32位,地址线扩展至32位</li>
+<li>1989年发布80486,1993年发布80586并命名为奔腾</li>
+</ul>
+</li>
+<li>
+<p>说明小端和大端的区别,并说明 80x86 系列采用了哪种方式?</p>
+<ul>
+<li>小端存储：<strong>数据的高字节保存在内存的高地址中，而数据的低字节保存在内存的低地址中</strong></li>
+<li>大端存储反之</li>
+<li>80x86采用小端存储</li>
+</ul>
+</li>
+<li>
+<p>8086 有哪五类寄存器,请分别举例说明其作用?</p>
+<ul>
+<li>通用寄存器：
+<ul>
+<li>数据寄存器: AX，BX，CX，DX
+<ul>
+<li>AX (Accumulator)：累加寄存器，也称之为累加器；</li>
+<li>BX (Base)：基地址寄存器；</li>
+<li>CX (Count)：计数器寄存器；</li>
+<li>DX (Data)：数据寄存器；</li>
+</ul>
+</li>
+<li>指针寄存器:
+<ul>
+<li>SP (Stack Pointer)：堆栈指针寄存器；</li>
+<li>BP (Base Pointer)：基指针寄存器；</li>
+</ul>
+</li>
+<li>变址寄存器:
+<ul>
+<li>SI (Source Index)：源变址寄存器；</li>
+<li>DI (Destination Index)：目的变址寄存器；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>控制寄存器:
+<ul>
+<li>IP (Instruction Pointer)：指令指针寄存器；</li>
+<li>FLAG：标志寄存器；</li>
+</ul>
+</li>
+<li>段寄存器:
+<ul>
+<li>CS (Code Segment)：代码段寄存器；</li>
+<li>DS (Data Segment)：数据段寄存器；</li>
+<li>SS (Stack Segment)：堆栈段寄存器；</li>
+<li>ES (Extra Segment)：附加段寄存器；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>什么是寻址?立即寻址和直接寻址的区别是什么?</p>
+<ul>
+<li>找到操作数的地址(从而能够取出操作数）</li>
+<li>区别：
+<ul>
+<li>立即寻址
+<ul>
+<li><code>MOV AX 1234H</code></li>
+<li>直接给出了操作数,事实上没有“寻址”</li>
+</ul>
+</li>
+<li>直接寻址
+<ul>
+<li><code>MOV AX [1234H]</code></li>
+<li>直接给出了地址1234H,用[]符号取数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>请举例说明寄存器间接寻址、寄存器相对寻址、基址加变址寻址、相对基址加变址寻址四种方式的<br>
+区别</p>
+<ul>
+<li>
+<p>寄存器间接寻址</p>
+<p><code>MOV AX [BX]</code><br>
+操作数有效地址在寄存器之中(SI、DI、BX、BP)</p>
+</li>
+<li>
+<p>寄存器相对寻址<br>
+• <code>MOV AX [SI+3]</code></p>
+</li>
+<li>
+<p>基址加变址<br>
+•<code> MOV AX [BX+DI]</code><br>
+• 把一个基址寄存器(BX、BP)的内容,加上变址寄存器(SI、DI)的内容。</p>
+</li>
+<li>
+<p>相对基址加变址<br>
+•<code> MOV AX [3+BX+DI]</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>请分别简述 MOV 指令和 LEA 指令的用法和作用?</p>
+<ul>
+<li>LEA：load effective address， 将一个内存地址直接赋给目的操作数
+<ul>
+<li><code>lea eax,[ebx+8]</code>就是将ebx+8这个值直接赋给eax，而不是把ebx+8处的内存地址里的数据赋给eax。</li>
+</ul>
+</li>
+<li>MOV: 与LEA相反</li>
+</ul>
+</li>
+<li>
+<p>请说出主程序与子程序之间至少三种参数传递方式</p>
+<ul>
+<li>
+<p>利用寄存器传递参数,就是把参数放在约定的寄存器中</p>
+</li>
+<li>
+<p>利用约定的存储单元传递参数</p>
+</li>
+<li>
+<p>利用堆栈传递参数</p>
+</li>
+</ul>
+</li>
+<li>
+<p>如何处理输入和输出,代码中哪里体现出来?</p>
+<ul>
+<li>宏，系统调用</li>
+</ul>
+</li>
+<li>
+<p>有哪些段寄存器</p>
+<ul>
+<li>见上文</li>
+</ul>
+</li>
+<li>
+<p>通过什么寄存器保存前一次的运算结果,在代码中哪里体现出来。</p>
+<ul>
+<li>注释里写了</li>
+</ul>
+</li>
+<li>
+<p>解释 <code>boot.asm </code>文件中, <code>org 0700h</code>的作用</p>
+<ul>
+<li>告诉汇编器,当前这段代码会放在07c00h处。所以,如果之后遇到需要绝对寻址的指令,那么绝对地址就是07c00h加上相对地址。</li>
+<li>在第一行加上<code>org 07c00h</code>只是让编译器从相对地址07c00h处开始编译第一条指令,相对地址被编译加载后就正好和绝对地址吻合</li>
+</ul>
+</li>
+<li>
+<p>boot.bin 应该放在软盘的哪一个扇区?为什么?</p>
+<ul>
+<li>first</li>
+<li>开机,从ROM运行BIOS程序,BIOS程序检查软盘0面0磁道1扇区,如果扇区以<code>0xaa55</code>结束,则认定为引导扇区,将其<strong>512字节</strong>的数据加载到内存的<code>07c00</code>处,然后设置PC,跳到内存07c00处开始执行代码。</li>
+</ul>
+</li>
+<li>
+<p>loader 的作用有哪些?</p>
+<ul>
+<li>为了突破512字节的限制,我们引入另外一个重要的文件loader.asm,引导扇区只负责把loader加载入内存并把控制权交给他,这样将会灵活得多。</li>
+<li>最终,由loader将内核kernel加载入内存,才开始了真正操作系统内核的运行。
+<ul>
+<li>跳入保护模式
+<ul>
+<li>最开始的x86处理器16位,寄存器用ax, bx等表示,称为实模式。后来扩<br>
+充成32位,eax,ebx等,为了向前兼容,提出了保护模式</li>
+<li>必须从实模式跳转到保护模式,才能访问1M以上的内存。</li>
+</ul>
+</li>
+<li>启动内存分⻚</li>
+<li>从kernel.bin中读取内核,并放入内存,然后跳转到内核所在的<br>
+开始地址,运行内核
+<ul>
+<li>跟boot类似,使用汇编直接在软盘下搜索kernel.bin</li>
+<li>但是,不能把整个kernel.bin放在内存,而是要以ELF文件的格式读取并<br>
+提取代码。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>解释 NASM 语言中<code>[ ]</code>的作用</p>
+<ul>
+<li>解地址</li>
+</ul>
+</li>
+<li>
+<p>解释语句 times 510-($-$$) db 0 ,为什么是 510? $ 和 $$ 分别表示什么?</p>
+<ul>
+<li>填充剩下的空间，使得生成的二进制代码恰好为512字节（ dw是两个字节 ）</li>
+<li>$表示当前行的偏移地址, $$表示当前段的起始偏移地址,</li>
+</ul>
+</li>
+<li>
+<p>解释配置文件<code> bochsrc</code> 文件中如下参数的含义</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">megs:32</span><br><span class="line">display_library: sdl</span><br><span class="line">floppya: 1_44=a.img, status=inserted</span><br><span class="line">boot: floppy</span><br></pre></td></tr></table></figure>
+<ul>
+<li>megs:虚拟机内存大小 (MB)</li>
+<li>display_library:bochs使用的GUI库,在Ubuntu下面是sdl</li>
+<li>floppya:虚拟机外设,软盘为a.img文件</li>
+<li>boot:虚拟机启动方式,从软盘启动</li>
+</ul>
+</li>
+</ol>
+<h1 id="调用约束"><a class="header-anchor" href="#调用约束"></a>调用约束</h1>
+<p>64 位 Linux 写一个集成了 C 语言库的程序时，你必须遵循以下的调用约束条件:</p>
+<ul>
+<li>传递参数时，按照从左到右的顺序，将尽可能多的参数依次保存在寄存器中。存放位置的寄存器顺序是确定的：
+<ul>
+<li>对于整数和指针，<code>rdi</code>，<code>rsi</code>，<code>rdx</code>， <code>rcx</code>，<code>r8</code>，<code>r9</code>。</li>
+<li>对于浮点数（float 和 double 类型），<code>xmm0</code>，<code>xmm1</code>，<code>xmm2</code>， <code>xmm3</code>，<code>xmm4</code>，<code>xmm5</code>，<code>xmm6</code>，<code>xmm7</code>。</li>
+</ul>
+</li>
+<li>剩下的参数将按照从右到左的顺序压入栈中，并在调用之后 <em>由调用函数推出栈</em> 。</li>
+<li>等所有的参数传入后，会生成调用指令。所以当被调用函数得到控制权后，返回地址会被保存在 <code>[rsp]</code> 中，第一个局部变量会被保存在 <code>[rsp+8]</code> 中，以此类推。</li>
+<li><strong>栈指针 <code>rsp</code> 在调用前必须进行 16 字节对齐处理</strong> 。当然，调用的过程中只会把一个 8 bytes 的返回地址推入栈中，所以当函数得到控制权时，<code>rsp</code> 并没有对齐。你需要向栈中压入数据或者从 <code>rsp</code> 减去 8 来使之对齐。</li>
+<li>调用函数需要保存如下的寄存器：<code>rbp</code>，<code>rbx</code>，<code>r12</code>，<code>r13</code>，<code>r14</code>，<code>r15</code>。其他的寄存器可以自由使用。</li>
+<li>被调用函数也需要保存 XMCSR 的控制位和 x87 指令集的控制字，但是 x87 指令在 64 位系统上十分少见所以你不必担心这点。</li>
+<li>整数返回值存放在 <code>rax</code> 或者 <code>rdx:rax</code> 中，浮点数返回值存放在 <code>xmm0</code> 或者 <code>xmm1:xmm0</code> 中。</li>
+</ul>
+<h2 id="Tips"><a class="header-anchor" href="#Tips"></a>Tips</h2>
+<ul>
+<li>
+<p>栈是由高地址向低地址增长的.</p>
+</li>
+<li>
+<p>传递参数时，按照从左到右的顺序，将尽可能多的<strong>参数依次保存在寄存器中</strong>。存放位置的寄存器顺序是确定的：</p>
+<ul>
+<li>对于整数和指针，<code>rdi</code>，<code>rsi</code>，<code>rdx</code>， <code>rcx</code>，<code>r8</code>，<code>r9</code>。</li>
+<li>对于浮点数（float 和 double 类型），<code>xmm0</code>，<code>xmm1</code>，<code>xmm2</code>， <code>xmm3</code>，<code>xmm4</code>，<code>xmm5</code>，<code>xmm6</code>，<code>xmm7</code>。</li>
+</ul>
+</li>
+<li>
+<p><strong>剩下的参数将按照从右到左的顺序压入栈中</strong>，并在调用之后 <em>由调用函数推出栈</em> 。</p>
+</li>
+<li>
+<p>等所有的参数传入后，会生成调用指令。所以当被调用函数得到控制权后，<strong>返回地址会被保存在 <code>[rsp]</code> 中</strong>，<strong>第一个局部变量会被保存在 <code>[rsp-8]</code> 中，以此类推</strong>。</p>
+<ul>
+<li>
+<p>局部变量的入栈顺序：</p>
+<ul>
+<li>
+<p>在没有溢出保护机制下的编译时，我们可以发现，所有的局部变量入栈的顺序（准确来说是系统为局部变量申请内存中栈空间的顺序）是正向的，即哪个变量先申明哪个变量就先得到空间， 也就是说，编译器给变量空间的申请是直接按照变量申请顺序执行的。</p>
+</li>
+<li>
+<p>在有溢出保护机制下的编译时，情况有了顺序上的变化，对于每一种类型的变量来说，栈空间申请的顺序都与源代码中相反，即<strong>哪个变量在源代码中先出现则后申请空间</strong>；而对不同的变量来说，申请的顺序也不同，有例子可以看出，int型总是在char的buf型之后申请，不管源代码中的顺序如何（这应该来源于编译器在进行溢出保护时设下的规定）。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="汇编避坑"><a class="header-anchor" href="#汇编避坑"></a>汇编避坑</h1>
+<ul>
+<li>慎用宏定义，它内部无法跳转和定义标签，因此无法封装复杂逻辑 ; 同时，使用时要记住宏定义内部对寄存器的更改</li>
+<li>可以<code>push rax</code>, 并使用<code>al</code>, 事实上你无法<code>push al</code>，PUSH 指令只对至少16位的寄存器使用</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/20/%E5%9B%BD%E5%8F%B2%E5%A4%A7%E7%BA%B2/" rel="prev" title="国史大纲">
+                  <i class="fa fa-chevron-left"></i> 国史大纲
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/21/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F%E7%B1%BB%E5%9E%8B/" rel="next" title="商业模式类型">
+                  商业模式类型 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

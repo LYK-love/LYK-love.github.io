@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:   单体应用容器化  Dockerfile build image push image    多阶段构建   构建镜像优化   介绍了应用的容器化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dockerizing">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/19/Dockerizing/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:   单体应用容器化  Dockerfile build image push image    多阶段构建   构建镜像优化   介绍了应用的容器化">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20image%20squash.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20image%20squash.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20push%20information.png">
+<meta property="article:published_time" content="2022-03-19T01:04:45.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.930Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20image%20squash.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/03/19/Dockerizing/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/03/19/Dockerizing/","path":"2022/03/19/Dockerizing/","title":"Dockerizing"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Dockerizing | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E4%BD%93%E5%BA%94%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8C%96"><span class="nav-text">单体应用容器化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile"><span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Options"><span class="nav-text">Options</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="nav-text">构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E9%95%9C%E5%83%8F%E5%B1%82"><span class="nav-text">增加镜像层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#build-cache"><span class="nav-text">build cache</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#squash-image"><span class="nav-text">squash image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F"><span class="nav-text">推送镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#preparation"><span class="nav-text">preparation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2"><span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%95%9C%E5%83%8F%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="nav-text">查看镜像构建过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="nav-text">运行容器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E9%98%B6%E6%AE%B5%E6%9E%84%E5%BB%BA"><span class="nav-text">多阶段构建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F%E4%BC%98%E5%8C%96"><span class="nav-text">构建镜像优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8alpine"><span class="nav-text">使用alpine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%89%8D%E4%B8%8B%E8%BD%BD%E4%BE%9D%E8%B5%96"><span class="nav-text">提前下载依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%A4%9A%E9%98%B6%E6%AE%B5%E6%9E%84%E5%BB%BA"><span class="nav-text">利用多阶段构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#github-%E7%9A%84-actions-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F%E9%97%AE%E9%A2%98"><span class="nav-text">github 的 actions 构建镜像问题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/19/Dockerizing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Dockerizing | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Dockerizing
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-19 01:04:45" itemprop="dateCreated datePublished" datetime="2022-03-19T01:04:45Z">2022-03-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>
+<p>单体应用容器化</p>
+<ul>
+<li>Dockerfile</li>
+<li>build image</li>
+<li>push image</li>
+</ul>
+</li>
+<li>
+<p>多阶段构建</p>
+</li>
+<li>
+<p>构建镜像优化</p>
+</li>
+</ul>
+<p>介绍了应用的容器化</p>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<p>应用容器化步骤：</p>
+<ol>
+<li>编写应用代码</li>
+<li>创建Dockerfile,其中包括当前应用的描述，依赖以及如何运行这个应用</li>
+<li>对该Dockerfile执行<code>docker image build</code></li>
+<li>等待Docker将应用程序构建到Docker镜像中</li>
+</ol>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20image%20squash.png" alt="dockerizing workflow"></p>
+<h1 id="单体应用容器化"><a class="header-anchor" href="#单体应用容器化"></a>单体应用容器化</h1>
+<p>示例项目：<a target="_blank" rel="noopener" href="https://github.com/LYK-love/psweb">https://github.com/LYK-love/psweb</a></p>
+<h2 id="Dockerfile"><a class="header-anchor" href="#Dockerfile"></a>Dockerfile</h2>
+<p>构建上下文（Build Context）： 包含应用文件的目录</p>
+<p>Dockerfile一般放在构建上下文的根目录下</p>
+<p>Dockerfile首字母不能小写</p>
+<p>Dockerfile:</p>
+<ul>
+<li>除了 <code>#</code> 开头的注释行之外， 其他的每一行都是一条指令
+<ul>
+<li>指令： <code>INSTRUCTION argument</code>: 不区分大小写，一般<code>INSTRUCTION</code>大写</li>
+</ul>
+</li>
+<li>分为四部分：基础镜像信息、维护者信息、镜像操作指令和容器启动时执行指令</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM alpine</span><br><span class="line"></span><br><span class="line">LABEL maintainer=&quot;nigelpoulton@hotmail.com&quot;</span><br><span class="line"></span><br><span class="line"># Install Node and NPM</span><br><span class="line">RUN apk add --update nodejs npm curl</span><br><span class="line"></span><br><span class="line"># Copy app to /src</span><br><span class="line">COPY . /src</span><br><span class="line"></span><br><span class="line">WORKDIR /src</span><br><span class="line"></span><br><span class="line"># Install dependencies</span><br><span class="line">RUN  npm install</span><br><span class="line"></span><br><span class="line">EXPOSE 8080</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [&quot;node&quot;, &quot;./app.js&quot;]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="Options"><a class="header-anchor" href="#Options"></a>Options</h3>
+<ul>
+<li>
+<p><code>FROM  &lt;image&gt;</code>： 将指定的镜像的作为要构建的镜像的基础镜像层，一般是OS</p>
+</li>
+<li>
+<p><code> LABEL &lt;tag&gt; &lt;tag&gt;</code>：添加一些元数据，每个tag都是键值对</p>
+</li>
+<li>
+<p><code>RUN &lt;command&gt;</code> 或 <code>RUN [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;]</code>：</p>
+</li>
+<li>
+<p>前者将在 shell 终端中运行命令，即 <code>/bin/sh -c</code>；后者则使用 <code>exec</code> 执行。指定使用其它终端可以通过第二种方式实现，例如 <code>RUN [&quot;/bin/bash&quot;, &quot;-c&quot;, &quot;echo hello&quot;]</code></p>
+</li>
+<li>
+<p>每条 <code>RUN</code> 指令都会在当前镜像层基础上执行指定命令， 并<strong>新建一个镜像层</strong></p>
+</li>
+<li>
+<p><code>ENV &lt;ENV_VARIABLE&gt;=&lt;str&gt;</code>: 设置环境变量</p>
+</li>
+<li>
+<p><code>COPY &lt;src&gt; &lt;dest&gt;</code>：</p>
+<p>复制本地主机的 <code>&lt;src&gt;</code>（为 Dockerfile 所在目录的相对路径，即构建上下文）到容器中的 <code>&lt;dest&gt;</code></p>
+</li>
+<li>
+<p><code>WORKDIR  [dir]</code>: 为Dockerfile中尚未执行的指令设置工作目录</p>
+</li>
+<li>
+<p><code>ENTRYPOINT</code></p>
+<p>两种格式：</p>
+<ul>
+<li><code>ENTRYPOINT [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;]</code></li>
+<li><code>ENTRYPOINT command param1 param2</code>（shell中执行）。</li>
+</ul>
+<p>配置镜像以容器方式启动后默认运行的程序，并且不可被 <code>docker run</code> 提供的参数覆盖。</p>
+<p>每个 Dockerfile 中只能有一个 <code>ENTRYPOINT</code>，当指定多个时，只有最后一个起效。</p>
+</li>
+<li>
+<p><code>EXPOSE &lt;port&gt; [&lt;port&gt;...]</code>：暴露容器端口. 一般不用写这个指令，在启动容器的时候自己映射端口. 写这个指令有如下好处:</p>
+<ol>
+<li>告诉告诉镜像使用者,该镜像暴露的端口</li>
+<li>如果使用随机端口映射运行容器，也就是 <code>docker run -P</code> ，会自动随机映射 <code>EXPOSE</code> 的端口</li>
+</ol>
+</li>
+<li>
+<p><code>VOLUME [&quot;/data&quot;]</code>：</p>
+<p>创建一个可以从本地主机或其他容器挂载的挂载点，一般用来存放数据库和需要保持的数据等。</p>
+</li>
+</ul>
+<h2 id="构建镜像"><a class="header-anchor" href="#构建镜像"></a>构建镜像</h2>
+<h3 id="步骤"><a class="header-anchor" href="#步骤"></a>步骤</h3>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image build [选项] path</span><br></pre></td></tr></table></figure>
+<p>docker daemon按行来读取path下（包括子目录）的 Dockerfile，并将该path下的所有内容发送给 Docker 服务端，由服务端来创建镜像</p>
+<ul>
+<li><code>-t</code> : 指定镜像的标签信息,即<code>&lt;image&gt;</code></li>
+</ul>
+<h3 id="原理"><a class="header-anchor" href="#原理"></a>原理</h3>
+<h4 id="增加镜像层"><a class="header-anchor" href="#增加镜像层"></a>增加镜像层</h4>
+<p>一般而言，如果指令会对镜像增改，那么会<strong>新建镜像层</strong>， 如果指令只是指示Docker如何构建或者如何运行应用程序，那么就只会<strong>增加镜像的元数据</strong></p>
+<p>查看image build的输出：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ docker image build -t web:latest .</span><br><span class="line">Sending build context to Docker daemon  82.43kB</span><br><span class="line">Step 1/8 : FROM alpine</span><br><span class="line">latest: Pulling from library/alpine</span><br><span class="line">3d2430473443: Pull complete </span><br><span class="line">Digest: sha256:d6d0a0eb4d40ef96f2310ead734848b9c819bb97c9d846385c4aca1767186cd4</span><br><span class="line">Status: Downloaded newer image for alpine:latest</span><br><span class="line"><span class="meta prompt_"> ---&gt; </span><span class="language-bash">e9adb5357e84</span></span><br><span class="line">Step 2/8 : LABEL maintainer=&quot;nigelpoulton@hotmail.com&quot;</span><br><span class="line"><span class="meta prompt_"> ---&gt; </span><span class="language-bash">Running <span class="keyword">in</span> 84a356f040f7</span></span><br><span class="line">Removing intermediate container 84a356f040f7</span><br><span class="line"><span class="meta prompt_"> ---&gt; </span><span class="language-bash">f84bda7d881d</span></span><br><span class="line">Step 3/8 : RUN apk add --update nodejs npm curl</span><br><span class="line"><span class="meta prompt_"> ---&gt; </span><span class="language-bash">Running <span class="keyword">in</span> 16254526f96c</span></span><br><span class="line">&lt;Snip&gt;</span><br><span class="line">Removing intermediate container 16254526f96c</span><br><span class="line">Step 4/8 : COPY . /src</span><br><span class="line"><span class="meta prompt_"> ---&gt; </span><span class="language-bash">7bee4035f9fb</span></span><br><span class="line">Step 5/8 : WORKDIR /src</span><br><span class="line"><span class="meta prompt_"> ---&gt; </span><span class="language-bash">Running <span class="keyword">in</span> 9773c1204206</span></span><br><span class="line">Removing intermediate container 9773c1204206</span><br><span class="line"><span class="meta prompt_"> ---&gt; </span><span class="language-bash">a9bea6558795</span></span><br><span class="line">Step 6/8 : RUN  npm install</span><br><span class="line"><span class="meta prompt_"> ---&gt; </span><span class="language-bash">Running <span class="keyword">in</span> 2117e2800e7d</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以发现，对于Dockerfile中的<strong>每一个产生镜像层的指令</strong>， docker server会：</p>
+<ol>
+<li>运行一个临时容器</li>
+<li>在该容器中执行该指令</li>
+<li>将指令执行结果保存为镜像层</li>
+<li>删除临时容器</li>
+</ol>
+<p>而对于不产生镜像层的指令， 不会生成临时容器</p>
+<h4 id="build-cache"><a class="header-anchor" href="#build-cache"></a>build cache</h4>
+<p><code>docker image build</code>会从顶层自上而下逐条执行Dockerfile中的指令， 对于每一条指令， Docker都会检查缓存中是否已经有与该指令对应的镜像层。</p>
+<ul>
+<li>如果Cache hit,  并且会链接到这个镜像层，在此基础上继续构建；</li>
+<li>如果Cache miss, 则会<strong>对剩余部分的指令设置缓存无效</strong>（ 这意味着Dockerfile接下来的指令将全部执行， 而不再尝试查找build cache ）， 并基于当前指令构建新的镜像层
+<ul>
+<li>一旦某条指令cache miss, 则之后的指令都不会使用缓存。 因此编写Dockerfile时， 尽量将易于导致镜像层改变的指令放到后面</li>
+<li><code>--no-cahce=true</code>： 强制忽略build cache</li>
+<li>判断缓存命中（即镜像是否相同）的算法：计算每一个被构建文件的checksum， 将其与已有镜像层中同一文件的checksum进行对比 。 如果不同，则说明 cache miss</li>
+</ul>
+</li>
+</ul>
+<h3 id="squash-image"><a class="header-anchor" href="#squash-image"></a>squash image</h3>
+<p>正常来说， docker会构建多个镜像层， 并将它们合并为一个镜像</p>
+<p>可以将镜像层手动合并， 这样更方便， 但是会导致被合并的镜像层无法被共享：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker image build --squash </span><br></pre></td></tr></table></figure>
+<p>例子：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20image%20squash.png" alt="docker image squash"></p>
+<p>可以看到，合并前的镜像层是独立的，可以只发送不同的镜像层， 但合并后，所有镜像层合并为一个镜像层， 所以每次都需要传输完整的镜像</p>
+<h3 id="示例"><a class="header-anchor" href="#示例"></a>示例</h3>
+<p>example:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image build -t web:latest .</span><br></pre></td></tr></table></figure>
+<h2 id="推送镜像"><a class="header-anchor" href="#推送镜像"></a>推送镜像</h2>
+<p>push首先需要当前用户登陆dockerhub</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20push%20information.png" alt="docker push information"></p>
+<p>push镜像需要如下信息：</p>
+<ul>
+<li>Registry: 默认<code>docker.io</code></li>
+<li>Repository: 被推送镜像的REPOSITORY属性值</li>
+<li>Tag:  默认<code>latest</code></li>
+</ul>
+<h3 id="preparation"><a class="header-anchor" href="#preparation"></a>preparation</h3>
+<p>假设镜像仓库名是web, 那么push后，镜像位于<code>docker.io/web:latest</code>,然而用户一般没有一级命名空间的权限,  因此<strong>需要为当前镜像重新打一个标签， 这个标签指定了要推送的用户空间</strong>：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image tag &lt;image-qith-current-wothtag&gt; &lt;image-with-new-tag&gt;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">该命令会为镜像添加额外的标签，不会删除已有的标签. 可以通过`docker image <span class="built_in">ls</span>` 查看，发现镜像拥有了两个标签</span> </span><br></pre></td></tr></table></figure>
+<p>如果你的标签上的用户名不等于你当前登陆的docker hub id, push会失败：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> 当前登陆用户为lyklove</span></span><br><span class="line">❯ docker image ls</span><br><span class="line">REPOSITORY           TAG       IMAGE ID       CREATED        SIZE</span><br><span class="line">hello-world          latest    feb5d9fea6a5   5 months ago   13.3kB</span><br><span class="line">lyk/hello-world      latest    feb5d9fea6a5   5 months ago   13.3kB</span><br><span class="line"></span><br><span class="line">❯ docker image push lyk/hello-world:latest</span><br><span class="line">The push refers to repository [docker.io/lyk/hello-world] </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 可以看到docker试图push到lyk的目录下，但是当前用户是lyklove, 不具有用户lyk的权限， 因此push会失败</span></span></span><br><span class="line"></span><br><span class="line">e07ee1baac5f: Preparing </span><br><span class="line">denied: requested access to the resource is denied</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="步骤-2"><a class="header-anchor" href="#步骤-2"></a>步骤</h3>
+<ol>
+<li>
+<p>先登陆docker hub：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker login</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>为当前镜像重新打一个标签（ 与当前dockerhub id相符）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image tag &lt;current-tag&gt; &lt;new-tag&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>push镜像（以新标签标识的镜像）：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image push [OPTIONS]  &lt;image&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="示例-2"><a class="header-anchor" href="#示例-2"></a>示例</h3>
+<p>例子：</p>
+<ol>
+<li>
+<p>假设有一个镜像 <code>web</code>， 则 <code>docker  image push web</code> 实际上会将镜像推送到<code>docker.io/web:latest</code></p>
+<p>( 默认Registry是<code>docker.io</code>,  默认tag是<code>latest</code> )</p>
+</li>
+<li>
+<p>但是， 我不可能有<code>docker.io/</code>这个以及命名空间的权限， 只能推送到我自己的二级命名空间(也就是用户的命名空间)：</p>
+<p>假如我当前登陆的docker hub id为<code>lyklove</code>， 则我需要推送到<code>docker.io/lyklove/web:latest</code></p>
+</li>
+<li>
+<p>为此，需要给镜像改名：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker  image tag web:latest lyklove/web:latest</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">由于镜像web的默认标签名就是latest, 因此也可以:</span></span><br><span class="line">docker image tag web lyklove/web</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>最后将<code>lyklove/web</code> ( 或者<code>lyklove/web:latest</code> )  推送到dockerhub</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image push lyklove/web:latest</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="查看镜像构建过程"><a class="header-anchor" href="#查看镜像构建过程"></a>查看镜像构建过程</h2>
+<p>查看在构建镜像的过程中执行了哪些指令：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image history &lt;image&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>每行内容都对应Dockerfile的一条指令（自下而上,  最后执行的指令（如<code> ENTRYPOINT</code>）最先显示）</p>
+</li>
+<li>
+<p>对于示例项目<code>web:latest</code>, 可以看到只有Dokcerfile的<code> FROM</code>， <code>RUN</code>和<code>ADD</code>指令添加了镜像层， 其他的指令只是新增了元数据信息：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ docker image history web</span><br><span class="line">IMAGE          CREATED         CREATED BY                                      SIZE      COMMENT</span><br><span class="line">8552b568ff4c   2 minutes ago   /bin/sh -c #(nop)  ENTRYPOINT [&quot;node&quot; &quot;./app…   0B        </span><br><span class="line">3669d3adfb1a   2 minutes ago   /bin/sh -c #(nop)  EXPOSE 8080                  0B        </span><br><span class="line">d0005c695ed3   2 minutes ago   /bin/sh -c npm install                          23.4MB    </span><br><span class="line">a9bea6558795   2 minutes ago   /bin/sh -c #(nop) WORKDIR /src                  0B        </span><br><span class="line">7bee4035f9fb   2 minutes ago   /bin/sh -c #(nop) COPY dir:09deb2ee65cb723fd…   44.9kB    </span><br><span class="line">6df93a7da909   2 minutes ago   /bin/sh -c apk add --update nodejs npm curl     52.5MB    </span><br><span class="line">f84bda7d881d   5 minutes ago   /bin/sh -c #(nop)  LABEL maintainer=nigelpou…   0B        </span><br><span class="line">e9adb5357e84   30 hours ago    /bin/sh -c #(nop)  CMD [&quot;/bin/sh&quot;]              0B        </span><br><span class="line">&lt;missing&gt;      30 hours ago    /bin/sh -c #(nop) ADD file:cf4b631a115c2bbfb…   5.57MB    </span><br><span class="line">                            </span><br></pre></td></tr></table></figure>
+<p>可以看到，第一行是执行的最后一条指令<code>ENTRYPOINT</code>。 一共产生了四个镜像层</p>
+</li>
+</ul>
+<p>查看镜像：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image inspect &lt;image&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image inspect web:latest # 以示例项目为例, 可以看到确实只有四个镜像层</span><br><span class="line"></span><br><span class="line">         &lt;Snip&gt;</span><br><span class="line">        &quot;RootFS&quot;: &#123;</span><br><span class="line">            &quot;Type&quot;: &quot;layers&quot;,</span><br><span class="line">            &quot;Layers&quot;: [</span><br><span class="line">                &quot;sha256:5e03d8cae8773cb694fff1d55da34a40d23c2349087ed15ce68476395d33753c&quot;,</span><br><span class="line">                &quot;sha256:3dc92b603964ad1b75c9dde518d028676ded40c82858ee4d236e10ef0e3c02fb&quot;,</span><br><span class="line">                &quot;sha256:04910df3fe981f716ad106dec89d8b667102690462e81efefef411273dad7d26&quot;,</span><br><span class="line">                &quot;sha256:a46c93c283ea7d6611acc8d1422f0b20f40acf1ebadd9d51439e425f7a3dc18d&quot;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">		&lt;Snip&gt;</span><br><span class="line">		</span><br></pre></td></tr></table></figure>
+<h2 id="运行容器"><a class="header-anchor" href="#运行容器"></a>运行容器</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container run -d --name c1 \</span><br><span class="line">-p 80:8080 \</span><br><span class="line">web:latest</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>--name</code>：  指定容器名</li>
+<li><code>-p host_port:container_port</code>: 指定将主机的端口映射到容器的端口</li>
+<li><code>-P</code>: 随机端口映射，容器内部端口随机映射到主机的高端口</li>
+<li><code>-d</code>: 后台运行容器，并返回容器ID</li>
+<li><code>-i</code>: 以交互模式运行容器，通常与 -t 同时使用</li>
+<li><code>-t</code>: 为容器重新分配一个伪输入终端，通常与 -i 同时使用</li>
+<li><code>-e username=&quot;ritchie&quot;</code>: 设置环境变量</li>
+<li><code>--env-file=[file]</code>: 从指定文件读入环境变量</li>
+<li><code>--expose=[port-num]-[port-num]</code>: 开放（暴露）一个端口或一组端口；</li>
+<li><code>--rm</code>:  退出时自动删除容器</li>
+</ul>
+<h1 id="多阶段构建"><a class="header-anchor" href="#多阶段构建"></a>多阶段构建</h1>
+<p>进行多阶段构建， 概念和Jenkinsfile、 Github Action workflow一样</p>
+<p>多阶段构建使用一个Dockerfile, 其中包含多个<code>FROM</code>指令， 每个都是一个 Build Stage, 从0开始编号。 每个stage可以复用之前stage的构建结果（jar包， target文件之类的）</p>
+<p>示例项目: <a target="_blank" rel="noopener" href="https://github.com/LYK-love/atsea-sample-shop-app">https://github.com/LYK-love/atsea-sample-shop-app</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">FROM node:latest AS storefront</span><br><span class="line">WORKDIR /usr/src/atsea/app/react-app</span><br><span class="line">COPY react-app .</span><br><span class="line">RUN npm install</span><br><span class="line">RUN npm run build # 构建出一个很大的node镜像</span><br><span class="line"></span><br><span class="line">FROM maven:latest AS appserver</span><br><span class="line">WORKDIR /usr/src/atsea</span><br><span class="line">COPY pom.xml .</span><br><span class="line">RUN mvn -B -f pom.xml -s /usr/share/maven/ref/settings-docker.xml dependency:resolve</span><br><span class="line">COPY . .</span><br><span class="line">RUN mvn -B -s /usr/share/maven/ref/settings-docker.xml package -DskipTests # 构建出一个很大的maven镜像</span><br><span class="line"></span><br><span class="line">FROM java:8-jdk-alpine</span><br><span class="line">RUN adduser -Dh /home/gordon gordon</span><br><span class="line">WORKDIR /static</span><br><span class="line">COPY --from=storefront /usr/src/atsea/app/react-app/build/ . # 从storefront阶段拉取一些文件过来， 复制到工作目录下</span><br><span class="line">WORKDIR /app</span><br><span class="line">COPY --from=appserver /usr/src/atsea/target/AtSea-0.0.1-SNAPSHOT.jar . # 同上， 从appserver阶段拉取一些文件过来， </span><br><span class="line">ENTRYPOINT [&quot;java&quot;, &quot;-jar&quot;, &quot;/app/AtSea-0.0.1-SNAPSHOT.jar&quot;]</span><br><span class="line">CMD [&quot;--spring.profiles.active=postgres&quot;] # 构建出一个精简的镜像</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>COPY --from</code> 指令： 从之前stage构建的镜像中仅复制生产环境所需要的文件， 这样镜像中就带有不会冗余文件（比如maven, node）</p>
+</li>
+<li>
+<p>三个<code>FROM</code>指令构建出三个镜像， 用<code>docker image build -t multi:stage</code>进行构建， 它只会命名最后一个镜像， 我们就只需要将最后一个镜像push到生产环境：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">❯ docker image ls</span><br><span class="line">REPOSITORY                  TAG            IMAGE ID       CREATED          SIZE</span><br><span class="line">node                        latest         36fad710e29d   2 weeks ago      991MB</span><br><span class="line">&lt;none&gt;                      &lt;none&gt;         d9c9c532ae40   7 minutes ago    934MB</span><br><span class="line">maven                       latest         d833a10812ed   3 weeks ago      793MB</span><br><span class="line">&lt;none&gt;                      &lt;none&gt;         db32cdd21a1a   31 minutes ago   1.15GB</span><br><span class="line">openjdk                     8-jdk-alpine   a3562aa0b991   2 years ago      105M</span><br><span class="line">multi                       stage          040df44afa9a   7 minutes ago    211MB</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以看到， 1第一行是第一阶段拉取的镜像， 第二行是第一阶段生成的镜像； 第三，四，五，六行同理；并且第六行镜像被<code>-t multi:stage</code>命了名</li>
+<li>还可以看到，只有最后一个镜像会被命名， 而其余的<code>FROM</code>指令生成的镜像都变成了玄虚镜像， 可以直接删除， 非常方便</li>
+</ul>
+</li>
+</ul>
+<h1 id="构建镜像优化"><a class="header-anchor" href="#构建镜像优化"></a>构建镜像优化</h1>
+<p>ref:<a target="_blank" rel="noopener" href="https://juejin.cn/post/6991689670027542564">如何优化 node 项目的 docker 镜像</a>, 这篇文章将构建镜像优化到了:</p>
+<ol>
+<li><strong>大小从 1.06G 到 73.4M</strong></li>
+<li><strong>构建速度从 29.6 秒到 1.3 秒</strong></li>
+</ol>
+<p>我们以文中的<a target="_blank" rel="noopener" href="https://github.com/iamobj/wechat-bot">node项目</a>为例, 最初的Dockerfile如下:</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">14.17</span>.<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量</span></span><br><span class="line"><span class="keyword">ENV</span> NODE_ENV=production</span><br><span class="line"><span class="keyword">ENV</span> APP_PATH=/node/app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> <span class="variable">$APP_PATH</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把当前目录下的所有文件拷贝到镜像的工作目录下 .dockerignore 指定的文件不会拷贝</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . <span class="variable">$APP_PATH</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yarn</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 暴露端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">4300</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> yarn start</span></span><br></pre></td></tr></table></figure>
+<h2 id="基本操作"><a class="header-anchor" href="#基本操作"></a>基本操作</h2>
+<ul>
+<li>
+<p>对于会新建镜像层的指令, 比如<code>RUN</code>, <code>ENV</code>… 因此这些指令最好<strong>写成一行</strong>, 可以用 <code>&amp;&amp;</code>连接多个命令或用<code>\\</code>换行书写.</p>
+<p>例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ENV NODE_ENV=production \</span><br><span class="line">    APP_PATH=/node/app</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>由于构建镜像时会逐层检查build cache, 因此最好把不经常变动的层提到前面去, 比如<code>ENV</code></p>
+</li>
+</ul>
+<h2 id="使用alpine"><a class="header-anchor" href="#使用alpine"></a>使用alpine</h2>
+<p>基础镜像层可以使用alpine, 这是一个超级小的Linux镜像. 上例的基础镜像层是node, 可以:</p>
+<ol>
+<li>
+<p>对于node等基础软件,使用其alpine版本:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM node:14.17.4-alpine</span><br></pre></td></tr></table></figure>
+<p>可以去 <a href="https://link.juejin.cn/?target=https%3A%2F%2Fhub.docker.com%2F_%2Fnode%3Ftab%3Ddescription%26page%3D1%26ordering%3Dlast_updated">dockerhub</a> 查看 node 有哪些版本标签</p>
+</li>
+<li>
+<p>使用alpine linux作为基础镜像层,然后手动装node等基础软件. 这个效果最显著:</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> alpine:<span class="number">3.14</span> AS base</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 apk 命令安装 nodejs 和 yarn，如果使用 npm 启动，就不需要装 yarn</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk add --no-cache --update nodejs=14.17.4-r0 yarn=1.22.10-r0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ... 后面的步骤不变</span></span><br></pre></td></tr></table></figure>
+<p>用户软件( node, yarn等 )最好都要<strong>指定依赖版本</strong></p>
+<p>alpine版本也一定要指定, <strong>不要选择 latest 版本</strong>( <code>From alpine:latest</code>)，因为后面要装的软件版本可能会在 alpine 的 latest 版本没有对应软件的版本号.</p>
+<p><strong>我们选择方案2</strong></p>
+</li>
+</ol>
+<h2 id="提前下载依赖"><a class="header-anchor" href="#提前下载依赖"></a>提前下载依赖</h2>
+<ul>
+<li>
+<p>对于前端项目, 下载依赖在构建镜像时花了很大时间. 我们可以利用构建缓存, <strong>先将package.json 文件单独提前拷贝到镜像，再装依赖</strong>，执行命令装依赖这层的前一层是拷贝 package.json 文件，因为<strong>安装依赖命令不会变化，所以只要 package.json 文件没变化，就不会重新执行 <code>yarn</code> 安装依赖，它会复用之前安装好的依赖</strong>.</p>
+<p>示例:</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> alpine:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 apk 命令安装 nodejs 和 yarn，如果使用 npm 启动，就不需要装 yarn</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk add --no-cache --update nodejs=14.17.4-r0 yarn=1.22.10-r0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 暴露端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">4300</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量</span></span><br><span class="line"><span class="keyword">ENV</span> NODE_ENV=production \</span><br><span class="line">    APP_PATH=/node/app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> <span class="variable">$APP_PATH</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拷贝 package.json 到工作跟目录下</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package.json .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yarn</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把当前目录下的所有文件拷贝到镜像的工作目录下 .dockerignore 指定的文件不会拷贝</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动命令</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> yarn start</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="利用多阶段构建"><a class="header-anchor" href="#利用多阶段构建"></a>利用多阶段构建</h2>
+<p>运行 node 程序只需要生产的依赖和最终 node 可以运行的文件，就是说我们运行项目只需要 package.js 文件里 dependencies 里的依赖，devDependencies 依赖只是编译阶段用的</p>
+<ul>
+<li>比如 <u>eslint 等这些工具在项目运行时是用不到的</u>，再比如我们项目是用 typescript 写的，node 是不能直接运行 ts 文件，ts 文件需要编译成 js 文件，</li>
+</ul>
+<p><u>运行项目我们只需要编译后的文件和 dependencies 里的依赖就可以运行，也就是说最终镜像只需要我们需要的东西</u>，任何其他东西都可以删掉，下面我们使用多阶段改写 Dockerfile:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 构建基础镜像</span><br><span class="line">    FROM alpine:3.14 AS base</span><br><span class="line"></span><br><span class="line">    # 设置环境变量</span><br><span class="line">    ENV NODE_ENV=production \</span><br><span class="line">        APP_PATH=/node/app</span><br><span class="line">    </span><br><span class="line">    # 设置工作目录</span><br><span class="line">    WORKDIR $APP_PATH</span><br><span class="line"></span><br><span class="line">    # 安装 nodejs 和 yarn</span><br><span class="line">    RUN apk add --no-cache --update nodejs=14.17.4-r0 yarn=1.22.10-r0</span><br><span class="line"></span><br><span class="line"># 使用基础镜像 装依赖阶段</span><br><span class="line">    FROM base AS install</span><br><span class="line"></span><br><span class="line">    # 拷贝 package.json 到工作跟目录下</span><br><span class="line">    COPY package.json ./</span><br><span class="line"></span><br><span class="line">    # 安装依赖</span><br><span class="line">    RUN yarn</span><br><span class="line"></span><br><span class="line"># 最终阶段，也就是输出的镜像是这个阶段构建的，前面的阶段都是为这个阶段做铺垫</span><br><span class="line">    FROM base</span><br><span class="line"></span><br><span class="line">    # 拷贝 装依赖阶段 生成的 node_modules 文件夹到工作目录下</span><br><span class="line">    COPY --from=install $APP_PATH/node_modules ./node_modules</span><br><span class="line"></span><br><span class="line">    # 将当前目录下的所有文件（除了.dockerignore排除的路径），都拷贝进入镜像的工作目录下</span><br><span class="line">    COPY . .</span><br><span class="line"></span><br><span class="line">    # 启动</span><br><span class="line">    CMD yarn start</span><br></pre></td></tr></table></figure>
+<h2 id="github-的-actions-构建镜像问题"><a class="header-anchor" href="#github-的-actions-构建镜像问题"></a>github 的 actions 构建镜像问题</h2>
+<p>github 提供的 actions，每次都是一个干净的实例，什么意思，就是每次执行，都是干净的机器，这会导致一个问题，会导致 docker 没法使用缓存，那有没有解决办法呢，我想到了两种解决办法：</p>
+<ol>
+<li>
+<p><a href="https://link.juejin.cn?target=https%3A%2F%2Fgithub.com%2Fdocker%2Fbuild-push-action%2Fblob%2Fmaster%2Fdocs%2Fadvanced%2Fcache.md">docker 官方提供的 action 缓存方案</a></p>
+<p>我用的是 Github cache 方案</p>
+</li>
+<li>
+<p>自托管 actions 运行机器</p>
+<p>相当于 gitlab 的 runner 一样，自己提供运行器，自己提供的就不会每次都是干净的机器，<a href="https://link.juejin.cn?target=https%3A%2F%2Fdocs.github.com%2Fcn%2Factions%2Fhosting-your-own-runners%2Fabout-self-hosted-runners%23requirements-for-self-hosted-runner-machines">详情看 actions 官方文档</a></p>
+</li>
+<li>
+<p>先构建一个已经安装好依赖包的镜像，然后基于此镜像再次构建，相当于多阶段构建，把前两个阶段构建的镜像产物推送到镜像仓库，再以这个镜像为基础去构建后续部分。借助镜像仓库存储基础镜像从而达到缓存的效果（此方案来源于评论里的大佬）</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 以这个镜像为基础去构建，这个镜像是已经装好项目依赖的镜像并推送到镜像仓库里，这里从镜像仓库拉下来</span></span><br><span class="line"><span class="keyword">FROM</span> project-base-image:latest</span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> yarn start</span></span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/18/Shell-Script/" rel="prev" title="Shell Script">
+                  <i class="fa fa-chevron-left"></i> Shell Script
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/19/Training-Day/" rel="next" title="Training Day">
+                  Training Day <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Basic Idea Docker DNS服务器 Commands Networks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker Network">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/23/Docker-Network/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Basic Idea Docker DNS服务器 Commands Networks">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Docker%20Network%20Arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Docker%20Network%20Layers.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/CNM.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/CNM%20multi-network.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/bridge%20principle.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/overlay%20%20principle.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/overlay%20%20example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Macvlan%20principle.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Macvlan%20example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Macvlan%20multi-vlan.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Ingress%20example.png">
+<meta property="article:published_time" content="2022-03-23T05:39:44.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.929Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Docker%20Network%20Arch.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/03/23/Docker-Network/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/03/23/Docker-Network/","path":"2022/03/23/Docker-Network/","title":"Docker Network"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Docker Network | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-idea"><span class="nav-text">Basic idea</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-DNS%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">Docker DNS服务器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CNM"><span class="nav-text">CNM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Libnetwork"><span class="nav-text">Libnetwork</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Driver"><span class="nav-text">Driver</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Commands"><span class="nav-text">Commands</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%BD%91%E7%BB%9C"><span class="nav-text">创建网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%BD%91%E7%BB%9C"><span class="nav-text">查看网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%BD%91%E7%BB%9C"><span class="nav-text">删除网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%AE%B9%E5%99%A8%E5%B9%B6%E5%AE%9A%E5%88%B6DNS"><span class="nav-text">创建容器并定制DNS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Networks"><span class="nav-text">Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#none"><span class="nav-text">none</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#host"><span class="nav-text">host</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#container"><span class="nav-text">container</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E6%9C%BA%E6%A1%A5%E6%8E%A5%E7%BD%91%E7%BB%9C"><span class="nav-text">单机桥接网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1"><span class="nav-text">容器通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84"><span class="nav-text">端口映射</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E6%9C%BA%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">多机覆盖网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%80%9A%E4%BF%A1-2"><span class="nav-text">容器通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9E%84%E5%BB%BASwarm"><span class="nav-text">构建Swarm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">创建覆盖网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E6%9C%8D%E5%8A%A1%E8%BF%9E%E6%8E%A5%E5%88%B0%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">将服务连接到覆盖网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E8%A6%86%E7%9B%96%E7%BD%91%E7%BB%9C"><span class="nav-text">测试覆盖网络</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E5%85%A5%E7%8E%B0%E6%9C%89%E7%BD%91%E7%BB%9C"><span class="nav-text">接入现有网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0"><span class="nav-text">服务发现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89DNS%E8%A7%84%E5%88%99"><span class="nav-text">自定义DNS规则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-4"><span class="nav-text">示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ingress%E7%BD%91%E7%BB%9C"><span class="nav-text">Ingress网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-5"><span class="nav-text">示例</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/23/Docker-Network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Docker Network | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker Network
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-23 05:39:44" itemprop="dateCreated datePublished" datetime="2022-03-23T05:39:44Z">2022-03-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Basic Idea</li>
+<li>Docker DNS服务器</li>
+<li>Commands</li>
+<li>Networks</li>
+</ul>
+<span id="more"></span>
+<h1 id="Basic-idea"><a class="header-anchor" href="#Basic-idea"></a>Basic idea</h1>
+<p>Docker使用了Linux的Namespaces技术来进行资源隔离，如PID Namespace隔离进程，Mount Namespace隔离文件系统，Network Namespace隔离网络等。一个Network Namespace提供了一份独立的网络环境，包括网卡、路由、Iptable规则等. 与其他的Network Namespace隔离</p>
+<ul>
+<li>因此，一个独立的网络就是一个独立的Network Namespace</li>
+<li>因此，严格意义上讲，下文介绍的Host， None根本不算网络，因为他们没有自己的Network Namespace</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Docker%20Network%20Arch.png" alt="Docker Network Arch"></p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Docker%20Network%20Layers.png" alt="Docker Network Layers"></p>
+<p>Docker网络架构由三部分组成：</p>
+<ul>
+<li>CNM：  Container Network Model, 容器网络模型，是设计标准</li>
+<li>Libnetwork：是CNM的具体实现，被Docker采用</li>
+<li>驱动：Go编写，实现了CNM中列举的核心组件</li>
+</ul>
+<h1 id="Docker-DNS服务器"><a class="header-anchor" href="#Docker-DNS服务器"></a>Docker DNS服务器</h1>
+<p>Docker sever有一个<strong>DNS服务器</strong>，可以为容器提供DNS解析功能， 也就是说，在容器网络中， <strong>容器名相当于域名</strong></p>
+<ul>
+<li>Docker DNS服务器记录了全部容器名称和ip地址的映射</li>
+<li>每个启动时使用了<code>--name</code>或<code>--net-alias</code>的Docker容器和Swarm服务， 都会将自己的名称和IP地址注册到Docker DNS服务器</li>
+</ul>
+<p>每个Docker容器都有自己的本地DNS解析器，相当于<strong>DNS代理服务器</strong>。像正常的网络一样，如果DNS解析器在本地缓存中没有找到对应映射，就会向Docker DNS服务器发起递归查询</p>
+<h2 id="CNM"><a class="header-anchor" href="#CNM"></a>CNM</h2>
+<p>定义了三个基本要素：</p>
+<ul>
+<li>Sandbox： 就像容器中的容器，其中运行着独立的网络栈。 被放在容器内部，为容器提供网络连接</li>
+<li>终端： 相当于虚拟网卡， 负责将沙盒连接到网络</li>
+<li>网络：就是软件实现的网桥</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/CNM.png" alt="CNM"></p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/CNM%20multi-network.png" alt="CNM multi-network"></p>
+<ul>
+<li>
+<p>虽然容器A,B运行于同一个主机，但是由于有不同的沙盒，所以网络堆栈不同</p>
+</li>
+<li>
+<p>容器A, B可以通信，因为都接入了网络A.</p>
+</li>
+<li>
+<p>容器B的两个终端属于不同网络， 没有交换机无法通信</p>
+</li>
+</ul>
+<h2 id="Libnetwork"><a class="header-anchor" href="#Libnetwork"></a>Libnetwork</h2>
+<p>实现了CNM定义的三大组件</p>
+<h2 id="Driver"><a class="header-anchor" href="#Driver"></a>Driver</h2>
+<p>Docker封装的内置驱动( on Linux )：</p>
+<ul>
+<li>Bridge</li>
+<li>Overlay</li>
+<li>Macvlan</li>
+</ul>
+<p>第三方也可以编写外部驱动</p>
+<p>每个驱动都负责其上所有网络资源的创建和管理</p>
+<p>Libnetwork支持同时激活多个网络驱动。 这意味着Docker环境可以支持一个庞大的异构网络</p>
+<h1 id="Commands"><a class="header-anchor" href="#Commands"></a>Commands</h1>
+<h2 id="创建网络"><a class="header-anchor" href="#创建网络"></a>创建网络</h2>
+<p>注意到只能用对应驱动创建网络， 而None，Host， Container这些特殊的“网络”，不需要驱动，也就没法用驱动创建</p>
+<p>创建容器网络：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker network create [OPTIONS] [network_name]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>-driver, -d</code>: 驱动程序管理网络(  默认 <code>bridge</code>  )</p>
+<ul>
+<li>
+<p><code>-d  bridge</code>: 创建<code>bridge</code>网络（仅限linux），这还会在主机内核中创建一个新的网桥， 查看liunx网桥：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brctl show</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><code>-d overlay</code>： overlay网络， 控制层默认用了TLS加密，  可以再指定<code>-o encrypted</code>对数据层加密</p>
+<ul>
+<li><code>--subnet=&lt;subnet1&gt; --subnet=&lt;subnet2&gt; ...</code>:  创建具有多个子网的覆盖网络（覆盖网络可以划分子网）， Docker负责子网间的路由</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>-p</code>, <code>--publish</code>: 指定端口映射</p>
+</li>
+</ul>
+<hr>
+<h2 id="查看网络"><a class="header-anchor" href="#查看网络"></a>查看网络</h2>
+<p>查看已有的网络：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker network ls</span><br></pre></td></tr></table></figure>
+<p>查看指定网络的详细信息：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker network inspect [network_name]</span><br></pre></td></tr></table></figure>
+<h2 id="删除网络"><a class="header-anchor" href="#删除网络"></a>删除网络</h2>
+<p>删除Docker主机上指定的网络</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker network rm &lt;network&gt;</span><br></pre></td></tr></table></figure>
+<p>删除Docker主机上所有未使用的网络</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker network prune</span><br></pre></td></tr></table></figure>
+<h2 id="创建容器并定制DNS"><a class="header-anchor" href="#创建容器并定制DNS"></a>创建容器并定制DNS</h2>
+<p>启动新容器，向其添加自定义的DNS服务器和域名：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container run -it --name &lt;dontainer-name&gt; \</span><br><span class="line">--dns=&lt;nameserver-ip&gt; \</span><br><span class="line">--dns-search=&lt;domain-name&gt; \</span><br><span class="line">&lt;image&gt; &lt;command&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Networks"><a class="header-anchor" href="#Networks"></a>Networks</h1>
+<p>None， Host， Containers网络比较特殊，我们一般也不用</p>
+<h2 id=""><a class="header-anchor" href="#"></a></h2>
+<h2 id="none"><a class="header-anchor" href="#none"></a>none</h2>
+<p>就是没有网络，使用此网络的主机没有ip地址，处于完全隔离的状态</p>
+<h2 id="host"><a class="header-anchor" href="#host"></a>host</h2>
+<p>Host网络即容器直接使用宿主机的网络，与主机在相同的网络命名空间下，使用相同的网络栈，容器可以直接使用主机的所有端口</p>
+<p>即不进行任何网络的虚拟化</p>
+<h2 id="container"><a class="header-anchor" href="#container"></a>container</h2>
+<p>container网络下的容器都共享相同的Network Namespace， 但除此之外，其他的namespace依然隔离</p>
+<ul>
+<li>这意味着容器共享了网络栈</li>
+<li>这意味着两个容器可以互相ping通</li>
+</ul>
+<h2 id="单机桥接网络"><a class="header-anchor" href="#单机桥接网络"></a>单机桥接网络</h2>
+<ul>
+<li>单机： 该网络只能在单个主机上运行，且只能连接所在主机上的容器</li>
+<li>桥接：该网络是交换机的软件实现</li>
+</ul>
+<p>每个Docker主机都有一个默认的单机桥接网络， 在linux上名为bridge,  windows上名为nat</p>
+<ul>
+<li>除非在容器创建时指定参数<code>--network</code>. 默认情况下，所有容器都会连接到该网络</li>
+</ul>
+<p>linux主机上的bridge网络由Bridge驱动创建， 而Bridge底层基于Linux内核的Linux Bridge技术.</p>
+<p>默认的bridge网络被映射到<code>docker0</code>Linux网桥, 容器连接到该网络后，docker就会从docker0子网中分配一个 IP 给容器使用，并设置 docker0 的 IP 地址为容器的<strong>默认网关</strong></p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/bridge%20principle.png" alt="bridge principle"></p>
+<p>创建单机桥接网络：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker network create -d bridge [name]</span><br></pre></td></tr></table></figure>
+<h3 id="容器通信"><a class="header-anchor" href="#容器通信"></a>容器通信</h3>
+<p>同一网络中的容器可以通过容器名来ping通， 因为容器内部运行了一个本地的DNS解析器，将请求转发到docker内部DNS服务器， 后者记录了容器启动时通过<code>--name</code>或<code>--net-alias</code> 指定的名称与容器之间的映射</p>
+<h4 id="示例"><a class="header-anchor" href="#示例"></a>示例</h4>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">❯ docker container run -it --name c1 \</span><br><span class="line">--network localnet \</span><br><span class="line">alpine sleep 1d</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">❯ docker container run -it --name c2 \</span><br><span class="line">--network localnet \</span><br><span class="line">alpine sh</span><br></pre></td></tr></table></figure>
+<h3 id="端口映射"><a class="header-anchor" href="#端口映射"></a>端口映射</h3>
+<p>容器启动时可以使用端口映射：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container run -p &lt;host_port&gt;:&lt;container_port&gt; &lt;image&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-p</code>, <code>--publish</code>: 指定端口映射</li>
+</ul>
+<h2 id="多机覆盖网络"><a class="header-anchor" href="#多机覆盖网络"></a>多机覆盖网络</h2>
+<p>覆盖网络是个<strong>二层</strong>容器网络,  允许单个网络包含多个主机，这样不同主机上的容器就可以<strong>在链路层实现通信</strong></p>
+<ul>
+<li>
+<p>使用<code>overlay</code>驱动， 即需要指定<code>-d overlay</code></p>
+<ul>
+<li>覆盖网络的控制层默认是加密的，可以指定<code>-o encrypted</code>对数据层加密</li>
+</ul>
+</li>
+<li>
+<p>overlay网络需要Swarm模式</p>
+</li>
+<li>
+<p>overlay网络中，所有节点必须打开：</p>
+<ul>
+<li><code>UDP/4789</code>： 绑定到<code>VTE</code>， 详见下文“原理”</li>
+<li>Swarm所需端口：
+<ul>
+<li><code>TCP/2377</code>： Swarm的集群管理默认使用2377端口</li>
+<li><code>TCP/7946</code>, <code>UDP/7946</code>: Swarm的节点发现使用7946端口</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="容器通信-2"><a class="header-anchor" href="#容器通信-2"></a>容器通信</h3>
+<ul>
+<li>
+<p>只有当运行中的容器连接到覆盖网络时，该网络才变成可用状态</p>
+<ul>
+<li>这意味着在集群中却没有运行（连接到覆盖网络的）容器的节点，是看不到覆盖网络的
+<ul>
+<li>此时的<code>docker network ls</code> 看不到覆盖网络</li>
+<li>当然，创建该网络的节点肯定能看到该网络</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>一个Swarm节点直到在覆盖网络上启动容器时，才会自动将自身加入到覆盖网络</p>
+<ul>
+<li>此时的<code>docker network ls</code> 可以看到覆盖网络</li>
+</ul>
+</li>
+<li>
+<p>覆盖网络在网络层为容器提供了<strong>完全的抽象</strong></p>
+<ul>
+<li>覆盖网络内的容器在网络层<u>直接通信</u> ， <code>traceroute</code>的跳数是1,  尽管这两个容器所在主机可能不在同一个物理网络， 跳数不止1
+<ul>
+<li>“直接通信” ‘跳数为1“ 的原因是Swarm<strong>默认是Ingress网络，这是个完全图，任意两个节点是直连的</strong></li>
+</ul>
+</li>
+<li>覆盖网络内的容器可以通过网络内的子网ip通信，也可以用容器名通信（ 参见下文《Ingress网络》 ）</li>
+</ul>
+</li>
+</ul>
+<h3 id="原理"><a class="header-anchor" href="#原理"></a>原理</h3>
+<blockquote>
+<p>隧道端点VTEP (VXLAN Tunnel End Point - an entity which originates and/orterminates VXLAN tunnels)</p>
+<p>VNI(VXLAN Network Identifier)</p>
+</blockquote>
+<p>Docker使用VXLAN隧道技术， 基于已经存在的三层网络来创建虚拟的二层网络</p>
+<ul>
+<li>VXLAN基于现有的三层网络创建隧道</li>
+</ul>
+<p>注意： overlay网络可以实现三层路由，即可以创建一个包含多个子网的overlay网络， Docker负责子网间的路由:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在Sandbo中创建2个虚拟交换机（不再只有1个）， 默认支持路由</span></span><br><span class="line">docker network create --subnet=&lt;11.1.1.0/24&gt; --subnet=&lt;11.1.1.0/24&gt; -d overlay &lt;network-name&gt;`</span><br></pre></td></tr></table></figure>
+<p>容器的Sandbox内部会创建一个名为<code>Br0</code>的虚拟交换机和一个<code>VTEP</code>， 后者一边连到<code>Br0</code>， 一边连到<strong>主机的网络栈</strong>， 主机网络栈中的终端可以从所连接的网络中获得IP地址（主机的IP）， 并以UDP Socket的方式<u>绑定到4789端口</u></p>
+<p>每个容器都有自己的虚拟以太网(<code>veth</code>)适配器,  并接入本地的<code>Br0</code></p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/overlay%20%20principle.png" alt="overlay principle"></p>
+<p>假设node1上的容器为C1, node2上的容器为C2， C1 ping C2 的ip <code>10.0.0.4</code>：</p>
+<ul>
+<li>该请求通过<code>veth</code>接口发送到<code>Br0</code>, <code>Br0</code>的ARP映射表中没有与当前目的ip对应的MAC地址， 因此它会将该frame发送到其上的所有端口</li>
+<li><code>VTEP</code>接口连接到<code>Br0</code>,它知道这个frame的映射， 于是<code>VTEP</code>将自己的MAC地址返回给<code>Br0</code>， 这是个代理ARP响应
+<ul>
+<li>和计网一模一样， 只返回下一跳的MAC地址，一步一步迭代</li>
+<li><code>VTEP</code>接口知道C2, 是因为所有新启动的容器都会将自己的网络详情用网络内置的Gossip协议发送给相同Swarm集群内的其他节点</li>
+</ul>
+</li>
+<li><code>Br0</code>收到返回结果，它更新自己的ARP映射， 将<code>10.0.0.4</code>映射到本地<code>VTEP</code>的MAC地址</li>
+<li><code>Br0</code> 将该frame转发到<code>VTEP</code>， 后者将frame封装成UDP包， 设置目的IP字段为node2的<code>VTEP</code>的IP地址，设置<u>目的UDP Socket端口为4789</u>
+<ul>
+<li>封装就是把 VXLAN Header信息（记录了VLAN到VXLAN的映射）添加到frame,  每个VLAN都对应一个VNID, 以便包被解析后可以被转发到正确的VLAN</li>
+</ul>
+</li>
+<li>包到达node2后， node2的内核发现目的端口为 UDP 4789, 还知道存在<code>VTEP</code>绑定到该端口， 内核就将包发给<code>VTEP</code></li>
+<li><code>VTEP</code>读取VNID, 解压该包， 根据VNID将包发给本地名为<code>Br0</code>的连接到VLAN（ 由VNID指定 ）的交换机， 在该交换机上， 包被发送给容器C2</li>
+</ul>
+<h3 id="示例-2"><a class="header-anchor" href="#示例-2"></a>示例</h3>
+<p>注：图中的主机ip请替换为自己的</p>
+<h4 id="构建Swarm"><a class="header-anchor" href="#构建Swarm"></a>构建Swarm</h4>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/overlay%20%20example.png" alt="overlay example"></p>
+<p>假设有两台Docker主机,  将他们配置为Swarm集群， 令node1为manager, node2为worker:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">on node1:</span></span><br><span class="line">docker swarm init --advertise-addr &lt;node1-ip&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">on node2:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要打开2377/tcp, 7946/tcp, 7946/udp</span></span><br><span class="line">docker swarm join --token &lt;token&gt; &lt;node1-ip&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="创建覆盖网络"><a class="header-anchor" href="#创建覆盖网络"></a>创建覆盖网络</h4>
+<p>在node1上创建网络：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">需要打开4789/udp</span></span><br><span class="line">docker network create -d overlay &lt;network-name&gt; # 覆盖网络使用overlay驱动</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建了新的覆盖网络， 还包括了一个TLS加密的控制层</li>
+<li><code>-o encrypted</code>: 设置数据层加密</li>
+</ul>
+<h4 id="将服务连接到覆盖网络"><a class="header-anchor" href="#将服务连接到覆盖网络"></a>将服务连接到覆盖网络</h4>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">on node1:</span></span><br><span class="line">docker service create --name &lt;service-name&gt; \</span><br><span class="line">--network &lt;network-name&gt; \</span><br><span class="line">--replicas 2 \</span><br><span class="line">ubuntu sleep infinity        </span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建了新服务，连接到了覆盖网络，且基于指定的镜像创建了两个副本（容器）
+<ul>
+<li>在这里，均在容器中用<code>sleep</code>来保持容器运行</li>
+</ul>
+</li>
+</ul>
+<p>当Swarm在覆盖网络上启动容器时，会自动将容器运行所在节点加入到网络中</p>
+<ul>
+<li>node2上启动了容器， 因此node2加入到覆盖网络</li>
+</ul>
+<h4 id="测试覆盖网络"><a class="header-anchor" href="#测试覆盖网络"></a>测试覆盖网络</h4>
+<p>由后文“服务发现”知， Swarm网络是可以通过容器名来定位的， 这里用ip来定位只是为了测试</p>
+<p>先查看被分配给覆盖网络的<code>Subnet</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker network inspect uber-net                                                          </span><br><span class="line">[                                                           </span><br><span class="line">    &#123;                                                       </span><br><span class="line">        &quot;Name&quot;: &quot;uber-net&quot;,                                 </span><br><span class="line">        &quot;Id&quot;: &quot;6arolzgpk57l5s6nn3uca25ho&quot;,                                                                              </span><br><span class="line">        &quot;Created&quot;: &quot;2022-03-23T03:24:24.651086709+08:00&quot;,                                                               </span><br><span class="line">        &quot;Scope&quot;: &quot;swarm&quot;,                                   </span><br><span class="line">        &quot;Driver&quot;: &quot;overlay&quot;,                                </span><br><span class="line">        &quot;EnableIPv6&quot;: false,                                </span><br><span class="line">        &quot;IPAM&quot;: &#123;                                           </span><br><span class="line">            &quot;Driver&quot;: &quot;default&quot;,                                                                                        </span><br><span class="line">            &quot;Options&quot;: null,                                </span><br><span class="line">            &quot;Config&quot;: [                                     </span><br><span class="line">                &#123;                                           </span><br><span class="line">                    &quot;Subnet&quot;: &quot;10.0.1.0/24&quot;,        # 子网掩吗                                                                    </span><br><span class="line">                    &quot;Gateway&quot;: &quot;10.0.1.1&quot;                                                                               </span><br><span class="line">                &#125;                                           </span><br><span class="line">            ]                                               </span><br><span class="line">&lt;Snip&gt;                   </span><br></pre></td></tr></table></figure>
+<p>看到覆盖网络的子网是<code>10.0.0/24</code></p>
+<p>然后分别查看两个node的对应容器的id和ip地址：</p>
+<p>查看id：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker container ls</span><br></pre></td></tr></table></figure>
+<p>查看容器ip地址：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container inspect \</span><br><span class="line">--format=&#x27;&#123;&#123;range .NetworkSettings.Networks&#125;&#125;&#123;&#123;.IPAddress&#125;&#125;&#123;&#123;end&#125;&#125;&#x27; \ </span><br><span class="line">&lt;container&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">node1输出：10.0.1.4</span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">node2输出：10.0.1.3</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确实遵循子网掩码10.0.0/24</span></span><br></pre></td></tr></table></figure>
+<p>然后进入任一容器，ping另一个容器的ip,发现能ping通</p>
+<p>使用<code>traceroute</code>跟踪路由信息，发现路由信息<u>只有一跳</u>，证明覆盖网络中，容器间通信是在网络层直连的</p>
+<h2 id="接入现有网络"><a class="header-anchor" href="#接入现有网络"></a>接入现有网络</h2>
+<p>Docker内置的Macvlan驱动可以给容器提供MAC和IP地址， 让容器在物理网络上成为“一等公民”：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Macvlan%20principle.png" alt="Macvlan principle"></p>
+<p>Macvlan 性能高，但是需要将主机网卡设为混杂模式，大部分公有云平台都不允许这么设置， 因此Macvlan在公有云平台不可行</p>
+<p>Macvlan基于linux的Macvlan内核驱动， 因此支持linux内核的所有网络功能， 包括VLAN的Trunk</p>
+<p>Macvlan驱动在连接到目标网络前，需要设置：</p>
+<ul>
+<li>子网信息</li>
+<li>网关</li>
+<li>可分配给容器的IP范围</li>
+<li>主机使用的接口或子接口</li>
+</ul>
+<h3 id="示例-3"><a class="header-anchor" href="#示例-3"></a>示例</h3>
+<p>假设有一个物理网络，其上有两个VLAN： VLAN100： 10.0.0.0/24 ； VLAN200： 192.168.3.0/24</p>
+<p>我们创建一个名为 macvlan100的 Macvlan网络，它连接到VLAN100：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker network create -d macvlan \</span><br><span class="line">--subnet=10.0.0.0/24 \</span><br><span class="line">--ip-range=10.0.0.0/25 \</span><br><span class="line">--gateway=10.0.0.1 \</span><br><span class="line">-o parent=eth0.100 \</span><br><span class="line">macvlan100</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Macvlan  采用标准的Linux子接口， 需要打上目标VLAN网络的ID, 在本例中是VLAN100, 所以子接口标记为<code>.100</code>( <code>eth0.100</code> )</li>
+<li><code>--ip-range</code>:   设置Macvlan网络中可分配给容器的IP范围， 这些地址会被保留，不能用于其他节点或者DHCP, 因为没有任何管理功能来检查IP区域重合的问题</li>
+</ul>
+<p>将容器部署到网络中：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container run -d --name mactainer1 \</span><br><span class="line">--network macvlan100 \</span><br><span class="line">alpine sleep 1d</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Macvlan%20example.png" alt="Macvlan example"></p>
+<p>Macvlan支持Trunk功能，这意味着可以在同一台主机创建多个VLAN网络：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Macvlan%20multi-vlan.png" alt="Macvlan multi-vlan"></p>
+<h2 id="服务发现"><a class="header-anchor" href="#服务发现"></a>服务发现</h2>
+<p>允许<u>同一网络中的</u>容器和Swarm服务通过名称互相定位</p>
+<ul>
+<li>显然，这是通过Docker的DNS服务实现的， 原理和正常网络的DNS服务完全相同</li>
+</ul>
+<h3 id="自定义DNS规则"><a class="header-anchor" href="#自定义DNS规则"></a>自定义DNS规则</h3>
+<p>用户可以自定义Swarm服务和容器的查询规则， 这是通过向容器内部的<code>/etc/resolv.conf</code>添加条目实现的（不要问我为什么是<code>resolv</code> 而不是<code>resolve</code>）</p>
+<ul>
+<li><code>--dns</code>:  添加自定义的DNS服务器， 向<code>/etc/resolv.conf</code>中追加这个列表</li>
+<li><code>--dns-search</code>: 指定自定义查询时所使用的域名， 向<code>/etc/resolv.conf</code>中追加这个域名</li>
+</ul>
+<h4 id="示例-4"><a class="header-anchor" href="#示例-4"></a>示例</h4>
+<p>启动新容器，并添加<code>8.8.8.8</code>DNS服务器， 同时指定<code>dockercets.com</code>作为域名添加到非完整查询中</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">❯ docker container run -it --name c3 \</span><br><span class="line">--dns=8.8.8.8 \</span><br><span class="line">--dns-search=dockercets.com \</span><br><span class="line">&gt; alpine sh</span><br></pre></td></tr></table></figure>
+<p>进入该容器，查看<code>/etc/resolv.conf</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/ # cat /etc/resolv.conf</span><br><span class="line">search dockercets.com</span><br><span class="line">nameserver 8.8.8.8</span><br></pre></td></tr></table></figure>
+<h2 id="Ingress网络"><a class="header-anchor" href="#Ingress网络"></a>Ingress网络</h2>
+<p>Swarm支持两种服务发布模式：</p>
+<ul>
+<li>Ingress:   默认， 可以让Swarm集群内任意节点（即使没有运行该服务副本）都能访问该服务
+<ul>
+<li>Ingress模式底层是一个<strong>完全图</strong>（ 采用Service Mesh网络 ）</li>
+<li>Ingree网络会<strong>将流量平均分在所有服务副本之上</strong></li>
+</ul>
+</li>
+<li>Host： Host模式发布的服务只能通过运行服务副本的节点来访问
+<ul>
+<li>这里的host模式不是之前提到的host网络</li>
+</ul>
+</li>
+</ul>
+<p>Host模式发布：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker service create -d --name svc1 \</span><br><span class="line">--publish published=5000,target=80,mode=host \</span><br><span class="line">nginx</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Ingress模式可以使用简单格式，即形如<code> -p 5000:80</code>, 而Host模式必须使用上述的完整格式（逗号前后还不能有空格）</li>
+<li><code>published=5000</code>:  服务通过5000端口向外部提供服务</li>
+<li><code>target=80</code>: 发送到published端口5000的请求， 会映射到服务副本的80端口</li>
+<li><code>mode=host</code>： 只有外部请求发送到运行了服务副本的节点才可以访问该服务</li>
+</ul>
+<h4 id="示例-5"><a class="header-anchor" href="#示例-5"></a>示例</h4>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Network/Ingress%20example.png" alt="Ingress example"></p>
+<ul>
+<li>该命令部署了一个<code>svc1</code>服务，连接到了<code>overnet</code>网络，并发布到5000端口</li>
+<li>这里的Swarm节点全部接入了Ingress网络， 所以这个端口被发布到了Swarm范围内</li>
+<li>集群确保到达Ingress网络中任意节点的5000端口的浏览，都会被路由到80端口的<code>svc1</code>  服务</li>
+<li>当前<code>svc1</code>服务只部署了一个副本，因此流量全部分配到Node2</li>
+<li>箭头展示了访问Node1的5000端口的浏览，通过Ingress网络，被路由到了Node2的正在运行的服务副本上</li>
+</ul>
+<p>可以看到，外部流量可能访问任意一个Swarm节点，但是最终都会被路由到运行服务副本的节点</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/23/Neuroscience-L1/" rel="prev" title="Neuroscience L1">
+                  <i class="fa fa-chevron-left"></i> Neuroscience L1
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/25/Docker-Swarm/" rel="next" title="Docker Swarm">
+                  Docker Swarm <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

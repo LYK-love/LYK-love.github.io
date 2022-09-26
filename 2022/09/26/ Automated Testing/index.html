@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline：  源码测试 移动应用 AI测试    Thanks to 191250025 and other classmates  This document is used to the Final Review of this course">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Automated Testing">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/26/%20Automated%20Testing/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline：  源码测试 移动应用 AI测试    Thanks to 191250025 and other classmates  This document is used to the Final Review of this course">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%8F%98%E5%BC%82%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%8F%98%E5%BC%82%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E4%BC%97%E5%8C%85%E6%B5%8B%E8%AF%95%E6%A0%91.png?Expires=1635207901&amp;OSSAccessKeyId=TMP.3KjR8oFRxvQevrnV39j9kZakE2oyA7i3YRfxSv4711yGuJEpRUWfp9apJ4jCs2cqqK1BxbM5sMui6Gh2BKjZpVKrUUoUB6&amp;Signature=P2%2B2uXSRBy3EFTU%2FUPfHrCgYyDY%3D">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E4%BC%97%E5%8C%85%E5%B7%A5%E4%BA%BA%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%8E%9F%E6%A0%B7%E6%9C%AC%E6%89%A9%E5%A2%9E.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%8D%95%E6%A0%B7%E6%9C%AC%E6%89%A9%E5%A2%9E.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%A4%9A%E6%A0%B7%E6%9C%AC%E6%89%A9%E5%A2%9E.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%A4%9A%E6%A0%B7%E6%9C%AC%20%E7%8B%97%E7%8B%97.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%A4%9A%E6%A0%B7%E6%9C%AC%E6%89%A9%E5%A2%9E%20%E7%8C%AB%E7%8B%97%E5%B9%B3%E5%9D%87.png">
+<meta property="article:published_time" content="2022-09-26T06:39:34.924Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.924Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Software Testing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%8F%98%E5%BC%82%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/26/%20Automated%20Testing/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/26/%20Automated%20Testing/","path":"2022/09/26/ Automated Testing/","title":"Automated Testing"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Automated Testing | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BA%90%E7%A0%81%E6%B5%8B%E8%AF%95"><span class="nav-text">源码测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E5%BD%92%E6%B5%8B%E8%AF%95"><span class="nav-text">回归测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="nav-text">优化方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%AE%E5%88%86%E6%B5%8B%E8%AF%95"><span class="nav-text">差分测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%9C%95%E5%8F%98%E6%B5%8B%E8%AF%95"><span class="nav-text">蜕变测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E5%BC%82%E6%B5%8B%E8%AF%95"><span class="nav-text">变异测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-text">测试用例优先级</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%AE%97%E6%B3%95%E7%9A%84%E6%B5%81%E7%A8%8B%E5%8F%8A%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="nav-text">主要算法的流程及复杂度</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E8%B4%AA%E5%BF%83%E7%9A%84TCP"><span class="nav-text">基于贪心的TCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%9B%B8%E4%BC%BC%E6%80%A7%E7%9A%84TCP"><span class="nav-text">基于相似性的TCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%90%9C%E7%B4%A2%E7%9A%84TCP"><span class="nav-text">基于搜索的TCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84TCP%E7%AD%96%E7%95%A5"><span class="nav-text">基于机器学习的TCP策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APFD%E8%AE%A1%E7%AE%97"><span class="nav-text">APFD计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E9%80%89%E6%8B%A9"><span class="nav-text">测试用例选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E6%96%B9%E6%B3%95"><span class="nav-text">主要方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E5%8C%96%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E9%80%89%E6%8B%A9"><span class="nav-text">最小化测试用例选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E9%80%89%E6%8B%A9"><span class="nav-text">安全测试用例选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%95%B0%E6%8D%AE%E6%B5%81%E5%92%8C%E8%A6%86%E7%9B%96%E7%9A%84%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E9%80%89%E6%8B%A9"><span class="nav-text">基于数据流和覆盖的测试用例选择</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E5%88%B6-%E9%9A%8F%E6%9C%BA%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E9%80%89%E6%8B%A9"><span class="nav-text">特制&#x2F;随机测试用例选择</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%A8%8B%E5%BA%8F%E5%88%86%E6%9E%90%E7%9A%84%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E9%80%89%E6%8B%A9"><span class="nav-text">基于程序分析的测试用例选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81"><span class="nav-text">静态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81"><span class="nav-text">动态</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E9%98%B2%E7%81%AB%E5%A2%99%E7%AE%97%E6%B3%95"><span class="nav-text">类的防火墙算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81-vs-%E9%9D%99%E6%80%81"><span class="nav-text">动态 vs 静态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E4%BC%98%E5%85%88%E7%BA%A7-V-S-%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E9%80%89%E6%8B%A9"><span class="nav-text">测试用例优先级 V.S. 测试用例选择</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E5%BA%94%E7%94%A8"><span class="nav-text">移动应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%83%8F%E7%90%86%E8%A7%A3%E7%9A%84%E7%A7%BB%E5%8A%A8%E5%BA%94%E7%94%A8%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-text">基于图像理解的移动应用自动化测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%84%E4%B8%AA%E4%BB%BB%E5%8A%A1%E7%9A%84%E9%9A%BE%E7%82%B9"><span class="nav-text">各个任务的难点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%BD%E5%A4%9F%E8%AE%BA%E8%BF%B0%E5%90%84%E4%B8%AA%E4%BB%BB%E5%8A%A1%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-text">能够论述各个任务的解决方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-text">核心思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="nav-text">方法步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%BE%A4%E6%99%BA%E5%8D%8F%E5%90%8C%E7%9A%84%E4%BC%97%E5%8C%85%E6%B5%8B%E8%AF%95"><span class="nav-text">基于群智协同的众包测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%9C%BA%E5%88%B6"><span class="nav-text">基本机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-text">解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%8F%E5%90%8C%E6%8E%A8%E8%8D%90"><span class="nav-text">协同推荐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B4%A8%E9%87%8F%E4%BF%9D%E8%AF%81"><span class="nav-text">质量保证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E4%BA%A4%E4%BB%98"><span class="nav-text">聚合交付</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AI%E6%B5%8B%E8%AF%95"><span class="nav-text">AI测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AI%E6%B5%8B%E8%AF%95%E6%A6%82%E8%BF%B0"><span class="nav-text">AI测试概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E%E4%BC%A0%E7%BB%9F%E6%B5%8B%E8%AF%95%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">与传统测试的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%9A%84%E9%9A%BE%E7%82%B9"><span class="nav-text">测试的难点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E6%B5%8B%E8%AF%95"><span class="nav-text">数据驱动的测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95"><span class="nav-text">模糊测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-text">基本流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E6%89%A9%E5%A2%9E"><span class="nav-text">图像扩增</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%A2%9E%E7%9A%84%E5%8E%9F%E5%88%99"><span class="nav-text">扩增的原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%89%A9%E5%A2%9E%E6%96%B9%E6%B3%95"><span class="nav-text">常用扩增方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%9F%E6%A0%B7%E6%9C%AC%E6%89%A9%E5%A2%9E"><span class="nav-text">原样本扩增</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%95%E6%A0%B7%E6%9C%AC%E6%89%A9%E5%A2%9E"><span class="nav-text">单样本扩增</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E6%A0%B7%E6%9C%AC%E6%89%A9%E5%A2%9E"><span class="nav-text">多样本扩增</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BB%E7%96%97%E5%9B%BE%E5%83%8F%E6%89%A9%E5%A2%9E%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-text">医疗图像扩增的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%BB%E7%96%97%E5%9B%BE%E5%83%8F%E6%89%A9%E5%A2%9E%E7%9A%84%E9%9A%BE%E7%82%B9"><span class="nav-text">医疗图像扩增的难点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text"></span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/26/%20Automated%20Testing/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Automated Testing | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Automated Testing
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-26 06:39:34" itemprop="dateCreated datePublished" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Software-Engineering/" itemprop="url" rel="index"><span itemprop="name">Software Engineering</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <ul>
+<li>Outline：
+<ul>
+<li>源码测试</li>
+<li>移动应用</li>
+<li>AI测试</li>
+</ul>
+</li>
+</ul>
+<p><em>Thanks to 191250025 and other classmates</em></p>
+<ul>
+<li>This document is used to the Final Review of this course</li>
+</ul>
+<span id="more"></span>
+<h1 id="源码测试"><a class="header-anchor" href="#源码测试"></a>源码测试</h1>
+<h2 id="回归测试"><a class="header-anchor" href="#回归测试"></a>回归测试</h2>
+<h3 id="基本概念"><a class="header-anchor" href="#基本概念"></a>基本概念</h3>
+<ul>
+<li>版本迭代后，重新测试用例
+<ul>
+<li>部分代码修改会影响接口，导致测试用例失效。</li>
+<li>新需求需要新用例</li>
+</ul>
+</li>
+<li>可有效保证<strong>代码修改的正确性</strong>并避免代码修改对被测程序其他模块产生的<strong>副作用</strong>。</li>
+</ul>
+<h3 id="优化方法"><a class="header-anchor" href="#优化方法"></a>优化方法</h3>
+<ul>
+<li>测试用例优先级（Test Case Prioritization，TCP）</li>
+<li>测试用例集约减（Test Suite Reduction，TSR）
+<ul>
+<li>不考，没记</li>
+</ul>
+</li>
+<li>测试用例选择（Test Case Selection，TCS）</li>
+</ul>
+<h3 id="差分测试"><a class="header-anchor" href="#差分测试"></a>差分测试</h3>
+<ul>
+<li>通过将<u>同一测试用例</u>运行到一系列相似功能的应用中观察<u>执行差异</u>来检测bug。(对拍)</li>
+</ul>
+<h3 id="蜕变测试"><a class="header-anchor" href="#蜕变测试"></a>蜕变测试</h3>
+<ul>
+<li>依据被测软件的领域知识和软件的实现方法建立的蜕变关系来生成新的测试用例,通过验证蜕变关系是否被保持来决定测试是否通过。( $sin x=sin(\pi-x)$ )
+<ul>
+<li>蜕变关系(Metamorphic Relation, MR) 是指多次执行目标程序时,输入与输出之间期望遵循的关系</li>
+</ul>
+</li>
+</ul>
+<h3 id="变异测试"><a class="header-anchor" href="#变异测试"></a>变异测试</h3>
+<ul>
+<li>通过定义好的变异操作来对源码进行修改,以此来帮助测试者定位测试数据的弱点,避免执行测试的弱点</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%8F%98%E5%BC%82%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B.png" alt="image-20211025220553543"></p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%8F%98%E5%BC%82%E6%B5%8B%E8%AF%95%E6%80%BB%E7%BB%93.png" alt="image-20211025220407419"></p>
+<h2 id="测试用例优先级"><a class="header-anchor" href="#测试用例优先级"></a>测试用例优先级</h2>
+<ul>
+<li>简介：
+<ul>
+<li>依照某种策略赋予每个测试用例的不同优先级,以提高测试套件的故障检测率。</li>
+<li>测试优先级排序技术采用特定的(启发式)算法计划测试用例,使得优先级较高的用例能够先于优先级低的用例执行。</li>
+</ul>
+</li>
+<li>类型：
+<ul>
+<li><strong>通用</strong>测试排序:为<strong>有利于后续版本的测试用例</strong>赋予更高的优先级。</li>
+<li><strong>特定于版本</strong>的测试排序:根据不同软件版本的特性为测试用例分配优先级。</li>
+</ul>
+</li>
+</ul>
+<h3 id="主要算法的流程及复杂度"><a class="header-anchor" href="#主要算法的流程及复杂度"></a>主要算法的流程及复杂度</h3>
+<h4 id="基于贪心的TCP"><a class="header-anchor" href="#基于贪心的TCP"></a>基于贪心的TCP</h4>
+<ul>
+<li>全局贪心策略
+<ul>
+<li>每轮优先挑选覆盖最多代码单元的测试用例。</li>
+<li>多个用例相同随机选择。</li>
+</ul>
+</li>
+<li>增量贪心策略
+<ul>
+<li>每轮优先挑选覆盖最多，且未被已选择用例覆盖代码单元的测试用例。</li>
+<li>所有代码单元均已被覆盖则重置排序过程</li>
+<li>多个用例相同随机选择</li>
+</ul>
+</li>
+</ul>
+<h4 id="基于相似性的TCP"><a class="header-anchor" href="#基于相似性的TCP"></a>基于相似性的TCP</h4>
+<ul>
+<li>
+<p>基本定义：每轮优先与已选择测试用例集差异性最大的测试用例。让测试用例均匀地分布在输入域中。</p>
+<ul>
+<li>（类似PRIM算法）</li>
+</ul>
+</li>
+<li>
+<p>排序步骤：</p>
+<ol>
+<li>
+<p>测试用例之间的距离计算：假设$U(t_1)$ 和 $U(t_2)$为测试用例$t_1$和$t_2$所覆盖的代码单元集合，那么这两个用例之间的距离计算如下：<br>
+$$<br>
+Jaccard(t_1,t_2)=1 - \frac { | U(t_1) \cap U(t_2)|}{| U(t_1) \cup U(t2) |}<br>
+$$</p>
+</li>
+<li>
+<p>用例与测试用例集之间的距离计算：分别使用最小距离、平均距离和最大距离度量方式计算待选择用例$t_c$与已选择用例集S的距离：<br>
+$$<br>
+D(tc,S)=\left{<br>
+\begin{aligned}<br>
+\max \left{ \min\limits_{0\leq i \leq |S|} \left{ Jaccard(t_c, t_i)\right} \right} \</p>
+<p>\max \left{ \underset{0 \leq i \leq|S|}{\operatorname{avg}} \left{ Jaccard(t_c, t_i)\right} \right} \</p>
+<p>\max \left{ \max\limits_{0\leq i \leq |S|} \left{ Jaccard(t_c, t_i)\right} \right} \</p>
+<p>\end{aligned}<br>
+\right.<br>
+$$</p>
+<ul>
+<li>$t_c$是待选用例。这里是计算tc跟已选测试用例集每个ti的距离。假设已选k个用例，则有k个距离，min就是取k个距离中最小的距离作为tc到已选集（包含k个测试用例）的距离。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="基于搜索的TCP"><a class="header-anchor" href="#基于搜索的TCP"></a>基于搜索的TCP</h4>
+<ul>
+<li>
+<p>基本定义：探索用例排序组合的状态空间，以此找到检测错误更快的用例序列。</p>
+</li>
+<li>
+<p>排序步骤：</p>
+<ol>
+<li>
+<p>种群构造：生成N个测试用例序列，之后随机生成切割点，互相交换两个用例序列切割点后部分的片段，仅交换相同测试用例的部分；同时以一定概率选择测试用例，并随机生成两个测试用例位置，进行互换，产生新的测试用例序列。</p>
+</li>
+<li>
+<p>评估值计算：以语句覆盖为例，给定程序包含m个语句$M = {s_1,s_2,…,s_m}$和n个测试用例$T={t_1,t_2,…,t_n}$，$T’$为某一次搜索中$T$的一个排序序列，$TS_i$为该测试用例序列$T’$中第一个覆盖语句$s_i$的测试用例下标，那么其适应度计算为：<br>
+$$<br>
+APSC = 1 - \frac {TF_1+TF_2+ \dots + TF_m}{n * m} + \frac {1}{2n}<br>
+$$</p>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="基于机器学习的TCP策略"><a class="header-anchor" href="#基于机器学习的TCP策略"></a>基于机器学习的TCP策略</h4>
+<ul>
+<li>
+<p>基本定义：基于测试分布特征，预测表现最佳的排序技术。</p>
+</li>
+<li>
+<p>排序步骤：</p>
+<ol>
+<li>
+<p>测试分布特征提取：给定被测程序，提取每个测试用例覆盖单元数；执行时间与单元时间内覆盖单元数。</p>
+</li>
+<li>
+<p>模型生成：由于三种特征取值范围不同，使用min-max正则化，最后使用XGBoost学习特征进行预测。</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="APFD计算"><a class="header-anchor" href="#APFD计算"></a>APFD计算</h3>
+<ul>
+<li>
+<p>APFD：(Average Percentage of Faults Detected )平均故障检测百分比</p>
+</li>
+<li>
+<p>给定程序包含m个故障$F={f_1,f_2,…,f_m}$和n个测试用例$T={t_1,t_2,…t_n}$，$T’$为$T$的一个排序序列，$TF_i$为该测试用例序列$T’$中第一个检测到故障$f_i$ 的测试用例下标，则该排序序列$T’$的APFD值计算公式为<br>
+$$<br>
+APFD = 1 - \frac {TF_1+TF_2+ \dots + TF_m}{n * m} + \frac {1}{2n}<br>
+$$</p>
+</li>
+</ul>
+<h2 id="测试用例选择"><a class="header-anchor" href="#测试用例选择"></a>测试用例选择</h2>
+<ul>
+<li>简介：
+<ul>
+<li>回归测试用例选择可以通过重新运行原始测试套件的一个<u>子集</u>，验证某些变更是否对当前软件版本的功能造成了影响。</li>
+</ul>
+</li>
+<li>优点：
+<ul>
+<li>降低回归测试的开销</li>
+<li>最大化缺陷探测能力</li>
+</ul>
+</li>
+<li>流程：
+<ul>
+<li>给定修改前的程序$P$，对应的测试用例集$T$，和修改后的程序$P’$</li>
+<li>寻找$T$的子集$T’$对$P’$进行测试，并且$T’$中的任意测试用例均是可以检测代码修改的测试用例。</li>
+</ul>
+</li>
+</ul>
+<h3 id="主要方法"><a class="header-anchor" href="#主要方法"></a>主要方法</h3>
+<h4 id="最小化测试用例选择"><a class="header-anchor" href="#最小化测试用例选择"></a>最小化测试用例选择</h4>
+<ul>
+<li>从$T$中找出<strong>最小</strong>的子集$T_{min}$，$T_{min}$能够覆盖$P$中所有本次修改的、或者受本次修改影响的部分。</li>
+<li>每一条新增的或者被修改的语句都能够被至少一个来自$T$的测试用例执行。</li>
+</ul>
+<h4 id="安全测试用例选择"><a class="header-anchor" href="#安全测试用例选择"></a>安全测试用例选择</h4>
+<ul>
+<li>
+<p>从$T$中选出能够暴露$P’$中的一个或多个缺陷的所有测试用例，构成安全回归测试集$T_S$</p>
+</li>
+<li>
+<p>$T_S$中的每个测试都能够满足以下条件之一</p>
+<ul>
+<li>
+<p>执行至少一条在$P’$中被删除的语句</p>
+</li>
+<li>
+<p>执行至少一条在$P’$中新增的语句</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="基于数据流和覆盖的测试用例选择"><a class="header-anchor" href="#基于数据流和覆盖的测试用例选择"></a>基于数据流和覆盖的测试用例选择</h4>
+<ul>
+<li>变更后的代码$P’$中使数据交互变化的语句构成语句集合$S_I$。从原本的测试用例集$T$中选取出所有覆盖到$S_I$中某条语句的测试用例，组成测试集$T_D$</li>
+<li>$T_D$中的每个测试都能够满足以下条件之一
+<ul>
+<li>执行至少一个在$P’$中被删除的Define-Use对</li>
+<li>执行至少一个在$P’$中新增的Define-Use对</li>
+</ul>
+</li>
+</ul>
+<h4 id="特制-随机测试用例选择"><a class="header-anchor" href="#特制-随机测试用例选择"></a>特制/随机测试用例选择</h4>
+<ul>
+<li>规定测试用例的选取数量为m，测试人员随机地从原本的测试用例集$T$中选出m个测试用例，组成随机回归测试集$T_R$</li>
+<li>面向剖面测试用例选择：与AOP有关，从$T$中选出与某个剖面a有关的测试用例k，组成回归测试集$T_a$</li>
+</ul>
+<h3 id="基于程序分析的测试用例选择"><a class="header-anchor" href="#基于程序分析的测试用例选择"></a>基于<strong>程序分析</strong>的测试用例选择</h3>
+<ul>
+<li>简介：
+<ul>
+<li>
+<p>通过<strong>程序分析</strong>技术计算出测试代码（方法、用例或套件）与生产代码之间的<strong>依赖关系</strong>，并在后者发生变更时，利用这些依赖关系将所有<strong>受到变更影响</strong>的测试代码（Change-Impacted Tests）自动选取出来，组成回归测试集</p>
+</li>
+<li>
+<p>一般被认为是一种<strong>安全测试用例选择技术</strong></p>
+</li>
+<li>
+<p>分类：静态，动态</p>
+</li>
+<li>
+<p>粒度：</p>
+<ul>
+<li>基本块级、方法级(细)</li>
+<li>类级、项目级(粗)</li>
+</ul>
+</li>
+<li>
+<p>阶段:</p>
+<p>A Phase –分析阶段:分析代码变更、计算测试依赖<br>
+E Phase –执行阶段:运行选中测试<br>
+C Phase –收集阶段:收集测试信息</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="静态"><a class="header-anchor" href="#静态"></a>静态</h4>
+<ul>
+<li>在<u>没有实际执行程序</u>的情况下对计算机软件程序进行自动化分析的技术（手动分析一般被称为程序理解或代码审查）。</li>
+<li>大多数情况下，分析的材料为<u>源语言代码</u>，少部分静态分析会针对目标语言代码进行
+<ul>
+<li>例如：分析Java的字节码</li>
+</ul>
+</li>
+</ul>
+<h4 id="动态"><a class="header-anchor" href="#动态"></a>动态</h4>
+<ul>
+<li>通过在真实或虚拟处理器上<u>执行程序</u>来完成对程序行为的分析。</li>
+<li>为了使动态程序分析有效，必须使用足够的测试输入来执行目标程序，以尽可能覆盖程序所有的输出。进行动态分析时一般需要注意最小化插桩对目标程序的影响</li>
+</ul>
+<h3 id="类的防火墙算法"><a class="header-anchor" href="#类的防火墙算法"></a>类的防火墙算法</h3>
+<ul>
+<li>
+<p>假设在<strong>继承</strong>层级(Inheritance Hierarchy)中,类A是类B的子类。当有且仅有B发生变动时,为了保证<br>
+测试充分,除B之外,A也应该重新进行单元测试。</p>
+</li>
+<li>
+<p>假设在<strong>聚合</strong>层级(Aggregation Hierarchy)中,类A是类B的一个聚合类。当有且仅有B发生变动时,为<br>
+了保证测试充分,除B之外,A也应该重新进行单元测试。</p>
+</li>
+<li>
+<p>假设在<strong>关联</strong>层级(Association Hierarchy)中,类A与类B的关系满足下列条件之一:</p>
+<ol>
+<li>
+<p>类A访问了类B的数据成员;</p>
+</li>
+<li>
+<p>类A需要向B传递信息</p>
+</li>
+</ol>
+<p>(简言之: A依赖B)</p>
+<p>当B发生变动时,为了保证测试充分,除B之外,A也应该重新进行测试。同时,类A还应该与类B进行重新集成。</p>
+</li>
+</ul>
+<h3 id="动态-vs-静态"><a class="header-anchor" href="#动态-vs-静态"></a>动态 vs 静态</h3>
+<table>
+<thead>
+<tr>
+<th>特征</th>
+<th>动态</th>
+<th>静态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>总体</td>
+<td>好</td>
+<td></td>
+</tr>
+<tr>
+<td>依赖信息</td>
+<td>多</td>
+<td></td>
+</tr>
+<tr>
+<td>开销</td>
+<td>小</td>
+<td></td>
+</tr>
+<tr>
+<td>过拟合</td>
+<td></td>
+<td>有</td>
+</tr>
+<tr>
+<td>插桩</td>
+<td>需要</td>
+<td>不需要</td>
+</tr>
+<tr>
+<td>运行测试阶段</td>
+<td></td>
+<td>好</td>
+</tr>
+</tbody>
+</table>
+<h2 id="测试用例优先级-V-S-测试用例选择"><a class="header-anchor" href="#测试用例优先级-V-S-测试用例选择"></a>测试用例优先级 V.S. 测试用例选择</h2>
+<ul>
+<li>优先级技术是对测试用例集进行排序,以<strong>最快的速度</strong>找到缺陷,提高测试用例集的故障检测率。</li>
+<li>选择技术是取测试用例集的子集,能覆盖修改过的代码,<strong>降低</strong>回归测试的<strong>开销</strong>并最大化缺陷探测能力</li>
+</ul>
+<h1 id="移动应用"><a class="header-anchor" href="#移动应用"></a>移动应用</h1>
+<h2 id="基于图像理解的移动应用自动化测试"><a class="header-anchor" href="#基于图像理解的移动应用自动化测试"></a>基于图像理解的移动应用自动化测试</h2>
+<h3 id="各个任务的难点"><a class="header-anchor" href="#各个任务的难点"></a>各个任务的难点</h3>
+<ul>
+<li>测试输入生成
+<ul>
+<li>任务难点:
+<ul>
+<li>运行环境多样化:网络多样化、平台多样化、设备多样化</li>
+<li>环境碎片化</li>
+<li>开发平台快速演化</li>
+<li>需要考虑系统级事件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="能够论述各个任务的解决方法"><a class="header-anchor" href="#能够论述各个任务的解决方法"></a>能够论述各个任务的解决方法</h3>
+<p>( 只针对测试输入生成 )</p>
+<ul>
+<li>基于随机:Monkey</li>
+<li>基于模型:Stout</li>
+<li>基于机器学习:Q-testing</li>
+</ul>
+<h3 id="核心思想"><a class="header-anchor" href="#核心思想"></a>核心思想</h3>
+<ul>
+<li>测试输入生成即针对给定应用进行测试探索</li>
+<li>移动应用结构可以抽象为图结构</li>
+</ul>
+<h3 id="方法步骤"><a class="header-anchor" href="#方法步骤"></a>方法步骤</h3>
+<p>(Stout)</p>
+<ul>
+<li>
+<p>模型构建</p>
+<ol>
+<li>
+<p>UI页面层次结构 – 事件识别</p>
+</li>
+<li>
+<p>随机有限状态机(动态分析)</p>
+</li>
+<li>
+<p>系统事件分析</p>
+<p>事件执行频率 – 初始概率</p>
+</li>
+</ol>
+</li>
+<li>
+<p>模型变异、测试生成与执行</p>
+<ol start="4">
+<li>随机变异事件转换概率</li>
+<li>基于概率生成测试</li>
+<li>随机注入系统事件</li>
+<li>测试执行</li>
+<li>输出度量(覆盖率)</li>
+<li>Gibbs取样(是否继续执行)</li>
+<li>缺陷诊断</li>
+</ol>
+</li>
+</ul>
+<h2 id="基于群智协同的众包测试"><a class="header-anchor" href="#基于群智协同的众包测试"></a>基于群智协同的众包测试</h2>
+<ul>
+<li>众包测试树</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E4%BC%97%E5%8C%85%E6%B5%8B%E8%AF%95%E6%A0%91.png?Expires=1635207901&amp;OSSAccessKeyId=TMP.3KjR8oFRxvQevrnV39j9kZakE2oyA7i3YRfxSv4711yGuJEpRUWfp9apJ4jCs2cqqK1BxbM5sMui6Gh2BKjZpVKrUUoUB6&amp;Signature=P2%2B2uXSRBy3EFTU%2FUPfHrCgYyDY%3D" alt="image-20211025233428057"></p>
+<ul>
+<li>众包的难点
+<ol>
+<li>大量重复报告</li>
+<li>大量不完善报告</li>
+<li>测试力度分布不均</li>
+<li>不能充分利用用户合作,验证问题</li>
+<li>整理归类报告困难,相似报告分散,浪费时间精力</li>
+<li>审核人员不能专注于质量控制,交付的报告质量较低</li>
+</ol>
+</li>
+</ul>
+<h3 id="基本机制"><a class="header-anchor" href="#基本机制"></a>基本机制</h3>
+<ul>
+<li>协同推荐：众测系统上发布测试任务（任务发布者）</li>
+<li>质量保证：众包工人参与测试任务，协作方式完成BUG报告（众包工人）</li>
+<li>聚合交付：识别并剔除恶意众包工人，审核报告并交付缺陷列表（管理者）</li>
+</ul>
+<h3 id="解决方法"><a class="header-anchor" href="#解决方法"></a>解决方法</h3>
+<h4 id="协同推荐"><a class="header-anchor" href="#协同推荐"></a>协同推荐</h4>
+<ol>
+<li>信息共享,用户提交报告时进行实时相似报告推荐,避免重复报告提交</li>
+<li>任务分配:用户在提交报告后对其进行审核报告推荐和测试页面推荐。</li>
+<li>协作方式:用户对于相似报告和审核报告的结果,可以点赞点踩,验证报告有效性。</li>
+</ol>
+<h4 id="质量保证"><a class="header-anchor" href="#质量保证"></a>质量保证</h4>
+<ul>
+<li>众包工人:
+<ol>
+<li>竞争式提交(独立测试提交报告,贡献归个人所有)、</li>
+<li>协作式提交(借鉴他人报告,修改他人报告后生成子报告)、</li>
+<li>审核(对他人报告点赞点踩)</li>
+</ol>
+</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E4%BC%97%E5%8C%85%E5%B7%A5%E4%BA%BA%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt="image-20201101010717401"></p>
+<ul>
+<li>质量控制系统:
+<ol>
+<li>bug报告有效性模块</li>
+<li>bug报告自动评估模块</li>
+<li>反馈与监控模块</li>
+<li>bug报告审核模块</li>
+</ol>
+</li>
+</ul>
+<h4 id="聚合交付"><a class="header-anchor" href="#聚合交付"></a>聚合交付</h4>
+<ul>
+<li>
+<p>过程：</p>
+<ol>
+<li>聚合阶段： 相似报告聚合</li>
+<li>融合阶段 ：融合相似报告，提高可读性</li>
+<li>围绕报告融合构建审核业务流程：使审核人员聚焦质量控制</li>
+</ol>
+</li>
+<li>
+<p>目标： 构建一套基于<strong>报告融合</strong>的测试报告处理流程</p>
+</li>
+</ul>
+<h1 id="AI测试"><a class="header-anchor" href="#AI测试"></a>AI测试</h1>
+<h2 id="AI测试概述"><a class="header-anchor" href="#AI测试概述"></a>AI测试概述</h2>
+<h3 id="与传统测试的区别"><a class="header-anchor" href="#与传统测试的区别"></a>与传统测试的区别</h3>
+<ul>
+<li>决策逻辑:
+<ul>
+<li>传统软件：程序代码控制决策逻辑</li>
+<li>智能软件:深度学习模型的结构、训练后得到的权重节点</li>
+</ul>
+</li>
+<li>系统程序特征:
+<ul>
+<li>传统软件：<u>控制流和数据流构建的业务处理</u></li>
+<li>智能软件<u>:数据驱动</u>构建的参数化数值计算</li>
+</ul>
+</li>
+<li>智能软件系统的缺陷往往不是显式的代码或参数错误</li>
+</ul>
+<h3 id="测试的难点"><a class="header-anchor" href="#测试的难点"></a>测试的难点</h3>
+<p>数据量不够、低质量数据、数据分布不均、不充分测试</p>
+<h3 id="数据驱动的测试"><a class="header-anchor" href="#数据驱动的测试"></a>数据驱动的测试</h3>
+<ol>
+<li>需求分析</li>
+<li>数据采集</li>
+<li>数据标注</li>
+<li>模型结构设计</li>
+<li>模型训练</li>
+<li>模型测试</li>
+<li>模型部署</li>
+</ol>
+<h2 id="模糊测试"><a class="header-anchor" href="#模糊测试"></a>模糊测试</h2>
+<h3 id="基本流程"><a class="header-anchor" href="#基本流程"></a>基本流程</h3>
+<ul>
+<li>通过异常的输入自动化发现待测程序缺陷</li>
+<li>预期输入：变异数据</li>
+<li>预期输出：断言失败、无效输入、异常崩溃、错误输出</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E6%A8%A1%E7%B3%8A%E6%B5%8B%E8%AF%95.png" alt="image-20201101122413533"></p>
+<h2 id="图像扩增"><a class="header-anchor" href="#图像扩增"></a>图像扩增</h2>
+<p>通过轻微变换现有数据或创建新的合成图像来得到新数据的技术。应用领域有图像扩增、文本扩增、雷达扩增…</p>
+<ul>
+<li>目的：增加数据量、丰富数据多样性、提高模型的泛化能力。</li>
+</ul>
+<h3 id="扩增的原则"><a class="header-anchor" href="#扩增的原则"></a>扩增的原则</h3>
+<ul>
+<li>不能引入无关的数据</li>
+<li>扩增总是基于先验知识的,对于不同的任务和场景,数据扩增的策略也会不同。</li>
+<li>扩增后的标签保持不变</li>
+</ul>
+<h3 id="常用扩增方法"><a class="header-anchor" href="#常用扩增方法"></a>常用扩增方法</h3>
+<h4 id="原样本扩增"><a class="header-anchor" href="#原样本扩增"></a>原样本扩增</h4>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%8E%9F%E6%A0%B7%E6%9C%AC%E6%89%A9%E5%A2%9E.png" alt="image-20201101132018081"></p>
+<h4 id="单样本扩增"><a class="header-anchor" href="#单样本扩增"></a>单样本扩增</h4>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%8D%95%E6%A0%B7%E6%9C%AC%E6%89%A9%E5%A2%9E.png" alt="image-20201101132102202"></p>
+<ul>
+<li>两阶段：找到可能包含物体的区域 -&gt; 对该区域进行分类</li>
+<li>单阶段：图片缩放划分等分网络，并且卷积后过滤获得最后预测框。</li>
+<li>特征合成：基于规则、基于分割确定合成区域</li>
+</ul>
+<h4 id="多样本扩增"><a class="header-anchor" href="#多样本扩增"></a>多样本扩增</h4>
+<ul>
+<li>
+<p>样本级合成：标签a的特征 + 标签b的特征 = 标签a</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%A4%9A%E6%A0%B7%E6%9C%AC%E6%89%A9%E5%A2%9E.png" alt="image-20201101132624376" style="zoom: 50%;" /><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%A4%9A%E6%A0%B7%E6%9C%AC%20%E7%8B%97%E7%8B%97.png" /><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95/%E5%A4%9A%E6%A0%B7%E6%9C%AC%E6%89%A9%E5%A2%9E%20%E7%8C%AB%E7%8B%97%E5%B9%B3%E5%9D%87.png" alt="image-20201101132643639" style="zoom: 50%;" /></p>
+</li>
+<li>
+<p>特征级合成：将不同特征在同一张图上面重新排列组合</p>
+</li>
+<li>
+<p>标签降级：变成不同的特征</p>
+</li>
+</ul>
+<h3 id="医疗图像扩增的特点"><a class="header-anchor" href="#医疗图像扩增的特点"></a>医疗图像扩增的特点</h3>
+<ul>
+<li>图像中不同形式的细微结构可能代表某种病变</li>
+<li>不能保证扩增的质量</li>
+<li>不同疾病要使用不同的扩增方法</li>
+</ul>
+<h3 id="医疗图像扩增的难点"><a class="header-anchor" href="#医疗图像扩增的难点"></a>医疗图像扩增的难点</h3>
+<ul>
+<li>患者隐私保护,医学影像匮乏</li>
+<li>共享临床数据困难</li>
+<li>影像质量参差不齐</li>
+<li>需要专家手动贴标签</li>
+</ul>
+<h3 id=""><a class="header-anchor" href="#"></a></h3>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Software-Testing/" rel="tag"># Software Testing</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/26/Big%20Data%20Tools/" rel="prev" title="Big Data Tools">
+                  <i class="fa fa-chevron-left"></i> Big Data Tools
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/26/C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" rel="next" title="C++面向对象">
+                  C++面向对象 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  The Static&#x2F;Dynamic Distinction Environments and States Name Variable …">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Programming Language Basic">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/13/Programming-Language-Basic/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  The Static&#x2F;Dynamic Distinction Environments and States Name Variable …">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Compilers/Programming%20Language%20Basic/Environments%20and%20States.png">
+<meta property="article:published_time" content="2022-09-12T16:30:33.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.937Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Compilers">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Compilers/Programming%20Language%20Basic/Environments%20and%20States.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/13/Programming-Language-Basic/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/13/Programming-Language-Basic/","path":"2022/09/13/Programming-Language-Basic/","title":"Programming Language Basic"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Programming Language Basic | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Static-Dynamic-Distinction"><span class="nav-text">The Static&#x2F;Dynamic Distinction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Environments-and-States"><span class="nav-text">Environments and States</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Name"><span class="nav-text">Name</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#name"><span class="nav-text">name</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#identifer"><span class="nav-text">identifer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#macro-name"><span class="nav-text">macro name</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#variable-name"><span class="nav-text">variable name</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variable"><span class="nav-text">Variable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Assignment-and-getValue"><span class="nav-text">Assignment and getValue</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Declaration-Definition-and-Initialization"><span class="nav-text">Declaration, Definition and Initialization</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Parameter-and-Argument"><span class="nav-text">Parameter and Argument</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Parameter-Passing"><span class="nav-text">Parameter Passing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Call-by-Value"><span class="nav-text">Call by Value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Call-by-Reference"><span class="nav-text">Call by Reference</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Static-Scope-and-Block-Structure"><span class="nav-text">Static Scope and Block Structure</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Procedures-Functions-and-Methods"><span class="nav-text">Procedures, Functions and Methods</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Explicit-Access-Control"><span class="nav-text">Explicit Access Control</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Aliasing"><span class="nav-text">Aliasing</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/13/Programming-Language-Basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Programming Language Basic | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Programming Language Basic
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-12 16:30:33" itemprop="dateCreated datePublished" datetime="2022-09-12T16:30:33Z">2022-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>The Static/Dynamic Distinction</li>
+<li>Environments and States</li>
+<li>Name</li>
+<li>Variable</li>
+<li>…</li>
+</ul>
+<span id="more"></span>
+<h1 id="The-Static-Dynamic-Distinction"><a class="header-anchor" href="#The-Static-Dynamic-Distinction"></a>The Static/Dynamic Distinction</h1>
+<p>If a language uses a policy that <u>allows the compiler to decide an issue</u> then we say that the language uses a <strong>static</strong> policy or that the issue can be decided <u>at compile time</u>.</p>
+<ul>
+<li>static: 某件事在编译期就被决定</li>
+<li>dynamic: 在运行期就被决定</li>
+</ul>
+<p>以上是抽象的static/dynamic概念, 一个语言可以在一个方面是static的, 另一个方面又是dynamic的.</p>
+<p>例如:</p>
+<ul>
+<li>
+<p>对于Type System, 静态类型语言的类型在编译期就决定, 而动态类型语言的类型在运行期才能决定.</p>
+<ul>
+<li>事实上, 由于类型系统最受关注, 我们叙述一门语言特性的时候, 经常省略掉定语“类型系统”, 直接说“XX语言是静态/动态的”.</li>
+</ul>
+</li>
+<li>
+<p>对于变量的内存分配, 如果一个变量是静态变量( <code>class variable</code> in Java ):</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Foo</span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">int</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>变量<code>x</code>的内存分配已经确定了, 所有<code>Foo</code>的instance都共享这一个变量.</p>
+</li>
+</ul>
+<h1 id="Environments-and-States"><a class="header-anchor" href="#Environments-and-States"></a>Environments and States</h1>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Compilers/Programming%20Language%20Basic/Environments%20and%20States.png" alt="Environments and States"></p>
+<ul>
+<li>
+<p>environment: 从<strong>name</strong>到<strong>variable</strong>的映射, 来区分同一作用域内同名的不同变量. 例如:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> x = <span class="number">3</span>;</span><br><span class="line">	cout &lt;&lt; x &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>f()</code>中的<strong>变量名</strong><code>x</code>被environment映射到变量<code>x = 3</code>. 而<code>f</code>外的<strong>变量名</strong><code>x</code>被environment映射到变量<code>x = 31</code>.</p>
+<ul>
+<li>当然, <strong>变量<code>variable</code>, 或者说左值<code>lvalue</code>, 就是一块具有值的内存的location</strong>, 所以“映射到变量”, 其实就是“映射到location”</li>
+<li>绝大多数PL的environment是<strong>动态</strong>的, 否则也无法区分同一作用域内同名的不同变量了.</li>
+</ul>
+</li>
+<li>
+<p>state: 从<strong>location</strong>到<strong>value</strong>的映射. 即lvalue到rvalue的映射</p>
+<ul>
+<li>
+<p>大部分PL的state是<strong>动态</strong>的, 因为只有程序运行时才能得到value. 但也有<strong>编译期决定的值,</strong> 也就是静态的state, 比如const:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const a = 1000</span><br></pre></td></tr></table></figure>
+<p>这里<code>a</code>的值在编译期就决定了, 是1000.</p>
+</li>
+<li>
+<p>当然, Macro的值也是编译器决定的:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ARRAYSIZE 1000</span></span><br></pre></td></tr></table></figure>
+<p>不过,macro不是变量, 只是个文本替换而已, 不能纳入name - variable - value的范畴</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Name"><a class="header-anchor" href="#Name"></a>Name</h1>
+<h2 id="name"><a class="header-anchor" href="#name"></a>name</h2>
+<ul>
+<li>name: 这里的name是抽象的概念, 它指程序中的<strong>一段有意义的文本</strong>.<br>
+$$<br>
+\mathrm{name} = { \mathrm{variable \  name}, \mathrm{macro \  name}, \mathrm{expression \  name}, \mathrm{keyword} }<br>
+$$</li>
+</ul>
+<h2 id="identifer"><a class="header-anchor" href="#identifer"></a>identifer</h2>
+<ul>
+<li>
+<p>identifer: name的子集, 它的文本是<u>符号</u>形式的, 标识了一个程序中的<strong>实体</strong><br>
+$$<br>
+\mathrm{identifer} = { \mathrm{variable \  name}, \mathrm{macro \  name} }<br>
+$$</p>
+<ul>
+<li>
+<p>identifer不包括expression name, 因为expression name是一段文本而不是一个符号; 也不包括<code>keyword</code>, 因为<code>keyword</code>并不标识什么实体, 在编程模型中也不发挥什么作用.</p>
+</li>
+<li>
+<p>例如:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Foo</span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bar</span>&#123;</span><br><span class="line">Foo foo;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Bar</span> <span class="variable">bar</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Bar</span>();</span><br><span class="line">bar.foo; <span class="comment">//expression name</span></span><br></pre></td></tr></table></figure>
+<p>这里的<code>bar</code>和<code>foo</code>都是variable name( identifer ), 但<code>bar.foo</code>是一个expression name</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="macro-name"><a class="header-anchor" href="#macro-name"></a>macro name</h2>
+<ul>
+<li>macro name: macro的文本名字, 由于macro是预处理器面对的东西, 是一个文本上的替换, 对编译器是透明的, 对于程序而言不算“真正的”实体. 因此macro不属于变量, macro name也不是variable name.</li>
+</ul>
+<h2 id="variable-name"><a class="header-anchor" href="#variable-name"></a>variable name</h2>
+<ul>
+<li>
+<p>variable name: 变量的文本名字, 它和identifier的唯一区别就是不含macro name.</p>
+<ul>
+<li>
+<p>严格地说, 由于name只对编译器有用, 变量名作为一个文本, 其用处就是帮助编译器找到对应的变量. 从这个意义上讲, <u>变量名其实要包括变量的类型,</u></p>
+<ul>
+<li>对于普通变量:</li>
+</ul>
+  <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">1</span>; </span><br><span class="line"><span class="type">double</span> y = <span class="number">0.43</span></span><br></pre></td></tr></table></figure>
+<p>具体的变量名应该是<code>int x</code>, <code>double y</code></p>
+<ul>
+<li>对于函数, 它的变量名就是Function Signature.</li>
+</ul>
+</li>
+<li>
+<p>当然这样讲太啰嗦了, 因此通常我们就说变量名时不说类型.</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Variable"><a class="header-anchor" href="#Variable"></a>Variable</h1>
+<ul>
+<li>
+<p>variable: 这里的“变量”是比较抽象的说法, 它是一块具有值的内存的location( 也就是一个地址/指针 ), 或者说左值<code>lvalue</code>. 因此任何在内存中实际存在, 或者说对程序可见的“实体”都可以称为“变量”. ( Macro在编译前就被替换了,  也无所谓什么内存, 肯定不是变量  ).</p>
+</li>
+<li>
+<p>注意, <strong>“变量是指针”<strong>这个说法比较拗口. 所以我们一般就</strong>用变量指向的值来代表该变量</strong>, 也就是说一般省略掉“变量是指针”这一事实</p>
+<ul>
+<li>比如对于<code>int x = 3</code>, 我们就说<code>x</code>是个int类型的变量. 不会说“<code>x</code>是个lvalue, 它指向的rvalue是int类型的3”</li>
+<li>同理, 对于<code>int *p = new Obj()</code>, 我们就说<code>p</code>是个指针变量, 不会说&quot;<code>p</code>是个lvalue, 它指向的rvalue是一个指针, 该指针又指向了对象&quot;</li>
+<li>对于Java这样的“所有变量都是引用(指针)”的语言, 我们就说某某变量是个引用, 不会说“该变量是个lvalue, 它指向的rvalue是一个指针, 该指针又指向了对象”</li>
+</ul>
+</li>
+<li>
+<p>常规的“变量”:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<p><code>x</code>是个变量名, 它被environment映射到一个具体的变量( OR location), 为了叙述方便, 我们通常直接说&quot;变量<code>x</code>&quot;.</p>
+<ul>
+<li>我们使用变量名<code>x</code>, 也就是通过它找到对应的那个<strong>变量</strong>或者说<strong>左值</strong>, 为了方便我们就将其称为<strong>变量<code>x</code></strong>,  它就是个地址, 我们需要使用它的内容, 也就是它对应的右值value.</li>
+</ul>
+</li>
+<li>
+<p><strong>函数</strong>也可以看作变量:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> ARRAYSIZE 1000</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">f</span><span class="params">()</span> </span><br><span class="line">&#123;</span><br><span class="line">	...</span><br><span class="line">	<span class="type">int</span> x = ARRAYSIZE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>f</code>是一个变量名, 当然严谨地说, 它的name是它的函数signature: <code>void f()</code>. 和常规的“变量”一样, 我们定义一个函数时, 会创建这个函数名对应的实体( 为了方便, 该实体就称为函数<code>f</code> ), 并为其分配内存.</p>
+</li>
+<li>
+<p>在将类型作为first-class member的语言中, <strong>类型</strong>也可以看做变量, 例如在Zig中:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const std = @import(&quot;std&quot;);</span><br><span class="line">const assert = std.debug.assert;</span><br><span class="line"></span><br><span class="line">test &quot;types are values&quot; &#123;</span><br><span class="line">    const T1 = u8;</span><br><span class="line">    const T2 = bool;</span><br><span class="line">    assert(T1 != T2);</span><br><span class="line"></span><br><span class="line">    const x: T2 = true;</span><br><span class="line">    assert(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const std = @import(&quot;std&quot;);</span><br><span class="line"></span><br><span class="line">fn List(comptime T: type) type &#123; //类型可以作为参数和返回值传递</span><br><span class="line">    return struct &#123;</span><br><span class="line">        items: []T,</span><br><span class="line">        len: usize,</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">pub fn main() void &#123;</span><br><span class="line">    var buffer: [10]i32 = undefined;</span><br><span class="line">    var list = List(i32)&#123;</span><br><span class="line">        .items = &amp;buffer,</span><br><span class="line">        .len = 0,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    std.debug.print(&quot;&#123;d&#125;\n&quot;, .&#123;list.items.len&#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到, 所有的基本数据类型, 和用户自定义<strong>类型</strong>, 都是**<code>type</code>类型的变量**, 类型甚至可以作为参数和返回值传递. 这就把类型和变量的地位等同起来了.</p>
+</li>
+</ul>
+<h1 id="Assignment-and-getValue"><a class="header-anchor" href="#Assignment-and-getValue"></a>Assignment and getValue</h1>
+<p>变量其实是一个指针,  是一个lvalue.</p>
+<ul>
+<li>
+<p>变量的<strong>赋值</strong>, 也就是把一个rvalue copy到变量( 即lvalue )指向的空间, 即将原有的rvalue擦除，而以一个新值来替代.</p>
+</li>
+<li>
+<p>变量的<strong>取值</strong>, 就是把变量( 即lvalue)所指向的空间的rvalue取出来.</p>
+<ul>
+<li>注意, 只有lvalue可以取值, rvalue本身就是值.</li>
+<li>我们所谓的“使用变量”, 其实是<strong>使用变量指向的值</strong>, 也就是lvalue对应的rvalue. 所以“使用变量”要先对变量取值</li>
+<li><strong>对于Java这样的所有变量皆引用的语言, 其“使用变量”实际上是先得到rvalue( 一个指针/引用 ), 然后使用rvalue所指向的值(对象).</strong></li>
+</ul>
+</li>
+<li>
+<p>例子:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int x = 3; //变量赋值</span><br><span class="line"></span><br><span class="line">sum(x, 5); //使用变量</span><br></pre></td></tr></table></figure>
+<ol>
+<li>把rvalue 3 copy到了变量<code>x</code>指向的空间. 以后访问lvalue <code>x</code>, 得到的值就是3</li>
+<li>使用了变量<code>x</code>. 也就是对<code>x</code>先进行取值, 得到rvalue 3, 作为sum的第一个argument</li>
+</ol>
+</li>
+</ul>
+<h1 id="Declaration-Definition-and-Initialization"><a class="header-anchor" href="#Declaration-Definition-and-Initialization"></a>Declaration, Definition and Initialization</h1>
+<p>声明和定义都是对变量而言. 表达式是个rvalue, 不存在“声明”, 都是“定义”.</p>
+<p>对于C/CPP而言, Declaration, Definition and Initialization有明确区分, 对于其他语言就不一定了.</p>
+<ul>
+<li>
+<p>Declaration: 使一个variable name为程序所知, 并且规定其<u>type</u></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="type">int</span> x; <span class="comment">// 在c/cpp中, 需要加extern来做到只声明不定义</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Definition: 真的创建该variable, 即为该变量申请一块内存.</p>
+<ul>
+<li>
+<p>定义时, <strong>变量会被赋值</strong>, <strong>此时的赋值称为“初始化”.</strong></p>
+<ul>
+<li>
+<p>可以手动赋值, 也就是“显示初始化”:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">1</span>; <span class="comment">// 声明并定义, 并显式初始化</span></span><br><span class="line"><span class="keyword">extern</span> <span class="type">int</span> k = <span class="number">1</span><span class="comment">//声明并定义k.  任何包含了显式初始化的声明即成为定义，这样写语法上没错，但会抵消extern的作用</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>也可以不手动赋值,则会“隐式初始化”, 其赋的值要取决于具体情况:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x; <span class="comment">// 声明并定义, 不显式初始化</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>很多时候我们把声明和定义写在一起. 为了方便, <strong>声明+定义统称为定义</strong>:</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>Initialization: 定义时, <strong>变量会被赋值</strong>, <strong>此时的赋值称为“初始化”</strong></p>
+<ul>
+<li>
+<p>可以手动赋值, 也就是“显示初始化”:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">1</span>; <span class="comment">// 声明并定义, 并显式初始化</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>也可以不手动赋值,则会“隐式初始化”, 其赋的值要取决于具体情况:</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x; <span class="comment">// 声明并定义, 不显式初始化</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>函数也是变量</strong>, 因此对函数的声明就是写下<strong>函数签名</strong>( 别忘了Function Signature就是函数的variable name ), 使该函数名为程序所知. 对函数的定义也就是创建该函数实体, 为函数分配内存, 并赋值, <strong>赋的“值”( rvalue )就是其函数实现</strong>.在C/CPP中, 我们经常把变量/函数的声明和定义分开</p>
+</li>
+</ul>
+<h1 id="Parameter-and-Argument"><a class="header-anchor" href="#Parameter-and-Argument"></a>Parameter and Argument</h1>
+<ul>
+<li>
+<p>parameter: 形式参数, 函数本身的参数</p>
+</li>
+<li>
+<p>argument: 实际参数, 函数调用方传入的参数</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">b</span>):</span><br><span class="line">	<span class="keyword">return</span> b*<span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>( f(a) )</span><br></pre></td></tr></table></figure>
+<p>这里的<code>a</code>是argument, <code>b</code>是parameter</p>
+</li>
+<li>
+<p>函数的参数是可以是lvalue(变量), 也可以是rvalue( 表达式, 常量… ).</p>
+</li>
+</ul>
+<h1 id="Parameter-Passing"><a class="header-anchor" href="#Parameter-Passing"></a>Parameter Passing</h1>
+<h2 id="Call-by-Value"><a class="header-anchor" href="#Call-by-Value"></a>Call by Value</h2>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">( <span class="type">int</span> b )</span></span>&#123;</span><br><span class="line"> b = b * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>变量名<code>a</code>对应变量<code>a</code> ( lvalue <code>a</code>), 它其实是个形如<code>0X432...</code>的地址, 在<code>0X432...</code>处存储了值<code>3</code>. lvalue <code>b</code>也同理, 是个形如<code>0X872...</code></p>
+<p>按值传递就是取出lvalue <code>a</code>  的rvalue, 然后赋值到lvalue <code>b</code>. 即取出<code>0X432...</code>的值, 然后赋值到<code>0X872...</code></p>
+<ul>
+<li>
+<p>Call by Value: 得到argument的<strong>rvalue</strong>, 然后赋值给parameter. 函数内部操作的是parameter, 其值的改变不会影响原来的argument.</p>
+<ul>
+<li>如果argument是个variable, 即一个lvalue  就会对其取值,得到rvalue</li>
+<li>如果argument是个expression, 则会对其求值, 得到结果(rvalue)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Call-by-Reference"><a class="header-anchor" href="#Call-by-Reference"></a>Call by Reference</h2>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">f</span><span class="params">( <span class="type">int</span>&amp; b )</span></span>&#123;</span><br><span class="line"> b = b * <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>按引用传递就是直接把<code>a</code>的lvalue copy给<code>b</code> , 现在<code>b</code>的lvalue就是<code>0X432...</code> ( <code>b</code>原来的的lvalue就没有了 ). 对<code>b</code>的操作其实就是对<code>a</code>的操作.</p>
+<ul>
+<li>
+<p>Call by Reference: 直接将argument的lvalue copy给parameter, 不会取argument的rvalue</p>
+</li>
+<li>
+<p>在Java中所有变量都是引用( 参见前文, 这话的实际意思是, 变量指向的rvalue是一个指针 ), 所有参数都是<strong>按值传递</strong>. 由于rvalue是一个指针, 按值传递又会赋值rvalue, 最终效果就是把指针赋值给了parameter. 对parameter的更改也就会导致对同一对象的更改.</p>
+</li>
+</ul>
+<h1 id="Static-Scope-and-Block-Structure"><a class="header-anchor" href="#Static-Scope-and-Block-Structure"></a>Static Scope and Block Structure</h1>
+<p>绝大部分语言的Scope是<strong>静态的</strong>, 语言被组织为一个个的block:</p>
+<ul>
+<li>
+<p>C使用花括号:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Awk使用<code>begin</code>, <code>end</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">begin</span><br><span class="line">		...</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Procedures-Functions-and-Methods"><a class="header-anchor" href="#Procedures-Functions-and-Methods"></a>Procedures, Functions and Methods</h1>
+<p>我们经常把Procedure, Function和Method混用, 严格来讲它们是不同的:</p>
+<ul>
+<li>Function: 返回某个类型的值的函数</li>
+<li>Procedure: 没有返回值的函数</li>
+<li>Method: Function, 但是是某个对象的成员</li>
+</ul>
+<p>C中只有Function, 但是通过<code>void f()</code>, Function也就可以看做Procedure.</p>
+<p>Java作为纯OO语言只有Method.</p>
+<h1 id="Explicit-Access-Control"><a class="header-anchor" href="#Explicit-Access-Control"></a>Explicit Access Control</h1>
+<p>OO语言会有:</p>
+<ul>
+<li>public</li>
+<li>protected</li>
+<li>private</li>
+</ul>
+<h1 id="Aliasing"><a class="header-anchor" href="#Aliasing"></a>Aliasing</h1>
+<p>对于按引用传递的语言, 或者Java这样的类似按引用传递( 按值传递 + 变量即引用 )的语言, 由于直接传递了指向对象的指针, 因此可能会有两个变量指向同一个对象:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String[] cars = &#123;<span class="string">&quot;Volvo&quot;</span>, <span class="string">&quot;BMW&quot;</span>, <span class="string">&quot;Ford&quot;</span>, <span class="string">&quot;Mazda&quot;</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">f</span><span class="params">( String[] a, String[] b )</span>&#123;</span><br><span class="line">	a[<span class="number">0</span>] = <span class="string">&quot;Tesla&quot;</span></span><br><span class="line">	b[<span class="number">0</span>] = a[<span class="number">0</span>] + <span class="string">&quot;Haha&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这种情况称为Aliasing, 分析Aliasing对于编译器的Optimization非常重要:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>对于如上语句, 只有当编译器确定<code>x</code>所引用的对象没有Aliasing时, <code>x</code>才能直接被替换为<code>2</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Compilers/" rel="tag"># Compilers</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Computer-History/" rel="prev" title="Computer History">
+                  <i class="fa fa-chevron-left"></i> Computer History
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Lexical-Analysis/" rel="next" title="Lexical Analysis">
+                  Lexical Analysis <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

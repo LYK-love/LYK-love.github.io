@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="My understanding of OS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS Basic">
+<meta property="og:url" content="http://lyk-love.cn/2021/10/06/OS-Basic/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="My understanding of OS">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Computer%20Hardware%20overview.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Top-view%20Example%201.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Top-view%20Example%202.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Top-view%20Example%203.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Example%20bus%20structure%20that%20connects%20the%20CPU%20and%20main%20memory.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Accessing%20Main%20Memory%20step%201.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Accessing%20Main%20Memory%20step%202.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Accessing%20Main%20Memory%20step%203.png">
+<meta property="article:published_time" content="2021-10-05T20:28:21.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.935Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Computer%20Hardware%20overview.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/10/06/OS-Basic/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/10/06/OS-Basic/","path":"2021/10/06/OS-Basic/","title":"OS Basic"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OS Basic | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Main-Components"><span class="nav-text">Main Components</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Hardware"><span class="nav-text">Hardware</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Software"><span class="nav-text">Software</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#kernel-mode"><span class="nav-text">kernel mode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#user-mode"><span class="nav-text">user mode</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WHAT-IS-OPERATING-SYSTEM"><span class="nav-text">WHAT IS OPERATING SYSTEM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-OS-as-an-Extended-Machine"><span class="nav-text">The OS as an Extended Machine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-OS-as-a-Resource-Manager"><span class="nav-text">The OS as a Resource Manager</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#COMPUTER-HARDWARE"><span class="nav-text">COMPUTER HARDWARE</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Top-view-Example"><span class="nav-text">Top-view Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Buses"><span class="nav-text">Buses</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU"><span class="nav-text">CPU</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Components"><span class="nav-text">Components</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Features"><span class="nav-text">Features</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU-Operations"><span class="nav-text">CPU Operations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU-Instructions"><span class="nav-text">CPU Instructions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multithread-and-Multicore-Chips"><span class="nav-text">Multithread and Multicore Chips</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Instruction-Set"><span class="nav-text">Instruction Set</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Main-Memeory"><span class="nav-text">Main Memeory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Accessing-Main-Memory"><span class="nav-text">Accessing Main Memory</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disk"><span class="nav-text">Disk</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-Devices"><span class="nav-text">I&#x2F;O Devices</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#I-O"><span class="nav-text">I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Booting-the-Computer"><span class="nav-text">Booting the Computer</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-OS-Zoo"><span class="nav-text">The OS Zoo</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mainframe-Operating-Systems"><span class="nav-text">Mainframe Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Server-Operating-Systems"><span class="nav-text">Server Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiprocessor-Operating-Systems"><span class="nav-text">Multiprocessor Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Personal-Computer-Operating-Systems"><span class="nav-text">Personal Computer Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Handheld-Computer-Operating-Systems"><span class="nav-text">Handheld Computer Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Embedded-Operating-Systems"><span class="nav-text">Embedded Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sensor-Node-Operating-Systems"><span class="nav-text">Sensor-Node Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Real-Time-Operating-Systems"><span class="nav-text">Real-Time Operating Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Smart-Card-Operating-Systems"><span class="nav-text">Smart Card Operating Systems</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OS-Concepts"><span class="nav-text">OS Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Processes"><span class="nav-text">Processes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Address-Space"><span class="nav-text">Address Space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#File"><span class="nav-text">File</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Protection"><span class="nav-text">Protection</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ontogeny-Recapitulates-Phylogeny"><span class="nav-text">Ontogeny Recapitulates Phylogeny</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#System-Calls"><span class="nav-text">System Calls</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Calls-Library-Functions"><span class="nav-text">System Calls &amp; Library Functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Calls-for-Process-Management"><span class="nav-text">System Calls for Process Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#System-Calls-for-Directory-Management"><span class="nav-text">System Calls for Directory Management</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Miscellaneous-System-Calls"><span class="nav-text">Miscellaneous System Calls</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Windows-Win32-API"><span class="nav-text">The Windows Win32 API</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OS-Structure"><span class="nav-text">OS Structure</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Monolithic-Systems"><span class="nav-text">Monolithic Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Layered-Systems"><span class="nav-text">Layered Systems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Microkernels"><span class="nav-text">Microkernels</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Client-Server-Model"><span class="nav-text">Client-Server Model</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-Machines"><span class="nav-text">Virtual Machines</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VM-370"><span class="nav-text">VM&#x2F;370</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-Machine-Rediscovered"><span class="nav-text">Virtual Machine Rediscovered</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exokernels"><span class="nav-text">Exokernels</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Summary"><span class="nav-text">Summary</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/10/06/OS-Basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OS Basic | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS Basic
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-10-05 20:28:21" itemprop="dateCreated datePublished" datetime="2021-10-05T20:28:21Z">2021-10-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>My understanding of OS</p>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<ul>
+<li>appearances can be deceiving.
+<ul>
+<li>The program that users interact with, usually called the <strong>shell</strong> when it is text based and the GUI when it uses icons, is actually not part of the operating system, although it uses the operating system to get its work done</li>
+</ul>
+</li>
+</ul>
+<h2 id="Main-Components"><a class="header-anchor" href="#Main-Components"></a>Main Components</h2>
+<h3 id="Hardware"><a class="header-anchor" href="#Hardware"></a>Hardware</h3>
+<p>The hardware consists of chips, boards, disks, a keyboard, a monitor, and similar physical objects.</p>
+<h3 id="Software"><a class="header-anchor" href="#Software"></a>Software</h3>
+<p>On top of the hardware is the software. Most computers have two modes of operation: <strong>kernel mode</strong> and <strong>user mode</strong>.</p>
+<ul>
+<li>OS runs on the bare hardware and provides the base for all the other software</li>
+</ul>
+<h4 id="kernel-mode"><a class="header-anchor" href="#kernel-mode"></a><strong>kernel mode</strong></h4>
+<ul>
+<li>the most fundamental piece of software, runs in <strong>kernel mode</strong> (also called supervisor mode). In this mode it has <u>complete access</u> to all the hardware and can execute any instruction the machine is capable of executing.</li>
+</ul>
+<h4 id="user-mode"><a class="header-anchor" href="#user-mode"></a>user mode</h4>
+<ul>
+<li>
+<p>The rest of the software runs in <strong>user mode</strong>, in which <u>only a subset of the machine instructions is available</u>.</p>
+<ul>
+<li>In particular, those instructions that affect control of the machine or do I/O )Input/Output&quot; are forbidden to user-mode programs</li>
+</ul>
+</li>
+<li>
+<p>The user interface program, <strong>shell</strong> or <strong>GUI</strong>, is the <u>lowest level of user-mode software</u>, and allows the user to start other programs</p>
+<p>(shell的概念详见<em>Shell Tools</em>)</p>
+</li>
+<li>
+<p>user mode 和 kernel mode 的区别并不严格</p>
+<ul>
+<li>
+<p>in embedded systems (which<br>
+may not have kernel mode) or interpreted systems (such as Java-based systems that use interpretation, not hardware, to separate the components).</p>
+</li>
+<li>
+<p>Also, in many systems there are programs that run in user mode but help the operating system or perform privileged functions</p>
+</li>
+<li>
+<p>总之， Everything running in <strong>kernel mode</strong> is clearly part of the <strong>operating system</strong>, but some programs running outside it are arguably also part of it, or at least closely associated with it</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="WHAT-IS-OPERATING-SYSTEM"><a class="header-anchor" href="#WHAT-IS-OPERATING-SYSTEM"></a>WHAT IS OPERATING SYSTEM</h1>
+<h2 id="The-OS-as-an-Extended-Machine"><a class="header-anchor" href="#The-OS-as-an-Extended-Machine"></a>The OS as an Extended Machine</h2>
+<ul>
+<li><strong>top-down view: operating system as primarily providing abstractions to application programs</strong>
+<ul>
+<li>The architecture (instruction set, memory organization, I/O, and bus structure) of most computers at the machine-language level is primitive and awkward to program, especially for input/output.即： 计算机的底层是丑陋和复杂的， 需要<strong>抽象</strong>出中间层才能方便使用</li>
+</ul>
+</li>
+<li><strong>This abstraction is the key to managing all this complexity（圣经！）</strong>. Good abstractions turn a nearly impossible task into two manageable ones. The first is defining and implementing the abstractions. The second is using these abstractions to solve the problem at hand</li>
+<li><strong>The job of the operating system is to create good abstractions and then implement and manage the abstract objects thus created</strong></li>
+<li>OS的真正用户是APP(和APP开发者)， 而end users使用的是UI（shell or GUI）提供的抽象。
+<ul>
+<li>While the abstractions at the user interface may be <strong>similar</strong> to the ones provided by the operating system, this is not always the case.
+<ul>
+<li>如Windows Desktop和command prompt采用了Windows提供的相同的system abstractions。 Linux的Gnome、KDE和X Window System看起来差别很大，实际上也采用了相同的system abstractions</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="The-OS-as-a-Resource-Manager"><a class="header-anchor" href="#The-OS-as-a-Resource-Manager"></a>The OS as a Resource Manager</h2>
+<ul>
+<li>
+<p><strong>bottom-up view: the operating system is there to manage all the pieces of a complex system</strong></p>
+</li>
+<li>
+<p>Resource management includes <strong>multiplexing</strong> (sharing) resources in two different ways: in time and in space</p>
+</li>
+</ul>
+<h1 id="COMPUTER-HARDWARE"><a class="header-anchor" href="#COMPUTER-HARDWARE"></a>COMPUTER HARDWARE</h1>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Computer%20Hardware%20overview.png" alt="Computer Hardware overview"></p>
+<p>注意，这里只介绍现代计算机的基本结构，没有包括GPU和VRAM等组件， 也没有包括对各种存储介质的介绍( RAM, ROM, Disk)。</p>
+<p>GPU的内容(不包括VRAM)详见拙著<em>GPU</em></p>
+<p>存储介质(包括Cache)和VRAM的内容详见拙著<em>Computer Storage</em></p>
+<h2 id="Top-view-Example"><a class="header-anchor" href="#Top-view-Example"></a>Top-view Example</h2>
+<p>假设计算机中存在<code>hello</code>程序:<code>echoh hello,world</code></p>
+<p>我们以在shell上输入<code>./hello</code>来执行<code>hello</code>程序为例， 在硬件视角下，程序执行步骤如下:</p>
+<ol>
+<li>
+<p>shell程序持续运行，等待用户输入，用户输入通过I/O bus传输到I/O bridge, 再传输到<em>system bus</em>, 经过<em>bus interface</em>传输到<em>reister file</em>. 然后沿上图的方向传输到内存</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Top-view%20Example%201.png" alt="Top-view Example 1"></p>
+</li>
+<li>
+<p>当用户输入Enter键，shell知道我们停止了输入，就把<code>hello</code>程序从磁盘中读到内存:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Top-view%20Example%202.png" alt="Top-view Example 2"></p>
+</li>
+<li>
+<p>最后，内存中的数据被读到CPU， CPU执行该程序, 将结果输出到显示设备</p>
+<ul>
+<li>这一步(数据从内存传输到CPU)详见下文<em>Accessing Main Memory</em></li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Top-view%20Example%203.png" alt="Top-view Example 3"></p>
+</li>
+</ol>
+<p>我们也可以看到，硬盘到主存的data-movement是很频繁也很耗时间的，因此诞生出了Cache，这是CPU内的存储结构，采用SRAM。</p>
+<h2 id="Buses"><a class="header-anchor" href="#Buses"></a>Buses</h2>
+<ul>
+<li>
+<p><em>bus</em>: 总线。 就是一组传输地址、数据和控制信号的电线。 总线传输数据的基本单位是<em>word</em>， 在不同的硬件实现上，<em>word</em>的大小也不同，通常是4或8 Byte</p>
+<ul>
+<li>基于不同的总线设计， 数据和地址可以共享总线，也可以使用不同总线。 不同设备也可以共享总线。 总线传递控制信号，来对事务进行同步。</li>
+</ul>
+</li>
+<li>
+<p>总线的类型：</p>
+<ul>
+<li><em>system bus</em></li>
+<li><em>memory bus</em></li>
+<li><em>I/O bus</em>： 被多个I/O设备共享</li>
+</ul>
+</li>
+<li>
+<p>original IBM PC最早使用了单总线架构,  为了更快的IO速度和CPU-to-memory traffic，额外的总线被引入。 形成了现代的x86系统</p>
+</li>
+<li>
+<p>This system has many buses (e.g., cache, memory, PCIe, PCI, USB, SATA, and DMI), each with a different transfer rate and function. The operating system must be aware of all of them for configuration and management.</p>
+</li>
+<li>
+<p>The main bus is the <strong>PCIe</strong>  bus.</p>
+</li>
+<li>
+<p>the CPU talks to memory over a fast <strong>DDR3</strong> bus, to an external graphics device over PCIe and to all other devices via a <strong>hub</strong> over a <strong>DMI</strong> (Direct Media Interface) bus. The hub in turn connects all the other devices, using the Universal Serial Bus to talk to  USB devices, the SATA bus to interact with hard disks and DVD drives, and PCIe to transfer Ethernet frames.</p>
+<ul>
+<li>PCI接口的设备另外放在一个hub processor 内</li>
+</ul>
+</li>
+<li>
+<p>Moreover, each of the cores has a dedicated cache and a much larger cache that is shared between them. Each of these caches introduces another bus.<br>
+每个core有一个专用cache，所有core共享一个更大的cache，每个cache拥有自己的总线</p>
+</li>
+<li>
+<p>Intel 和 MS设计了<strong>plug and play</strong>系统，可以自动收集IO设备信息，集中分配中断优先级和I/O（设备的）寄存器地址</p>
+<ul>
+<li>在此之前，这些都要手动分配</li>
+</ul>
+</li>
+</ul>
+<h2 id="CPU"><a class="header-anchor" href="#CPU"></a>CPU</h2>
+<h3 id="Components"><a class="header-anchor" href="#Components"></a>Components</h3>
+<p>CPU是计算机指令的执行单元。 由四部分组成:</p>
+<ol>
+<li><em>program counter</em> (PC): 一个 <em>word-size storage (or register)</em>，也称为<strong>栈指针</strong>，永远指向当前正在执行的指令的地址</li>
+<li><em>register file</em>: 一个small storage device, 由一组word-size registers组成，每个寄存器都有其独特的名字</li>
+<li><em>arithmetic/logic unit</em> (ALU)： 用于计算</li>
+<li><em>bus interface</em>：一组电路，用于CPU和主存之间的数据传输</li>
+</ol>
+<h3 id="Features"><a class="header-anchor" href="#Features"></a>Features</h3>
+<ul>
+<li>每个CPU都有自己特殊的指令集。ARM处理器不能执行x86程序</li>
+<li>由于对内存的存取所花的时间比执行一条指令还要长，CPU内部会有寄存器。</li>
+<li>许多寄存器对用户<strong>可见</strong>
+<ul>
+<li>PC</li>
+<li>栈指针，指向内存中的栈顶。栈含有每个程序的帧。栈帧含有： 输入的参数、局部变量、没有保存进寄存器的临时变量</li>
+<li>PSW(Program Status Word): 包含状态码位。 用户程序通常能读整个PSW，但仅仅只能写其中的一部分</li>
+</ul>
+</li>
+<li>为了提供性能，CPU通常有流水线和超标量。
+<ul>
+<li>流水线会把底层的复杂度暴露给上层，令人头疼</li>
+<li>超标量： 多个指令同时被取指和译指，然后放到一个Holding buffer里，每当一个执行单元空闲时，就去Holding buffer中找它能处理的指令。该设计的一个后果是：指令不一定按顺序执行。而执行结果能不能和顺序实现的CPU相同，取决于硬件。</li>
+</ul>
+</li>
+<li>除了嵌入式系统中的少数，CPU都有 user mode和kernel mode. 当运行在kernel mode， CPU可以执行指令集提供的每一条指令和硬件提供的所有特性。 在
+<ul>
+<li>桌面机和服务器上，OS都运行在kernel mode.</li>
+<li>在大部分嵌入式系统中，OS一部分运行在kernel mode, 剩余部分运行在 user mode</li>
+<li>用户程序永远运行在 user mode，只能执行一小部分指令和一小部分硬件特性。  “设置PSW的mode bit以进入 kernel mode”也是被禁止的</li>
+</ul>
+</li>
+<li>为了获得OS的服务，用户程序会发起system call,即陷入kernel并启动OS
+<ul>
+<li>the  TRAP  instruction switched from user mode to kernel mode and starts the OS.执行结束后，控制会返还到TRAP的下一条指令</li>
+<li>计算机的trap不仅有用于执行system call的指令，还有别的</li>
+</ul>
+</li>
+</ul>
+<h3 id="CPU-Operations"><a class="header-anchor" href="#CPU-Operations"></a>CPU Operations</h3>
+<p>basic cycle of CPU: 取指、译指、执行</p>
+<h3 id="CPU-Instructions"><a class="header-anchor" href="#CPU-Instructions"></a>CPU Instructions</h3>
+<p>抽象地说， CPU指令分为四种：</p>
+<ul>
+<li><em>Load:</em> 从主存中copy一个byte或word到一个寄存器里， 这会覆盖寄存器里该位置上之前的值</li>
+<li><em>Store:</em> 从寄存器里copy一个byte或word到主存的某个位置，这会覆盖主存里该位置上之前的值</li>
+<li><em>Operate:</em> 将两个寄存器里的值copy到ALO， 后者进行算数计算，并将结果存入一个寄存器，这会覆盖该寄存器里该位置上之前的值</li>
+<li><em>Jump:</em> 该指令含有一个word， 记录了要跳转到的目标指令的位置。 CPU会copy该字段到PC，覆盖PC之前的值</li>
+</ul>
+<h3 id="Multithread-and-Multicore-Chips"><a class="header-anchor" href="#Multithread-and-Multicore-Chips"></a>Multithread and Multicore Chips</h3>
+<ul>
+<li>multithreading: 允许CPU拥有两个线程并且在<strong>纳秒</strong>级的时间里切换。 <strong>多线程并不是并行</strong>，因为同一时间还是只有一个程序在CPU上运行
+<ul>
+<li>如果一个程序要读取内存（花的时间比较长），那么多线程的CPU可以切换到另一个程序</li>
+<li>多线程带来的问题是：每一个线程都会被OS视为独立的CPU. 考虑一个双CPU的系统，每个CPU有两个线程。当有两个线程的任务时，OS可能会把它们全部交给同一个CPU上的两个线程，而这是很浪费的</li>
+</ul>
+</li>
+<li>许多CPU芯片上还有多个(几十个)processors or <strong>cores</strong>  使用多核芯片需要一个多处理器的OS</li>
+<li>GPU拥有上千个core, 适用于许多并行执行的小规模计算， 在顺序计算上并不突出。</li>
+</ul>
+<h3 id="Instruction-Set"><a class="header-anchor" href="#Instruction-Set"></a>Instruction Set</h3>
+<p>CPU指令集可以分为CISC和RISC两类.</p>
+<p>x86和arm的那些历史就不讲了. 这里理清一些概念.</p>
+<ul>
+<li>x86和x86_64: x86是32位的, x86_64是x86的64位版本</li>
+<li>arm, arm64和aarh64: 顾名思义, arm是32位的, arm64是arm的64位版本. 并且arm64和aarh64合并了, 所以arm64和aarh64是一个东西.
+<ul>
+<li>M1的指令集就是arm64. 低功耗的移动设备和嵌入式设备基本也都是arm架构.</li>
+</ul>
+</li>
+<li>因为桌面级CPU基本都是64位的, 要么是x86_64, 要么是arm64, 所以我们常说的x86, arm其实指代的是它们的64位版本.</li>
+<li>arm和x86: 简单来说, arm属于RISC, 功耗较低. x86属于CISC, 性能较高.</li>
+</ul>
+<h2 id="Main-Memeory"><a class="header-anchor" href="#Main-Memeory"></a>Main Memeory</h2>
+<ul>
+<li>
+<p><em>main memory</em>（OR <em>system memory</em> ）：主存。 在冯诺依曼架构中，处理器( 包括ALU和Controller )与存储器进行数据交互。</p>
+<ul>
+<li>我们通常就用RAM来指主存。 更精确地说，主存的材质是DRAM</li>
+<li>此外还存在显存(VRAM)， 宽泛地讲， 和CPU交互的是主存，和GPU交互的就是显存</li>
+<li><strong>在通常的语境下，我们说的RAM都是主存，也就是和CPU交互的DRAM</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="Accessing-Main-Memory"><a class="header-anchor" href="#Accessing-Main-Memory"></a>Accessing Main Memory</h3>
+<p>数据通过bus( 总线， 见下文 )在CPU和主存间传输。 每一次CPU和主存间的数据传输就是一次<em>bus transaction</em></p>
+<p>整个过程的I/O类型是DMA(见下文<em>I/O Devices -&gt; I/O -&gt; DMA</em>)</p>
+<ul>
+<li>A <em>read transaction</em> transfers data from the main memory to the CPU.</li>
+<li>A <em>write transaction</em> transfers data from the CPU to the main memory.</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Example%20bus%20structure%20that%20connects%20the%20CPU%20and%20main%20memory.png" alt="Example bus structure that connects the CPU and main memory"></p>
+<p>上图展示了CPU和主存进行数据传输的基本模型。 包含了三个组件：CPU、 I/O bridge（ 是一个芯片组， 包含了<em>memory controller</em>）、主存。 CPU和 I/O bridge通过<em>system bus</em>连接，  I/O bridge和主存通过<em>memory bus</em>连接。 当然如同之前介绍的,  I/O bridge还会把<em>system bus</em>和<em>memory bus</em>连接到<em>I/O bus</em>，它由I/O设备共享</p>
+<p>考虑如下指令:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">movq A,%rax # 将地址A指向的内容赋值给rax</span><br></pre></td></tr></table></figure>
+<p>CPU的<em>bus interface</em>会开始一个<em>write transaction</em>, 步骤为:</p>
+<ol>
+<li>
+<p>CPU将地址A放到系统总线上，  I/O bridge将该signal传递给<em>memory bus</em></p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Accessing%20Main%20Memory%20step%201.png" alt="Accessing Main Memory step 1"></p>
+</li>
+<li>
+<p>主存感知到<em>memory bus</em>上的信号(地址A)， 从DRAM中读取A处的数据x，写进<em>memory bus</em>，  I/O bridge会将其传递给<em>system bus</em></p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Accessing%20Main%20Memory%20step%202.png" alt="Accessing Main Memory step 2"></p>
+</li>
+<li>
+<p>主存感知到<em>memory bus</em>上的信号( 数据x )，从<em>memory bus</em>读数据，然后copy到%rax</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Accessing%20Main%20Memory%20step%203.png" alt="Accessing Main Memory step 3"></p>
+</li>
+</ol>
+<h2 id="Disk"><a class="header-anchor" href="#Disk"></a>Disk</h2>
+<ul>
+<li>Disk：称为硬盘，是非易失的外部存储设备。</li>
+</ul>
+<h2 id="I-O-Devices"><a class="header-anchor" href="#I-O-Devices"></a>I/O Devices</h2>
+<p>I/O设备的介绍详见拙著<em>Computer I/O Device</em></p>
+<h3 id="I-O"><a class="header-anchor" href="#I-O"></a>I/O</h3>
+<ul>
+<li>
+<p>IO有三种类型：</p>
+<ol>
+<li><strong>busy waiting</strong>：用户程序发起system call,  kernel将其转换为procedure call交给相应的driver. Driver启动IO设备并且对设备轮询。IO结束后，driver将数据（如果有的话）返回，OS将控制返还给调用者
+<ul>
+<li>占用了CPU的全部时间</li>
+</ul>
+</li>
+<li><strong>interrupt</strong>：driver开启设备，要求它在完成时发出中断. At that point the driver returns. The operating system then blocks the caller if need be and looks for other work to do.</li>
+<li><strong>DMA</strong>(Direct Memory Access): DMA芯片可以在避免CPU持续干预的情况下控制内存和一些controller之间的数据传输
+<ul>
+<li>CPU启动DMA芯片，告诉它how many bytes to transfer, the device and memory addresses involved, and the direction, and lets it go. 当DMA芯片工作结束时，会发出中断（和方法二一样）</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>中断的过程：</p>
+<ol>
+<li>driver通过向contoller的device  registers写入来告诉controller要做什么。controller然后便启动device</li>
+<li>When the controller has finished reading or writing the number of bytes it has been told to transfer, it signals the interrupt controller chip <strong>using certain bus lines</strong></li>
+<li>如果中断控制器准备好接受新中断（ 如果它在处理一个更高优先级的中断，就不会ready ）,it asserts a pin on the CPU chip telling it</li>
+<li>中断控制器把<strong>device number</strong>放在总线上，CPU就可以read并且知道是哪个设备刚刚finished
+<ul>
+<li>一旦CPU决定接受中断, PC和PSW会被压栈，CPU会切换到内核态</li>
+<li>The device number may be used as an index into part of memory to find the address of the interrupt handler for this device. This part of memory is called the <strong>interrupt vector</strong></li>
+<li>一旦 interrupt handler启动，它就将PC和PSW出栈并保存，并向设备询问。当所有的handeller结束后，就退回到终端前执行的程序</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>中断可能会在其它interrupt handler运行时发生。 因此CPU可以disable interrupts and then reenable them later。当CPU disable interrupts时，设备依然持续发出中断信号，但CPU不会接受。</p>
+</li>
+<li>
+<p>由于多个中断可能同时发生，每个设备都有（通常是静态的）中断优先级来决定在disable结束后，哪个中断先被接受。</p>
+</li>
+</ul>
+<h2 id="Booting-the-Computer"><a class="header-anchor" href="#Booting-the-Computer"></a>Booting the Computer</h2>
+<p>计算机启动时，<strong>首先加载</strong>硬件驱动程序，硬件驱动程序有BIOS和UEFI， 这里简要介绍BIOS, 详见拙著<em>Linux Hardware Basic</em></p>
+<p>BIOS对应的磁盘分区格式是MBR</p>
+<ul>
+<li><strong>BIOS</strong>（Basic Input Output System）：PC主板上的一个程序
+<ul>
+<li>The BIOS contains low-level I/O software, including procedures to read the keyboard, write to the screen, and do disk I/O, among other things.</li>
+<li>Nowadays, it is held in a <strong>flash RAM</strong>, which is nonvolatile but which can be updated by the operating system when bugs are found in the BIOS.</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>计算机开机时，BIOS启动，它会检查RAM和键盘等基础外设的连接和响应情况
+<ul>
+<li>It starts out by scanning the PCIe and PCI buses to detect all the devices attached to them.</li>
+<li>如果设备和上次启动时不一样，新的设备将被配置</li>
+</ul>
+</li>
+<li>通过CMOS中的启动设备列表，BIOS找到启动设备，后者的第一个扇区将被读进内存并执行，检查该扇区是否是MBR扇区，是的话会加载其中的boot loader</li>
+<li>一段boot loader程序被从MBR扇区读入， boot loader是OS提供的，因此能够读取OS的核心文件</li>
+<li>boot loader读取核心文件</li>
+<li>核心文件会加载OS</li>
+<li>OS问询BIOS，得到配置信息，对每个设备，OS检查自己是否有对应驱动，若没有，则通知用户去下载。</li>
+<li>当所有设备驱动都齐备时，OS将它们加载进kernel. 并初始化分区表，启动各种程序…(如登陆程序和GUI)</li>
+</ol>
+<h1 id="The-OS-Zoo"><a class="header-anchor" href="#The-OS-Zoo"></a>The OS Zoo</h1>
+<h2 id="Mainframe-Operating-Systems"><a class="header-anchor" href="#Mainframe-Operating-Systems"></a>Mainframe Operating Systems</h2>
+<ul>
+<li>mainframes：体型巨大，高I\O capacity</li>
+<li>用途：
+<ul>
+<li>batch： 不需要用户在场交互，即可处理程序</li>
+<li>transaction processing,</li>
+<li>and timesharing</li>
+</ul>
+</li>
+<li><strong>Timesharing</strong> systems，允许许多远程用户同时登陆一台主机处理任务, such as querying a big database.</li>
+<li>正被UNIX的各种变体（如LINUX）取代</li>
+</ul>
+<h2 id="Server-Operating-Systems"><a class="header-anchor" href="#Server-Operating-Systems"></a>Server Operating Systems</h2>
+<ul>
+<li>
+<p>They serve multiple users at once over a network and allow the users to share hardware and software resources.</p>
+</li>
+<li>
+<p>Typical server operating systems are Solaris, FreeBSD, Linux and Windows Server 201x.</p>
+</li>
+</ul>
+<h2 id="Multiprocessor-Operating-Systems"><a class="header-anchor" href="#Multiprocessor-Operating-Systems"></a>Multiprocessor Operating Systems</h2>
+<ul>
+<li>把多个CPU连接称为一个系统。属于server OS的变体，增加了通信、连通性等功能</li>
+<li>Many popular operating systems, including Windows and Linux, run on multiprocessors</li>
+</ul>
+<h2 id="Personal-Computer-Operating-Systems"><a class="header-anchor" href="#Personal-Computer-Operating-Systems"></a>Personal Computer Operating Systems</h2>
+<ul>
+<li>无需多言</li>
+</ul>
+<h2 id="Handheld-Computer-Operating-Systems"><a class="header-anchor" href="#Handheld-Computer-Operating-Systems"></a>Handheld Computer Operating Systems</h2>
+<ul>
+<li>A handheld computer，又称<strong>PDA</strong>(Personal Digital Assistant),是一个可以边手持边操作的小型计算机</li>
+<li>Google’s Android and Apple’s iOS</li>
+</ul>
+<h2 id="Embedded-Operating-Systems"><a class="header-anchor" href="#Embedded-Operating-Systems"></a>Embedded Operating Systems</h2>
+<ul>
+<li>和Handheld Computer OS区别在于：嵌入式OS中无法自主安装软件 ---- 软件都写在ROM里，这也意味着不需要提供app之间的保护</li>
+</ul>
+<h2 id="Sensor-Node-Operating-Systems"><a class="header-anchor" href="#Sensor-Node-Operating-Systems"></a>Sensor-Node Operating Systems</h2>
+<ul>
+<li>
+<p>每个节点都是个小型计算机，通过一个基站进行无线通信</p>
+</li>
+<li>
+<p>Each sensor node is a real computer, with a CPU, RAM, ROM, and one or more environmental sensors. It runs a small, but real operating system, usually one that is event driven, responding to external events or making measurements periodically based on an internal clock.</p>
+</li>
+<li>
+<p>所有程序写在ROM里</p>
+</li>
+</ul>
+<h2 id="Real-Time-Operating-Systems"><a class="header-anchor" href="#Real-Time-Operating-Systems"></a>Real-Time Operating Systems</h2>
+<ul>
+<li>
+<p><strong>hard real-time system</strong>: actions absolutely <strong>must</strong> occur at a certain moment (or within a certain range)</p>
+<ul>
+<li>如工业、航空、军事</li>
+</ul>
+</li>
+<li>
+<p><strong>soft real-time system</strong>: ddl没那么死</p>
+</li>
+<li>
+<p>The categories of handhelds, embedded systems, and real-time systems overlap considerably</p>
+</li>
+</ul>
+<h2 id="Smart-Card-Operating-Systems"><a class="header-anchor" href="#Smart-Card-Operating-Systems"></a>Smart Card Operating Systems</h2>
+<ul>
+<li>没想到吧，smart card也有一个OS!
+<ul>
+<li>有小型CPU和ROM</li>
+</ul>
+</li>
+<li>Some smart cards are Java oriented</li>
+</ul>
+<h1 id="OS-Concepts"><a class="header-anchor" href="#OS-Concepts"></a>OS Concepts</h1>
+<h2 id="Processes"><a class="header-anchor" href="#Processes"></a>Processes</h2>
+<ul>
+<li>A process is fundamentally a container that holds all the information needed to run a program</li>
+<li><strong>address space</strong>: 进程可操作的一块内存。 包括了可执行的程序、程序的数据和栈指针</li>
+<li><strong>process table</strong>: an array of structures, one for each process currently in existence
+<ul>
+<li>大多数OS都有，储存了每个进程的所有信息,不只是地址空间</li>
+</ul>
+</li>
+<li><strong>core image</strong>:    address space of  a ( suspended ) process</li>
+<li><strong>ID</strong>:
+<ul>
+<li><strong>UID</strong>: each  person authorized to used a system is assigned a UID by the system administrator</li>
+<li>每个进程都拥有其创建者的UID， 子进程的UID就是父进程的UID</li>
+<li><strong>GID</strong>： users can be members of groups</li>
+</ul>
+</li>
+</ul>
+<h2 id="Address-Space"><a class="header-anchor" href="#Address-Space"></a>Address Space</h2>
+<ul>
+<li>每个进程都拥有其可操作的地址空间，而<strong>address space</strong>是和物理内存<strong>解耦</strong>（借助虚拟内存）的</li>
+<li>虽然避免内存中的进程互相干扰是硬件需要提供的机制，但该机制在软件层需要由OS控制</li>
+</ul>
+<h2 id="File"><a class="header-anchor" href="#File"></a>File</h2>
+<ul>
+<li>
+<p><strong>File &amp; Directory</strong>: OS把底层千奇百怪的存储设备抽象成文件系统，并使用<strong>directory</strong>概念来管理</p>
+<ul>
+<li>对文件和目录的许多操作都需要<code>syscall</code></li>
+</ul>
+</li>
+<li>
+<p><strong>pathname</strong>: 文件在 directory hierarchy 中有<strong>pathname</strong>, 后者最顶层是<strong>root directory</strong>, 由<code>/</code>表示。 从根目录开始的路径叫做<strong>绝对路径</strong>。 而每个进程又有自己当时的<strong>working directory</strong>， 其中的路径名不需要从根目录开始,例如对于绝对路径<code>C:\Docs\sub\javac</code>, 当前工作目录是<code>C:\Docs</code></p>
+<ul>
+<li>绝对路径：<code>C:\Docs\sub\javac</code></li>
+<li>相对路径：<code>sub\javac</code> ; 也可写成：<code>.\sub\javac</code></li>
+<li><code>.</code>表示当前目录，<code>..</code>表示上级目录</li>
+</ul>
+</li>
+<li>
+<p><strong>file descriptor</strong>在文件被读写前，它首先要被打开，此时需要检验许可，若许可成功，则系统返回一个<strong>file descriptor</strong>用于后续操作； 否则返回一个error code</p>
+</li>
+<li>
+<p><strong>mount</strong>: 将CD-ROM上的file system挂载到root file system.</p>
+<ul>
+<li>此时原有节点的数据不能被访问，因为这个节点已经被挂载了。由于挂在节点一般是空节点，这一般不会造成影响</li>
+</ul>
+</li>
+<li>
+<p><strong>special file</strong>：OS将I/O设备抽象为special file ，使得它可以用处理普通文件的<code>syscall</code>来处理这类设备，special file分两种，都挂载到<code>/dev</code>目录下</p>
+<ul>
+<li>block special file：用于由随机寻址块组成的设备 .i.e 磁盘</li>
+<li>character special file: 用于输入\输出字符流的设备 .i.e 键盘</li>
+</ul>
+</li>
+<li>
+<p><strong>pipe</strong>： 用于进程间通信的伪文件，通过它，UNIX进程间通信就像是普通的文件读写</p>
+<ul>
+<li>pipe的实现很像文件的实现，一个进程要想知道其输出文件是一个真实的文件还是一个pipe，只能使用<code>syscall</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Protection"><a class="header-anchor" href="#Protection"></a>Protection</h2>
+<ul>
+<li>
+<p>protection code: each file in UNIX are protected by assigning each one a 9-bit binary protection code, which consists of three 3-bit fields, one for the owner, one for the owner’s group, one for everyone else.</p>
+<ul>
+<li>例如<code>rwxr-x--x</code>意味着拥有者可读可写可执行， 群组可读可执行，其他人可执行</li>
+</ul>
+</li>
+</ul>
+<h1 id="Ontogeny-Recapitulates-Phylogeny"><a class="header-anchor" href="#Ontogeny-Recapitulates-Phylogeny"></a>Ontogeny Recapitulates Phylogeny</h1>
+<ul>
+<li>达尔文有个理论，“胚胎的成长会浮现其种族的演化”，这在计算机领域是很形象的。一个思想可能会因为技术创新而变得火热，然后湮没无闻，可思想本身是不死的。因此新技术的发展，其内核几乎总是一些“老旧”的思想。一项技术的发展所要经历的不同阶段，几乎也总是计算机发展史上的不同思想的重现</li>
+<li>因此，不要歧视所谓的“obsolete idea”</li>
+</ul>
+<h1 id="System-Calls"><a class="header-anchor" href="#System-Calls"></a>System Calls</h1>
+<ul>
+<li>
+<p>对<code>syscall</code>的调用一般是高度依赖于机器的，并且是汇编语言，但会提供一个<strong>procedure library</strong>来允许在高级语言中调用<code>syscall</code></p>
+</li>
+<li>
+<p>每个单CPU的计算机同时只能处理一条指令， 如果一个user mode的程序需要system service， 它就会执行a trap instruction 来将控制权交给OS, 后者完成任务后再将控制权交还</p>
+<ul>
+<li>因此<code>syscall</code>和普通的procedure call没什么区别，只是前者会陷入kernel mode</li>
+</ul>
+</li>
+<li>
+<p>System call执行步骤：</p>
+<ol>
+<li>参数压栈</li>
+<li>参数压栈</li>
+<li>参数压栈</li>
+<li>使用普通的procedure call调用library procedure,</li>
+<li>library procedure将 system-call number放入OS所期望的地方（通常是个寄存器）</li>
+<li>library procedure执行<code>TRAP</code>, 陷入kernel mode。 并从内核层的固定地址开始执行
+<ul>
+<li>TRAP指令和 procedure call的区别在于能陷入内核层，并且TRAP不能跳转到任意位置，只能跳转到固定位置，或者跳转到其参数中给定的位置</li>
+</ul>
+</li>
+<li>内核层检查system-call number, 并分发给对应的handler</li>
+<li>handler执行</li>
+<li>handler执行完毕后，控制<em>可能会</em>交还给user space的library procedure
+<ul>
+<li>system call也可以阻塞caller，比如在等待用户输入时。 此时OS会去执行其它进程</li>
+</ul>
+</li>
+<li>library procedure以通常的procedure call返回的方式返回user program</li>
+<li>user program像对待任何library procedure一样，清除栈顶</li>
+</ol>
+</li>
+</ul>
+<h2 id="System-Calls-Library-Functions"><a class="header-anchor" href="#System-Calls-Library-Functions"></a>System Calls &amp; Library Functions</h2>
+<p>系统调用和库函数都以C函数的形式出现</p>
+<p>系统调用：</p>
+<ul>
+<li>Linux内核的对外接口;</li>
+<li>用户程序和内核之间唯一的接口;</li>
+<li>提供最小接口</li>
+</ul>
+<p>库函数：</p>
+<ul>
+<li>依赖于系统调用; 提供较复杂功能
+<ul>
+<li>例：标准I/O库</li>
+</ul>
+</li>
+</ul>
+<h2 id="System-Calls-for-Process-Management"><a class="header-anchor" href="#System-Calls-for-Process-Management"></a>System Calls for Process Management</h2>
+<ul>
+<li>
+<p><code>fork</code>是POSIX中唯一的创建新进程的方法，它会创建一个和父进程完全相同的子进程，并返回子进程在父进程中的<strong>PID</strong>( PID在子进程中为0 )</p>
+</li>
+<li>
+<p>当一条指令被输入时。shell会fork出一个新的子进程，这个子进程必须执行这条用户指令，它首先会调用<code>exec</code> system call( 实际上该system call名字不一定叫<code>exec</code> )</p>
+<ul>
+<li><code>exec(command,parameters,0)</code></li>
+<li>其参数分别为：要执行的文件名； 参数数组的指针； 环境数组的指针</li>
+<li>执行<code>exec</code>会导致该子进程的整个<strong>core image</strong>被<code>exec</code>第一个参数（即文件名）所指向的文件所替换</li>
+</ul>
+</li>
+<li>
+<p>例子：执行<code>cp file1 file2</code></p>
+<ol>
+<li>
+<p>shell <code>fork</code>出子进程,子进程执行<code>cp</code>这个文件，将源和目的文件的名字传给它</p>
+<ul>
+<li>程序就是文件，<code>cp</code>既是程序，当然也是个文件</li>
+</ul>
+</li>
+<li>
+<p><code>cp</code>的内容是:</p>
+<p><code>main( argc, argv, envp )</code></p>
+<ul>
+<li><code>argc</code>: 参数数量，包括程序名在内，这里是3</li>
+<li><code>argc</code>：参数名（都是字符串）指针. <code>argv[0]</code>指向string “cp”</li>
+<li><code>envp</code>: 环境指针， 一个string的键值对数组，这里没有环境要传递，因此是0</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>UNIX进程在内存中分三段：</p>
+<ul>
+<li><strong>text segment</strong>: i.e., the program code</li>
+<li><strong>data segment</strong>: i.e., the variables 向上增长</li>
+<li><strong>stack segment</strong>： 向下增长</li>
+</ul>
+</li>
+</ul>
+<h2 id="System-Calls-for-Directory-Management"><a class="header-anchor" href="#System-Calls-for-Directory-Management"></a>System Calls for Directory Management</h2>
+<ul>
+<li><code>mkdir</code>, <code>rmdir</code>: create and remove empty directories</li>
+<li><code>link</code>: allow the same file to appear under 2 or more names
+<ul>
+<li>UNIX系统有一个i-node组成的表，每个i-node记录了这个文件的一些信息， 而UNIX File都有一个File number，是i-node的索引。 一个directory就是一个（ i-number, ASCII name ）pair的集合. <code>link</code>做的就是创建一个新的directory,它只有一个pair，其ASCII name可能不同，但i-number 是已有的文件的</li>
+</ul>
+</li>
+</ul>
+<h2 id="Miscellaneous-System-Calls"><a class="header-anchor" href="#Miscellaneous-System-Calls"></a>Miscellaneous System Calls</h2>
+<ul>
+<li><code>chmod</code>: 改变文件的九位protection code</li>
+<li><code>chdir</code>: 改变文件的工作目录</li>
+<li><code>kill</code></li>
+</ul>
+<h2 id="The-Windows-Win32-API"><a class="header-anchor" href="#The-Windows-Win32-API"></a>The Windows Win32 API</h2>
+<ul>
+<li>UNIX的system call和library几乎是一一对应的， 但是Windows把它们解耦了，开发者们面对的是<strong>WIn32 API</strong></li>
+<li><strong>WIn32 API</strong>极其庞大和复杂，因此很难区分哪个调用了system call哪个没有</li>
+</ul>
+<h1 id="OS-Structure"><a class="header-anchor" href="#OS-Structure"></a>OS Structure</h1>
+<h2 id="Monolithic-Systems"><a class="header-anchor" href="#Monolithic-Systems"></a>Monolithic Systems</h2>
+<ul>
+<li>整个OS作为一个单一程序运行在kernel mode</li>
+<li>OS是一个procedures的集合， 每一个procedure都可以自由调用其它任何procedure，完全没有信息隐藏</li>
+<li>当计算机启动时，不仅OS会被加载， 许多OS还支持loadable extensions,比如I/O驱动和文件系统。 它们在UNIX中称为 share libraries, 在Windows中称为DLLs</li>
+</ul>
+<h2 id="Layered-Systems"><a class="header-anchor" href="#Layered-Systems"></a>Layered Systems</h2>
+<ul>
+<li>OS由层级结构组成，每一层使用下一层的服务</li>
+<li>最早是THE system,由Dijkstra研发
+<ul>
+<li>Layered system只是个设计目标，由于每个层最终都链接到一起，实际上整个OS是一个单一的程序</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>The operator (用户操作进程 )</td>
+</tr>
+<tr>
+<td>4</td>
+<td>User programs</td>
+</tr>
+<tr>
+<td>3</td>
+<td>I/O management  3层以上不用处理IO细节</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Operator-process communication</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Memory management</td>
+</tr>
+<tr>
+<td>0</td>
+<td>processor allocation and multiprogramming</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Layered system的理念后来在MULTICS体现。 后者是由一系列同心环组成，内环拥有更大的权限，外环若要使用内环的服务，需要系统调用</li>
+</ul>
+<h2 id="Microkernels"><a class="header-anchor" href="#Microkernels"></a>Microkernels</h2>
+<ul>
+<li>Layered system的设计者可以划分kernel-user的界限，传统的Layered system全部运行在kernel，而这是不必要的。microkernel的理念是将OS分离为不同模块，其中只有一个 — 称作microkernel 运行在内核层，其余的运行在用户层，以实现高可靠性</li>
+<li>除了OS X( based on Mach microkernel ), 通常的桌面OS都不用microkernel</li>
+<li>著名的有塞班和MINIX 3</li>
+<li>MINIX 3的结构：
+<ul>
+<li>内核层： system call handler和时钟的驱动（ 因为调度器经常要与时钟交互 ）</li>
+<li>用户层（从下到上）：
+<ol>
+<li>Drivers：各种设备驱动，由于不在内核层，因此无法直接对I/O port sapce操作，也无法直接发起I/O commands,只能构造一个structure发给内核</li>
+<li>servers：为上层提供各种服务，其中有个<strong>reincarnation server</strong> 工作是检查其它server和driver的工作情况，若不正常，就自动替换，不需要任何用户干预。</li>
+<li>User programs</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>也可将微内核的理念看作  “<em>mechanism</em>和<em>policy</em>分离”。 mechanism指的是机器自动执行的那部分， policy指的是需要用户指定的那部分， 内核层只需要管理mechanism</li>
+</ul>
+<h2 id="Client-Server-Model"><a class="header-anchor" href="#Client-Server-Model"></a>Client-Server Model</h2>
+<p>不解释了</p>
+<h2 id="Virtual-Machines"><a class="header-anchor" href="#Virtual-Machines"></a>Virtual Machines</h2>
+<h2 id="VM-370"><a class="header-anchor" href="#VM-370"></a>VM/370</h2>
+<ul>
+<li>将multiprogramming和extended machine with a more convenient interface解耦</li>
+<li>使用VM monitor（又称为hypervisor），它运行在硬件上，向上提供虚拟机。</li>
+<li>虚拟机提供的不是extened machine，而是<strong>硬件</strong>， 没有任何抽象
+<ul>
+<li>其实虚拟机是将机器硬件抽象成了虚拟硬件提供给宿主机，实现了物理硬件的虚拟化。但是虚拟机不会给宿主机提供任何抽象API，它提供的还是硬件资源（尽管是虚拟的）。</li>
+<li>这部分详见“OS VMM”，我的另一篇文章</li>
+</ul>
+</li>
+<li>由于每个虚拟机对应一块真实的硬件，所以每个虚拟机能运行独立的OS，比如OS/360, CMS( Conversational Monitor System )等</li>
+<li>当一个CMS程序发起系统调用，系统会内陷到CMS( 而不是VM/370 ), 而CMS会发起普通的硬件指令调用， 这将会内陷到VM/370， 后者执行这些指令</li>
+</ul>
+<h2 id="Virtual-Machine-Rediscovered"><a class="header-anchor" href="#Virtual-Machine-Rediscovered"></a>Virtual Machine Rediscovered</h2>
+<ul>
+<li>虚拟化的前提是CPU支持虚拟化，而许多研究使得不支持虚拟化的CPU也能虚拟化（比如x86）</li>
+<li>Bochs: 解释器，使得CPU“能够”虚拟化，很慢。 后来有许多改进，这类软件称为machine simulator</li>
+<li>type2 hypervisor：建立在type1 hypervisor之上，即建立在一个宿主机OS之上。而type1 hypervisor建立在纯粹的硬件上</li>
+</ul>
+<h2 id="Exokernels"><a class="header-anchor" href="#Exokernels"></a>Exokernels</h2>
+<ul>
+<li>与传统的虚拟机不同的地方在于，exokernels为每个虚拟机分配资源，虚拟机知道自己被分配了多少资源。
+<ul>
+<li>这就避免了建立映射的损耗。传统的虚拟机都认为自己拥有整个硬件，因此得为它们建立映射层</li>
+</ul>
+</li>
+</ul>
+<h1 id="Summary"><a class="header-anchor" href="#Summary"></a>Summary</h1>
+<p>计算机科学的发展日新月异，只有刻苦坚持，才能走在别人前面</p>
+<p>refs：</p>
+<ul>
+<li><em>Modern  Operating Systems</em></li>
+<li><em>Operating Systems Three Easy pieces</em></li>
+<li><em>CSAPP</em></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/10/03/%E6%88%91%E5%92%8C%E6%88%91%E7%9A%84%E7%88%B6%E8%BE%88/" rel="prev" title="我和我的父辈">
+                  <i class="fa fa-chevron-left"></i> 我和我的父辈
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/10/20/%E5%9B%BD%E5%8F%B2%E5%A4%A7%E7%BA%B2/" rel="next" title="国史大纲">
+                  国史大纲 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

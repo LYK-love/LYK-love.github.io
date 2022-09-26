@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Mysql Management Mysql Database Management Mysql Table Management">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MYSQL Management">
+<meta property="og:url" content="http://lyk-love.cn/2022/04/10/MYSQL-Management/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Mysql Management Mysql Database Management Mysql Table Management">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-09T16:44:41.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.934Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Database">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/04/10/MYSQL-Management/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/04/10/MYSQL-Management/","path":"2022/04/10/MYSQL-Management/","title":"MYSQL Management"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MYSQL Management | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mysql-Management"><span class="nav-text">Mysql Management</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7"><span class="nav-text">创建用户帐户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA-%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">导出&#x2F;入数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E7%94%A8%E6%88%B7%E6%8E%88%E6%9D%83"><span class="nav-text">给用户授权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90"><span class="nav-text">查看用户权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81"><span class="nav-text">修改用户名和密码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%99%BB%E9%99%86MySQL%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B"><span class="nav-text">在登陆MySQL的情况下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%B2%A1%E6%9C%89%E7%99%BB%E9%99%86%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B"><span class="nav-text">在没有登陆的情况下</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MYSQL-Database-Management"><span class="nav-text">MYSQL Database Management</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">MySQL创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#drop-%E5%91%BD%E4%BB%A4%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">drop 命令删除数据库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MYSQL-Table-Management"><span class="nav-text">MYSQL Table Management</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="nav-text">创建表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="nav-text">删除表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%A1%A8"><span class="nav-text">查看表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E8%AE%B0%E5%BD%95"><span class="nav-text">插入记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5"><span class="nav-text">修改字段</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/04/10/MYSQL-Management/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MYSQL Management | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MYSQL Management
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-09 16:44:41" itemprop="dateCreated datePublished" datetime="2022-04-09T16:44:41Z">2022-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Mysql Management</li>
+<li>Mysql Database Management</li>
+<li>Mysql Table Management</li>
+</ul>
+<span id="more"></span>
+<h1 id="Mysql-Management"><a class="header-anchor" href="#Mysql-Management"></a>Mysql Management</h1>
+<ul>
+<li><strong>USE *数据库名*</strong> :<br>
+选择要操作的Mysql数据库，使用该命令后所有Mysql命令都只针对该数据库。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> use RUNOOB;</span><br><span class="line">Database changed</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>SHOW DATABASES:</strong><br>
+列出 MySQL 数据库管理系统的数据库列表。</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> DATABASES;</span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------+</span></span><br><span class="line"><span class="operator">|</span> Database           <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------+</span></span><br><span class="line"><span class="operator">|</span> information_schema <span class="operator">|</span>fuke</span><br><span class="line"><span class="operator">|</span> RUNOOB             <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> cdcol              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> mysql              <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> onethink           <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> performance_schema <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> phpmyadmin         <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> test               <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> wecenter           <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> wordpress          <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">--------------------+</span></span><br><span class="line"><span class="number">10</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.02</span> sec)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong>SHOW TABLES:</strong><br>
+显示指定数据库的所有表，使用该命令前需要使用 use 命令来选择要操作的数据库。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> use RUNOOB;</span><br><span class="line">Database changed</span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> TABLES;</span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="operator">|</span> Tables_in_runoob <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="operator">|</span> employee_tbl     <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> runoob_tbl       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> tcount_tbl       <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------------+</span></span><br><span class="line"><span class="number">3</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>SHOW COLUMNS FROM *数据表*:</strong><br>
+显示数据表的属性，属性类型，主键信息 ，是否为 NULL，默认值等其他信息。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> COLUMNS <span class="keyword">FROM</span> runoob_tbl;</span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+--------------+------+-----+---------+-------+</span></span><br><span class="line"><span class="operator">|</span> Field           <span class="operator">|</span> Type         <span class="operator">|</span> <span class="keyword">Null</span> <span class="operator">|</span> Key <span class="operator">|</span> <span class="keyword">Default</span> <span class="operator">|</span> Extra <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+--------------+------+-----+---------+-------+</span></span><br><span class="line"><span class="operator">|</span> runoob_id       <span class="operator">|</span> <span class="type">int</span>(<span class="number">11</span>)      <span class="operator">|</span> <span class="keyword">NO</span>   <span class="operator">|</span> PRI <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> runoob_title    <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">255</span>) <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> runoob_author   <span class="operator">|</span> <span class="type">varchar</span>(<span class="number">255</span>) <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">|</span> submission_date <span class="operator">|</span> <span class="type">date</span>         <span class="operator">|</span> YES  <span class="operator">|</span>     <span class="operator">|</span> <span class="keyword">NULL</span>    <span class="operator">|</span>       <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------+--------------+------+-----+---------+-------+</span></span><br><span class="line"><span class="number">4</span> <span class="keyword">rows</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.01</span> sec)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>SHOW INDEX FROM *数据表*:</strong><br>
+显示数据表的详细索引信息，包括PRIMARY KEY（主键）。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> INDEX <span class="keyword">FROM</span> runoob_tbl;</span><br><span class="line"><span class="operator">+</span><span class="comment">------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">Table</span>      <span class="operator">|</span> Non_unique <span class="operator">|</span> Key_name <span class="operator">|</span> Seq_in_index <span class="operator">|</span> Column_name <span class="operator">|</span> <span class="keyword">Collation</span> <span class="operator">|</span> <span class="keyword">Cardinality</span> <span class="operator">|</span> Sub_part <span class="operator">|</span> Packed <span class="operator">|</span> <span class="keyword">Null</span> <span class="operator">|</span> Index_type <span class="operator">|</span> Comment <span class="operator">|</span> Index_comment <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span></span><br><span class="line"><span class="operator">|</span> runoob_tbl <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span> <span class="keyword">PRIMARY</span>  <span class="operator">|</span>            <span class="number">1</span> <span class="operator">|</span> runoob_id   <span class="operator">|</span> A         <span class="operator">|</span>           <span class="number">2</span> <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span> <span class="keyword">NULL</span>   <span class="operator">|</span>      <span class="operator">|</span> BTREE      <span class="operator">|</span>         <span class="operator">|</span>               <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><strong>SHOW TABLE STATUS [FROM db_name] [LIKE ‘pattern’] \G:</strong><br>
+该命令将输出Mysql数据库管理系统的性能及统计信息。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> <span class="keyword">TABLE</span> STATUS  <span class="keyword">FROM</span> RUNOOB;   # 显示数据库 RUNOOB 中所有表的信息</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> <span class="keyword">TABLE</span> STATUS <span class="keyword">from</span> RUNOOB <span class="keyword">LIKE</span> <span class="string">&#x27;runoob%&#x27;</span>;     # 表名以runoob开头的表的信息</span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> <span class="keyword">TABLE</span> STATUS <span class="keyword">from</span> RUNOOB <span class="keyword">LIKE</span> <span class="string">&#x27;runoob%&#x27;</span>\G;   # 加上 \G，查询结果按列打印</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="创建用户帐户"><a class="header-anchor" href="#创建用户帐户"></a>创建用户帐户</h2>
+<p>MySQL提供了<code>CREATE USER</code>语句，允许您创建一个新的用户帐户。 <code>CREATE USER</code>语句的语法如下：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> user_account IDENTIFIED <span class="keyword">BY</span> password;</span><br></pre></td></tr></table></figure>
+<p>用户帐号(<code>user_account</code>)是以<code>username@hostname</code>格式跟在<code>CREATE USER</code>子句之后。</p>
+<p>密码(<code>password</code>)在<code>IDENTIFIED BY</code>子句中指定。<code>password</code>必须是明文。 在将用户帐户保存到用户表之前，MySQL将加密明文密码。</p>
+<p>例如，要创建一个新的用户<code>dbadmin</code>，这个用户只允许从<code>localhost</code>主机并使用密码为<code>pwd123</code>连接到MySQL数据库服务器，使用<code>CREATE USER</code>语句，如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;lyk&#x27;</span>@<span class="string">&#x27;%&#x27;</span></span><br><span class="line">IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>'[user]@[允许登录的host]'</code></li>
+</ul>
+<p>要查看用户帐户的权限，请使用<code>SHOW GRANTS</code>语句，如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> GRANTS <span class="keyword">FOR</span> dbadmin<span class="variable">@localhost</span>;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
+<p>执行上面查询语句，得到以下结果 -</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">mysql&gt; </span><span class="language-bash">SHOW GRANTS FOR dbadmin@localhost;</span></span><br><span class="line">+---------------------------------------------+</span><br><span class="line">| Grants for dbadmin@localhost                |</span><br><span class="line">+---------------------------------------------+</span><br><span class="line">| GRANT USAGE ON *.* TO &#x27;dbadmin&#x27;@&#x27;localhost&#x27; |</span><br><span class="line">+---------------------------------------------+</span><br><span class="line">1 row in set</span><br><span class="line">Shell</span><br></pre></td></tr></table></figure>
+<p>上面结果中的<code>*.*</code>显示<code>dbadmin</code>用户帐户只能登录到数据库服务器，没有其他权限。 要授予用户权限，您可以使用<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/grant.html">GRANT语句</a>，有关<code>Grant</code>语句，我们将在<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/grant.html">下一个教程</a>中介绍。</p>
+<p>请注意，点(<code>.</code>)之前的部分表示数据库，点(<code>.</code>)后面的部分表示表，例如<code>database.table</code>，<code>testdb.offices</code>等等。</p>
+<p>要允许用户帐户从任何主机连接，请使用百分比(<code>%</code>)通配符，如以下示例所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE USER superadmin@&#x27;%&#x27; IDENTIFIED BY &#x27;mypassword&#x27;;</span><br></pre></td></tr></table></figure>
+<p>百分比通配符<code>%</code>与<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/like.html">LIKE</a>运算符中使用的效果相同，例如，要允许<code>mysqladmin</code>用户帐户从<code>yiibai.com</code>主机的任何子域连接到数据库服务器，请使用百分比通配符<code>%</code>，如下所示：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> mysqladmin@<span class="string">&#x27;%.yiibai.com&#x27;</span></span><br><span class="line">IDENTIFIED <span class="keyword">by</span> <span class="string">&#x27;mypassword&#x27;</span>;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>请注意，也可以在<code>CREATE USER</code>语句中使用下划线通配符<code>_</code>。</p>
+</blockquote>
+<p>如果您省略了用户帐户的主机名部分，MySQL也会接受它，并允许用户从任何主机进行连接。 例如，以下语句创建一个名为<code>remote_user</code>的新用户帐户，可以从任何主机连接到数据库服务器：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> remote_user;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
+<p>可以看到授予远程用户帐户(<code>remote_user</code>)的权限如下：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> GRANTS <span class="keyword">FOR</span> remote_user;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
+<p>执行上面查询语句，得到以下结果 -</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> GRANTS <span class="keyword">FOR</span> remote_user;</span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> Grants <span class="keyword">for</span> remote_user@<span class="operator">%</span>                <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">GRANT</span> USAGE <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;remote_user&#x27;</span>@<span class="string">&#x27;%&#x27;</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------------------------------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span></span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
+<p>要注意，引用是非常重要的，特别是当用户帐户包含特殊字符(如<code>_</code>或<code>%</code>)时。</p>
+<p>如果您不小心引用<code>&quot;username@hostname&quot;</code>这样的用户帐户，MySQL将创建一个<code>username@hostname</code>的用户，并允许用户从任何主机进行连接，这可能不是您预期的。</p>
+<p>例如，以下语句创建可以从任何主机连接到MySQL数据库服务器的新用户<code>api@localhost</code>(这是用户名，并非用户账号)。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 常用创建用户为：CREATE USER api@&#x27;localhost&#x27; 与下面语句不同 -</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;api@localhost&#x27;</span>;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
+<p>查看上面创建的用户的权限 -</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> GRANTS <span class="keyword">FOR</span> <span class="string">&#x27;api@localhost&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">-------------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> Grants <span class="keyword">for</span> api<span class="variable">@localhost</span>@<span class="operator">%</span>                <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-------------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">GRANT</span> USAGE <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;api@localhost&#x27;</span>@<span class="string">&#x27;%&#x27;</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-------------------------------------------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span></span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
+<p>如果创建一个已经存在的用户，MySQL会发出一个错误。 例如，以下语句创建一个名为<code>remote_user</code>的用户帐户已经存在：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> remote_user;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
+<p>上面语句执行后，MySQL发出以下错误信息：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="number">1396</span> <span class="operator">-</span> Operation <span class="keyword">CREATE</span> <span class="keyword">USER</span> failed <span class="keyword">for</span> <span class="string">&#x27;remote_user&#x27;</span>@<span class="string">&#x27;%&#x27;</span></span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
+<p>请注意，<code>CREATE USER</code>语句只是创建一个没有任何权限的新用户帐户。如果要<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/grant.html">向用户授予使用权限</a>，则使用<code>GRANT</code>语句</p>
+<h2 id="导出-入数据库"><a class="header-anchor" href="#导出-入数据库"></a>导出/入数据库</h2>
+<p>导出：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysqldump -u [user] [database_name] &gt; [filename].sql</span><br></pre></td></tr></table></figure>
+<p>导入:</p>
+<figure class="highlight plaintext"><figcaption><span>y</span></figcaption><table><tr><td class="code"><pre><span class="line">mysql&gt; source c:\temp\mysqlsampledatabase.sql</span><br></pre></td></tr></table></figure>
+<h2 id="给用户授权"><a class="header-anchor" href="#给用户授权"></a>给用户授权</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GRANT ALL ON *.* TO &#x27;super&#x27;@&#x27;localhost&#x27; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
+<p><code>ON *.*</code>子句表示MySQL中的所有数据库和所有对象。<code>WITH GRANT OPTION</code>允许<code>super@localhost</code>向其他用户授予权限</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flush privileges</span><br></pre></td></tr></table></figure>
+<p>刷新权限</p>
+<h2 id="查看用户权限"><a class="header-anchor" href="#查看用户权限"></a>查看用户权限</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">show grants for [user]</span><br></pre></td></tr></table></figure>
+<h2 id="修改用户名和密码"><a class="header-anchor" href="#修改用户名和密码"></a>修改用户名和密码</h2>
+<h3 id="在登陆MySQL的情况下"><a class="header-anchor" href="#在登陆MySQL的情况下"></a>在登陆MySQL的情况下</h3>
+<p>方法一：通过sql命令修改密码<br>
+命令格式：set password for 用户名@localhost = password(‘新密码’);</p>
+<p>新版本mysql 命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alter user 用户名@localhos identified by &#x27;新密码&#x27;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果密码为空，则不要加<code>identified by ''</code>子句</li>
+</ul>
+<p>例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set password for root@localhost = password(&#x27;123&#x27;); </span><br><span class="line"># or</span><br><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;123&#x27;;</span><br></pre></td></tr></table></figure>
+<p>方法二：用UPDATE直接修改user表<br>
+–使用mysql数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use mysql; </span><br></pre></td></tr></table></figure>
+<p>–更改user表中指定用户的密码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update user set password=password(&#x27;123&#x27;) where user=&#x27;root&#x27; and host=&#x27;localhost&#x27;; </span><br></pre></td></tr></table></figure>
+<p>–权限刷新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+<h3 id="在没有登陆的情况下"><a class="header-anchor" href="#在没有登陆的情况下"></a>在没有登陆的情况下</h3>
+<p><code>mysqladmin</code> 命令<br>
+命令格式:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqladmin -u用户名 -p旧密码 password 新密码 </span><br></pre></td></tr></table></figure>
+<p>例子：将root用户的密码由123456改为123</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqladmin   -u root -p 123456 password 123</span><br></pre></td></tr></table></figure>
+<h1 id="MYSQL-Database-Management"><a class="header-anchor" href="#MYSQL-Database-Management"></a>MYSQL Database Management</h1>
+<h3 id="MySQL创建数据库"><a class="header-anchor" href="#MySQL创建数据库"></a>MySQL创建数据库</h3>
+<p>我们可以在登陆 MySQL 服务后，使用 <strong>create</strong> 命令创建数据库，语法如下:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE DATABASE 数据库名;</span><br></pre></td></tr></table></figure>
+<h3 id="drop-命令删除数据库"><a class="header-anchor" href="#drop-命令删除数据库"></a>drop 命令删除数据库</h3>
+<p>drop 命令格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">drop database &lt;数据库名&gt;;</span><br></pre></td></tr></table></figure>
+<h1 id="MYSQL-Table-Management"><a class="header-anchor" href="#MYSQL-Table-Management"></a>MYSQL Table Management</h1>
+<h3 id="创建表"><a class="header-anchor" href="#创建表"></a>创建表</h3>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> table_name (column_name column_type);</span><br></pre></td></tr></table></figure>
+<p>以下例子中我们将在 RUNOOB 数据库中创建数据表runoob_tbl：</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> `runoob_tbl`(</span><br><span class="line">   `runoob_id` <span class="type">INT</span> UNSIGNED AUTO_INCREMENT,</span><br><span class="line">   `runoob_title` <span class="type">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">   `runoob_author` <span class="type">VARCHAR</span>(<span class="number">40</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">   `submission_date` <span class="type">DATE</span>,</span><br><span class="line">   <span class="keyword">PRIMARY</span> KEY ( `runoob_id` )</span><br><span class="line">)ENGINE<span class="operator">=</span>InnoDB <span class="keyword">DEFAULT</span> CHARSET<span class="operator">=</span>utf8;</span><br></pre></td></tr></table></figure>
+<p>实例解析：</p>
+<ul>
+<li>如果你不想字段为 <strong>NULL</strong> 可以设置字段的属性为 <strong>NOT NULL</strong>， 在操作数据库时如果输入该字段的数据为<strong>NULL</strong> ，就会报错。</li>
+<li>AUTO_INCREMENT定义列为自增的属性，一般用于主键，数值会自动加1。</li>
+<li>PRIMARY KEY关键字用于定义列为主键。 您可以使用多列来定义主键，列间以逗号分隔。</li>
+<li>ENGINE 设置存储引擎，CHARSET 设置编码。</li>
+</ul>
+<h3 id="删除表"><a class="header-anchor" href="#删除表"></a>删除表</h3>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> table_name ;</span><br></pre></td></tr></table></figure>
+<h3 id="查看表"><a class="header-anchor" href="#查看表"></a>查看表</h3>
+<ul>
+<li>
+<p>列出当前数据库的所有表：<code>SHOW TABLES;</code></p>
+</li>
+<li>
+<p>查看表的结构: <code>DESC [table_name]</code></p>
+<ul>
+<li>
+<p>这里<code>DESC</code>是<code>describe</code>的缩写</p>
+</li>
+<li>
+<p>还有个<code>DESC</code>是<code>descend</code>的缩写：</p>
+<p><code>select ename,sal from emp order by sal desc; </code></p>
+<ul>
+<li>手动指定按照薪水由大到小排序（降序关键字<code>desc</code>）</li>
+</ul>
+</li>
+<li>
+<p>查看创建表的SQL语句：<code>SHOW CREATE TABLE [table_name];</code></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="插入记录"><a class="header-anchor" href="#插入记录"></a>插入记录</h3>
+<p>MySQL 表中使用 <strong>INSERT INTO</strong> SQL语句来插入数据。</p>
+<p>你可以通过 mysql&gt; 命令提示窗口中向数据表中插入数据，或者通过PHP脚本来插入数据。</p>
+<p>以下为向MySQL数据表插入数据通用的 <strong>INSERT INTO</strong> SQL语法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO table_name ( field1, field2,...fieldN )</span><br><span class="line">                       VALUES</span><br><span class="line">                       ( value1, value2,...valueN );</span><br></pre></td></tr></table></figure>
+<p>如果数据是字符型，必须使用单引号或者双引号，如：“value”。</p>
+<p>如果数据是DATE类型， 则不需要输入连字符， 如<code>2019-08-01</code>， 则插入<code>20190721</code></p>
+<h3 id="修改字段"><a class="header-anchor" href="#修改字段"></a>修改字段</h3>
+<ul>
+<li>
+<p>如果要给<code>students</code>表新增一列<code>birth</code>，使用：</p>
+<p><code>ALTER TABLE students ADD COLUMN birth VARCHAR(10) NOT NULL;</code></p>
+</li>
+<li>
+<p>要修改birth列，例如把列名改为birthday，类型改为VARCHAR(20)：</p>
+<p><code>ALTER TABLE students CHANGE COLUMN birth birthday VARCHAR(20) NOT NULL;</code></p>
+</li>
+<li>
+<p>要删除列，使用：</p>
+<p><code>ALTER TABLE students DROP COLUMN birthday;</code></p>
+</li>
+</ul>
+<p>RENAME用于表的重命名：RENAME <NAME> 或 RENAME TO <NAME></p>
+<p>MODIFY用于字段类型的修改：MODIFY COLUMN  &lt;列名&gt; &lt;类型&gt;</p>
+<p>ALTER用于对字段类型、默认值的修改：ALTER COLUMN &lt;列名&gt; &lt;类型&gt;  SET DE***T &lt;默认值&gt;</p>
+<p>CHANGE用于对列名及类型的修改：CHANGE COLUMN &lt;旧列名&gt; &lt;新列名&gt; &lt;类型&gt;</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/04/OS-Persistence/" rel="prev" title="OS Persistence">
+                  <i class="fa fa-chevron-left"></i> OS Persistence
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/04/10/MYSQL-Basic/" rel="next" title="MYSQL Basic">
+                  MYSQL Basic <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

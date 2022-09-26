@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Docker Kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cloud Native Toolkit">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/13/Cloud-Native-Toolkit/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Docker Kubernetes">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-13T15:10:42.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.926Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="K8s">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/13/Cloud-Native-Toolkit/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/13/Cloud-Native-Toolkit/","path":"2022/09/13/Cloud-Native-Toolkit/","title":"Cloud Native Toolkit"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Cloud Native Toolkit | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker"><span class="nav-text">Docker</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#kubernetes"><span class="nav-text">kubernetes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Install"><span class="nav-text">Install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Uninstall"><span class="nav-text">Uninstall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E8%8A%82%E7%82%B9"><span class="nav-text">配置管理节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%BB%E6%9C%BA"><span class="nav-text">配置主机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9cgroup"><span class="nav-text">修改cgroup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cluster-Config"><span class="nav-text">Cluster Config</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96master%E8%8A%82%E7%82%B9"><span class="nav-text">初始化master节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-kubectl-%E5%B7%A5%E5%85%B7"><span class="nav-text">配置 kubectl 工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%AE%8C%E6%88%90%E5%90%8E%E5%B9%B6%E4%B8%8D%E4%BC%9A%E5%88%B7%E6%96%B0%E5%87%BA%E4%BB%80%E4%B9%88%E4%BF%A1%E6%81%AF%EF%BC%8C%E5%8F%AF%E4%BB%A5%E9%80%9A%E8%BF%87%E4%B8%8B%E9%9D%A2%E4%B8%A4%E6%9D%A1%E5%91%BD%E4%BB%A4%E6%B5%8B%E8%AF%95-kubectl%E6%98%AF%E5%90%A6%E5%8F%AF%E7%94%A8%EF%BC%9A"><span class="nav-text">执行完成后并不会刷新出什么信息，可以通过下面两条命令测试 kubectl是否可用：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2-flannel-%E7%BD%91%E7%BB%9C"><span class="nav-text">部署 flannel 网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E8%8A%82%E7%82%B9%E6%98%AF%E5%90%A6%E9%83%A8%E7%BD%B2%E5%AE%8C%E6%88%90"><span class="nav-text">检查节点是否部署完成</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/13/Cloud-Native-Toolkit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Cloud Native Toolkit | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Cloud Native Toolkit
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-13 15:10:42" itemprop="dateCreated datePublished" datetime="2022-09-13T15:10:42Z">2022-09-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Docker</li>
+<li>Kubernetes</li>
+</ul>
+<span id="more"></span>
+<h1 id="Docker"><a class="header-anchor" href="#Docker"></a>Docker</h1>
+<p>参见《Docker Intro》</p>
+<ol>
+<li>
+<p>install:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt install docker.io</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>最好使用非root用户来使用Docker,此时需要添加非root用户到本地Docker Unix组：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo usermod -aG docker [user_name]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果当前登陆用户就是要添加进组的用户的话，需要重新登陆才能生效</li>
+</ul>
+</li>
+<li>
+<p>换源阿里云,需要去阿里云“容器镜像服务” --&gt; “镜像加速器” 生成镜像url：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://zz1b9pta.mirror.aliyuncs.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+<p>*mac用户可在setting – docker engine中修改<code>daemon.json</code>文件</p>
+</li>
+<li>
+<p>终端输入docker info查看是否配置成功</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt; docker info</span><br><span class="line">...</span><br><span class="line">Registry Mirrors:</span><br><span class="line">https://zz1b9pta.mirror.aliyuncs.com/</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>将docker设置为开机自启：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="kubernetes"><a class="header-anchor" href="#kubernetes"></a>kubernetes</h1>
+<h2 id="Install"><a class="header-anchor" href="#Install"></a>Install</h2>
+<p>ubuntu20.04下安装k8s</p>
+<p>注意，k8s的安装和集群初始化都需要root用户</p>
+<ol>
+<li>
+<p>安装docker</p>
+</li>
+<li>
+<p>安装依赖</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common</span><br></pre></td></tr></table></figure>
+<ul>
+<li>直接在<code>/etc/apt/sources.list</code>里添加<code>https://mirrors.aliyun.com/kubernetes/apt/</code>是不行的，因为这个阿里镜像站使用的<code>ssl</code>进行传输的，所以要先安装<code>apt-transport-https</code>并下载镜像站的密钥才可以进行下载</li>
+</ul>
+</li>
+<li>
+<p>安装GPG证书:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add - </span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>写入软件源信息:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">cat &lt;&lt;<span class="variable constant_">EOF</span> &gt;<span class="regexp">/etc/</span>apt/sources.<span class="property">list</span>.<span class="property">d</span>/kubernetes.<span class="property">list</span></span><br><span class="line">deb <span class="attr">https</span>:<span class="comment">//mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main</span></span><br><span class="line"><span class="variable constant_">EOF</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>然后更新源列表：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>查看可安装版本：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt-cache madison kubelet</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装指定版本:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install -y kubelet=1.18.4-00 kubeadm=1.18.4-00 kubectl=1.18.4-00</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>如果想要安装最新版本，就直接：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install -y kubelet kubeadm kubectl</span><br></pre></td></tr></table></figure>
+<p>但是很不推荐，因为最新的k8s 1.24.* 的集群初始化有bug，不如用老版本</p>
+</li>
+</ul>
+</li>
+<li>
+<p>设置开机启动:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo systemctl enable kubelet &amp;&amp; sudo systemctl start kubelet</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>查看所需镜像,以刚才安装的1.18.4版本为例:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm config images list --kubernetes-version=v1.18.4</span><br><span class="line"></span><br><span class="line">k8s.gcr.io/kube-apiserver:v1.18.4</span><br><span class="line">k8s.gcr.io/kube-controller-manager:v1.18.4</span><br><span class="line">k8s.gcr.io/kube-scheduler:v1.18.4</span><br><span class="line">k8s.gcr.io/kube-proxy:v1.18.4</span><br><span class="line">k8s.gcr.io/pause:3.2</span><br><span class="line">k8s.gcr.io/etcd:3.4.3-0</span><br><span class="line">k8s.gcr.io/coredns:1.6.7</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>上面的镜像是Google的，国内无法访问，需要用阿里云的镜像来替换:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/kube-apiserver:v1.18.4</span><br><span class="line">docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/kube-controller-manager:v1.18.4</span><br><span class="line">docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler:v1.18.4</span><br><span class="line">docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/kube-proxy:v1.18.4</span><br><span class="line">docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.2</span><br><span class="line">docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/etcd:3.4.3-0</span><br><span class="line">docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/coredns:1.6.7</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>为镜像重新打tag：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/kube-apiserver:v1.18.4 k8s.gcr.io/kube-apiserver:v1.18.4</span><br><span class="line">docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/kube-controller-manager:v1.18.4 k8s.gcr.io/kube-controller-manager:v1.18.4</span><br><span class="line">docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/kube-scheduler:v1.18.4 k8s.gcr.io/kube-scheduler:v1.18.4</span><br><span class="line">docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/kube-proxy:v1.18.4 k8s.gcr.io/kube-proxy:v1.18.4</span><br><span class="line">docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/pause:3.2 k8s.gcr.io/pause:3.2</span><br><span class="line">docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/etcd:3.4.3-0 k8s.gcr.io/etcd:3.4.3-0</span><br><span class="line">docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/coredns:1.6.7 k8s.gcr.io/coredns:1.6.7</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>执行下面命令，测试安装是否正常</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm init</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>k8s集群在初始化时建议使用root用户，如果以普通用户执行<code>kubeadm init</code>， 会得到报错:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[ERROR IsPrivilegedUser]: user is not running as root [preflight] If you know what you are doing, you can make a check non-fatal with `--ignore-preflight-errors=...`</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>查看k8s版本:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm version</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm version: &amp;version.Info&#123;Major:&quot;1&quot;, Minor:&quot;24&quot;, GitVersion:&quot;v1.24.1&quot;, GitCommit:&quot;3ddd0f45aa91e2f30c70734b175631bec5b5825a&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2022-05-24T12:24:38Z&quot;, GoVersion:&quot;go1.18.2&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>``GitVersion:“v1.24.1&quot;”` 即为版本号</li>
+</ul>
+</li>
+</ol>
+<h2 id="Uninstall"><a class="header-anchor" href="#Uninstall"></a>Uninstall</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt remove -y kubelet kubeadm kubectl</span><br><span class="line">rm -rf ~/.kube/</span><br><span class="line">rm -rf /etc/kubernetes/</span><br><span class="line">rm -rf /etc/systemd/system/kubelet.service.d</span><br><span class="line">rm -rf /etc/systemd/system/kubelet.service</span><br><span class="line">rm -rf /usr/bin/kube*</span><br><span class="line">rm -rf /etc/cni</span><br><span class="line">rm -rf /opt/cni</span><br><span class="line">rm -rf /var/lib/etcd</span><br><span class="line">rm -rf /var/etcd</span><br></pre></td></tr></table></figure>
+<h2 id="配置管理节点"><a class="header-anchor" href="#配置管理节点"></a>配置管理节点</h2>
+<h2 id="配置主机"><a class="header-anchor" href="#配置主机"></a>配置主机</h2>
+<p>增加主机名:</p>
+<p>单独为每个服务器增加主机名，格式为hostnamectl set-hostname hostname。一般主节点取名master，从节点取名node.</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">hostnamectl set-hostname [k8s-master]</span><br></pre></td></tr></table></figure>
+<p>在主节点配置所有k8s服务器的host，并且host名字跟各服务器的主机名对应。这里配置的是公网IP</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat &gt;&gt; /etc/hosts &lt;&lt; EOF </span><br><span class="line">&lt;主节点公网IP&gt; k8s-master</span><br><span class="line">&lt;工作节点公网IP&gt; k8s-node1</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &quot;使host配置生效&quot; &gt; /dev/null</span><br><span class="line">/etc/init.d/network restart</span><br></pre></td></tr></table></figure>
+<h2 id="修改cgroup"><a class="header-anchor" href="#修改cgroup"></a>修改cgroup</h2>
+<p>Kubernetes cgroup driver was set to systems but docker was set to systemd. So I created <code>/etc/docker/daemon.json</code> and added below:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">&quot;exec-opts&quot;:</span> [<span class="string">&quot;native.cgroupdriver=systemd&quot;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Then</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">sudo</span> <span class="string">systemctl</span> <span class="string">daemon-reload</span></span><br><span class="line"><span class="string">sudo</span> <span class="string">systemctl</span> <span class="string">restart</span> <span class="string">docker</span></span><br><span class="line"><span class="string">sudo</span> <span class="string">systemctl</span> <span class="string">restart</span> <span class="string">kubelet</span></span><br></pre></td></tr></table></figure>
+<p>Then：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker info | grep Cgroup</span><br></pre></td></tr></table></figure>
+<p>如果输出为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Cgroup Driver: systemed</span><br><span class="line">Cgroup Version: 1</span><br></pre></td></tr></table></figure>
+<p>即成功</p>
+<h2 id="Cluster-Config"><a class="header-anchor" href="#Cluster-Config"></a>Cluster Config</h2>
+<h3 id="初始化master节点"><a class="header-anchor" href="#初始化master节点"></a>初始化master节点</h3>
+<p>如果初始化过程中出现错误，要使用<code>kubeadm reset -f</code>清除之前的配置</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm init \</span><br><span class="line">--apiserver-advertise-address=121.36.247.134 \</span><br><span class="line">--kubernetes-version=v1.18.4 \</span><br><span class="line">--pod-network-cidr=10.244.0.0/16 \</span><br><span class="line">--service-cidr=10.96.0.0/12 \</span><br><span class="line">--ignore-preflight-errors=Swap</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm init \</span><br><span class="line">--apiserver-advertise-address=121.36.247.134 \</span><br><span class="line">--image-repository registry.aliyuncs.com/google_containers \</span><br><span class="line">--pod-network-cidr=10.244.0.0/16</span><br></pre></td></tr></table></figure>
+<p>这里介绍一下一些常用参数的含义：</p>
+<ul>
+<li><code>--apiserver-advertise-address</code>: k8s 的<code>apiserver</code>的部署地址，填自己的管理节点 ip( 如果公网通信，那就是公网ip )</li>
+<li><code>--image-repository</code>: 拉取的 docker 镜像源，因为初始化的时候<code>kubeadm</code>会去拉 k8s 的很多组件来进行部署，所以需要指定国内镜像源，下不然会拉取不到镜像。</li>
+<li><code>--pod-network-cidr</code>: 这个是 k8s 采用的节点网络，因为我们将要使用<code>flannel</code>作为 k8s 的网络，所以这里填<code>10.244.0.0/16</code>就好</li>
+<li><code>--kubernetes-version</code>: 这个是用来指定你要部署的 k8s 版本的，一般不用填，不过如果初始化过程中出现了因为版本不对导致的安装错误的话，可以用这个参数手动指定。</li>
+<li><code>--ignore-preflight-errors</code>: 忽略初始化时遇到的错误，比如说我想忽略 cpu 数量不够 2 核引起的错误，就可以用<code>--ignore-preflight-errors=CpuNum</code>。错误名称在初始化错误时会给出来。</li>
+</ul>
+<h3 id="配置-kubectl-工具"><a class="header-anchor" href="#配置-kubectl-工具"></a>配置 kubectl 工具</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mkdir -p /root/.kube &amp;&amp; \</span><br><span class="line">cp /etc/kubernetes/admin.conf /root/.kube/config</span><br></pre></td></tr></table></figure>
+<h3 id="执行完成后并不会刷新出什么信息，可以通过下面两条命令测试-kubectl是否可用："><a class="header-anchor" href="#执行完成后并不会刷新出什么信息，可以通过下面两条命令测试-kubectl是否可用："></a>执行完成后并不会刷新出什么信息，可以通过下面两条命令测试 <code>kubectl</code>是否可用：</h3>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line"><span class="meta"># 查看已加入的节点</span></span><br><span class="line">kubectl <span class="keyword">get</span> nodes</span><br><span class="line"><span class="meta"># 查看集群状态</span></span><br><span class="line">kubectl <span class="keyword">get</span> cs</span><br></pre></td></tr></table></figure>
+<h3 id="部署-flannel-网络"><a class="header-anchor" href="#部署-flannel-网络"></a>部署 flannel 网络</h3>
+<p><code>flannel</code>是一个专门为 k8s 设置的网络规划服务，可以让集群中的不同节点主机创建的 docker 容器都具有全集群唯一的虚拟IP地址</p>
+<figure class="highlight ruby"><table><tr><td class="code"><pre><span class="line">kubectl apply -f <span class="symbol">https:</span>/<span class="regexp">/raw.githubusercontent.com/coreos</span><span class="regexp">/flannel/master</span><span class="regexp">/Documentation/kube</span>-flannel.yml</span><br></pre></td></tr></table></figure>
+<h3 id="检查节点是否部署完成"><a class="header-anchor" href="#检查节点是否部署完成"></a>检查节点是否部署完成</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubectl get nodes</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+              <a href="/tags/K8s/" rel="tag"># K8s</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Traditional-Unix-CLI-Tools/" rel="prev" title="Traditional Unix CLI Tools">
+                  <i class="fa fa-chevron-left"></i> Traditional Unix CLI Tools
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Java-Toolkit/" rel="next" title="Java Toolkit">
+                  Java Toolkit <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

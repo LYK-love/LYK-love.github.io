@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Intro Confidentiality Digital Signature Message Digest End-point Authentication Key Distribution Securing Wireless LANs and 4G&#x2F;5G Cellular Networks Operational security">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Network Security">
+<meta property="og:url" content="http://lyk-love.cn/2022/08/28/Computer%20Networking%20Network-Security/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Intro Confidentiality Digital Signature Message Digest End-point Authentication Key Distribution Securing Wireless LANs and 4G&#x2F;5G Cellular Networks Operational security">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Cryptographic%20components.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Block%20Cipher.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Message%20Digest.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/End-point%20Authentication%20against%20Playback%20Attack.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/man-in-the-middle%20attack.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Authentication%20and%20Key%20Agreement%20in%20802.11%20Wireless%20LANs.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Mutual%20Authentication%20and%20Shared%20Symmetric%20Session%20Key%20Derivation.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/EAP.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/AKA.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Operational%20Security.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/packet%20filters%20plus%20application%20gateways.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Example-%20ANONYMITY%20AND%20PRIVACY.png">
+<meta property="article:published_time" content="2022-08-28T01:20:12.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.927Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Computer Networking">
+<meta property="article:tag" content="Network Security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Cryptographic%20components.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/08/28/Computer%20Networking%20Network-Security/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/08/28/Computer%20Networking%20Network-Security/","path":"2022/08/28/Computer Networking Network-Security/","title":"Network Security"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Network Security | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Target"><span class="nav-text">Target</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Problems"><span class="nav-text">Problems</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Assumptions"><span class="nav-text">Assumptions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Confidentiality"><span class="nav-text">Confidentiality</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cryptographic-Model"><span class="nav-text">Cryptographic Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Encryption"><span class="nav-text">Encryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Decryption"><span class="nav-text">Decryption</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key-System"><span class="nav-text">Key System</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-Types"><span class="nav-text">Attack Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Symmetric-Key-System"><span class="nav-text">Symmetric Key System</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Old-Time-Cipher"><span class="nav-text">Old-Time Cipher</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Block-Cipher"><span class="nav-text">Block Cipher</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CBC"><span class="nav-text">CBC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Modern-Ciphers"><span class="nav-text">Modern Ciphers</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DES"><span class="nav-text">DES</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AES"><span class="nav-text">AES</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Public-Key-System"><span class="nav-text">Public Key System</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cryptographic-Hash-Functions"><span class="nav-text">Cryptographic Hash Functions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MD5"><span class="nav-text">MD5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SHA"><span class="nav-text">SHA</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Digital-Signature"><span class="nav-text">Digital Signature</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Message-Digest"><span class="nav-text">Message Digest</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Negative-Example"><span class="nav-text">Negative Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Message-Authentication-Code"><span class="nav-text">Message Authentication Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Usage"><span class="nav-text">Usage</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#End-point-Authentication"><span class="nav-text">End-point Authentication</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#IP-Spoofing"><span class="nav-text">IP Spoofing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Message-Reordering"><span class="nav-text">Message Reordering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Playback-Attack"><span class="nav-text">Playback Attack</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nounce"><span class="nav-text">nounce</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#man-in-the-middle-attack"><span class="nav-text">man-in-the-middle attack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Key-Distribution"><span class="nav-text">Key Distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Symmentric-Key-Distribution"><span class="nav-text">Symmentric Key Distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Public-Key-Distribution"><span class="nav-text">Public Key Distribution</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Securing-Wireless-LANs-and-4G-5G-Cellular-Networks"><span class="nav-text">Securing Wireless LANs and 4G&#x2F;5G Cellular Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Authentication-and-Key-Agreement-in-802-11-Wireless-LANs"><span class="nav-text">Authentication and Key Agreement in 802.11 Wireless LANs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mutual-Authentication-and-Shared-Symmetric-Session-Key-Derivation"><span class="nav-text">Mutual Authentication and Shared Symmetric Session Key Derivation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#802-11-Security-Messaging-Protocols"><span class="nav-text">802.11 Security Messaging Protocols</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Authentication-and-Key-Agreement-in-4G-5G-Cellular-Networks"><span class="nav-text">Authentication and Key Agreement in 4G&#x2F;5G Cellular Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AKA-Protocol-in-4G"><span class="nav-text">AKA Protocol in 4G</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Changes-in-5G"><span class="nav-text">Changes in 5G</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Operational-Security"><span class="nav-text">Operational Security</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Firewalls"><span class="nav-text">Firewalls</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Packet-Filters"><span class="nav-text">Packet Filters</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ACL"><span class="nav-text">ACL</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Application-Gateways"><span class="nav-text">Application Gateways</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDS"><span class="nav-text">IDS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPS"><span class="nav-text">IPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#EXP-ANONYMITY-AND-PRIVACY"><span class="nav-text">EXP: ANONYMITY AND PRIVACY</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/08/28/Computer%20Networking%20Network-Security/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Network Security | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Network Security
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-28 01:20:12" itemprop="dateCreated datePublished" datetime="2022-08-28T01:20:12Z">2022-08-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Intro</li>
+<li>Confidentiality</li>
+<li>Digital Signature</li>
+<li>Message Digest</li>
+<li>End-point Authentication</li>
+<li>Key Distribution</li>
+<li>Securing Wireless LANs and 4G/5G Cellular Networks</li>
+<li>Operational security</li>
+</ul>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<h2 id="Target"><a class="header-anchor" href="#Target"></a>Target</h2>
+<p>网络安全有四大目标:</p>
+<ul>
+<li><em>Confidentiality</em>：只有信息的发送方和接收方才知道信息的内容</li>
+<li><em>Message integrity</em>：信息接收方需要确认所收到的信息<strong>没有被人篡改</strong>过.</li>
+<li><em>Authentication</em>: 鉴别分为两种:
+<ul>
+<li><em>Message Authentication</em>: 对报文的鉴别, 即报文是不是对方发的, 是不是别人伪造的
+<ul>
+<li>很多书( 谢希仁, 自顶而下… ) 都把报文鉴别也放到 <em>Message integrity</em> 的范畴, 我觉得这样会引起混淆. 因此我用自己的分类方式.</li>
+<li>事实上, <strong>实现报文鉴别的方法, 也都实现了报文完整性, 因此我不会单独介绍<em>Message integrity</em>和<em>Message Authentication</em>, 而是直接介绍实现了这两个特性的方法</strong>:
+<ol>
+<li><strong>数字签名</strong></li>
+<li><strong>报文摘要</strong></li>
+</ol>
+</li>
+</ul>
+</li>
+<li><em>End-point authentication</em> or <em>Entity authenticatio</em>: 对所通信的对象的鉴别</li>
+<li>报文鉴别是对每一个报文的, 而实体鉴别是对于通信实体的. 因此实体鉴别只需在通信开始时实行一次.</li>
+<li>一般来说, 实体鉴别是双向的.</li>
+</ul>
+</li>
+<li><em>Operational security</em>: 几乎所有组织的网络最终都是连到互联网的，所以网络很容易受到攻击, 需要确保网络的运行时安全.</li>
+</ul>
+<h2 id="Problems"><a class="header-anchor" href="#Problems"></a>Problems</h2>
+<p>计算机网络的攻击可以分为四种:</p>
+<ol>
+<li>截获——从网络上窃听他人的通信内容</li>
+<li>中断——有意中断他人在网络上的通信</li>
+<li>篡改——故意篡改网络上传送的报文</li>
+<li>伪造——伪造信息在网络上传送</li>
+</ol>
+<p>此外, 攻击还可以分为被动攻击和主动攻击:</p>
+<ul>
+<li>被动攻击: Attacker只是观察和分析PDU( 协议数据单元 )而不干扰信息流</li>
+<li>主动攻击: Attacker对PDU进行各种处理</li>
+</ul>
+<h2 id="Assumptions"><a class="header-anchor" href="#Assumptions"></a>Assumptions</h2>
+<p>在本文中，我们假设Bob和Alice在偷情, 他们互相在网络上通信. 而Bob的妻子Trudy, 想要通过攻击网络来发现这段恋情.（我认为这个例子更加生动形象，也更能体现网络安全的重要作用）</p>
+<h1 id="Confidentiality"><a class="header-anchor" href="#Confidentiality"></a>Confidentiality</h1>
+<ul>
+<li><em>cryptography</em>: 密码编码学，是密码体制的设计学
+<ul>
+<li>加密算法也称为<em>cypher</em></li>
+</ul>
+</li>
+<li><em>cryptanalysis</em>: 密码分析学，是在未知密钥的情况下从密文推演出明文或密钥的技术</li>
+<li><em>cryptology</em>：密码学， 密码编码学+密码分析学</li>
+</ul>
+<hr>
+<p>密码体制的安全性:</p>
+<ul>
+<li>无条件安全: 不论截取者获得了多少密文，但在密文中都没有足够的信息来唯一地确定出对应的明文,  即该密码体制理论上是不可破的
+<ul>
+<li>在无任何限制的条件下，目前几乎所有实用的密码体制均是可破的。 因此我们转而追求“计算上安全”</li>
+</ul>
+</li>
+<li>计算上安全： 密码不能在一定时间内被可以使用的计算资源破译</li>
+</ul>
+<h2 id="Cryptographic-Model"><a class="header-anchor" href="#Cryptographic-Model"></a>Cryptographic Model</h2>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Cryptographic%20components.png" alt="Cryptographic components"></p>
+<p>Alice向Bob发送的信息是<strong>明文</strong>（ plaintext, or cleartext ）, 通过<strong>encryption algorithm</strong>加密后，就得到了<strong>密文</strong>( <strong>ciphertext</strong> )</p>
+<h3 id="Encryption"><a class="header-anchor" href="#Encryption"></a>Encryption</h3>
+<p>Alice发送明文$m$, 并提供一个密钥$K_A$,  加密算法( encryption algorithm ) $E$接受$m$和$K_A$， 生成密文$c$：<br>
+$$<br>
+c = E_{K_A}(m)<br>
+$$</p>
+<ul>
+<li>密钥( key )是一串秘密的字符串</li>
+</ul>
+<h3 id="Decryption"><a class="header-anchor" href="#Decryption"></a>Decryption</h3>
+<p>Bob收到密文$c$后，提供一个密钥$K_B$，解密算法( decryption algorithm ) $D$接受$c$和$K_B$，得到明文$m$:<br>
+$$<br>
+m = D_{K_B}© = D_{K_B}( E_{K_A}(m) )<br>
+$$</p>
+<ul>
+<li>解密算法是加密算法的逆运算，在进行解密运算时，如果不使用事先约定好的密钥就无法解出明文</li>
+</ul>
+<h3 id="Key-System"><a class="header-anchor" href="#Key-System"></a>Key System</h3>
+<ul>
+<li>对称加密系统( symmetric key system ):  $K_A = K_B$ ， 且两个密钥都是保密的.</li>
+<li>非对称加密系统( 也称为公钥加密系统 , public key system):  $K_A \ne K_B$ ， 且密钥分为公钥( public key )和私钥( private key ),  公钥对全世界公开， 而私钥只有通信的一方知道.
+<ul>
+<li>已有的非对称加密算法( RSA等 )相比已有的对称加密算法( DES, AES )都慢得多. 因此很多低时延场景都使用对称加密.
+<ul>
+<li>比如后文介绍的WIFI网络, 无论是交换密钥还是数据传输都使用对称加密.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Attack-Types"><a class="header-anchor" href="#Attack-Types"></a>Attack Types</h2>
+<p>对密码体制的攻击，分为以下三种：</p>
+<ul>
+<li><em>Ciphertext-only attack</em>： 攻击者只知道密文</li>
+<li><em>Known-plaintext attack</em>： 攻击者知道密文，以及一部分密文-明文对照( (plaintext, ciphertext) pairings  )</li>
+<li><em>Chosen-plaintext attack</em>: 攻击者可以选择明文，然后获取其对应的密文。  使用Chosen-plaintext attack， 攻击者很容易破解整个密码体制
+<ul>
+<li>当然，对于后面介绍的现代密码体制，即使是Chosen-plaintext attack也很难破解</li>
+</ul>
+</li>
+</ul>
+<h2 id="Symmetric-Key-System"><a class="header-anchor" href="#Symmetric-Key-System"></a>Symmetric Key System</h2>
+<h3 id="Old-Time-Cipher"><a class="header-anchor" href="#Old-Time-Cipher"></a>Old-Time Cipher</h3>
+<p>我们先来看看古代的对称加密系统：</p>
+<ul>
+<li>凯撒加密（ Caesar cipher ）： 选择数字k, 把英文文本的每个字母替换成其在字母表上后面第k位的字母
+<ul>
+<li>很容易破解</li>
+</ul>
+</li>
+<li>单字母加密( monoalphabetic cipher ): 使用一张明文字母 &lt;–&gt; 密文字母的映射表，将明文按表加密</li>
+<li>多字母加密( polyalphabetic encryption ): 对明文的每个字母，先后使用多个映射表加密</li>
+</ul>
+<p>这些加密算法都很简陋，即使攻击者不知道任何明文( 即Ciphertext-only attack )，也可以根据一些手段进行破解：</p>
+<ol>
+<li>通过统计学分析。 英文中，统计意义上最常见的字母是e和f，分别占文本的13%和9%</li>
+<li>通过猜词，比如i和t常一起出现，成为it。 甚至对于Alice和Bob的情况，Trudy很可能会猜测文本中存在“love”、“Alice”、“Bob”等词，获得更多信息</li>
+</ol>
+<h3 id="Block-Cipher"><a class="header-anchor" href="#Block-Cipher"></a>Block Cipher</h3>
+<p>与古代按字母加密不同，现代加密系统都采用分组加密。 如下所示：</p>
+<ol>
+<li>在加密前，先对整个的明文进行<strong>分组</strong>。对于64位的报文， 我们将其分成8位的组( 每个组也就是一个8位的二进制数据 )
+<ul>
+<li><strong>正由于Block Cypher接受固定位数的Block, 因此许多协议中都要加入一个padding字段, 用于填充报文以便于加密</strong>.</li>
+</ul>
+</li>
+<li>对每个组进行<strong>加密</strong>处理加密，形成64位的密文( 64-bit scrambler )
+<ul>
+<li>可以按表加密，即图上的T。 更现代的做法是使用加密<strong>函数</strong>F</li>
+</ul>
+</li>
+<li><strong>重排</strong>这64位密文，形成输出密文( 64-bit output )</li>
+<li>将输出密文作为输入，回到步骤1。 循环n次，得到最终结果
+<ul>
+<li>循环n次的原因在于增大输入中的每一位对输出的影响。 如果只循环一次，则输入中的1位，至多影响输出中的一位。加密过程会更容易破解</li>
+</ul>
+</li>
+</ol>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Block%20Cipher.png" alt="Block Cipher"></p>
+<p>暴力破解算法，就需要把n位长的密钥都是一遍，也就是$2^n$次的开销</p>
+<h3 id="CBC"><a class="header-anchor" href="#CBC"></a>CBC</h3>
+<p>对于两个完全相同的分组，其分组加密后的密文也会是相同的。比如，对于HTTP报文， 普遍存在内容如“HTTP/1.1”的块， 它们对应的密文也是相同的，这会让攻击者很容易猜出一些信息。 为此，分组加密还引入了<strong>密钥+ 随机数</strong>：</p>
+<ol>
+<li>
+<p>我们假设组为k位。 对于第$i$组( 记为$m(i)$ )，报文发送方生成一个随机的k位数$r(i)$, 然后用密钥$S$加密:<br>
+$$<br>
+c(i) = K_S( \ m(i) \oplus r(i) \ )<br>
+$$</p>
+<ul>
+<li>$r(i)$是随机的，因此对于内容相同的$m(i) = m(j)$， 有$c(i) \ne c(j)$</li>
+</ul>
+</li>
+<li>
+<p>发送方把每组的密文$c(i)$和随机数$r(i)$一起发送。 接收方收到密文和随机数后，使用对称密钥$S$解密:<br>
+$$<br>
+m(i) = K_S( \ c(i) \ )\oplus r(i)<br>
+$$</p>
+<ul>
+<li>攻击者可以获得$c(i)$和$r(i)$，但不知道密钥$S$，因此无法解密得到$m$</li>
+</ul>
+</li>
+</ol>
+<p>该算法的缺点是：对于每个k位的组，都要生成一个k位的随机数r。 二者都被传输，使得报文带宽翻倍。解决方法是采用<strong>Cipher Block Chaining (CBC)</strong>：</p>
+<ol>
+<li>
+<p>在加密前，发送方先生成一个随机的k位数$c(0)$, 称为<strong>Initialization Vector (IV)</strong>， 将其用<strong>明文</strong>发送</p>
+</li>
+<li>
+<p>对于第一个块，采用$c(0)$作为上文的$r(1)$, 用密钥$S$加密:<br>
+$$<br>
+c(1) = K_S( \ m(1) \oplus c(0) \ )<br>
+$$</p>
+</li>
+<li>
+<p>对于第$i$组， 发送方计算c(i):<br>
+$$<br>
+c(i) = K_S( \ m(i) \oplus c(i-1) \ )<br>
+$$<br>
+注意到，CBC就是将$c(i-1)$作为$r(i)$.</p>
+</li>
+<li>
+<p>对于第$i$组，发送方只需发送其密文$c(i)$.  因此接收方总共接收到$c(0), c(1), c(2), …$， 总共只增加了$c(0)$的带宽</p>
+</li>
+</ol>
+<h3 id="Modern-Ciphers"><a class="header-anchor" href="#Modern-Ciphers"></a>Modern Ciphers</h3>
+<p>如前所述，现代的公钥加密算法采用分组加密，且都用函数F( 而非图上的表T )加密， 算法都接受一个密钥，来决定每个块的加密函数($F_1, F_2,F_3…$)以及重排时的规则等等。</p>
+<ul>
+<li>当然，该密钥还会用于CBC</li>
+</ul>
+<h4 id="DES"><a class="header-anchor" href="#DES"></a>DES</h4>
+<p>DES( Data Encryption Standard )：名为“数据加密标准”，由美国研发</p>
+<ul>
+<li>uses 64-bit blocks with a 56-bit key</li>
+</ul>
+<p>DES对56位密钥很容易被攻破， 为此又出现了DES3。 它使用两个密钥，把一个64位明文用一个密钥加密，再用另一个密钥解密，然后再使用第一个密钥加密，即：</p>
+<p>$$<br>
+c = \mathrm{DES}<em>{K_1}( \mathrm{DES}</em>{K_2}^{-1}( \mathrm{DES}_{K_1} ) )<br>
+$$</p>
+<h4 id="AES"><a class="header-anchor" href="#AES"></a>AES</h4>
+<p>AES( Advanced Encryption Standard ): 名为“高级加密标准”。由美国标准与技术协会（NIST）对该标准对实现进行遴选，最终选中了Joan Daemen和Vincent Rijmen提交的Rijndael算法</p>
+<ul>
+<li>uses 128-bit blocks and can operate with keys that are 128, 192, and 256 bits long</li>
+</ul>
+<h2 id="Public-Key-System"><a class="header-anchor" href="#Public-Key-System"></a>Public Key System</h2>
+<p>公钥密码体制: 使用不同的加密密钥与解密密钥</p>
+<ul>
+<li>由斯坦福（Stanford）大学的研究人员Diffie与Hellman于1976年提出［DIFF76].</li>
+<li>最著名的是RSA, 详见拙著<a href="https://lyk-love.cn/2022/08/24/RSA/#more">RSA</a></li>
+</ul>
+<p>在公钥密码体制中，加密密钥 PK （public key ）是向公众公开的，而解密密钥 SK （secret key )则是需要保密的. 加密算法E 和解密算法D也都是公开的.</p>
+<p>公钥密码体制的加密和解密过程：</p>
+<ol>
+<li>
+<p>接收者B先生成一堆密钥：公钥$PK_{B}$ ( public key, 向公众公开. 用于加密 )和私钥$SK_{B}$ ( secret key, 保密. 用于解密  ).</p>
+</li>
+<li>
+<p>发送者A用B的公钥$PK_{B}$通过E运算对明文加密，得出密文，发送给B:<br>
+$$<br>
+c = E_{PK_{B}}(m)<br>
+$$</p>
+</li>
+<li>
+<p>B用自己的私钥$SK_{B}$通过D运算进行解密，恢复出明文，即:<br>
+$$<br>
+m = D_{SK_{B}}© = D_{SK_{B}}( \  E_{PK_{B}}(m) \ )<br>
+$$</p>
+</li>
+<li>
+<p>虽然在计算机上可以容易地产生成对的$PK_{B}$和$SK_{B}$ ，但从已知的$PK_{B}$实际上不可能推导出$SK_{B}$，即从$PK_{B}$到$SK_{B}$是“计算上不可能的 ”.</p>
+<ul>
+<li>参见我的<a href="https://lyk-love.cn/2022/08/24/RSA/#more">RSA</a>, RSA算法生成公钥$(n,e)$ 和私钥$(n, d)$ , 要根据$(n,e)$ 推导出$d$, 需要对$n$ 进行质数分解. 目前质数分解是计算上不可能的</li>
+</ul>
+</li>
+<li>
+<p>虽然公钥可用来加密，但却不能用来解密，即<br>
+$$<br>
+D_{ PK_{B} } (E_{PK_{B}}(m)) \ne m<br>
+$$</p>
+</li>
+<li>
+<p>对<a href="https://lyk-love.cn/2022/08/24/RSA/#more">RSA</a>来说,它的加密函数和解密函数都是一个函数, 只是加密和解密时接受的参数不同. 因此可以把加密函数用于解密, 只要给它输入私钥和密文即可; 对于解密函数也同理<br>
+$$<br>
+D_{SK_{B}} (E_{PK_{B}}(m)) = E_{SK_{B}}(D_{PK_{B}}(m)) = m.<br>
+$$</p>
+</li>
+</ol>
+<h2 id="Cryptographic-Hash-Functions"><a class="header-anchor" href="#Cryptographic-Hash-Functions"></a>Cryptographic Hash Functions</h2>
+<p>a hash function takes an input, $m$, and computes a fixed-size string $H(m)$ known as a hash.</p>
+<ul>
+<li>
+<p><strong>cryptographic hash function</strong>: 哈希函数, 且满足 It is <strong>computationally infeasible</strong> to find any two different messages <em>x</em> and <em>y</em> such that $H(x) = H(y)$ , which means it’s a one-way function.</p>
+<ul>
+<li>cryptographic hash function 就是比较难发生碰撞的Hash函数, 常见的Checksum和CRC校验都属于Hash函数, 但都很容易碰撞, 因此不适合作为“加密哈希函数”. 具体例子见<a target="_blank" rel="noopener" href="https://github.com/LYK-love/Lazy-Scripts/blob/master/checksum.py">我的checksum实现</a></li>
+<li>对于$(m, H(m))$ , 入侵者不可能使用$m’$替换$m$并使得$H(m’) == H(m)$</li>
+</ul>
+</li>
+<li>
+<p>最初的著名的加密哈希函数是MD5 ( Message Digest version 5 ), 由Rivest发明. 不过MD5在2004年被王小云给破解了.</p>
+</li>
+<li>
+<p>后来, 美国标准与技术协会NIST又提出了SHA( Secure Hash Algorithm ), SHA-1也被破解了. 现在一般用SHA-2, 3 …</p>
+</li>
+</ul>
+<h3 id="MD5"><a class="header-anchor" href="#MD5"></a>MD5</h3>
+<p>MD5代码为128位</p>
+<p>Steps:</p>
+<ol>
+<li>append: 先把报文按模 $2^{64}$ 计算其余数（64位），追加在报文后面</li>
+<li>padding: 在报文和余数之间填充1～512位，使得填充后的总长度是512的整数倍. 填充的首位是1，后面都是0
+<ul>
+<li>填充到固定位数, 用于Block Cypher</li>
+</ul>
+</li>
+<li>把追加和填充后的报文分割为一个个512位的数据块，每个512位的报文数据再分成4个128位的数据块依次送到不同的散列函数进行4轮计算。每一轮又都按32位的小数据块进行复杂的运算。一直到最后计算出MD5报文摘要代码（128位）</li>
+</ol>
+<h3 id="SHA"><a class="header-anchor" href="#SHA"></a>SHA</h3>
+<h1 id="Digital-Signature"><a class="header-anchor" href="#Digital-Signature"></a>Digital Signature</h1>
+<p>数字签名实现了以下三点:</p>
+<ol>
+<li>接收者能够核实发送者对报文的签名。也就是说，接收者能够确信该报文的确是发送者发送的。其他人无法伪造对报文的签名. 即<strong>报文鉴别</strong></li>
+<li>接收者确信所收到的数据和发送者发送的完全一样而没有被篡改过. 即<strong>报文完整性</strong></li>
+</ol>
+<p>数字签名的步骤:</p>
+<ol>
+<li>发送方A用自己的撕咬对报文进行加密, 发给接收方B.</li>
+<li>B用A的公钥对数据解密, 得到报文</li>
+</ol>
+<ul>
+<li>因为除A外没有别人持有A的私钥. 别人如果伪造A向B发报文, B将无法用A对公钥进行解密, 这就实现了<strong>报文鉴别</strong>.</li>
+<li>同理, 别人篡改过这篇报文, 但因为不知道A的私钥, B将将无法用A对公钥进行解密, 这就实现了<strong>报文完整性</strong>.</li>
+<li>注意, 任何人用A的公钥都可以得出A发送的明文. 因此数据签名并不能用于保密.  如果要加密的话, 可以再使用加密算法.</li>
+</ul>
+<h1 id="Message-Digest"><a class="header-anchor" href="#Message-Digest"></a>Message Digest</h1>
+<p>Message Digest实现了报文完整性和报文鉴别, Message Digest通过报文鉴别码MAC实现.</p>
+<ul>
+<li>NB: 局域网中使用的媒体接入控制MAC也是使用这三个字母, 因此在看到MAC时应注意上下文.</li>
+<li><strong>报文鉴别码MAC和数字签名的最大区别</strong>: 数字签名需要对整个报文进行加密, 而MAC只需要对报文的Hash $H$ 进行加密. 而 $H$ 一般远小于整个报文, 因此MAC消耗的资源更少. 当然MAC存在哈希碰撞的问题, 所以可以理解为 MAC 比数字签名“轻”一点, 但是安全性弱一点.</li>
+</ul>
+<h2 id="Negative-Example"><a class="header-anchor" href="#Negative-Example"></a>Negative Example</h2>
+<p>先来看一个反例. 下面给出的简单步骤, 看起来似乎可以实现报文的完整性和报文鉴别:</p>
+<ol>
+<li>用户A首先根据自己的明文 $X$计算出散列 $H ( X )$ ( 例如,使用MD5 ). 为方便起见, 我们把得出的散列$H ( X )$记为$H$ .</li>
+<li>用户A把散列$H$拼接在明文 $X$ 的后面，生成了扩展的报文$(X,H)$, 然后发送给B.</li>
+<li>用户B收到了这个扩展的报文$(X,H)$. 因为散列的长度$H$是早已知道的固定值, 因此可以把收到的散列$H$和明文$X$分离开. B通过散列函数的运算, 计算出收到的明文$X$ 的散列$H ( X )$. 若$H ( X ) = H$, 则B似乎可以相信所收到的明文是A发送过来的.</li>
+</ol>
+<p>像上面列举的做法，实际上是<strong>不可行</strong>的 . 设想某个入侵者创建了一个伪造的报文$M$ ，然后也同样地计算出其散列$H ( M )$ , 并且冒充A把拼接有散列的扩展报文发送给B. B收到扩展的报文$(M,H(M))$后，按照上面步骤 (3) 的方法进行验证, 发现一切都是正常的, 就会误认为所收到的伪造报文就是A发送的.</p>
+<h2 id="Message-Authentication-Code"><a class="header-anchor" href="#Message-Authentication-Code"></a>Message Authentication Code</h2>
+<p>解决上面问题的办法并不复杂，就是对散列进行一次加密( 对称和非对称都可以 ):</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Message%20Digest.png" alt="Message Digest"></p>
+<ol>
+<li>
+<p>在A从报文$X$导出散列$H$后，就对散列$H$用密钥 $K$ 加密. 这样得出的结果叫做<strong>报文鉴别码 MAC</strong>（Message Authentication Code )</p>
+<ul>
+<li>现在已经有了好几个不同的MAC标准，而使用最广泛的就是HMAC，它可以和MD5或SHA一起使用［RFC 2104, 6151].</li>
+</ul>
+</li>
+<li>
+<p>A把已加密的报文鉴别码MAC拼接在报文 $X$ 的后面，得到扩展的报文，发送给B.</p>
+</li>
+<li>
+<p>B收到后把MAC与报文 $X$ 分离出来, 然后用密钥对MAC解密, 得到加密前的散列$H$, 再计算出$X$的散列$H ( X )$, 将$H ( X )$  与 $H$比较. 由于入侵者无法对MAC解密.</p>
+<ul>
+<li>NB: 该这里为了节约计算资源, 没有加密 $X + H$ , 只加密了 $H$ .  $H$ 大小一般远小于 $X$ .</li>
+</ul>
+</li>
+</ol>
+<h2 id="Usage"><a class="header-anchor" href="#Usage"></a>Usage</h2>
+<p>在链路层, 大量交换机需要交换报文, 为了实现报文完整性和报文鉴别, 且保证通信速度( Digital Signature太慢了 ), 一般都用Message Digest.</p>
+<ul>
+<li>Message Digest 使用了加密算法, 也就需要密钥分配, 详见后文<em>Key Distribution</em></li>
+</ul>
+<h1 id="End-point-Authentication"><a class="header-anchor" href="#End-point-Authentication"></a>End-point Authentication</h1>
+<p>or Entity Authentication</p>
+<p>你可能认为只要通信时每一个报文都采用HMAC之类的方式保证报文鉴别和报文完整性, 就能实现整个通信过程的安全, 这是错误的.</p>
+<p>注意, 实体鉴别只需要在通信建立时实施一次. 此外在通信过程中的每一个报文, 依然需要进行报文鉴别和报文完整性检查, 以保证报文的安全性.</p>
+<h2 id="IP-Spoofing"><a class="header-anchor" href="#IP-Spoofing"></a>IP Spoofing</h2>
+<ul>
+<li>IP Spoofing: C可以截获A的IP地址( HMAC对报文头不加密, 因此可以获取IP地址 )，然后把A的IP地址冒充为自己的IP地址(这叫做IP欺骗). 不过IP Sproofing只能单向, 没啥用.</li>
+</ul>
+<h2 id="Message-Reordering"><a class="header-anchor" href="#Message-Reordering"></a>Message Reordering</h2>
+<ul>
+<li>C可以把两个报文重新排序, 更改其TCP <code>seq</code>号( 因为报文头没有被HMAC加密 ), 再发给B. 或者C可以干脆删除该报文. B就无法收到正确的信息了.</li>
+</ul>
+<h2 id="Playback-Attack"><a class="header-anchor" href="#Playback-Attack"></a>Playback Attack</h2>
+<p><strong>我们假设报文采用了HMAC, , 但还是会遇到实体鉴别问题</strong></p>
+<ul>
+<li>
+<p>Playback Attack( 重放攻击 ):</p>
+<ol>
+<li>入侵者C可以从网络上截获A发给B的报文, C并不需要破译这个报文 ( 因为这可能得花很长时间 ）, 而是直接把这个由A加密的报文发送给B, 使B误认为C就是A.</li>
+<li>完成“实体鉴别后”, C就和B开始通信, B会向伪装成A的C发送许多本来应当发给A的报文.</li>
+</ol>
+</li>
+<li>
+<p>重放攻击的关键在于, B不知道他所受到的报文是来自A的, 还是来自攻击者C的playback. 导致B将这些报文视作属于同一个会话的.</p>
+</li>
+<li>
+<p>这个问题和TCP连接时的三报文握手是一样的: 当server遇到一个 SYN segment 时, 它如何判断这个segment是否属于这次连接? 毕竟它也可能属于上一次连接.</p>
+</li>
+<li>
+<p>TCP的解决方案是server向client发送的SYNACK报文中添加一个<code>seq</code>, 并等待client发来的ACK, 查看其中是否有<code>ack = seq + 1</code>.</p>
+<p>也就是说, TCP server使用一个<code>seq</code>来维护一条连接. 对于不同的连接, 其<code>seq</code>不一样, 因此server能把重放攻击者和正常client区分.</p>
+<ul>
+<li>使用序列号之后, 对报文排了序. 也可以<strong>顺便避免Message Reordering攻击</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="nounce"><a class="header-anchor" href="#nounce"></a>nounce</h3>
+<p>在实体鉴别时采用<strong>nonce</strong>( 不重数 )来维护一个“鉴别会话”. nounce就是一种<code>seq</code>, 不同连接的nounce的取值范围不相同. 因此, B和A的鉴别会话, 与B和重放者C的鉴别会话, 拥有不同的nounce, 也就<strong>被视作两个会话</strong>, B不会把A和C混淆.</p>
+<p>当然, 为了保证鉴别会话的报文不被篡改, 还需要报文加密. 下图给出了采用对称加密的鉴别会话过程:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/End-point%20Authentication%20against%20Playback%20Attack.png" alt="End-point Authentication against Playback Attack"></p>
+<ol>
+<li>A首先用明文发送其身份A和一个不重数 $R_A$ 给B.</li>
+<li>B响应A的查问，用共享的密钥$K_{AB}$ 对 $R_A$ 加密后发回给A，同时也给出了自己的不重数$R_B$</li>
+<li>最后, A再响应B的查问, 用共享的密钥$K_{AB}$ 对 $R_B$ 加密后发回给B.
+<ul>
+<li>这里很重要的一点是A和B对不同的会话必须使用不同的不重数集。由于不重数不能重复使用, 所以C在进行重放攻击时无法重复使用所截获的不重数.</li>
+</ul>
+</li>
+<li>B用$K_{AB}$对 $R_B$ 解密, 发现确实是自己发送的 $R_B$ , 就相信通信的对方是A.</li>
+</ol>
+<p>对称加密需要通信双方共享密钥. 为了省去这个麻烦, 似乎可以用非对称加密:</p>
+<ul>
+<li>在前面的例子中, B可以用其私钥对不重数 $R_A$ 进行签名后发回给A. A用B的公钥核实签名, 如能得出自己原来发送的不重数 $R_A$ , 就核实了和自己通信的对方的确是B. 同样, A也用自己的私钥对不重数R B 进行签名后发送给B. B用A的公钥核实签名, 鉴别了A的身份.</li>
+</ul>
+<p>上面的做法是有漏洞的, 让我们看下面的例子:</p>
+<ol>
+<li>C冒充是A，发送报文给B，说: ”我是A“</li>
+<li>B选择一个不重数 $R_B$  , 发送给A，但被C截获了。</li>
+<li>C用自己的私钥$SK_C$冒充是A的私钥，对 $R_B$ 加密，并发送给B。</li>
+<li>B向A发送报文，要求对方把解密用的公钥发送过来，但这报文也被C截获了.</li>
+<li>C把自己的公钥 $PK_C$ 冒充是A的公钥发送给B。</li>
+<li>B用收到的公钥PK C 对收到的加密的 $R_B$ 进行解密，其结果当然正确. 于是B相信通信的对方是A，接着就向A发送许多敏感数据，但都被C截获了.</li>
+</ol>
+<p>然而上述这种欺骗手段不够高明，因为B只要打电话询问一下A就能戳穿骗局，因为A根本没有和B进行通信。但下面的“中间人攻击 ”（man-in-the-middle attack）就更加具有欺骗性.</p>
+<h2 id="man-in-the-middle-attack"><a class="header-anchor" href="#man-in-the-middle-attack"></a>man-in-the-middle attack</h2>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/man-in-the-middle%20attack.png" alt="man-in-the-middle attack"></p>
+<ol>
+<li>A想和B通信，向B发送“我是A”的报文, 并给出了自己的身份。这个报文被“中间人”C截获, C把这个报文原封不动地转发给B. B选择一个不重数 $R_B$ 发送给A，但同样被C截获后也照样转发给A.</li>
+<li>中间人C用自己的私钥 $SK_C$ 对 $R_B$ 加密后发回给B, 使B误以为是A发来的。A收到 $R_B$ 后也用自己的私钥 $SK_C$ 对 $R_B$ 加密后发回给B，但中途被C截获并丢弃. B向A索取其公钥，这个报文被C截获后转发给A.</li>
+<li>C把自己的公钥 $PK_C$ 冒充是A的公钥发送给B，而C也截获到A发送给B的公钥$PK_A$ .</li>
+<li>B用收到的公钥  $PK_C$ （以为是A的）对数据 DATA 加密，并发送给A.</li>
+<li>C截获后用自己的私钥 $SK_C$  解密，复制一份留下, 然后再用A的公钥 $PK_A$ 对数据DATA 加密后发送给A.</li>
+<li>A收到数据后，用自己的私钥 $SK_A$ 解密, 以为和B进行了保密通信. 其实, B发送给A的加密数据已被中间人C截获并解密了一份, 但A和B却都不知道.</li>
+</ol>
+<h1 id="Key-Distribution"><a class="header-anchor" href="#Key-Distribution"></a>Key Distribution</h1>
+<p>密钥分配也是网络安全的重要问题.</p>
+<ul>
+<li>对于对称加密, 常见问题是对称密钥的分配很麻烦. 需要一个设施来进行自动化的密钥分配.</li>
+<li>对于非对称加密, 常见问题是<strong>声称拥有某人密钥的人, 在现实中并不是某人</strong> , 这也是<strong>中间人攻击成功的原因</strong>. 其实这是一个网络-现实中的实体鉴别问题.
+<ul>
+<li>由于公钥是公开的, 因此非对称加密的密钥的分配效率不是问题吗不需要“让通信双方共享密钥”.</li>
+<li>实体鉴别只能对通信方在网络上的身份进行鉴别. , 但是,网络上的身份不一定就是现实中的身份, 比如, Trudy声称自己是Bob, 然后使用自己的私钥和Alice通信. 在Alice看来, 一切都是正常的, 实体鉴别也通过了. 问题在她鉴别的“Bob”身份只是网络上的, 在现实中, 这个人是Trudy.  Alice使用了所谓的Bob的密钥, 其实她使用的一直都是Trudy的.</li>
+<li>因此需要有一个机构来在现实中进行鉴别, 建立网络 - 现实身份的映射</li>
+</ul>
+</li>
+</ul>
+<h2 id="Symmentric-Key-Distribution"><a class="header-anchor" href="#Symmentric-Key-Distribution"></a>Symmentric Key Distribution</h2>
+<ul>
+<li>KDC( Key Distribution Center ): KDC是大家都信任的机构，其任务就是给需要进行秘密通信的用户临时分配一个会话密钥（仅使用一次）.</li>
+</ul>
+<h2 id="Public-Key-Distribution"><a class="header-anchor" href="#Public-Key-Distribution"></a>Public Key Distribution</h2>
+<p><strong>认证中心CA ( Certification Authority )</strong>: 一个权威机构, 用于接受用户认证, 向用户发放证书（certificate）, 证书内容是用户的公钥和个人信息( 比如IP, 人名… ).</p>
+<ul>
+<li>CA对证书进行数字签名, 这样用户就保证了该证书真的属于改CA.</li>
+<li>当然, CA的安全性取决于其权威性. 我自己也可以作为CA生成一个证书, 但是这样的证书肯定没人信.</li>
+</ul>
+<p>使用CA的步骤:</p>
+<ol>
+<li>每个实体需要持有CA发的证书</li>
+<li>任何人想要获取该实体的公钥, 只需从CA处获取该实体的证书( 或者让该实体自己提供证书也行 ). 这样就能确保对方真的是现实中的那个人.
+<ul>
+<li>例如, 如果我用了数字签名, 他人就可以拿我证书上的公钥和我的公钥比对, 确保我网络上的身份和我现实中的身份一致.</li>
+</ul>
+</li>
+</ol>
+<h1 id="Securing-Wireless-LANs-and-4G-5G-Cellular-Networks"><a class="header-anchor" href="#Securing-Wireless-LANs-and-4G-5G-Cellular-Networks"></a>Securing Wireless LANs and 4G/5G Cellular Networks</h1>
+<p>在无线网络( 包括802.11 wireless LANs 和4G/5G cellular network )中, 攻击者可以嗅探到任何报文, 因此无线网络的安全很重要.</p>
+<h2 id="Authentication-and-Key-Agreement-in-802-11-Wireless-LANs"><a class="header-anchor" href="#Authentication-and-Key-Agreement-in-802-11-Wireless-LANs"></a>Authentication and Key Agreement in 802.11 Wireless LANs</h2>
+<ul>
+<li>
+<p>WIFI的网络安全有两个目标:</p>
+<ul>
+<li><em>Mutual authentication</em>: 如果移动设备要接入网络, 移动设备和网络需要互相鉴别</li>
+<li><em>Encryption</em>: 移动设备和access point (AP)通信的报文 ( 属于链路层frame ) 需要加密. 因为移动网络中的加密一般要求高速,所以采用对称加密.</li>
+</ul>
+</li>
+<li>
+<p><strong>Authentication Server</strong> (AS) : WIFI还需要一个AS来负责鉴别. AP在鉴别时仅仅作为Mobile device和AS通信的桥接.</p>
+</li>
+</ul>
+<p>以下是一个Mobile device接入WIFI的过程:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Authentication%20and%20Key%20Agreement%20in%20802.11%20Wireless%20LANs.png" alt="Authentication and Key Agreement in 802.11 Wireless LANs"></p>
+<p>We can identify four distinct phases to the process of mutual authentication and encryption-key derivation and use in Figure 8.30:</p>
+<ol>
+<li><em>Discovery.</em> AP广播其存在, 然后mobile device与其通信. 此时还没有经过鉴别, 也没有生成链路层frame加密的密钥.</li>
+<li><em>Mutual authentication and shared symmetric key derivation.</em> : 详细过程在下面的<em>Mutual Authentication and Shared Symmetric Session Key Derivation</em>介绍
+<ol>
+<li>为了方便, mobile device都会和AS共享一个密钥( e.g. WIFI密码 )用于鉴别时加密, 双方通过这个密钥, nounce( 避免playback attack )和cryptographic hashing( 报文鉴别, 报文完整性 )来进行双向的实体鉴别.</li>
+<li>并且会生成一个symmentric session key( ( 如前所述, 我们一般用对称加密 ), 用于<strong>加密mobile device和AP间传输的链路层frame</strong>.
+<ul>
+<li>一般而言,对称加密算法是AES</li>
+</ul>
+</li>
+</ol>
+</li>
+<li><em>Shared symmetric session key distribution.</em> 步骤二中, mobile device和AS都拥有了session key, 此时还需要把session key也传输给AP. ( 不然mobile device和AP通信怎么加密呢… )</li>
+<li><em>Encrypted communication between mobile device and a remote host <strong>via the AP</strong>.</em></li>
+</ol>
+<h3 id="Mutual-Authentication-and-Shared-Symmetric-Session-Key-Derivation"><a class="header-anchor" href="#Mutual-Authentication-and-Shared-Symmetric-Session-Key-Derivation"></a><strong>Mutual Authentication and Shared Symmetric Session Key Derivation</strong></h3>
+<ul>
+<li>Wired Equivalent Privacy( WEP ): 就是WIFI网络的安全通信协议. WEP很快被WPA取代.</li>
+<li>WiFi Protected Access( WPA ): 就是WEP的改进版.目前都用的WPA3( 2018年发布 )
+<ul>
+<li>WEP a <strong>four-way handshake</strong> protocol</li>
+<li>作用:
+<ul>
+<li>mutual authentication</li>
+<li>shared symmetric session-key derivation</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Mutual%20Authentication%20and%20Shared%20Symmetric%20Session%20Key%20Derivation.png" alt="Mutual Authentication and Shared Symmetric Session Key Derivation"></p>
+<p>如图, WPA工作流程为:</p>
+<ol start="0">
+<li>Mobile device( M )和AS事先会共享一个密钥( 比如WIFI密码 ), 记为$K_{AS-M}$</li>
+<li>AS生成一个NonceAS发给M, 这用于避免重放攻击</li>
+<li>M收到NonceAS, 并生成它自己的NonceM. 然后M使用NonceAS, NonceM, $K_{AS-M}$, 其MAC地址和AS的MAC地址生成symmentric session key $K_{M-AP}$. 然后将NonceM 和 一个HMAC加密的值( 包括了 $K_{AS-M}$ 和 NounceAS )发给AS</li>
+<li>AS通过decode HMAC, 得到NonceAS, 确认了M不是重放攻击. 同时得到了$K_{AS-M}$, 完成了实体鉴别( 即对方确实是拥有这个 $K_{AS-M}$ 的设备). AS然后执行和M一样的操作, 用它收到的NonceAS, NonceM, $K_{AS-M}$, 其MAC地址和M的MAC地址生成$K_{M-AP}$. 因为和M的参数一样, 它们推导出的 $K_{M-AP}$ 也一样.  接下来 $K_{M-AP}$ 会被通知给AP</li>
+</ol>
+<h3 id="802-11-Security-Messaging-Protocols"><a class="header-anchor" href="#802-11-Security-Messaging-Protocols"></a>802.11 Security Messaging Protocols</h3>
+<ul>
+<li>Extensible Authentication Protocol (EAP): M和AS通信时采用的协议.
+<ul>
+<li>注意到M和AS其实是端到端的request/response通信. 因此EAP是一个端到端协议.</li>
+<li>EAP是链路层协议. 数据封装成EAPoL (EAP over LAN) 在WIFI链路上传输. AP收到后, 使用RADIUS protoco( or DIAMETER protocol )来解包为通用的链路层协议( TCP/UDP ) ,然后发给AS.</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/EAP.png" alt="EAP"></p>
+<h2 id="Authentication-and-Key-Agreement-in-4G-5G-Cellular-Networks"><a class="header-anchor" href="#Authentication-and-Key-Agreement-in-4G-5G-Cellular-Networks"></a>Authentication and Key Agreement in 4G/5G Cellular Networks</h2>
+<ul>
+<li>4G/5G蜂窝网络的安全性要求和WIFI差不多, 都需要:
+<ul>
+<li>双向鉴别: 基站当然有必要鉴别手机. 但因为基站也有可能被黑, 所以手机也有必要鉴别基站…</li>
+<li>加密: 手机和基站依然需要生成一个对称加密密钥, 用来加密M和BS之间通信的链路层frame</li>
+</ul>
+</li>
+</ul>
+<h3 id="AKA-Protocol-in-4G"><a class="header-anchor" href="#AKA-Protocol-in-4G"></a>AKA Protocol in 4G</h3>
+<ul>
+<li>4G/5G蜂窝网络的鉴别和加密协议为AKA( Authentication and Key Agreement (AKA) protocol ), 它规定了如下步骤:</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/AKA.png" alt="AKA"></p>
+<ol start="0">
+<li>
+<p>和WIFI一样, 手机和HSS之间需要共享一个密钥$K_{HSS-M}$用于鉴别时的加密. 和WIFI的密钥一般就是WIFI密码不同, $K_{HSS-M}$一般存在手机的SIM卡和HSS database里.</p>
+</li>
+<li>
+<p><em>Authentication request to HSS.</em> 当mobile device第一次通过基站请求加入网络时, 它将发送一个包含其 international mobile subscriber identity (IMSI) 的sttach message, 基站会把该信息转发给被访网络( visited network, 图中称为VN )的MME. 然后MME把<strong>IMSI和VN的信息</strong>发送给家庭网络的HSS.</p>
+<ul>
+<li>IMSI在4G中被明文传输.</li>
+</ul>
+</li>
+<li>
+<p><em>Authentication response from HSS.</em> HSS使用预先共享的$K_{HSS-M}$进行加密, 以获得一个认证令牌auth_token = $K_{HSS-M}(IMSI)$和 一个expected authentication response token $xres_{HSS}$.  前者最终被转发给mobile device, 后者发给MME.</p>
+</li>
+<li>
+<p><em>Authentication response from mobile device.</em> mobile device收到auth_token后解密得到IMSI:<br>
+$$<br>
+K_{HSS-M}(K_{HSS-M}(IMSI)) = IMSI<br>
+$$<br>
+mobile device于是知道了该HSS拥有$K_{HSS-M}$, mobile device因此就<strong>鉴别了蜂窝网络</strong> ( HSS和MME就是蜂窝网络的AS ).</p>
+<p>并且, mobile device会使用和HSS相同的算法计算出$xres_{M}$, 只是使用了自己的key ( $K_{HSS-M}$) , 并将其$K_{HSS-M}$发送给MME</p>
+</li>
+<li>
+<p><em>Mobile device authentication.</em> MME比对$xres_{M}$ 和  $xres_{HSS}$ , 由于HSS和mobile device拥有相同的$K_{HSS-M}$, 因此:<br>
+$$<br>
+xres_{M} == xres_{HSS}<br>
+$$<br>
+MME于是知道了mobile device拥有和HSS相同的key ,因此蜂窝网络<strong>鉴别了mobile device</strong> .</p>
+<ul>
+<li>这里MME的作用类似WIFI中的AP, 仅仅是一个中介, 不需要知道$K_{HSS-M}$. 和WIFI中不同的是, MME在这里做了认证决定.</li>
+</ul>
+</li>
+<li>
+<p><em>Data plane and control plane key derivation.</em> 步骤1~4完成了双向鉴别, 接下来mobile device就和基站共同生成了symmentric session key, 过程和WIFI中的一样. sesssion key用于加密蜂窝网络的链路层frame, 当然, data plane 和 control plane通信是不同的, 因此需要生成两个key.</p>
+<ul>
+<li>加密算法是AES, 和WIFI一样</li>
+</ul>
+</li>
+</ol>
+<h3 id="Changes-in-5G"><a class="header-anchor" href="#Changes-in-5G"></a>Changes in 5G</h3>
+<ol>
+<li>5G的鉴别和加密协议是AKA’ , 它继承了4G的AKA. 此外, 5G还采用了WIFI中的EAP, 因此报文格式和4G的不同. 并且5G还新增了一个协议用于IoT场景, 该协议不需要$K_{HSS-M}$ .</li>
+<li>4G的鉴别中, 是被访网络的MME做了mobile device的鉴别决定, 在5G中, 一般都由家庭网络来进行这个鉴别.</li>
+<li>5G中的IMSI是被非对称加密的.</li>
+</ol>
+<p>关于4G/5G安全的更多细节: [3GPP SAE 2019; Cable Labs 2019; Cichonski 2017]</p>
+<h1 id="Operational-Security"><a class="header-anchor" href="#Operational-Security"></a>Operational Security</h1>
+<p>三大组件:</p>
+<ol>
+<li>Firewall</li>
+<li>Intrusion Detection System ( IDS )</li>
+<li>Intrusion Prevention Systems (IPS)</li>
+</ol>
+<p>防火墙, IDS等肯定会让网络变慢. 因此我们一般把网络划分为不同区域, 需要与外网连接的服务器被分到防御较宽松的<strong>demilita- rized zone (DMZ)</strong>, 其他服务器被分到防御更严格的区域:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Operational%20Security.png" alt="Operational Security"></p>
+<ul>
+<li>注意, IDS等设施同一时间要计算无数个报文, 工作量很大. 因此一般在网络中部署多个IDS, 达到分治的效果, 如上图所示.</li>
+</ul>
+<h2 id="Firewalls"><a class="header-anchor" href="#Firewalls"></a>Firewalls</h2>
+<ul>
+<li>
+<p>A <strong>firewall</strong> is a combination of hardware and software that isolates an organization’s internal network from the Internet at large, allowing some packets to pass and blocking others</p>
+</li>
+<li>
+<p>Firewalls can be classified in 2 categories:</p>
+<ol>
+<li>packet filters: 工作在传输层, 是一种具有分组过滤功能的<u>路由器</u>，它根据过滤规则对进出内部网络的分组执行转发或者丢弃.</li>
+<li>application gateways: 也称为Proxy Server( 代理服务器 )工作在应用层, 就是一个应用层APP, 用来在应用层监控某个应用发出在报文.
+<ul>
+<li>An <strong>application gateway</strong> is an <u>application-specific</u> server through which all application data (inbound and out- bound) must pass.</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>分组过滤器和应用网关可以结合使用, 如图:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/packet%20filters%20plus%20application%20gateways.png" alt="packet filters plus application gateways"></p>
+</li>
+</ul>
+<h3 id="Packet-Filters"><a class="header-anchor" href="#Packet-Filters"></a>Packet Filters</h3>
+<ul>
+<li>
+<p>分组过滤器分为两种:</p>
+<ul>
+<li>无状态: 独立地处理每一个分组.</li>
+<li>有状态: 会跟踪每个连接或会话的通信状态，并根据这些状态信息来决定是否转发分组.</li>
+</ul>
+</li>
+<li>
+<p>以无状态过滤器为例, 假设要保护的网络是130.207/16, 它要和一个Web server at 130.207.244.203 通信:</p>
+<table>
+<thead>
+<tr>
+<th>Policy</th>
+<th>Policy Firewall Setting</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No outside Web access.</td>
+<td>Drop all outgoing packets to any IP address, port 80.</td>
+</tr>
+<tr>
+<td>No incoming TCP connections, except those for organization’s public Web server only.</td>
+<td>Drop all incoming TCP SYN packets to any IP except 130.207.244.203, port 80.</td>
+</tr>
+<tr>
+<td>Prevent Web-radios from eating up the available bandwidth.</td>
+<td>Drop all incoming UDP packets—except DNS packets.</td>
+</tr>
+<tr>
+<td>Prevent your network from being used for a  smurf DoS attack.</td>
+<td>Drop all ICMP ping packets going to a “broadcast” address (eg 130.207.255.25)</td>
+</tr>
+<tr>
+<td>Prevent your network from being tracerouted.</td>
+<td>Drop all outgoing ICMP TTL expired traffic.</td>
+</tr>
+</tbody>
+</table>
+<p>上表中只是抽象的规则, 具体的规则存储在ACL.</p>
+</li>
+</ul>
+<h4 id="ACL"><a class="header-anchor" href="#ACL"></a>ACL</h4>
+<ul>
+<li>
+<p>ACL( access control list ): 就是 packet filters 里的过滤规则, ACL其实和路由表长得差不多</p>
+<ul>
+<li>比如, 如果想要禁止所有的TCP连接的建立, 只要过滤掉所有ACK = 0的报文 ( 因为TCP中, 只有连接建立时第一个报文的ACK = 0, 此后所有的报文都有ACK =1 )</li>
+<li>如果想要禁止员工看视频, 可以把<u>不必要的UDP报文</u>都过滤掉.
+<ul>
+<li>不可能过滤掉全部的UDP报文, 因为DNS之类的服务也使用UDP</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>ACL自顶而下<u>顺序匹配</u>.</p>
+<ul>
+<li>When a statement “matches”,  no more statements are evaluated.</li>
+<li>The packet is either permitted or denied.</li>
+</ul>
+</li>
+<li>
+<p>There is an implicit “<u>deny any</u>” statement at the end of the ACL. If a packet does not match any of the statements in the ACL, it is dropped. 下面例子的表中显式地给出了这条规则,</p>
+</li>
+<li>
+<p>下面是一个例子, 该防火墙要保护的网络是222.22/16</p>
+<table>
+<thead>
+<tr>
+<th>action</th>
+<th>source address</th>
+<th>dest address</th>
+<th>prototol</th>
+<th>source port</th>
+<th>dest port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>allow</td>
+<td>222.22/16</td>
+<td>outside of 222.22/16</td>
+<td>TCP</td>
+<td>&gt; 1023</td>
+<td>any</td>
+</tr>
+<tr>
+<td>allow</td>
+<td>outside of 222.22/16</td>
+<td>222.22/16</td>
+<td>TCP</td>
+<td>80</td>
+<td>&gt; 1023</td>
+</tr>
+<tr>
+<td>allow</td>
+<td>222.22/16</td>
+<td>outside of 222.22/16</td>
+<td>UDP</td>
+<td>&gt; 1023</td>
+<td>53</td>
+</tr>
+<tr>
+<td>allow</td>
+<td>outside of 222.22/16</td>
+<td>222.22/16</td>
+<td>UDP</td>
+<td>53</td>
+<td>&gt; 1023</td>
+</tr>
+<tr>
+<td>deny</td>
+<td>all</td>
+<td>all</td>
+<td>all</td>
+<td>all</td>
+<td>all</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>
+<p>前两条规则允许网络内部的主机<strong>单向</strong>地访问Web:</p>
+<ol>
+<li>
+<p>第一条规则允许TCP packet with destination port 80 离开网络, 即允许主机单方面发出TCP请求</p>
+</li>
+<li>
+<p>第二条规则允许TCP packet with source port 80 and the ACK bit set进入网络, 即允许主机接受对方的TCP请求.</p>
+<p>注意, 由于不允许外部主机的ACK = 0进入网络( 因此无法建立TCP连接 ), 所以外部主机是无法用TCP访问内部主机的. 因此是“单向”</p>
+</li>
+</ol>
+</li>
+<li>
+<p>接下来两条规则允许所有DNS packets进出网络.</p>
+</li>
+<li>
+<p>最后一条规则就是deny any, 它是默认的, 禁止了除上述规则匹配的分组之外的所有其他分组.</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="Application-Gateways"><a class="header-anchor" href="#Application-Gateways"></a>Application Gateways</h3>
+<ul>
+<li>相比工作在传输层的报文过滤器, 应用网关的控制能力更强更灵活.
+<ul>
+<li>比如, 组织可能希望某些内部人员必须先在内网进行登录认证后, 才能访问外网. 而“登录认证”的数据属于应用层, 不属于IP/TCP/UDP. 这一级别的访问控制只能由应用网关来处理.</li>
+</ul>
+</li>
+</ul>
+<h2 id="IDS"><a class="header-anchor" href="#IDS"></a>IDS</h2>
+<ul>
+<li>
+<p>IDS: 防火墙只能对分组进行简单的检查, 像上面所介绍的, 只能检查地址,协议类型等, 因此很容易被攻破. IDS能对分组进行深度检查, 并对可疑分组发出alert</p>
+</li>
+<li>
+<p>IDS分两种:</p>
+<ul>
+<li>
+<p>Signature-based IDS( 基于特征的IDS ): 维护一个所有已知攻击标志性特征的数据库, 每个特征是一个与某种入侵活动相关联的规则集. 这些规则一般是手动输入的.</p>
+<ul>
+<li>基于特征的IDS只能检测已知攻击，对于未知攻击则束手无策. 而且即使某个报文匹配了某条规则, 它也不一定就是个有害报文.</li>
+</ul>
+</li>
+<li>
+<p>Anomaly-based IDS( 基于异常的IDS ):通过观察正常运行的网络流量来动态判断. 不过区分正常和异常流量很困难, 所以基于异常的IDS能力有限</p>
+</li>
+</ul>
+</li>
+<li>
+<p>目前最常用的开源IDS是Snort, 它是Signature-based IDS.</p>
+</li>
+</ul>
+<h2 id="IPS"><a class="header-anchor" href="#IPS"></a>IPS</h2>
+<ul>
+<li>IPS: 和IDS配套使用, 在IDS发出alert后, IPS负责把可疑分组清除</li>
+</ul>
+<h2 id="EXP-ANONYMITY-AND-PRIVACY"><a class="header-anchor" href="#EXP-ANONYMITY-AND-PRIVACY"></a>EXP: ANONYMITY AND PRIVACY</h2>
+<p>假如我要访问一个奇怪的网站( 比如, 某个含有不当言论的网站 ), 我想要:</p>
+<ol>
+<li>不让网站知道我的IP</li>
+<li>不让我的local ISP知道我在访问这个网站, 也就是不让ISP知道我的目的IP</li>
+<li>不让local ISP知道我和网站通信交换的报文.</li>
+</ol>
+<p>只使用SSL是不行的, SSL只能加密报文payload, 但是不能加密源和目的IP地址, 所以无法满足要求1, 2.</p>
+<p>正确做法是使用Proxy Server( 代理服务器, 也就是应用网关 ) + SSL:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Network%20Security/Example-%20ANONYMITY%20AND%20PRIVACY.png" alt="Example: ANONYMITY AND PRIVACY"></p>
+<ol>
+<li>我使用SSL和代理服务器通信, 我向代理服务器发送的HTTP报文都是SSL加密的.</li>
+<li>报文被代理服务器解密发给网站.</li>
+<li>代理服务器和网站通信, 它们之间的报文不需要加密.</li>
+<li>网站发给代理服务器的报文被SSL加密后传给我.</li>
+</ol>
+<p>这种方式下, 代理服务器的IP作为ISP看到的的目的IP和网站看到的源IP. 数据也被SSL保护. 问题在于, 代理服务器会知道一切( 我的源IP, 目的IP, 我的数据 ), 因此这种方法的安全性取决于代理服务器的安全性.</p>
+<p>更好的方法是采用<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-my/Tor">TOR</a>, 它使用一个 Proxy Server Pool, 其中每个Proxy Server都是不互通的( non-colluding ). 每次通信随机从中选一个Proxy Server. [[TOR 2020]</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Networking/" rel="tag"># Computer Networking</a>
+              <a href="/tags/Network-Security/" rel="tag"># Network Security</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/28/Security-in-Internet/" rel="prev" title="Security in Internet">
+                  <i class="fa fa-chevron-left"></i> Security in Internet
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/28/%E4%B8%80%E7%A0%81%E5%A4%9A%E7%AB%AF%E6%96%B9%E6%A1%88%E6%AF%94%E8%BE%83/" rel="next" title="一码多端方案比较">
+                  一码多端方案比较 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

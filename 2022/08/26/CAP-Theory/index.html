@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Intro Consistency Availability Partition Tolerance CAP: Tradeoff Yield &amp;&amp; Harvest BASE Theory">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CAP Theory">
+<meta property="og:url" content="http://lyk-love.cn/2022/08/26/CAP-Theory/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Intro Consistency Availability Partition Tolerance CAP: Tradeoff Yield &amp;&amp; Harvest BASE Theory">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-08-25T22:09:03.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.926Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Distributed System">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/08/26/CAP-Theory/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/08/26/CAP-Theory/","path":"2022/08/26/CAP-Theory/","title":"CAP Theory"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CAP Theory | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Consistency"><span class="nav-text">Consistency</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Strong-Consistency"><span class="nav-text">Strong Consistency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Eventual-Consistency-Algorithm"><span class="nav-text">Eventual  Consistency Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Eventual-Consistency"><span class="nav-text">Eventual Consistency</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Availability"><span class="nav-text">Availability</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Partition-Tolerance"><span class="nav-text">Partition Tolerance</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#P-is-Mandatory"><span class="nav-text">P is Mandatory</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CAP-Tradeoff"><span class="nav-text">CAP: Tradeoff</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Consistency-Availability"><span class="nav-text">Consistency &gt; Availability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Availability-Consistency"><span class="nav-text">Availability &gt; Consistency</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Yield-Harvest"><span class="nav-text">Yield &amp;&amp; Harvest</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BASE-Theory"><span class="nav-text">BASE Theory</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Refs"><span class="nav-text">Refs</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/08/26/CAP-Theory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CAP Theory | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CAP Theory
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-25 22:09:03" itemprop="dateCreated datePublished" datetime="2022-08-25T22:09:03Z">2022-08-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Intro</li>
+<li>Consistency</li>
+<li>Availability</li>
+<li>Partition Tolerance</li>
+<li>CAP: Tradeoff</li>
+<li>Yield &amp;&amp; Harvest</li>
+<li>BASE Theory</li>
+</ul>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<p>In 2000, Dr. Eric Brewer 在 <em>Proceedings of the Annual ACM Symposium on Principles of Distributed Computing</em>[^1]上提出了CAP理论的猜想:</p>
+<p>a shared-data system can have at most two of the three following properties:</p>
+<ol>
+<li><strong>C</strong>onsistency:</li>
+<li><strong>A</strong>vailability</li>
+<li>tolerance to network <strong>P</strong>artitions.</li>
+</ol>
+<p>In 2002, Gilbert and Lynch[^2] 形式化地证明了该猜想.</p>
+<p>CAP理论揭示出分布式系统不可能同时满足CAP这三者.</p>
+<h1 id="Consistency"><a class="header-anchor" href="#Consistency"></a>Consistency</h1>
+<p>From Gilbert and Lynch<a target="_blank" rel="noopener" href="https://codahale.com/you-cant-sacrifice-partition-tolerance/#fn:2">^2</a>:</p>
+<blockquote>
+<p>Atomic, or linearizable, consistency is the condition expected by most web services today. Under this consistency guarantee, there must exist a total order on all operations such that <strong>each operation looks as if it were completed at a single instant</strong>. This is equivalent to requiring requests of the distributed shared memory to act as if they were executing on a single node, responding to operations one at a time.</p>
+</blockquote>
+<ul>
+<li>一致性( Consistency ): a system is consistent if <strong>an update is applied to all relevant nodes at the same <u>logical time</u>.</strong>
+<ul>
+<li>也就是说系统各节点的状态是一致的, 对多个节点的操作从结果上看就好像是对一个节点的操作, 不存在状态不一致的节点. 这也要求操作的原子性.</li>
+<li>比如, 所有节点访问同一份最新的数据副本.</li>
+<li>database replication不是强一致性的, 因为副本同步需要时间.</li>
+</ul>
+</li>
+<li>即使和全局的一致性是不可能的, 我们要求的只是相对而言的一致性( 即不一致状态的时间粒度很小, 小到没有影响 )</li>
+<li>关于一致性的实现, 有强一致性算法和最终一致性算法</li>
+</ul>
+<h2 id="Strong-Consistency"><a class="header-anchor" href="#Strong-Consistency"></a>Strong Consistency</h2>
+<p>//TODO</p>
+<p>Paxos：我最喜欢的图灵奖获得者Leslie Lamport于90年提出，几乎所有强一致性算法鼻祖.</p>
+<p>Raft(Paxos变种)：etcd使用</p>
+<p>ZAB(Paxos变种)：ZooKeeper使用</p>
+<h2 id="Eventual-Consistency-Algorithm"><a class="header-anchor" href="#Eventual-Consistency-Algorithm"></a>Eventual  Consistency Algorithm</h2>
+<p>DNS系统：域名解析，超过TTL逐步向上询问</p>
+<p>Gossip算法：逆熵算法，Cassandra中使用</p>
+<h2 id="Eventual-Consistency"><a class="header-anchor" href="#Eventual-Consistency"></a>Eventual Consistency</h2>
+<h1 id="Availability"><a class="header-anchor" href="#Availability"></a>Availability</h1>
+<p>Again from Gilbert and Lynch[^2]:</p>
+<blockquote>
+<p>For a distributed system to be continuously available, <strong>every request received by a non-failing node in the system must result in a response</strong>. That is, <strong>any algorithm used by the service must eventually terminate</strong> … [When] qualified by the need for partition tolerance, this can be seen as a strong definition of availability: even when severe network failures occur, every request must terminate.</p>
+</blockquote>
+<ul>
+<li>可用性(Availability): 每个对non-failing node的请求一定能被响应.
+<ul>
+<li>这里指的是<u>有效</u>的响应, 500服务器错误不是一次有效的响应.</li>
+</ul>
+</li>
+<li>绝对的可用性也是不可能的, 因为存在节点全部fail的情况</li>
+</ul>
+<h1 id="Partition-Tolerance"><a class="header-anchor" href="#Partition-Tolerance"></a>Partition Tolerance</h1>
+<p>Once more, Gilbert and Lynch<a target="_blank" rel="noopener" href="https://codahale.com/you-cant-sacrifice-partition-tolerance/#fn:2">2</a>:</p>
+<blockquote>
+<p>In order to model partition tolerance, <strong>the network will be allowed to lose arbitrarily many messages sent from one node to another</strong>. When a network is partitioned, all messages sent from nodes in one component of the partition to nodes in another component are lost. (And any pattern of message loss can be modeled as a temporary partition separating the communicating nodes at the exact instant the message is lost.)</p>
+</blockquote>
+<ul>
+<li>分区容错性(Partition tolerance): 系统能够容忍任意的网络分区故障.
+<ul>
+<li>这里的网络分区故障是指, 网络分成许多区域, 不同区域间不能互通</li>
+<li>网络丢包可以被认为是暂时的分区故障; node failure也可以被认为是分区故障, 因为所有发送给它的数据包都会丢失</li>
+<li>当然也存在不需要分区容错性的系统, 比如单机系统. 不过对于分布式系统, 都存在分区问题.</li>
+</ul>
+</li>
+<li>只要是分布是</li>
+</ul>
+<h2 id="P-is-Mandatory"><a class="header-anchor" href="#P-is-Mandatory"></a>P is Mandatory</h2>
+<p><strong>P is mandatory in distributed systems. You cannot not choose it.</strong></p>
+<p>我们可以假设一下, 如果有一个CA的系统, 它有三个节点$A, B, V$, 管理同一块数据. 由于网络分区, 节点被分裂为${A, B}$和${C}$, 此时有一个更新数据的写请求到达节点$C$. 此时$C$只有两种选择:</p>
+<ol>
+<li>接受这次写请求, 但是$A,B$ 在分区恢复前永远不知道数据已经被更新</li>
+<li>拒绝这次写请求, 直到分区恢复后再开始接受请求</li>
+</ol>
+<p>选择1只能保证可用性, 选择2只能保证一致性. 但没法同时保持CA.</p>
+<p>因此, 只要是分布式系统, 都<strong>必须保持P</strong>. 因此系统要么是CP, 要么是AP, 绝不可能是CA. 除非这个分布式系统能够在网络分区的情况下更新其他节点的状态, 但这是不可能的.</p>
+<h1 id="CAP-Tradeoff"><a class="header-anchor" href="#CAP-Tradeoff"></a>CAP: Tradeoff</h1>
+<h2 id="Consistency-Availability"><a class="header-anchor" href="#Consistency-Availability"></a>Consistency &gt; Availability</h2>
+<p>如果一个系统是CP的, 也就是提供一致性( C )而不是可用性( A ), 它将通过<strong>拒绝响应一些请求</strong>来保证其一致性( i.e. 原子读写, 事务)</p>
+<p>常见例子是大部分分布式数据库以及银行系统</p>
+<h2 id="Availability-Consistency"><a class="header-anchor" href="#Availability-Consistency"></a>Availability &gt; Consistency</h2>
+<p>如果一个系统是AP的, 也就是提供可用性( A ), 而不是一致性( C ), 它将对所有的请求做出响应，可能会返回旧的读和接受冲突的写.</p>
+<p>有很多数据模型可以接受旧的读, 比如金融行业, 淘宝, 12306 …</p>
+<h1 id="Yield-Harvest"><a class="header-anchor" href="#Yield-Harvest"></a>Yield &amp;&amp; Harvest</h1>
+<p>有许多种对分布式系统的度量, 其中很有名的是 Fox 和 Brewer在“Harvest, Yield, and Scalable Tolerant Systems”[^3]中提出的<strong>yield</strong> and <strong>harvest</strong>.</p>
+<ul>
+<li>
+<p><strong>yield</strong>: he probability of completing a request</p>
+<ul>
+<li>yield与&quot;正常运行时间&quot;很接近，但在实践中更有用，因为并非所有的时间都有同等价值. yield直接映射到用户体验. 在没有请求的情况下宕机一秒钟, 会减少正常运行时间, 但对用户或yield没有影响</li>
+</ul>
+</li>
+<li>
+<p><strong>harvest</strong>:  the fraction of the data reflected in the response, i.e. the completeness of the answer to the query.<br>
+$$<br>
+\mathrm{harvest}= \frac{\mathrm{total \ data}}{\mathrm{data \ available}}<br>
+$$</p>
+<ul>
+<li>例如, 假设我们在一个搜索引擎上工作，我们可以想象每个词都有单独的索引。使用 &quot;cute &quot;一词的网页的索引在$A$节点上，使用 &quot;婴儿 &quot;一词的网页的索引在$B$节点上，而 &quot;动物 &quot;一词的索引在$C$机器上。那么，搜索 “cute baby animals”，结合来自节点$A,B,C$的结果，${A,B,C}$将有100%的$\mathrm{harvest}$. 然而, 如果节点$BB$不可用，我们可能只返回 &quot;cute animals&quot;的结果，这将是一个66%的$\mathrm{harvest}$.</li>
+<li>例如, 一个存储文件版本的系统在一些节点瘫痪的情况下, 可以选择呈现它能找到的最新版本的文件，即使它知道这有可能不是它所存储的最新版本.</li>
+</ul>
+</li>
+<li>
+<p>关键在于, yield和harvest之间存在trade off. 在设计系统时要根据业务来侧重其中一方. Replicated systems 倾向于把fault等价为 reduced yield, 因为请求被拒绝了(为了同步); partitioned systems 倾向于把fault等价为 reduced harvest, 因为能够接受相同数量的请求, 但是某些分区中的数据不见了.</p>
+</li>
+</ul>
+<h1 id="BASE-Theory"><a class="header-anchor" href="#BASE-Theory"></a>BASE Theory</h1>
+<p>CAP理论描述了分布式系统的理想状态, BASE理论是一个更妥协的理论, 在实践中更有用:</p>
+<ul>
+<li><strong>B</strong>asically <strong>A</strong>vailable( 基本可用 ): 在出现故障时，允许部分可用性（基础可用）</li>
+<li><strong>S</strong>oft State( 软状态 ): 允许出现中间状态，不同节点之间数据不一致</li>
+<li><strong>E</strong>ventual Consistency( 最终一致性 ): 软状态不可持续, 在有限期限后应能保证数据的最终一致</li>
+</ul>
+<h1 id="Refs"><a class="header-anchor" href="#Refs"></a>Refs</h1>
+<p>[^1]: Brewer. <a target="_blank" rel="noopener" href="http://www.cs.berkeley.edu/~brewer/cs262b-2004/PODC-keynote.pdf">Towards robust distributed systems.</a> Proceedings of the Annual ACM Symposium on Principles of Distributed Computing (2000) vol. 19 pp. 7—10<br>
+[^2]: Gilbert and Lynch. <a target="_blank" rel="noopener" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.67.6951&amp;rep=rep1&amp;type=pdf">Brewer’s conjecture and the feasibility of consistent, available, partition-tolerant web services.</a> ACM SIGACT News (2002) vol. 33 (2) pp. 59<br>
+[^3]: Fox and Brewer. <a target="_blank" rel="noopener" href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.24.3690&amp;rep=rep1&amp;type=pdf">Harvest, yield, and scalable tolerant systems.</a> Hot Topics in Operating Systems, 1999. Proceedings of the Seventh Workshop on (1999) pp. 174—178</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Distributed-System/" rel="tag"># Distributed System</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/25/Python-Module/" rel="prev" title="Python Module">
+                  <i class="fa fa-chevron-left"></i> Python Module
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/26/Python-REGEX/" rel="next" title="Python REGEX">
+                  Python REGEX <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

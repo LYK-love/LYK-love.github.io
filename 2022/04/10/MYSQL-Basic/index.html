@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  CS Archetecture Apps Config Concurrency Control  Lock Transaction MVCC   Sotrage Engine  ref: Mysql是怎样运行的, 高性能Mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MYSQL Basic">
+<meta property="og:url" content="http://lyk-love.cn/2022/04/10/MYSQL-Basic/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  CS Archetecture Apps Config Concurrency Control  Lock Transaction MVCC   Sotrage Engine  ref: Mysql是怎样运行的, 高性能Mysql">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Database/Mysql%20Basic/CS%20Arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Database/Mysql%20Basic/undo%20log.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Database/Mysql%20Basic/MVCC%20example.png">
+<meta property="article:published_time" content="2022-04-09T16:45:48.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.934Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Database">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Database/Mysql%20Basic/CS%20Arch.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/04/10/MYSQL-Basic/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/04/10/MYSQL-Basic/","path":"2022/04/10/MYSQL-Basic/","title":"MYSQL Basic"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MYSQL Basic | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CS-Archetecture"><span class="nav-text">CS Archetecture</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86"><span class="nav-text">连接管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="nav-text">解析与优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E7%BC%93%E5%AD%98"><span class="nav-text">查询缓存</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%E8%A7%A3%E6%9E%90"><span class="nav-text">语法解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E8%AF%A2%E4%BC%98%E5%8C%96"><span class="nav-text">查询优化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="nav-text">存储引擎</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Apps"><span class="nav-text">Apps</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql-Server"><span class="nav-text">Mysql Server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql-Client"><span class="nav-text">Mysql Client</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Config"><span class="nav-text">Config</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-text">配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%8F%98%E9%87%8F"><span class="nav-text">系统变量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6"><span class="nav-text">并发控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lock"><span class="nav-text">Lock</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#table-lock"><span class="nav-text">table lock</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#row-lock"><span class="nav-text">row lock</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transaction"><span class="nav-text">Transaction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ACID"><span class="nav-text">ACID</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="nav-text">隔离级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql%E7%9A%84%E4%BA%8B%E5%8A%A1"><span class="nav-text">Mysql的事务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8B%E5%8A%A1%E6%97%A5%E5%BF%97"><span class="nav-text">事务日志</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MVCC"><span class="nav-text">MVCC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E4%B8%AA%E9%9A%90%E8%97%8F%E5%AD%97%E6%AE%B5"><span class="nav-text">三个隐藏字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Read-View"><span class="nav-text">Read View</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Undo-log"><span class="nav-text">Undo log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVCC%E6%9B%B4%E6%96%B0%E8%A1%8C%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-text">MVCC更新行的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVCC%E6%9F%A5%E8%AF%A2%E8%A1%8C%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-text">MVCC查询行的原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%93%E5%89%8D%E8%AF%BB%E5%92%8C%E5%BF%AB%E7%85%A7%E8%AF%BB"><span class="nav-text">当前读和快照读</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E-2"><span class="nav-text">存储引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Innodb"><span class="nav-text">Innodb</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Myisam"><span class="nav-text">Myisam</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSV"><span class="nav-text">CSV</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory"><span class="nav-text">Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E8%A1%A8%E7%9A%84%E5%BC%95%E6%93%8E"><span class="nav-text">转换表的引擎</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/04/10/MYSQL-Basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MYSQL Basic | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MYSQL Basic
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-09 16:45:48" itemprop="dateCreated datePublished" datetime="2022-04-09T16:45:48Z">2022-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>CS Archetecture</li>
+<li>Apps</li>
+<li>Config</li>
+<li>Concurrency Control
+<ul>
+<li>Lock</li>
+<li>Transaction</li>
+<li>MVCC</li>
+</ul>
+</li>
+<li>Sotrage Engine</li>
+</ul>
+<p>ref: <em>Mysql是怎样运行的</em>, <em>高性能Mysql</em></p>
+<span id="more"></span>
+<h1 id="CS-Archetecture"><a class="header-anchor" href="#CS-Archetecture"></a>CS Archetecture</h1>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Database/Mysql%20Basic/CS%20Arch.png" alt="CS Arch"></p>
+<ul>
+<li>
+<p>Mysql采用CS模式，CS之间通过TCP通信，Server默认监听3306端口，也可以手动指定</p>
+<ul>
+<li>如果CS都运行在同一台机器上，则默认使用Unix Socket通信， Server默认监听的Socket为<code>/var/run/mysqld/mysqld.sock</code>，也可以手动指定</li>
+</ul>
+</li>
+<li>
+<p>和Servlet一样，每当一个Client连接到Server， 后者都会创建一个线程与该Client交互，当Client退出后，该线程会被缓存起来，并被之后的Client复用</p>
+</li>
+<li>
+<p>Server拥有一个存储引擎API，来屏蔽底层存储引擎的差异。 Server通过API和存储引擎通信</p>
+</li>
+</ul>
+<h2 id="连接管理"><a class="header-anchor" href="#连接管理"></a>连接管理</h2>
+<p>连接建立后，Mysql Server会接收到Client的请求，请求（即查询语句）是文本格式</p>
+<h2 id="解析与优化"><a class="header-anchor" href="#解析与优化"></a>解析与优化</h2>
+<h3 id="查询缓存"><a class="header-anchor" href="#查询缓存"></a>查询缓存</h3>
+<p>由于维护缓存需要性能开销，Mysql 8.0开始已经没有查询缓存了</p>
+<p>查询缓存就是对查询语句的结果做缓存，由于查询语句是文本格式，所以任何字符上的不同都会导致cache miss. 任何更新表的操作都会刷新缓存</p>
+<h3 id="语法解析"><a class="header-anchor" href="#语法解析"></a>语法解析</h3>
+<p>相当于编译过程</p>
+<h3 id="查询优化"><a class="header-anchor" href="#查询优化"></a>查询优化</h3>
+<p>优化结构生成执行计划</p>
+<p>优化器不关心表的存储引擎，但后者又对查询有影响，因此优化器会请求存储引擎来提供信息</p>
+<h2 id="存储引擎"><a class="header-anchor" href="#存储引擎"></a>存储引擎</h2>
+<p>查看Server支持的存储引擎:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">show engines</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Transactions</code>列表示是否支持事务处理</li>
+<li><code>Savepoints</code>列表示是否支持事务的部分回滚</li>
+</ul>
+<p>指定存储引擎（默认是Innodb）：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE [table_name](</span><br><span class="line">...</span><br><span class="line">)ENGINE = [engine_name]</span><br></pre></td></tr></table></figure>
+<p>修改表的存储引擎：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ALTER TABLE [table_name] ENGINE = Innodb</span><br></pre></td></tr></table></figure>
+<p>查看表的存储结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW CREATE TABLE [table_name]]\G</span><br></pre></td></tr></table></figure>
+<h1 id="Apps"><a class="header-anchor" href="#Apps"></a>Apps</h1>
+<p>Mysql是一组程序，包括了可执行文件，shell脚本等</p>
+<p>Linux下，Mysql安装目录：<code>/usr/bin</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ ls /usr/bin | grep mysql</span><br><span class="line">mysql</span><br><span class="line">mysql_config_editor</span><br><span class="line">mysql_migrate_keyring</span><br><span class="line">mysql_secure_installation</span><br><span class="line">mysql_ssl_rsa_setup</span><br><span class="line">mysql_tzinfo_to_sql</span><br><span class="line">mysql_upgrade</span><br><span class="line">mysqladmin</span><br><span class="line">mysqlanalyze</span><br><span class="line">mysqlbinlog</span><br><span class="line">mysqlcheck</span><br><span class="line">mysqld_multi</span><br><span class="line">mysqld_safe</span><br><span class="line">mysqldump</span><br><span class="line">mysqldumpslow</span><br><span class="line">mysqlimport</span><br><span class="line">mysqloptimize</span><br><span class="line">mysqlpump</span><br><span class="line">mysqlrepair</span><br><span class="line">mysqlreport</span><br><span class="line">mysqlshow</span><br><span class="line">mysqlslap</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一般安装时会自动将这些可执行文件添加到环境变量<code>PATH</code></li>
+</ul>
+<h2 id="Mysql-Server"><a class="header-anchor" href="#Mysql-Server"></a>Mysql Server</h2>
+<ul>
+<li><code>mysqld</code>: Mysql Server程序, 运行该程序就启动了一个Mysql Server进程，但该文件一般不常用，我们一般用脚本启动
+<ul>
+<li><code>-P</code>: 指定Server监听的端口，默认是3306</li>
+<li><code>--default-storage-engine=[engine_name]</code>: 指定默认存储引擎</li>
+<li><code>--skip_networking</code>:禁止使用TCP通信，即Client无法用ip来与Server通信</li>
+</ul>
+</li>
+<li><code>mysqld_safe</code>: 是一个Shell脚本，间接调用<code>mysqld</code>并持续监控Server的运行状态，并将Server的出错信息输出到错误日志
+<ul>
+<li>对于传递给<code>mysqld_safe</code>的启动选项，如果它处理不了，会被转发到<code>mysqld</code></li>
+</ul>
+</li>
+<li><code>mysqld_nulti</code>: Shell脚本，用于启动或停止多个Server实例</li>
+</ul>
+<h2 id="Mysql-Client"><a class="header-anchor" href="#Mysql-Client"></a>Mysql Client</h2>
+<ul>
+<li>
+<p><code>mysql</code>: Mysql Client程序，用法为：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysql -h [hostname] -u [username] -p [password]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-h</code>: Server进程所在的主机的域名or IP地址，如果Server就运行在本机，可以省略这个参数, 长参数形式为：<code>--host=[hostname]</code></li>
+<li><code>-u</code>: 用户名, 长参数形式为：<code>--user=[username]</code>, 缺省则为当前Linux登陆用户</li>
+<li><code>-p</code>:	密码, 长参数形式为：<code>--password=[password]</code></li>
+<li><code>-P</code>: 指定需要连接的Server的端口，默认是3306</li>
+</ul>
+</li>
+<li>
+<p>退出mysql：<code>exit</code>, <code>quit</code></p>
+</li>
+</ul>
+<h1 id="Config"><a class="header-anchor" href="#Config"></a>Config</h1>
+<p>命令行指定的配置只对当次启动生效，可以在mysql配置文件里指定配置</p>
+<ul>
+<li>命令行的配置会覆盖配置文件的配置</li>
+<li>配置文件中，个人的配置会覆盖全局的配置</li>
+</ul>
+<h2 id=""><a class="header-anchor" href="#"></a></h2>
+<h2 id="配置文件"><a class="header-anchor" href="#配置文件"></a>配置文件</h2>
+<p>Mysql配置文件位置：</p>
+<ul>
+<li>
+<p>Global: <code>/etc/mysql/my.cnf</code></p>
+</li>
+<li>
+<p>Personal: <code>~/.my.cnf</code></p>
+</li>
+</ul>
+<p>配置文件分多个组， <code>[server]</code>, <code>[client]</code>, <code>[mysqld]</code>这些， 对应名字的程序/脚本启动时会读取对应组的部分， 比如<code>mysqld</code>会读取<code>[mysqld]</code>的配置， <code>mysqld_safe</code>会读取<code>[mysqld_safe]</code>，当然，<code>mysqld_safe</code>会调用<code>mysqld</code>, 因此也会间接读取<code>[mysqld]</code></p>
+<ul>
+<li>所有Server程序都会读取<code>[server]</code></li>
+<li>所有Client程序都会读取<code>[client]</code></li>
+<li>如果一个程序间接调用了另一个程序，则后者的配置也会被读取， 如 <code>mysqld_safe</code>会读取<code>[mysqld_safe]</code>，由于<code>mysqld_safe</code>会调用<code>mysqld</code>, 因此也会间接读取<code>[mysqld]</code></li>
+</ul>
+<h3 id="系统变量"><a class="header-anchor" href="#系统变量"></a>系统变量</h3>
+<p>通过命令行和配置文件进行的配置，会被读取为系统变量，系统变量的作用域分为GLOBAL和SESSION</p>
+<ul>
+<li>GLOBAL：对Server有效， 每次Server启动时，根据配置来初始化GLOBAL变量</li>
+<li>SESSION：对当次会话有效，即只对某个Client的连接有效。 SESSION变量在连接时根据相应GLOBAL变量的值来初始化
+<ul>
+<li>更改GLOBAL变量的值只会影响到之后接入的SESSION， 之前的SESSION变量不会被改变</li>
+</ul>
+</li>
+</ul>
+<p>不是所有的系统变量都具有这两种作用范围，有些只具有GLOBAL范围，如<code>max_connections</code>;有些只具有SESSION范围，<code>insert_id</code></p>
+<p>有些系统变量是只读的，如<code>version</code></p>
+<p>查看系统变量：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW [scope] VARIABLES [LIKE [pattern]]</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>[scope]</code>: 取值为<code>GLOBAL</code>, <code>SESSION</code>， 即查看指定作用域的变量</li>
+</ul>
+<h1 id="并发控制"><a class="header-anchor" href="#并发控制"></a>并发控制</h1>
+<ul>
+<li>
+<p>每种存储引擎都可以实现自己的锁策略和锁粒度</p>
+</li>
+<li>
+<p>Mysql Server不管理事务，事务由下层的存储引擎实现（当然这只是理论上，事实上server层可能会加table lock）</p>
+</li>
+<li>
+<p><strong>不要使用多个存储引擎</strong>， 否则在一个事务中混合了采用多个存储引擎的表，有的支持事务，有的不支持，就会出现各种问题</p>
+</li>
+<li>
+<p>Innodb采用两阶段锁定协议，在事务执行时随时都可以锁定，锁只有在执行<code>COMMIT</code>或<code>ROLLBACK</code>后才会释放，且所有锁都在同一时刻释放</p>
+</li>
+<li>
+<p>InnoDB使用锁机制和MVCC进行并发控制, 并通过next-key locking防止幻读</p>
+</li>
+</ul>
+<h2 id="Lock"><a class="header-anchor" href="#Lock"></a>Lock</h2>
+<p>Innodb处理死锁的方案：将持有最少行级排他锁的事务进行回滚</p>
+<p>下面介绍一些基本的锁策略:</p>
+<h3 id="table-lock"><a class="header-anchor" href="#table-lock"></a>table lock</h3>
+<p>Myisam使用表锁</p>
+<p>存储引擎管理自己的锁，但server也可能会主动加table lock</p>
+<ul>
+<li>Server会对<code>ALTER TABLE</code>之类的语句使用table lock，而忽略存储引擎的锁机制</li>
+</ul>
+<h3 id="row-lock"><a class="header-anchor" href="#row-lock"></a>row lock</h3>
+<p>Innodb使用行级锁</p>
+<p>行级锁的粒度更细，对并发的支持更好，开销也更大， row lock只在存储引擎中实现，<u>与Server无关</u></p>
+<h2 id="Transaction"><a class="header-anchor" href="#Transaction"></a>Transaction</h2>
+<h3 id="ACID"><a class="header-anchor" href="#ACID"></a>ACID</h3>
+<ul>
+<li>atomicity</li>
+<li>consistency: 数据库总是从一个一致性的状态转换到另一个一致性的状态</li>
+<li>isolation: 一个事务在提交之前，对其他事务不可见</li>
+<li>duality: 事务提交后必须被持久化（持久性也分不同的级别，没有策略能保证100%对持久性）</li>
+</ul>
+<h3 id="隔离级别"><a class="header-anchor" href="#隔离级别"></a>隔离级别</h3>
+<ul>
+<li>
+<p>READ UNCOMMITTED: 事务中的修改，即使未提交， 对其他事物也是可见的。 事务可以读取未提交的数据，也称为脏读</p>
+</li>
+<li>
+<p>READ COMMITTED: 满足了隔离性（一个事务从开始直到提交之前，所做的任何修改对其他事务不可见）， 避免了脏读，存<strong>在不可重复读、幻读问题</strong></p>
+<ul>
+<li>可重复读：在同一个事务中多次读取同样的记录的结果是一致的</li>
+<li>MVCC对该级别的实现就是每次进行普通的select查询，都会产生一个新的快照(不同时间，当前活跃的事务不同，行记录最近一次更新的事务ID也可能不同)。相当于二级锁协议，进行读操作需要加读锁，读完就释放锁</li>
+</ul>
+</li>
+<li>
+<p>REPEATABLE READ: Mysql默认级别。 避免了脏读和不可重复读，但存在幻读（ Phantom Read ）问题</p>
+<ul>
+<li>
+<p>幻读：当某个事物读取某个范围内的记录时， 另一个事务又在该范围插入了新的纪录， 当之前的事务再次读取该范围的记录时，会产生幻行</p>
+</li>
+<li>
+<p>Innodb和Xtradb通过Next-Key Locks算法的间隙锁和记录锁解决了幻读</p>
+</li>
+<li>
+<p>MVCC对该级别的实现就是在当前事务中只有第一次进行普通的select查询，才会产生快照，此后这个事务一直使用这一个快照进行查询，相当于三级锁协议，进行读操作需要加读锁，事务结束才释放</p>
+</li>
+</ul>
+</li>
+<li>
+<p>SERIALIZABLE: 强制事务串行执行</p>
+</li>
+</ul>
+<p>Mysql能识别所有隔离级别，Innodb也支持所有隔离级别</p>
+<p>设置当前会话隔离级别，在下一个事务开始时生效：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SET TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>可以在配置文件中设置GLOBAL的隔离级别</li>
+</ul>
+<h3 id="Mysql的事务"><a class="header-anchor" href="#Mysql的事务"></a>Mysql的事务</h3>
+<p>Mysql默认采用自动提交模式，每个查询都是一个事务， 可以修改<code>AUTOCOMMIT</code>变量来启用/禁用该模式</p>
+<ul>
+<li>禁用自动提交后， 所有查询都在一个事务中，直到显示地执行<code>COMMIT</code>提交或<code>ROLLBACK</code>回滚</li>
+<li>该模式对不支持事务的表，如Myisam, Memory等， 没有影响</li>
+</ul>
+<p>某些命令在执行前会强制执行<code>COMMIT</code>提交当前的事务</p>
+<ul>
+<li><code>ALTER TABLE</code>, <code>LOCK TABLE</code></li>
+</ul>
+<h3 id="事务日志"><a class="header-anchor" href="#事务日志"></a>事务日志</h3>
+<p>事务日志采用追加方式，这样日志就在磁盘中占用连续的区域，写日志非常快</p>
+<p>预写式日志：先写入日志，再写入数据，两次写磁盘</p>
+<h2 id="MVCC"><a class="header-anchor" href="#MVCC"></a>MVCC</h2>
+<p>ref: <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41008202/article/details/105559613">MVCC</a></p>
+<p>Multi Version Concurrency Control: 多版本并发控制，支持MVCC的数据库表中<strong>每一行数据都可能存在多个版本</strong>，对数据库的任何修改的提交都不会直接覆盖之前的数据，而是产生一个新的版本与老版本共存，通过读写数据时<strong>读不同的版本来避免加锁阻塞</strong>（写写还是要阻塞等待，因为事务对数据进行更新时会加上排他锁)，MVCC的具体实现依赖于存储引擎，这里只介绍Innodb的MVCC</p>
+<ul>
+<li>实现：在每个表中添加三个隐藏字段以及事务在查询时创建快照（read view），以及建立数据版本链(Undo log)</li>
+<li>InnoDB支持多版本数据，<strong>在更新或者删除数据时，并不会立马删除原有行记录，而是将旧版本存入回滚段中的Undo log内，并通过回滚指针形成一个数据链，可以通过这个指针访问链上的历代数据版本</strong>，正是这种机制使得数据库数据产生了多个版本，为通过MVCC进行快照读提供了可能</li>
+<li>并不是所有的查询都是进行快照读，使用普通的select 语句进行查询时会生成快照，进行快照读；使用select … lock in share mode，select … for update，insert，update，delete 语句等语句进行查询或者更新时还是会使用锁机制，进行锁阻塞。</li>
+<li>使用MVCC的作用(意义)是非阻塞的解决了事务读写冲突，提高了并发性能</li>
+<li>MVCC工作在READ COMMITED和REPEATABLE READ两种隔离级别下</li>
+</ul>
+<h3 id="三个隐藏字段"><a class="header-anchor" href="#三个隐藏字段"></a>三个隐藏字段</h3>
+<p>InnoDB会为每个使用InnoDB存储引擎的表添加三个隐藏字段，用于实现数据多版本以及聚集索引：</p>
+<ul>
+<li>
+<p>A 6-byte <code>DB_TRX_ID</code> field: 对该行的最后一次插入/更新的事务号， 删除也是一种更新，只是标记一下该行的deleted bit</p>
+<ul>
+<li>设置删除位并不会真的进行物理删除，当InnoDB丢弃为删除而编写的更新撤消日志记录时，它才会物理删除相应的行及其索引记录。此删除操作称为清除，速度非常快</li>
+<li>这意味着<strong>每行都有一个事务号</strong></li>
+</ul>
+</li>
+<li>
+<p>A 7-byte <code>DB_ROLL_PTR</code> field:  called the roll pointer. The roll pointer <strong>points to an undo log record</strong> written to the rollback segment. If the row was updated, the undo log record contains the information necessary to rebuild the content of the row before it was updated.   回滚指针，指向当前记录行的undo log信息(存储该数据的前一个版本)</p>
+</li>
+<li>
+<p>A 6-byte <code>DB_ROW_ID</code> field:  随着新行插入而单调递增的行ID。InnoDB使用聚簇索引，数据存储是以聚簇索引字段的大小顺序进行存储的，当表没有主键或唯一非空索引时，innodb就会使用这个行ID自动产生聚簇索引。如果表有主键或唯一非空索引，聚簇索引就不会包含这个行ID了。该字段跟MVCC关系不大</p>
+</li>
+</ul>
+<h3 id="Read-View"><a class="header-anchor" href="#Read-View"></a>Read View</h3>
+<p>read view是读视图，其实就是一种快照，里面记录了系统中当前活跃事务的ID以及相关信息，主要用途是用来做可见性判断，判断当前事务是否有资格访问该行数据(详情下解)。read view有多个变量，这里只介绍关键部分：</p>
+<ul>
+<li>
+<p><code>trx_ids</code>: 活跃事务列表，也就是Read View开始创建时<strong>其他未提交的活跃事务的ID列表</strong>。例如事务A在创建read view(快照)时，数据库中事务B和事务C还没提交或者回滚结束事务，此时trx_ids就会将事务B和事务C的事务ID记录下来</p>
+</li>
+<li>
+<p><code>low_limit_id</code>： 目前出现过的最大的事务ID+1，即下一个将被分配的事务ID</p>
+</li>
+<li>
+<p><code>up_limit_id</code>： 活跃事务列表trx_ids中最小的事务ID，如果trx_ids为空，则up_limit_id 为 low_limit_id，虽然该字段名为up_limit,但在trx_ids中的活跃事务号是降序的，所以最后一个为最小活跃事务ID</p>
+<ul>
+<li>如果当前行的事务号小于<code>up_limit_id</code>, 则说明该行的最后一次更新在当前的Read View中最早的事务开始之前已经提交了</li>
+</ul>
+</li>
+<li>
+<p><code>creator_trx_id</code>： 当前创建read view的事务的ID</p>
+</li>
+</ul>
+<h3 id="Undo-log"><a class="header-anchor" href="#Undo-log"></a>Undo log</h3>
+<p>Undo log中存储老版本数据，当一个事务需要读取记录行时，如果当前记录行不可见，可以通过roll pointer顺着undo log链找到满足其可见性条件的记录行版本</p>
+<p>在InnoDB里，undo log分为如下两类：</p>
+<ol>
+<li><code>insert undo log</code> : 事务对insert新记录时产生的undo log, 只在事务回滚时需要, 并且在事务提交后就可以立即丢弃。</li>
+<li><code>update undo log</code> : 事务对记录进行delete和update操作时产生的undo log，不仅在事务回滚时需要，快照读也需要，只有当数据库所使用的快照中不涉及该日志记录，对应的回滚日志才会被purge线程删除</li>
+</ol>
+<p>Purge线程：上文提到了InnoDB删除一个行记录时，并不是立刻物理删除，而是将该行数据的DB_TRX_ID字段更新为做删除操作的事务ID，并将删除位deleted_bit设置为true(已删除)，将其放入update undo log中。为了节省磁盘空间，<u>InnoDB有专门的purge线程来清理deleted_bit为true的记录</u>。purge线程自己也维护了一个read view，如果某个记录的deleted_bit为true，并且DB_TRX_ID相对于purge线程的read view可见，那么这条记录一定是可以被安全清除的。</p>
+<h3 id="MVCC更新行的原理"><a class="header-anchor" href="#MVCC更新行的原理"></a>MVCC更新行的原理</h3>
+<p>MVCC机制下实现更新还是会用到排他锁，但由于我们读的时候可以通过快照读，读多个版本避免了使用共享锁，因此可以使得读事务不会因为写事务阻塞。MVCC的优越性在于事务需要读行记录的时候不会因为有事务在更新该行记录而阻塞,事务在写行记录时也不会因为有事务在读数据而阻塞。</p>
+<p>更新原理: 假设我现在需要修改行记录A,他们的修改过程如下，</p>
+<ol>
+<li>MVCC更新行记录A时会先用排他锁锁住该行记录A；</li>
+<li>然后将该行记录复制到update undo log中，生成旧版本行记录B；</li>
+<li>使行记录A的回滚指针指向这条旧版本B，再在行记录A中修改用户需要修改的字段，并将DB_TRX_ID字段更新为更新这条记录的事务ID；</li>
+<li>最后提交事务。(用户需要修改的字段指的是业务字段，比如我们要修改name等)</li>
+</ol>
+<p>通过回滚指针，形成了一条当前行记录指向历代旧版本行记录的链表，通过这条链表，我们就可以查询该行记录的多个旧版本:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Database/Mysql%20Basic/undo%20log.png" alt="undo log"></p>
+<h3 id="MVCC查询行的原理"><a class="header-anchor" href="#MVCC查询行的原理"></a>MVCC查询行的原理</h3>
+<p>InnoDB中，事务在第一次进行普通的select查询时，会创建一个read view(快照)，用于可见性判断，事务只能查询到行记录对于事务来说可见的数据版本。可见性判断是通过行记录的DB_TRX_ID(最近一次插入/更新/删除该行记录的事务ID)以及read view中的变量比较来判断。</p>
+<p>查询过程如下:</p>
+<ol>
+<li>
+<p>如果 $\mathrm{DB \underline{ } TRX \underline{ }ID} &lt; \mathrm{up\underline{ }limit \underline{ } id}$</p>
+<p>表明这个行记录最近一次更新在当前事务创建快照之前就已经提交了，该记录行的值对当前事务是可见的，当前事务可以访问该行记录，跳到步骤(4)。</p>
+</li>
+<li>
+<p>如果$\mathrm{DB \underline{ } TRX \underline{ }ID} \ge \mathrm{low \underline{ } limit \underline{ } id}$</p>
+<p>表明这个行记录最近一次更新是快照创建之后才创建的事务完成的，该记录行的值对当前事务是不可见的，当前事务不可以访问该行记录。因此当前事务只能访问比该行记录更旧的数据版本。通过该记录行的 DB_ROLL_PTR 指针，找到更旧一版的行记录，取出更旧一版的行记录的事务号DB_TRX_ID，然后跳到步骤(1)重新判断当前事务是否有资格访问该行记录。</p>
+</li>
+<li>
+<p>如果$\mathrm{up\underline{ }limit \underline{ } id} \le \mathrm{DB \underline{ } TRX \underline{ }ID} &lt; \mathrm{low \underline{ } limit \underline{ } id} $</p>
+<p>则表明对这个行记录最近一次更新的事务可能是活跃列表中的事务也可能是已经成功提交的事务(事务ID号大的事务可能会比ID号小的事务先进行提交)，比如说初始时有5个事务在并发执行，事务ID分别是1001~1005，1004事务完成提交，1001事务进行普通select的时候创建的快照中活跃事务列表就是1002、1003、1005。因此up_limit_id就是1002， low_limit_id就是1006。对于这种情况，我们需要在活跃事务列表中进行遍历(因为活跃事务列表中的事务ID是有序的，因此用二分查找)，确定DB_TRX_ID是否在活跃事务列表中。</p>
+<ol>
+<li>若不在，说明对这个行记录最近一次更新的事务是在创建快照之前提交的事务，此行记录对当前事务是可见的，也就是说当前事务有资格访问此行记录，跳到步骤(4)。</li>
+<li>若在，说明对这个行记录最近一次更新的事务是当前活跃事务，在快照创建过程中或者之后完成的数据更新，此行记录对当前事务是不可见的(若可见则会造成脏读、不可重复读等问题)。因此当前事务只能访问该行记录的更旧的版本数据。通过该记录行的 <code>DB_ROLL_PTR</code> 指针，找到更旧一版的行记录，取出更旧一版的行记录的事务号<code>DB_TRX_ID</code>，然后跳到步骤(1)重新判断当前事务是否有资格访问该行记录。</li>
+</ol>
+</li>
+<li>
+<p>可以访问，将该行记录的值返回</p>
+</li>
+</ol>
+<h3 id="当前读和快照读"><a class="header-anchor" href="#当前读和快照读"></a>当前读和快照读</h3>
+<p>快照读:使用普通的select 语句进行查询时会生成快照，进行快照读，快照读不会上锁，根据可见性判断，来决定是读取该行记录的最新版本还是旧版本。(只有使用普通的select语句进行查询才会用到快照读，才享受到了MVCC机制的读写非阻塞的优越性)</p>
+<p>当前读:使用select … lock in share mode，select … for update，insert，update，delete 语句等语句进行查询或者更新时，会使用相应的锁进行锁定，查询到的肯定数据库中该行记录的最新版本。</p>
+<h3 id="示例"><a class="header-anchor" href="#示例"></a>示例</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Database/Mysql%20Basic/MVCC%20example.png" alt="MVCC example"></p>
+<h1 id="存储引擎-2"><a class="header-anchor" href="#存储引擎-2"></a>存储引擎</h1>
+<p>Mysql将每个数据库（即schema）保存为数据目录下的一个字目录，创建表时，会在数据库字目录下创建一个和表同名的<code>.frm</code>文件保存表的定义</p>
+<p>查看表的相关信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">show table status like &#x27;[pattern]&#x27;\G;</span><br></pre></td></tr></table></figure>
+<p>或者查看<code>INFORMATION_SCHEMA</code></p>
+<table>
+<thead>
+<tr>
+<th>功能</th>
+<th>MylSAM</th>
+<th>MEMORY</th>
+<th>InnoDB</th>
+<th>Archive</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存储限制</td>
+<td>256TB</td>
+<td>RAM</td>
+<td>64TB</td>
+<td>None</td>
+</tr>
+<tr>
+<td>支持事务</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>支持全文索引</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>支持树索引</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>支持哈希索引</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>支持数据缓存</td>
+<td>No</td>
+<td>N/A</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>支持外键</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Innodb"><a class="header-anchor" href="#Innodb"></a>Innodb</h2>
+<p>Mysql默认的存储引擎</p>
+<p>Innodb的数据存储在tablespace中，tablespace是由Innodb管理的黑盒</p>
+<h2 id="Myisam"><a class="header-anchor" href="#Myisam"></a>Myisam</h2>
+<p>不支持事务和行级锁，只使用表锁</p>
+<p>Myisam将表分别存储为数据文件(<code>.myd</code>)和索引文件(<code>.myi</code>)</p>
+<p>Myisam可以创建压缩表，如果对表不再进行修改操作，那么可以讲该表压缩.这可以极大地减少空间占用</p>
+<ul>
+<li>工具：<code>myisampack</code></li>
+<li>压缩表也支持索引，但索引是只读的</li>
+<li>压缩表是按行压缩的，不是整表压缩。因此解压也只需要解压某些行</li>
+</ul>
+<h2 id="CSV"><a class="header-anchor" href="#CSV"></a>CSV</h2>
+<p>可以将CSV文件和Mysql的表做转换</p>
+<h2 id="Memory"><a class="header-anchor" href="#Memory"></a>Memory</h2>
+<p>所有数据都在内存，没有磁盘IO</p>
+<ul>
+<li>即重启后数据会丢失，但表结构会保留</li>
+</ul>
+<p>支持Hash索引</p>
+<p>使用table lock，并发程度低</p>
+<p>Mysql的临时表一般是Memoey表</p>
+<ul>
+<li>临时表是使用<code>CREATE TEMPORARY TABLE</code>创建的表，可以采用任何存储引擎，Memory只是默认采用的存储引擎</li>
+</ul>
+<h2 id="转换表的引擎"><a class="header-anchor" href="#转换表的引擎"></a>转换表的引擎</h2>
+<ol>
+<li>
+<p>ALTER TABLE</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ALTER TABLE [table-name] ENGINE=[engine-name]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>先将表导出（<code>mysqldump</code>），然后修改sql文件的CREATE TABLE语句的存储引擎选项，还要修改表名（因为同一个数据库不允许重名的表）</p>
+</li>
+<li>
+<p>创建一个新的存储引擎的表，然后用INSERT…SELECT来导入数据</p>
+</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Database/" rel="tag"># Database</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/10/MYSQL-Management/" rel="prev" title="MYSQL Management">
+                  <i class="fa fa-chevron-left"></i> MYSQL Management
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/04/11/String-Algorithms/" rel="next" title="String Algorithms">
+                  String Algorithms <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

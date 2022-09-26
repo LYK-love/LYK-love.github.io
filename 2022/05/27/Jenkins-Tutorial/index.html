@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Jenkins SCM Access Token Credentials Webhook slave Jenkinsfile 日志">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins Tutorial">
+<meta property="og:url" content="http://lyk-love.cn/2022/05/27/Jenkins-Tutorial/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Jenkins SCM Access Token Credentials Webhook slave Jenkinsfile 日志">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-05-26T22:48:57.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.931Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="CICD">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/05/27/Jenkins-Tutorial/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/05/27/Jenkins-Tutorial/","path":"2022/05/27/Jenkins-Tutorial/","title":"Jenkins Tutorial"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Jenkins Tutorial | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Jenkins"><span class="nav-text">Jenkins</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E9%99%86"><span class="nav-text">登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5jenkins%E5%AE%B9%E5%99%A8"><span class="nav-text">进入jenkins容器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCM"><span class="nav-text">SCM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Access-Token"><span class="nav-text">Access Token</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Credentials"><span class="nav-text">Credentials</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0Credential"><span class="nav-text">添加Credential</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#webhook"><span class="nav-text">webhook</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#slave"><span class="nav-text">slave</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0slave"><span class="nav-text">添加slave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jenkinsfile"><span class="nav-text">Jenkinsfile</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9slave"><span class="nav-text">选择slave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workspace"><span class="nav-text">workspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example"><span class="nav-text">example</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E5%BF%97"><span class="nav-text">日志</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/05/27/Jenkins-Tutorial/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Jenkins Tutorial | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Jenkins Tutorial
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-05-26 22:48:57" itemprop="dateCreated datePublished" datetime="2022-05-26T22:48:57Z">2022-05-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Jenkins</li>
+<li>SCM</li>
+<li>Access Token</li>
+<li>Credentials</li>
+<li>Webhook</li>
+<li>slave</li>
+<li>Jenkinsfile</li>
+<li>日志</li>
+</ul>
+<span id="more"></span>
+<h1 id="Jenkins"><a class="header-anchor" href="#Jenkins"></a>Jenkins</h1>
+<p>Jenkins是一个开源的CICD工具</p>
+<h2 id="安装"><a class="header-anchor" href="#安装"></a>安装</h2>
+<p>建议以容器形式安装并运行jenkins</p>
+<p>容器形式运行jenkins，需要注意jenkins的数据持久化， jenkins的数据目录为<code>/var/jenkins_home</code> ， 需要将其挂载到宿主机的某个目录</p>
+<p>注意，以容器形式运行的jenkins，其<strong>主体是容器</strong>，因此后续配置SSH 公钥，SSH私钥等等操作，都是对于Jenkins容器（而非宿主机）的。 甚至Jenkins容器对宿主机的ssh登陆也需要手动配置</p>
+<ol>
+<li>
+<p>pull镜像：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull jenkins/jenkins</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>启动容器：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d -uroot -p 8081:8080 -p 50000:50000 --name jenkins -v /home/jenkins_home:/var/jenkins_home -v /etc/localtime:/etc/localtime jenkins/jenkins</span><br><span class="line"></span><br><span class="line">参数说明：</span><br><span class="line">-d                 	 # -d:后台启动</span><br><span class="line">-u root              # 指定容器的用户</span><br><span class="line">--name jenkins       # 容器实例名</span><br><span class="line">--restart=always     # 容器随docker自启动，因为重启docker时，默认容器都会被关闭</span><br><span class="line">-p                   # -p host_port:container_port: 指定将主机的端口映射到容器的端口</span><br><span class="line">-v                   # 映射目录（给容器挂载存储卷）</span><br><span class="line">-e                   # 指定环境变量</span><br><span class="line"></span><br><span class="line">注意：</span><br><span class="line">1. 将宿主机端口映射到容器端口，映射端口不要和宿主机冲突</span><br><span class="line">2. 将容器对应的数据目录映射到宿主机上（实现数据持久化）</span><br><span class="line">3. 将宿主机node、maven等前后台构建工具（环境变量）映射到容器中</span><br><span class="line">4. Jenkins镜像创建的容器自带Git工具（/usr/bin/git）</span><br><span class="line">5. Jenkins镜像创建的容器自带java环境（/usr/local/openjdk-8/bin/java）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>接下来就可以通过浏览器访问jenkins</p>
+</li>
+</ol>
+<h2 id="登陆"><a class="header-anchor" href="#登陆"></a>登陆</h2>
+<p>密码保存在容器的<code>/var/jenkins_home/secrets/initialAdminPassword</code>中，如果忘记了登录密码，可以查看该文件</p>
+<h2 id="进入jenkins容器"><a class="header-anchor" href="#进入jenkins容器"></a>进入jenkins容器</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container exec jenkins bash</span><br></pre></td></tr></table></figure>
+<h1 id="SCM"><a class="header-anchor" href="#SCM"></a>SCM</h1>
+<p>SCM就是Source Code Management， 即github， gitlab这样的代码托管平台， jenkins可以用git从SCM上clone代码，并进行构建</p>
+<ul>
+<li>jenkins要从SCM上clone代码，需要先在SCM上配置jenkins的ssh公钥
+<ul>
+<li>注意，如果是以容器形式运行的jenkins，这个“公钥”也必须是jenkins容器而非宿主机的公钥</li>
+</ul>
+</li>
+</ul>
+<p>在job configuration页面，可以配置job的SCM， 由于Jenkins构建需要jenkinsfile， 因此还需要指定jenkinsfile在代码仓库中的位置（所在分支、脚本名等）</p>
+<ul>
+<li>Branches to build：即要clone的代码分支</li>
+<li>Script Path： jenkinsfile所在目录，包括其名字
+<ul>
+<li>jenkinsfile不一定名为<code>jenkinsfile</code>, 它可以自由命名， jenkins根据Script Path来找到jenkinsfile</li>
+</ul>
+</li>
+</ul>
+<p>Jenkins从SCM得到代码以及jenkins脚本后，就要根据脚本进行项目构建， 而项目构建不一定由jenkins主机来做。 jenkins采用master - slave模式， jenkins主机作为master，可以将代码和脚本交给slave，让脚本执行构建过程</p>
+<p>注意：</p>
+<p>使用github作为SCM时， 如果<code>Branches to build</code> 设为空，则必须取消lightweight checkout，详见https://issues.jenkins.io/browse/JENKINS-46588</p>
+<h1 id="Access-Token"><a class="header-anchor" href="#Access-Token"></a>Access Token</h1>
+<p>jenkins与SCM交互，需要配置对这些SCM的Access Token</p>
+<ol>
+<li>
+<p>先在SCM生成Access Token</p>
+<ul>
+<li>github: <a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">在github生成Access Token</a></li>
+<li>gitlab: 登录GitLab -&gt; 在用户头像下拉框，选择“Setting” -&gt; 点击“Access Tokens”，输入“Name”和“Expires at”，勾选“api” -&gt; 点击“Create personal access token”，生成access token，记录下此token</li>
+</ul>
+</li>
+<li>
+<p>在jenkins， 系统管理 -&gt; Manage Credentials -&gt; Stores scoped to Jenkins -&gt; 添加该Token作为凭据</p>
+<ul>
+<li>类型选择Username and password</li>
+<li>在用户名中输入一个不存在的用户名</li>
+<li>密码填写Personal Access Token</li>
+</ul>
+</li>
+<li>
+<p>用该凭据来连接SCM:</p>
+<ul>
+<li>
+<p>github: “Manage Jenkins” -&gt; “Configure System” -&gt; GitHub， 使用刚才配置的Credential</p>
+<ul>
+<li>github网址：<a target="_blank" rel="noopener" href="https://api.github.com">https://api.github.com</a></li>
+</ul>
+</li>
+<li>
+<p>gitlab: “Manage Jenkins” -&gt; “Configure System” -&gt; “GitLab”，使用刚才配置的Credential</p>
+<ul>
+<li>
+<p>Gitlab host URL：<a target="_blank" rel="noopener" href="https://git.nju.edu.cn/">https://git.nju.edu.cn/</a></p>
+<p>我用的学校的gitlab， 所以用的是学校的gitlab的网址</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="Credentials"><a class="header-anchor" href="#Credentials"></a>Credentials</h1>
+<p>Jenkins采用CS模式与其他服务通信（比如gitlab的webhook、 jenkins slave节点）， 通信的建立需要有<strong>凭据（Credential）</strong></p>
+<h2 id="添加Credential"><a class="header-anchor" href="#添加Credential"></a>添加Credential</h2>
+<ol>
+<li>
+<p>进入<code>Manage Jenkins</code> --&gt; <code>Manage Credentials</code> --&gt; <code>Stores scoped to Jenkins</code> --&gt; <code>Global Credentials(unrestricted)</code>, 点击<code>Add Credentials</code></p>
+</li>
+<li>
+<p>根据不同的通信类型选择不同的凭据形式，并填写即可</p>
+</li>
+<li>
+<p>以ssh私钥连接（ 这意味着jenkins主机已经将ssh 公钥发送给了目标主机， 以后只需要私钥就可以登录目标主机 ）为例，需要填写:</p>
+<ul>
+<li>Username: ssh连接采用的的用户名</li>
+<li>Private Key：ssh连接所需的私钥</li>
+</ul>
+</li>
+</ol>
+<h1 id="webhook"><a class="header-anchor" href="#webhook"></a>webhook</h1>
+<blockquote>
+<p>Webhooks are <strong>event</strong>s sent by a webhook provider to your app</p>
+</blockquote>
+<p>jenkins + github配置 webhook教程：<a target="_blank" rel="noopener" href="https://www.decodingdevops.com/configure-github-web-hook-for-jenkins/">https://www.decodingdevops.com/configure-github-web-hook-for-jenkins/</a></p>
+<p>jenkins + gitlab配置webhook很简单</p>
+<p>jenkins可以暴露给github和gitlab等代码托管平台一个webhook url, 每当用户在代码托管平台触发某些事件时（比如进行了push，merge等），后者就可以给jenkins发送一个hook，让jenkins进行构建</p>
+<ul>
+<li>
+<p>jenkins在收到SCM的hook后，会检查在jenkins上注册的SCM 仓库，如果发现某个仓库的信息和hook信息一致，jenkins的SCM插件（gitlab插件/github插件）就会去检查SCM上的仓库内容，如果该仓库内容有改动，就会发起一次build</p>
+<ul>
+<li>这意味着如果本次push没有对内容做更改，jenjins插件就不会检查出变动，也就不会发起构建。 对于用户来说，这意味着jenkins正常收到了hook消息，却一直无法触发构建，jenkins log中也查不到信息（GitHub Hook Log到了“Changes not found”就结束了，没有下文）， <strong>需要在job的<code>Github Hook Log</code>页面查看信息</strong>（该页面只有github插件有）</li>
+</ul>
+</li>
+</ul>
+<p>下面演示github的webhook配置过程：</p>
+<ol>
+<li>得到webhook url
+<ul>
+<li>对于gitlab，jenkins在安装gitlab插件后，可以在job configuration页面的**Build Triggers ** 勾选： <code>Build when a change is pushed to GitLab. GitLab webhook URL ***</code>, 并复制webhook url</li>
+<li>对于github: 默认是<code>http://[jenkins-host-ip]:[port]/github-webhook/</code>， 也可以在配置页面override该url</li>
+</ul>
+</li>
+<li>在gitlab/github 仓库的设置里面添加webhook
+<ul>
+<li>github： 填写<strong>Payload URL</strong>字段</li>
+</ul>
+</li>
+<li>在Jenkins的 job configuration页面的 <strong>Build Triggers</strong> 勾选 <strong>GitHub hook trigger for GITScm polling.</strong></li>
+</ol>
+<p>Note: Jenkins默认暴露8080端口，与github通信，因此要确保8080端口开放，否则github发送的消息无法到达jenkins</p>
+<h1 id="slave"><a class="header-anchor" href="#slave"></a>slave</h1>
+<p>jenkins是master-slave模式， jenkins自身只是指挥者， 它<strong>根据jenkinsfile的内容选择slave</strong>，指挥slave运行脚本</p>
+<ul>
+<li>
+<p>如果某台主机被设置为slave主机，jenkins会在其中安装一个agent程序。 如果jenkins选择该slave进行构建，则会ssh连接到该slave， 运行agent进程，并将代码和jenkinsfile发给它, 实现<strong>通过slave构建</strong></p>
+<ul>
+<li>
+<p>agent程序用java编写，所以slave节点上<strong>必须有jdk</strong>, 否则无法安装agent程序，也就无法将其作为slave节点</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在slave节点上</span></span><br><span class="line"></span><br><span class="line">sudo apt-get install openjdk-8-jdk</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>BTW，由于jenkins一般配合docker，所以slave节点上还要安装docker</p>
+</li>
+</ul>
+</li>
+<li>
+<p>默认情况下，jenkins的slave只有一个，即jenkins自身（ 如果是容器形式的jenkins， 那就是jenkins容器作为slave ）。 可以在<code>Manage Jenkins</code> --&gt; <code>Manage Nodes and Clouds</code>中查看和配置slave节点</p>
+<ul>
+<li>可以看到，容器和宿主机是两个独立的实体，jenkins容器的默认slave是自身容器。在Jenkins容器眼中，宿主机和其他机器一样，jenkins把宿主机和其他机器添加为slave的步骤都相同</li>
+</ul>
+</li>
+</ul>
+<h2 id="添加slave"><a class="header-anchor" href="#添加slave"></a>添加slave</h2>
+<ol start="0">
+<li>
+<p>由于我采用ssh方式连接到slave，jenkins主机需要先配置对slave节点的ssh免密登陆， 即把ssh <strong>public key</strong>发给slave节点：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh-copy-id lyk@[slave-host]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>​		然后在<code>Credentials</code>页面，设置一个Credential， 内容是 jenkins主机到该slave节点的ssh <strong>private key</strong></p>
+<ol>
+<li>
+<p>进入<code>Manage Jenkins</code> --&gt; <code>Manage Nodes and Clouds</code> ， 进入添加节点页面，输入相应信息，最终进入节点的配置页面</p>
+</li>
+<li>
+<p>在节点配置页面填写信息：</p>
+<ul>
+<li>
+<p><strong>Labels</strong>： <strong>指定该slave的label, 在jenkinsfile中通过label来引用对应的slave</strong></p>
+</li>
+<li>
+<p><strong>Remote root directory</strong>: jenkins agent的根目录，agent会在<strong>此目录下创建<code>workspace</code>目录，作为jenkins的工作目录</strong>，也就是构建上下文</p>
+<p>这里将Remote root directory设为用户目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/home/lyk</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这会<strong>创建<code>/home/lyk/workspace</code>目录，后续的构建都在该目录下进行</strong></li>
+</ul>
+</li>
+<li>
+<p>Launch method: jenkins master登录到slave节点的方法，只有先登录到主机，才能启动slave agent进程</p>
+<p>一般通过ssh：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Launch agents via SSH</span><br></pre></td></tr></table></figure>
+<p>接下来输入ssh登录到slave节点所需的信息：</p>
+<ul>
+<li>Host： slave节点的ip</li>
+<li>Credentials：之前设置好的Credential， 即jenkins主机到该slave的ssh公钥</li>
+<li>Host Key Verification Strategy： Mannually trusted Key Verification Strategy</li>
+</ul>
+</li>
+</ul>
+<p>注意：</p>
+<p>主机要使用docker，需要把用户添加进docker群组，而这一步需要用户重新登陆才能生效。 但是，jenkins client是通过用户身份登陆的，而且应该是<strong>永久</strong>登陆，即使令节点&quot;Disconnect&quot;(在节点控制界面)， 依然不会断开登陆。</p>
+<p>也就是说，如果在配置好slave主机的docker之前（即将用户添加至docker群组并重新登录），就令主机成为slave节点，这就会导致jenkins agent使用不了docker，报错:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Got permission denied while trying to connect to the Docker daemon socket</span><br></pre></td></tr></table></figure>
+<p>解决方法是删除该节点，重新配置节点</p>
+<h2 id=""><a class="header-anchor" href="#"></a></h2>
+</li>
+</ol>
+<h1 id="Jenkinsfile"><a class="header-anchor" href="#Jenkinsfile"></a>Jenkinsfile</h1>
+<p>官网教程：<a target="_blank" rel="noopener" href="https://www.jenkins.io/doc/book/pipeline/">https://www.jenkins.io/doc/book/pipeline/</a></p>
+<p>jenkins根据jenkinsfile来进行构建，该文件有两种写法： <code>Declarative</code>和<code>pipeline script</code>，后者使用groovy语言，表达能力比较强，推荐使用</p>
+<p>pipeline script由一个个stage组成，在每个stage内执行一些指令</p>
+<h2 id="选择slave"><a class="header-anchor" href="#选择slave"></a>选择slave</h2>
+<p>后面会看到，jenkins由slave来负责实际的构建过程，而slave就是根据jenkinsfile选择的:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"># 选择label为<span class="keyword">volatile</span>-ai-slave的节点来构建此脚本</span><br><span class="line">node(<span class="string">&quot;volatile-ai-slave&quot;</span>) </span><br><span class="line">&#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="workspace"><a class="header-anchor" href="#workspace"></a>workspace</h2>
+<p>jenkins会在配置slave时指定的<code>Remote root directory</code>下创建<code>workspace</code>目录,作为工作目录</p>
+<ul>
+<li>
+<p>可以在jenkinsfile中使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">def workspace = pwd()</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">echo $&#123;workspace&#125;</span><br></pre></td></tr></table></figure>
+<p>输出为<code>[Remote root directory]/workspace</code></p>
+</li>
+</ul>
+<h2 id="example"><a class="header-anchor" href="#example"></a>example</h2>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">node(<span class="string">&quot;volatile-ai-slave&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">def</span> workspace = pwd()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> git_branch = <span class="string">&#x27;**&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> git_repository = <span class="string">&#x27;**&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> vm_ip = <span class="string">&#x27;**&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> vm_port = <span class="string">&#x27;**&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> vm_user = <span class="string">&#x27;**&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> IMAGE_NAME = <span class="string">&#x27;volatile_ai&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> IMAGE_NAME_WITH_TAG = <span class="string">&#x27;volatile_ai:latest&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> IMAGE_TO_RUN = <span class="string">&#x27;lyklove/volatile_ai:latest&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> CONTAINER_NAME = <span class="string">&#x27;volatile_ai&#x27;</span></span><br><span class="line"></span><br><span class="line">    stage(<span class="string">&#x27;clone from gitlab into slave\&#x27;s workspace&#x27;</span>) &#123;</span><br><span class="line">        echo <span class="string">&quot;workspace: $&#123;workspace&#125;&quot;</span></span><br><span class="line">        git <span class="attr">branch:</span> <span class="string">&quot;$&#123;git_branch&#125;&quot;</span>, <span class="attr">url:</span> <span class="string">&quot;$&#123;git_repository&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    stage(<span class="string">&#x27;cd to build context&#x27;</span>) &#123;</span><br><span class="line">        echo <span class="string">&quot;the context now is:&quot;</span></span><br><span class="line">        sh <span class="string">&quot;ls -al&quot;</span></span><br><span class="line">        sh <span class="string">&quot;cd $&#123;workspace&#125;&quot;</span></span><br><span class="line">        echo <span class="string">&quot;cd to build context, now the context is:&quot;</span></span><br><span class="line">        sh <span class="string">&quot;ls -al&quot;</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    stage(<span class="string">&quot;build docker image&quot;</span>)&#123;</span><br><span class="line">        sh <span class="string">&quot;docker build -t $&#123;IMAGE_NAME&#125; .&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//     stage(&quot;login to dockerhub&quot;)&#123;</span></span><br><span class="line"><span class="comment">//         withCredentials([usernamePassword(credentialsId: &#x27;DOCKERHUB_KEY&#x27;, passwordVariable: &#x27;password&#x27;, usernameVariable: &#x27;username&#x27;)]) &#123;</span></span><br><span class="line"><span class="comment">//             sh &#x27;docker login -u $username -p $password&#x27;</span></span><br><span class="line"><span class="comment">//         &#125;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line">    stage(<span class="string">&quot;push to dockerhub&quot;</span>)&#123;</span><br><span class="line"><span class="comment">//         echo &quot;begin push to dockerhub&quot;</span></span><br><span class="line">        sh <span class="string">&quot;docker image tag $&#123;IMAGE_NAME_WITH_TAG&#125; lyklove/$&#123;IMAGE_NAME_WITH_TAG&#125;&quot;</span></span><br><span class="line"><span class="comment">//         sh &quot;docker image push lyklove/$&#123;IMAGE_NAME_WITH_TAG&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    stage(<span class="string">&quot;clean previous image and container&quot;</span>)&#123;</span><br><span class="line">        sh <span class="string">&quot;docker container rm -f $&#123;CONTAINER_NAME&#125;&quot;</span></span><br><span class="line"><span class="comment">//         sh &quot;docker image rm $&#123;IMAGE_NAME_WITH_TAG&#125;&quot;</span></span><br><span class="line"><span class="comment">//         sh &quot;docker image rm $&#123;IMAGE_TO_RUN&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//     stage( &quot;pull image&quot; )&#123;</span></span><br><span class="line"><span class="comment">//         sh &quot;docker pull  lyklove/$&#123;IMAGE_NAME_WITH_TAG&#125;&quot;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line">    stage(<span class="string">&quot;run container&quot;</span>) &#123;</span><br><span class="line">        sh <span class="string">&quot;docker image ls&quot;</span></span><br><span class="line">        sh <span class="string">&quot;docker container run --name $&#123;CONTAINER_NAME&#125; --net=host  -d $&#123;IMAGE_TO_RUN&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    stage(<span class="string">&quot;signal gitlab: deployed&quot;</span>)&#123;</span><br><span class="line">        updateGitlabCommitStatus <span class="attr">name:</span> <span class="string">&#x27;deployed&#x27;</span>, <span class="attr">state:</span> <span class="string">&#x27;success&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="日志"><a class="header-anchor" href="#日志"></a>日志</h1>
+<p>日志是最好的debug工具， jenkins日志位于：Dashboard -&gt; System Log</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CICD/" rel="tag"># CICD</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/05/05/EulerOS/" rel="prev" title="EulerOS">
+                  <i class="fa fa-chevron-left"></i> EulerOS
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/06/12/Design-Principle/" rel="next" title="Design Principle">
+                  Design Principle <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

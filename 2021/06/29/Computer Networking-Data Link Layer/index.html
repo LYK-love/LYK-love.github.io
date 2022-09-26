@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  使用点对点信道的数据链路层 点对点协议PPP 使用广播信道的数据链路层 扩展的以太网 高速以太网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Link Layer">
+<meta property="og:url" content="http://lyk-love.cn/2021/06/29/Computer%20Networking-Data%20Link%20Layer/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  使用点对点信道的数据链路层 点对点协议PPP 使用广播信道的数据链路层 扩展的以太网 高速以太网">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-29T11:25:11.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.927Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Computer Networking">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/06/29/Computer%20Networking-Data%20Link%20Layer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/06/29/Computer%20Networking-Data%20Link%20Layer/","path":"2021/06/29/Computer Networking-Data Link Layer/","title":"Data Link Layer"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Data Link Layer | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%82%B9%E5%AF%B9%E7%82%B9%E4%BF%A1%E9%81%93%E7%9A%84%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="nav-text">使用点对点信道的数据链路层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%92%8C%E5%B8%A7"><span class="nav-text">数据链路和帧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="nav-text">三个基本问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E6%88%90%E5%B8%A7"><span class="nav-text">封装成帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%8F%E6%98%8E%E4%BC%A0%E8%BE%93"><span class="nav-text">透明传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%AE%E9%94%99%E6%A3%80%E6%B5%8B"><span class="nav-text">差错检测</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E5%8D%8F%E8%AE%AEPPP"><span class="nav-text">点对点协议PPP</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PPP%E5%8D%8F%E8%AE%AE%E5%BA%94%E6%BB%A1%E8%B6%B3%E7%9A%84%E9%9C%80%E6%B1%82"><span class="nav-text">PPP协议应满足的需求</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%E7%9A%84%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="nav-text">使用广播信道的数据链路层</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E5%9F%9F%E7%BD%91%E7%9A%84%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82"><span class="nav-text">局域网的数据链路层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E9%85%8D%E5%99%A8%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">适配器的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSMA-CD%E5%8D%8F%E8%AE%AE"><span class="nav-text">CSMA&#x2F;CD协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E7%9A%84MAC%E5%B1%82"><span class="nav-text">以太网的MAC层</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E7%9A%84%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">扩展的以太网</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E7%89%A9%E7%90%86%E5%B1%82%E6%89%A9%E5%B1%95%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">在物理层扩展以太网</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E6%89%A9%E5%B1%95%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">在数据链路层扩展以太网</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-text">以太网交换机的特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91%E4%BA%A4%E6%8D%A2%E6%9C%BA%E7%9A%84%E8%87%AA%E5%AD%A6%E4%B9%A0%E5%8A%9F%E8%83%BD"><span class="nav-text">以太网交换机的自学习功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E6%80%BB%E7%BA%BF%E5%88%B0%E6%98%9F%E5%9E%8B%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">从总线到星型以太网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%B1%80%E5%9F%9F%E7%BD%91"><span class="nav-text">虚拟局域网</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AB%98%E9%80%9F%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">高速以太网</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/06/29/Computer%20Networking-Data%20Link%20Layer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Data Link Layer | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Data Link Layer
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-29 11:25:11" itemprop="dateCreated datePublished" datetime="2021-06-29T11:25:11Z">2021-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>使用点对点信道的数据链路层</li>
+<li>点对点协议PPP</li>
+<li>使用广播信道的数据链路层</li>
+<li>扩展的以太网</li>
+<li>高速以太网</li>
+</ul>
+<span id="more"></span>
+<p>数据链路层使用的信道主要有两种类型：</p>
+<ol>
+<li>点对点信道</li>
+<li>广播信道： 一对多， 需要共享信道协议来协调数据发送</li>
+</ol>
+<p>本章我们研究的是在同一个局域网中， 分组怎样从一台主机传送到另一台主机， 但并不经过路由器转发。 从整个互联网角度看， 局域网仍属于数据链路层的范围。</p>
+<h1 id="使用点对点信道的数据链路层"><a class="header-anchor" href="#使用点对点信道的数据链路层"></a>使用点对点信道的数据链路层</h1>
+<h2 id="数据链路和帧"><a class="header-anchor" href="#数据链路和帧"></a>数据链路和帧</h2>
+<ul>
+<li><code>链路</code>: 从一个结点到<strong>相邻结点</strong>的物理线路(有线或无线), 而中间没有其他的交换结点. 链路只是一条路径的组成部分</li>
+<li><code>数据链路</code>: 链路 + 必要的通信协议, 现在常用方法是用<strong>网络适配器</strong>(既有硬件也有软件)来实现这些协议</li>
+<li>帧:  网络层协议的数据单元是<code>IP数据报(或简称数据报, 分组 或 包)</code>. 点对点信道的数据链路层在进行通信时的主要步骤如下:
+<ol>
+<li>结点A数据链路层把网络层交下来的<code>packet</code>添加首部和尾部封装成帧</li>
+<li>结点A把封装好的帧发送给结点B的数据链路层</li>
+<li>若结点B的数据链路层收到的帧无差错, 则从收到的帧中提取出<code>packet</code>交给上层的网络层;  否则丢弃这个帧</li>
+</ol>
+</li>
+</ul>
+<h2 id="三个基本问题"><a class="header-anchor" href="#三个基本问题"></a>三个基本问题</h2>
+<h3 id="封装成帧"><a class="header-anchor" href="#封装成帧"></a>封装成帧</h3>
+<ul>
+<li>分组交换: 所有在互联网上传送的数据都以<code>IP数据报(packet)</code> 为传送单位. <code>packet</code>到数据链路层就成为帧的数据部分, 加上首部和尾部就成为完整的帧</li>
+<li>首部和尾部的一个重要作用是<strong>帧定界</strong>, 此外, 首部和尾部还包含许多必要的控制信息</li>
+<li>每一种链路层协议都规定了<strong>所能传输的帧的数据部分长度上限 — 最大传送单元MTU( Maximum Transfer Unit )</strong></li>
+</ul>
+<h3 id="透明传输"><a class="header-anchor" href="#透明传输"></a><strong>透明传输</strong></h3>
+<ul>
+<li>字节填充</li>
+</ul>
+<h3 id="差错检测"><a class="header-anchor" href="#差错检测"></a>差错检测</h3>
+<ul>
+<li>CRC</li>
+</ul>
+<h1 id="点对点协议PPP"><a class="header-anchor" href="#点对点协议PPP"></a>点对点协议PPP</h1>
+<ul>
+<li><code>Point-to-Point Protocol</code>， 是用户计算机和<code>ISP</code>通信时所使用的数据链路层协议</li>
+</ul>
+<h2 id="PPP协议应满足的需求"><a class="header-anchor" href="#PPP协议应满足的需求"></a>PPP协议应满足的需求</h2>
+<ol>
+<li>简单</li>
+<li>封装成帧.
+<ul>
+<li>PPP协议必须规定特殊的字符作为<code>帧定界符</code></li>
+</ul>
+</li>
+<li>透明性</li>
+<li>多种网络协议
+<ul>
+<li>PPP必须能够<strong>在同一条物理链路上同时支持多种网络层协议</strong>的运行</li>
+</ul>
+</li>
+<li>多种类型链路
+<ul>
+<li>PPP必须能在多种类型的链路上运行. 例如串行和并行, 同步和异步, 高速和低速, 电和光</li>
+</ul>
+</li>
+<li>差错检测( error detection )
+<ul>
+<li>立即丢弃有差错的帧</li>
+</ul>
+</li>
+<li>检测连接状态
+<ul>
+<li>必须具有一种机制能够及时自动检测链路是否处于正常工作状态</li>
+</ul>
+</li>
+<li>最大传送单元
+<ul>
+<li>必须对每一种类型的点对点链路设置<strong>最大传送单元MTU</strong>的标准默认值. 这是为了促进各种书籍线之间的互操作性. 如果高层协议发送的分组过长并超过MTU的数值, PPP就要丢弃这样的帧. MTU是数据链路层的帧可以载荷的<strong>数据部分</strong>的最大长度, 而<strong>不是帧的总长度</strong></li>
+</ul>
+</li>
+<li>网络层地址协商</li>
+<li>数据压缩协商</li>
+</ol>
+<h1 id="使用广播信道的数据链路层"><a class="header-anchor" href="#使用广播信道的数据链路层"></a>使用广播信道的数据链路层</h1>
+<h2 id="局域网的数据链路层"><a class="header-anchor" href="#局域网的数据链路层"></a>局域网的数据链路层</h2>
+<ul>
+<li>局域网最主要的特点: <strong>网络为一个单位所拥有, 且地理范围和站点数目均有限</strong></li>
+<li>局域网的优点:
+<ol>
+<li>具有广播功能.  从一个站点可很方便地访问全网. 局域网上的主机可共享连接在局域网上的各种硬件和软件资源</li>
+<li>便于习用的扩展和逐渐演变, 各设备的位置可灵活调整和改变</li>
+<li>提高了系统的可靠性( reliability ) ,  可用性( availability ) 和生存性( survivability )</li>
+</ol>
+</li>
+<li>局域网的分类( 按拓扑 ):
+<ul>
+<li>星型网</li>
+<li>总线网</li>
+<li>环形网</li>
+</ul>
+</li>
+<li><strong>共享信道</strong>要考虑的一个问题是如何使众多用户能合理且方便地共享媒体资源, 这在技术上有两种方法:
+<ol>
+<li><strong>静态划分信道</strong> . 如第二张的频分复用, 时分复用, 波分服用等. 用户只要分配到了信道就不会与其它用户发生冲突. 但这种方式代价较高, 不适合局域网</li>
+<li><strong>动态媒体接入控制</strong>, 又称为<strong>多点接入( multiple access )</strong> , 分两类
+<ul>
+<li><strong>随机接入</strong>: 用户可以随机地发送信息. 但如果两个或更多的用户在同一时刻发送信息, 那么在共享媒体上就要产生<strong>碰撞</strong>(即发生了<strong>冲突</strong>), 因此必须有解决碰撞的协议. 以太网属于随机接入</li>
+<li><strong>受控接入</strong> 用户不能随机地发送消息而必须接受一定的控制</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="适配器的作用"><a class="header-anchor" href="#适配器的作用"></a>适配器的作用</h3>
+<ul>
+<li>适配器和局域网之间的通信通过<code>电缆</code>或者<code>双绞线</code>以<code>串行</code>传输方式进行</li>
+<li>适配器和计算机之间的通信通过计算机主板上的<code>IO总线</code>以<code>并行</code>传输方式进行</li>
+<li>适配器的一个重要功能是进行数据串行传输和并行传输的转换</li>
+<li>计算机的<code>硬件地址</code>就在适配器的<code>ROM</code>中, 而计算机的软件地址—<code>IP地址</code>, 则在计算机的存储器中</li>
+<li>适配器在接受和发送各种帧时, 不使用计算机的CPU. 当适配器收到有差错的帧时, 就把这个帧<u>直接丢弃而不必通知计算机</u>. 当收到正确的帧时, 它就使用<code>中断</code>来通知计算机, 并交付协议栈中的网络层.</li>
+<li>当计算机要发送<code>IP数据报</code>时, 就由协议栈把<code>IP数据报</code>向下交给适配器, 组装成<code>帧</code>后发送到<code>局域网</code></li>
+</ul>
+<h3 id="CSMA-CD协议"><a class="header-anchor" href="#CSMA-CD协议"></a>CSMA/CD协议</h3>
+<ul>
+<li><code>Carrier Sense Multiple Access with Collision Detection，载波侦听多路访问/冲突检测协议) </code></li>
+<li>早期以太网是<code>总线型</code>的. 属于<code>广播通信</code>. 为了在总线上实现<u>一对一通信</u>, 可以使每台计算机的<code>适配器</code>拥有一个和其他适配器不同的地址, 当发送数据帧时, 在帧的首部写明接收站的地址.</li>
+<li><strong>仅当数据帧中的目的地址与适配器ROM中存放的硬件地址一致时</strong>, 该适配器才能接收这个数据帧, 否则就丢弃. 这样, 就在总线上实现了</u>一对一通信</u></li>
+<li>以太网采取以下两种措施
+<ul>
+<li><strong>无连接</strong>
+<ul>
+<li>不必建立链接就可以直接发送数据</li>
+<li>适配器对发送的数据帧<strong>不进行编号, 也不要求对方发回确认</strong></li>
+<li>尽最大努力的交付, 即不可靠的交付.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>总线特点: <strong>在同一时间只能允许一台计算机发送数据</strong>, 解决方法:
+<ul>
+<li>CSMA/CD协议</li>
+<li>曼彻斯特编码</li>
+</ul>
+</li>
+<li>CSMA/CD的特点
+<ul>
+<li>多点接入</li>
+<li>载波监听
+<ul>
+<li>检测信道( 发送前和发送中都要不停检测信道 )</li>
+</ul>
+</li>
+<li>碰撞检测</li>
+</ul>
+</li>
+</ul>
+<h3 id="以太网的MAC层"><a class="header-anchor" href="#以太网的MAC层"></a>以太网的MAC层</h3>
+<ul>
+<li>局域网中, 硬件地址又称为<code>MAC地址</code></li>
+<li>48位的全球地址, 就是固化在适配器的ROM中的地址</li>
+<li>发往本站的帧有三种:
+<ol>
+<li>单播( unicast )帧</li>
+<li>广播( broadcast )帧( 一对全体 ), 即发送给本局域网上所有站点的帧( 全1地址 )</li>
+<li>多播(multicast )帧( 一对多 ): 即发送给本局域网上部分站点的帧</li>
+</ol>
+</li>
+<li>所有的适配器都能识别前两种帧,有的能通过编程方式识别多播地址</li>
+</ul>
+<h1 id="扩展的以太网"><a class="header-anchor" href="#扩展的以太网"></a>扩展的以太网</h1>
+<h2 id="在物理层扩展以太网"><a class="header-anchor" href="#在物理层扩展以太网"></a>在物理层扩展以太网</h2>
+<ul>
+<li>用集线器</li>
+<li>缺点：
+<ul>
+<li>多个系的以太网通过集线器互连起来后， 多个<strong>碰撞域</strong>会合并成一个
+<ul>
+<li>碰撞域： 在任意时刻， 每个碰撞域中只能有一个站在发送数据</li>
+</ul>
+</li>
+<li>如果不同的系使用不同的以太网技术（如数据率不同）， 那么就不可能用集线器把它们互连起来。 集线器基本是个多借口的转发器， 它不能把帧进行缓存</li>
+</ul>
+</li>
+</ul>
+<h2 id="在数据链路层扩展以太网"><a class="header-anchor" href="#在数据链路层扩展以太网"></a>在数据链路层扩展以太网</h2>
+<p>扩展以太网一般在数据链路层进行， 用交换机</p>
+<h3 id="以太网交换机的特点"><a class="header-anchor" href="#以太网交换机的特点"></a>以太网交换机的特点</h3>
+<ul>
+<li>交换机就是<strong>多接口的网桥</strong></li>
+<li>每个接口都直接与单台主机或另一个以太网交换机相连, 且工作在<code>全双工方式</code></li>
+<li>具有并行性, 能同时连通多对接口, 且多对主机能同时通信, 相互通信的主机都是<strong>独占传输媒体, 无碰撞地传输数据</strong></li>
+<li>是一种即插即用设备, 其内部的<code>帧交换表(地址表)</code>是通过<strong>自学习算法</strong>建立的</li>
+<li>交换机能隔离<code>冲突域</code>,但不能隔离广播域
+<ul>
+<li>交换机使用硬件转发, 比使用软件转发的网桥快很多</li>
+</ul>
+</li>
+<li>交换机一般具有多种速率的接口, 因此不同数据率的两给局域网可以互连</li>
+<li>部分交换机实现<code>直通(  cut through )</code>的交换方式. 而网桥只能存储转发</li>
+</ul>
+<h3 id="以太网交换机的自学习功能"><a class="header-anchor" href="#以太网交换机的自学习功能"></a>以太网交换机的自学习功能</h3>
+<ol>
+<li>A向B发送一帧, 从接口1进入交换机. 交换机收到帧后, 先查找交换表, 没有找到应从哪个接口转发这个帧( 在MAC地址这一列中, 没有找到目的地址为B的项目 ). 接着, 交换机吧这个帧的源地址和接口1写入交换表中, 并<strong>向除接口1外的所有接口广播这个帧</strong></li>
+<li>C和D将丢弃这个帧, 因为目的地址不对. B会收下这个帧. 这称为<strong>过滤</strong></li>
+<li>假定接下来B通过接口3向A发送一帧. 交换机查找交换表, 发现交换表中的MAC地址有A, 就应当把收到的帧从接口1转发出去. 并向表中写入源地址B和接口3</li>
+</ol>
+<ul>
+<li>交换表中每个项目都设有一定的有效时间</li>
+<li>如果存在冗余链路, 则会导致帧在某个环路中无限兜圈子, 因此IEEE制定了<strong>生成树协议STP( Spanning Tree Protocol )</strong>, 其要点是不改变网络的实际拓扑, 而在逻辑上切断某些链路, 似的从一台主机到所有其他主机的路径是五环路的树状结构, 从而消除了兜圈子现象.</li>
+</ul>
+<h3 id="从总线到星型以太网"><a class="header-anchor" href="#从总线到星型以太网"></a>从总线到星型以太网</h3>
+<ul>
+<li>目前, 采用以太网<strong>交换机</strong>的<strong>星型拓扑</strong>成为<strong>首选拓扑</strong></li>
+<li>总线以太网使用CSMA/DA协议, 以半双工方式工作. 但以太网交换机不使用共享总线, 没有碰撞问题, 因此不使用CSMA/DA协议, 而是以全双工方式工作</li>
+<li>因为<strong>帧</strong>结构没有改变, 所以现在的局域网还叫以太网</li>
+</ul>
+<h3 id="虚拟局域网"><a class="header-anchor" href="#虚拟局域网"></a><strong>虚拟局域网</strong></h3>
+<ul>
+<li>是由一些局域网网段构成的与物理位置无关的逻辑组, 而这些网段有某些共同的需求. ,每一个VLAN帧都有一个明确的标识符( VLAN tag, 4字节 ), 指明发送方属于哪一个VLAN</li>
+</ul>
+<h1 id="高速以太网"><a class="header-anchor" href="#高速以太网"></a>高速以太网</h1>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Networking/" rel="tag"># Computer Networking</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/28/Software%20Development%20Procedure%20Model/" rel="prev" title="Software Development Procedure Model">
+                  <i class="fa fa-chevron-left"></i> Software Development Procedure Model
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/04/%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%AE%9E%E9%AA%8C%E5%BF%83%E7%90%86%E5%AD%A6%E7%BB%AA%E8%AE%BA/" rel="next" title="第一章-绪论">
+                  第一章-绪论 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

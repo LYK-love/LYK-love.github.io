@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ref: Optimization Methods Outline:  Mathematical Optimization Least-squares Linear Programming Convex Optimization Nonlinear Optimization Summary">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Optimization Methods- Lecture1">
+<meta property="og:url" content="http://lyk-love.cn/2021/09/08/Optimization-Methods-Lecture1/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="ref: Optimization Methods Outline:  Mathematical Optimization Least-squares Linear Programming Convex Optimization Nonlinear Optimization Summary">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-09-07T21:47:40.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.937Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Optimization Methods">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/09/08/Optimization-Methods-Lecture1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/09/08/Optimization-Methods-Lecture1/","path":"2021/09/08/Optimization-Methods-Lecture1/","title":"Optimization Methods- Lecture1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Optimization Methods- Lecture1 | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mathematical-Optimization"><span class="nav-text">Mathematical Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Applications"><span class="nav-text">Applications</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Portfolio-Optimization"><span class="nav-text">Portfolio Optimization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Device-Sizing"><span class="nav-text">Device Sizing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Fitting"><span class="nav-text">Data Fitting</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Solving-Optimization-Problems"><span class="nav-text">Solving Optimization Problems</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Least-squares"><span class="nav-text">Least-squares</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-Least-squares"><span class="nav-text">Using Least-squares</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Linear-Programming"><span class="nav-text">Linear Programming</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-Linear-Programming"><span class="nav-text">Using Linear Programming</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Convex-Optimization"><span class="nav-text">Convex Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Solving-Convex-Optimization-Problems"><span class="nav-text">Solving Convex Optimization Problems</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nonlinear-Optimization"><span class="nav-text">Nonlinear Optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Local-Optimization-Methods"><span class="nav-text">Local Optimization Methods</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Global-Optimization"><span class="nav-text">Global Optimization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Role-of-Convex-Optimization-in-Nonconvex-Problems"><span class="nav-text">Role of Convex Optimization in Nonconvex Problems</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/09/08/Optimization-Methods-Lecture1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Optimization Methods- Lecture1 | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Optimization Methods- Lecture1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-09-07 21:47:40" itemprop="dateCreated datePublished" datetime="2021-09-07T21:47:40Z">2021-09-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Mathematics/" itemprop="url" rel="index"><span itemprop="name">Mathematics</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>ref: <a target="_blank" rel="noopener" href="http://www.lamda.nju.edu.cn/chengq/course/opt2021/opt2021.html">Optimization Methods</a></p>
+<p>Outline:</p>
+<ul>
+<li><strong>Mathematical Optimization</strong></li>
+<li><strong>Least-squares</strong></li>
+<li><strong>Linear Programming</strong></li>
+<li><strong>Convex Optimization</strong></li>
+<li><strong>Nonlinear Optimization</strong></li>
+<li><strong>Summary</strong></li>
+</ul>
+<span id="more"></span>
+<h1 id="Mathematical-Optimization"><a class="header-anchor" href="#Mathematical-Optimization"></a>Mathematical Optimization</h1>
+<ul>
+<li>
+<p><strong>Optimization Problem</strong><br>
+$$<br>
+min \quad \quad f_0(x) \<br>
+s.t. \quad f_i(x) \leq b_i, \quad i=1,2,\dots,n<br>
+$$</p>
+<ul>
+<li>Optimization Variable: $x=(x_1,\dots,x_n)$</li>
+<li>Objective Function: $f_0:R^n \rarr R$</li>
+<li>Constraint Functions: $f_i:R^n \rarr R$​</li>
+</ul>
+</li>
+<li>
+<p>$x^*$​ is called <strong>optimal</strong> or a solution</p>
+<ul>
+<li>$f_i(x^*)\leq b_i$ , $i=1,\dots,m $</li>
+<li>For any $z$ with $f_i(z)\leq b_i $, we have $f_0(z)\geq f_0(x^*)$</li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<p><strong>Linear Program</strong>  线性函数的定义<br>
+$$<br>
+f_i(\alpha x + \beta y) = \alpha f_i(x) + \beta f_i(y)<br>
+$$</p>
+<ul>
+<li>For all $x,y \in R^n$ and all $\alpha, \beta \in R$​</li>
+<li>$i$​ 可以为$0$​（目标函数）， 也可以为$1,2,\dots,n$​​​​( 约束函数 )。 当优化问题的目标函数和约束函数都是线性函数时， 整个问题称为<strong>线性规划（线性问题）</strong></li>
+</ul>
+</li>
+<li>
+<p><strong>Nonlinear Program</strong></p>
+<ul>
+<li>If the Optimization Problem is not linear</li>
+</ul>
+</li>
+<li>
+<p><strong>Convex Optimization Problem</strong><br>
+$$<br>
+f_i(\alpha x + \beta y) \leq \alpha f_i(x) + \beta f_i(y)<br>
+$$</p>
+<ul>
+<li>
+<p>For all $x,y \in R^n$​ and all $\alpha, \beta \in R$​ with $\alpha + \beta=1, \alpha \geq 0, \beta \geq 0$</p>
+</li>
+<li>
+<p>线性规划是凸优化的一个特例</p>
+<ul>
+<li>只要求对$\alpha + \beta=1, \alpha \geq 0, \beta \geq 0$的$\alpha, \beta$成立， 实际上把条件放松了​</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Applications"><a class="header-anchor" href="#Applications"></a>Applications</h2>
+<p>$$<br>
+min \quad \quad f_0(x) \<br>
+s.t. \quad f_i(x) \leq b_i, \quad i=1,2,\dots,n<br>
+$$</p>
+<ul>
+<li><strong>Abstraction</strong>
+<ul>
+<li>$x$​ represents the choice made</li>
+<li>$f_i(x) \leq b_i$ represent firm requirements that limit the possible choices</li>
+<li>$f_0(x)$​ represents the cost of choosing</li>
+<li>A solution corresponds to a choice that has minimum cost, among all choices that meet the requirements</li>
+</ul>
+</li>
+</ul>
+<h3 id="Portfolio-Optimization"><a class="header-anchor" href="#Portfolio-Optimization"></a>Portfolio Optimization</h3>
+<ul>
+<li>
+<p><strong>Variables</strong></p>
+<ul>
+<li>$x_i$ represents the investment in the $𝑖_th$ asset</li>
+<li>$x \in R$​ describes the overall portfolio allocation across the set of asset</li>
+</ul>
+</li>
+<li>
+<p><strong>Constraints</strong></p>
+<ul>
+<li>A limit on the budget the requirement</li>
+<li>Investments are nonnegative</li>
+<li>A minimum acceptable value of expected return for the whole portfolio</li>
+</ul>
+</li>
+<li>
+<p>Objective</p>
+<ul>
+<li>Minimize the variance of the portfolio return 投资的回报最稳定（ 也可以把目标换成期望的回报最高 ）</li>
+</ul>
+</li>
+</ul>
+<h3 id="Device-Sizing"><a class="header-anchor" href="#Device-Sizing"></a>Device Sizing</h3>
+<ul>
+<li><strong>Variables</strong>
+<ul>
+<li>$x \in R^n$​  describes the widths and lengths of the devices</li>
+</ul>
+</li>
+<li><strong>Constraints</strong>
+<ul>
+<li>Limits on the device</li>
+<li>Timing</li>
+<li>A limit on the total area of the circuit</li>
+</ul>
+</li>
+<li>Objective
+<ul>
+<li>Minimize the total power consumed by the circuit</li>
+</ul>
+</li>
+</ul>
+<h3 id="Data-Fitting"><a class="header-anchor" href="#Data-Fitting"></a>Data Fitting</h3>
+<ul>
+<li><strong>Variables</strong>
+<ul>
+<li>$x \in R^n$ describes parameters in the model</li>
+</ul>
+</li>
+<li><strong>Constraints</strong>
+<ul>
+<li>Prior information</li>
+<li>Required limits on the parameters (such as nonnegativity)</li>
+</ul>
+</li>
+<li>Objective
+<ul>
+<li>Minimize the prediction error between the observed data and the values predicted by the model</li>
+</ul>
+</li>
+</ul>
+<h2 id="Solving-Optimization-Problems"><a class="header-anchor" href="#Solving-Optimization-Problems"></a>Solving Optimization Problems</h2>
+<ul>
+<li><strong>General Optimization Problem</strong>
+<ul>
+<li>Very difficult to solve</li>
+<li>Constraints can be very complicated, the number of variables can be very large 约束复杂， 变量多</li>
+<li>Methods involve some compromise, e.g., computation time, or suboptimal solution</li>
+</ul>
+</li>
+<li><strong>Exceptions</strong>
+<ul>
+<li>Least-squares problems</li>
+<li>Linear programming problems</li>
+<li>Convex optimization problems</li>
+</ul>
+</li>
+</ul>
+<h1 id="Least-squares"><a class="header-anchor" href="#Least-squares"></a><strong>Least-squares</strong></h1>
+<ul>
+<li>
+<p><strong>The Problem</strong><br>
+$$<br>
+min \quad ||Ax-b||<em>2^2 = \sum</em>{i=1}^k { (a_i^T x - b_i)^2 }<br>
+$$</p>
+<ul>
+<li>$A \in R^{k \times n}$​ ,  $a_i^T$​ is the $i_{th}$​ row of $A,b \in R^k$​</li>
+<li>$A \in R^n$​ is the optimization variable​</li>
+</ul>
+</li>
+<li>
+<p><strong>Setting the gradient to be 0</strong><br>
+$$<br>
+2A^T(Ax-b)=0 \<br>
+\rarr \quad A^TAx = A^Tb \<br>
+\rarr \quad x = (A^TA)^{-1}A^Tb<br>
+$$</p>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<p><strong>A Set of Linear Equations</strong><br>
+$$<br>
+A^TAx = A^Tb<br>
+$$</p>
+</li>
+<li>
+<p><strong>Solving least-squares problems</strong></p>
+<ul>
+<li>Reliable and efficient algorithms and software</li>
+<li>Computation time proportional to $n^2k( A \in R^{k \times n})$ ; less if structured</li>
+<li>A mature technology</li>
+<li>Challenging for <strong>extremely large</strong> problems</li>
+</ul>
+</li>
+</ul>
+<h2 id="Using-Least-squares"><a class="header-anchor" href="#Using-Least-squares"></a>Using Least-squares</h2>
+<ul>
+<li>
+<p><strong>Easy to Recognize</strong></p>
+</li>
+<li>
+<p><strong>Weighted least-squares</strong><br>
+$$<br>
+\sum\limits_{i=1}^k w_i( a_i^Tx-b_i )^2<br>
+$$<br>
+把$w_i$移到括号里就是标准最小二乘</p>
+<ul>
+<li>Different importance</li>
+</ul>
+</li>
+<li>
+<p><strong>Different importance</strong><br>
+$$<br>
+\sum\limits_{i=1}^k ( a_i^Tx-b_i )^2 + \rho \sum\limits_{i=1}^n x_i^2<br>
+$$<br>
+也可化为标准最小二乘</p>
+<ul>
+<li>More stable，避免过拟合</li>
+</ul>
+</li>
+</ul>
+<h1 id="Linear-Programming"><a class="header-anchor" href="#Linear-Programming"></a><strong>Linear Programming</strong></h1>
+<ul>
+<li>
+<p><strong>The Problem</strong><br>
+$$<br>
+min \quad c^Tx \<br>
+s.t. \quad a_i^Tx \leq b_i, \quad i = 1, \dots, m<br>
+$$</p>
+<ul>
+<li>$c,a_1,\dots,a_m \in R^n, b_1, \dots, b_m \in R$</li>
+</ul>
+</li>
+<li>
+<p><strong>Solving Linear Programs</strong></p>
+<ul>
+<li>No analytical formula for solution</li>
+<li>Reliable and efficient algorithms and software</li>
+<li>Computation time proportional to $𝑛^2𝑚$ if $ m \geq 𝑛$; less with structure</li>
+<li>A mature technology</li>
+<li>Challenging for <strong>extremely large</strong> problems</li>
+</ul>
+</li>
+</ul>
+<h2 id="Using-Linear-Programming"><a class="header-anchor" href="#Using-Linear-Programming"></a>Using Linear Programming</h2>
+<ul>
+<li><strong>Not as easy to recognize</strong></li>
+<li><strong>Chebyshev Approximation Problem</strong></li>
+</ul>
+<p>$$<br>
+min \quad \max\limits_{i=1,\dots,k} |a_i^Tx-b_i| \<br>
+\iff min \quad t \quad \quad \quad s.t. \quad t = \max\limits_{i=1,\dots,k} |a_i^Tx-b_i| \<br>
+\quad\quad  \quad \iff min \quad t \quad \quad \quad s.t. \quad t \geq  |a_i^Tx-b_i|, {i=1,\dots,k} ( 因为最小化，所以可以等价 )\<br>
+\quad \quad \quad\iff min \quad t \quad \quad \quad s.t. \quad t \geq  |a_i^Tx-b_i|, {i=1,\dots,k} \<br>
+\quad \quad \quad \quad \quad \iff min \quad t \quad \quad \quad s.t. \quad -t \leq  a_i^Tx-b_i \leq t, {i=1,\dots,k} \<br>
+$$</p>
+<h1 id="Convex-Optimization"><a class="header-anchor" href="#Convex-Optimization"></a>Convex Optimization</h1>
+<ul>
+<li>
+<p><strong>Local minimizers are also global minimizers</strong></p>
+</li>
+<li>
+<p>The Problem<br>
+$$<br>
+f_i(\alpha x + \beta y) \leq \alpha f_i(x) + \beta f_i(y)<br>
+$$</p>
+<ul>
+<li>
+<p>For all $x,y \in R^n$ and all $\alpha, \beta \in R$ with $\alpha + \beta=1, \alpha \geq 0, \beta \geq 0$</p>
+</li>
+<li>
+<p>Least-squares and linear programs as special cases</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="Solving-Convex-Optimization-Problems"><a class="header-anchor" href="#Solving-Convex-Optimization-Problems"></a>Solving Convex Optimization Problems</h2>
+<ul>
+<li>No analytical solution</li>
+<li>Reliable and efficient algorithms (e.g., interior-point methods)</li>
+<li>Computation time (roughly) proportional to $\max{n^3,n^2m,F}$​
+<ul>
+<li>$F$ is cost of evaluating $f_i$​’s and their first and second derivatives</li>
+</ul>
+</li>
+<li><strong>Almost</strong> a technology</li>
+</ul>
+<hr>
+<ul>
+<li><strong>Often difficult to recognize</strong></li>
+<li><strong>Many tricks for transforming problems into convex form</strong></li>
+<li><strong>Surprisingly many problems can be solved via convex optimization</strong></li>
+</ul>
+<h1 id="Nonlinear-Optimization"><a class="header-anchor" href="#Nonlinear-Optimization"></a><strong>Nonlinear Optimization</strong></h1>
+<ul>
+<li>An optimization problem when the objective or constraint functions are not linear, but not known to be convex</li>
+<li>Sadly, there are no effective methods for solving the general nonlinear programming problem
+<ul>
+<li>Could be NP-hard</li>
+</ul>
+</li>
+<li>We need <strong>compromise</strong></li>
+</ul>
+<h2 id="Local-Optimization-Methods"><a class="header-anchor" href="#Local-Optimization-Methods"></a>Local Optimization Methods</h2>
+<ul>
+<li>Find a point that minimizes $f_0$ among feasible points near it
+<ul>
+<li>The compromise is to give up seeking the optimal $x$</li>
+</ul>
+</li>
+<li>Fast, can handle large problems
+<ul>
+<li>Differentiability</li>
+</ul>
+</li>
+<li>Require initial guess</li>
+<li>Provide no information about distance to (global) optimum</li>
+<li>Local optimization methods are more art <strong>than technology</strong>
+<ul>
+<li>全凭运气</li>
+</ul>
+</li>
+</ul>
+<h2 id="Global-Optimization"><a class="header-anchor" href="#Global-Optimization"></a>Global Optimization</h2>
+<ul>
+<li><strong>Find the global solution</strong>
+<ul>
+<li>The compromise is efficiency</li>
+</ul>
+</li>
+<li><strong>Worst-case complexity grows exponentially with problem size</strong></li>
+<li><strong>Applications</strong></li>
+<li>A small number of variables, where computing time is not critical</li>
+<li>The value of finding the true global solution is very high</li>
+</ul>
+<hr>
+<ul>
+<li><strong>Worst-case Analysis of a high value or safety-critical system</strong>
+<ul>
+<li>Variables represent uncertain parameters</li>
+<li>Objective function is a utility function</li>
+<li>Constraints represent prior knowledge</li>
+<li>If the worst-case value is acceptable, we can certify the system as safe or reliable 能证明系统可靠</li>
+</ul>
+</li>
+<li><strong>Local optimization methods can be tried</strong>
+<ul>
+<li>If finding values that yield unacceptable performance, then the system is not reliable 局部优化已经发现了不可接受的值，那系统就不可靠</li>
+<li>But it cannot certify the system as reliable 只能证明系统不可靠，不能证明可靠</li>
+</ul>
+</li>
+</ul>
+<h2 id="Role-of-Convex-Optimization-in-Nonconvex-Problems"><a class="header-anchor" href="#Role-of-Convex-Optimization-in-Nonconvex-Problems"></a>Role of Convex Optimization in Nonconvex Problems</h2>
+<ul>
+<li><strong>Initialization for local optimization</strong>
+<ul>
+<li>An approximate, but convex, formulation</li>
+</ul>
+</li>
+<li><strong>Convex heuristics for nonconvex optimization</strong>
+<ul>
+<li>Sparse solutions (compressive sensing)</li>
+</ul>
+</li>
+<li><strong>Bounds for global optimization</strong> 通过凸优化来找全局优化问题的下界
+<ul>
+<li>Relaxation 把条件松弛</li>
+<li>Lagrangian relaxation</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Optimization-Methods/" rel="tag"># Optimization Methods</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/09/08/Neuroscience-L3/" rel="prev" title="Neuroscience L3">
+                  <i class="fa fa-chevron-left"></i> Neuroscience L3
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/09/Optimization-Methods-Lecture2/" rel="next" title="Optimization-Methods-Lecture2">
+                  Optimization-Methods-Lecture2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

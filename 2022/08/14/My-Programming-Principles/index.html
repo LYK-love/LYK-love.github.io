@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  一些吐槽 Programming Language Testing Infrasturcture Open Source Dev">
+<meta property="og:type" content="article">
+<meta property="og:title" content="My Programming Principles">
+<meta property="og:url" content="http://lyk-love.cn/2022/08/14/My-Programming-Principles/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  一些吐槽 Programming Language Testing Infrasturcture Open Source Dev">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-08-14T15:47:42.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.934Z">
+<meta property="article:author" content="有多远滚多远">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/08/14/My-Programming-Principles/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/08/14/My-Programming-Principles/","path":"2022/08/14/My-Programming-Principles/","title":"My Programming Principles"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>My Programming Principles | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E5%90%90%E6%A7%BD"><span class="nav-text">一些吐槽</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6"><span class="nav-text">硬件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E8%A8%80"><span class="nav-text">语言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-CPP"><span class="nav-text">C&#x2F;CPP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM%E8%AF%AD%E8%A8%80"><span class="nav-text">JVM语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Go-Carbon-Rust"><span class="nav-text">Go&#x2F;Carbon&#x2F;Rust</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC%E8%AF%AD%E8%A8%80"><span class="nav-text">脚本语言</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OS"><span class="nav-text">OS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-text">测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Programming-Language"><span class="nav-text">Programming Language</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Testing"><span class="nav-text">Testing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Infrasturcture"><span class="nav-text">Infrasturcture</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Open-Source-Dev"><span class="nav-text">Open Source Dev</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Some-Experience"><span class="nav-text">Some Experience</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Some-Quotes"><span class="nav-text">Some Quotes</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JS%E7%AC%91%E8%AF%9D"><span class="nav-text">JS笑话</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/08/14/My-Programming-Principles/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="My Programming Principles | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          My Programming Principles
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-14 15:47:42" itemprop="dateCreated datePublished" datetime="2022-08-14T15:47:42Z">2022-08-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Software-Engineering/" itemprop="url" rel="index"><span itemprop="name">Software Engineering</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>一些吐槽</li>
+<li>Programming Language</li>
+<li>Testing</li>
+<li>Infrasturcture</li>
+<li>Open Source Dev</li>
+</ul>
+<span id="more"></span>
+<h1 id="一些吐槽"><a class="header-anchor" href="#一些吐槽"></a>一些吐槽</h1>
+<h2 id="硬件"><a class="header-anchor" href="#硬件"></a>硬件</h2>
+<ul>
+<li>我讨厌面向机器编程</li>
+<li>在上世纪90年代, 1G RAM要1w多美金, 前人为了省钱而使用各种奇技淫巧情有可原. 问题在于这些“奇技淫巧”传承下来形成了一个庞大的代码库, 甚至被纳入了C/CPP开发的最佳实践. 现代硬件已经十分发达了. 再去搞这些东西不是搞笑么. 不过只要从事该领域总会遇到这些东西, 惹不起我还躲不起么. 所以我死也不干硬件/OS/高性能领域. 也不会在这方面写任何项目</li>
+</ul>
+<h2 id="语言"><a class="header-anchor" href="#语言"></a>语言</h2>
+<h3 id="C-CPP"><a class="header-anchor" href="#C-CPP"></a>C/CPP</h3>
+<p>C/CPP代码是我见过的最丑陋最离谱的代码:</p>
+<ul>
+<li>Macro编程: Macro编程在我看来根本不能算编程, Macro编程就是一坨大便.</li>
+<li>结构体操作( in C): C的结构体可以有很多离奇的内存操作. 我指的不是内存对奇, 而是大量的指针运算, 这玩意儿结合Macro之后, 在语法上就是乱七八糟的一堆. 有些人觉得很秀, 我只觉得不安全而且恶心</li>
+<li>元编程: 模板根本不能调试, 而且我也不知道元编程有什么用.</li>
+<li>诡异的语法: C/CPP的Technical Debt大到难以想象. 许多上古代码库都在语法边缘疯狂试探,  鬼知道后代编译器能不能兼容.  Linux内核代码至今无法用clang编译, 就是因为里面有很离谱的语法. 当然gcc和linux有着阴险的交易, 居然兼容了这种语法, 这更让我恶心了</li>
+</ul>
+<p>上述问题在几乎所有大型C/CPP库都普遍存在, 让我十分厌恶.</p>
+<p>当然C/CPP本身还有很多丑陋之处:</p>
+<ul>
+<li>C/CPP生态惨不忍睹,连个<strong>包管理工具都没有</strong>,开发体验很迷.</li>
+<li>一大堆Technical Debt; CPP backward compatibility又保留了大量上古语法, 而且越积越多. 这些技术债和上古语法混杂在一起, 让人在开发时没有<strong>最佳实践</strong>. 不知道用哪些库, 也不知道用哪些特性, 甚至异常都不知道该不该用
+<ul>
+<li>其实我很好奇CPP真的能向后兼容C么, 据我所知G++对于C的语法比GCC要严格, 某些GCC能过的C代码, G++根本编译不过. 那我用G++编译一个C++混着上述“G++编译不过的C代码”的文件, 应该也不能成功啊</li>
+</ul>
+</li>
+<li>CPP发展很慢,委员会操作成谜. <a target="_blank" rel="noopener" href="https://thenewstack.io/google-launches-carbon-an-experimental-replacement-for-c/">Google锐评</a>为&quot;The language’s evolution is also stymied by a <strong>bureaucratic committee process</strong>&quot;</li>
+<li>memory safety: 其实我不反感CPP的指针操作, 相反我很喜欢它, 因为十分符合直觉. 指针只是一种机制, 用不用得好取决于个人. 在我看来,只要编程有最佳实践, 照着实践原则来, 就不会发生这种问题. 然而CPP刚好又没有最佳实践, 大家想怎么写怎么写, 水平参差不齐. 这才是memory safety problem的根源</li>
+</ul>
+<h3 id="JVM语言"><a class="header-anchor" href="#JVM语言"></a>JVM语言</h3>
+<ul>
+<li>JAVA: 其实我觉得JAVA很简洁. 因为语法很简单. 当然它肯定不够现代, 不过对我来讲, JAVA == SpringBoot == CURD, 就是一个干活的工具罢了. 能用并且可靠就行</li>
+<li>Scala: 用过, 感觉很厉害, 但是又感觉没啥用. 语法新一点又不能当饭吃. 毕竟它的对手是语法上没有什么大问题的JAVA, Scala的新语法不是什么杀手级的特性</li>
+<li>Kotlin: 我的评价是呵呵. Kotlin这辈子也就这样了. 不过哪天Pivoto大发善心把SpringBoot移植到Kotlin,我还是很愿意试一下的</li>
+</ul>
+<h3 id="Go-Carbon-Rust"><a class="header-anchor" href="#Go-Carbon-Rust"></a>Go/Carbon/Rust</h3>
+<ul>
+<li>Go: 语法让人感觉很丑. 这可能是我们看C like的代码太多, 养成了习惯的缘故. 此外Go倒是没什么缺点. Go最大的优势是许多云原生基础设施都是Go写的, 这刚好是我感兴趣的领域之一</li>
+<li>Carbon: 没发布,但我希望能做好</li>
+<li>Rust: 这个东西… 就我个人来说, 我希望它被Carbon取代. Rust很伟大, 很新. 但我认为它和Carbon只能活一个. 毕竟二者定位差的不是很多.</li>
+</ul>
+<h3 id="脚本语言"><a class="header-anchor" href="#脚本语言"></a>脚本语言</h3>
+<ul>
+<li>Python: 写脚本没有缺点. 当然一些涉及底层的脚本还得用Go写. Python最大的问题是开发者, 许多论文的代码都没有把依赖写清楚.  Python进行重量级开发表现惨不忍睹, 但由于没人用Python进行重量级开发, 所以这个问题不存在.</li>
+<li>Bash: 垃圾. 连 <code>[[]]</code>和<code>[[[]]]</code>都有区别</li>
+<li>Ts/JS: 我会在后文详细吐槽这二者. 有人说Ts/Js不只是脚本语言,而是个前后端通用语言. 我觉得和笑话没什么分别</li>
+</ul>
+<h2 id="OS"><a class="header-anchor" href="#OS"></a>OS</h2>
+<p>我讨厌OS开发,原因有:</p>
+<ul>
+<li>如前所述, OS和硬件关系很密切, 而且C/CPP的丑陋代码在Linux中广泛存在. 我忍受不了这样的开发</li>
+<li>Linux已经是上世纪的古董了. 本质上我们还处于计算机科学的石器时代, 我们使用的是古老的Linux, 命令行工具使用的是古老的Unix CommandLine, shell是目前看来特别垃圾的bash, bash script的语法现在看来简直是惨不忍睹, 基础设施的编程语言是古老且臃肿且丑陋且缺乏统一的现代设计的C/CPP. 总而言之, 现代CS的大部分问题都不是人的问题, 是CS世界发展缓慢的问题. 写Shell很痛苦, 不是因为程序员不行, 是Shell本身就是个该被淘汰的垃圾语言. C/CPP, OS 等等同理. 是世界的原始, 造成了人的痛苦. 对此我的对策是慢慢等. 等新的编程语言接替C/CPP, 等到有人用新的编程语言来开发包括OS在内的一切基础设施, 让基础设施开发变得体验更好. 在这个美好的未来来临之前, 我不想参与任何的硬件和OS开发</li>
+</ul>
+<h2 id="测试"><a class="header-anchor" href="#测试"></a>测试</h2>
+<ol>
+<li>提高代码质量唯一可行的手段不是写测试，而是反复的提炼自己的思维，写简单清晰的代码</li>
+<li>“测试能帮助后来人”的误区, 测试对于后来人的作用，并不是你有些人想象的那么大。创造清晰的代码才是解决这个问题的关键。</li>
+<li>最优雅的程序往往也是最高效的</li>
+</ol>
+<h1 id="Programming-Language"><a class="header-anchor" href="#Programming-Language"></a>Programming Language</h1>
+<p>综上所述, 我自己的项目开发都需要选择新的语言,保证代码的简洁优雅和现代.</p>
+<ul>
+<li>
+<p>基础设施: Go. 首先,我不干硬件和OS开发, 但有可能做一些基础设施(编译器, 服务器, JVM, Docker, 网络协议)的开发, 不可避免地会接触一点底层和Linux. 因此我需要的是一个和<strong>硬件没有关系的,又有一定底层能力的, 语法和工具链足够现代</strong>的语言, 我选择Go.</p>
+</li>
+<li>
+<p>OS/硬件: Carbon. 虽然嘴上说不干, 但困难并不会随着我的逃避而消失. 首先C是不可能的, 我需要的是一个在<strong>功能上完美替代CPP的现代语言</strong>. 我选择Carbon. 当然Carbon目前还没发布, 但我目前也没干OS/硬件, 等我干这个领域的时候, 希望Carbon能成长起来吧(有人说Carbon最终只会是另一个Kotlin, 但我巴不得Carbon能彻底取代CPP)</p>
+</li>
+<li>
+<p>算法: CPP. 算法不需要复杂的语法特性, 有指针和容器库就够了. 虽然CPP很垃圾,但那是建立在庞大混乱的生态和稀奇古怪的语法上. 自己写算法不需要面对这些问题. 就把CPP当作C + OOP + STL就够了</p>
+</li>
+<li>
+<p>小脚本: Python. 随时随地写点小脚本. 自己写脚本没有性能和平台要求, 一切以简介优雅为主. 没事儿干谁会写Shell</p>
+</li>
+<li>
+<p>AI算法: Python</p>
+</li>
+<li>
+<p>区块链: 这个都用DSL的, solidity之类的. 目前我没啥时间做区块链,先搁置吧</p>
+</li>
+<li>
+<p>APP:</p>
+<ul>
+<li>
+<p>后端Java: 自己做APP,核心关注点肯定是功能, 其次就是前端. 其余部分(尤其是后端)怎么简单怎么来就好, 反正全是CURD, 也学不到东西. SpringBoot方便省事, 甚至有低代码工具可以让我不写后端的话我也会欣然接受.</p>
+<ul>
+<li>我也对Ruby做过调研,据说这玩意儿又老又笨重, 所以不考虑了.</li>
+<li>Python Flask和FastAPI个人体验就是个笑话. Python根本没法写业务代码. 动态弱类型的代码安全性惨不忍睹. 写来写去最后Python后端还是写成了Java的样子</li>
+</ul>
+</li>
+<li>
+<p>前端: 最好的用户体验需要Hybrid开发, 即安卓原生 + 框架了. 我没有iOS设备, 所以暂时不考虑iOS原生</p>
+<ul>
+<li>
+<p>框架React/React Native: 我又不是职业前端,我不想在前端浩如烟海的生态中浪费时间, 选择够自己用的工具集就行了.  对于魔术代码, 只有我理解了其底层实现我才用得放心, 但again, 我又不是职业前端, 没那么多时间看底层代码, 所以Vue我是不考虑的. React轮子比较多,写法也比较符合后端直觉.</p>
+<ul>
+<li>BTW, Vue的一码多端我好像没听说有很好的方案. 只知道一个uniapp, 它被我的同学评价为一坨垃圾</li>
+<li>对于一码多端还有一个选择是Flutter, 不过我都会React了,暂时没必要学它</li>
+</ul>
+</li>
+<li>
+<p>语言Ts:  Ts… 我不想评价, 在我看来它就是一坨冒着热气的大便, 但是Js连大便都不如, 我没得选择. 虽然Ts宣传JS + 类型系统, 不过一门新语言实际上肯定会带来许多新特性, 当然了, 其中唯一值得我说的就是类型系统. 我到现在也没搞明白TS类型系统的设计思想是啥. 感觉非常非常复杂, Interface,Type和Class区别是什么. 类型窄化又是干嘛的, 为啥要使用结构等价来判断类型, 为啥会有any这种奇怪的类型. 总之,要么是Ts设计太现代, 我经验太浅不足以充分认知; 要么就是Ts设计者脑子出问题了, 纯炫技. 而且Ts开发非常非常难受, 类型后置+大量箭头表达式+范型使得代码丑陋至极. 维护起来特别恶心</p>
+</li>
+<li>
+<p>CSS有很多选择, LESS和Tailwind. 这个取决于我要的样式效果复不复杂.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Testing"><a class="header-anchor" href="#Testing"></a>Testing</h1>
+<p>对于企业来讲, 测试是必须的, 甚至TDD也情有可原.  但测试本质上是用来防止人多和人蠢的  , 我自己开发还写个锤子测试.</p>
+<h1 id="Infrasturcture"><a class="header-anchor" href="#Infrasturcture"></a>Infrasturcture</h1>
+<p>目前我掌握的Docker, K8S/Docker Swarm, Jenkins配合工作的挺好的. 不需要更改</p>
+<h1 id="Open-Source-Dev"><a class="header-anchor" href="#Open-Source-Dev"></a>Open Source Dev</h1>
+<p>开源项目最重要的是兴趣/需求, 其次是规划.</p>
+<p>需求这个东西, 如果有的话,早就去创业了. 大部分情况下都是没有什么重大需求的, 所以就日常写一些有趣味的小项目就好了.</p>
+<p>对于规划来讲,很多开源库文档里面第一件事就是Define the vision. 毕竟开源项目成功靠的是坚持, 是积少成多. 没有清晰可靠的规划是写不完一个项目的.</p>
+<h1 id="Some-Experience"><a class="header-anchor" href="#Some-Experience"></a>Some Experience</h1>
+<p>对于一些小项目, 在出现了很奇怪复杂的错误时, 与其花时间Debug, 不如直接重开, 关键文件复制进来就完事儿了.</p>
+<h1 id="Some-Quotes"><a class="header-anchor" href="#Some-Quotes"></a>Some Quotes</h1>
+<ol>
+<li>研究物理的人如果遇到不理解的事情，总是可以责怪上帝，世界这么复杂不是你的错。但是如果你的程序有问题，那就找不到替罪羊了。0就是0，1就是1，就是你把它搞砸了。</li>
+<li>当没有计算机的时候，编程不是问题。当有了比较弱的计算机时，编程成了中等程度的问题。现在我们有了巨大的计算机，编程就成了巨大的问题。</li>
+<li>为什么这么少的人追求优雅？这就是现实。如果说优雅也有缺点的话，那就是你需要艰巨的工作才能得到它，需要良好的教育才能欣赏它。</li>
+<li>工程师和设计师都有巨人主义情节，喜欢构建庞然大物，对很多人来说这是一种永无止境的诱惑.</li>
+<li>副作用这种东西，其实是根本的，有用的。对于这一点，我喜欢跟人这样讲：在计算机和电子线路最开头发明的时候，所有的线路都是“纯”的，因为逻辑门和导线没有任何记忆数据的能力。后来有人发明了触发器（flip-flop），才有了所谓“副作用”。是副作用让我们可以存储中间数据，从而不需要把所有数据都通过不同的导线传输到需要的地方。没有副作用的语言，就像一个没有无线电，没有光的世界，所有的数据都必须通过实在的导线传递，这许多纷繁的电缆，必须被正确的连接和组织，才能达到需要的效果。我们为什么喜欢 WiFi，4G 网，Bluetooth，这也就是为什么一个语言不应该是“纯”的。</li>
+<li>开源项目可以塑造一个人.  很多人没有意识到这一点，一般都是作者塑造作品，但是有些作品可以塑造作者. 你做着做着，变成了跟原来不一样的人</li>
+<li>真的想做一个项目，那就开始得越快越好。早点做出有价值的成果，你会吸引到客户；如果做不出来，你就可以早点放弃，节省自己的时间，并了解哪里行不通</li>
+</ol>
+<h1 id="JS笑话"><a class="header-anchor" href="#JS笑话"></a>JS笑话</h1>
+<ol>
+<li>
+<p>JavaScript的优点是可以写任何东西, 缺点是你真的会用它去写这些东西.</p>
+</li>
+<li>
+<p>JS非常糟糕，以至于实际上所有JavaScript程序员都必须使用linter (例如<br>
+JSLint或ESLint)。尽管近年来ECMAScrint经历了许多许多改进，但委员会无法完全消除JavaScript最严重的错误。所以问问自已这个问题:<strong>还有什么其他现代编程语言如此糟糕</strong><br>
+<strong>以至于为了安全起见最推荐使用linter?</strong></p>
+</li>
+<li>
+<p>A: I hate Go, its ugly!</p>
+<p>B: You want to talk about ugly? Look at JavaScript!</p>
+</li>
+<li></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/14/Resolution-on-Screen/" rel="prev" title="Resolution on Screen">
+                  <i class="fa fa-chevron-left"></i> Resolution on Screen
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/15/Lossless-and-Lossy-Comprehension/" rel="next" title="Lossless and Lossy Comprehension">
+                  Lossless and Lossy Comprehension <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

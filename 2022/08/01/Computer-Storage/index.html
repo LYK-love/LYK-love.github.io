@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Basic Ideas:  Cache Main Memory VRAM Disk   Storage Material  RAM ROM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Computer Storage">
+<meta property="og:url" content="http://lyk-love.cn/2022/08/01/Computer-Storage/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Basic Ideas:  Cache Main Memory VRAM Disk   Storage Material  RAM ROM">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/memory%20hierarchy.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/Characteristics%20of%20DRAM%20and%20SRAM%20memory.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/bitable.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/DRAM%20chip%20exp.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/DRAM%20pin.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/DRAM%20addressing%201.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/DRAM%20addressing%202.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/Memory%20Module.png">
+<meta property="article:published_time" content="2022-07-31T22:02:16.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.928Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Hardware">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/memory%20hierarchy.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/08/01/Computer-Storage/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/08/01/Computer-Storage/","path":"2022/08/01/Computer-Storage/","title":"Computer Storage"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Computer Storage | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Ideas"><span class="nav-text">Basic Ideas</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache"><span class="nav-text">Cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Main-Memory"><span class="nav-text">Main Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VRAM"><span class="nav-text">VRAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disk"><span class="nav-text">Disk</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Storage-Material"><span class="nav-text">Storage Material</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RAM"><span class="nav-text">RAM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SRAM"><span class="nav-text">SRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DRAM"><span class="nav-text">DRAM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DRAM-Structure"><span class="nav-text">DRAM Structure</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pin"><span class="nav-text">pin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DRAM-Addressing"><span class="nav-text">DRAM Addressing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Memory-Module"><span class="nav-text">Memory Module</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enhanced-DRAMs"><span class="nav-text">Enhanced DRAMs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FPM-DRAM"><span class="nav-text">FPM DRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EDO-DRAM"><span class="nav-text">EDO DRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SDRAM"><span class="nav-text">SDRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDR-SDRAM"><span class="nav-text">DDR SDRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDDR"><span class="nav-text">GDDR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROM"><span class="nav-text">ROM</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/08/01/Computer-Storage/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Computer Storage | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Computer Storage
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-07-31 22:02:16" itemprop="dateCreated datePublished" datetime="2022-07-31T22:02:16Z">2022-07-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Basic Ideas:
+<ul>
+<li>Cache</li>
+<li>Main Memory</li>
+<li>VRAM</li>
+<li>Disk</li>
+</ul>
+</li>
+<li>Storage Material
+<ul>
+<li>RAM</li>
+<li>ROM</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<h1 id="Basic-Ideas"><a class="header-anchor" href="#Basic-Ideas"></a>Basic Ideas</h1>
+<p>计算机的存储架构是分层的：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/memory%20hierarchy.png" alt="memory hierarchy"></p>
+<ul>
+<li>CPU registers: 也就是CPU的 <em>register file</em>， 对它的访问没有延迟</li>
+<li>cache memory: 有L1，L2， L3 …，差别是timing 。访问L1没有延迟，访问L2有1-2个时钟周期的延迟</li>
+<li>main memory: 主存, the work house of memory system, 也被称为RAM.（当然更精确的说法是DRAM）</li>
+<li>disk: 硬盘，是一种外部存储设备，最慢</li>
+</ul>
+<p>越上层速度越快，价格越贵，其容量也就越小</p>
+<p>还有<em>虚拟内存</em> , 这是进程视角下的内存， 包含了主存和一部分从硬盘中置换出来的存储空间, 由<strong>MMU</strong>( Memory Management Unit )完成。总之，虚拟内存是一个抽象的内存概念，和现实的存储结构没有关系。</p>
+<h2 id="Cache"><a class="header-anchor" href="#Cache"></a>Cache</h2>
+<ul>
+<li>Cache， 位于CPU内部的存储设备，其材质一般是SRAM. 一般有多级cache, 如L1/L2/L3</li>
+</ul>
+<h2 id="Main-Memory"><a class="header-anchor" href="#Main-Memory"></a>Main Memory</h2>
+<ul>
+<li>
+<p><em>main memory</em>（OR <em>system memory</em> ）：主存，也称为<em>system memory</em>. 在冯诺依曼架构中, 处理器( 包括ALU和Controller )与存储器进行数据交互, 这里我们把和CPU交互的RAM称为<strong>主存</strong>.</p>
+</li>
+<li>
+<p>后面会提到， 主板上的内存条( <em>memory module</em>, 由DRAM组成 )的集合就是主存，提供给CPU一个统一的内存视图</p>
+</li>
+<li>
+<p><strong>在通常的语境下，我们说的RAM都是主存，也就是和CPU交互的DRAM</strong></p>
+</li>
+<li>
+<p>板载内存( on-board memory )：焊接在电路板上的内存就是板载内存，它无法更换。 与之对应的是可插拔的内存条。</p>
+<ul>
+<li>对于系统RAM，除了板载内存，还可以用可插拔的内存条。</li>
+<li>不过对于显存( VRAM )，目前已经不存在可插拔的显存了，所以所有<strong>显存都是板载的</strong>( 起码目前为止 )</li>
+<li>系统RAM的板载内存一般焊接在主板上，而显存一般焊接在显卡的PCB( <strong>印刷电路板</strong>，也就是显卡的“主板”)上</li>
+</ul>
+</li>
+</ul>
+<h2 id="VRAM"><a class="header-anchor" href="#VRAM"></a>VRAM</h2>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/462191421">显存的文档</a></p>
+<ul>
+<li><em>Video RAM (VRAM)</em>: 显存， 用作GPU的frame buffer. 广义地讲, 显存不是一种特定的RAM材质,  <strong>任何用作主存的RAM( 也就是DRAM )都可以用作显存</strong>。 事实上我们可以把和CPU交互的DRAM叫主存，和GPU交互的叫显存。
+<ul>
+<li>当然了，在带宽、延迟和速度方面，CPU和GPU的需求是不同的。因此VRAM的材质一般采用GDDR( 下文会介绍 )</li>
+<li>VRAM主要存储纹理数据( texture data )，用于和GPU交互。 因此它也被称为 <em>Texture Memory</em></li>
+<li>当显存不够用时，GPU将会不得不<strong>从主存中分配内存来作为VRAM</strong>。 甚至如果电脑采用集显，也就是和CPU集成到一起的GPU， GPU就没有自己的RAM。 GPU会将系统RAM的一部分作为VRAM，显而易见这很慢</li>
+<li>也有一些计算机使用“统一内存”， 即CPU和GPU都使用为GPU设计的RAM，在运行时为两个处理器动态分配。这样就避免了给GPU和CPU使用不同的内存。
+<ul>
+<li>比如PlayStation 5和M1，统一使用GDDR</li>
+<li>作为一个额外的好处，如果CPU和GPU都需要相同的数据，就不需要在两套不同的内存中拥有两个副本。</li>
+</ul>
+</li>
+<li>有些厂商会提供同一型号但是不同VRAM容量的显卡，其实一般来说，为了单单高一点VRAM就加钱没啥必要。。。</li>
+</ul>
+</li>
+<li>显存的指标：显存主要包括capacity、frequency和bandwidth这三个参数</li>
+</ul>
+<h2 id="Disk"><a class="header-anchor" href="#Disk"></a>Disk</h2>
+<p>Disk：称为硬盘，是非易失的外部存储设备。因为早期的硬盘都是机械硬盘( HDD )，成盘状，所以称为硬“盘”</p>
+<ul>
+<li>
+<p>机械硬盘( HDD ):拥有磁头，扇区和盘片, 材料和ROM没关系.</p>
+<ul>
+<li>HDD比较重，而且运行时会呼呼地转，发出噪音. HDD价格低容量大，速度也远远慢于SSD. 适合存储一些音频、视频数据</li>
+<li>现在M.2 NVMe固态硬盘速度能达到3500MB/s，就算是普通的SATA SSD速度也能到550MB/s，而机械硬盘现在能到200MB/s就很不错了</li>
+</ul>
+</li>
+<li>
+<p><strong>固态硬盘</strong>（ SSD， Solid State Disk )：</p>
+<ul>
+<li>
+<p>SSD<strong>没有物理上的磁头和盘片，也没有扇区和磁道等概念</strong>. SSD的存储原理和机械硬盘不同，它是闪存盘的matrix，用某种控制芯片将多个<strong>NAND FLASH</strong>颗粒整合,</p>
+<ul>
+<li>Flash属于广义上的ROM( 见下文<em>ROM</em> ).</li>
+</ul>
+</li>
+<li>
+<p>严格地讲，SSD不算Disk， 不过它在计算机架构中确实承担着Disk的职能( 外部存储设备 )，所以把SSD放入Disk一类</p>
+</li>
+<li>
+<p>SSD价格贵, 速度快. 因为没有磁头, 寻道时间几乎为0. 因为没有机械部件, 因此抗震荡, 低功耗, 无噪音</p>
+</li>
+<li>
+<p>现在流行的使用MVMe协议的SSD</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>机械硬盘只能实现 50-120 MB/秒的写入速度，而固态硬盘能达到 550 MB/秒的 SATA 总线极限值</p>
+<p>注意，虽然SSD材料是ROM，但磁盘和ROM是两个概念。 现代的磁盘包括了HDD和SSD， 已经不是一个材料概念，而是一个计算机架构中的抽象的功能的概念。 而ROM是一个材料的概念。不能把ROM和Disk混为一谈。</p>
+<h1 id="Storage-Material"><a class="header-anchor" href="#Storage-Material"></a>Storage Material</h1>
+<h2 id="RAM"><a class="header-anchor" href="#RAM"></a>RAM</h2>
+<p>RAM（ random access memory ）： 是volatile（易失性）的存储材料， 也就是说断电就会丢失所有信息。 RAM常用来做计算机的内存，包括cache和主存等</p>
+<p>RAM分为两类：</p>
+<ul>
+<li>SRAM( Static RAM ):  “静态”是指只要不掉电, 存储在SRAM中的数据就不会丢失
+<ul>
+<li>更快更贵，一般用作Cache</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>DRAM( Dynamic RAM ): 在通电时还需要进行周期性的刷新操作, 才能保证数据不丢失
+<ul>
+<li>比SRAM慢，也更便宜，一般用作主存和显存</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>下图总结了SRAM和DRAM的区别：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/Characteristics%20of%20DRAM%20and%20SRAM%20memory.png" alt="Characteristics of DRAM and SRAM memory"></p>
+<ul>
+<li>SRAM的存取比DRAM快</li>
+<li>SRAM对干扰不敏感</li>
+<li>SRAM每单元使用更多晶体管，密集度低，比DRAM更贵，功耗更大</li>
+</ul>
+<hr>
+<p>我们规定RAM芯片的基本存储单位是bit，对应的物理结构称为cell</p>
+<h3 id="SRAM"><a class="header-anchor" href="#SRAM"></a>SRAM</h3>
+<p>SRAM 将每个bit存储在一个 <em>bistable</em> ( 双稳态 )的cell里。每个cell用一个 <em>six-transistor</em>电路实现。</p>
+<p>双稳态：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/bitable.png" alt="bitable"></p>
+<p>上图是一个双稳态电路，它永远保持在两个不同的电压状态，也就是在上图左（右）稳态。其他任何状态都是不稳定的——电路会从不稳定状态迅速地转移到其中一个稳定状态。</p>
+<p>上图其实有个地方应该是有偏差的，也就是中间那个状态。原则上来说，当左右两边的作用力相同时，钟摆在垂直的时候也能无限期地保持平衡，但是当左右两边稍微发生一点扰动，这个状态就会变成左稳态或右稳态之一。而且一旦倒下，便不会有机会再站起来。我们称这个状态为亚稳态。</p>
+<p>因为SRAM有双稳态的特性，<strong>只要有电，它就会永远的保持它的值, 即使有干扰来扰乱电压, 当干扰时, 电路就会恢复到稳定值.</strong></p>
+<ul>
+<li>也就是说SRAM在通电时不需要刷新就能保存数据</li>
+</ul>
+<p>但没有电的话, 双稳态的状态就不能保持了, 意味着数据也就丢失了. 这就是我们常说, 电脑断电后内存数据就会丢失的原因.</p>
+<h3 id="DRAM"><a class="header-anchor" href="#DRAM"></a>DRAM</h3>
+<p>DRAM将每个位存储为对一个电容的充电。DRAM可以制造得非常密集——每个单元由一个电容和一个访问晶体管组成。但是与SRAM不同的是，DRAM存储器的单元对干扰非常敏感.当电容的电压被扰乱之后，它就永远不会恢复了.</p>
+<ul>
+<li>DRAM加电时需要不断刷新, 才能保存数据</li>
+</ul>
+<h4 id="DRAM-Structure"><a class="header-anchor" href="#DRAM-Structure"></a>DRAM Structure</h4>
+<ul>
+<li>DRAM芯片的每$w$个cell组成一个supercell，每$d$个supercell组成一个DRAM芯片的存储部分。
+<ul>
+<li>即， 一个$d \times w$的DRAM总共存储了$d \times w $ bit</li>
+</ul>
+</li>
+<li>supercell被组织成一个$r$行$c$列的长方形阵列，其中$r \times c = d$.  每个DRAM内使用$(i,j)$二维地址对supercell进行寻址( 即$(行号， 列号)$ )
+<ul>
+<li>也就是说，DRAM的<strong>寻址的基本单位</strong>是supercell， DRAM没有提供机制给supercell内部的cell寻址</li>
+</ul>
+</li>
+</ul>
+<p>example：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/DRAM%20chip%20exp.png" alt="DRAM chip exp"></p>
+<ul>
+<li>上图展示了一个$16 * 8 $的DRAM芯片，其中含有$d = 16$个supercell，每个supercell包含$w = 8 $个cell，$r=4$行， $c=4$列
+<ul>
+<li>每个supercell含有8个cell，相当于每个supercell存储了1 Byte， 即<strong>该DRAM是按字节寻址的</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="pin"><a class="header-anchor" href="#pin"></a>pin</h4>
+<ul>
+<li>pin( 引脚 ): 对芯片的外部物理接口的抽象称呼，这里我们只讨论用于信息I/O的pin， 每个携带1 bit信号。 其实不是所有的pin都能用来信息I/O， 比如Vcc和GND，除了供电，就没有其他用处。</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/DRAM%20pin.png" alt="DRAM pin"></p>
+<p>DRAM芯片通过pin来进行信息传输，上图给出了两组pin：</p>
+<ol>
+<li>8个data pin，能在芯片中I/O一个字节</li>
+<li>2个addr pin，能携带一个2 bit的地址，用于对supercell的寻址
+<ul>
+<li>注意到，这个DRAM是4行4列的，所以一次只能对一维进行寻址</li>
+</ul>
+</li>
+</ol>
+<h4 id="DRAM-Addressing"><a class="header-anchor" href="#DRAM-Addressing"></a>DRAM Addressing</h4>
+<p>每个DRAM芯片被连接到某个称为<em>memory controller</em>的电路。这个电路可一次向每个DRAM芯片I/O $w$位。<em>memory controller</em>读取supercell $(i,j)$的内容的步骤为：</p>
+<ol>
+<li>
+<p><em>memory controller</em>会通过addr pin发送2 bit的行地址$i$</p>
+<ul>
+<li>
+<p>这个操作称为<em>a RAS (row access strobe) request</em></p>
+</li>
+<li>
+<p>DRAM此时会选中supercell mateix的第$i$行，复制到内部行缓冲区:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/DRAM%20addressing%201.png" alt="DRAM addressing 1"></p>
+</li>
+</ul>
+</li>
+<li>
+<p>再发送2 bit的列地址$j$</p>
+<ul>
+<li>
+<p>这个操作称为<em>a CAS (col access strobe) request</em></p>
+</li>
+<li>
+<p>DRAM此时会选中行缓冲区的第$j$列. 该元素就是supercell$(i,j)$的1 Byte内容</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/DRAM%20addressing%202.png" alt="DRAM addressing 2"></p>
+</li>
+</ul>
+</li>
+<li>
+<p>DRAM然后会将这1 Byte内容通过8个data pin发送给<em>memory controller</em></p>
+</li>
+</ol>
+<p>这个模型把DRAM的supercell组织成二维而不是一维数组，是为了降低芯片上addr pin的数量。 如果supercell被组织成一维数组，就需要$\log_216 = 4$个addr pin. 但是二维数组就需要如上所述的两次寻址，要花更多的时间</p>
+<p>这里考虑最简情况，把一个DRAM芯片当做一个<em>memory module</em>。稍后我们会看到，一个<em>memory module</em>由多个DRAM组成，由 <em>memory module</em>和<em>memory controller</em>交互</p>
+<h4 id="Memory-Module"><a class="header-anchor" href="#Memory-Module"></a>Memory Module</h4>
+<ul>
+<li><em>memory module</em>: DRAM被组织成<em>memory module</em>，插到主板的插槽上
+<ul>
+<li><em>memory module</em>也就是我们常说的<strong>内存条</strong></li>
+</ul>
+</li>
+<li><em>main memory</em>：主存，也称为<em>system memory</em>. 主板上内存条的集合，提供给计算机一个统一的内存视图，这就是主存
+<ul>
+<li>此外还存在“显存”， 其实二者是一样的。 给CPU用的叫主存，给GPU用的叫显存</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/Memory%20Module.png" alt="Memory Module"></p>
+<ul>
+<li>
+<p>上图展示了一个容量为64 MB 的<em>memory module</em>, 由8个 8MB * 8 （ $d = 8* 1024 * 8, w = 8$ ）的DRAM芯片组成，按0～7编号。每个supercell存储$w = 8$ bit 信息。</p>
+</li>
+<li>
+<p>我们假设一个word为8 Byte. 地址A $(i,j)$上的一个word 就由这8个DRAM的地址为$(i,j)$的supercell组成。 也就是说DRAM0的$(i,j)$存储A的第0个Byte, DRAM1的$(i,j)$存储A的第1个Byte, 以此类推 8个DRAM中读取的8个Byte被发送给<em>memory controller</em>， 组合成一个word，再发送给CPU</p>
+</li>
+</ul>
+<h2 id="Enhanced-DRAMs"><a class="header-anchor" href="#Enhanced-DRAMs"></a>Enhanced DRAMs</h2>
+<p>除了上述我们介绍的常规DRAM，还有很多变种的DRAM</p>
+<h3 id="FPM-DRAM"><a class="header-anchor" href="#FPM-DRAM"></a>FPM DRAM</h3>
+<ul>
+<li><em>Fast page mode DRAM (FPM DRAM)</em>: 传统的DRAM在读取$(i,j)$ 数据时，会先将第$i$行copy到行缓冲区，然后读取第$j$列将其返回， 丢弃该行的其他元素。 如果workload是要读取第<em>i</em> 行的所有supercell，那么传统DRAM会在每个RAS/CAS后丢弃剩余数据，重新加载行缓冲区。这无疑是十分低效的。 FPM DRAM在完成$(i,j)$的RAS/CAS后， 不会丢弃剩余的元素。 因此对于第$i$行其他元素的RAS/CAS，可以直接返回结果</li>
+</ul>
+<h3 id="EDO-DRAM"><a class="header-anchor" href="#EDO-DRAM"></a>EDO DRAM</h3>
+<ul>
+<li><em>Extended data out DRAM (EDO DRAM)</em>: 比FPM DRAM更先进， 可以把多个CAS缓冲CAS为一组，一起发送</li>
+</ul>
+<h3 id="SDRAM"><a class="header-anchor" href="#SDRAM"></a>SDRAM</h3>
+<ul>
+<li><em>Synchronous DRAM (SDRAM)</em>： 传统DRAM, FPM DRAM, EDO DRAM都是以异步方式进行I/O的( 使用RAS和CAS两个独立的信号 ). 而SDRAM的I/O都在系统时钟的上升沿执行，这使得它可以同步地存取数据. 简言之，SDRAM比传统DRAM快很多</li>
+<li>SDRAM的材质分为双极性与CMOS( Complementary Metal Oxide Semiconductor, 互补金属氧化物半导体 )
+<ul>
+<li>CMOS还被用于在数字影像领域. 市面上常见的数码产品, 其感光元件主要就是CCD或者CMOS, 尤其是低端摄像头产品, 而通常高端摄像头都是CCD感光元件.</li>
+</ul>
+</li>
+<li><strong>主板上就用了一个CMOS芯片来记录时间和硬件配置参数</strong>，比如该从哪个盘启动. 该硬件很悲催，没有自己的名字，我们就称为CMOS. CMOS里自带一个小电池, 因此虽然是易失性的，断了电也能工作</li>
+</ul>
+<h3 id="DDR-SDRAM"><a class="header-anchor" href="#DDR-SDRAM"></a>DDR SDRAM</h3>
+<ul>
+<li><em>Double Data-Rate Synchronous DRAM (DDR SDRAM)</em>：双通道DDR SDRAM, 是SDRAM的增强版, 在上升/下降沿都执行I/O</li>
+<li>随着 <em>prefetch buffer</em> ( 预取缓冲区，决定了有效带宽 ) 的增大，DDR已经分为DDR (2 bits), DDR2 (4 bits), DDR3 (8 bits), DDR4(  ) and  DDR5( 16 bits )
+<ul>
+<li>注意， DDR4的prefetch和3一样，都是8 bit，但是DDR4提高了核心频率，所以总线速度得以提高</li>
+<li>DDR的&quot;Double Data-Rate&quot;指的是会在系统时钟的<strong>上升和下降沿都执行I/O</strong>，并不意味着DDR的速度是SDRAM的两倍。 事实上，随着DDR技术的进步，速度差距是越来越大的。</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">SDRAM</th>
+<th style="text-align:left">DDR</th>
+<th style="text-align:left">DDR2</th>
+<th style="text-align:left">DDR3</th>
+<th style="text-align:left">DDR4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">prefetch buffer size</td>
+<td style="text-align:left">1 bit</td>
+<td style="text-align:left">2 bit</td>
+<td style="text-align:left">4 bit</td>
+<td style="text-align:left">8 bit</td>
+<td style="text-align:left">8 bit</td>
+</tr>
+<tr>
+<td style="text-align:left">电压</td>
+<td style="text-align:left">3.3</td>
+<td style="text-align:left">2.5 - 2.6</td>
+<td style="text-align:left">1.8</td>
+<td style="text-align:left">1.35 - 1.5</td>
+<td style="text-align:left">1.2</td>
+</tr>
+</tbody>
+</table>
+<h3 id="GDDR"><a class="header-anchor" href="#GDDR"></a>GDDR</h3>
+<ul>
+<li><em>GDDR( Graphics Double Data Rate DRAM )</em>： 一般用作VRAM( 显存 )，带宽更高，速度更快， 支持并发读写（当然容量也更小）。 市面上常见的有GDDR6</li>
+<li>GDDR和主存的普通DDR的最大区别就是前者有一个<strong>宽的“总线”</strong>， 总线越宽，数据传输速率越高。 由于图形涉及并行操作大量数据，因此内存总线的宽度非常重要。</li>
+</ul>
+<h2 id="ROM"><a class="header-anchor" href="#ROM"></a>ROM</h2>
+<p>ROM( Read-Only Memory ):  顾名思义是不可写的一种存储材质，它是<strong>novolatile</strong>( 非易失性)的， 数据不会随着断电而丢失。</p>
+<ul>
+<li>不过，“不可写”其实是生产工艺的限制，而不是什么设计上的特性。</li>
+<li>后来ROM发展出了可擦写的存储材质EPROM和EEPROM，因为是可擦写的，所以严格来讲不算&quot;Read-Only&quot;， 但是它们确实是在ROM技术上发展出来的，因此也称为ROM。 后来在这两种技术的发展上又发展出了<strong>NAND FLASH</strong>闪存，这就是我们现在用的U盘中用到的技术，同样，因为其体积小，容量和速度均不错，现在手机存储中的emmc颗粒也是用的这种技术，所以有手机厂商就把手机的存储容量约定俗成为ROM，其继承ROM断电不丢失数据的特性，而且有着较快的速度。（但是是<strong>可擦写</strong>的哦）</li>
+<li>EEPROM和flash都有写入次数限制</li>
+</ul>
+<p>refs: CSAPP</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hardware/" rel="tag"># Hardware</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/01/GPU/" rel="prev" title="GPU">
+                  <i class="fa fa-chevron-left"></i> GPU
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/06/Computer-I:O-Device/" rel="next" title="Computer I/O Device">
+                  Computer I/O Device <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

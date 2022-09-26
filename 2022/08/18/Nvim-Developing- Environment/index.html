@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Nvim Nvim Config LspInstall Dap Keybinds">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nvim Developing Environment">
+<meta property="og:url" content="http://lyk-love.cn/2022/08/18/Nvim-Developing-%20Environment/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Nvim Nvim Config LspInstall Dap Keybinds">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-08-17T22:52:46.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.934Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Editor">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/08/18/Nvim-Developing-%20Environment/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/08/18/Nvim-Developing-%20Environment/","path":"2022/08/18/Nvim-Developing- Environment/","title":"Nvim Developing Environment"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Nvim Developing Environment | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Nvim"><span class="nav-text">Nvim</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nvim-vs-VSCode"><span class="nav-text">Nvim vs VSCode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Features"><span class="nav-text">Features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Config"><span class="nav-text">Config</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Nvim-Config"><span class="nav-text">Nvim Config</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Config-Install"><span class="nav-text">Config Install</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Structure"><span class="nav-text">Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Usage"><span class="nav-text">Usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Customize"><span class="nav-text">Customize</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LspInstall"><span class="nav-text">LspInstall</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Commands"><span class="nav-text">Commands</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dap"><span class="nav-text">Dap</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Structure-2"><span class="nav-text">Structure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Usage-2"><span class="nav-text">Usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Specific-Daps"><span class="nav-text">Specific Daps</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C-C-Rust-via-lldb-vscode"><span class="nav-text">C&#x2F;C++&#x2F;Rust (via lldb-vscode)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Go"><span class="nav-text">Go</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Keybinds"><span class="nav-text">Keybinds</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/08/18/Nvim-Developing-%20Environment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Nvim Developing Environment | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nvim Developing Environment
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-17 22:52:46" itemprop="dateCreated datePublished" datetime="2022-08-17T22:52:46Z">2022-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Nvim</li>
+<li>Nvim Config</li>
+<li>LspInstall</li>
+<li>Dap</li>
+<li>Keybinds</li>
+</ul>
+<span id="more"></span>
+<h1 id="Nvim"><a class="header-anchor" href="#Nvim"></a>Nvim</h1>
+<h2 id="Nvim-vs-VSCode"><a class="header-anchor" href="#Nvim-vs-VSCode"></a>Nvim vs VSCode</h2>
+<p>Nvim和VSCode是两个主流的编辑器/IDE.</p>
+<ul>
+<li>VS Code’s use of <a target="_blank" rel="noopener" href="https://www.electronjs.org/">Electron</a> makes it available on all major platforms. This is how <a target="_blank" rel="noopener" href="https://github.com/features/codespaces">GitHub Codespaces</a> or <a target="_blank" rel="noopener" href="https://www.gitpod.io/">Gitpod</a> can access to the entire VS Code ecosystem. See <a target="_blank" rel="noopener" href="https://console.dev/interviews/gitpod-christian-weichel/">our interview with GitPod’s Chief Architect / Head of Engineering</a> about how important this has been.
+<ul>
+<li>虽然微软团队对VSCode的Electron做了很多魔改, 极大地提升了性能, 但依然使得我个人感觉很不舒服</li>
+</ul>
+</li>
+<li>Nvim更快</li>
+</ul>
+<h2 id="Features"><a class="header-anchor" href="#Features"></a>Features</h2>
+<ul>
+<li><strong>Performance:</strong> 🚀 Very fast.</li>
+<li><strong>Syntax highlighting:</strong> Neovim 0.5 now includes <a target="_blank" rel="noopener" href="https://github.com/nvim-treesitter/nvim-treesitter">Treesitter</a> and supports  <a target="_blank" rel="noopener" href="https://github.com/neovim/nvim-lspconfig">LSP</a>, but still requires some config.</li>
+<li><strong>Customizable:</strong> ✅ Large ecosystem of plugins and themes.</li>
+<li><strong>Cross-platform:</strong> Linux ✅ Windows ✅ macOS ✅</li>
+</ul>
+<h2 id="Config"><a class="header-anchor" href="#Config"></a>Config</h2>
+<ul>
+<li>
+<p>Neovim设置全局配置文件,需要在<code>/etc/profile</code>添加：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export VIM=/usr/share/nvim</span><br><span class="line">export PATH=&quot;$PATH:$VIM/sysinit.vim&quot;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>有可能会出现这种情况：</p>
+<blockquote>
+<p>直接使用 nvim … 打开文件时一切正常，配置也生效;<br>
+但当你使用 sudo nvim … 打开文件时，配置文件并没有生效</p>
+</blockquote>
+<p>出现这种情况的原因是：当你使用 sudo命令的时候，用户的身份切换了（默认是root）,此时你的环境变量也被重置了，系统当然就找不到你的配置文件。</p>
+<p>解决的方案大致有2种：</p>
+<ol>
+<li>使用 sudo -E nvim … 打开文件 （最快速的方法，不过每次都需要加上 -E, 有点麻烦）</li>
+<li>修改 sudo 的配置文件: /etc/sudoers(如果用nvim打开是空文件的话，可以试一下用vim 或者 visudo打开，后面就不细说了，超纲了)</li>
+</ol>
+</li>
+</ul>
+<h1 id="Nvim-Config"><a class="header-anchor" href="#Nvim-Config"></a>Nvim Config</h1>
+<p>使用<a target="_blank" rel="noopener" href="https://github.com/ayamir/nvimdots/">ayamir的Nvim配置</a>,  它集成了大量插件, 包括Nvim + LSP + Dap.</p>
+<p>其配置文件位于<code>~/.config/nvim/lua</code></p>
+<h2 id="Config-Install"><a class="header-anchor" href="#Config-Install"></a>Config Install</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/ayamir/nvimdots/wiki/Prerequisites">https://github.com/ayamir/nvimdots/wiki/Prerequisites</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># for neovim python module</span><br><span class="line">pip install neovim --user</span><br><span class="line"></span><br><span class="line"># clone</span><br><span class="line">git clone git@github.com:ayamir/nvimdots.git ~/.config/nvim</span><br><span class="line"></span><br><span class="line"># sync plugins(maybe need multiple times)</span><br><span class="line">nvim +PackerSync</span><br></pre></td></tr></table></figure>
+<h2 id="Structure"><a class="header-anchor" href="#Structure"></a>Structure</h2>
+<p><code>init.lua</code> is the kernel config file. It requires configuration in <code>lua</code> directory.</p>
+<ul>
+<li><code>lua</code> directory contains 3 parts.
+<ul>
+<li><code>core</code> directory contains base configuration of neovim.</li>
+<li><code>keymap</code> directory contains keybindings of plugins.</li>
+<li><code>modules</code> directory contains 5 parts.
+<ul>
+<li><code>completion</code> directory contains code completion’s configuration.</li>
+<li><code>editor</code> directory contains plugins’ configuration about editing.</li>
+<li><code>lang</code> directory contains plugins’ configuration about specific language.</li>
+<li><code>tools</code> directory contains telescope and its extensions’ configuration.</li>
+<li><code>ui</code> directory contains plugins’ configuration about ui.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Usage"><a class="header-anchor" href="#Usage"></a>Usage</h2>
+<ul>
+<li>
+<p>已经集成了<a target="_blank" rel="noopener" href="https://github.com/williamboman/nvim-lsp-installer">nvim-lsp-installer</a>, 只需手动安装对应语言的language server.</p>
+<ul>
+<li>
+<p>lsp-installer默认安装的html LSP有问题, 需要手动安装新的:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">npm i -g vscode-html-languageserver-bin</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p>For <a target="_blank" rel="noopener" href="https://github.com/nvim-treesitter/nvim-treesitter#supported-languages">nvim-treesitter</a>, ensure installed parsers are configured <a target="_blank" rel="noopener" href="https://github.com/ayamir/nvimdots/blob/f593682b349f69a468bfeb6cd1eb87f810b8a37f/lua/modules/editor/config.lua#L19-L37">here</a>, you can add or remove parsers on your own demand.</p>
+</li>
+<li>
+<p>For <a target="_blank" rel="noopener" href="https://github.com/mattn/efm-langserver">efm-langserver</a>, you need to install itself and format/lint tools manually.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install clang</span><br><span class="line">brew install eslint</span><br><span class="line">go install golang.org/x/tools/...@latest</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<ul>
+<li>
+<p>You can use <code>FormatToggle</code> command to enable/disable format-on-save which is enabled by default.</p>
+</li>
+<li>
+<p>Also, you can disable format-on-save for specific workspace by add its absolute path in <code>format_disabled_dirs.txt</code> in new line.</p>
+</li>
+<li>
+<p>You can use <code>:checkhealth</code> command to check whether all modules works or not.</p>
+</li>
+<li>
+<p><strong>Please ensure all of tools installed above can be found in <code>PATH</code></strong>.</p>
+</li>
+<li>
+<p>You can configure these tools in your own habit like <code>.eslintrc.js</code> and <code>.prettierrc.json</code>.</p>
+<p>Recommanded way to set <strong>PATH</strong> variable is export it in your <code>~/.profile</code> like this:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> LOCAL_BIN=<span class="string">&quot;<span class="variable">$HOME</span>/.local/bin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> GOROOT=<span class="string">&quot;/usr/lib/go&quot;</span></span><br><span class="line"><span class="built_in">export</span> GOPATH=<span class="string">&quot;<span class="variable">$HOME</span>/go&quot;</span></span><br><span class="line"><span class="built_in">export</span> GOBIN=<span class="string">&quot;<span class="variable">$HOME</span>/go/bin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> HS_BIN=<span class="string">&quot;<span class="variable">$HOME</span>/.cabal/bin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> NPM_BIN=<span class="string">&quot;<span class="variable">$HOME</span>/.npm-global/bin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> KT_BIN=<span class="string">&quot;<span class="variable">$HOME</span>/.kotlin/bin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> RS_BIN=<span class="string">&quot;<span class="variable">$HOME</span>/.cargo/bin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=<span class="string">&quot;/usr/lib/jvm/default&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> BENTO_BIN=<span class="string">&quot;<span class="variable">$HOME</span>/.local/share/bento4/bin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> ROFI_BIN=<span class="string">&quot;<span class="variable">$HOME</span>/.config/rofi/bin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$LOCAL_BIN</span>:<span class="variable">$GOBIN</span>:<span class="variable">$HS_BIN</span>:<span class="variable">$NPM_BIN</span>:<span class="variable">$RS_BIN</span>:<span class="variable">$JAVA_HOME</span>:<span class="variable">$BENTO_BIN</span>:<span class="variable">$ROFI_BIN</span>:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Customize"><a class="header-anchor" href="#Customize"></a>Customize</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/ayamir/nvimdots/wiki/Usage">https://github.com/ayamir/nvimdots/wiki/Usage</a></p>
+<p>nvim添加插件, 需要用<a target="_blank" rel="noopener" href="https://github.com/wbthomason/packer.nvim">packaer.nvim</a></p>
+<h1 id="LspInstall"><a class="header-anchor" href="#LspInstall"></a>LspInstall</h1>
+<p><a target="_blank" rel="noopener" href="https://github.com/williamboman/nvim-lsp-installer#available-lsps">https://github.com/williamboman/nvim-lsp-installer#available-lsps</a></p>
+<h2 id="Commands"><a class="header-anchor" href="#Commands"></a>Commands</h2>
+<ul>
+<li><code>:LspInstallInfo</code> - opens a graphical overview of your language servers</li>
+<li><code>:LspInstall [--sync] [server] ...</code> - installs/reinstalls language servers. Runs in a blocking fashion if the <code>--sync</code> argument is passed (only recommended for scripting purposes).</li>
+<li><code>:LspUninstall [--sync] &lt;server&gt; ...</code> - uninstalls language servers. Runs in a blocking fashion if the <code>--sync</code> argument is passed (only recommended for scripting purposes).</li>
+<li><code>:LspUninstallAll [--no-confirm]</code> - uninstalls all language servers</li>
+<li><code>:LspInstallLog</code> - opens the log file in a new tab window</li>
+<li><code>:LspPrintInstalled</code> - prints all installed language servers</li>
+</ul>
+<h1 id="Dap"><a class="header-anchor" href="#Dap"></a>Dap</h1>
+<p><a target="_blank" rel="noopener" href="https://github.com/mfussenegger/nvim-dap">Official Repositoty</a></p>
+<p>nvim-dap is a Debug Adapter Protocol client, or “debugger”, or “debug-frontend”.</p>
+<p>With the help of a debug adapter it can:</p>
+<ol>
+<li>Launch an application to debug</li>
+<li>Attach to running applications to debug them</li>
+<li>Set breakpoints and step through code</li>
+<li>Inspect the state of the application</li>
+</ol>
+<p>Dap插件的配置代码位于: <code>~/.config/nvim/lua/modules/editor/plugins.lua</code>, 我们不需要改动.</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">editor[<span class="string">&quot;rcarriga/nvim-dap-ui&quot;</span>] = &#123;</span><br><span class="line">	opt = <span class="literal">false</span>,</span><br><span class="line">	<span class="built_in">config</span> = conf.dapui,</span><br><span class="line">	requires = &#123;</span><br><span class="line">		&#123; <span class="string">&quot;mfussenegger/nvim-dap&quot;</span>, <span class="built_in">config</span> = conf.dap &#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="string">&quot;Pocco81/dap-buddy.nvim&quot;</span>,</span><br><span class="line">			opt = <span class="literal">true</span>,</span><br><span class="line">			cmd = &#123; <span class="string">&quot;DIInstall&quot;</span>, <span class="string">&quot;DIUninstall&quot;</span>, <span class="string">&quot;DIList&quot;</span> &#125;,</span><br><span class="line">			commit = <span class="string">&quot;24923c3819a450a772bb8f675926d530e829665f&quot;</span>,</span><br><span class="line">			<span class="built_in">config</span> = conf.dapinstall,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="Structure-2"><a class="header-anchor" href="#Structure-2"></a>Structure</h2>
+<p>You’ll need to install and configure a debug adapter per language. See</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mfussenegger/nvim-dap/blob/master/doc/dap.txt">:help dap.txt</a></li>
+<li>the <a target="_blank" rel="noopener" href="https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation">Debug-Adapter Installation</a> wiki</li>
+<li><code>:help dap-adapter</code></li>
+<li><code>:help dap-configuration</code></li>
+</ul>
+<p>A debug adapter is a facilitator between nvim-dap (the client), and a language-specific debugger:</p>
+<figure class="highlight txt"><table><tr><td class="code"><pre><span class="line">DAP-Client ----- Debug Adapter ------- Debugger ------ Debugee</span><br><span class="line">(nvim-dap)  |   (per language)  |   (per language)    (your app)</span><br><span class="line">            |                   |</span><br><span class="line">            |        Implementation specific communication</span><br><span class="line">            |        Debug adapter and debugger could be the same process</span><br><span class="line">            |</span><br><span class="line">     Communication via the Debug Adapter Protocol</span><br></pre></td></tr></table></figure>
+<p>adapter 示例:</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">dap.adapters.python = &#123;</span><br><span class="line">	<span class="built_in">type</span> = <span class="string">&quot;executable&quot;</span>,</span><br><span class="line">	command = <span class="built_in">os</span>.<span class="built_in">getenv</span>(<span class="string">&quot;HOME&quot;</span>) .. <span class="string">&quot;/.local/share/nvim/dapinstall/python/bin/python&quot;</span>,</span><br><span class="line">	args = &#123; <span class="string">&quot;-m&quot;</span>, <span class="string">&quot;debugpy.adapter&quot;</span> &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>configurations 示例:</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">dap.configurations.python = &#123;</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">-- The first three options are required by nvim-dap</span></span><br><span class="line">		<span class="built_in">type</span> = <span class="string">&quot;python&quot;</span>, <span class="comment">-- the type here established the link to the adapter definition: `dap.adapters.python`</span></span><br><span class="line">		request = <span class="string">&quot;launch&quot;</span>,</span><br><span class="line">		name = <span class="string">&quot;Launch file&quot;</span>,</span><br><span class="line">		<span class="comment">-- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options</span></span><br><span class="line"></span><br><span class="line">		program = <span class="string">&quot;$&#123;file&#125;&quot;</span>, <span class="comment">-- This configuration will launch the current file if used.</span></span><br><span class="line">		pythonPath = <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">			<span class="comment">-- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.</span></span><br><span class="line">			<span class="comment">-- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.</span></span><br><span class="line">			<span class="comment">-- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.</span></span><br><span class="line">			<span class="keyword">local</span> cwd = vim.fn.getcwd()</span><br><span class="line">			<span class="keyword">if</span> vim.fn.executable(cwd .. <span class="string">&quot;/venv/bin/python&quot;</span>) == <span class="number">1</span> <span class="keyword">then</span></span><br><span class="line">				<span class="keyword">return</span> cwd .. <span class="string">&quot;/venv/bin/python&quot;</span></span><br><span class="line">			<span class="keyword">elseif</span> vim.fn.executable(cwd .. <span class="string">&quot;/.venv/bin/python&quot;</span>) == <span class="number">1</span> <span class="keyword">then</span></span><br><span class="line">				<span class="keyword">return</span> cwd .. <span class="string">&quot;/.venv/bin/python&quot;</span></span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				<span class="keyword">return</span> <span class="string">&quot;/usr/bin/python&quot;</span></span><br><span class="line">			<span class="keyword">end</span></span><br><span class="line">		<span class="keyword">end</span>,</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Usage-2"><a class="header-anchor" href="#Usage-2"></a>Usage</h2>
+<p>A typical debug flow consists of:</p>
+<ul>
+<li>Setting breakpoints via <code>:lua require'dap'.toggle_breakpoint()</code>.</li>
+<li>Launching debug sessions and resuming execution via <code>:lua require'dap'.continue()</code>.</li>
+<li>Stepping through code via <code>:lua require'dap'.step_over()</code> and <code>:lua require'dap'.step_into()</code>.</li>
+<li>Inspecting the state via the built-in REPL: <code>:lua require'dap'.repl.open()</code> or using the widget UI (<code>:help dap-widgets</code>)</li>
+</ul>
+<p>See <a target="_blank" rel="noopener" href="https://github.com/mfussenegger/nvim-dap/blob/master/doc/dap.txt">:help dap.txt</a>, <code>:help dap-mapping</code> and <code>:help dap-api</code>.</p>
+<h2 id="Specific-Daps"><a class="header-anchor" href="#Specific-Daps"></a>Specific Daps</h2>
+<ul>
+<li>
+<p>具体语言的Dap配置代码位于: <code>~/.config/nvim/lua/modules/editor/config.lua</code>.</p>
+</li>
+<li>
+<p>具体语言的Dap的安装文档: <a target="_blank" rel="noopener" href="https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation">Doc</a></p>
+</li>
+</ul>
+<p>ayamir默认配置好了许多Dap, 大部分情况下我们只需安装对应的依赖, 让ayamir的代码生效即可.</p>
+<h3 id="C-C-Rust-via-lldb-vscode"><a class="header-anchor" href="#C-C-Rust-via-lldb-vscode"></a>C/C++/Rust (via lldb-vscode)</h3>
+<p>ayamir用的就是<code>lldb-vscode</code>, 只需要自己自己下载<code>lldb-vscode</code>, 确保其能够在命令行调用, 再在ayamir的配置代码里把<code>lldb-vscode</code>的路径改为自己的路径即可:</p>
+<ol>
+<li>
+<p>install:</p>
+<p><code>lldb-vscode</code>是LLVM的一个包, 只需安装LLVM, 并配置到环境变量即可</p>
+</li>
+<li>
+<p>找到LLVM的路径,将其<code>bin</code>目录配置到<code>PATH</code>, 这样该目录下的子命令( 包括<code>lldb-vscode</code> )就可以在命令行调用了. 这一步也是在安装LLVM的时候做的</p>
+</li>
+<li>
+<p><code>lldb-vscode</code> 在LLVM目录下, 太曲折了. 我们弄一个符号链接. 注意,  注意一般OS的软件都放在<code>/usr/bin</code>,但Mac不允许在<code>/usr/bin</code>随意操作( ln会报错&quot;Operation not permitted&quot; ), 因此我的软件链接放在<code>/usr/local/bin</code></p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="built_in">ln</span> -s /opt/homebrew/opt/llvm/bin/lldb-vscode /usr/bin/lldb-vscode</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>修改代码中的路径:</p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line"># ~/.<span class="built_in">config</span>/nvim/lua/modules/editor</span><br><span class="line">	dap.adapters.lldb = &#123;</span><br><span class="line">		<span class="built_in">type</span> = <span class="string">&quot;executable&quot;</span>,</span><br><span class="line">		</span><br><span class="line">		command = <span class="string">&quot;/usr/local/bin/lldb-vscode&quot;</span>, # 改到自己的路径</span><br><span class="line">		name = <span class="string">&quot;lldb&quot;</span>,</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="Go"><a class="header-anchor" href="#Go"></a>Go</h3>
+<p>默认配置代码不需要改动, 只需安装依赖:</p>
+<ol>
+<li>
+<p>Install delve:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">go install github.com/go-delve/delve/cmd/dlv@latest</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Install vscode-go:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/golang/vscode-go</span><br><span class="line"><span class="built_in">cd</span> vscode-go</span><br><span class="line">npm install</span><br><span class="line">npm run compile</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Keybinds"><a class="header-anchor" href="#Keybinds"></a>Keybinds</h1>
+<p><a target="_blank" rel="noopener" href="https://github.com/ayamir/nvimdots/wiki/Keybindings">https://github.com/ayamir/nvimdots/wiki/Keybindings</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Editor/" rel="tag"># Editor</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/15/Lossless-and-Lossy-Comprehension/" rel="prev" title="Lossless and Lossy Comprehension">
+                  <i class="fa fa-chevron-left"></i> Lossless and Lossy Comprehension
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/22/How-Digital-Cameras-Work/" rel="next" title="How Digital Cameras Work">
+                  How Digital Cameras Work <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

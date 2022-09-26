@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Basic HTML Attributes Head Elements Block and Inline Elements Other Elements CSS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML Basic">
+<meta property="og:url" content="http://lyk-love.cn/2022/08/23/HTML-Basic/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Basic HTML Attributes Head Elements Block and Inline Elements Other Elements CSS">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-08-22T19:02:39.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.930Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="HTML">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/08/23/HTML-Basic/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/08/23/HTML-Basic/","path":"2022/08/23/HTML-Basic/","title":"HTML Basic"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HTML Basic | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic"><span class="nav-text">Basic</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#DOCTYPE"><span class="nav-text">&lt;!DOCTYPE&gt;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML-Elements"><span class="nav-text">HTML Elements</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A0%87%E7%AD%BE"><span class="nav-text">基本标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Usage"><span class="nav-text">Usage</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nav"><span class="nav-text">&lt;nav&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#aside"><span class="nav-text">&lt;aside&gt;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML-Attributes"><span class="nav-text">HTML Attributes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%B1%9E%E6%80%A7"><span class="nav-text">基本属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class"><span class="nav-text">Class</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML-Head-Elements"><span class="nav-text">HTML Head Elements</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#title"><span class="nav-text">&lt;title&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#style"><span class="nav-text">&lt;style&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#meta"><span class="nav-text">&lt;meta&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link"><span class="nav-text">&lt;link&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#script"><span class="nav-text">&lt;script&gt;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#base"><span class="nav-text">&lt;base&gt;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Block-and-Inline-Elements"><span class="nav-text">Block and Inline Elements</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Block"><span class="nav-text">Block</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inline"><span class="nav-text">Inline</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Other-Elements"><span class="nav-text">Other Elements</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#label"><span class="nav-text">&lt;label&gt;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSS"><span class="nav-text">CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-CSS"><span class="nav-text">Using CSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inline-2"><span class="nav-text">Inline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Internal"><span class="nav-text">Internal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#External"><span class="nav-text">External</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Class-2"><span class="nav-text">Class</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/08/23/HTML-Basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="HTML Basic | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HTML Basic
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-22 19:02:39" itemprop="dateCreated datePublished" datetime="2022-08-22T19:02:39Z">2022-08-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Basic</li>
+<li>HTML Attributes</li>
+<li>Head Elements</li>
+<li>Block and Inline Elements</li>
+<li>Other Elements</li>
+<li>CSS</li>
+</ul>
+<span id="more"></span>
+<h1 id="Basic"><a class="header-anchor" href="#Basic"></a>Basic</h1>
+<h2 id="DOCTYPE"><a class="header-anchor" href="#DOCTYPE"></a>&lt;!DOCTYPE&gt;</h2>
+<p>The <code>&lt;!DOCTYPE&gt;</code> declaration represents the document type, and helps browsers to display web pages correctly.</p>
+<p>It must only appear once, at the top of the page (before any HTML tags).</p>
+<p>The <code>&lt;!DOCTYPE&gt;</code> declaration is not case sensitive.</p>
+<p>The <code>&lt;!DOCTYPE&gt;</code> declaration for HTML5 is:</p>
+<!DOCTYPE html>
+<h1 id="HTML-Elements"><a class="header-anchor" href="#HTML-Elements"></a>HTML Elements</h1>
+<p>An HTML element is defined by a start tag, some content, and an end tag:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;tagname&gt; Content goes here... &lt;/tagname&gt;</span><br></pre></td></tr></table></figure>
+<p>tag及其包括的content构成了HTML元素</p>
+<ul>
+<li>HTML tag不是大小写敏感的
+<ul>
+<li><code>&lt;P&gt;</code> means the same as <code>&lt;p&gt;</code></li>
+</ul>
+</li>
+<li>HTML元素可以嵌套</li>
+<li>某些HTML元素没有内容部分(比如 <code>&lt;br&gt;</code> 元素)，称为空元素。  空元素不能有end tag</li>
+</ul>
+<h2 id="基本标签"><a class="header-anchor" href="#基本标签"></a>基本标签</h2>
+<ul>
+<li>The <code>&lt;!DOCTYPE html&gt;</code> declaration defines that this document is an HTML5 document</li>
+<li>The <code>&lt;html&gt;</code> element is the root element of an HTML page</li>
+<li>The <code>&lt;head&gt;</code> element contains meta information about the HTML page</li>
+<li>The <code>&lt;title&gt;</code> element specifies a title for the HTML page (which is shown in the browser’s title bar or in the page’s tab)</li>
+<li>The <code>&lt;body&gt;</code> element defines the document’s body, and is a container for all the visible contents, such as headings, paragraphs, images, hyperlinks, tables, lists, etc.</li>
+<li>The <code>&lt;h1&gt;</code> element defines a large heading</li>
+<li>The <code>&lt;p&gt;</code> element defines a paragraph</li>
+</ul>
+<h2 id="Usage"><a class="header-anchor" href="#Usage"></a>Usage</h2>
+<ul>
+<li>All HTML documents must start with a document type declaration: <code>&lt;!DOCTYPE html&gt;</code>.</li>
+<li>The HTML document itself begins with <code>&lt;html&gt;</code> and ends with <code>&lt;/html&gt;</code>.</li>
+<li>The visible part of the HTML document is between <code>&lt;body&gt;</code> and <code>&lt;/body&gt;</code>.</li>
+</ul>
+<h2 id="nav"><a class="header-anchor" href="#nav"></a>&lt;nav&gt;</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;nav&gt;</span><br><span class="line">  &lt;a href=&quot;/html/&quot;&gt;HTML&lt;/a&gt; |</span><br><span class="line">  &lt;a href=&quot;/css/&quot;&gt;CSS&lt;/a&gt; |</span><br><span class="line">  &lt;a href=&quot;/js/&quot;&gt;JavaScript&lt;/a&gt; |</span><br><span class="line">  &lt;a href=&quot;/jquery/&quot;&gt;jQuery&lt;/a&gt;</span><br><span class="line">&lt;/nav&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="aside"><a class="header-anchor" href="#aside"></a>&lt;aside&gt;</h2>
+<p>The <code>&lt;aside&gt;</code> element defines some content aside from the content it is placed in (like a sidebar).</p>
+<p>The <code>&lt;aside&gt;</code> content should be indirectly related to the surrounding content.</p>
+<h1 id="HTML-Attributes"><a class="header-anchor" href="#HTML-Attributes"></a>HTML Attributes</h1>
+<p>HTML attributes provide additional information about HTML elements.</p>
+<ul>
+<li>All HTML elements can have <strong>attributes</strong></li>
+<li>Attributes are always specified in <strong>the start tag</strong></li>
+<li>Attributes usually come in name/value pairs like: <strong>name=“value”</strong></li>
+</ul>
+<h2 id="基本属性"><a class="header-anchor" href="#基本属性"></a>基本属性</h2>
+<p>The <code>&lt;a&gt;</code> tag defines a hyperlink. The <code>href</code> <u>attribute</u> specifies the URL of the page the link goes to:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.w3schools.com&quot;</span>&gt;</span>Visit W3Schools<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="Class"><a class="header-anchor" href="#Class"></a>Class</h2>
+<p>The <code>class</code> attribute can be used on <strong>any</strong> HTML element.</p>
+<p><strong>Note:</strong> The class name is case sensitive!</p>
+<p>HTML elements can belong to more than one class.</p>
+<h1 id="HTML-Head-Elements"><a class="header-anchor" href="#HTML-Head-Elements"></a>HTML Head Elements</h1>
+<p>The <code>&lt;head&gt;</code> element is a container for metadata (data about data) and is placed between the <code>&lt;html&gt;</code> tag and the <code>&lt;body&gt;</code> tag.</p>
+<p>HTML metadata is data about the HTML document. Metadata is not displayed.</p>
+<p>Metadata typically define the document title, character set, styles, scripts, and other meta information.</p>
+<p>You can have several <code>&lt;header&gt;</code> elements in one HTML document. However, <code>&lt;header&gt;</code> cannot be placed within a <code>&lt;footer&gt;</code>, <code>&lt;address&gt;</code> or another <code>&lt;header&gt;</code> element.</p>
+<h2 id="title"><a class="header-anchor" href="#title"></a>&lt;title&gt;</h2>
+<ul>
+<li>The title must be text-only</li>
+</ul>
+<ul>
+<li>defines a title in the browser toolbar</li>
+<li>displays a title for the page in search engine-results</li>
+</ul>
+<h2 id="style"><a class="header-anchor" href="#style"></a>&lt;style&gt;</h2>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="selector-tag">body</span> &#123;<span class="attribute">background-color</span>: powderblue;&#125;</span></span><br><span class="line"><span class="language-css">  <span class="selector-tag">h1</span> &#123;<span class="attribute">color</span>: red;&#125;</span></span><br><span class="line"><span class="language-css">  <span class="selector-tag">p</span> &#123;<span class="attribute">color</span>: blue;&#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="meta"><a class="header-anchor" href="#meta"></a>&lt;meta&gt;</h2>
+<p><strong>Define the character set used:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>Define keywords for search engines:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;meta name=&quot;keywords&quot; content=&quot;HTML, CSS, JavaScript&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>Define a description of your web page:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;meta name=&quot;description&quot; content=&quot;Free Web tutorials&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>Define the author of a page:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;meta name=&quot;author&quot; content=&quot;John Doe&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>Refresh document every 30 seconds:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;meta http-equiv=&quot;refresh&quot; content=&quot;30&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>Setting the viewport to make your website look good on all devices:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="link"><a class="header-anchor" href="#link"></a>&lt;link&gt;</h2>
+<p>The <code>&lt;link&gt;</code> tag is most often used to link to external style sheets:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;mystyle.css&quot;&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="script"><a class="header-anchor" href="#script"></a>&lt;script&gt;</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">function myFunction() &#123;</span><br><span class="line">  document.getElementById(&quot;demo&quot;).innerHTML = &quot;Hello JavaScript!&quot;;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="base"><a class="header-anchor" href="#base"></a>&lt;base&gt;</h2>
+<p>The <code>&lt;base&gt;</code> element specifies the base URL and/or target for all relative URLs in a page.</p>
+<p>The <code>&lt;base&gt;</code> tag must have either an href or a target attribute present, or both.</p>
+<p>There can only be one single <code>&lt;base&gt;</code> element in a document!</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;head&gt;</span><br><span class="line">&lt;base href=&quot;https://www.w3schools.com/&quot; target=&quot;_blank&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;img src=&quot;images/stickman.gif&quot; width=&quot;24&quot; height=&quot;39&quot; alt=&quot;Stickman&quot;&gt;</span><br><span class="line">&lt;a href=&quot;tags/tag_base.asp&quot;&gt;HTML base Tag&lt;/a&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Block-and-Inline-Elements"><a class="header-anchor" href="#Block-and-Inline-Elements"></a>Block and Inline Elements</h1>
+<ul>
+<li>The <code>&lt;div&gt;</code> element is a block-level and is often used as a container for other HTML elements</li>
+<li>The <code>&lt;span&gt;</code> element is an inline container used to mark up a part of a text, or a part of a document</li>
+</ul>
+<h2 id="Block"><a class="header-anchor" href="#Block"></a>Block</h2>
+<p>A block-level element always <strong>starts on a new line</strong>, and the browsers automatically add some space (<strong>a margin</strong>) <strong>before and after the element</strong>.</p>
+<p>A block-level element always takes up the full width available (stretches out to the left and right as far as it can).</p>
+<p>Two commonly used block elements are: <code>&lt;p&gt;</code> and <code>&lt;div&gt;</code>.</p>
+<p>The <code>&lt;p&gt;</code> element defines a paragraph in an HTML document.</p>
+<p>The <code>&lt;div&gt;</code> element defines a division or a section in an HTML document.</p>
+<h2 id="Inline"><a class="header-anchor" href="#Inline"></a>Inline</h2>
+<p>An inline element does not start on a new line.</p>
+<p>An inline element only takes up as much width as necessary.</p>
+<p><strong>Note:</strong> An inline element cannot contain a block-level element!</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;span&gt;Hello World&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Other-Elements"><a class="header-anchor" href="#Other-Elements"></a>Other Elements</h1>
+<h1 id="label"><a class="header-anchor" href="#label"></a>&lt;label&gt;</h1>
+<p>The <code>for</code> attribute of <code>&lt;label&gt;</code> must be equal to the id attribute of the related element to bind them together. A label can also be bound to an element by placing the element inside the <code>&lt;label&gt;</code> element.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;form action=&quot;/action_page.php&quot;&gt;</span><br><span class="line">  &lt;input type=&quot;radio&quot; id=&quot;html&quot; name=&quot;fav_language&quot; value=&quot;HTML&quot;&gt; # 对应for = &quot;html&quot;</span><br><span class="line">  &lt;label for=&quot;html&quot;&gt;HTML&lt;/label&gt;&lt;br&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;input type=&quot;radio&quot; id=&quot;css&quot; name=&quot;fav_language&quot; value=&quot;CSS&quot;&gt;# 对应for = &quot;css&quot;</span><br><span class="line">  &lt;label for=&quot;css&quot;&gt;CSS&lt;/label&gt;&lt;br&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;input type=&quot;radio&quot; id=&quot;javascript&quot; name=&quot;fav_language&quot; value=&quot;JavaScript&quot;&gt;</span><br><span class="line">  &lt;label for=&quot;javascript&quot;&gt;JavaScript&lt;/label&gt;&lt;br&gt;&lt;br&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="CSS"><a class="header-anchor" href="#CSS"></a>CSS</h1>
+<h2 id="Using-CSS"><a class="header-anchor" href="#Using-CSS"></a>Using CSS</h2>
+<p>CSS can be added to HTML documents in 3 ways:</p>
+<ul>
+<li><strong>Inline</strong> - by using the <code>style</code> attribute inside HTML elements</li>
+<li><strong>Internal</strong> - by using a <code>&lt;style&gt;</code> element in the <code>&lt;head&gt;</code> section</li>
+<li><strong>External</strong> - by using a <code>&lt;link&gt;</code> element to link to an external CSS file</li>
+</ul>
+<h2 id="Inline-2"><a class="header-anchor" href="#Inline-2"></a>Inline</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;h1 style=&quot;color:blue;&quot;&gt;A Blue Heading&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Internal"><a class="header-anchor" href="#Internal"></a>Internal</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">body &#123;background-color: powderblue;&#125;</span><br><span class="line">h1   &#123;color: blue;&#125;</span><br><span class="line">p    &#123;color: red;&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;h1&gt;This is a heading&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;This is a paragraph.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="External"><a class="header-anchor" href="#External"></a>External</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;h1&gt;This is a heading&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;This is a paragraph.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="Class-2"><a class="header-anchor" href="#Class-2"></a>Class</h2>
+<p>To create a class; write a period (.) character, followed by a class name. Then, define the CSS properties within curly braces {}:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;style&gt;</span><br><span class="line">.city &#123;</span><br><span class="line">  background-color: tomato;</span><br><span class="line">  color: white;</span><br><span class="line">  padding: 10px;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">&lt;h2 class=&quot;city&quot;&gt;London&lt;/h2&gt;</span><br><span class="line">&lt;p&gt;London is the capital of England.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;h2 class=&quot;city&quot;&gt;Paris&lt;/h2&gt;</span><br><span class="line">&lt;p&gt;Paris is the capital of France.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;h2 class=&quot;city&quot;&gt;Tokyo&lt;/h2&gt;</span><br><span class="line">&lt;p&gt;Tokyo is the capital of Japan.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/HTML/" rel="tag"># HTML</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/23/Javascript-Basic/" rel="prev" title="Javascript Basic">
+                  <i class="fa fa-chevron-left"></i> Javascript Basic
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/24/RSA/" rel="next" title="RSA">
+                  RSA <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

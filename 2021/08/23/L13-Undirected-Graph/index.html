@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:   UAG的DFS树   UAG的DFS框架   UAG的DFS应用   容错连通   寻找割点   寻找桥">
+<meta property="og:type" content="article">
+<meta property="og:title" content="L13 Undirected Graph">
+<meta property="og:url" content="http://lyk-love.cn/2021/08/23/L13-Undirected-Graph/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:   UAG的DFS树   UAG的DFS框架   UAG的DFS应用   容错连通   寻找割点   寻找桥">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-23T12:01:35.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.932Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Algorithm design and analysis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/08/23/L13-Undirected-Graph/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/08/23/L13-Undirected-Graph/","path":"2021/08/23/L13-Undirected-Graph/","title":"L13 Undirected Graph"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>L13 Undirected Graph | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#UAG%E7%9A%84DFS%E6%A0%91"><span class="nav-text">UAG的DFS树</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UAG%E7%9A%84DFS%E6%A1%86%E6%9E%B6"><span class="nav-text">UAG的DFS框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UAG%E7%9A%84DFS%E5%BA%94%E7%94%A8"><span class="nav-text">UAG的DFS应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E9%94%99%E8%BF%9E%E9%80%9A"><span class="nav-text">容错连通</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E5%89%B2%E7%82%B9"><span class="nav-text">寻找割点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E6%A1%A5"><span class="nav-text">寻找桥</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/08/23/L13-Undirected-Graph/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="L13 Undirected Graph | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          L13 Undirected Graph
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-08-23 12:01:35" itemprop="dateCreated datePublished" datetime="2021-08-23T12:01:35Z">2021-08-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>
+<p><strong>UAG的DFS树</strong></p>
+</li>
+<li>
+<p><strong>UAG的DFS框架</strong></p>
+</li>
+<li>
+<p><strong>UAG的DFS应用</strong></p>
+<ul>
+<li>
+<p><strong>容错连通</strong></p>
+<ul>
+<li>
+<p><strong>寻找割点</strong></p>
+</li>
+<li>
+<p><strong>寻找桥</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<h1 id="UAG的DFS树"><a class="header-anchor" href="#UAG的DFS树"></a>UAG的DFS树</h1>
+<p>UAG的遍历的主要差别就在于剔除二次遍历</p>
+<ul>
+<li>
+<p>TE：当发现一个白色节点并递归地进行遍历时， 就将其连接的边标记为TE。 遍历过程中的TE组成遍历树， 这与DAG是类似的。 对于原本无向的边， 遍历过程为它做了定向( orientation ), 即遍历推进的方向。</p>
+</li>
+<li>
+<p>BE： 当遍历节点$u$并发现一条边指向灰色节点$v$时, 此时有两种本质不同的情况:</p>
+<p>若$vu$是TE, 则这是一次二次遍历,因而标识并剔除这一类型的遍历.</p>
+<p>若$v$是$u$的某个不是父节点的祖先节点, 则将$uv$标记为BE</p>
+</li>
+<li>
+<p>DE: 当遍历节点$u$​时, 发现一条边指向节点$v$​​时, 且$v$​是$u$​​在遍历树中的后继节点, 此时边$uv$为DE, 但这次遍历必然是二次遍历,应该被剔除. 这是因为根据DE的定义, 此时$v$不能是白色( 否则$uv$是TE ), 不能是灰色(可能是二次遍历的BE ), 因而只能是黑色, 即$v$已经结束了遍历, 它结束遍历前必然已经完成了边$vu$的遍历, 且根据$u$,$v$间的祖先后继关系, 边$vu$首次被遍历时标记为BE(可能是二次遍历的BE).</p>
+</li>
+<li>
+<p>CE: 不存在. 因为当遍历节点$u$时,发现一条边指向节点$v$. 根据CE的定义, $u$, $v$间没有祖先后继关系,所以与上面分析类似, 节点$v$只能是黑色, 它已经完成了遍历. 所以点$v$在结束遍历前必然已经访问过边$vu$. 当从$v$出发遍历$vu$时, $u$尚未被遍历, 为白色. 所以$vu$为TE, 这和$u$, $v$间没有祖先后继关系相矛盾.</p>
+</li>
+</ul>
+<h1 id="UAG的DFS框架"><a class="header-anchor" href="#UAG的DFS框架"></a>UAG的DFS框架</h1>
+<p>对于TE的处理于DAG一致, 此外还要处理BE的情况. 根据对BE的讨论,我们必须去除指向父结点的BE. 为此, 我们记录了每个节点的父节点.</p>
+<p>算法框架直接将上述两种情况外的其他情况忽略, 因为其他情况都是二次遍历, <u>不需要处理</u>. 一个邻居节点只可能有3种情况:</p>
+<ul>
+<li>白色: 即TE</li>
+<li>灰色:
+<ul>
+<li>灰色且不是父结点: 需要额外处理</li>
+<li>灰色且是父结点: 二次遍历</li>
+</ul>
+</li>
+<li>黑色:
+<ul>
+<li>DE: 二次遍历</li>
+<li>CE: 二次遍历</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="built_in">DFS_UG</span>(v, parent):</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">v.color := GRAY;</span><br><span class="line">&lt;Preorder processing of node v&gt;;</span><br><span class="line">foreach neighbour w of v <span class="keyword">do</span></span><br><span class="line">	<span class="keyword">if</span> w.color = WHITE then</span><br><span class="line">		&lt;Exploratory processing of TE vw&gt;;</span><br><span class="line">		<span class="built_in">DFS_UG</span>(w,v);</span><br><span class="line">		&lt;Backtrack processing <span class="keyword">for</span> TE vw&gt;;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">if</span> w.color = GRAY <span class="keyword">and</span> w != parent then</span><br><span class="line">			&lt;Check BE vw&gt;;</span><br><span class="line">&lt;Postorder processing of node v&gt;;</span><br><span class="line">v.color := BLack;</span><br></pre></td></tr></table></figure>
+<h1 id="UAG的DFS应用"><a class="header-anchor" href="#UAG的DFS应用"></a>UAG的DFS应用</h1>
+<h2 id="容错连通"><a class="header-anchor" href="#容错连通"></a>容错连通</h2>
+<ul>
+<li><strong>定义4.7</strong> 对于连通的无向图$G$, 如果其中任意去掉$k-1$个点, 图$G$仍然连通, 则称图$G$是$k$-点连通的. 类似的, 如果图中任意去掉$k-1$条边, 图$G$仍然连通, 则称图$G$是$k$-边连通的.</li>
+</ul>
+<p>已知,当$k=1$时, $k$​-连通就退化为传统的无环连通. 另外, 我们更关注$k=2$​​的 特殊情况, 即去掉某个点或某条边后,剩下的图不再连通. 由此引入割点( articulation point )和桥( bridge )的概念.</p>
+<ul>
+<li><strong>定义4.8</strong> 对于连通的无向图$G$​, 称节点$v$​为割点, 如果去掉点$v$​后, 图$G$​不再连通; 称边$uv$​为桥, 如果去掉边$uv$​后, 图$G$​​不再连通.</li>
+</ul>
+<h3 id="寻找割点"><a class="header-anchor" href="#寻找割点"></a>寻找割点</h3>
+<p>Brute Force: 遍历每个顶点, 检查剩下的图是否连通, 代价为$O(n(m+n))$, 这一方法源于割点的定义. 为了将代价改进到线性时间, 需要将割点的定义做等价变换.以支持更高效的找割点的算法.</p>
+<p>割点的定义依赖一个<strong>全局</strong>的性质( 整个图是否连通 ), 这一性质难以高效地进行检测. 为此我们首先将割点的定义等价地变化为一个<strong>局部</strong>的性质, 利用部分节点之间的关系来完成割点的检测.</p>
+<ul>
+<li>
+<p><strong>引理4.7</strong> ( 割点基于路径的定义 )	节点$v$为割点, 当且仅当存在节点对$w$和$x$满足节点$v$出现在$w$到$x$的每一条路径上.</p>
+<p>证明略.</p>
+</li>
+<li>
+<p><strong>引理4.8</strong> ( 割点基于DFS的定义 )	假设在一次DFS中, 节点$v$不是遍历树的根节点. 则节点$v$​为割点, 当且仅当在遍历树中, 存在节点$v$的某棵子树, 没有任何BE指向$v$的祖先节点.</p>
+<p>证明:</p>
+<p>必要性:	易证若节点$v$​的某棵子树,没有任何BE指向$v$​​的祖先节点, 则删掉$v$​后, 该子树将于图的其他部分断连, 所以$v$​是割点.</p>
+<p>充分性: 假设节点$v$为割点, 则根据引理4.7, 存在不同于$v$的两个节点$x$和$y$满足$v$出现在$x$到$y$的每一条路径上. 首先我们发现节点$x$和$y$中至少有一个是节点$v$在遍历树中的后继节点( 可通过反证法证明.  ). 所以必有某个点在遍历树中的后继节点, 而$v$必然不是叶节点. 同样可用反证法证明, 若$v$的任意子树均有BE指向$v$的祖先节点, 此时无论$x$和$y$哪一个是$v$的后继节点( 或者都是 ), 均可构造一条从$x$到$y$的不经过$v$的路径, 这和$v$出现在$x$到$y$的每一条路径上相矛盾.</p>
+<p>证毕.</p>
+</li>
+<li>
+<p>根据引理4.8, 可以用算法操作来发现割点: 为每个节点维护一个变量<code>back</code>来判定它是否为割点:</p>
+<ul>
+<li>
+<p>当$v$首次被发现时:<br>
+$$<br>
+v.back = v.discoverTime<br>
+$$</p>
+</li>
+<li>
+<p>遍历过程中遇到一条从节点$v$指向节点$w$的BE:<br>
+$$<br>
+v.back=min{v.back, w.discoverTime}<br>
+$$</p>
+</li>
+<li>
+<p>遍历节点$w$结束, 从$w$回退到$v$时:<br>
+$$<br>
+v.back=min{v.back,w.back}<br>
+$$</p>
+</li>
+</ul>
+<p>注意, $v.back$初始值为$v.discoverTime$, 且$v.back$的值只会减少. 其减少有两种情况:</p>
+<ul>
+<li>遍历过程遇到一条BE, 记为边$vw$. 处理完BE并回退时, $v.back$被减少为$w.discoverTime$. 由于BE指向的节点$w$是祖先节点, 所以$w.discoverTime$更小,这一更新使得$v.back$​的值减少.</li>
+<li>处理完TE$vw$回退时, 如果节点$w$​的<code>back</code>值有更新( 只可能减少 ), 这一更新随着回退被传递到回退的节点.</li>
+</ul>
+</li>
+<li>
+<p>当从TE $vw$回退时, 如果$w.back \geq v.discoverTime$, 则节点$v$​​是割点.</p>
+<ul>
+<li>
+<p><strong>定理4.5</strong>	ARTICULATION-POINT-DFS算法是正确的.</p>
+<p>证明:</p>
+<p>根据引理4.8, 要证明算法正确性, 只需证明当从TE $vw$回退时, 如果$w.back \geq v.discoverTime$, 则以$w$为根的某棵子树没有任何BE指向$v$的祖先节点. 根据<code>back</code>值的更新方法, 如果以$w$为根的某棵子树存在BE指向$v$的祖先, 则$v$的祖先的$discoverTime$会被赋值给$w$为根的子树中某个节点的<code>back</code>值, 	且随着遍历的回退过程, 这一$discoverTime$会以<code>back</code>遍历的方式传递给$w.back$. 由于祖先节点具有更小的$discoverTime$, 所以如果这样的一条BE存在, 则$w.back$一定小于$v.discoverTime$, 反之则说明这样的BE不存在.</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">ARTICULATION-POINT-<span class="built_in">DFS</span>(v):</span><br><span class="line"></span><br><span class="line">v.color := GRAY;</span><br><span class="line">time := time + <span class="number">1</span>;</span><br><span class="line">v.discoverTime := time;</span><br><span class="line">v.back := discoverTime;</span><br><span class="line">foreach neighbour w of v <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> w.color = WHITE then</span><br><span class="line">        w.back	:=  ARTICULATION-POINT-<span class="built_in">DFS</span>(w);</span><br><span class="line">		<span class="keyword">if</span> w.back &gt;= v.discoverTime then</span><br><span class="line">            Output v as an articulation point;</span><br><span class="line">		v.back = &#123;v.back, w.back&#125;;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">        <span class="keyword">if</span> vw is BE then</span><br><span class="line">            v.back = min&#123; v.back, w.discoverTime &#125;;</span><br><span class="line"><span class="keyword">return</span> back;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="寻找桥"><a class="header-anchor" href="#寻找桥"></a>寻找桥</h3>
+<p>基于UAG的DFS中,只会出现TE和BE, 对于BE, 删去它后图依然是连通的( 易证 ), 因此只需关注TE.</p>
+<ul>
+<li>
+<p><strong>引理4.9</strong> ( 桥基于DFS的定义 )	给定遍历树中的TE $uv$ ( $u$是$v$的父结点 ), $uv$是桥 当且仅当在以$v$为根的所有遍历树的子树中, 没有BE指向$v$​​的祖先节点( 不包括$v$, 包括$u$).</p>
+</li>
+<li>
+<p>$v.back$维护方式为:</p>
+<ul>
+<li>
+<p>当$v$首次被发现时:<br>
+$$<br>
+v.back = v.discoverTime<br>
+$$</p>
+</li>
+<li>
+<p>当遍历BE $vw$时,<br>
+$$<br>
+v.back = min{v.back,w.back}<br>
+$$</p>
+</li>
+<li>
+<p>当遍历节点$w$结束, 回退到$v$时, $v.back = min{v.back,w.back}$</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>定理4.6</strong>	BRIDGE-DFS算法是正确的.</p>
+<p>证明略</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">BRIDGE-<span class="built_in">DFS</span>(u):</span><br><span class="line"></span><br><span class="line">v.color := GRAY;</span><br><span class="line">time := time + <span class="number">1</span>;</span><br><span class="line">v.discoverTime := time;</span><br><span class="line">v.back := discoverTime;</span><br><span class="line">foreach neighbour w of v <span class="keyword">do</span></span><br><span class="line">    <span class="keyword">if</span> w.color = WHITE then</span><br><span class="line">    	v.back := min&#123; u.back, v.back &#125;;</span><br><span class="line">    	<span class="keyword">if</span> v.back &gt; u.discoverTime then</span><br><span class="line">    		Output uv as a bridge;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">if</span> uv is BE then</span><br><span class="line">			u.back := min&#123;u.back, v.discoverTime&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm-design-and-analysis/" rel="tag"># Algorithm design and analysis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/23/T4-BFS-DFS/" rel="prev" title="T4 BFS/DFS">
+                  <i class="fa fa-chevron-left"></i> T4 BFS/DFS
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/09/08/Neuroscience-L3/" rel="next" title="Neuroscience L3">
+                  Neuroscience L3 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

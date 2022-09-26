@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一些常用的命令行工具，和它们的现代替代 ref: MIT  lesson, Unix命令的现代替代">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unix CLI Tools">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/13/Unix-CLI-Tools/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="一些常用的命令行工具，和它们的现代替代 ref: MIT  lesson, Unix命令的现代替代">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.beekka.com/blogimg/asset/202201/bg2022012707.webp">
+<meta property="article:published_time" content="2022-09-13T14:57:44.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.942Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.beekka.com/blogimg/asset/202201/bg2022012707.webp">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/13/Unix-CLI-Tools/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/13/Unix-CLI-Tools/","path":"2022/09/13/Unix-CLI-Tools/","title":"Unix CLI Tools"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Unix CLI Tools | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Easy-Installation"><span class="nav-text">Easy Installation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%88%97%E8%A1%A8%E8%AF%B4%E6%98%8E"><span class="nav-text">依赖列表说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96%E5%88%97%E8%A1%A8%E4%BD%BF%E7%94%A8"><span class="nav-text">依赖列表使用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-and-Dir"><span class="nav-text">File and Dir</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E7%9B%AE%E5%BD%95-exa"><span class="nav-text">列出目录: exa</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E6%96%87%E4%BB%B6%E6%B5%8F%E8%A7%88%E5%99%A8-ranger-broot"><span class="nav-text">终端文件浏览器: ranger &#x2F; broot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bat-fx-hexyl"><span class="nav-text">bat &amp; fx &amp; hexyl</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#diff-so-fancy"><span class="nav-text">diff-so-fancy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#With-diff"><span class="nav-text">With diff</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#find-fd"><span class="nav-text">find&#x2F;fd</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#grep-ripgrep"><span class="nav-text">grep &amp; ripgrep</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Finding-Shell-History"><span class="nav-text">Finding Shell History</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fzf-mcfly"><span class="nav-text">fzf &amp;&amp; mcfly</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Version-Control"><span class="nav-text">Version Control</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Configure-git-diff-so-fancy"><span class="nav-text">Configure git: diff-so-fancy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitupdate"><span class="nav-text">gitupdate</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Text-Operation"><span class="nav-text">Text Operation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#choose"><span class="nav-text">choose</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jq"><span class="nav-text">jq</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Resource-Monitoring"><span class="nav-text">Resource Monitoring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#General-Monitor-htop-bottom-iotop"><span class="nav-text">General Monitor: htop &amp;&amp; bottom &amp;&amp; iotop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-Info-procs"><span class="nav-text">Process Info:procs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disk-Usage-duf-ncdu"><span class="nav-text">Disk Usage: duf, ncdu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Memory-Usage-free"><span class="nav-text">Memory Usage: free</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Open-Files-lsof"><span class="nav-text">Open Files: lsof</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Networking"><span class="nav-text">Networking</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Network-Package-Monitor-ss"><span class="nav-text">Network Package Monitor: ss</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network-Config-ip"><span class="nav-text">Network Config: ip</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Usage"><span class="nav-text">Usage</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network-Usage-nethogs-iftop"><span class="nav-text">Network Usage: nethogs, iftop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Network-Connections-gping"><span class="nav-text">Network Connections: gping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NetworkRequests-httpie"><span class="nav-text">NetworkRequests: httpie</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS-dog"><span class="nav-text">DNS: dog</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Benchmarking"><span class="nav-text">Benchmarking</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hyperfine"><span class="nav-text">hyperfine</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Calculating"><span class="nav-text">Calculating</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sc"><span class="nav-text">sc</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Efficiency"><span class="nav-text">Efficiency</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#tldr"><span class="nav-text">tldr</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/13/Unix-CLI-Tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Unix CLI Tools | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unix CLI Tools
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-13 14:57:44" itemprop="dateCreated datePublished" datetime="2022-09-13T14:57:44Z">2022-09-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>一些常用的命令行工具，和它们的现代替代</p>
+<p>ref: <a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/shell-tools/">MIT  lesson</a>, <a target="_blank" rel="noopener" href="https://github.com/ibraheemdev/modern-unix">Unix命令的现代替代</a></p>
+<span id="more"></span>
+<h1 id="Easy-Installation"><a class="header-anchor" href="#Easy-Installation"></a>Easy Installation</h1>
+<p>对于传统UnixCLi工具,都已经被加入到Unix标准工具集中,不需要手动下载了. 而很多新工具需要手动下载. 以下列出的所有新工具均可以用包管理器( <code>yay</code> for Arch, <code>brew</code> for OSX )下载. 为了方便, 我还提供了<a target="_blank" rel="noopener" href="https://github.com/LYK-love/PackageLists">依赖列表</a>来批量下载.</p>
+<h2 id="依赖列表说明"><a class="header-anchor" href="#依赖列表说明"></a>依赖列表说明</h2>
+<p>文件名格式为<code>[XX_Packages]_[Platform[_Advanced]]].txt</code>:</p>
+<ul>
+<li>
+<p><code>[xx_packages]</code>: 就是包的类型, 比如R<code>esource_Monitoring_Packages</code>等等</p>
+</li>
+<li>
+<p><code>[Platform]</code>:包兼容的平台</p>
+<ul>
+<li><code>Linux</code>: 故名思义,就是Linux下可以安装的包</li>
+<li><code>Mac</code>: Mac OSX下可以安装的包. 总体来说和linux下没有大的区别</li>
+<li><code>General</code>:Linux和Mac同时兼容的包</li>
+</ul>
+</li>
+<li>
+<p><code>[XX]_[Platform[_Advanced]</code>: 如果一个列表出现了有和无<code>Advanced</code>的两个版本, 说明该列表的类型内有些包用处不大, 不需要安装, 也就没有包括在无<code>Advanced</code>的列表里面. 而<code>Advanced</code>列表中包含了全部包.</p>
+<ul>
+<li>比如同为终端文件浏览器的<code>ranger</code>和<code>broot</code>,一般情况下使用前者就够了, 因此 <code>File&amp;Oir_Operations_Packages_General.txt</code>只包含了<code>ranger</code>, 而<code>File&amp;Oir_Operations_Packages_Anvanced.txt</code>包含了后者</li>
+</ul>
+</li>
+</ul>
+<h2 id="依赖列表使用"><a class="header-anchor" href="#依赖列表使用"></a>依赖列表使用</h2>
+<p>Mac:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install $(cat [packages].txt)</span><br></pre></td></tr></table></figure>
+<p>for other platform just replace brew with your correspondding package manager</p>
+<h1 id="File-and-Dir"><a class="header-anchor" href="#File-and-Dir"></a>File and Dir</h1>
+<p><code>File&amp;Dir_Operations_Packages_General.txt</code>: 没安装broot</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">exa	ranger	bat	diff-so-fancy	fd	ripgrep</span><br></pre></td></tr></table></figure>
+<p><code>File&amp;Dir_Operations_Packages_Advanced.txt</code>: 把broot加上了</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">exa	ranger	bat	diff-so-fancy	fd	ripgrep broot</span><br></pre></td></tr></table></figure>
+<h2 id="列出目录-exa"><a class="header-anchor" href="#列出目录-exa"></a>列出目录: exa</h2>
+<p><code>exa</code>是<code>ls</code>命令的替代品，可以彩色输出目录内容，更容易辨识:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">exa --long --git</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数<code>--git</code>表示输出文件的 Git 状态。
+<ul>
+<li><code>N</code>：新文件</li>
+<li><code>M</code>：文件有变动</li>
+<li><code>I</code>：该文件被忽略</li>
+</ul>
+</li>
+</ul>
+<p>除了平铺显示，<code>exa</code>还支持目录的树状显示。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">exa --tree --level=2</span><br></pre></td></tr></table></figure>
+<h2 id="终端文件浏览器-ranger-broot"><a class="header-anchor" href="#终端文件浏览器-ranger-broot"></a>终端文件浏览器: ranger / broot</h2>
+<ul>
+<li>
+<p>ranger: 终端文件浏览器, 支持vim语法</p>
+</li>
+<li>
+<p>broot: 类似ranger的终端文件浏览器， 不支持vim语法，但是能浏览媒体文件</p>
+<p>Usage:</p>
+<p>列出当前目录的文件信息。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">br -sdph</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-s</code>：显示文件体积</li>
+<li><code>-d</code>：显示文件时间</li>
+<li><code>-p</code>：显示文件权限</li>
+<li><code>-h</code>：显示隐藏文件</li>
+</ul>
+<p>在broot界面中，可以完成各种文件操作：</p>
+<ul>
+<li>搜索：输入搜索词</li>
+<li>复制：输入<code>:cp &lt;复制后的文件名&gt;</code></li>
+<li>删除：输入<code>:rm</code></li>
+<li>改名：输入<code>:mv &lt;新文件名&gt;</code></li>
+<li>退出：输入<code>:q</code></li>
+</ul>
+<p>还可以预览文件：</p>
+<ul>
+<li>打开外部关联程序： 通过上下箭头选中文件，然后按下右箭头<code>→</code></li>
+<li>在当前窗口预览文件： <code>ctrl + →</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="bat-fx-hexyl"><a class="header-anchor" href="#bat-fx-hexyl"></a>bat &amp; fx &amp; hexyl</h2>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/sharkdp/bat">bat</a> : <code>cat</code>命令的替代品，输出文本文件的内容，并且带有<code>cat</code>所没有的代码高亮和行号</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yay -S bat</span><br></pre></td></tr></table></figure>
+<p>usage:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bat README.md</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/antonmedv/fx">fx</a> 或者 <a target="_blank" rel="noopener" href="https://github.com/stedolan/jq">jq</a>: 浏览JSON 文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yay -S fx</span><br></pre></td></tr></table></figure>
+<p>usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fx data.json</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/sharkdp/hexyl">hexyl</a>: 浏览二进制文件</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yay -S hexyl</span><br></pre></td></tr></table></figure>
+<p>usage:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexyl example.jpg</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="diff-so-fancy"><a class="header-anchor" href="#diff-so-fancy"></a>diff-so-fancy</h3>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/so-fancy/diff-so-fancy">diff-so-fancy</a> : 对diff进行了改进, 使得命令行的 diff 操作具有类似 GitHub 的页面效果. 可以用来替代git diff和diff</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yay -S diff-so-fancy</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>安装后, 参考官方文档进行配置:</p>
+<h2 id="With-diff"><a class="header-anchor" href="#With-diff"></a>With diff</h2>
+<p>Use <code>-u</code> with <code>diff</code> for unified output, and pipe the output to <code>diff-so-fancy</code>:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">diff -u file_a file_b | diff-so-fancy</span><br></pre></td></tr></table></figure>
+<h2 id="find-fd"><a class="header-anchor" href="#find-fd"></a>find/fd</h2>
+<p>One of the most common repetitive tasks that every programmer faces is finding files or directories. All UNIX-like systems come packaged with <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/find.1.html"><code>find</code></a>, a great shell tool to find files. <code>find</code> will recursively search for files matching some criteria. Some examples:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all directories named src</span></span><br><span class="line">find . -name src -type d</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all python files that have a folder named <span class="built_in">test</span> <span class="keyword">in</span> their path</span></span><br><span class="line">find . -path &#x27;*/test/*.py&#x27; -type f</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all files modified <span class="keyword">in</span> the last day</span></span><br><span class="line">find . -mtime -1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all zip files with size <span class="keyword">in</span> range 500k to 10M</span></span><br><span class="line">find . -size +500k -size -10M -name &#x27;*.tar.gz&#x27;</span><br></pre></td></tr></table></figure>
+<p>Beyond listing files, find can also perform actions over files that match your query. This property can be incredibly helpful to simplify what could be fairly monotonous tasks.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Delete all files with .tmp extension</span></span><br><span class="line">find . -name &#x27;*.tmp&#x27; -exec rm &#123;&#125; \;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all PNG files and convert them to JPG</span></span><br><span class="line">find . -name &#x27;*.png&#x27; -exec convert &#123;&#125; &#123;&#125;.jpg \;</span><br></pre></td></tr></table></figure>
+<p>Despite <code>find</code>’s ubiquitousness, its syntax can sometimes be tricky to remember. For instance, to simply find files that match some pattern <code>PATTERN</code> you have to execute <code>find -name '*PATTERN*'</code> (or <code>-iname</code> if you want the pattern matching to be case insensitive). You could start building aliases for those scenarios, but part of the shell philosophy is that it is good to explore alternatives. Remember, one of the best properties of the shell is that you are just calling programs, so you can find (or even write yourself) replacements for some. For instance, <a target="_blank" rel="noopener" href="https://github.com/sharkdp/fd"><code>fd</code></a> is a simple, fast, and user-friendly alternative to <code>find</code>. It offers some nice defaults like colorized output, default regex matching, and Unicode support. It also has, in my opinion, a more intuitive syntax. For example, the syntax to find a pattern <code>PATTERN</code> is <code>fd PATTERN</code>.</p>
+<p>Most would agree that <code>find</code> and <code>fd</code> are good, but some of you might be wondering about the efficiency of looking for files every time versus compiling some sort of index or database for quickly searching. That is what <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/locate.1.html"><code>locate</code></a> is for. <code>locate</code> uses a database that is updated using <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/updatedb.1.html"><code>updatedb</code></a>. In most systems, <code>updatedb</code> is updated daily via <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man8/cron.8.html"><code>cron</code></a>. Therefore one trade-off between the two is speed vs freshness. Moreover <code>find</code> and similar tools can also find files using attributes such as file size, modification time, or file permissions, while <code>locate</code> just uses the file name. A more in-depth comparison can be found <a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/60205/locate-vs-find-usage-pros-and-cons-of-each-other">here</a>.</p>
+<h2 id="grep-ripgrep"><a class="header-anchor" href="#grep-ripgrep"></a>grep &amp; ripgrep</h2>
+<p>For now, know that <code>grep</code> has many flags that make it a very versatile tool. Some I frequently use are <code>-C</code> for getting <strong>C</strong>ontext around the matching line and <code>-v</code> for in<strong>v</strong>erting the match, i.e. print all lines that do <strong>not</strong> match the pattern. For example, <code>grep -C 5</code> will print 5 lines before and after the match. When it comes to quickly searching through many files, you want to use <code>-R</code> since it will <strong>R</strong>ecursively go into directories and look for files for the matching string.</p>
+<p>But <code>grep -R</code> can be improved in many ways, such as ignoring <code>.git</code> folders, using multi CPU support, &amp;c. Many <code>grep</code> alternatives have been developed, including <a target="_blank" rel="noopener" href="https://beyondgrep.com/">ack</a>, <a target="_blank" rel="noopener" href="https://github.com/ggreer/the_silver_searcher">ag</a> and <a target="_blank" rel="noopener" href="https://github.com/BurntSushi/ripgrep">rg</a>. All of them are fantastic and pretty much provide the same functionality. For now I am sticking with ripgrep (<code>rg</code>), given how fast and intuitive it is. Some examples:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all python files <span class="built_in">where</span> I used the requests library</span></span><br><span class="line">rg -t py &#x27;import requests&#x27;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all files (including hidden files) without a shebang line</span></span><br><span class="line">rg -u --files-without-match &quot;^#!&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all matches of foo and <span class="built_in">print</span> the following 5 lines</span></span><br><span class="line">rg foo -A 5</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Print statistics of matches (<span class="comment"># of matched lines and files )</span></span></span><br><span class="line">rg --stats PATTERN</span><br></pre></td></tr></table></figure>
+<p>Note that as with <code>find</code>/<code>fd</code>, it is important that you know that these problems can be quickly solved using one of these tools, while the specific tools you use are not as important.</p>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/BurntSushi/ripgrep">ripgrep</a> 是<code>grep</code>命令的替代品，用来搜索文件内容, 默认带有行号和搜索词高亮，速度也更快:</p>
+<p>它跟<code>grep</code>的用法类似。下面例子是搜索当前目录里面，所有内容包含字符串<code>foo</code>的 Markdown 文件。</p>
+</li>
+</ul>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># grep 的写法</span></span><br><span class="line">$ grep foo *.md</span><br><span class="line"></span><br><span class="line"><span class="comment"># ripgrep 的写法</span></span><br><span class="line">$ rg foo *.md</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="Finding-Shell-History"><a class="header-anchor" href="#Finding-Shell-History"></a>Finding Shell History</h2>
+<p><code>Finding_Shell_History_Packages_General.txt</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">fzf mcfly</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>history</code> : 在STDOUT上打印shell命令记录, 可以用 <code>history | grep find</code> 进行检索</li>
+<li><code>Ctrl+R</code> + type a substring you want to match for commands in your history来检索历史命令. This can also be enabled with the UP/DOWN arrows in <a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-history-substring-search">zsh</a></li>
+</ul>
+<h3 id="fzf-mcfly"><a class="header-anchor" href="#fzf-mcfly"></a>fzf &amp;&amp; mcfly</h3>
+<ul>
+<li>
+<p><code>fzf</code> : GO 语言编写的交互式的 Unix 命令行工具。可以用来查找任何 <strong>列表</strong>内容，文件、Git 分支、进程等。所有的命令行工具可以生成列表输出的都可以再通过管道 pipe 到 fzf 上进行搜索和查找.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yay -S fzf</span><br></pre></td></tr></table></figure>
+<p>这个命令比较复杂, 见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41859976#:~:text=Fuzzy%20finder%20%28fzf%2Bvim%29%20%E4%BD%BF%E7%94%A8%E5%85%A8%E6%8C%87%E5%8D%97%201%20%E5%AE%89%E8%A3%85%20%E4%BB%A5%20macOS,fzf%20%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0%208%20%E6%A0%B8%E5%BF%83%E5%91%BD%E4%BB%A4%20FZF_DEFAULT_COMMAND%20...%20More%20items">教程</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/cantino/mcfly">McFly</a> 是<code>ctrl-r</code>的替代品，安装以后，只要按下<code>ctrl-r</code>，就会出现一个更好用的搜索界面</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yay -S mcfly</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Version-Control"><a class="header-anchor" href="#Version-Control"></a>Version Control</h1>
+<h2 id="Configure-git-diff-so-fancy"><a class="header-anchor" href="#Configure-git-diff-so-fancy"></a>Configure git: diff-so-fancy</h2>
+<p>Configure git to use <code>diff-so-fancy</code> for all diff output:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global core.pager &quot;diff-so-fancy | less --tabs=4 -RFX&quot;</span><br><span class="line">git config --global interactive.diffFilter &quot;diff-so-fancy --patch&quot;</span><br></pre></td></tr></table></figure>
+<p>Improved colors for the highlighted bits</p>
+<p>The default Git colors are not optimal. The colors used for the screenshot above were:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git config --global color.ui true</span><br><span class="line"></span><br><span class="line">git config --global color.diff-highlight.oldNormal    &quot;red bold&quot;</span><br><span class="line">git config --global color.diff-highlight.oldHighlight &quot;red bold 52&quot;</span><br><span class="line">git config --global color.diff-highlight.newNormal    &quot;green bold&quot;</span><br><span class="line">git config --global color.diff-highlight.newHighlight &quot;green bold 22&quot;</span><br><span class="line"></span><br><span class="line">git config --global color.diff.meta       &quot;11&quot;</span><br><span class="line">git config --global color.diff.frag       &quot;magenta bold&quot;</span><br><span class="line">git config --global color.diff.func       &quot;146 bold&quot;</span><br><span class="line">git config --global color.diff.commit     &quot;yellow bold&quot;</span><br><span class="line">git config --global color.diff.old        &quot;red bold&quot;</span><br><span class="line">git config --global color.diff.new        &quot;green bold&quot;</span><br><span class="line">git config --global color.diff.whitespace &quot;red reverse&quot;</span><br></pre></td></tr></table></figure>
+<p>以后每次执行<code>git diff</code>，就会输出它的执行结果</p>
+<h2 id="gitupdate"><a class="header-anchor" href="#gitupdate"></a>gitupdate</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/nikitavoloboev/gitupdate">gitupdate</a>是一个工具, 用于Commit and push updated files with file names as commit message:</p>
+<p>Install:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">go install github.com/nikitavoloboev/gitupdate@latest</span><br></pre></td></tr></table></figure>
+<p>Usage:</p>
+<p>You can either use it by passing it a file path (with git repo) that you want to commit. i.e.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gitupdate /Users/nikivi/src/cli/gitupdate</span><br></pre></td></tr></table></figure>
+<p>Or if you are already in the git directory you want to commit, run:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">gitupdate .</span><br></pre></td></tr></table></figure>
+<p>This will add all files that have changed since last commit and will include all the file names (without extension) as the commit message. <a target="_blank" rel="noopener" href="https://github.com/nikitavoloboev/knowledge/commits/main">Example use</a>.</p>
+<p>If you want to only consider top level folders for the commit message, use the <code>--top</code> (or <code>-t</code> for short) flag.</p>
+<h1 id="Text-Operation"><a class="header-anchor" href="#Text-Operation"></a>Text Operation</h1>
+<p><code>Text_Operations_Packages_General.txt</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">choose	jq	</span><br></pre></td></tr></table></figure>
+<h2 id="choose"><a class="header-anchor" href="#choose"></a>choose</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/theryangeary/choose">choose</a> 是<code>cut</code>命令的替代品，用来选中指定的栏位。</p>
+<p>它的优势主要是语法更简单，比如输出文件的第一列。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># cut 的写法</span></span><br><span class="line">$ <span class="built_in">cat</span> data.txt | <span class="built_in">cut</span> -d <span class="string">&quot; &quot;</span> -f 1</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ <span class="built_in">cut</span> -d <span class="string">&quot; &quot;</span> -f 1 data.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># choose 的写法</span></span><br><span class="line">$ <span class="built_in">cat</span> data.txt | choose 0</span><br><span class="line"><span class="comment"># or</span></span><br><span class="line">$ choose 0 -i data.txt</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="jq"><a class="header-anchor" href="#jq"></a>jq</h2>
+<ul>
+<li><code>jq</code>: <code>sed</code> for JSON data.</li>
+</ul>
+<h1 id="Resource-Monitoring"><a class="header-anchor" href="#Resource-Monitoring"></a>Resource Monitoring</h1>
+<p><code>Resource_Monitoring_Packages_General.txt</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">htop	bottom	iotop	procs	duf	ncdu	free	lsof</span><br></pre></td></tr></table></figure>
+<p>可以酌情添加<code>glances</code>和<code>dstat</code></p>
+<h2 id="General-Monitor-htop-bottom-iotop"><a class="header-anchor" href="#General-Monitor-htop-bottom-iotop"></a>General Monitor: htop &amp;&amp; bottom &amp;&amp; iotop</h2>
+<ul>
+<li>
+<p><code>top</code>: 传统的资源监控工具</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://htop.dev/"><code>htop</code></a>:  <code>htop</code> has a myriad of options and keybinds, some useful ones are: <code>&lt;F6&gt;</code> to sort processes, <code>t</code> to show tree hierarchy and <code>h</code> to toggle threads.</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://nicolargo.github.io/glances/"><code>glances</code></a>: alternative for htop. with a great UI.</p>
+</li>
+<li>
+<p>For , <a target="_blank" rel="noopener" href="http://dag.wiee.rs/home-made/dstat/"><code>dstat</code></a> : alternative for htop. with aggregate measures across all processes. It can computes real-time resource metrics for lots of different subsystems like I/O, networking, CPU utilization, context switches, &amp;c.</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://github.com/ClementTsang/bottom"><code>bottom</code></a>: Yet another cross-platform graphical process/system monitor. You can run bottom using <code>btm</code>.</p>
+<ul>
+<li>For help on flags, use <code>btm -h</code> for a quick overview or <code>btm --help</code> for more details.</li>
+<li>For info on key and mouse bindings, press <code>?</code> inside bottom or refer to the <a target="_blank" rel="noopener" href="https://clementtsang.github.io/bottom/nightly/">documentation</a>.</li>
+</ul>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man8/iotop.8.html"><code>iotop</code></a> displays live <strong>I/O usage information</strong> and is handy to check if a process is doing heavy I/O disk operations</p>
+</li>
+</ul>
+<h2 id="Process-Info-procs"><a class="header-anchor" href="#Process-Info-procs"></a>Process Info:procs</h2>
+<ul>
+<li><code>ps</code>： 显示进程信息</li>
+<li><code>procs</code>:  <code>ps</code>的现代替代</li>
+</ul>
+<h2 id="Disk-Usage-duf-ncdu"><a class="header-anchor" href="#Disk-Usage-duf-ncdu"></a>Disk Usage: duf, ncdu</h2>
+<ul>
+<li>
+<p><code>df</code> : 显示磁盘占用情况</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="http://man7.org/linux/man-pages/man1/du.1.html"><code>du</code></a> 显示当前目录下每个文件占用的磁盘空间</p>
+<ul>
+<li><code>-h</code> ： print with <strong>h</strong>uman readable format.</li>
+</ul>
+</li>
+<li>
+<p><code>duf</code>： <code>df</code>的现代替代</p>
+</li>
+<li>
+<p><code>ncdu</code>： <code>du</code>的现代替代</p>
+</li>
+</ul>
+<h2 id="Memory-Usage-free"><a class="header-anchor" href="#Memory-Usage-free"></a>Memory Usage: free</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/free.1.html"><code>free</code></a> displays the total amount of free and used memory in the system. Memory is also displayed in tools like <code>htop</code>.</li>
+</ul>
+<h2 id="Open-Files-lsof"><a class="header-anchor" href="#Open-Files-lsof"></a>Open Files: lsof</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man8/lsof.8.html"><code>lsof</code></a> lists file information about files opened by processes. It can be quite useful for checking which process has opened a specific file.</li>
+</ul>
+<h1 id="Networking"><a class="header-anchor" href="#Networking"></a>Networking</h1>
+<p><code>networking_packages_Linux.txt</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ss	iproute2	nethlogs	iftop	gping	dog</span><br></pre></td></tr></table></figure>
+<p><code>Networking_Packages_Mac.txt</code>: 没有<code>ss</code>, <code>iproute2</code>改成了<code>iproute2mac</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">iproute2mac	nethlogs	iftop	gping	dog</span><br></pre></td></tr></table></figure>
+<h2 id="Network-Package-Monitor-ss"><a class="header-anchor" href="#Network-Package-Monitor-ss"></a>Network Package Monitor: ss</h2>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/duanxz/p/4669798.html"><code>ss</code></a>: short for “<strong>socket statistics</strong>”.  <code>ss</code> lets you monitor incoming and outgoing network packets statistics as well as interface statistics. A common use case of <code>ss</code> is figuring out what process is using a given port in a machine.</p>
+<ul>
+<li>
+<p>当服务器的socket连接数量变得非常大时，无论是使用netstat命令还是直接cat /proc/net/tcp，执行速度都会很慢, 用ss才是节省时间。</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://www.igoroseledko.com/socket-statistics-ss-command/">教程</a></p>
+</li>
+<li>
+<p>该工具似乎没有mac版</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Network-Config-ip"><a class="header-anchor" href="#Network-Config-ip"></a>Network Config: ip</h2>
+<ul>
+<li>
+<p><code>ip</code>: 用于操作路由,网络设备和网络接口. 是<code>netstat</code> and <code>ifconfig</code> 的现代替代, 后二者已经停止维护了，可能不会被包含在新的Linux发行版中. <code>ip</code>命令位于iproute2工具包中.</p>
+<p>Linux:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt install iproute2</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://github.com/brona/iproute2mac">Mac版本</a>:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install iproute2mac</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Usage"><a class="header-anchor" href="#Usage"></a>Usage</h3>
+<p>也可以手动在<code>/etc/network/interfaces</code>内永久地添加路由信息</p>
+<ul>
+<li>
+<p>查看路由表</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ip route</span><br></pre></td></tr></table></figure>
+<p>注意，物理上的路由表和转发表，在Linux内核中被抽象成了一个东西，不作区分，所以统称为路由表</p>
+<p>如果用netstat: <code>netstat -nr</code></p>
+</li>
+<li>
+<p>Add a new default gateway route:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">add default via &lt;gateway_IP&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Add/Delete an IP address to an interface:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo ip route add &lt;network_ip&gt;/&lt;cidr&gt; via &lt;gateway_ip&gt; [ dev &lt;network_card_name&gt; ]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>如果不指定网络设备，则会默认使用第一块网卡( 不会使用环回地址)</p>
+</li>
+<li>
+<p>也可以添加默认路由: 把<code>&lt;network_ip&gt;/&lt;cidr&gt;</code>换成<code>default</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>Modify an existing route using ip route command</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo ip route change </span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Clear routes with flush using ip route command</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo ip route flush [ip]</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Clear all the routes from the routing table using ip route command</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo ip route flush table main</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Network-Usage-nethogs-iftop"><a class="header-anchor" href="#Network-Usage-nethogs-iftop"></a>Network Usage: nethogs, iftop</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/raboof/nethogs"><code>nethogs</code></a> and <a target="_blank" rel="noopener" href="http://www.ex-parrot.com/pdw/iftop/"><code>iftop</code></a> are good interactive CLI tools for monitoring network usage.</li>
+</ul>
+<p>If you want to test these tools you can also artificially impose loads on the machine using the <a target="_blank" rel="noopener" href="https://linux.die.net/man/1/stress"><code>stress</code></a> command.</p>
+<h2 id="Network-Connections-gping"><a class="header-anchor" href="#Network-Connections-gping"></a>Network Connections: gping</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/orf/gping"><code>gping</code></a>: <code>ping</code>, but with a graph.</li>
+</ul>
+<h2 id="NetworkRequests-httpie"><a class="header-anchor" href="#NetworkRequests-httpie"></a>NetworkRequests: httpie</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/httpie/httpie">httpie</a> 是 curl 的替代品，用来发出 HTTP 请求。</p>
+<p>它的特点是语法更简单，并且服务器的返回内容会格式化高亮显示。</p>
+<p><img data-src="https://cdn.beekka.com/blogimg/asset/202201/bg2022012707.webp" alt="img"></p>
+<p>下面是发出 PUT 请求的例子。</p>
+<blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># curl 的写法</span></span><br><span class="line">$ curl -X PUT -d hello=world example.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># httpie 的写法</span></span><br><span class="line">$ http PUT example.com hello=world </span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>同类项目还有 <a target="_blank" rel="noopener" href="https://github.com/rs/curlie">curlie</a>、<a target="_blank" rel="noopener" href="https://github.com/ducaale/xh">xh</a>。</p>
+<h2 id="DNS-dog"><a class="header-anchor" href="#DNS-dog"></a>DNS: dog</h2>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://dns.lookup.dog/">dog</a> : 是<code>dig</code>命令的替代品，用来发出 DNS 查询。它的用法比<code>dig</code>简单多了。</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认查询 A 记录</span></span><br><span class="line">dog example.net</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查询多个记录</span></span><br><span class="line">dog example.net A NS MX</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Benchmarking"><a class="header-anchor" href="#Benchmarking"></a>Benchmarking</h1>
+<p><code>Benchmarking_Packages_General.txt</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hyperfine</span><br></pre></td></tr></table></figure>
+<h2 id="hyperfine"><a class="header-anchor" href="#hyperfine"></a>hyperfine</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/sharkdp/hyperfine"><code>hyperfine</code></a>: A command-line benchmarking tool.</li>
+</ul>
+<h1 id="Calculating"><a class="header-anchor" href="#Calculating"></a>Calculating</h1>
+<p><code>Calculating_Packages_General.txt</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">scal</span><br></pre></td></tr></table></figure>
+<h2 id="sc"><a class="header-anchor" href="#sc"></a>sc</h2>
+<ul>
+<li><code>sc</code>: short for: <code>scal</code></li>
+</ul>
+<h1 id="Efficiency"><a class="header-anchor" href="#Efficiency"></a>Efficiency</h1>
+<h2 id="tldr"><a class="header-anchor" href="#tldr"></a>tldr</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yay -S tldr</span><br></pre></td></tr></table></figure>
+<p>或者用man/info，后者的信息存放在<code>/usr/info</code></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Shell/" rel="tag"># Shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Lexical-Analysis/" rel="prev" title="Lexical Analysis">
+                  <i class="fa fa-chevron-left"></i> Lexical Analysis
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Package-Manager/" rel="next" title="Package Manager">
+                  Package Manager <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

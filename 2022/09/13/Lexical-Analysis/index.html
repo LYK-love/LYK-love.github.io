@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Intro Language Pattern Token">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lexical Analysis">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/13/Lexical-Analysis/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Intro Language Pattern Token">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Compilers/Lexical%20Analysis/Interaction%20with%20Parser.png">
+<meta property="article:published_time" content="2022-09-12T16:30:57.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.933Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Compilers">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Compilers/Lexical%20Analysis/Interaction%20with%20Parser.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/13/Lexical-Analysis/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/13/Lexical-Analysis/","path":"2022/09/13/Lexical-Analysis/","title":"Lexical Analysis"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Lexical Analysis | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Language"><span class="nav-text">Language</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Pattern"><span class="nav-text">Pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E7%95%99%E5%AD%97%E5%92%8C%E6%A0%87%E8%AF%86%E7%AC%A6%E7%9A%84%E8%AF%86%E5%88%AB"><span class="nav-text">保留字和标识符的识别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Token"><span class="nav-text">Token</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-text">Example</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/13/Lexical-Analysis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Lexical Analysis | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Lexical Analysis
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-12 16:30:57" itemprop="dateCreated datePublished" datetime="2022-09-12T16:30:57Z">2022-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Intro</li>
+<li>Language</li>
+<li>Pattern</li>
+<li>Token</li>
+</ul>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<ul>
+<li>
+<p><strong>lexical analysis</strong>: 词法分析器( Lexical Analyser, or <strong>Scanner</strong> )将源程序按字符流读入, 按照模式匹配映射成一个个 lexeme( <strong>词素</strong> ), 再将lexeme转化成如下形式的token( <strong>词法单元</strong> ):</p>
+<p><strong>&lt; token-name, attribute-value &gt;</strong></p>
+<ul>
+<li>当一串字符能模式匹配多个词素时, 必须通过属性来传递附加的信息。</li>
+<li>token-name 表示某种词法单位的抽象符号. 语法分析器通过token-name即可确定token sequence的结构</li>
+<li>attribute-value 指向符号表的一项, 用于语义分析和代码生成</li>
+</ul>
+</li>
+<li>
+<p>Scanner由Parser调用, 需要的时候不断读取读入并生成Token</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Compilers/Lexical%20Analysis/Interaction%20with%20Parser.png" alt="Interaction with Parser"></p>
+</li>
+</ul>
+<h1 id="Language"><a class="header-anchor" href="#Language"></a>Language</h1>
+<ul>
+<li>
+<p>字母表: 一个有限的符号集合</p>
+<ul>
+<li>二进制 {0, 1}</li>
+<li>ASCII</li>
+<li>Unicode</li>
+<li>典型的字母表包括字母、数位和标点符号</li>
+</ul>
+</li>
+<li>
+<p>串: 字母表中符号组成的一个有穷序列</p>
+<ul>
+<li>
+<p>$|s|$: 串<em>s</em>的长度</p>
+</li>
+<li>
+<p>$\epsilon$: 长度为0的串, 空串</p>
+</li>
+</ul>
+</li>
+<li>
+<p>语言:给定字母表上一个任意的<u>可数</u>的串的集合.</p>
+<ul>
+<li>语法正确的C程序的集合, 英语, 汉语</li>
+</ul>
+</li>
+<li>
+<p>和串有关的术语(banana)</p>
+<ul>
+<li>前缀: 从串的尾部删除0个或多个符号后得到的串 (ban、banana、 ε)</li>
+<li>后缀: 从串的开始处删除0个或多个符号后得到的串 (nana、banana、ε)</li>
+<li>子串: 删除串的某个前缀和某个后缀得到的串 (banana、nan、 ε)</li>
+<li>真前缀, 真后缀, 真子串:既不等于原串，也不等于空 串的前缀、后缀、子串</li>
+<li>子序列: 从原串中删除0个或者多个符号后得到的串 (baan)</li>
+</ul>
+</li>
+<li>
+<p>串的运算:</p>
+<ul>
+<li>连接(concatenation): x和y的连接的就是把y附加到x的后面形成的串, 记作xy
+<ul>
+<li>x=dog, y=house, xy=doghouse</li>
+</ul>
+</li>
+<li>指数运算(幂运算): $s_0=\epsilon$ , $s_1=s$ , $s_i=s^{i-1}s$
+<ul>
+<li>$x$=dog , $x^0$=ε , $x^1$=dog , $x^3$=dogdogdog</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>语言上的运算:</p>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th>Def</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L和M的并</td>
+<td>$L \cup M = { s \</td>
+</tr>
+<tr>
+<td>L和M的连接</td>
+<td>$LM = {st \</td>
+</tr>
+<tr>
+<td>L的Kleene闭包</td>
+<td>$L^* = \cup_{i=0}^\infty L^i$</td>
+</tr>
+<tr>
+<td>L的正闭包</td>
+<td>$L^+ = \cup_{i=1}^\infty L^i$</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h1 id="Pattern"><a class="header-anchor" href="#Pattern"></a>Pattern</h1>
+<ul>
+<li>Parser对输入的字符串进行<strong>模式匹配</strong>, 得到lexeme</li>
+<li>模式( <strong>Pattern</strong> )可以用<a href="https://lyk-love.cn/2022/09/11/Regular-Expression/"><strong>正则表达式</strong>( Regular Expression )</a>来表示.
+<ul>
+<li>面对复杂的语言时, 正则也会变得极其复杂, 为此可以用<a href="https://lyk-love.cn/2022/09/11/Finite-Machine/">NFA或DFA</a>来表示模式.</li>
+</ul>
+</li>
+<li>可以证明, 正则, NFA, DFA是等价的, 可以<a href="https://lyk-love.cn/2022/03/26/Transformation%20of%20RE,%20NFA,%20DFA/?highlight=transfor">相互转换</a></li>
+</ul>
+<h2 id="保留字和标识符的识别"><a class="header-anchor" href="#保留字和标识符的识别"></a>保留字和标识符的识别</h2>
+<p>在很多程序设计语言中，保留字也符合标识符的模式, 识别标识符的状态转换图也会识别保留字.</p>
+<p>解决方法:</p>
+<ul>
+<li>在符号表中预先填写保留字，并指明它们不是普通标识符</li>
+<li>为关键字/保留字建立单独的状态转换图. 并设定保留字的优先级高于标识符</li>
+</ul>
+<h1 id="Token"><a class="header-anchor" href="#Token"></a>Token</h1>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Description</th>
+<th>Lexeme Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>if</td>
+<td>字符i, f</td>
+<td>if</td>
+</tr>
+<tr>
+<td>else</td>
+<td>字符e, l, s, e</td>
+<td>else</td>
+</tr>
+<tr>
+<td>comparison</td>
+<td>&lt;, &gt;, &lt;=, !=等比较运算符</td>
+<td>&lt;=, !=</td>
+</tr>
+<tr>
+<td>id</td>
+<td>字母开头的字母/数字串</td>
+<td>Po, score, D2</td>
+</tr>
+<tr>
+<td>number</td>
+<td>任何数字常量</td>
+<td>3.1415, 0, 6.02e42</td>
+</tr>
+<tr>
+<td>literal</td>
+<td>在<code>&quot;&quot;</code>之间, 除<code>&quot;&quot;</code>以外的任何字符</td>
+<td>“core dumped”</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Example"><a class="header-anchor" href="#Example"></a>Example</h2>
+<p>字符串<code>E = M * C ** 2</code>对应的Token:</p>
+<ul>
+<li><code>&lt;id, 指向符号表中</code>E<code>的条目的指针&gt;</code></li>
+<li><code>&lt;assign_op&gt;</code></li>
+<li><code>&lt;id, 指向符号表中</code>M<code>的条目的指针&gt;</code></li>
+<li><code>&lt;mult_op&gt;</code></li>
+<li><code>&lt;id, 指向符号表中C的条目的指针&gt;</code></li>
+<li><code>&lt;exp_op&gt;</code></li>
+<li><code>&lt;number, 整数值2&gt;</code></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Compilers/" rel="tag"># Compilers</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Programming-Language-Basic/" rel="prev" title="Programming Language Basic">
+                  <i class="fa fa-chevron-left"></i> Programming Language Basic
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/13/Unix-CLI-Tools/" rel="next" title="Unix CLI Tools">
+                  Unix CLI Tools <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  类之间的关系 组合 &gt; 继承 Design Pattern 设计模式：创建型 设计模式： 结构型 设计模式：行为型  ref： 软件系统设计 — 潘敏学； Design Pattern Turotial">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Design Pattern">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/26/Design-Pattern/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  类之间的关系 组合 &gt; 继承 Design Pattern 设计模式：创建型 设计模式： 结构型 设计模式：行为型  ref： 软件系统设计 — 潘敏学； Design Pattern Turotial">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/generalization">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/realization">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/dependency">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/association">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/aggragation">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/composition">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Design%20Pattern%20Classification.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/simple%20factory%20pattern">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/simple%20factory%20user_manager">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/factory%20method%20pattern">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/factory%20method%20pattern%20logger">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/abstract%20factory%20pattern">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/abstract%20factory%20method%20text%20%20and%20button">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/abstract%20factory%20method%20text%20and%20button%20realization.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/builder%20pattern.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Builder%20Pattern%20KFC%20example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/prototype%20pattern.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Class%20Adapter.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Object%20Adapter.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Default%20Adapter.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Bio%20Adapter.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Transparent%20Composite.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Composite%20Pattern%20safe-composite%20arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Transparent%20Composite%20FileSystem.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/bridge%20arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/bridge%20example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/bridge%20example2.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Decotator%20Pattern%20arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Decotator%20Pattern%20-semi-transparent-example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Decotator%20Pattern%20example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Facade%20Pattern%20arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Facade%20Pattern%20example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Flyweight%20Pattern%20complex-arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Proxy%20Pattern%20arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Strategy%20Pattern%20arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/command%20pattern.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Command%20example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/state%20pattern.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/state%20pattern%20room.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/observer%20pattern.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/observer%20example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/medicator%20pattern">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/medicator%20pattern%20advantage.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Template%20Method%20Pattern.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Template%20Method%20Pattern%20example.png">
+<meta property="article:published_time" content="2022-09-26T06:39:34.928Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.929Z">
+<meta property="article:author" content="有多远滚多远">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/generalization">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/26/Design-Pattern/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/26/Design-Pattern/","path":"2022/09/26/Design-Pattern/","title":"Design Pattern"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Design Pattern | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B1%BB%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-text">类之间的关系</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%9B%E5%8C%96-Generalization%EF%BC%89"><span class="nav-text">泛化(Generalization）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-Realization"><span class="nav-text">实现(Realization)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BE%9D%E8%B5%96-Dependency"><span class="nav-text">依赖(Dependency)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E8%81%94-Association"><span class="nav-text">关联(Association)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E5%90%88-Aggregation"><span class="nav-text">聚合(Aggregation)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E5%90%88-Composition"><span class="nav-text">组合(Composition)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%84%E5%90%88-%E7%BB%A7%E6%89%BF"><span class="nav-text">组合 &gt; 继承</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Design-Pattern"><span class="nav-text">Design Pattern</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Types"><span class="nav-text">Types</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Creationnal-Patterns"><span class="nav-text">Creationnal  Patterns</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Singleton"><span class="nav-text">Singleton</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Simple-Factory"><span class="nav-text">Simple Factory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Factory-Method"><span class="nav-text">Factory Method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#code"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Abstract-Factory"><span class="nav-text">Abstract Factory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-text">概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-2"><span class="nav-text">模式结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90"><span class="nav-text">模式分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#code-2"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-3"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-2"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="nav-text">缺点：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Builder"><span class="nav-text">Builder</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-3"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-3"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-4"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-3"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-2"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8C%96"><span class="nav-text">模式简化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prototype"><span class="nav-text">Prototype</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-4"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-4"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-3"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="nav-text">适用环境</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Structural-Patterns"><span class="nav-text">Structural Patterns</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Adatpter"><span class="nav-text">Adatpter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E9%80%82%E9%85%8D%E5%99%A8"><span class="nav-text">类适配器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E9%80%82%E9%85%8D%E5%99%A8"><span class="nav-text">对象适配器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-5"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-4"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-text">默认适配器模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E5%90%91%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-text">双向适配器模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Composite"><span class="nav-text">Composite</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA"><span class="nav-text">模式动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-5"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90-2"><span class="nav-text">模式分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%8F%E6%98%8E%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="nav-text">透明组合模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="nav-text">安全组合模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-4"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-%E9%80%8F%E6%98%8E%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="nav-text">示例( 透明组合模式 )</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bridge"><span class="nav-text">Bridge</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA-2"><span class="nav-text">模式动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-6"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90-3"><span class="nav-text">模式分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cocde"><span class="nav-text">cocde</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-5"><span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E6%AF%9B%E7%AC%94"><span class="nav-text">模拟毛笔</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%A8%E5%B9%B3%E5%8F%B0%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE%E5%99%A8"><span class="nav-text">跨平台视频播放器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-6"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-5"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83-2"><span class="nav-text">适用环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E6%89%A9%E5%B1%95"><span class="nav-text">模式扩展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Decorator"><span class="nav-text">Decorator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-7"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90-4"><span class="nav-text">模式分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-5"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8A%E9%80%8F%E6%98%8E%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F"><span class="nav-text">半透明装饰模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-6"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%8F%E6%98%8E%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F"><span class="nav-text">透明装饰模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-7"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-7"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-6"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83-3"><span class="nav-text">适用环境</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Facade"><span class="nav-text">Facade</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-8"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90-5"><span class="nav-text">模式分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-6"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-8"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-8"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-7"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83-4"><span class="nav-text">适用环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E6%89%A9%E5%B1%95-2"><span class="nav-text">模式扩展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flyweight"><span class="nav-text">Flyweight</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-9"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90-6"><span class="nav-text">模式分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-7"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-9"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-8"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83-5"><span class="nav-text">适用环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E6%89%A9%E5%B1%95-3"><span class="nav-text">模式扩展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Proxy"><span class="nav-text">Proxy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-10"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-8"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-10"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-9"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%86%E5%88%86"><span class="nav-text">模式细分</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Behavioral-Patterns"><span class="nav-text">Behavioral Patterns</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Strategy"><span class="nav-text">Strategy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-11"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83-6"><span class="nav-text">适用环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E6%89%A9%E5%B1%95-4"><span class="nav-text">模式扩展</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command"><span class="nav-text">Command</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-12"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90-7"><span class="nav-text">模式分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-9"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-9"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-11"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-10"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83-7"><span class="nav-text">适用环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#State"><span class="nav-text">State</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-10"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-11"><span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Observer"><span class="nav-text">Observer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-13"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-10"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-11"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-12"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-12"><span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mediator"><span class="nav-text">Mediator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-14"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-11"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-13"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-13"><span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Template-Method"><span class="nav-text">Template Method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84-15"><span class="nav-text">模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#code-12"><span class="nav-text">code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-12"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9-14"><span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9-14"><span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%BD%E8%8E%B1%E5%9D%9E%E5%8E%9F%E5%88%99"><span class="nav-text">好莱坞原则</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/26/Design-Pattern/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Design Pattern | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Design Pattern
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-26 06:39:34" itemprop="dateCreated datePublished" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Software-Engineering/" itemprop="url" rel="index"><span itemprop="name">Software Engineering</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>类之间的关系</li>
+<li>组合 &gt; 继承</li>
+<li>Design Pattern</li>
+<li>设计模式：创建型</li>
+<li>设计模式： 结构型</li>
+<li>设计模式：行为型</li>
+</ul>
+<p>ref： 软件系统设计 — 潘敏学； <a target="_blank" rel="noopener" href="https://refactoring.guru/design-patterns/creational-patterns">Design Pattern Turotial</a></p>
+<span id="more"></span>
+<h1 id="类之间的关系"><a class="header-anchor" href="#类之间的关系"></a>类之间的关系</h1>
+<p>ref: <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d1d45efcfac1">https://www.jianshu.com/p/d1d45efcfac1</a></p>
+<h2 id="泛化-Generalization）"><a class="header-anchor" href="#泛化-Generalization）"></a>泛化(Generalization）</h2>
+<blockquote>
+<p>泛化表示一个更泛化的元素和一个更具体的元素之间的关系。泛化是用于对<code>继承</code>进行建模的<code>UML元素</code>。在Java中，用<code>extends</code>关键字表示。</p>
+</blockquote>
+<p>**表示方式：**用实线空心箭头表示。</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/generalization" alt="img"></p>
+<h2 id="实现-Realization"><a class="header-anchor" href="#实现-Realization"></a>实现(Realization)</h2>
+<blockquote>
+<p>实现是一种<code>类与接口</code>的关系，表示类是接口所有特征和行为的实现，在程序中一般通过<code>类实现接口</code>来描述。</p>
+</blockquote>
+<p>**表示方式：**用虚线空心三角形箭头表示，实现类指向接口。</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/realization" alt="img"></p>
+<h2 id="依赖-Dependency"><a class="header-anchor" href="#依赖-Dependency"></a>依赖(Dependency)</h2>
+<blockquote>
+<p>是一种<code>使用</code>的关系，即一个类的实现需要另一个类的协助。在Java中，方法参数需要传入另一个类的对象，就表示依赖这个类。</p>
+</blockquote>
+<p>**表示方式：**虚线箭头。</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/dependency" alt="img"></p>
+<p>**注意：**类A需要用到类B，类A指向类B。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Student</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">read</span><span class="params">(Book book)</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;读的书是：&quot;</span> + book.getName());</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">eat</span><span class="params">(Food food)</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;吃的是：&quot;</span> + food.getName());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="关联-Association"><a class="header-anchor" href="#关联-Association"></a>关联(Association)</h2>
+<blockquote>
+<p>表示类与类之间的联接,它使一个类知道另一个类的属性和方法，这种关系比依赖更强、不存在依赖关系的偶然性、关系也不是临时性的，一般是长期性的。通常是将一个类的对象作为另一个类的成员变量.</p>
+<p>在Java中，一个类的全局变量引用了另一个类，就表示关联了这个类</p>
+</blockquote>
+<p>**表示方式：**实线箭头。</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/association" alt="img"></p>
+<p>**注意：**类A中用到类B属性，类A指向类B。</p>
+<h2 id="聚合-Aggregation"><a class="header-anchor" href="#聚合-Aggregation"></a>聚合(Aggregation)</h2>
+<blockquote>
+<p>概念：聚合是关联关系的一种，是强的关联关系。聚合是整体和个体之间的关系，即<strong>has-a</strong>的关系，整体与个体可以具有各自的生命周期，部分可以属于多个整体对象，也可以为多个整体对象共享。聚合和关联关系在语法上是一致的，只能从语义来区分</p>
+</blockquote>
+<p>**表示方式：**尾部为空心菱形的实线箭头（也可以没箭头）</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/aggragation" alt="img"></p>
+<p>**注意：**类A中用到类B属性，类A指向类B。</p>
+ <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">People</span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Student student;</span><br><span class="line">	<span class="keyword">private</span> Worker worker;</span><br><span class="line">	<span class="keyword">private</span> Farmer farmer;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">People</span><span class="params">(Student student, Worker worker, Farmer farmer)</span>&#123;</span><br><span class="line">		<span class="built_in">this</span>.student = student;</span><br><span class="line">		<span class="built_in">this</span>.worker = worker;</span><br><span class="line">		<span class="built_in">this</span>.farmer = farmer;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="组合-Composition"><a class="header-anchor" href="#组合-Composition"></a>组合(Composition)</h2>
+<blockquote>
+<p>组合也是关联关系的一种。组合是一种整体与部分的关系，即contains-a的关系，比聚合更强。部分与整体的生命周期一致，整体的生命周期结束也就意味着部分的生命周期结束，组合关系不能共享。程序中组合和关联关系是一致的，只能从语义级别来区分。</p>
+</blockquote>
+<p>**表示方式：**尾部为实心菱形的实现箭头（也可以没箭头）。</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/composition" alt="img"></p>
+<p>**注意：**Head是Dog的一部分，Dog指向Head。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Bird</span>&#123;</span><br><span class="line">	<span class="keyword">private</span> Wing wing;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">People</span><span class="params">()</span>&#123;</span><br><span class="line">		wing = <span class="keyword">new</span> <span class="title class_">Wing</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="组合-继承"><a class="header-anchor" href="#组合-继承"></a>组合 &gt; 继承</h1>
+<ul>
+<li>Expert designers know not to solve every problem from first principles, they reuse solutions : <strong>“不要造轮子”</strong></li>
+<li><strong>HAS-A can be better than IS-A</strong>
+<ol>
+<li>Composition gives you a lot more flexibility.</li>
+<li>Not only does it let you encapsulate a family of<br>
+algorithms into their own set of classes, but it<br>
+also lets you change behavior at runtime.</li>
+</ol>
+</li>
+<li>与继承关系相比，组合的主要优势在于不会破坏类的封装性，而且<strong>继承是一种耦合度较大的静态关系，无法在程序运行时动态扩展</strong>。在软件开发阶段，组合关系虽然不会比继承关系减少编码量，但是到了软件维护阶段，由于关联关系使系统具有较好的<strong>松耦合性</strong>，因此使得<strong>系统更加容易维护</strong>。当然，组合的缺点是<strong>比继承关系要创建更多的对象</strong></li>
+</ul>
+<h1 id="Design-Pattern"><a class="header-anchor" href="#Design-Pattern"></a>Design Pattern</h1>
+<blockquote>
+<p><strong>设计模式(Design Pattern)<strong>是</strong>一套被反复使用、多数人知晓的、经过分类编目的、代码设计经验的总结</strong></p>
+</blockquote>
+<p>基本要素：</p>
+<ol>
+<li>模式名称 (Pattern name)</li>
+<li>问题 (Problem)</li>
+<li>解决方案 (Solution)</li>
+<li>效果 (Consequences)</li>
+</ol>
+<h2 id="Types"><a class="header-anchor" href="#Types"></a>Types</h2>
+<ul>
+<li>
+<p>根据其目的(模式是用来做什么的)可分为创建型(Creational)，结构型(Structural)和行为型(Behavioral)三种：</p>
+<ol>
+<li>创建型模式主要用于创建对象。</li>
+<li>结构型模式主要用于处理类或对象的组合。</li>
+<li>行为型模式主要用于描述对类或对象怎样交互和怎样分配职责。</li>
+</ol>
+</li>
+<li>
+<p>根据范围，即模式主要是用于处理类之间关系还是处理对象之间的关系，可分为类模式和对象模式两种：</p>
+<ol>
+<li>类模式处理类和子类之间的关系，这些关系通过继承建立，在编译时刻就被确定下来，是静态的</li>
+<li>对象模式处理对象间的关系，这些关系在运行时刻变化，是动态的</li>
+</ol>
+</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Design%20Pattern%20Classification.png" alt="Design Pattern Classification"></p>
+<ul>
+<li>注： 模板方法为什么是行为性模式? 答案：子类控制父类的行为</li>
+</ul>
+<h1 id="Creationnal-Patterns"><a class="header-anchor" href="#Creationnal-Patterns"></a>Creationnal  Patterns</h1>
+<h2 id="Singleton"><a class="header-anchor" href="#Singleton"></a>Singleton</h2>
+<p>太简单，不介绍了</p>
+<h2 id="Simple-Factory"><a class="header-anchor" href="#Simple-Factory"></a>Simple Factory</h2>
+<p>策略模式解决<strong>行为问题</strong>, 而工厂模式解决<strong>对象创建问题</strong></p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/simple%20factory%20pattern" alt="image-20220315145604053"></p>
+<h3 id="模式结构"><a class="header-anchor" href="#模式结构"></a>模式结构</h3>
+<ul>
+<li>Factory：  工厂角色</li>
+<li>Product：抽象产品</li>
+<li>ConcreteProduct： 具体产品角色</li>
+</ul>
+<h3 id="示例"><a class="header-anchor" href="#示例"></a>示例</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/simple%20factory%20user_manager" alt="image-20220315145955575"></p>
+<p>简单工厂模式的缺点</p>
+<ul>
+<li>当有新产品要加入到系统中时,必须修改工厂类,加入必要的处理逻辑,这违背了“开闭原则”</li>
+</ul>
+<h2 id="Factory-Method"><a class="header-anchor" href="#Factory-Method"></a>Factory Method</h2>
+<blockquote>
+<p>在工厂方法模式中,核心的工厂类不再负责所有产品的创建,而是将具体创建工作交给子类去做。这个核心类仅仅负责给出具体工厂必须实现的接口,而不负责哪一个产品类被实例化这种细节,这使得<strong>工厂方法模式可以在不修改工厂角色的情况下引进新产品</strong></p>
+</blockquote>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/factory%20method%20pattern" alt="image-20220315150329091"></p>
+<h3 id="code"><a class="header-anchor" href="#code"></a>code</h3>
+<p>抽象工厂类代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">PayMethodFactory</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> AbstractPay <span class="title function_">getPayMethod</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体工厂类代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CashPayFactory</span> <span class="keyword">extends</span> <span class="title class_">PayMethodFactory</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> AbstractPay <span class="title function_">getPayMethod</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">CashPay</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>客户类代码片段:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">PayMethodFactory factory;</span><br><span class="line">AbstractPay payMethod; <span class="comment">//在定义工厂和产品时都必须使用抽象层</span></span><br><span class="line">factory=<span class="keyword">new</span> <span class="title class_">CashPayFactory</span>();</span><br><span class="line">payMethod =factory.getPayMethod();</span><br><span class="line">payMethod.pay();</span><br></pre></td></tr></table></figure>
+<p>为了提高系统的可扩展性和灵活性,在<strong>定义工厂和产品时都必须使用抽象层</strong>,如果需要更换产品类,只需要更换对应的工厂即可,其他代码不需要进行任何修改。</p>
+<h3 id="示例-2"><a class="header-anchor" href="#示例-2"></a>示例</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/factory%20method%20pattern%20logger" alt="image-20220315150923939"></p>
+<h3 id="优点"><a class="header-anchor" href="#优点"></a>优点</h3>
+<ul>
+<li>很好地符合了“开闭原则”</li>
+</ul>
+<h3 id="缺点"><a class="header-anchor" href="#缺点"></a>缺点</h3>
+<ul>
+<li>添加新产品时，不仅要添加新的产品类，还要添加对应的具体工厂类，增加系统的复杂度</li>
+</ul>
+<h2 id="Abstract-Factory"><a class="header-anchor" href="#Abstract-Factory"></a>Abstract Factory</h2>
+<blockquote>
+<p>抽象工厂模式(Abstract Factory Pattern):提供一个创建一系列相关或相互依赖对象的接口,而无须指定它们具体的类。抽象工厂模式又称为Kit模式,属于<strong>对象创建型模式</strong></p>
+</blockquote>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/abstract%20factory%20pattern" alt="image-20220315151244481"></p>
+<h3 id="概念"><a class="header-anchor" href="#概念"></a>概念</h3>
+<ul>
+<li><strong>产品等级结构</strong>： 即产品的继承结构。 如抽象类是电视机， 而子类有海信电视机， TCL电视机， 则抽象电视机与具体品牌的电视机构成了一个产品等级结构</li>
+<li><strong>产品族</strong>：由同一个工厂生产的，位于不同产品等级结构中的一组产品。 如海尔是一个产品族， 海尔电视机属于电视机产品结构， 电冰箱位于电冰箱产品结构</li>
+</ul>
+<h3 id="模式结构-2"><a class="header-anchor" href="#模式结构-2"></a>模式结构</h3>
+<ul>
+<li>AbstractFactory</li>
+<li>AbstractProduct</li>
+<li>Product</li>
+</ul>
+<h2 id="模式分析"><a class="header-anchor" href="#模式分析"></a>模式分析</h2>
+<ul>
+<li>抽象工厂模式与工厂方法模式的区别：工厂方法模式针对的是一个产品等级结构，而抽象工厂模式则需要面对多个产品等级结构</li>
+</ul>
+<h3 id="code-2"><a class="header-anchor" href="#code-2"></a>code</h3>
+<p>抽象工厂类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">AbstractFactory</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> AbstractProductA <span class="title function_">createProductA</span><span class="params">()</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> AbstractProductB <span class="title function_">createProductB</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体工厂类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteFactory1</span> <span class="keyword">extends</span> <span class="title class_">AbstractFactory</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> AbstractProductA <span class="title function_">createProductA</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ConcreteProductA1</span>();</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> AbstractProductB <span class="title function_">createProductB</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">ConcreteProductB1</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="示例-3"><a class="header-anchor" href="#示例-3"></a>示例</h3>
+<p>产品结构为：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/abstract%20factory%20method%20text%20%20and%20button" alt="image-20220315151837764"></p>
+<p>抽象工厂模式：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/abstract%20factory%20method%20text%20and%20button%20realization.png" alt="image-20220315151810392"></p>
+<h3 id="优点-2"><a class="header-anchor" href="#优点-2"></a>优点</h3>
+<ul>
+<li>增加或者替换产品族比较方便</li>
+</ul>
+<h3 id="缺点："><a class="header-anchor" href="#缺点："></a>缺点：</h3>
+<ul>
+<li>增加新的产品等级结构需要修改抽象工厂和所有的具体工厂类，<strong>对“开闭原则”的支持呈现倾斜性</strong></li>
+</ul>
+<h2 id="Builder"><a class="header-anchor" href="#Builder"></a>Builder</h2>
+<blockquote>
+<p>建造者模式可以<strong>将一个复杂对象的构建与它的表示分离</strong>,使得<strong>同样的构建过程可以创建不同的表示</strong>.将部件和其组装过程分开,<strong>一步一步创建一个复杂的对象</strong></p>
+<p>是一种对象创建型模式</p>
+</blockquote>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/builder%20pattern.png" alt="image-20220308144855351"></p>
+<h3 id="模式结构-3"><a class="header-anchor" href="#模式结构-3"></a>模式结构</h3>
+<ul>
+<li>Builder:抽象建造者</li>
+<li>ConcreteBuilder:具体建造者</li>
+<li>Directo: :指挥者. 一方面它隔离了客户与生产过程;另一方面它负责控制产品的生成过程</li>
+<li>Product:产品角色</li>
+</ul>
+<h3 id="code-3"><a class="header-anchor" href="#code-3"></a>code</h3>
+<p>抽象建造者:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Builder</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">protected</span> Product product=<span class="keyword">new</span> <span class="title class_">Product</span>();</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">buildPartA</span><span class="params">()</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">buildPartB</span><span class="params">()</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">buildPartC</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Product <span class="title function_">getResult</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> product;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Director:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Director</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> Builder builder;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">Director</span><span class="params">(Builder builder)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">this</span>.builder=builder;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBuilder</span><span class="params">(Builder builder)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">this</span>.builder=builer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> Product <span class="title function_">construct</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	builder.buildPartA();</span><br><span class="line">	builder.buildPartB();</span><br><span class="line">	builder.buildPartC();</span><br><span class="line">	<span class="keyword">return</span> builder.getResult();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>client:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Builder</span> <span class="variable">builder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConcreteBuilder</span>();</span><br><span class="line"><span class="type">Director</span> <span class="variable">director</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Director</span>(builder);</span><br><span class="line"><span class="type">Product</span> <span class="variable">product</span> <span class="operator">=</span> director.construct();</span><br></pre></td></tr></table></figure>
+<p>在客户端代码中,无须关心产品对象的具体组装过程， <strong>只需确定具体建造者的类型</strong>,建造者模式将复杂对象的构建与对象的表现分离开来,这样使得同样的构建过程可以创建出不同的表现</p>
+<h3 id="示例-4"><a class="header-anchor" href="#示例-4"></a>示例</h3>
+<p>KFC套餐,这里省略了抽象建造者</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Builder%20Pattern%20KFC%20example.png" alt="Builder Pattern KFC example"></p>
+<h3 id="优点-3"><a class="header-anchor" href="#优点-3"></a>优点</h3>
+<ul>
+<li>client不必知道产品的创建过程，<strong>将产品本身与产品的创建过程解耦</strong></li>
+<li><u>可以更加精细地控制产品的创建过程</u></li>
+<li>增加新的具体建造者无须修改原有类库的代码，指挥者类针对抽象建造者类编程，系统扩展方便，<strong>符合“开闭原则”</strong></li>
+</ul>
+<h3 id="缺点-2"><a class="header-anchor" href="#缺点-2"></a>缺点</h3>
+<ul>
+<li>建造者模式所创建的产品一般具有较多的共同点,其组成部分相似,如果产品之间的差异性很大,则不适合使用建造者模式,因此其<u>使用范围受到一定的限制</u></li>
+<li>如果产品的内部变化复杂,可能会导致需要定义很多具体建造者类来实现这种变化,导致系统变得很庞大。</li>
+</ul>
+<h3 id="模式简化"><a class="header-anchor" href="#模式简化"></a>模式简化</h3>
+<ul>
+<li>省略抽象建造者角色: 如果系统中只需要一个具体建造者的话,可以省略掉抽象建造者。</li>
+<li>省略指挥者角色: 在具体建造者只有一个的情况下,如果抽象建造者角色已经被省略掉,那么还可以省略指挥者角色,让Builder角色扮演指挥者与建造者双重角色。</li>
+</ul>
+<h2 id="Prototype"><a class="header-anchor" href="#Prototype"></a>Prototype</h2>
+<blockquote>
+<p>原型模式(Prototype Pattern): 用原型实例指定创建对象的种类,并且通过复制这些原型创建新的对象。原型模式允许一个对象再创建另外一个可定制的对象,无须知道任何创建的细节</p>
+<p>是一种对象创建型模式</p>
+</blockquote>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/prototype%20pattern.png" alt="image-20220308152010781"></p>
+<h3 id="模式结构-4"><a class="header-anchor" href="#模式结构-4"></a>模式结构</h3>
+<ul>
+<li>Prototype:抽象原型类</li>
+<li>ConcretePrototype:具体原型类</li>
+<li>Client</li>
+</ul>
+<p>一般而言,<code>clone()</code>方法满足:</p>
+<ul>
+<li>对任何的对象x,都有<code>x.clone() !=x</code>,即克隆对象与原对象不是同一个对象。</li>
+<li>对任何的对象x,都有<code>x.clone().getClass()==x.getClass()</code>,即克隆对象与原对象的类型一样。</li>
+<li>如果对象x的equals()方法定义恰当,那么<code>x.clone().equals(x)</code>应该成立</li>
+</ul>
+<p>Java提供的<code>clone()</code>方法默认是浅拷贝，可以override该方法实现不完全的深拷贝</p>
+<ul>
+<li>要实现彻底的深拷贝是非常困难的</li>
+</ul>
+<h3 id="优点-4"><a class="header-anchor" href="#优点-4"></a>优点</h3>
+<ul>
+<li>可以快速创建很多相同或相似的对象，简化对象的创建过程，还可以保存对象的一些中间状态；</li>
+</ul>
+<h3 id="缺点-3"><a class="header-anchor" href="#缺点-3"></a>缺点</h3>
+<ul>
+<li>需要为每一个编写<code>clone()</code>，因此对已有类进行改造时，需要修改其源代码，违反了开闭原则</li>
+<li>在实现深克隆时需要编写较为复杂的代码
+<ul>
+<li>事实上几乎不存在完全的深拷贝，这要考虑到底层对象复杂的引用关系</li>
+</ul>
+</li>
+</ul>
+<h3 id="适用环境"><a class="header-anchor" href="#适用环境"></a>适用环境</h3>
+<ul>
+<li><u>创建新对象成本较大</u>，新的对象可以通过原型模式对已有对象进行复制来获得；</li>
+<li>系统要<u>保存对象的状态</u>，而对象的状态变化很小；</li>
+<li>需要避免使用分层次的工厂类来创建分层次的对象，并且类的实例对象只有一个或很少的几个组合状态，<u>通过复制原型对象得到新实例可能比使用构造函数创建一个新实例更加方便</u></li>
+</ul>
+<h1 id="Structural-Patterns"><a class="header-anchor" href="#Structural-Patterns"></a>Structural Patterns</h1>
+<h2 id="Adatpter"><a class="header-anchor" href="#Adatpter"></a>Adatpter</h2>
+<blockquote>
+<p>适配器模式(Adapter Pattern) :将一个接口转换成客户希望的另一个接口,适配器模式使接口不兼容的那些类可以一起工作,其别名为包装器(Wrapper)。适配器模式<strong>既可以作为类结构型模式,也可以作为对象结构型模式</strong></p>
+<p>在适配器模式中可以定义一个包装类,包装不兼容接口的对象,这个包装类指的就是适配器(Adapter),它所包装的对象就是适配者<br>
+(Adaptee),即被适配的类</p>
+<p>适配器提供客户类需要的接口,适配器的实现就是把客户类的请求转化为对适配者的相应接口的调用。也就是说:当客户类调用适配器的方法时,在适配器类的内部将调用适配者类的方法,而这个过程对客户类是透明的,客户类并不直接访问适配者类。因此,适配器可以使由于接口不兼容而不能交互的类可以一起工作。这就是适配器模式的模式动机</p>
+</blockquote>
+<p>模式结构：</p>
+<ul>
+<li>Target:  目标抽象类， 即</li>
+<li>Adapter： 适配器类</li>
+<li>Adaptee： 适配者类</li>
+<li>Client</li>
+</ul>
+<h3 id="类适配器"><a class="header-anchor" href="#类适配器"></a>类适配器</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Class%20Adapter.png" alt="Class Adapter"></p>
+<ul>
+<li>Adapter多继承， 同时继承Target和Adaptee, 这需要语言支持多继承。</li>
+<li>如果语言不支持多继承， 那么如果Target是接口的话，也可以选择<u>继承Adaptee,实现Target</u></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Adapter</span> <span class="keyword">extends</span> <span class="title class_">Adaptee</span> <span class="keyword">implements</span> <span class="title class_">Target</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">request</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		specificRequest();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="对象适配器"><a class="header-anchor" href="#对象适配器"></a>对象适配器</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Object%20Adapter.png" alt="Object Adapter"></p>
+<ul>
+<li>不是继承<code>Adaptee</code>类，而是持有<code>Adaptee</code>的实例，以解决兼容性的问题。即持有<code>Adaptee</code>类，实现<code>Target</code>接口，完成<code>Adaptee—&gt;Target</code>的适配</li>
+<li>缺点是难以置换Aaptee的方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Adapter</span> <span class="keyword">extends</span> <span class="title class_">Target</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> Adaptee adaptee;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Adapter</span><span class="params">(Adaptee adaptee)</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">this</span>.adaptee=adaptee;</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">request</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		adaptee.specificRequest();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="优点-5"><a class="header-anchor" href="#优点-5"></a>优点</h3>
+<p>将目标类和适配者类解耦，通过引入一个适配器类来重用现有的适配者类，而无须修改原有代码。</p>
+<p>增加了类的透明性和复用性，将具体的实现封装在适配者类中，对于客户端类来说是透明的，而且提高了适配者的复用性。</p>
+<p>灵活性和扩展性都非常好，通过使用配置文件，可以很方便地更换适配器，也可以在不修改原有代码的基础上增加新的适配器类，完全符合“开闭原则’</p>
+<p>由于适配器类是适配者类的子类，因此可以在适配器类中置换一些适配者的方法，使得适配器的灵活性更强</p>
+<h3 id="缺点-4"><a class="header-anchor" href="#缺点-4"></a>缺点</h3>
+<p>对于Java、C#等不支持多重继承的语言，使用有局限</p>
+<h3 id="默认适配器模式"><a class="header-anchor" href="#默认适配器模式"></a>默认适配器模式</h3>
+<blockquote>
+<p>默认适配器模式(Default Adapter Pattern)或缺省适配器模式:</p>
+<p>当不需要全部实现接口提供的方法时，可先设计一个抽象类实现接口，并为该接口中每个方法提供一个默认实现(空方法)，那么该抽象类的子类可有选择地覆盖父类的某些方法来实现需求，它适用于一个接口不想使用其所有的方法的情况。因此也称为单接口适配器模式</p>
+</blockquote>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Default%20Adapter.png" alt="Default Adapter"></p>
+<h3 id="双向适配器模式"><a class="header-anchor" href="#双向适配器模式"></a>双向适配器模式</h3>
+<blockquote>
+<p>在对象适配器的使用过程中，如果在适配器中同时包含对目标类和适配者类的引用，适配者可以通过它调用目标类中的方法，目标类也可以通过它调用适配者类中的方法，那么该适配器就是一个双向适配器</p>
+</blockquote>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Bio%20Adapter.png" alt="Bio Adapter"></p>
+<h2 id="Composite"><a class="header-anchor" href="#Composite"></a>Composite</h2>
+<blockquote>
+<p>组合模式(Composite Pattern): 组合多个对象形成树形结构以表示“整体部分”的结构层次。组合模式对单个对象(即叶子对象)和组合对象(即容器对象)的使用具有一致性</p>
+<p>又称为“整体部分”(Part-Whole)模式，</p>
+<p>属于<strong>对象的结构模式</strong>，它将对象组织到树结构中,可以用来描述整体与部分的关系</p>
+</blockquote>
+<h3 id="模式动机"><a class="header-anchor" href="#模式动机"></a>模式动机</h3>
+<ul>
+<li>对于树形结构，当容器对象(如文件夹)的某一个方法被调用时，将遍历整个树形结构，寻找也包含这个方法的成员对象(可以是容器对象，也可以是叶子对象，如子文件夹和文件)并调用执行(递归调用)</li>
+<li>由于容器对象和叶子对象在功能上的区别，在使用这些对象的客户端代码中必须有区别地对待容器对象和叶子对象，而实际上大多数情况下客户端希望一致地处理它们，因为对于这些对象的区别对待将会使得程序非常复杂</li>
+<li>组合模式描述了如何将容器对象和叶子对象进行<strong>递归组合</strong>，使得用户在使用时无须对它们进行区分，可以一致地对待容器对象和叶子对象</li>
+<li>事实上，Leaf类不可能实现Component类的<code>operation()</code>之外的方法，这样毫无意义。 因此<strong>组合模式分为两种</strong>：
+<ul>
+<li>透明组合模式：把Leaf和Composite看成一个东西，Component类的所有方法都是抽象方法， 则Leaf必须实现所有这些方法
+<ul>
+<li>好处：对Client而言， Leaf和Composite没有区别，可以直接针对Component抽象类编程</li>
+<li>坏处：Leaf的<code>operation()</code>之外的方法全都是无用方法，Leaf对这些方法的实现基本就是抛出异常。Client“透明”地处理Component时，（因为有Leaf存在）要么处理异常， 要么就用RTTI判断对象的实际类型，没有安全性，事实上也不可能透明</li>
+<li>因此，透明组合模式就是个笑话</li>
+</ul>
+</li>
+<li>安全组合模式：Component是一个<strong>接口</strong>，仅拥有抽象方法<code>operation（）</code>。 Composite和Leaf都实现Component接口，这样这两个子类的行为就是合理的
+<ul>
+<li>优点：Leaf和Composite的行为是合理的</li>
+<li>缺点：Leaf和Composite是两个不同的类型，使用的时候无法面向Component编程，即对Client不够透明</li>
+<li>推荐使用安全组合模式</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="模式结构-5"><a class="header-anchor" href="#模式结构-5"></a>模式结构</h3>
+<ul>
+<li>
+<p>Component: 抽象构件</p>
+<ul>
+<li>
+<p>client针对<code>Component</code>进行编程，无须知道它到底表示的是叶子还是容器，可以对其进行统一处理</p>
+</li>
+<li>
+<p>容器对象中既可以包含叶子，也可以包含容器，以此实现递归组合，形成一个树形结构</p>
+</li>
+<li>
+<p>抽象父类<code> Component</code>中，只有<code>operation （）</code>是抽象方法，其他方法都要提供实现， 否则Leaf类就要实现这些方法了（这是不可能的）</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Leaf:叶子构件</p>
+</li>
+<li>
+<p>Composite:容器构件</p>
+</li>
+<li>
+<p>Client:客户类</p>
+</li>
+</ul>
+<h3 id="模式分析-2"><a class="header-anchor" href="#模式分析-2"></a>模式分析</h3>
+<ul>
+<li>组合模式的关键是定义了一个<u>抽象构件类</u>，它<strong>既可以代表叶子，又可以代表容器</strong>，而客户端针对该抽象构件类进行编程，<u>无须知道它到底表示的是叶子还是容器，可以对其进行统一处理</u></li>
+<li>同时容器对象与抽象构件类之间还建立了聚合关系，容器对象既可以包含叶子，也可以包含容器，以此实现递归组合，形成树形结构</li>
+</ul>
+<h3 id="透明组合模式"><a class="header-anchor" href="#透明组合模式"></a>透明组合模式</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Transparent%20Composite.png" alt="Transparent Composite"></p>
+<p>Component：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Component</span> <span class="comment">//Leaf类必须实现所有抽象方法</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Component c)</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Component c)</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> Component <span class="title function_">getChild</span><span class="params">(<span class="type">int</span> i)</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Leaf:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Leaf</span> <span class="keyword">extends</span> <span class="title class_">Component</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Component c)</span> <span class="comment">//这些方法都是无意义的，只能抛个异常</span></span><br><span class="line">	&#123; <span class="comment">//异常处理或错误提示 &#125;</span></span><br><span class="line">        </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Component c)</span></span><br><span class="line">	&#123; <span class="comment">//异常处理或错误提示 &#125;</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">public</span> Component <span class="title function_">getChild</span><span class="params">(<span class="type">int</span> i)</span></span><br><span class="line">	&#123; <span class="comment">//异常处理或错误提示 &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//实现代码</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="安全组合模式"><a class="header-anchor" href="#安全组合模式"></a>安全组合模式</h3>
+<p>在Java AWT中使用了安全组合模式</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Composite%20Pattern%20safe-composite%20arch.png" alt="Composite Pattern safe-composite arch"></p>
+<p>Component：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">class</span> Component <span class="comment">//Leaf类只需要实现operation（）</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Leaf:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Leaf</span> <span class="keyword">extends</span> <span class="title class_">Component</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//实现代码</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="code-4"><a class="header-anchor" href="#code-4"></a>code</h3>
+<p>前面给出了Component和Leaf的代码，这里只需要给出Composite的代码</p>
+<p>Composite:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Composite</span> <span class="keyword">extends</span> <span class="title class_">Component</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">ArrayList</span> <span class="variable">list</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">add</span><span class="params">(Component c)</span></span><br><span class="line">	&#123;</span><br><span class="line">		list.add(c);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">remove</span><span class="params">(Component c)</span></span><br><span class="line">	&#123;</span><br><span class="line">		list.remove(c);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">public</span> Component <span class="title function_">getChild</span><span class="params">(<span class="type">int</span> i)</span></span><br><span class="line">	&#123;</span><br><span class="line">		(Component)list.get(i);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>( Object obj: list )</span><br><span class="line">		&#123;</span><br><span class="line">			((Component)obj).operation();</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="示例-透明组合模式"><a class="header-anchor" href="#示例-透明组合模式"></a>示例( 透明组合模式 )</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Transparent%20Composite%20FileSystem.png" alt="Transparent Composite FileSystem"></p>
+<h2 id="Bridge"><a class="header-anchor" href="#Bridge"></a>Bridge</h2>
+<blockquote>
+<p>将抽象部分与它的实现 部分分离，使它们都可以独立地变化</p>
+<p>对象结构型模式</p>
+</blockquote>
+<ul>
+<li>
+<p>桥接模式将抽象部分与它的实现部分分离，使它们都可以独立地变化。它是一种对象结构型模式，又称为柄体(Handle and Body)模式或接口(Interface)模式。</p>
+</li>
+<li>
+<p>桥接模式包含如下四个角色:抽象类中定义了一个实现类接口类型的对象并可以维护该对象;扩充抽象类扩充由抽象类定义的接口，它实现了在抽象类中定义的抽象业务方法，在扩充抽象类中可以调用在实现类接口中定义的业务方法;实现类接口定义了实现类的接口，实现类接口仅提供基本操作，而抽象类定义的接口可能会做更多更复杂的操作;具体实现类实现了实现类接口并且具体实现它，在不同的具体实现类中提供基本操作的不同实现，在程序运行时，具体实现类对象将替换其父类对象，提供给客户端具体的业务操作方法。</p>
+</li>
+<li>
+<p>在桥接模式中，抽象化(Abstraction)与实现化(Implementation)脱耦，<br>
+它们可以沿着各自的维度独立变化。</p>
+</li>
+<li>
+<p>桥接模式的主要优点是分离抽象接口及其实现部分，是比多继承方案更好的解决方法，桥接模式还提高了系统的可扩充性，在两个变化维度中任意扩展一个维度，都不需要修改原有系统，实现细节对客户透明，可以对用户隐藏实现细节;其主要缺点是增加系统的理解与设计难度，且识别出系统中两个独立变化的维度并不是一-件容易的事情。</p>
+</li>
+<li>
+<p>桥接模式适用情况包括:需要在构件的抽象化角色和具体化角色之间增加更多的灵活性，避免在两个层次之间建立静态的继承联系;抽象化角色和实现化角色可以以继承的方式独立扩展而互不影响;一个类存在两个独立变化的维度，且这两个维度都需要进行扩展;设计要求需要独立管理抽象化角色和具体化角色;不希望使用继承或因为多层次继承导致系统类的个数急剧增加的系统。</p>
+</li>
+</ul>
+<h3 id="模式动机-2"><a class="header-anchor" href="#模式动机-2"></a>模式动机</h3>
+<ul>
+<li>
+<p>对于有<strong>多个变化维度</strong>的系统，采用<strong>桥接模式</strong>来进行设计系统中类的个数更少， 且系统扩展更为方便</p>
+</li>
+<li>
+<p>桥接模式<strong>将继承关系转换为关联关系</strong>， 从而<strong>降低了类与类之间的耦合</strong></p>
+</li>
+</ul>
+<h3 id="模式结构-6"><a class="header-anchor" href="#模式结构-6"></a>模式结构</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/bridge%20arch.png" alt="bridge arch"></p>
+<ul>
+<li>Abstraction</li>
+<li>RefinedAbstraction：扩充抽象类</li>
+<li>Implementor： 扩充的维度类，这里用接口，也可以用抽象类</li>
+<li>ConcreteImplementor：维度类的实现类。 例如，若Implementor是“颜色”，则ConcreteImplementor可以是“红”、“黄”、“蓝”</li>
+</ul>
+<h3 id="模式分析-3"><a class="header-anchor" href="#模式分析-3"></a>模式分析</h3>
+<p>理解桥接模式，重点需要理解如何将<strong>抽象化</strong>(Abstraction)与<strong>实现化</strong>(Implementation)<strong>解耦</strong></p>
+<ul>
+<li>抽象化：将对象的共同性质抽取出来形成类
+<ul>
+<li>比如，将不同颜色、形状的矩形抽象为“正方形类”</li>
+</ul>
+</li>
+<li>实现化：针对抽象化给出具体实现。 实现化产生的对象比抽象化更具体
+<ul>
+<li>比如，对“矩形类”进行实例化，赋予其不同的属性（颜色、大小…）</li>
+</ul>
+</li>
+<li>抽象化与实现化解耦：将<strong>抽象化和实现化之间的强关联转变成弱关联，将两个角色（维度类和抽象物体类）之间的继承关系改为关联关系</strong>
+<ul>
+<li>具体矩形类不需要继承“颜色类”，再继承“大小类”，这样会造成类的数量爆炸。</li>
+<li>取而代之的是，使用抽象矩形类，与“颜色类”和“大小类”<strong>组合</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="cocde"><a class="header-anchor" href="#cocde"></a>cocde</h3>
+<p>Implementor：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Implementor</span> &#123;</span><br><span class="line">  </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operationImpl</span><span class="params">()</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Abstraction:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Abstraction</span> </span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//引入了新的维度， 比如该Abstraction类是矩形类，Implementor是颜色类，</span></span><br><span class="line">  <span class="comment">//引入Implementor即使得矩形多了一个“颜色”维度</span></span><br><span class="line">	<span class="keyword">protected</span> Implementor impl;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setImpl</span><span class="params">(Implementor impl)</span> </span><br><span class="line">  &#123;</span><br><span class="line">		<span class="built_in">this</span>.impl=impl; </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span>; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>RefinedAbstraction:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RefinedAbstraction</span> <span class="keyword">extends</span> <span class="title class_">Abstraction</span> &#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span> </span><br><span class="line">  &#123;</span><br><span class="line">		<span class="comment">//代码 </span></span><br><span class="line">    impl.operationImpl(); </span><br><span class="line">    <span class="comment">//代码</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="示例-5"><a class="header-anchor" href="#示例-5"></a>示例</h3>
+<h4 id="模拟毛笔"><a class="header-anchor" href="#模拟毛笔"></a>模拟毛笔</h4>
+<p><strong>蜡笔和毛笔是传统继承模式与桥接模式的最好比喻</strong></p>
+<p>现需要提供<u>大中小3种型号</u>的画笔，能够绘制<u>5种不同颜色</u></p>
+<p>如果使用蜡笔，我们需要准备3*5=15支蜡笔，也就是说必须准备15个具体的蜡笔类</p>
+<ul>
+<li>蜡笔相当于传统的使用继承体系来扩展对象， 每个具体蜡笔类继承自某个具体大小类，和具体的颜色类， 一共有15个具体蜡笔类</li>
+<li>毛笔相当于桥接模式，使用组合来扩展对象。 只需要一个抽象毛笔类，它依赖大小类和颜色类。 只需要3 + 5个维度类 + 一个抽象毛笔类，使用时再使用具体的毛笔实现类</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/bridge%20example.png" alt="bridge example"></p>
+<h4 id="跨平台视频播放器"><a class="header-anchor" href="#跨平台视频播放器"></a>跨平台视频播放器</h4>
+<p>每个播放器都有两个维度的属性： 支持的视频格式， 支持的操作系统</p>
+<p>通过Bridge模式，将两个维度与播放器类组合起来</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/bridge%20example2.png" alt="bridge example2."></p>
+<h3 id="优点-6"><a class="header-anchor" href="#优点-6"></a>优点</h3>
+<ul>
+<li>分离抽象接口及其实现部分</li>
+<li>与多继承对比：
+<ul>
+<li>多继承违背了类的单一职责原则(“一个类只有一个变化的原因”， 即变化的维度)；</li>
+<li>使用多继承，类的个数会过多</li>
+</ul>
+</li>
+<li>桥接模式提高了系统的可扩展性
+<ul>
+<li>在两个变化维度中任意扩展一个维度，都不需要修改原有系统。</li>
+</ul>
+</li>
+<li>可以对用户隐藏实现细节，使得实现细节对客户透明</li>
+</ul>
+<h3 id="缺点-5"><a class="header-anchor" href="#缺点-5"></a>缺点</h3>
+<ul>
+<li>引入桥接模式会增加系统的复杂度</li>
+<li>桥接模式<u>要求正确识别出系统中两个独立变化的维度，因此其使用范围具有一定的局限性</u></li>
+</ul>
+<h3 id="适用环境-2"><a class="header-anchor" href="#适用环境-2"></a>适用环境</h3>
+<ul>
+<li>系统需要<u>在构件的抽象化角色和具体化角色之间增加更多的灵活性，避免在两个层次之间建立静态的继承关系</u>，
+<ul>
+<li>通过桥接模式可以使它们在抽象层建立一个关联关系</li>
+<li>抽象化角色和实现化角色可以以继承的方式独立扩展而互不影响，在程序运行时可以动态将一个抽象化子类的对象和一个实现化子类的对象进行组合</li>
+</ul>
+</li>
+<li><u>一个类存在多个独立变化的维度</u>，且这些维度都需要进行扩展
+<ul>
+<li>也可以使用多继承，但会导致类的组合爆炸</li>
+</ul>
+</li>
+<li><u>不希望使用继承或因为多层次继承导致系统类的个数急剧增加的系统</u></li>
+</ul>
+<h3 id="模式扩展"><a class="header-anchor" href="#模式扩展"></a>模式扩展</h3>
+<p>适配器模式与桥接模式的联用</p>
+<p>桥接模式和适配器模式用于设计的不同阶段,桥接模式用于系统的初步设计，对于存在两个独立变化维度的类可以将其分为抽象化和实现化两个角色，使它们可以分别进行变化;而在初步设计完成之后，当发现系统与已有类无法协同工作时，可以采用适配器模式。但有时候在设计初期也需要考虑适配器模式，特别是那些涉及到大量第三方应用接口的情况。</p>
+<h2 id="Decorator"><a class="header-anchor" href="#Decorator"></a>Decorator</h2>
+<blockquote>
+<p>装饰模式(Decorator Pattern) : <strong>动态地给一个对象增加一些额外的职责</strong>(Responsibility), 就增加对象功能来说，装饰模式比生成子类实现更为灵活</p>
+<p>别名称为包装器(Wrapper)，与适配器模式的别名相同，但它们适用于不同的场合。根据翻译的不同，装饰模式也有人称之为“油漆工模式”</p>
+<p>是一种对象结构型模式。</p>
+</blockquote>
+<ul>
+<li>装饰模式可分为：
+<ul>
+<li>透明装饰模式： 要求client完全面向抽象编程，client应该全部使用抽象构件类型</li>
+<li>半透明装饰模式:允许client声明具体装饰者类型的对象，调用在具体装饰者中新增的方法</li>
+</ul>
+</li>
+</ul>
+<h3 id="模式结构-7"><a class="header-anchor" href="#模式结构-7"></a>模式结构</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Decotator%20Pattern%20arch.png" alt="Decotator Pattern arch"></p>
+<ul>
+<li>Component</li>
+<li>ConcreteComponent</li>
+<li>Decorator：抽象装饰类</li>
+<li>ConcreteDecorator</li>
+</ul>
+<h3 id="模式分析-4"><a class="header-anchor" href="#模式分析-4"></a>模式分析</h3>
+<ul>
+<li>
+<p>使用装饰模式来实现扩展<strong>比继承更加灵活</strong>，<strong>它以对客户透明的方式动态地给一个对象附加更多的责任</strong></p>
+<ul>
+<li>装饰模式可以在不需要创造更多子类的情况下，将对象的功能加以扩展</li>
+</ul>
+</li>
+<li>
+<p>装饰模式的简化：如果只有一个具体构件类而没有抽象构件类，那么抽象装饰类可以作为具体构件类的直接子类。</p>
+</li>
+</ul>
+<h3 id="code-5"><a class="header-anchor" href="#code-5"></a>code</h3>
+<p>抽象装饰类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Decorator</span> <span class="keyword">extends</span> <span class="title class_">Component</span> </span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> Component component;</span><br><span class="line">  </span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Decorator</span><span class="params">(Component component)</span> </span><br><span class="line">  &#123;</span><br><span class="line">		<span class="built_in">this</span>.component=component; </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span> </span><br><span class="line">  &#123;</span><br><span class="line">		component.operation(); </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体装饰类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteDecorator</span> <span class="keyword">extends</span> <span class="title class_">Decorator</span> </span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">ConcreteDecorator</span><span class="params">(Component component)</span> </span><br><span class="line">  &#123;</span><br><span class="line">		<span class="built_in">super</span>(component); </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span> </span><br><span class="line">  &#123;</span><br><span class="line">		<span class="built_in">super</span>.operation();</span><br><span class="line">		addedBehavior(); </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addedBehavior</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//新增方法 </span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="半透明装饰模式"><a class="header-anchor" href="#半透明装饰模式"></a>半透明装饰模式</h3>
+<p>半透明(semi-transparent)的装饰模式允许用户在客户端声明具体装饰者类型的对象，调用在具体装饰者中新增的方法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Transform camaro;</span><br><span class="line">camaro=<span class="keyword">new</span> <span class="title class_">Car</span>();</span><br><span class="line">camaro.move();<span class="comment">//这里依然属于面向抽象编程，move()是抽象的Transform类的方法</span></span><br><span class="line">Robot bumblebee=<span class="keyword">new</span> <span class="title class_">Robot</span>(camaro); bumblebee.move();</span><br><span class="line">bumblebee.say(); <span class="comment">//这里使用了具体的Robot装饰类的方法，没有面向抽象编程</span></span><br></pre></td></tr></table></figure>
+<h4 id="示例-6"><a class="header-anchor" href="#示例-6"></a>示例</h4>
+<p>变形金刚在变形之前是一辆汽车，它可以在陆地上移动。当它变成机器人之后除了能够在陆地上移动之<br>
+外，还可以说话;如果需要，它还可以变成飞机，除了在陆地.上移动还可以在天空中飞翔。</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Decotator%20Pattern%20-semi-transparent-example.png" alt="Decotator Pattern -semi-transparent-example"></p>
+<h3 id="透明装饰模式"><a class="header-anchor" href="#透明装饰模式"></a>透明装饰模式</h3>
+<p>在透明装饰模式中，要求<strong>客户端完全针对抽象编程</strong>，装饰模式的透明性要求客户端程序不应该声明具体构件类型和具体装饰类型，而应该全部声明为抽象构件类型。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Cipher sc,cc,ac;</span><br><span class="line">sc=<span class="keyword">new</span> <span class="title class_">SimpleCipher</span>(); </span><br><span class="line">cc=<span class="keyword">new</span> <span class="title class_">ComplexCipher</span>(sc); </span><br><span class="line">ac=<span class="keyword">new</span> <span class="title class_">AdvancedCipher</span>(cc);</span><br></pre></td></tr></table></figure>
+<h4 id="示例-7"><a class="header-anchor" href="#示例-7"></a>示例</h4>
+<p>存在多种字符串加密算法(Cipher)</p>
+<ul>
+<li>SImpleCipher:</li>
+<li>ComplexCipher</li>
+<li>AdvancedCipher</li>
+</ul>
+<p>用户可以只选择一种加密算法，也可以多重加密</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Decotator%20Pattern%20example.png" alt="Decotator Pattern example"></p>
+<h4 id="优点-7"><a class="header-anchor" href="#优点-7"></a>优点</h4>
+<ul>
+<li>装饰模式与继承关系的目的都是要扩展对象的功能，但是<strong>装饰模式可以提供比继承更多的灵活性</strong>。</li>
+<li>具体构件类与具体装饰类可以独立变化，用户可以根据需要增加新的具体构件类和具体装饰类，在使用时再对其进行组合，原有代码无须改变，符合“开闭原则”</li>
+</ul>
+<h4 id="缺点-6"><a class="header-anchor" href="#缺点-6"></a>缺点</h4>
+<ul>
+<li>
+<p>使用装饰模式进行系统设计时<strong>将产生很多小对象</strong>，这些对象的区别在于它们之间相互连接的方式有所不同，而不是它们的类或者属性值有所不同，同时还将产生很多具体装饰类。这些装饰类和小对象的产生将增加系统的复杂度，加大学习与理解的难度。</p>
+</li>
+<li>
+<p>这种比继承更加灵活机动的特性，也意味着<strong>装饰模式比继承更加易于出错</strong>，错误排查也比较困难</p>
+</li>
+</ul>
+<h4 id="适用环境-3"><a class="header-anchor" href="#适用环境-3"></a>适用环境</h4>
+<ul>
+<li>在不影响其他对象的情况下，<strong>以动态、透明的方式给单个对象添加职责</strong></li>
+<li>需要<strong>动态地给一个对象增加功能</strong>，这些功能也可以动态地被撤销</li>
+<li><strong>当不能采用继承的方式对系统进行扩充或者采用继承不利于系统扩展和维护时</strong>。 不能采用继承的情况主要有两类:
+<ol>
+<li>是系统中存在大量独立的扩展，为支持每一种组合将产生大量的子类，使得子类数目呈爆炸性增长;</li>
+<li>类被定义为不能继承(如final类)</li>
+</ol>
+</li>
+</ul>
+<h2 id="Facade"><a class="header-anchor" href="#Facade"></a>Facade</h2>
+<blockquote>
+<p>外观模式(Facade Pattern):在外观模式中，外部与一个子系统的通信必须通过一个<strong>统一的外观对</strong>象进行，为子系统中的一组接口提供一组一致的更高层次的接口，使得子系统更容易使用</p>
+<p>又称为门面模式</p>
+<p>是一种对象结构型模式</p>
+</blockquote>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Facade%20Pattern%20arch.png" alt="Facade Pattern arch"></p>
+<h3 id="模式结构-8"><a class="header-anchor" href="#模式结构-8"></a>模式结构</h3>
+<ul>
+<li>Facade</li>
+<li>SubSystem</li>
+</ul>
+<h3 id="模式分析-5"><a class="header-anchor" href="#模式分析-5"></a>模式分析</h3>
+<ul>
+<li>外观模式要求一个<u>子系统的外部与其内部的通信通过一个统一的外观对象进行</u>，外观类将客户端与子系统的内部复杂性分隔开，使得<u>client只需要与外观对象打交道，而不需要与子系统内部的很多对象打交道</u>
+<ul>
+<li>是“<u>迪米特法则</u>”的体现，也降低了client与子系统类的耦合</li>
+<li>引入外观类可以降低系统的复杂度</li>
+<li>降低了子系统间的通信和相互依赖关系</li>
+</ul>
+</li>
+<li>提高了客户端使用的便捷性，使得客户端无须关心子系统的工作细节，通过外观角色即可调用相关功能</li>
+</ul>
+<h3 id="code-6"><a class="header-anchor" href="#code-6"></a>code</h3>
+<p>Facade：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Facade</span> </span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">SubSystemA</span> <span class="variable">obj1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SubSystemA</span>(); </span><br><span class="line">  <span class="keyword">private</span> <span class="type">SubSystemB</span> <span class="variable">obj2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SubSystemB</span>(); </span><br><span class="line">  <span class="keyword">private</span> <span class="type">SubSystemC</span> <span class="variable">obj3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SubSystemC</span>(); </span><br><span class="line">  </span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		obj1.method(); obj2.method(); obj3.method();</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="示例-8"><a class="header-anchor" href="#示例-8"></a>示例</h3>
+<p>一个电源总开关可以控制四盏灯、一个风扇、一台空调和一台电视机的启动和关闭</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Facade%20Pattern%20example.png" alt="Facade Pattern example"></p>
+<h3 id="优点-8"><a class="header-anchor" href="#优点-8"></a>优点</h3>
+<ul>
+<li><u>对客户屏蔽子系统组件</u>，<u>减少了客户处理的对象数目并使得子系统使用起来更加容易</u></li>
+<li>实现了子系统与客户之间的松耦合关系</li>
+<li>降低了大型软件系统中的编译依赖性，并简化了系统在不同平台之间的移植过程
+<ul>
+<li>因为编译一个子系统一般不需要编译所有其他的子系统。一个子系统的修改对其他子系统没有任何影响，而且子系统内部变化也不会影响到外观对象</li>
+</ul>
+</li>
+<li>只是提供了一个访问子系统的统一入口，并不影响用户直接使用子系统类</li>
+</ul>
+<h3 id="缺点-7"><a class="header-anchor" href="#缺点-7"></a>缺点</h3>
+<ul>
+<li><u>不能很好地限制客户使用子系统类</u>，如果对客户访问子系统类做太多的限制则减少了可变性和灵活性。</li>
+<li>在不引入抽象外观类的情况下，当增加新的子系统或者移除子系统时需要修改外观类，<strong>违背了“开闭原则”</strong></li>
+</ul>
+<h3 id="适用环境-4"><a class="header-anchor" href="#适用环境-4"></a>适用环境</h3>
+<ul>
+<li>当要为一个复杂子系统提供一个简单接口时可以使用外观模式。该接口可以满足大多数用户的需求，而且<u>用户也可以越过外观类直接访问子系统</u></li>
+<li><u>客户程序与多个子系统之间存在很大的依赖性</u>。引入外观类将子系统与客户以及其他子系统解耦，可以提高子系统的独立性和可移植性</li>
+<li>在层次化结构中，可以使用外观模式定义系统中每一层的入口，层与层之间不直接产生联系，而通过外观类建立联系，降低层之间的耦合度</li>
+</ul>
+<h3 id="模式扩展-2"><a class="header-anchor" href="#模式扩展-2"></a>模式扩展</h3>
+<ul>
+<li><strong>不要试图通过外观类为子系统增加新行为</strong>，外观模式的用意是为子系统提供一个集中化和简化的沟通渠道，而不是向子系统加入新的行</li>
+</ul>
+<h2 id="Flyweight"><a class="header-anchor" href="#Flyweight"></a>Flyweight</h2>
+<blockquote>
+<p>享元模式： <strong>通过共享，实现大量的细粒度对象的复用</strong>，以解决对象数量太多导致的性能问题</p>
+<p>是一种对象结构性模式</p>
+</blockquote>
+<p>分为复合享元模式和单纯享元模式</p>
+<ul>
+<li>单纯享元模式： 就是所有享元对象都可以共享</li>
+<li>复合享元模式： 存在复合享元对象，它是单纯和不可共享享元对象的组合，本身不能被共享。 但可以被分解为单纯享元对象，和一些不可共享的享元对象</li>
+<li>默认是复合享元模式</li>
+</ul>
+<p>复合享元模式：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Flyweight%20Pattern%20complex-arch.png" alt="Flyweight Pattern complex-arch"></p>
+<h3 id="模式结构-9"><a class="header-anchor" href="#模式结构-9"></a>模式结构</h3>
+<ul>
+<li>Flyweight:抽象享元类： 声明一个接口，通过它可以接受并作用于外部状态</li>
+<li>ConcreteFlyweight: 具体享元类</li>
+<li>UnsharedConcreteFlyweight:不可共享的具体享元类</li>
+<li>FlyweightFactory:享元工厂类，用于创建并管理享元对象</li>
+</ul>
+<h3 id="模式分析-6"><a class="header-anchor" href="#模式分析-6"></a>模式分析</h3>
+<ul>
+<li>享元模式是一个<u>考虑系统性能</u>的设计模式，通过使用享元模式可以节约内存空间，提高系统的性能。</li>
+<li>享元模式的核心在于<strong>享元工厂类</strong>，享元工厂类的作用在于提供一个用于<strong>存储享元对象的享元池</strong>，用户需要对象时，首先从享元池中获取，如果享元池中不存在,则创建一个新的享元对象返回给用户，并在享元池中保存该新增对象。</li>
+<li>享元模式以共享的方式高效地支持大量的细粒度对象</li>
+<li>享元对象具有内部状态(Internal State)和外部状态(External State)
+<ul>
+<li>内部状态是<u>存储在享元对象内部并且不会随环境改变而改变的状态</u>，因此可以共享。</li>
+<li>外部状态是<u>存储在client的，随环境改变而改变的、不可以共享的状态</u>
+<ul>
+<li>client在享元对象被创建之后并在需要被使用时，将外部状态传入到享元对象内部</li>
+<li>外部状态间相互独立</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="code-7"><a class="header-anchor" href="#code-7"></a>code</h3>
+<p>FlyweightFactory:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FlyweightFactory</span> </span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">//持有享元对象的序列</span></span><br><span class="line">	<span class="keyword">private</span> <span class="type">HashMap</span> <span class="variable">flyweights</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>();</span><br><span class="line">	<span class="keyword">public</span> Flyweight <span class="title function_">getFlyweight</span><span class="params">(String key)</span> </span><br><span class="line">  &#123;</span><br><span class="line">		<span class="keyword">if</span>(flyweights.containsKey(key)) </span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">return</span> (Flyweight)flyweights.get(key);</span><br><span class="line">		&#125; </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="type">Flyweight</span> <span class="variable">fw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConcreteFlyweight</span>(); </span><br><span class="line">      flyweights.put(key,fw);</span><br><span class="line">			<span class="keyword">return</span> fw;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>Flyweight</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Flyweight</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//内部状态作为成员属性</span></span><br><span class="line">	<span class="keyword">private</span> String intrinsicState;</span><br><span class="line">  </span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Flyweight</span><span class="params">(String intrinsicState)</span> </span><br><span class="line">  &#123;</span><br><span class="line">		<span class="built_in">this</span>.intrinsicState = intrinsicState; </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">//接受外部状态，并可能改变外部状态</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">(String extrinsicState)</span> </span><br><span class="line">  &#123;</span><br><span class="line">		...... </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="优点-9"><a class="header-anchor" href="#优点-9"></a>优点</h3>
+<ul>
+<li>
+<p>可以极大减少内存中对象的数量，使得相同对象或相似对象在内存中只保存一份</p>
+</li>
+<li>
+<p>外部状态相对独立，而且不会影响其内部状态，从而使得享元对象可以在不同的环境中被共享。</p>
+</li>
+</ul>
+<h3 id="缺点-8"><a class="header-anchor" href="#缺点-8"></a>缺点</h3>
+<ul>
+<li>享元模式使得系统更加复杂，需要分离出内部状态和外部状态，这使得程序的逻辑复杂化。</li>
+<li>为了使对象可以共享，享元模式需要将享元对象的状态外部化，而读取外部状态使得运行时间变长。</li>
+</ul>
+<h3 id="适用环境-5"><a class="header-anchor" href="#适用环境-5"></a>适用环境</h3>
+<ul>
+<li><strong>一个系统有大量相同或者相似的对象</strong>，由于这类对象的大量使用，造成内存的大量耗费。</li>
+<li><strong>对象的大部分状态都可以外部化</strong>，可以将这些外部状态传入对象中。</li>
+<li>使用享元模式需要维护一个存储享元对象的享元池，而这需要耗费资源，因此，<strong>在多次重复使用享元对象时才值得使用享元模式。</strong></li>
+</ul>
+<h3 id="模式扩展-3"><a class="header-anchor" href="#模式扩展-3"></a>模式扩展</h3>
+<p>享元模式与其他模式的联用</p>
+<ul>
+<li>在享元模式的享元工厂类中通常提供一个静态的工厂方法用于返回享元对象，使用简单工厂模式来生成享元对象。在一个系统中，通常只有唯一一个享元工厂，因此享元工厂类可以使用单例模式进行设计。</li>
+<li>享元模式可以结合组合模式形成复合享元模式，统- -对享元对象设置外部状态。</li>
+</ul>
+<h2 id="Proxy"><a class="header-anchor" href="#Proxy"></a>Proxy</h2>
+<blockquote>
+<p>代理模式(Proxy Pattern) :给某一个对象提供一个代理，并<strong>由代理对象控制对原对象的引用</strong></p>
+<p>是一种对象结构型模式</p>
+</blockquote>
+<ul>
+<li>远程代理为一个位于不同的地址空间的对象提供一个本地的代表对象，它使得客户端可以访问在远程机器上的对象，远程机器可能具有更好的计算性能与处理速度，可以快速响应并处理客户端请求。</li>
+<li>如果需要创建一个资源消耗较大的对象，先创建一个消耗相对较小的对象来表示，真实对象只在需要时才会被真正创建，这个小对象称为虚拟代理。虚拟代理通过使用一个小对象来代表一一个大对象，可以减少系统资源的消耗，对系统进行优化并提高运行速度 ---- 也就是<strong>延迟初始化</strong></li>
+<li>保护代理可以控制对一个对象的访问，可以给不同的用户提供不同级别的使用权限</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Proxy%20Pattern%20arch.png" alt="Proxy Pattern arch"></p>
+<h3 id="模式结构-10"><a class="header-anchor" href="#模式结构-10"></a>模式结构</h3>
+<ul>
+<li>Subject:抽象主题角色</li>
+<li>Proxy:代理主题角色</li>
+<li>RealSubject:真实主题角色</li>
+</ul>
+<p>Proxy和RealSubject都继承Subject， 使得可以面向抽象的Subject编程，而不必考虑具体的实现类是Proxy还是ReadSubject</p>
+<p>Proxy持有ReadSubject对象，进行相应操作</p>
+<h3 id="code-8"><a class="header-anchor" href="#code-8"></a>code</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Proxy</span> <span class="keyword">implements</span> <span class="title class_">Subject</span> &#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="type">RealSubject</span> <span class="variable">realSubject</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RealSubject</span>(); </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">preRequest</span><span class="params">()</span> &#123;......&#125;</span><br><span class="line">  </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">request</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		preRequest(); </span><br><span class="line">    realSubject.request(); </span><br><span class="line">    postRequest();</span><br><span class="line">	&#125;</span><br><span class="line">  </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">postRequest</span><span class="params">()</span> &#123;......&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="优点-10"><a class="header-anchor" href="#优点-10"></a>优点</h3>
+<ul>
+<li>代理模式能够协调调用者和被调用者，在一定程度上降低了系统的耦合度。</li>
+<li><strong>远程代理</strong>使得客户端可以访问在远程机器.上的对象，远程机器可能具有更好的计算性能与处理速度，可以快速响应并处理客户端请求。</li>
+<li><strong>虚拟代理</strong>通过使用一个小对象来代表一-个大对象，可以减少系统资源的消耗，对系统进行优化并提高运行速度。</li>
+<li><strong>保护代理可以控制对真实对象的使用权限</strong></li>
+</ul>
+<h3 id="缺点-9"><a class="header-anchor" href="#缺点-9"></a>缺点</h3>
+<ul>
+<li>慢</li>
+<li>复杂度高</li>
+</ul>
+<h3 id="模式细分"><a class="header-anchor" href="#模式细分"></a>模式细分</h3>
+<p>根据代理模式的使用目的，常见的代理模式有以下几种类型:</p>
+<ul>
+<li>远程(Remote)代理: 为一个位于不同的地址空间的对象提供一个 本地的代理，对象，这个不同的地址空间可以是在同一台主机中，也可以在另一台主机中，远程代理又叫做大使(Ambassador)</li>
+<li>虚拟(Virtual)代理:如果需要创建一个资源消耗较大的对象，先创建一个消耗相对较小的对象来表示，真实对象只在需要时才会被真正创建
+<ul>
+<li>使用示例： 大图浏览的控制
+<ol>
+<li>用户通过浏览器访问网页时先<strong>不加载真实的大图</strong>，而是通过代理对象的方法来进行处理</li>
+<li>在代理对象的方法中，<strong>先使用一个线程向客户端浏览器加载一个小图片</strong>，然后在后台<strong>使用另一个线程来调用大图片的加载方法将大图片加载到客户端</strong>。 当需要浏览大图片时，再将大图片在新网页中显示。</li>
+<li>如果用户在浏览大图时加载工作还没有完成，可以再启动一个线程来显示相应的提示信息。通过代理技术结合多线程编程将真实图片的加载放到后台来操作，不影响前台图片的浏览</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>Copy- on-Write代理: 是虚拟代理的一种，把复制(克隆)操作延迟到只有在客户端真正需要时才执行。一般来说，对象的深克隆是一个开销较大的操作，Copy-on-Write代理可以让这个操作延迟，只有对象被用到的时候才被克隆</li>
+<li>保护(Protect or Access)代理: 给不同用户提供不同的使用权限，来控制对对象的访问</li>
+<li>缓冲(Cache)代理: 为数据提供临时的存储空间，以便多个客户端可以共享数据。</li>
+<li>防火墙(Firewall)代理: 保护对象不被恶意攻击</li>
+<li>智能引用(Smart Reference)代理: 相当于智能指针，当一个对象被引用时，智能引用代理会进行一些额外的操作，比如，记录下此对象被调用的次数</li>
+</ul>
+<h1 id="Behavioral-Patterns"><a class="header-anchor" href="#Behavioral-Patterns"></a>Behavioral Patterns</h1>
+<h2 id="Strategy"><a class="header-anchor" href="#Strategy"></a>Strategy</h2>
+<blockquote>
+<p>策略模式： 定义一系列可替换的算法，由client决定使用哪个</p>
+</blockquote>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Strategy%20Pattern%20arch.png" alt="Strategy Pattern arch"></p>
+<h3 id="模式结构-11"><a class="header-anchor" href="#模式结构-11"></a>模式结构</h3>
+<ul>
+<li>上下文（Context ) ： 拥有Strategy对象的一个引用； 被配置了具体策略 ConcreteStrategy</li>
+<li>策略（Strategy）: 声明了所支持策略的接口。 Context利用这些被ConcreteStrategy定义的接口</li>
+<li>具体策略（ConcreteStrategy）: 实现了Strategy声明 的接口，给出了具体的实现</li>
+</ul>
+<p>模式逻辑：</p>
+<ul>
+<li>上下文<code>Context</code>和<code>Strategy</code>的相互协作完成整个算法。 <code>Context</code>可能会通过提供方法让<code>Strategy</code>访问其数据；甚 至将自身的引用传给<code>Strategy</code>，供其访问其数据。 <code>Strategy</code>会在需要的时候访问<code>Context</code>的成员变量。</li>
+<li>上下文<code>Context</code>将一些对他的请求转发给策略类来实现 ，客户（<code>Client</code>）通常创建<code>ConcreteStrategy</code>的对象，然 后传递给C<code>ontext</code>来灵活配置<code>Strategy</code>接口的具体实现； 这样<code>Client</code>就有可以拥有一个<code>Strategy</code>接口的策略族，其 中包含多种<code>ConcreteStrategy</code>的实现</li>
+</ul>
+<h3 id="适用环境-6"><a class="header-anchor" href="#适用环境-6"></a>适用环境</h3>
+<ul>
+<li>当很多相关类<u>只在它们的行为的实现上不一样</u></li>
+<li>当我们需要<u>同一个行为的不同实现</u>（变体）的时候</li>
+<li>算法需要用到一些数据，而这些数据不应该被客户知道。我们可以通过策略模式隐藏复杂的算法和数据接口。</li>
+<li>一个类定义了很多行为，这些行为作为一个<code>switch</code>选择语句的分支执行部分。策略模式可以消除这些分支选择</li>
+</ul>
+<h3 id="模式扩展-4"><a class="header-anchor" href="#模式扩展-4"></a>模式扩展</h3>
+<ul>
+<li><code>Strategy</code>可以是接口，也可以是类。如果是类，则可以抽象所有具体算法中公共的实现部分。</li>
+<li>当然，我们也可以直接通过Context的子类来实现不同的 Context实现。不过这样算法的具体实现，就和算法的利用的 实现项目交织在一起，不利于理解和维护.</li>
+<li>策略模式消除了类似根据策略类型的Switch语句。</li>
+<li>可以动态选择不同的策略
+<ul>
+<li>这需要客户必须提前知晓不同的策略</li>
+</ul>
+</li>
+<li>Context和Strategy之间的通信有代价</li>
+<li>策略模式会创建出较多的对象</li>
+</ul>
+<h2 id="Command"><a class="header-anchor" href="#Command"></a>Command</h2>
+<blockquote>
+<p>命令模式(Command Pattern): 将一个请求封装为一个对象,从而可在请求client时传递参数; 对请求排队或者记录请求日志,以及支持可撤销的操作。</p>
+<p>是一种对象行为型模式, aka动作(Action)模式或事务(Transaction)模式</p>
+</blockquote>
+<p>client持有reciever和 invoker， 通过将receiver传给ConcreteCommand来构造command， 然后把command传给invoker， client只要调用<code>invoker</code>的<code>invoke（）</code></p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/command%20pattern.png" alt="image-20220308152816123"></p>
+<h3 id="模式结构-12"><a class="header-anchor" href="#模式结构-12"></a>模式结构</h3>
+<ul>
+<li>命令模式包含如下角色:</li>
+<li>Command: 抽象命令类</li>
+<li>ConcreteCommand: 具体命令类</li>
+<li>Invoker:  调用者</li>
+<li>Receiver:  接收者</li>
+<li>Client: 客户类</li>
+</ul>
+<h3 id="模式分析-7"><a class="header-anchor" href="#模式分析-7"></a>模式分析</h3>
+<ul>
+<li>命令模式的本质是对命令进行封装，<strong>将发出命令的责任和执行命令的责任分开</strong>
+<ul>
+<li>client负责发出命令。 client持有receiver和invoker，用receiver构造ConcreteCommand， 将command传给invoker，调用<code>invoker.invoke()</code>，发出命令</li>
+<li>invoke负责执行命令。 invoker对象持有了command对象， command对象已经被注入了receiver对象。由 invoker执行command</li>
+</ul>
+</li>
+<li>每一个命令都是一个操作:请求的一方发出请求，要求执行一个操作; 接收的一方收到请求，并执行操作
+<ul>
+<li>Receiver有<code>doSomething()</code>方法，在<code>command.exeute()</code>中调用</li>
+</ul>
+</li>
+<li>命令模式<strong>使请求本身成为一个对象</strong>，这个对象和其他对象一样可以被存储和传递
+<ul>
+<li>通过引入抽象命令接口（<code>Command</code>），且client针对<code>Command</code>接口编程</li>
+</ul>
+</li>
+<li>命令模式允许请求的一方和接收的一方独立开来，使得请求的一方不必知道接收请求的一方的接口、请如何接收、操作是否被执行、何时被执行、怎么被执行的 等问题</li>
+</ul>
+<h3 id="code-9"><a class="header-anchor" href="#code-9"></a>code</h3>
+<p>通用Receiver类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Receiver</span> &#123; </span><br><span class="line">    <span class="comment">//抽象接收者，定义每个接收者都必须完成的业务 </span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">doSomething</span><span class="params">()</span>; </span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>具体的Receiver类ConcreteReciver1、ConcreteReciver2：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteReciver1</span> <span class="keyword">extends</span> <span class="title class_">Receiver</span>&#123; </span><br><span class="line">    <span class="comment">//每个接收者都必须处理一定的业务逻辑 </span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doSomething</span><span class="params">()</span>&#123; </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteReciver2</span> <span class="keyword">extends</span> <span class="title class_">Receiver</span>&#123; </span><br><span class="line">    <span class="comment">//每个接收者都必须处理一定的业务逻辑 </span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doSomething</span><span class="params">()</span>&#123; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>抽象的Command类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Command</span> &#123; </span><br><span class="line">    <span class="comment">//每个命令类都必须有一个执行命令的方法</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">execute</span><span class="params">()</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用者Invoker类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Invoker</span> &#123; </span><br><span class="line">    <span class="keyword">private</span> Command command; </span><br><span class="line">    <span class="comment">//受气包，接受命令 </span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setCommand</span><span class="params">(Command _command)</span>&#123; </span><br><span class="line">        <span class="built_in">this</span>.command = _command; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//执行命令 </span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">invoke</span><span class="params">()</span>&#123; </span><br><span class="line">      </span><br><span class="line">        <span class="built_in">this</span>.command.execute(); </span><br><span class="line">     </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体的Command类ConcreteCommand1、ConcreteCommand2：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteCommand1</span> <span class="keyword">extends</span> <span class="title class_">Command</span> &#123; </span><br><span class="line">    <span class="comment">//进行命令处理的Receiver</span></span><br><span class="line">    <span class="keyword">private</span> Receiver receiver;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">//通过构造函数来注入receiver</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ConcreteCommand1</span><span class="params">(Receiver _receiver)</span>&#123; </span><br><span class="line">        <span class="built_in">this</span>.receiver = _receiver; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//必须实现一个命令 </span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">execute</span><span class="params">()</span> &#123; </span><br><span class="line">        <span class="comment">//业务处理 </span></span><br><span class="line">        <span class="built_in">this</span>.receiver.doSomething(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteCommand2</span> <span class="keyword">extends</span> <span class="title class_">Command</span> &#123; </span><br><span class="line">    <span class="comment">//进行命令处理的Receiver</span></span><br><span class="line">    <span class="keyword">private</span> Receiver receiver;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">//通过构造函数来注入receiver</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ConcreteCommand2</span><span class="params">(Receiver _receiver)</span>&#123; </span><br><span class="line">        <span class="built_in">this</span>.receiver = _receiver; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//必须实现一个命令 </span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">execute</span><span class="params">()</span> &#123; </span><br><span class="line">        <span class="comment">//业务处理 </span></span><br><span class="line">        <span class="built_in">this</span>.receiver.doSomething(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Client：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Client</span> &#123; </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123; </span><br><span class="line">        <span class="comment">//首先声明调用者Invoker </span></span><br><span class="line">        <span class="type">Invoker</span> <span class="variable">invoker</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Invoker</span>(); </span><br><span class="line">        <span class="comment">//定义接收者 </span></span><br><span class="line">        <span class="type">Receiver</span> <span class="variable">receiver</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConcreteReciver1</span>(); </span><br><span class="line">        <span class="comment">//定义一个发送给接收者的命令 </span></span><br><span class="line">        <span class="type">Command</span> <span class="variable">command</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConcreteCommand1</span>(receiver); </span><br><span class="line">        <span class="comment">//把命令交给调用者去执行 </span></span><br><span class="line">        invoker.setCommand(command); </span><br><span class="line">        invoker.invoke(); </span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="示例-9"><a class="header-anchor" href="#示例-9"></a>示例</h3>
+<p>遥控器（<code>Controller</code>）是client， 电视机（<code>Television</code>）是接收者，有三个具体命令类</p>
+<ul>
+<li>这个示例是简化版的命令模式，没有invoker，也没有动态注入Receiver</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Command%20example.png" alt="Command example"></p>
+<h3 id="优点-11"><a class="header-anchor" href="#优点-11"></a>优点</h3>
+<p>命令模式的优点</p>
+<ul>
+<li>降低系统耦合度</li>
+<li>可扩展性强，很容易加入新的命令类</li>
+<li>可以比较容易地设计命令队列和宏命令（组合命令）</li>
+<li>可以方便地实现请求的Undo和Redo</li>
+</ul>
+<h3 id="缺点-10"><a class="header-anchor" href="#缺点-10"></a>缺点</h3>
+<ul>
+<li>可能导致系统具有过多的命令类</li>
+</ul>
+<h3 id="适用环境-7"><a class="header-anchor" href="#适用环境-7"></a>适用环境</h3>
+<ul>
+<li>系统需要将请求调用者和请求接收者解耦，使得调用者和接收者不直接交互</li>
+<li>系统需要在不同的时间指定请求、将请求排队和执行请求</li>
+<li>系统需要支持命令的撤销(Undo)操作和恢复(Redo)操作</li>
+<li>系统需要将一 组操作组合在一起，即支持宏命令</li>
+</ul>
+<p>Unix的SHell编程的宏命令功能，可以将多条命令封装在一个命令对象中，这使用了命令模式</p>
+<h2 id="State"><a class="header-anchor" href="#State"></a>State</h2>
+<blockquote>
+<p>状态模式(State Pattern) :允许一个对象在其内部状态改变时改变它的行为,对象看起来似乎修改了它的类。其别名为状态对象(Objects for States), 状态模式是一种<strong>对象行为型模式</strong></p>
+</blockquote>
+<p>状态模式描述了对象状态的变化以及对象如何在每一种状态下表现出不同的行为。</p>
+<p>状态模式的关键是引入了一个<strong>抽象类</strong>来专门表示对象的状态,这个类我们叫做抽象状态类,而对象的每一种具体状态类都继承了该类,并在不同具体状态类中实现了不同状态的行为,包括各种状态之间的转换。</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/state%20pattern.png" alt="image-20220308143955436"></p>
+<p>结构：</p>
+<ul>
+<li>Context 环境类： 是拥有状态的对象。 有时候可以充当状态管理器(State Manager)的角色,可以在环境类中对状态进行切换操作</li>
+<li>State 抽象状态类（也可以是接口） : 可以将不同对象下的行为单独提取出来封装在具体的状态类中,使得环境类对象在其内部状态改变时可以改变它的行为,对象看起来似乎修改了它的类,而实际上是由于切换到不同的具体状态类实现的。</li>
+<li>ConcreteState: 具体状态类</li>
+</ul>
+<h3 id="示例-10"><a class="header-anchor" href="#示例-10"></a>示例</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/state%20pattern%20room.png" alt="image-20220308144112980"></p>
+<h3 id="缺点-11"><a class="header-anchor" href="#缺点-11"></a>缺点</h3>
+<ul>
+<li>状态模式的使用必然会增加系统类和对象的个数。</li>
+<li>状态模式的结构与实现都较为复杂,如果使用不当将导致程序结构和代码的混乱。</li>
+<li>状态模式对“<strong>开闭原则</strong>”的支持并不太好,对于可以切换状态的状态模式,增加新的状态类需要修改那些负责状态转换的源代码,否则无法切换到新增状态;而且修改某个状态类的行为也需修改对应类的源代码。</li>
+</ul>
+<h2 id="Observer"><a class="header-anchor" href="#Observer"></a>Observer</h2>
+<blockquote>
+<p>观察者模式(Observer Pattern): 通过建立对象间的一对多依赖关系, 使得每当一个对象状态发生改变时,其相关依赖对象皆得到通知并被自动更新</p>
+<p>又叫做发布-订阅(Publish/Subscribe)模式、模型-视图(Model/View)模式、源-监听器(Source/Listener)模式或从属者(Dependents)模式</p>
+<p>是一种<strong>对象行为型模式</strong></p>
+</blockquote>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/observer%20pattern.png" alt="image-20220315142422314"></p>
+<h3 id="模式结构-13"><a class="header-anchor" href="#模式结构-13"></a>模式结构</h3>
+<ul>
+<li>Subject: 目标</li>
+<li>ConcreteSubject:具体目标</li>
+<li>Observer:观察者</li>
+<li>ConcreteObserver: 具体观察者</li>
+</ul>
+<h3 id="code-10"><a class="header-anchor" href="#code-10"></a>code</h3>
+<p>抽象目标类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Subject</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">protected</span> <span class="type">ArrayList</span> <span class="variable">observers</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">attach</span><span class="params">(Observer observer)</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">detach</span><span class="params">(Observer observer)</span>;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">notify</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体目标类：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteSubject</span> <span class="keyword">extends</span> <span class="title class_">Subject</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">attach</span><span class="params">(Observer observer)</span></span><br><span class="line">	&#123;</span><br><span class="line">		observers.add(observer);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">detach</span><span class="params">(Observer observer)</span></span><br><span class="line">	&#123;</span><br><span class="line">		observers.remove(observer);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">notify</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span>(Object obs:observers)</span><br><span class="line">		&#123;</span><br><span class="line">			((Observer)obs).update();</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>抽象观察者：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Observer</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体观察者：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteObserver</span> <span class="keyword">implements</span> <span class="title class_">Observer</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//具体更新代码</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>client代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">Subject</span> <span class="variable">subject</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConcreteSubject</span>();</span><br><span class="line"><span class="type">Observer</span> <span class="variable">observer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ConcreteObserver</span>();</span><br><span class="line">subject.attach(observer);</span><br><span class="line">subject.notify();</span><br></pre></td></tr></table></figure>
+<h3 id="示例-11"><a class="header-anchor" href="#示例-11"></a>示例</h3>
+<p>猫是老鼠和狗的观察目标，老鼠和狗是观察者，猫叫，则老鼠跑，狗也跟着叫</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/observer%20example.png" alt="observer example"></p>
+<h3 id="优点-12"><a class="header-anchor" href="#优点-12"></a>优点</h3>
+<p>优点：</p>
+<ul>
+<li>实现了表示层和数据逻辑层的分离</li>
+<li>实现了Observer和Subject的解耦</li>
+<li>支持广播通信</li>
+<li>符合“开闭原则”</li>
+</ul>
+<h3 id="缺点-12"><a class="header-anchor" href="#缺点-12"></a>缺点</h3>
+<ul>
+<li>通知到所有直接和间接的Observer，耗时较大</li>
+<li>Observer和Subject可能发生循环依赖</li>
+</ul>
+<h2 id="Mediator"><a class="header-anchor" href="#Mediator"></a>Mediator</h2>
+<blockquote>
+<p>中介者模式(Mediator Pattern): 用一个中介对象来封装一系列的对象交互,中介者使各对象不需要显式地相互引用,从而<strong>使其松耦合</strong>,而且可以独立地改变它们之间的交互</p>
+<p>又称为调停者模式</p>
+<p>是一种对象行为型模式</p>
+</blockquote>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/medicator%20pattern" alt="image-20220315161423254"></p>
+<h3 id="模式结构-14"><a class="header-anchor" href="#模式结构-14"></a>模式结构</h3>
+<ul>
+<li>Medicator</li>
+<li>ConcreteMedicator</li>
+<li>Colleague</li>
+<li>ConcreteColleague</li>
+</ul>
+<h3 id="code-11"><a class="header-anchor" href="#code-11"></a>code</h3>
+<p>抽象中介者类代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Mediator</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">protected</span> ArrayList colleagues;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">register</span><span class="params">(Colleague colleague)</span></span><br><span class="line">	&#123;</span><br><span class="line">		colleagues.add(colleague);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体中介者类代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteMediator</span> <span class="keyword">extends</span> <span class="title class_">Mediator</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">operation</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		......</span><br><span class="line">		((Colleague)(colleagues.get(<span class="number">0</span>))).method1();</span><br><span class="line">		......</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>抽象同事类代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">Colleague</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">protected</span> Mediator mediator;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">Colleague</span><span class="params">(Mediator mediator)</span></span><br><span class="line">	&#123;	</span><br><span class="line">		<span class="built_in">this</span>.mediator=mediator;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">method1</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteColleague</span> <span class="keyword">extends</span> <span class="title class_">Colleague</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="title function_">ConcreteColleague</span><span class="params">(Mediator mediator)</span></span><br><span class="line">	&#123;</span><br><span class="line">        <span class="built_in">super</span>(mediator);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method1</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		......</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">   	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">method2</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		mediator.operation1();</span><br><span class="line">	&#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="优点-13"><a class="header-anchor" href="#优点-13"></a>优点</h3>
+<p>中介者模式可以使对象之间的关系数量大大减少：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/medicator%20pattern%20advantage.png" alt="image-20220315161530458"></p>
+<h3 id="缺点-13"><a class="header-anchor" href="#缺点-13"></a>缺点</h3>
+<ul>
+<li>具体中介者类可能会非常复杂，事实上这就是一个God Class</li>
+</ul>
+<h2 id="Template-Method"><a class="header-anchor" href="#Template-Method"></a>Template Method</h2>
+<blockquote>
+<p>模板方法模式：定义一个操作中<strong>算法的骨架</strong>,而将一些步骤<strong>延迟到子类中</strong>,模板方法使得子类可以<strong>不改变一个算法的结构即可重定义该算法的某些特定步骤</strong></p>
+<p>是一种类行为型模式</p>
+</blockquote>
+<ul>
+<li>
+<p>模板方法模式是<strong>基于继承</strong>的代码复用基本技术</p>
+<ul>
+<li>只有继承，没有关联</li>
+</ul>
+</li>
+<li>
+<p>在模板方法模式中,可以<strong>将相同的代码放在父类中,而将不同的方法实现放在不同的子类中</strong></p>
+<ul>
+<li>具体子类的基本方法将覆盖父类中定义的基本方法, 子类的钩子方法也将覆盖父类的钩子方法, 从而可以通过在子类中实现的钩子方法对父类方法的执行进行约束, 实现子类对父类行为的<strong>反向控制</strong></li>
+</ul>
+</li>
+<li>
+<p>模板方法模式包含两个角色:</p>
+<ul>
+<li><strong>模板方法</strong>： 定义在抽象类中，是一系列基本方法的组合</li>
+<li><strong>基本方法</strong>： 实现算法某个具体步骤， 可分为：
+<ul>
+<li>抽象方法</li>
+<li>具体方法</li>
+<li>钩子方法</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Template%20Method%20Pattern.png" alt="Template Method Pattern"></p>
+<h3 id="模式结构-15"><a class="header-anchor" href="#模式结构-15"></a>模式结构</h3>
+<ul>
+<li>AbstractClass</li>
+<li>ConcreteClass</li>
+</ul>
+<h3 id="code-12"><a class="header-anchor" href="#code-12"></a>code</h3>
+<p>钩子方法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">template</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	open();</span><br><span class="line">	display();</span><br><span class="line">	<span class="keyword">if</span>(isPrint())<span class="comment">//根据钩子方法的返回值来执行逻辑</span></span><br><span class="line">	&#123;</span><br><span class="line">		print();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//不同的子类可以自定义这个函数的返回值，从而实现对template方法的反向控制</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">isPrint</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>抽象类代码:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">AbstractClass</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">templateMethod</span><span class="params">()</span> <span class="comment">//模板方法，是一系列基本方法的组合</span></span><br><span class="line">	&#123;</span><br><span class="line">		primitiveOperation1();</span><br><span class="line">		primitiveOperation2();</span><br><span class="line">		primitiveOperation3();</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">primitiveOperation1</span><span class="params">()</span> <span class="comment">//基本方法—具体方法</span></span><br><span class="line">	&#123;</span><br><span class="line">	<span class="comment">//实现代码</span></span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title function_">primitiveOperation2</span><span class="params">()</span>; <span class="comment">//基本方法—抽象方法，在子类中实现</span></span><br><span class="line">    </span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">primitiveOperation3</span><span class="params">()</span> <span class="comment">//基本方法—钩子方法，由子类来定义其逻辑</span></span><br><span class="line">	&#123;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>子类代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteClass</span> <span class="keyword">extends</span> <span class="title class_">AbstractClass</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">primitiveOperation2</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//实现代码</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">primitiveOperation3</span><span class="params">()</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//实现代码</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="示例-12"><a class="header-anchor" href="#示例-12"></a>示例</h3>
+<p>在银行办理业务( <code>process()</code> )时，一般都包含几个基本步骤：</p>
+<ol>
+<li>首先需要取号排队: <code>takeNumber()</code></li>
+<li>然后办理具体业务：<code>transact()</code></li>
+<li>最后需要对银行工作人员进行评分<code>evaluate()</code></li>
+</ol>
+<p>无论具体业务是取款、存款还是转账，其基本流程都一样, 因此模板方法是<code>process()</code>，基本方法是<code>takeNumber() + transact() + evaluate()</code></p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/Template%20Method%20Pattern%20example.png" alt="Template Method Pattern example"></p>
+<h3 id="优点-14"><a class="header-anchor" href="#优点-14"></a>优点</h3>
+<ul>
+<li>
+<p>模板方法模式<strong>在一个类中抽象地定义算法，而由它的子类实现细节的处理</strong></p>
+</li>
+<li>
+<p>代码复用</p>
+</li>
+<li>
+<p>模板方法模式可以实现<strong>反向控制</strong></p>
+<ul>
+<li>通过钩子方法</li>
+</ul>
+</li>
+<li>
+<p>通过对修改子类来修改行为，符合“开闭原则”</p>
+</li>
+</ul>
+<h3 id="缺点-14"><a class="header-anchor" href="#缺点-14"></a>缺点</h3>
+<ul>
+<li>每个不同的实现都需要定义一个子类，这会导致<strong>类的个数增加</strong>，系统更加庞大，设计也更加抽象
+<ul>
+<li>但是也更加符合“单一职责原则”，类的内聚性更高</li>
+</ul>
+</li>
+</ul>
+<h3 id="好莱坞原则"><a class="header-anchor" href="#好莱坞原则"></a>好莱坞原则</h3>
+<p><em>“不要给我们打电话， 我们会给你打电话(Don 't call us, we’11 call you)</em></p>
+<ul>
+<li>
+<p>好莱坞原则(Hollywood Principle)： 子类不显式调用父类的方法，而是通过覆盖父类的方法来实现某些具体的业务逻辑，<strong>父类控制对子类的调用</strong></p>
+</li>
+<li>
+<p>在模板方法模式中，好莱坞原则体现在:通过父类来调用子类， 子类不需要调用父类。 将某些步骤的实现写在子类中，由父类来控制整个过程</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/26/Computer%20Networking-Application%20Layer/" rel="prev" title="Application Layer">
+                  <i class="fa fa-chevron-left"></i> Application Layer
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/26/Git/" rel="next" title="Git">
+                  Git <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

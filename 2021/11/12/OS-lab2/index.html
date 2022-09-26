@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  PPT内容 实验内容（ 附我的部分代码 ）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS lab2">
+<meta property="og:url" content="http://lyk-love.cn/2021/11/12/OS-lab2/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  PPT内容 实验内容（ 附我的部分代码 ）">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-11-11T19:42:50.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.936Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/11/12/OS-lab2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/11/12/OS-lab2/","path":"2021/11/12/OS-lab2/","title":"OS lab2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OS lab2 | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#PPT%E5%86%85%E5%AE%B9"><span class="nav-text">PPT内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%9E%E6%A8%A1%E5%BC%8F-%E4%BB%80%E4%B9%88%E6%98%AF%E4%BF%9D%E6%8A%A4%E6%A8%A1%E5%BC%8F"><span class="nav-text">什么是实模式,什么是保护模式?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%80%89%E6%8B%A9%E5%AD%90"><span class="nav-text">什么是选择子?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8F%8F%E8%BF%B0%E7%AC%A6"><span class="nav-text">什么是描述符?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFGDT-%E4%BB%80%E4%B9%88%E6%98%AFLDT"><span class="nav-text">什么是GDT,什么是LDT?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E5%88%86%E5%88%AB%E8%AF%B4%E6%98%8EGDTR%E5%92%8CLDTR%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-text">请分别说明GDTR和LDTR的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E8%AF%B4%E6%98%8EGDT%E7%9B%B4%E6%8E%A5%E6%9F%A5%E6%89%BE%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E7%9A%84%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4"><span class="nav-text">请说明GDT直接查找物理地址的具体步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E8%AF%B4%E6%98%8E%E9%80%9A%E8%BF%87LDT%E6%9F%A5%E6%89%BE%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80%E7%9A%84%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4%E3%80%82"><span class="nav-text">请说明通过LDT查找物理地址的具体步骤。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B9%E7%9B%AE%E5%BD%95%E5%8C%BA%E5%A4%A7%E5%B0%8F%E4%B8%80%E5%AE%9A%E4%B9%88-%E6%89%87%E5%8C%BA%E5%8F%B7%E6%98%AF%E5%A4%9A%E5%B0%91-%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-text">根目录区大小一定么?扇区号是多少?为什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8C%BA%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%B0%87%E5%8F%B7%E6%98%AF%E5%A4%9A%E5%B0%91-%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-text">数据区第一个簇号是多少?为什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FAT%E8%A1%A8%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">FAT表的作用?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-text">解释静态链接的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-text">解释动态链接的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E9%93%BE%E6%8E%A5%E7%9B%B8%E5%85%B3PPT%E4%B8%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8ld%E9%93%BE%E6%8E%A5%E8%80%8C%E4%B8%8D%E6%98%AFgcc"><span class="nav-text">静态链接相关PPT中为什么使用ld链接而不是gcc</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linux%E4%B8%8B%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E7%9A%84%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E9%BB%98%E8%AE%A4%E4%BB%8E%E5%93%AA%E9%87%8C%E5%BC%80%E5%A7%8B%E5%88%86%E9%85%8D"><span class="nav-text">linux下可执行文件的虚拟地址空间默认从哪里开始分配</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9"><span class="nav-text">实验相关内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E7%A8%8B%E5%BA%8F"><span class="nav-text">主程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BPB%E6%8C%87%E5%AE%9A%E5%AD%97%E6%AE%B5%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-text">BPB指定字段的含义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%BF%9B%E5%85%A5%E5%AD%90%E7%9B%AE%E5%BD%95%E5%B9%B6%E8%BE%93%E5%87%BA-%E8%AF%B4%E6%98%8E%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8"><span class="nav-text">如何进入子目录并输出(说明方法调用)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%8E%B7%E5%BE%97%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E7%9A%84%E5%86%85%E5%AE%B9-%E5%8D%B3%E5%A6%82%E4%BD%95%E8%8E%B7%E5%BE%97%E6%95%B0%E6%8D%AE%E5%8C%BA%E7%9A%84%E5%86%85%E5%AE%B9-%E6%AF%94%E5%A6%82%E4%BD%BF%E7%94%A8%E6%8C%87%E9%92%88%E7%AD%89"><span class="nav-text">如何获得指定文件的内容,即如何获得数据区的内容(比如使用指针等)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8CC%E4%BB%A3%E7%A0%81%E5%92%8C%E6%B1%87%E7%BC%96%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92%E5%92%8C%E8%BF%94%E5%9B%9E%E5%80%BC%E4%BC%A0%E9%80%92"><span class="nav-text">如何进行C代码和汇编之间的参数传递和返回值传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E4%BB%A3%E7%A0%81%E4%B8%AD%E5%AF%B9I-O%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F-%E8%AF%B4%E6%98%8E%E6%8C%87%E5%AE%9A%E5%AF%84%E5%AD%98%E5%99%A8%E6%89%80%E5%AD%98%E5%80%BC%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-text">汇编代码中对I&#x2F;O的处理方式,说明指定寄存器所存值的含义</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/11/12/OS-lab2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OS lab2 | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS lab2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-11-11 19:42:50" itemprop="dateCreated datePublished" datetime="2021-11-11T19:42:50Z">2021-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>PPT内容</li>
+<li>实验内容（ 附我的部分代码 ）</li>
+</ul>
+<span id="more"></span>
+<h1 id="PPT内容"><a class="header-anchor" href="#PPT内容"></a>PPT内容</h1>
+<h2 id="什么是实模式-什么是保护模式"><a class="header-anchor" href="#什么是实模式-什么是保护模式"></a>什么是实模式,什么是保护模式?</h2>
+<ul>
+<li>实模式就是用基地址加偏移量就可以直接拿到物理地址的模式
+<ul>
+<li>缺点:实模式非常不安全</li>
+</ul>
+</li>
+<li>保护模式就是不能直接拿到物理地址的模式
+<ul>
+<li>需要进行地址转换</li>
+<li>从80386开始,是现代操作系统的主要模式</li>
+</ul>
+</li>
+</ul>
+<h2 id="什么是选择子"><a class="header-anchor" href="#什么是选择子"></a>什么是选择子?</h2>
+<ul>
+<li>选择子共16位,放在段选择寄存器里</li>
+<li>低2位表示请求特权级</li>
+<li>第3位表示选择GDT方式还是LDT方式</li>
+<li>高13位表示在描述符表中的偏移(故描述符表的项数最多是2^13)</li>
+</ul>
+<h2 id="什么是描述符"><a class="header-anchor" href="#什么是描述符"></a>什么是描述符?</h2>
+<ul>
+<li>描述符表中存储的一个元素,是一个指针</li>
+</ul>
+<h2 id="什么是GDT-什么是LDT"><a class="header-anchor" href="#什么是GDT-什么是LDT"></a>什么是GDT,什么是LDT?</h2>
+<ul>
+<li>GDT:全局描述符表,是全局唯一的。存放一些公用的描述符和包含各进程LDT首地址的描述符。</li>
+<li>LDT:局部描述符表,每个进程都可以有一个。存放本进程内使用的描述符。</li>
+</ul>
+<h2 id="请分别说明GDTR和LDTR的结构"><a class="header-anchor" href="#请分别说明GDTR和LDTR的结构"></a>请分别说明GDTR和LDTR的结构</h2>
+<ul>
+<li>GDTR:48位寄存器,高32位放置GDT首地址,低16位放置GDT<br>
+限长(限长决定了可寻址的大小,注意低16位放的不是选择子)</li>
+<li>LDTR:16位寄存器,放置一个特殊的选择子,用于查找当前进<br>
+程的LDT首地址。</li>
+</ul>
+<h2 id="请说明GDT直接查找物理地址的具体步骤"><a class="header-anchor" href="#请说明GDT直接查找物理地址的具体步骤"></a>请说明GDT直接查找物理地址的具体步骤</h2>
+<ol>
+<li>给出段选择子(放在段选择寄存器里)+偏移量</li>
+<li>若选择了GDT方式,则从GDTR获取GDT首地址,用段选择<br>
+子中的13位做偏移,拿到GDT中的描述符</li>
+<li>如果合法且有权限,用描述符中的段首地址加上(1)中的偏移量找到物理地址。寻址结束。</li>
+</ol>
+<h2 id="请说明通过LDT查找物理地址的具体步骤。"><a class="header-anchor" href="#请说明通过LDT查找物理地址的具体步骤。"></a>请说明通过LDT查找物理地址的具体步骤。</h2>
+<ol>
+<li>给出段选择子(放在段选择寄存器中)+偏移量</li>
+<li>若选择了LDT方式,则从GDTR获取GDT首地址,用LDTR中的偏移量（ LDTR内部的选择子 ）做偏移,拿到GDT中的描述符1， 它的内容是LDT的首地址</li>
+<li>从描述符1中获取LDT首地址,用段选择子中的13位做偏移,拿到LDT中的描述符2</li>
+<li>如果合法且有权限,用描述符2中的段首地址加上(1)中的偏移量找到物理地址。寻址结束。</li>
+</ol>
+<h2 id="根目录区大小一定么-扇区号是多少-为什么"><a class="header-anchor" href="#根目录区大小一定么-扇区号是多少-为什么"></a>根目录区大小一定么?扇区号是多少?为什么?</h2>
+<ul>
+<li>
+<p>不一定， 目录区大小为<code>(RootEntCnt * 32 + BytsPerSec - 1) / BytsPerSec</code>， 即 取决于BPB中的<code>RootEntCnt</code></p>
+</li>
+<li>
+<p>扇区号为<code>RsvdSecCnt + NumFATs * FATSz</code>， 即 引导区的扇区数 + fat表数*每个fat表所占扇区数</p>
+</li>
+</ul>
+<h2 id="数据区第一个簇号是多少-为什么"><a class="header-anchor" href="#数据区第一个簇号是多少-为什么"></a>数据区第一个簇号是多少?为什么?</h2>
+<ul>
+<li>在1.44M软盘上，FAT前三个字节的值是固定的0xF0、0xFF、0xFF，用于表示这是一个应用在1.44M软盘上的FAT12文件系统。本来序号为0和1的FAT表项应该对应于簇0和簇1，但是由于这两个表项被设置成了固定值，簇0和簇1就没有存在的意义了，所以数据区就起始于簇2</li>
+</ul>
+<h2 id="FAT表的作用"><a class="header-anchor" href="#FAT表的作用"></a>FAT表的作用?</h2>
+<ul>
+<li>FAT项的值代表文件的下一个簇号</li>
+</ul>
+<h2 id="解释静态链接的过程"><a class="header-anchor" href="#解释静态链接的过程"></a>解释静态链接的过程</h2>
+<ul>
+<li>静态链接是指在编译阶段直接把静态库加入到可执行文件中去</li>
+<li>空间和地址分配 ; 符号解析和重定位</li>
+</ul>
+<h2 id="解释动态链接的过程"><a class="header-anchor" href="#解释动态链接的过程"></a>解释动态链接的过程</h2>
+<ol>
+<li>动态链接器自举<br>
+动态链接器本身也是一个不依赖其他共享对象的共享对象，需要完成自举。</li>
+<li>装载共享对象<br>
+将可执行文件和链接器自身的符号合并成为全局符号表，开始寻找依赖对象。加载对象的过程可以看做图的遍历过程；新的共享对象加载进来后，其符号将合并入全局符号表；加载完毕后，全局符号表将包含进程动态链接所需全部符号。</li>
+<li>重定位和初始化<br>
+链接器遍历可执行文件和共享对象的重定位表，将它们GOT/PLT中每个需要重定位的位置进行修正。完成重定位后，链接器执行.init段的代码，进行共享对象特有的初始化过程（例如C++里全局对象的构造函数）。</li>
+<li>转交控制权<br>
+完成所有工作，将控制权转交给程序的入口开始执行。</li>
+</ol>
+<h2 id="静态链接相关PPT中为什么使用ld链接而不是gcc"><a class="header-anchor" href="#静态链接相关PPT中为什么使用ld链接而不是gcc"></a>静态链接相关PPT中为什么使用ld链接而不是gcc</h2>
+<ul>
+<li>
+<p>gcc默认动态链接， 当然也可以指定<code>-static</code>使用静态链接</p>
+</li>
+<li>
+<p>ld也相同（ 所以这二者都可以 ）</p>
+</li>
+</ul>
+<h2 id="linux下可执行文件的虚拟地址空间默认从哪里开始分配"><a class="header-anchor" href="#linux下可执行文件的虚拟地址空间默认从哪里开始分配"></a>linux下可执行文件的虚拟地址空间默认从哪里开始分配</h2>
+<ul>
+<li>
+<p>事实上，入口地址的选择取决于链接器</p>
+</li>
+<li>
+<p>The script define the following variables used by the loader <strong>ld</strong>:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">      TEXT_START_ADDR - the first byte of the text segment, after any</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">              headers.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">      TEXT_BASE_ADDRESS - the first byte of the text segment.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">      TEXT_START_SYMBOLS - symbols that appear at the start of the</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">              .text section.</span></span><br></pre></td></tr></table></figure>
+<p>For example, on GNU/Linux,</p>
+<p><code>/usr/lib/ldscripts/elf_x86_64.x</code> 或者<code>ld --verbose |grep SEGMENT_START</code></p>
+<p>we see:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line">PROVIDE (__executable_start = SEGMENT_START(&quot;text-segment&quot;, 0x400000)); \</span><br><span class="line">    . = SEGMENT_START(&quot;text-segment&quot;, 0x400000) + SIZEOF_HEADERS;</span><br></pre></td></tr></table></figure>
+<p>The text-segment mapping values are:</p>
+<ul>
+<li><strong>0x08048000</strong> on 32 Bits</li>
+<li><strong>0x400000</strong> on 64 Bits</li>
+</ul>
+<p>You can find out more about linker scripts by browsing the linker manual:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">info ld Scripts</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>你也可以手动指定入口地址，比如：</p>
+<p><code>gcc -Wl,-Ttext-segment=0x800000 hello_world.c </code></p>
+<p>which sets the entry point to 0x800000 (+ the ELF header size, which gets loaded at 0x800000 in memory) instead of the default 0x400000.</p>
+</li>
+<li>
+<p>证据：写一个汇编文件<code>a.asm</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">main:</span><br><span class="line">    ret</span><br></pre></td></tr></table></figure>
+<p><code>nasm -f elf64 a.asm</code></p>
+<p><code>ld a.o</code></p>
+<p><code>readelf -l a.out</code></p>
+<p>可以看到：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Elf file type is EXEC (Executable file)</span><br><span class="line">Entry point 0x401000</span><br><span class="line">There are 2 program headers, starting at offset 64</span><br><span class="line"></span><br><span class="line">Program Headers:</span><br><span class="line">  Type           Offset             VirtAddr           PhysAddr</span><br><span class="line">                 FileSiz            MemSiz              Flags  Align</span><br><span class="line">  LOAD           0x0000000000000000 0x0000000000400000 0x0000000000400000</span><br><span class="line">                 0x00000000000000b0 0x00000000000000b0  R      0x1000</span><br><span class="line">  LOAD           0x0000000000001000 0x0000000000401000 0x0000000000401000</span><br><span class="line">                 0x0000000000000001 0x0000000000000001  R E    0x1000</span><br><span class="line"></span><br><span class="line"> Section to Segment mapping:</span><br><span class="line">  Segment Sections...</span><br><span class="line">   00     </span><br><span class="line">   01     .text </span><br></pre></td></tr></table></figure>
+<p>The first (lowest) <code>LOAD</code> segment’s virtual address is the default load base of the file. You can see it’s <code>0x0000000000400000</code> for this file.</p>
+</li>
+</ul>
+<h1 id="实验相关内容"><a class="header-anchor" href="#实验相关内容"></a>实验相关内容</h1>
+<h2 id="思路"><a class="header-anchor" href="#思路"></a>思路</h2>
+<ul>
+<li>用OO方式，构建文件系统树， 对文件系统的所有操作转换为对文件系统树的操作</li>
+<li>对指令的解析采用工厂模式</li>
+<li>缺点是没有充分重构， 比如加入异常机制和lamda表达式，太懒了QAQ
+<ul>
+<li>并且，这个思路会在程序开始时加载完整个文件系统树，内存占用很高，不符合实际情况。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Fat12FileSystemTree</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    ~<span class="built_in">Fat12FileSystemTree</span>()</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">delete</span> root;</span><br><span class="line">        root = <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> Fat12FileSystemTree *<span class="title">init</span><span class="params">( FILE *fat12, BPB *bpb, DirEntry *rootEntry)</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">initSystemParameters</span><span class="params">()</span></span>;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mountFiles</span><span class="params">( )</span></span>;<span class="comment">//将目录区的数据挂载到文件系统,构造文件树</span></span><br><span class="line"></span><br><span class="line">    <span class="function">Node *<span class="title">searchByPath</span><span class="params">( <span class="type">const</span> string &amp;path )</span></span>;</span><br><span class="line">    <span class="function">Node *<span class="title">searchByPath</span><span class="params">( DirNode* parent, <span class="type">const</span> string &amp;path )</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span>  BytsPerSec;	<span class="comment">//每扇区字节数</span></span><br><span class="line">    <span class="type">int</span>  SecPerClus;	<span class="comment">//每簇扇区数</span></span><br><span class="line">    <span class="type">int</span>  RsvdSecCnt;	<span class="comment">//Boot记录占用的扇区数</span></span><br><span class="line">    <span class="type">int</span>  NumFATs;	<span class="comment">//FAT表个数（默认为2）</span></span><br><span class="line">    <span class="type">int</span>  RootEntCnt;	<span class="comment">//根目录最大文件数</span></span><br><span class="line">    <span class="type">int</span>  FATSz;	<span class="comment">//每个FAT表占用扇区数</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">static</span> Fat12FileSystemTree *instance;</span><br><span class="line">    DirEntry *dirEntry;<span class="comment">//目录项的指针，每次fread都会被刷新</span></span><br><span class="line">    DirNode *root;</span><br><span class="line">    BPB *bpb;</span><br><span class="line">    FILE *fat12;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">Fat12FileSystemTree</span>(FILE *fat12, BPB *bpb, DirEntry *rootEntry);</span><br><span class="line">    <span class="function">DirNode *<span class="title">initRoot</span><span class="params">()</span></span>; <span class="comment">//初始化root节点，name和path均为&quot;/&quot;</span></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isMatch</span><span class="params">( Node* node, <span class="type">const</span> string &amp; AbsolutePath )</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//    void mountChildren(int startCluster, DirNode *parent);</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mountFiles</span><span class="params">( <span class="type">int</span> startClusterNum, DirNode* parent )</span></span>;<span class="comment">//递归地将数据区的数据挂载到文件系统树，对文件节点获取其内容，对目录节点进一步递归</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mountNode</span><span class="params">( DirEntry*dirEntry, <span class="type">int</span> baseAddr, DirNode *parent )</span></span>;<span class="comment">//将给定地址的数据加载进当前目录项（ currentEntry ），再通过当前目录项创建节点</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">loadContent</span><span class="params">( <span class="type">int</span> startClus, FileNode *fileNode )</span></span>;<span class="comment">//加载文件节点的内容</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getNextClusterNum</span><span class="params">( <span class="type">int</span> num )</span></span>;<span class="comment">//读取FAT表，获取下一个簇号</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isValidNodeName</span><span class="params">(string name)</span></span>;</span><br><span class="line">    <span class="function">string <span class="title">getDirNodeName</span><span class="params">(string name)</span></span>;</span><br><span class="line">    <span class="function">string <span class="title">getFileNodeName</span><span class="params">(string name)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="主程序"><a class="header-anchor" href="#主程序"></a>主程序</h2>
+<ul>
+<li>注意，如果使用clion,因为clion的工作目录是上一级，那么镜像文件的路径是<code>../a.img</code>,但是用makefile的话，工作目录是当前目录，因此路径该改为<code>./a.img</code></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    FILE* fat12 = <span class="built_in">fopen</span>(<span class="string">&quot;../a.img&quot;</span>, <span class="string">&quot;rb&quot;</span>);	<span class="comment">//打开FAT12镜像文件</span></span><br><span class="line">    BPB *bpb = BPB::<span class="built_in">init</span>( fat12);</span><br><span class="line">    DirEntry *rootEntry = <span class="keyword">new</span> <span class="built_in">DirEntry</span>();</span><br><span class="line"></span><br><span class="line">    Fat12FileSystemTree *fileSystem = Fat12FileSystemTree::<span class="built_in">init</span>(fat12, bpb, rootEntry );</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>( <span class="literal">true</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">myPrint</span>(<span class="string">&quot;@lyk&gt;&quot;</span>);</span><br><span class="line"></span><br><span class="line">        vector&lt;string&gt; input_list = <span class="built_in">handleInput</span>();</span><br><span class="line">        string instructionName = <span class="built_in">getInstructionName</span>( input_list );</span><br><span class="line">        vector&lt;string&gt; options = <span class="built_in">getOptions</span>( input_list );</span><br><span class="line">        vector&lt;string&gt; parameters = <span class="built_in">getParameters</span>( input_list  );</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        Instruction *instruction = InstructionFactory:: <span class="built_in">create</span>( fileSystem, instructionName );</span><br><span class="line">        instruction -&gt; <span class="built_in">exec</span>( options, parameters );</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="BPB指定字段的含义"><a class="header-anchor" href="#BPB指定字段的含义"></a>BPB指定字段的含义</h2>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//从软盘的第11Byte开始，到第35Byte, 共25Byte</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BPB</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    u16  BPB_BytsPerSec;	<span class="comment">//每扇区字节数</span></span><br><span class="line">    u8   BPB_SecPerClus;	<span class="comment">//每簇扇区数</span></span><br><span class="line">    u16  BPB_RsvdSecCnt;	<span class="comment">//Boot占用的扇区数</span></span><br><span class="line">    u8   BPB_NumFATs;	<span class="comment">//FAT表个数</span></span><br><span class="line">    u16  BPB_RootEntCnt;	<span class="comment">//根目录最大文件数</span></span><br><span class="line">    u16  BPB_TotSec16;		<span class="comment">//逻辑扇区总数</span></span><br><span class="line">    u8   BPB_Media;		<span class="comment">//介质描述符</span></span><br><span class="line">    u16  BPB_FATSz16;	<span class="comment">//每个FAT占用扇区数</span></span><br><span class="line">    u16  BPB_SecPerTrk;  <span class="comment">//	每磁道扇区数（Sector/track）</span></span><br><span class="line">    u16  BPB_NumHeads;	<span class="comment">//磁头数（面数）</span></span><br><span class="line">    u32  BPB_HiddSec;	<span class="comment">//隐藏扇区数</span></span><br><span class="line">    u32  BPB_TotSec32;	<span class="comment">//如果BPB_TotSec16为0，该值为逻辑扇区总数</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> BPB *<span class="title">init</span><span class="params">(FILE * fat12)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( instance == <span class="literal">NULL</span>  )</span><br><span class="line">            instance = <span class="keyword">new</span> <span class="built_in">BPB</span>( fat12);</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">static</span> BPB *instance;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">BPB</span>(FILE* fat12); <span class="comment">//读取boot信息</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">BPB* BPB:: instance = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">BPB:: <span class="built_in">BPB</span>(FILE* fat12 )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> check;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//BPB第11个字节处开始</span></span><br><span class="line">    check = <span class="built_in">fseek</span>(fat12, <span class="number">11</span>, SEEK_SET);</span><br><span class="line">    <span class="keyword">if</span> (check == <span class="number">-1</span>)</span><br><span class="line">        <span class="built_in">myPrint</span>(<span class="string">&quot;fseek in fillBPB failed!\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//BPB长度为25字节</span></span><br><span class="line">    check = <span class="built_in">fread</span>( <span class="keyword">this</span> , <span class="number">1</span>, <span class="number">25</span>, fat12);</span><br><span class="line">    <span class="keyword">if</span> (check != <span class="number">25</span>)</span><br><span class="line">        <span class="built_in">myPrint</span>(<span class="string">&quot;fread in fillBPB failed!\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="如何进入子目录并输出-说明方法调用"><a class="header-anchor" href="#如何进入子目录并输出-说明方法调用"></a>如何进入子目录并输出(说明方法调用)</h2>
+<ul>
+<li>
+<p>目录项结构;</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//32Byte per entry, 数据区的目录项也采用此结构</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DirEntry</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">char</span> DIR_Name[Dir_Name_Length];</span><br><span class="line">    u8   DIR_Attr;		<span class="comment">//文件属性</span></span><br><span class="line">    <span class="type">char</span> Reserve[<span class="number">10</span>]; <span class="comment">//保留位，用于Win NT</span></span><br><span class="line">    u16  DIR_WrtTime;</span><br><span class="line">    u16  DIR_WrtDate;</span><br><span class="line">    u16  DIR_FstClus;	<span class="comment">//开始簇号</span></span><br><span class="line">    u32  DIR_FileSize;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>获得baseAddr。对根目录区而言，只需得到Directory Area 起始地址<code>baseAddressOfDirArea</code>，加上 项数 * 32Byte 就是<code>baseAddressForDirEntry</code></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> Fat12FileSystemTree:: <span class="built_in">mountFiles</span>()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> baseAddressOfDirArea = ( RsvdSecCnt + NumFATs * FATSz ) * BytsPerSec;<span class="comment">// Directory Area 起始地址</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> baseAddressForDirEntry = baseAddressOfDirArea;<span class="comment">//目录项的起始地址</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span> ; i &lt; RootEntCnt; i++ , baseAddressForDirEntry+=<span class="number">32</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">mountNode</span>( dirEntry, baseAddressForDirEntry, root );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>获得baseAddr,对数据区而言</p>
+<ul>
+<li>
+<p>首先得到数据区起始地址<code>baseAddressOfDataArea</code>和当前簇号<code>currentClusterNum</code></p>
+</li>
+<li>
+<p>得到当前簇的起始地址<code>baseAddressForCurrentCluster</code>， 就是该簇第一个的baseAddr<code>baseAddressForDirEntry</code>，每次迭代读取一个目录项（32Byte）， 因此<code>baseAddr += 32</code>,</p>
+</li>
+<li>
+<p>直到到达簇的末尾<code>baseAddressForCurrentCluster + bytesOfThisCluster</code>， 通过<code>fatValue = getNextClusterNum( currentClusterNum )</code>从fat表中得到下一个簇的簇号。</p>
+</li>
+<li>
+<p>令<code>currentClusterNum = fatValue</code>  ， 不断迭代读取簇，直到文件结束或坏簇</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Fat12FileSystemTree::mountFiles</span><span class="params">(<span class="type">int</span> startClusterNum, DirNode *parent)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//    parent-&gt;createDefaultNodes();</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//数据区起始地址，即第一个簇（2号簇）的偏移字节</span></span><br><span class="line">    <span class="type">int</span> baseAddressOfDataArea = BytsPerSec * (RsvdSecCnt + FATSz * NumFATs + (RootEntCnt * <span class="number">32</span> + BytsPerSec - <span class="number">1</span>) / BytsPerSec);</span><br><span class="line">    <span class="type">int</span> fatValue = <span class="number">0</span>; <span class="comment">//fat表项的值，代表文件的下一个簇号</span></span><br><span class="line">    <span class="type">int</span> currentClusterNum = startClusterNum;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>( fatValue &lt; <span class="number">0xFF8</span> )</span><br><span class="line">    &#123;</span><br><span class="line">        fatValue = <span class="built_in">getNextClusterNum</span>( currentClusterNum );<span class="comment">//查FAT表获取下一个簇号</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( fatValue == <span class="number">0xFF7</span> )</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">myPrint</span>(<span class="string">&quot;ERR 读取了坏簇\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> baseAddressForCurrentCluster = baseAddressOfDataArea + (currentClusterNum - <span class="number">2</span>)*SecPerClus*BytsPerSec;<span class="comment">//当前簇的起始地址</span></span><br><span class="line">        <span class="type">int</span> bytesOfThisCluster = SecPerClus * BytsPerSec; <span class="comment">//当前簇的长度</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>( <span class="type">int</span>  baseAddressForDirEntry = baseAddressForCurrentCluster ;  baseAddressForDirEntry &lt; baseAddressForCurrentCluster + bytesOfThisCluster ; baseAddressForDirEntry+=<span class="number">32</span> ) <span class="comment">//baseAddressForDirEntry = 当前目录项的起始地址，不能超过该簇</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">mountNode</span>( dirEntry, baseAddressForDirEntry,parent );</span><br><span class="line">        &#125;</span><br><span class="line">        currentClusterNum = fatValue;<span class="comment">//根据fat项更新簇号</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span>; <span class="comment">//该目录节点递归完毕</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>从软盘中读取目录项，并创建节点</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span>  Fat12FileSystemTree:: <span class="built_in">mountNode</span>( DirEntry* currentEntry, <span class="type">int</span> baseAddr, DirNode *parent) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">fseek</span>(fat12, baseAddr, SEEK_SET) == <span class="number">-1</span>)</span><br><span class="line">        <span class="built_in">myPrint</span>(<span class="string">&quot;fseek in mountFiles failed!\n&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">fread</span>(currentEntry, <span class="number">1</span>, <span class="number">32</span>, fat12) != <span class="number">32</span>)</span><br><span class="line">        <span class="built_in">myPrint</span>(<span class="string">&quot;fread in mountFiles failed!\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="function">string <span class="title">dirEntryName</span><span class="params">(&amp;(currentEntry-&gt;DIR_Name[<span class="number">0</span>]), &amp;(currentEntry-&gt;DIR_Name[Dir_Name_Length]))</span></span>;<span class="comment">///起始位置 结束长度位置 +1</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">isValidNodeName</span>(dirEntryName)) &#123;</span><br><span class="line">        <span class="keyword">return</span>;<span class="comment">//目录项名字不合法，不挂载</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        string realName;</span><br><span class="line">        <span class="keyword">if</span> (dirEntry-&gt;DIR_Attr == <span class="number">0x10</span>) <span class="comment">// directory node</span></span><br><span class="line">        &#123;</span><br><span class="line">            realName = <span class="built_in">getDirNodeName</span>(dirEntryName);</span><br><span class="line">            DirNode *child = <span class="keyword">new</span> <span class="built_in">DirNode</span>(realName, parent-&gt;AbsolutePath + realName + <span class="string">&quot;/&quot;</span>,</span><br><span class="line">                                         currentEntry-&gt;DIR_FileSize);   <span class="comment">//新建该目录的节点</span></span><br><span class="line">            parent-&gt;children.<span class="built_in">push_back</span>(child);</span><br><span class="line">            <span class="keyword">if</span>(child-&gt;<span class="built_in">isDefaultNode</span>())<span class="comment">// . 和 ..不递归</span></span><br><span class="line">            &#123;</span><br><span class="line">                ;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                parent-&gt;dir_count++;</span><br><span class="line">                <span class="built_in">mountFiles</span>(currentEntry-&gt;DIR_FstClus, child);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span><span class="comment">// file node</span></span><br><span class="line">        &#123;</span><br><span class="line">            realName = <span class="built_in">getFileNodeName</span>(dirEntryName);</span><br><span class="line">            FileNode *child = <span class="keyword">new</span> <span class="built_in">FileNode</span>(realName, parent-&gt;AbsolutePath + realName + <span class="string">&quot;/&quot;</span>,</span><br><span class="line">                                           currentEntry-&gt;DIR_FileSize);   <span class="comment">//新建该文件的节点</span></span><br><span class="line">            parent-&gt;children.<span class="built_in">push_back</span>(child);</span><br><span class="line">            parent-&gt;file_count++;</span><br><span class="line">            <span class="built_in">loadContent</span>(currentEntry-&gt;DIR_FstClus, child);<span class="comment">//读取文件的内容</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="如何获得指定文件的内容-即如何获得数据区的内容-比如使用指针等"><a class="header-anchor" href="#如何获得指定文件的内容-即如何获得数据区的内容-比如使用指针等"></a>如何获得指定文件的内容,即如何获得数据区的内容(比如使用指针等)</h2>
+<ul>
+<li>
+<p>对目录节点而言， 就是上文的<code> mountNode用</code>，  用 <code>fseek</code>和<code>fread</code>不断从baseAddr开始读取目录项，用目录项的数据初始化节点</p>
+</li>
+<li>
+<p>对文件节点而言：（ 与 <code> mountNode</code>的逻辑相同，只是懒得重构了）</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">void</span> Fat12FileSystemTree :: <span class="built_in">loadContent</span>( <span class="type">int</span> startClus, FileNode  *fileNode)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> dataBase = BytsPerSec * (RsvdSecCnt + FATSz * NumFATs + (RootEntCnt * <span class="number">32</span> + BytsPerSec - <span class="number">1</span>) / BytsPerSec);</span><br><span class="line">    <span class="type">int</span> currentClus = startClus;</span><br><span class="line">    <span class="type">int</span> value = <span class="number">0</span>;		<span class="comment">//这里用value来进行不同簇的读取（超过512字节）</span></span><br><span class="line">    <span class="type">char</span> *p = fileNode -&gt; content;</span><br><span class="line">    <span class="keyword">if</span> (startClus == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (value &lt; <span class="number">0xFF8</span>) &#123;</span><br><span class="line">        value = <span class="built_in">getNextClusterNum</span>( currentClus);<span class="comment">//获取下一个簇</span></span><br><span class="line">        <span class="keyword">if</span> (value == <span class="number">0xFF7</span></span><br><span class="line">                ) &#123;</span><br><span class="line">            <span class="built_in">myPrint</span>(<span class="string">&quot;坏簇，读取失败!\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">char</span>* str = (<span class="type">char</span>*)<span class="built_in">malloc</span>(SecPerClus*BytsPerSec);	<span class="comment">//暂存从簇中读出的数据</span></span><br><span class="line">        <span class="type">char</span> *content = str;</span><br><span class="line">        <span class="type">int</span> startByte = dataBase + (currentClus - <span class="number">2</span>)*SecPerClus*BytsPerSec;</span><br><span class="line">        <span class="type">int</span> check;</span><br><span class="line">        check = <span class="built_in">fseek</span>(fat12, startByte, SEEK_SET);</span><br><span class="line">        <span class="keyword">if</span> (check == <span class="number">-1</span>)</span><br><span class="line">            <span class="built_in">myPrint</span>(<span class="string">&quot;fseek in loadContent failed!&quot;</span>);</span><br><span class="line"></span><br><span class="line">        check = <span class="built_in">fread</span>(content, <span class="number">1</span>, SecPerClus*BytsPerSec, fat12);<span class="comment">//提取数据</span></span><br><span class="line">        <span class="keyword">if</span> (check != SecPerClus * BytsPerSec)</span><br><span class="line">            <span class="built_in">myPrint</span>(<span class="string">&quot;fread in loadContent failed!&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> count = SecPerClus * BytsPerSec; <span class="comment">//簇的字节数</span></span><br><span class="line">        <span class="type">int</span> loop = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;<span class="comment">//读取赋值</span></span><br><span class="line">            *p = content[i];</span><br><span class="line">            p++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">free</span>(str);</span><br><span class="line">        currentClus = value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="如何进行C代码和汇编之间的参数传递和返回值传递"><a class="header-anchor" href="#如何进行C代码和汇编之间的参数传递和返回值传递"></a>如何进行C代码和汇编之间的参数传递和返回值传递</h2>
+<ul>
+<li>
+<p>64位linux, 参数传递使用<code>rdi</code>, <code>rsi</code></p>
+</li>
+<li>
+<p>注意，x64的系统调用和x32不一样，前者使用<code>syscall</code>而不是<code>int 0x80</code>，并且<code>syscall</code>的打印函数的寄存器要求也与<code>int 0x80</code>不同</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> &#123;</span><br><span class="line"><span class="type">void</span> _print(<span class="type">const</span> <span class="type">char</span> *, <span class="type">const</span> <span class="type">int</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">myPrint</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *p)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    _print(p, <span class="built_in">strlen</span>(p));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="汇编代码中对I-O的处理方式-说明指定寄存器所存值的含义"><a class="header-anchor" href="#汇编代码中对I-O的处理方式-说明指定寄存器所存值的含义"></a>汇编代码中对I/O的处理方式,说明指定寄存器所存值的含义</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">global _print</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">section .text</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">; 传参顺序: rdi，rsi，rdx，rcx，r8，r9</span><br><span class="line">; void print(char* s, int lenl);</span><br><span class="line">_print:</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    ;x64的打印函数</span><br><span class="line">    ; ; write(1, message, 13) </span><br><span class="line">    ; mov     rax, 1                  ; 1 号系统调用是写操作 </span><br><span class="line">    ; mov     rdi, 1                  ; 1 号文件系统调用是标准输出 </span><br><span class="line">    ; mov     rsi, message            ; rsi存放输出字符串的地址 </span><br><span class="line">    ; mov     rdx, 13                 ; rdx存放字符串的长度 </span><br><span class="line">    ; syscall                         ; 调用系统执行写操作 </span><br><span class="line"></span><br><span class="line">    ; 如果是x32,则打印函数为：</span><br><span class="line">	; push rax, 4</span><br><span class="line">    ; push rbx, 1</span><br><span class="line">    ; push rcx, rdi; 可以看到，存放字符串地址和长度的寄存器是rcx, rdx,与x64不同</span><br><span class="line">    ; push rdx, rsi</span><br><span class="line">    ; int 80h</span><br><span class="line">    ; ret</span><br><span class="line">    ; push rdx</span><br><span class="line">    ; push rdi</span><br><span class="line">    </span><br><span class="line">    push rdx</span><br><span class="line">    push rdi</span><br><span class="line"></span><br><span class="line">    mov rdx, rsi</span><br><span class="line">    mov rsi, rdi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    mov     rax, 1                  ; 1 号系统调用是写操作 </span><br><span class="line">    mov     rdi, 1                  ; 1 号文件系统调用是标准输出 </span><br><span class="line"></span><br><span class="line">    syscall                         ; 调用系统执行写操作 </span><br><span class="line"></span><br><span class="line">    pop rdi</span><br><span class="line">    pop rdx</span><br><span class="line">    ret</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/11/05/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F%E8%AE%BE%E8%AE%A1/" rel="prev" title="商业模式设计">
+                  <i class="fa fa-chevron-left"></i> 商业模式设计
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/11/15/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F%E6%88%98%E7%95%A5/" rel="next" title="商业模式战略">
+                  商业模式战略 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

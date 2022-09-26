@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  耦合 内聚 耦合和内聚的度量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Coupling &amp;&amp; Cohension">
+<meta property="og:url" content="http://lyk-love.cn/2021/06/27/Coupling%20&&%20Cohension/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  耦合 内聚 耦合和内聚的度量">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-27T11:09:16.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.928Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Software Engineering Methodology">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/06/27/Coupling%20&&%20Cohension/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/06/27/Coupling%20&&%20Cohension/","path":"2021/06/27/Coupling && Cohension/","title":"Coupling && Cohension"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Coupling && Cohension | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Coupling"><span class="nav-text">Coupling</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Types-of-Coupling"><span class="nav-text">Types of Coupling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E8%80%A6%E5%90%88"><span class="nav-text">访问耦合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Principles-of-Component-Coupling"><span class="nav-text">Principles of Component Coupling</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF%E8%80%A6%E5%90%88"><span class="nav-text">继承耦合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Principles-of-Inherit-Coupling"><span class="nav-text">Principles of Inherit Coupling</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cohension"><span class="nav-text">Cohension</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Types-of-Cohension"><span class="nav-text">Types of Cohension</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Principles-of-Cohension"><span class="nav-text">Principles of Cohension</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%80%A6%E5%90%88%E5%92%8C%E5%86%85%E8%81%9A%E7%9A%84%E5%BA%A6%E9%87%8F"><span class="nav-text">耦合和内聚的度量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Coupling-Metrics"><span class="nav-text">Coupling Metrics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Coupling-between-object-classes-CBO"><span class="nav-text">Coupling between object classes (CBO)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-abstraction-coupling-DAC"><span class="nav-text">Data abstraction coupling (DAC)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ce-and-Ca-efferent-and-afferent-coupling"><span class="nav-text">Ce and Ca (efferent and afferent coupling)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Depth-of-the-Inheritance-tree-DIT"><span class="nav-text">Depth of the Inheritance tree (DIT)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Number-of-children-NOC"><span class="nav-text">Number of children (NOC)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cohesion-Metrics"><span class="nav-text">Cohesion Metrics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Lack-of-cohesion-in-methods-LCOM"><span class="nav-text">Lack of cohesion in methods (LCOM)</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/06/27/Coupling%20&&%20Cohension/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Coupling && Cohension | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Coupling && Cohension
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-27 11:09:16" itemprop="dateCreated datePublished" datetime="2021-06-27T11:09:16Z">2021-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Software-Engineering/" itemprop="url" rel="index"><span itemprop="name">Software Engineering</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>耦合</li>
+<li>内聚</li>
+<li>耦合和内聚的度量</li>
+</ul>
+<span id="more"></span>
+<p>本文所引用的设计原则参见 <em>Design Patterns</em></p>
+<blockquote>
+<p>we want high cohesion and low coupling. 高内聚, 低耦合</p>
+</blockquote>
+<h1 id="Coupling"><a class="header-anchor" href="#Coupling"></a>Coupling</h1>
+<p>Coupling: the measure of <strong>the strength</strong> of association established by a connection from one module to another 耦合是对模块间联系的度量</p>
+<ul>
+<li>
+<p>How complicated the connection is</p>
+</li>
+<li>
+<p>Whether the connection refers to the module itself or something inside it</p>
+<ul>
+<li>Connections that address or refer to a module as a whole by its name yield <strong>lower coupling</strong> than connections referring to the internal elements of another module 相比引用另一整个模块, 引用另一个模块内部的成员 的耦合性更高</li>
+</ul>
+</li>
+<li>
+<p>在结构化编程中，耦合是对某个标签或者地址的引用： A connection is a reference to some label or address defined elsewhere</p>
+</li>
+<li>
+<p>在面向对象编程中，按照模块的访问逻辑耦合可分为：</p>
+<ul>
+<li>Component coupling （访问耦合）：模块间的依赖关系</li>
+<li>Inheritance coupling （继承耦合）：模块间的继承关系（以及实现等等）</li>
+</ul>
+</li>
+</ul>
+<h2 id="Types-of-Coupling"><a class="header-anchor" href="#Types-of-Coupling"></a>Types of Coupling</h2>
+<p>六种耦合, 由低到高（耦合性越低越好） ：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>耦合性</th>
+<th>解释</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>内容耦合</td>
+<td>最高（最坏）</td>
+<td>一个模块直接修改或者依赖于另一个模块的内容</td>
+<td>程序跳转GOTO; 改变另一个模块的内部数据</td>
+</tr>
+<tr>
+<td>公共耦合,</td>
+<td></td>
+<td>模块之间共享全局的数据</td>
+<td>全局变量</td>
+</tr>
+<tr>
+<td>重复耦合</td>
+<td></td>
+<td>模块之间有同样逻辑的重复代码</td>
+<td></td>
+</tr>
+<tr>
+<td>控制耦合</td>
+<td></td>
+<td>传递了控制信息</td>
+<td>传递&quot;显示星期天&quot;. 传递模块和接收模块必须共享同一个内部结构和逻辑</td>
+</tr>
+<tr>
+<td>印记耦合</td>
+<td></td>
+<td>共享数据结构, 但是却只用了其中的一部分</td>
+<td>传递了整个记录给另一个模块, 另一个模块却只需要一个字段</td>
+</tr>
+<tr>
+<td>数据耦合</td>
+<td>最低( 最好 )</td>
+<td>两个模块的所有参数是同类型的数据项</td>
+<td>传递一个整数给一个计算平方根的函数</td>
+</tr>
+</tbody>
+</table>
+<h2 id=""><a class="header-anchor" href="#"></a></h2>
+<ul>
+<li>Data Coupling   数据耦合
+<ul>
+<li>Connections that pass necessary data</li>
+</ul>
+</li>
+<li>Stamp Coupling  印记耦合
+<ul>
+<li>Connections that pass data more than necessary</li>
+</ul>
+</li>
+<li>Control Coupling  控制耦合
+<ul>
+<li>Connections that pass data and control elements</li>
+</ul>
+</li>
+<li>Repeat Coupling 重复耦合</li>
+<li>Common Coupling  公共耦合</li>
+<li>Content Coupling 内容耦合</li>
+<li>Obviously Stamp Coupling couples more Data Coupling</li>
+<li>Control Coupling also couples more than data coupling
+<ul>
+<li>Information Hiding</li>
+</ul>
+</li>
+</ul>
+<h2 id="访问耦合"><a class="header-anchor" href="#访问耦合"></a>访问耦合</h2>
+<h3 id="Principles-of-Component-Coupling"><a class="header-anchor" href="#Principles-of-Component-Coupling"></a>Principles of Component Coupling</h3>
+<p>降低访问耦合的设计原则：</p>
+<ul>
+<li>
+<p>Global Variables Consider Harmful</p>
+</li>
+<li>
+<p>To be Explicit</p>
+</li>
+<li>
+<p>Don’t repeat</p>
+</li>
+<li>
+<p>Programming to Interface</p>
+</li>
+<li>
+<p>Programming to Required Interface, not only Suffered Interface</p>
+</li>
+<li>
+<p><strong>Design by Contract</strong></p>
+<ul>
+<li>
+<p>Contract of Module/ Class</p>
+<ul>
+<li>Required methods / Provided methods</li>
+</ul>
+</li>
+<li>
+<p>Contract of Methods</p>
+<ul>
+<li><code>PreCondition</code> , <code>PostCondition</code>, <code>Invariant</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Interface Segregation Principle(ISP)</strong></p>
+</li>
+<li>
+<p>Programming to Simpler Interface</p>
+</li>
+<li>
+<p>Many client-specific interfaces are better than one general purpose interface <strong>把接口变小</strong></p>
+</li>
+<li>
+<p><strong>The Law of Demeter</strong></p>
+</li>
+</ul>
+<h2 id="继承耦合"><a class="header-anchor" href="#继承耦合"></a>继承耦合</h2>
+<h3 id="Principles-of-Inherit-Coupling"><a class="header-anchor" href="#Principles-of-Inherit-Coupling"></a>Principles of Inherit Coupling</h3>
+<ul>
+<li>Liskov Substitution Principle （LSP）</li>
+<li>Favor Composition Over Inheritance</li>
+</ul>
+<h1 id="Cohension"><a class="header-anchor" href="#Cohension"></a>Cohension</h1>
+<p>Cohension： 模块内部各个元素彼此结合的紧密程度的度量</p>
+<h2 id="Types-of-Cohension"><a class="header-anchor" href="#Types-of-Cohension"></a>Types of Cohension</h2>
+<p>从低到高：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>内聚性</th>
+<th>解释</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>偶然内聚</td>
+<td>最低</td>
+<td>模块执行多个不相干的操作</td>
+<td></td>
+</tr>
+<tr>
+<td>逻辑内聚</td>
+<td></td>
+<td>模块执行一系列相关操作, 每个操作的调用由其他模块来决定</td>
+<td>把下列方法放在一个模块中: 开车去, 坐火车去, 坐飞机去</td>
+</tr>
+<tr>
+<td>时间内聚</td>
+<td></td>
+<td>模块执行一系列与时间有关的操作</td>
+<td>把下列方法放在一个模块中: 起床, 刷牙, 洗脸, 吃早餐</td>
+</tr>
+<tr>
+<td>过程内聚</td>
+<td></td>
+<td>模块执行一系列与步骤顺序有关的操作</td>
+<td>把下列方法放在一个模块中: 守门员传球给后卫, 后卫传球给中场, 中场传球给前锋, 前锋射门</td>
+</tr>
+<tr>
+<td>通信内聚</td>
+<td></td>
+<td>模块执行一系列与步骤顺序有关的操作, 并且这些操作在相同的数据上进行</td>
+<td>把下列方法放在一个模块中: 查书的名字, 查书的作者, 查书的出版商</td>
+</tr>
+<tr>
+<td>功能内聚</td>
+<td></td>
+<td>模块只执行一个操作或达到一个单一的目的</td>
+<td>下列内容都作为独立模块: 计算平方根, 决定最短路径, 压缩数据</td>
+</tr>
+<tr>
+<td>信息内聚</td>
+<td>最高(最好)</td>
+<td>模块进行许多操作, 各个都有各自的入口点, 每个操作的代码相对独立, 而且所有操作都在相同的数据结构上完成</td>
+<td>比如栈. 它包含相应的数据结构和操作. 所有的操作都是针对相同的数据结构</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Principles-of-Cohension"><a class="header-anchor" href="#Principles-of-Cohension"></a>Principles of Cohension</h2>
+<ul>
+<li>Single Responsibility Principle( SRP )</li>
+</ul>
+<h1 id="耦合和内聚的度量"><a class="header-anchor" href="#耦合和内聚的度量"></a>耦合和内聚的度量</h1>
+<h2 id="Coupling-Metrics"><a class="header-anchor" href="#Coupling-Metrics"></a>Coupling Metrics</h2>
+<p>模块间耦合性度量</p>
+<h3 id="Coupling-between-object-classes-CBO"><a class="header-anchor" href="#Coupling-between-object-classes-CBO"></a>Coupling between object classes (CBO)</h3>
+<p>对象类之间的耦合</p>
+<ul>
+<li>
+<p>一个类合作（即相关）的数量。当CBO增大时，不仅降低了可重用性，而且使其修改和修改后的测试变得复杂。所以，每个类的CBO值应当保持合理。这与在传统软件中减少耦合的一般原则是一致的。</p>
+</li>
+<li>
+<p>A count of the number of other classes: 访问本类或者含有被本类访问的方法或变量的其他类. ( 不包括继承 )</p>
+<ul>
+<li>which access a method or variable in this class, or</li>
+<li>contain a method or variable accessed by this class</li>
+<li>Not including Inheritance</li>
+</ul>
+</li>
+<li>
+<p>Want to keep this low</p>
+</li>
+</ul>
+<h3 id="Data-abstraction-coupling-DAC"><a class="header-anchor" href="#Data-abstraction-coupling-DAC"></a>Data abstraction coupling (DAC)</h3>
+<p>数据抽象耦合</p>
+<ul>
+<li>
+<p>The number of attribute having an ADT type dependent on the definitions of other classes 拥有<u>依赖于其他类的ADT</u>的属性的数量</p>
+</li>
+<li>
+<p>Want to keep this low</p>
+</li>
+</ul>
+<h3 id="Ce-and-Ca-efferent-and-afferent-coupling"><a class="header-anchor" href="#Ce-and-Ca-efferent-and-afferent-coupling"></a>Ce and Ca (efferent and afferent coupling)</h3>
+<p>传出耦合和传入耦合</p>
+<ul>
+<li>
+<p>Ca: 传入耦合</p>
+<ul>
+<li>The number of classes outside this category that depend upon classes within this category. 外部的依赖于这个category内部的类的类的数量</li>
+</ul>
+</li>
+<li>
+<p>Ce: 传出耦合</p>
+<ul>
+<li>The number of classes inside this category that depend upon classes outside this category 这个category内部的依赖于外部类的类的数量</li>
+</ul>
+</li>
+<li>
+<p>Want to keep these low</p>
+</li>
+</ul>
+<h3 id="Depth-of-the-Inheritance-tree-DIT"><a class="header-anchor" href="#Depth-of-the-Inheritance-tree-DIT"></a>Depth of the Inheritance tree (DIT)</h3>
+<p>继承树深度</p>
+<ul>
+<li>
+<p>the maximum length from the node to the root of the tree 这个类的节点到继承树根节点的最大距离</p>
+</li>
+<li>
+<p>as <code>DIT</code> grows, it becomes difficult to predict behavior of a class because of the high degree of inheritance DIT越大,这个类离根节点越远,类的行为就难以预测</p>
+</li>
+<li>
+<p>Positively, large DIT values imply that many methods may be reused</p>
+<p>好消息是, DIT越大, 意味着越多可重用的方法</p>
+</li>
+</ul>
+<h3 id="Number-of-children-NOC"><a class="header-anchor" href="#Number-of-children-NOC"></a>Number of children (NOC)</h3>
+<p>子女数</p>
+<ul>
+<li>count of the subclasses immediately subordinate to a class  就是直接隶属于该节点的节点数</li>
+<li>as NOC grows, reuse increases <code>NOC</code>越大,重用越频繁</li>
+<li>as NOC grows, abstraction can become diluted <code>NOC</code>越大, 抽象性就越被稀释</li>
+<li>increase in NOC means the amount of testing will increase <code>NOC</code>增大意味着更多的测试</li>
+</ul>
+<h2 id="Cohesion-Metrics"><a class="header-anchor" href="#Cohesion-Metrics"></a>Cohesion Metrics</h2>
+<p>模块内聚性度量</p>
+<h3 id="Lack-of-cohesion-in-methods-LCOM"><a class="header-anchor" href="#Lack-of-cohesion-in-methods-LCOM"></a>Lack of cohesion in methods (LCOM)</h3>
+<ul>
+<li>Definition:</li>
+</ul>
+<p>一个类内的每种方法访问一个或多个属性（也称实例变量）。LCOM是访问一个或多个相同属性方法的数量。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Class Ck with n methods M1,…Mn</span><br><span class="line"></span><br><span class="line">Ij is the set of instance variables used by Mj</span><br><span class="line"></span><br><span class="line">There are n such sets I1 ,…, In</span><br><span class="line"></span><br><span class="line">P = &#123;(Ii, Ij) | (Ii ∩ Ij ) =  ∅&#125; //P是访问一个类中不同属性的方法的度量, P越大, 内聚性越差</span><br><span class="line"></span><br><span class="line">Q = &#123;(Ii, Ij) | (Ii ∩ Ij ) ≠  ∅&#125; //Q是访问一个类中相同属性的方法的度量,Q越大, 说明类中这样的方法越多, 内聚性越好</span><br><span class="line"></span><br><span class="line">If all n sets Ii are ∅ then P = ∅</span><br><span class="line"></span><br><span class="line">LCOM = |P| – |Q|, if |P| &gt; |Q|</span><br><span class="line"></span><br><span class="line">LCOM = 0 otherwise</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Want to keep this low</li>
+<li>Many other versions of LCOM have been defined</li>
+<li>If <code>LCOM </code>&gt;=1, then the class should be separated</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Software-Engineering-Methodology/" rel="tag"># Software Engineering Methodology</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/17/C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1-Part3/" rel="prev" title="C++面向对象-Part3">
+                  <i class="fa fa-chevron-left"></i> C++面向对象-Part3
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/27/Modularity/" rel="next" title="Modularity">
+                  Modularity <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

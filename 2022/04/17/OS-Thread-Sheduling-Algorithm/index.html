@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  workload scheduling metrics 处理器调度层次 各种算法…">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS Thread Sheduling Algorithm">
+<meta property="og:url" content="http://lyk-love.cn/2022/04/17/OS-Thread-Sheduling-Algorithm/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  workload scheduling metrics 处理器调度层次 各种算法…">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-04-16T23:13:57.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.936Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/04/17/OS-Thread-Sheduling-Algorithm/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/04/17/OS-Thread-Sheduling-Algorithm/","path":"2022/04/17/OS-Thread-Sheduling-Algorithm/","title":"OS Thread Sheduling Algorithm"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OS Thread Sheduling Algorithm | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#workload"><span class="nav-text">workload</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scheduling-metrics"><span class="nav-text">scheduling metrics</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%E8%B0%83%E5%BA%A6%E5%B1%82%E6%AC%A1"><span class="nav-text">处理器调度层次</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%91%A8%E8%BD%AC%E6%97%B6%E9%97%B4%E7%AE%97%E6%B3%95"><span class="nav-text">优化周转时间算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FCFS"><span class="nav-text">FCFS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SJF"><span class="nav-text">SJF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#STCF"><span class="nav-text">STCF</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%93%8D%E5%BA%94%E6%97%B6%E9%97%B4%E7%AE%97%E6%B3%95"><span class="nav-text">优化响应时间算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RR"><span class="nav-text">RR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E5%90%88IO%E7%9A%84STCF"><span class="nav-text">结合IO的STCF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MLFQ"><span class="nav-text">MLFQ</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E4%BE%8B%E4%BB%BD%E9%A2%9D"><span class="nav-text">比例份额</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%A9%E7%A5%A8%E8%B0%83%E5%BA%A6"><span class="nav-text">彩票调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E9%95%BF%E8%B0%83%E5%BA%A6"><span class="nav-text">步长调度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HRRN"><span class="nav-text">HRRN</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E5%A4%84%E7%90%86%E5%99%A8%E8%B0%83%E5%BA%A6"><span class="nav-text">多处理器调度</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SQMS"><span class="nav-text">SQMS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MQMS"><span class="nav-text">MQMS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-text"></span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/04/17/OS-Thread-Sheduling-Algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OS Thread Sheduling Algorithm | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS Thread Sheduling Algorithm
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-16 23:13:57" itemprop="dateCreated datePublished" datetime="2022-04-16T23:13:57Z">2022-04-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>workload</li>
+<li>scheduling metrics</li>
+<li>处理器调度层次</li>
+<li>各种算法…</li>
+</ul>
+<span id="more"></span>
+<h1 id="workload"><a class="header-anchor" href="#workload"></a>workload</h1>
+<ul>
+<li>Def: a fully-operational scheduling discipline</li>
+<li>为了方便下面各种算法的说明， 我们目前对work load做出如下假设：
+<ol>
+<li>每个工作运行相同的时间（工作就是进程）</li>
+<li>所有的工作同时到达</li>
+<li>一旦开始，所有工作保持运行直到完成</li>
+<li>所有工作只使用CPU（即，不执行IO操作）</li>
+<li>所有工作的运行时间已知</li>
+</ol>
+</li>
+</ul>
+<h1 id="scheduling-metrics"><a class="header-anchor" href="#scheduling-metrics"></a>scheduling metrics</h1>
+<ul>
+<li>性能指标：
+<ul>
+<li>周转时间： 任务完成 - 任务到达</li>
+<li>响应时间：任务首次运行（服务时间） - 任务到达
+<ul>
+<li>用于度量<strong>交互性</strong>，因为分时系统的用户会面对终端，这要求终端交互性好</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>公平</li>
+</ul>
+<h1 id="处理器调度层次"><a class="header-anchor" href="#处理器调度层次"></a>处理器调度层次</h1>
+<ul>
+<li>高级调度（长程调度、作业调度）: 决定能否加入到执行的进程池中</li>
+<li>中级调度（平衡负载调度）： 决定主存中的可用进程集合</li>
+<li>低级调度（短程调度、 进程调度）：决定哪个进程占用处理器执行</li>
+</ul>
+<h1 id="优化周转时间算法"><a class="header-anchor" href="#优化周转时间算法"></a>优化周转时间算法</h1>
+<p>用于批处理作业。下述三个算法都面向“周转时间”，但是当衡量其“响应时间”时，下述算法表现都不好。 对于SJF而言，只要短进程源源不断来,<br>
+长进程就饿死</p>
+<h2 id="FCFS"><a class="header-anchor" href="#FCFS"></a>FCFS</h2>
+<ul>
+<li>First Come First Service: 非抢占,直到某个进程运行结束,依次调度接下来的,偏爱长作业
+<ul>
+<li>推翻假设1后（可能出现长作业），该算法fail</li>
+</ul>
+</li>
+</ul>
+<h2 id="SJF"><a class="header-anchor" href="#SJF"></a>SJF</h2>
+<ul>
+<li>Shortest Job First: 非抢占，先运行最短的任务
+<ul>
+<li>再推翻假设2,运行进程不同时到达，此时短任务可能会晚到达，由于算法非抢占，短任务必须等待长任务执行完，该算法fail</li>
+</ul>
+</li>
+</ul>
+<h2 id="STCF"><a class="header-anchor" href="#STCF"></a>STCF</h2>
+<ul>
+<li>Shortest Time-to-Completion First: 最短完成时间优先: 抢占式SJF,推翻了假设3</li>
+</ul>
+<h1 id="优化响应时间算法"><a class="header-anchor" href="#优化响应时间算法"></a>优化响应时间算法</h1>
+<p>用于分时系统</p>
+<h2 id="RR"><a class="header-anchor" href="#RR"></a>RR</h2>
+<ul>
+<li>Round Robin:抢占,time slice结束时,当前进程放入就绪队列,然后切换到队列中的下个进程
+<ul>
+<li>“抢占”是指进程之间。 在同一time slice内，进程不抢占</li>
+<li>time slice必须是时钟中断周期的倍数</li>
+<li>time slice太短也不好，因为context switch有成本</li>
+</ul>
+</li>
+<li>该算法在“周转时间”表现不佳</li>
+</ul>
+<h2 id="结合IO的STCF"><a class="header-anchor" href="#结合IO的STCF"></a>结合IO的STCF</h2>
+<ul>
+<li>推翻假设4,现在运行程序执行IO。此时假设有两个工作A和B,每项占用<code>50ms</code>CPU，但每A运行<code>10ms</code>会发起<code>10ms</code>的IO请求，而B只使用CPU</li>
+<li>此时可以把A的每个<code>10ms</code>工作视为独立的工作，因此系统先调度<code>10ms</code>的A，然后调度<code>50ms</code>的B，而<code>10ms</code>后新的A会提交，因此会抢占B执行，这样做实现了overlap</li>
+<li>overlap： 一个进程在另一个进程等待IO时使用CPU</li>
+</ul>
+<h2 id="MLFQ"><a class="header-anchor" href="#MLFQ"></a>MLFQ</h2>
+<p>推翻假设5后，进程运行时间不可知，之前的算法失效</p>
+<ul>
+<li>
+<p>Multi-Level Feedback:多级反馈调度:  <strong>抢占式</strong>,每当进程被抢占时就降级</p>
+<ul>
+<li>建立多个不同优先级的就绪进程队列，多个就绪进程队列之间按照优先级调度</li>
+<li>高优先级的就绪进程, 分配的时间片短</li>
+<li>同一就绪进程队列中的进程的优先数和时间片相同, 按照FCFS调度</li>
+<li>工作进入系统时放在最高优先级</li>
+<li>一旦工作用完了其在某一层中的时间片，它就被抢占，自己移入低一级队列
+<ul>
+<li>进程只有被抢占后才降级，因此如果一共只有一个进程，该进程不会降级</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>problem： 如果短工作不断到来，长进程可能饿死</p>
+<ul>
+<li>改进： 经过一段时间S, 将系统中所有工作重新加入最高优先级队列</li>
+</ul>
+</li>
+</ul>
+<h2 id="比例份额"><a class="header-anchor" href="#比例份额"></a>比例份额</h2>
+<p>确保每个工作获得一定比例的CPU时间，实现公平性</p>
+<p>份额调度最大的缺点在于难以确定份额，即依赖假设5</p>
+<h2 id="彩票调度"><a class="header-anchor" href="#彩票调度"></a>彩票调度</h2>
+<ul>
+<li>每个进程持有一定数量的彩票，该进程的彩票数占总彩票数的百分比代表它占有某个资源的份额</li>
+<li>CPU每个时间片随即抽取一个数，拥有该数对应彩票的进程会被调度一个时间片
+<ul>
+<li>例如工作A和B分别有75, 25个彩票，对应数字0 - 74, 75 - 99.</li>
+<li>OS抽取数字序列为：63, 85, 70, 39, 76, 17, 95</li>
+<li>工作调度次序为：A, B, A, A, B, A, B</li>
+</ul>
+</li>
+<li><strong>随机</strong>， 优点是实现简单，不依赖任何全局量</li>
+<li>PROBLEM：基于概率，因此有可能出现异常情况</li>
+</ul>
+<h2 id="步长调度"><a class="header-anchor" href="#步长调度"></a>步长调度</h2>
+<ul>
+<li>每个进程都具有步长(<code>stride</code>), 和一个行程（<code>pass</code>）值。
+<ul>
+<li>步长： 一个大数 / 进程的彩票数</li>
+<li>初始时所有行程值为0</li>
+</ul>
+</li>
+<li>每次调度当前具有最小行程值的进程，每当进程运行一个时间片后后， 行程值 += 步长
+<ul>
+<li>进程在时间片内不被抢占</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">current = remove_min(<span class="built_in">queue</span>); <span class="comment">//pick client with min pass</span></span><br><span class="line">schedule(current);<span class="comment">// use resource for quantum</span></span><br><span class="line">current -&gt; pass += current -&gt; stride;<span class="comment">// compute next pass using stride</span></span><br><span class="line">insert( <span class="built_in">queue</span>, current );<span class="comment">// put back into the queue</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>例子：假设A,B,C彩票数分别为100,50,250, 其步长值分别为100, 200, 40</p>
+<ol>
+<li>
+<p>初始时所有步长为零，随即调度工作，假设A被调度，执行一个时间片，更新其行程值为100. 然后选择B, 运行后更新其行程值为200； 然后选择C,运行后更新其行程值为40</p>
+</li>
+<li>
+<p>然后算法选择最小的工作，它会再调度2次C, C的行程值增加到120. 然后调度A …</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>行程值（A） （步长 = 100）</th>
+<th>行程值（A） （步长 = 100）</th>
+<th>行程值（A） （步长 = 100）</th>
+<th>被调度进程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>A</td>
+</tr>
+<tr>
+<td>100</td>
+<td>0</td>
+<td>0</td>
+<td>B</td>
+</tr>
+<tr>
+<td>100</td>
+<td>200</td>
+<td>0</td>
+<td>C</td>
+</tr>
+<tr>
+<td>100</td>
+<td>200</td>
+<td>40</td>
+<td>C</td>
+</tr>
+<tr>
+<td>100</td>
+<td>200</td>
+<td>80</td>
+<td>C</td>
+</tr>
+<tr>
+<td>100</td>
+<td>200</td>
+<td>120</td>
+<td>A</td>
+</tr>
+<tr>
+<td>200</td>
+<td>200</td>
+<td>120</td>
+<td>C</td>
+</tr>
+<tr>
+<td>200</td>
+<td>200</td>
+<td>160</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<p>可以看到，在这段时间内， A, B, C分别调度2, 1， 4次，与其彩票数占比相符合</p>
+</li>
+<li>
+<p>彩票调度只能在概率上实现比例（因此有概率翻车），而步长调度可以直接控制比例</p>
+</li>
+<li>
+<p>PROBLEM： 步长调度需要维护全局状态：行程值。 如果中途有新进程加入，则新进程的行程值为0,它会独占CPU</p>
+</li>
+</ul>
+<h2 id="HRRN"><a class="header-anchor" href="#HRRN"></a>HRRN</h2>
+<ul>
+<li>HRRN(highest response radio next)高响应比优先**: 非抢占式**
+<ul>
+<li>响应比 = (等待时间+服务时间) / 服务时间</li>
+</ul>
+</li>
+</ul>
+<h1 id="多处理器调度"><a class="header-anchor" href="#多处理器调度"></a>多处理器调度</h1>
+<p>缓存一致性：</p>
+<ul>
+<li>一种方案： 总线窥探（<code>bus snooping</code>）: 每个缓存都监听链接所有缓存和内存的总线，在发现内存访问。</li>
+</ul>
+<p>同步问题：</p>
+<ul>
+<li>加锁</li>
+</ul>
+<p>缓存亲和度：</p>
+<ul>
+<li>同意进程在同一CPU运行时，由于有cache而运行得快</li>
+</ul>
+<h2 id="SQMS"><a class="header-anchor" href="#SQMS"></a>SQMS</h2>
+<ul>
+<li>
+<p>单队列调度（Single-Queue Multiprocessor Scheduling）：所有工作放入一个全局的单调队列。每个CPU从队列中拿取工作</p>
+<ul>
+<li>当然，可以将工作以时间片为单位存储进队列，这样CPU每次都运行一个time slice的工作</li>
+</ul>
+</li>
+<li>
+<p>缓存亲和度问题：  假设有CPU 0-3, 队列中工作序列为A,B,C,D,E, 则：</p>
+<table>
+<thead>
+<tr>
+<th>CPU0</th>
+<th>CPU1</th>
+<th>CPU2</th>
+<th>CPU3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+<td>D</td>
+</tr>
+<tr>
+<td>E</td>
+<td>A</td>
+<td>B</td>
+<td>C</td>
+</tr>
+<tr>
+<td>D</td>
+<td>E</td>
+<td>A</td>
+<td>B</td>
+</tr>
+<tr>
+<td>C</td>
+<td>D</td>
+<td>E</td>
+<td>A</td>
+</tr>
+<tr>
+<td>可以看到亲和度很差</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="MQMS"><a class="header-anchor" href="#MQMS"></a>MQMS</h2>
+<ul>
+<li>多队列调度（Multi-Queue Multiprocessor Scheduling）: 每个CPU拥有自己的队列。 不同队列可以采用不同的调度规则。OS依据一些启发式规则将新工作放入某个队列
+<ul>
+<li>每个CPU之间调度相互独立</li>
+</ul>
+</li>
+</ul>
+<h1 id=""><a class="header-anchor" href="#"></a></h1>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/17/OS-Page-Sheduling-Algorithm/" rel="prev" title="OS Page Sheduling Algorithm">
+                  <i class="fa fa-chevron-left"></i> OS Page Sheduling Algorithm
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/05/05/Hard-Link-Symbol-Link/" rel="next" title="Hard Link && Symbol Link">
+                  Hard Link && Symbol Link <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

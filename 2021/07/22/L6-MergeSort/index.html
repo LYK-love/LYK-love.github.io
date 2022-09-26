@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Oultline  MergeSort  Worst-case analysis of MergeSort More than sort: the MergeSort D&amp;C   Lower Bounds for comparison-based sorting ( nlogn )  Worst-case ( Omega(nlogn) ) Average-case (nlogn - 1.4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="L6 MergeSort">
+<meta property="og:url" content="http://lyk-love.cn/2021/07/22/L6-MergeSort/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Oultline  MergeSort  Worst-case analysis of MergeSort More than sort: the MergeSort D&amp;C   Lower Bounds for comparison-based sorting ( nlogn )  Worst-case ( Omega(nlogn) ) Average-case (nlogn - 1.4">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-22T15:52:17.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.932Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Algorithm design and analysis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/07/22/L6-MergeSort/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/07/22/L6-MergeSort/","path":"2021/07/22/L6-MergeSort/","title":"L6 MergeSort"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>L6 MergeSort | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MergeSort"><span class="nav-text">MergeSort</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Space-Complexity-of-Merge"><span class="nav-text">Space Complexity of Merge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Worst-case-Complexity-of-MergeSort"><span class="nav-text">Worst  case Complexity of MergeSort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Optimality-of-Merge"><span class="nav-text">Optimality of Merge</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Worst-case-Analysis-of-MergeSort"><span class="nav-text">Worst case Analysis of MergeSort</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-MergeSort-D-C"><span class="nav-text">The MergeSort D&amp;C</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lower-Bounds-for-i-comparison-based-sorting-i"><span class="nav-text">Lower Bounds for comparison-based sorting</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Decision-Tree-for-Sorting"><span class="nav-text">Decision Tree for Sorting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Characterizing-the-Decision-Tree"><span class="nav-text">Characterizing the Decision Tree</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lower-Bound-for-Worst-Case"><span class="nav-text">Lower Bound for Worst Case</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#External-Path-Length-EPL"><span class="nav-text">External Path Length( EPL )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lower-Bound-for-Average-Behavior"><span class="nav-text">Lower Bound for Average Behavior</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MergeSort-Has-Optimal-Average-Performance"><span class="nav-text">MergeSort Has Optimal Average Performance</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/07/22/L6-MergeSort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="L6 MergeSort | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          L6 MergeSort
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-22 15:52:17" itemprop="dateCreated datePublished" datetime="2021-07-22T15:52:17Z">2021-07-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Oultline</p>
+<ul>
+<li><code>MergeSort</code>
+<ul>
+<li>Worst-case analysis of <code>MergeSort</code></li>
+<li>More than sort: the <code>MergeSort</code> D&amp;C</li>
+</ul>
+</li>
+<li>Lower Bounds for <i>comparison-based sorting</i> ( <code>nlogn</code> )
+<ul>
+<li>Worst-case ( <code>Omega(nlogn)</code> )</li>
+<li>Average-case (<code>nlogn - 1.443n</code> )</li>
+</ul>
+</li>
+</ul>
+<span id="more"></span>
+<h1 id="MergeSort"><a class="header-anchor" href="#MergeSort"></a><code>MergeSort</code></h1>
+<h2 id="Space-Complexity-of-Merge"><a class="header-anchor" href="#Space-Complexity-of-Merge"></a>Space Complexity of Merge</h2>
+<ul>
+<li>A algorithm is “in space”
+<ul>
+<li>If the extra space it has to use is in Omega(1)</li>
+</ul>
+</li>
+<li>Merge is <strong>not</strong> an in place algorithm
+<ul>
+<li>Since it needs O(n) extra space to store the merged sequence during the merging process</li>
+</ul>
+</li>
+</ul>
+<h2 id="Worst-case-Complexity-of-MergeSort"><a class="header-anchor" href="#Worst-case-Complexity-of-MergeSort"></a>Worst  case Complexity of <code>MergeSort</code></h2>
+<ul>
+<li>Observations
+<ul>
+<li>Worst case is that comparison is conducted between A[k-1] and B[m-1]</li>
+<li>After each comparison, one element is inserted into Array C, <strong>at least</strong></li>
+<li>After entering Array C ,  an element will never be compared again</li>
+<li>After last comparison, at least two elements( the two just compared ) have not yet been moved to Array C. So at most <i>n - 1</i> comparisons are done.</li>
+</ul>
+</li>
+<li><strong>In worst case, <i>n - 1</i> comparisons are done, where  n = k + m</strong></li>
+</ul>
+<h2 id="Optimality-of-Merge"><a class="header-anchor" href="#Optimality-of-Merge"></a>Optimality of Merge</h2>
+<ul>
+<li>
+<p>Any algorithm to merge two sorted arrays, each containing k = m = n/2 entries, by comparison of keys, does <strong>at least</strong>(如果算法笨的话可能有重复比较)  <i>n - 1</i> comparisons <strong>in the worst case</strong>.</p>
+<ul>
+<li>
+<p>Choose keys so that:</p>
+<p>b0 &lt; a0 &lt; b1 &lt; a1 &lt; … &lt; bi &lt; ai&lt; bi+1,…, &lt; bm-1 &lt; ak-1</p>
+</li>
+<li>
+<p>Then the algorithm must  compare ai with bi for every i in [ 0, m - 1 ], and must compare ai with bi+1 for every i in [0, m - 1], so there are <i>n - 1</i> comparisons</p>
+</li>
+</ul>
+</li>
+<li>
+<p>先考虑最好情况,也就是两边数组大小不一样的时候,一个数组全部比完了,那么另一个数组的剩余部分就在这次比较后全部插入辅助数组中, 比较次数小于 <i>n - 1</i></p>
+</li>
+<li>
+<p>反之,最坏情况就是&quot;其中一个数组比完了&quot;这个情况不发生,也就是两个数组一直比到最后, 也就是两个数组的最后一个元素相互比较( “comparison is conducted between A[k-1] and B[m-1]” ), 这就要求k = m = n/2</p>
+</li>
+<li>
+<p>可能有人会疑惑, 如果两数组大小极度不均衡,但是较小数组的最后一个元素远大于较大数组的所有元素,这不也是比到最后吗? 也是 <i>n - 1 </i> 吗? 为什么最坏情况的构造里, 还要要求 k = m = n/2 呢?</p>
+<ul>
+<li>因为对于这种情况,对于较小的数组,完全可以用折半查找来插入,不需要归并了.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Worst-case-Analysis-of-MergeSort"><a class="header-anchor" href="#Worst-case-Analysis-of-MergeSort"></a>Worst case Analysis of <code>MergeSort</code></h2>
+<ul>
+<li>The recurrence equation for <code>MergeSort</code>
+<ul>
+<li><code>W(n) = W( floor( n/2 ) ) + W( cell( n/2 ) ) + n - 1 (或者O(n))</code></li>
+<li>W (1) = 0</li>
+</ul>
+</li>
+<li>The <i>Master Theorem</i> applies for the equation, so:
+<ul>
+<li><strong>W(n) ∈ <code>Omega(nlogn)</code></strong></li>
+</ul>
+</li>
+<li>精细分析, 得出 <i>W(n) = nlogn - ( alpha - log alpha )n + 1</i>
+<ul>
+<li><i>cell( nlogn  - n + 1 ) &lt;= W(n) &lt;= cell( nlogn - 0.914n)</i></li>
+</ul>
+</li>
+</ul>
+<h2 id="The-MergeSort-D-C"><a class="header-anchor" href="#The-MergeSort-D-C"></a>The <code>MergeSort</code> D&amp;C</h2>
+<ul>
+<li>
+<p>Counting the number of inversions</p>
+<ul>
+<li>Brute force: O(n2)  蛮力做法</li>
+<li>Can we use divide &amp; conquer
+<ul>
+<li>In <code>O(nlogn)</code> =&gt; combination in O(n)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><code>MergeSort</code> as the **carrier ** 用归并排序做</p>
+<ul>
+<li>
+<p>Sorted subarrays</p>
+<ul>
+<li>A[ 0… k-1] and B[ 0 … m-1 ]</li>
+</ul>
+</li>
+<li>
+<p>Compare the <i>left</i> and the <i>right</i> elements</p>
+<ul>
+<li>
+<p>A[i] vs. B[j]</p>
+</li>
+<li>
+<p>if A[i] &gt; B[j]</p>
+<ul>
+<li>
+<p>(i,j) is an inversion</p>
+</li>
+<li>
+<p>For all i’  &gt; j</p>
+<p>( i’ , j) are inversions ( i’ &gt; i )</p>
+</li>
+<li>
+<p>B[j] is selected</p>
+</li>
+</ul>
+</li>
+<li>
+<p>if A[i]] &lt; B[j]</p>
+<ul>
+<li>No inversions found</li>
+<li>A[i] is selected</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Lower-Bounds-for-i-comparison-based-sorting-i"><a class="header-anchor" href="#Lower-Bounds-for-i-comparison-based-sorting-i"></a>Lower Bounds for <i>comparison-based sorting</i></h1>
+<ul>
+<li>Upper bound, e.g., <strong>worst-case cost</strong>  给定一个算法，输入不同，复杂度有一个上界（比如worst-case）
+<ul>
+<li>For <strong>any</strong> possible input, the cost of the <strong>specific</strong> algorithm A is no more than the <i>upper bound</i>
+<ul>
+<li><i>Max{ Cost( i ) | i is an input }</i></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Lower bound, e.g., comparison-based sorting  比如，对于所有可能的算法，每个算法都有一个worst-case, 这是个上界，对所有上界取下界,就是worst-case的下界。相应的， 所有可能的算法的所有可能的期望值，也就是average-case复杂度，的下界，就是average-case复杂度的下界
+<ul>
+<li>For <strong>any</strong> possible( comparison-based ) sorting algorithm A, the worst-case is no less than the <i>lower bound</i>
+<ul>
+<li><i>Min{ Worst-case(a) | a is an algorithm }</i></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Decision-Tree-for-Sorting"><a class="header-anchor" href="#Decision-Tree-for-Sorting"></a>Decision Tree for Sorting</h2>
+<ul>
+<li>Decision tree is a <strong>2-tree</strong>( assuming no same keys )</li>
+<li>The action of Sort on a particular input corresponds to following on path in its decision tree from the root to leaf associated to the specific output</li>
+<li>Decision tree  是刻画所有 <i>comparison-based</i> 的排序的数学工具</li>
+</ul>
+<h2 id="Characterizing-the-Decision-Tree"><a class="header-anchor" href="#Characterizing-the-Decision-Tree"></a>Characterizing the Decision Tree</h2>
+<ul>
+<li>
+<p>For a sequence of <i>n</i> distinct elements, there are <i>n!</i> different permutation</p>
+<ul>
+<li>
+<p>叶节点是所有可能的输出,这是n个输入元素的所有可能的排列,因此是n!</p>
+</li>
+<li>
+<p>So, the decision tree has at least <i>n!</i> leaves, and exactly n! leaves can be reached from the root</p>
+</li>
+<li>
+<p>So, for the purpose of lower bounds evaluation, we use trees with exactly n! leaves.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>The number of comparison done in the <strong>worst case</strong> is the <strong>height</strong> of the tree</p>
+</li>
+<li>
+<p>The <strong>average</strong> number of comparison done is the <strong>average</strong> of lengths of all paths from the root  to a leaf.</p>
+</li>
+<li>
+<p>变成了离散数学问题</p>
+</li>
+</ul>
+<h2 id="Lower-Bound-for-Worst-Case"><a class="header-anchor" href="#Lower-Bound-for-Worst-Case"></a>Lower Bound for Worst Case</h2>
+<ul>
+<li><strong>Theorem</strong>: Any algorithm to sort <i>n</i> items by comparisons of keys must do at least <code>cell(log n!)</code>. or approximately <code>cell(  nlogn - 1.443n)</code>, key comparisons in the worst case.
+<ul>
+<li>Lemma: let <i>L</i> be the number of leaves in a binary tree and h be its height. Then L &lt;= 2^h   可用归纳法证明
+<ul>
+<li>即高度为h，  h &gt;= log L , L = n！,   所以  h &gt;= log( n! )</li>
+</ul>
+</li>
+<li>log( n! ) &gt;= … &gt;= log( (n/2)^ (n/2) ) = n/2log(n/2) ∈ <strong>Omega( nlogn )</strong></li>
+</ul>
+</li>
+<li>因此，worst-case的下界为<code>nlogn</code></li>
+</ul>
+<h2 id="External-Path-Length-EPL"><a class="header-anchor" href="#External-Path-Length-EPL"></a>External Path Length( EPL )</h2>
+<ul>
+<li><strong>EPL — sum of path length to every leaf</strong>
+<ul>
+<li>The  EPL <i>t</i> is recursively defined as follows:</li>
+<li>[Base case] 0 for a  single external node</li>
+<li>[Recursion] <i>t</i> is non-leaf with sub-trees <i>L</i> and <i>R</i>, then the sum of:
+<ul>
+<li>The external path length of <i>L</i></li>
+<li>the number of external node of <i>L</i> ( 每个完整的树作为子树时,节点的深度都要下沉1,所以递归合并时每个叶节点对应的路径长度都要加一 )</li>
+<li>The external path length of <i>R</i></li>
+<li>the number of external node of <i>R</i></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Lower-Bound-for-Average-Behavior"><a class="header-anchor" href="#Lower-Bound-for-Average-Behavior"></a>Lower Bound for Average Behavior</h2>
+<ul>
+<li>
+<p>Since a decision tree with <i>L</i> leaves is a 2-tree,  the average path length from the root to leaf is <i>epl / L</i></p>
+</li>
+<li>
+<p>Recall that <strong><i>epl</i> &gt;= <i>L log( L )</i></strong></p>
+</li>
+<li>
+<p>每个输出对应的概率是 1 / L , 而所有代价的总和是<i>epl</i>, 所以平均情况复杂度在所有可能的输入等概率的前提下,是 <i>epl/L</i>, 因此求average case的下界,就是求<i>epl</i>的下界</p>
+</li>
+<li>
+<p><strong>Theorem</strong>: The average number of comparisons done by an algorithm to sort <i>n</i> items by comparison of keys is at least <i>log(n!)</i>, which is about <i> nlogn - 1.443n </i></p>
+</li>
+<li>
+<p>More Balanced 2-tree, Less EPL</p>
+<ul>
+<li>设一棵 决策树有两个节点,高度分别为h , k, h - k &gt; 1( 即该树不平衡 ).  高度为h的节点有两个叶节点, 高度k的节点没有叶节点( 由于是2-tree, 不可能只有一个叶子节点 )</li>
+<li>Assuming that <i>h - k &gt; 1</i>&gt;, when calculating <i>epl</i> , h + h + k is replaced by<i> ( h - 1 ) + 2( k + 1 )</i>. the net change in <i>epl</i> is k - h + 1 &lt; 0, that is , the <i>epl</i> decreases</li>
+<li>因此,求<i>epl</i>的下界,就是求最平衡的树的<i>epl</i>, 最平衡的二叉树就是`完美二叉树. 由此可证明:  <strong><i>epl</i> &gt;= <i>L log( L )</i></strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="MergeSort-Has-Optimal-Average-Performance"><a class="header-anchor" href="#MergeSort-Has-Optimal-Average-Performance"></a><code>MergeSort</code> Has Optimal Average Performance</h1>
+<ul>
+<li>The <strong>average</strong> number of comparisons done by an algorithm to sort <i>n</i> items by comparison of keys is at least about <i>nlogn - 1.443n</i></li>
+<li>The <strong>worst</strong> complexity of <code>MergeSort</code> is in <code>Omega(nlogn)</code>( 之前已证 )</li>
+<li>So, <code>MergeSort</code> is optimal as for its average performance
+<ul>
+<li>首先, 归并排序的worst-case是<code>nlogn</code>, 而average-case必定小于等于worst-case, 即 <code>MergeSort</code>的average=case的上界是<code>nlogn</code>. 作为一个comparison sorting, 由于comparison sorting的average-case的下界是<code>nlogn</code>. 因此<code>MergeSort</code>的average-case的下界是<code>nlogn</code>. 夹逼得出, 所以<code>MergeSort</code>的average-case就是<code>nlog</code>级别</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm-design-and-analysis/" rel="tag"># Algorithm design and analysis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/21/L5-HeapSort/" rel="prev" title="L5 HeapSort">
+                  <i class="fa fa-chevron-left"></i> L5 HeapSort
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/23/%E4%BD%BF%E7%94%A8Typora%E7%BC%96%E5%86%99%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F/" rel="next" title="Typora && Latex">
+                  Typora && Latex <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

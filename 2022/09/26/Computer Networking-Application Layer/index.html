@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  DNS P2P 文件传送协议 TELNET 万维网 Email DHCP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Application Layer">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/26/Computer%20Networking-Application%20Layer/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  DNS P2P 文件传送协议 TELNET 万维网 Email DHCP">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/DNS%E5%9F%9F%E7%9A%84%E5%88%86%E5%8C%BA.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/P2P%E5%92%8CCS%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%9C%80%E5%B0%8F%E5%88%86%E5%8F%91%E6%97%B6%E9%97%B4%E5%AF%B9%E6%AF%94.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/%20%20%E7%8E%AF%E5%BD%A2DHT.jpg">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/HTTP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.jpg">
+<meta property="og:image" content="https://img-blog.csdn.net/20180424090604643?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3plcGh5cjk5OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="article:published_time" content="2022-09-26T06:39:34.927Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.927Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Computer Networking">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/DNS%E5%9F%9F%E7%9A%84%E5%88%86%E5%8C%BA.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/26/Computer%20Networking-Application%20Layer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/26/Computer%20Networking-Application%20Layer/","path":"2022/09/26/Computer Networking-Application Layer/","title":"Application Layer"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Application Layer | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9FDNS"><span class="nav-text">域名系统DNS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%9C%8D%E5%8A%A1"><span class="nav-text">其他服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%92%E8%81%94%E7%BD%91%E7%9A%84%E5%9F%9F%E5%90%8D%E7%BB%93%E6%9E%84"><span class="nav-text">互联网的域名结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">域名服务器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B1%82%E6%AC%A1"><span class="nav-text">DNS服务器层次</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS%E7%BC%93%E5%AD%98"><span class="nav-text">DNS缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS%E8%AE%B0%E5%BD%95%E5%92%8C%E6%8A%A5%E6%96%87"><span class="nav-text">DNS记录和报文</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#P2P%E5%BA%94%E7%94%A8"><span class="nav-text">P2P应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#P2P%E6%96%87%E4%BB%B6%E5%88%86%E5%8F%91"><span class="nav-text">P2P文件分发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#P2P%E4%BD%93%E7%B3%BB%E7%9A%84%E6%89%A9%E5%B1%95%E6%80%A7"><span class="nav-text">P2P体系的扩展性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BitTorrent"><span class="nav-text">BitTorrent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%95%A3%E5%88%97%E8%A1%A8"><span class="nav-text">分布式散列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%BD%A2DHT"><span class="nav-text">环形DHT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E7%AD%89%E6%96%B9%E6%89%B0%E5%8A%A8"><span class="nav-text">对等方扰动</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E4%BC%A0%E9%80%81%E5%8D%8F%E8%AE%AE"><span class="nav-text">文件传送协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FTP%E6%A6%82%E8%BF%B0"><span class="nav-text">FTP概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FTP%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">FTP的基本工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%96%87%E4%BB%B6%E4%BC%A0%E9%80%81%E5%8D%8F%E8%AE%AETFTP"><span class="nav-text">简单文件传送协议TFTP</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E7%BB%88%E7%AB%AF%E5%8D%8F%E8%AE%AETELNET"><span class="nav-text">远程终端协议TELNET</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%87%E7%BB%B4%E7%BD%91WWW"><span class="nav-text">万维网WWW</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%9F%E4%B8%80%E8%B5%84%E6%BA%90%E5%AE%9A%E4%BD%8D%E7%AC%A6URL"><span class="nav-text">统一资源定位符URL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E9%80%81%E5%8D%8F%E8%AE%AEHTTP"><span class="nav-text">超文本传送协议HTTP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E6%A6%82%E8%BF%B0"><span class="nav-text">HTTP概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">代理服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E6%8A%A5%E6%96%87%E7%BB%93%E6%9E%84"><span class="nav-text">HTTP报文结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87"><span class="nav-text">请求报文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87"><span class="nav-text">响应报文</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E7%A0%81"><span class="nav-text">状态码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cookie"><span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-cache"><span class="nav-text">Web cache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Conditional-GET"><span class="nav-text">Conditional GET</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%87%E7%BB%B4%E7%BD%91%E7%9A%84%E6%96%87%E6%A1%A3"><span class="nav-text">万维网的文档</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%96%87%E6%A1%A3"><span class="nav-text">静态文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E6%96%87%E6%A1%A3"><span class="nav-text">动态文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B4%BB%E5%8A%A8%E6%96%87%E6%A1%A3"><span class="nav-text">活动文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%87%E7%BB%B4%E7%BD%91%E7%9A%84%E4%BF%A1%E6%81%AF%E6%A3%80%E7%B4%A2%E7%B3%BB%E7%BB%9F"><span class="nav-text">万维网的信息检索系统</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6"><span class="nav-text">电子邮件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E9%82%AE%E4%BB%B6%E4%BC%A0%E9%80%81%E5%8D%8F%E8%AE%AESMTP"><span class="nav-text">简单邮件传送协议SMTP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%82%AE%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%8D%8F%E8%AE%AEPOP3"><span class="nav-text">邮件读取协议POP3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%82%AE%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%8D%8F%E8%AE%AEIMAP"><span class="nav-text">邮件读取协议IMAP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-web%E7%9A%84%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6"><span class="nav-text">基于 web的电子邮件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E4%BA%92%E8%81%94%E7%BD%91%E9%82%AE%E4%BB%B6%E6%89%A9%E5%85%85MIME"><span class="nav-text">通用互联网邮件扩充MIME</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E4%B8%BB%E6%9C%BA%E9%85%8D%E7%BD%AE%E5%8D%8F%E8%AE%AEDHCP"><span class="nav-text">动态主机配置协议DHCP</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/26/Computer%20Networking-Application%20Layer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Application Layer | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Application Layer
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-26 06:39:34" itemprop="dateCreated datePublished" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li><strong>DNS</strong></li>
+<li><strong>P2P</strong></li>
+<li><strong>文件传送协议</strong></li>
+<li><strong>TELNET</strong></li>
+<li><strong>万维网</strong></li>
+<li><strong>Email</strong></li>
+<li><strong>DHCP</strong></li>
+</ul>
+<span id="more"></span>
+<h1 id="域名系统DNS"><a class="header-anchor" href="#域名系统DNS"></a>域名系统DNS</h1>
+<p>port：53</p>
+<h2 id="概述"><a class="header-anchor" href="#概述"></a>概述</h2>
+<ul>
+<li>把互联网上的主机名字转换为IP地址</li>
+<li>DNS被设计为一个联机分布式数据库系统， 并采用CS模式。 DNS使大部分名字都在本地进行<strong>解析（resolve）</strong>,  仅少量解析需要在互联网上通信。
+<ul>
+<li>由于是分布式系统，单个计算机的故障不会妨碍整个DNS系统的运行</li>
+</ul>
+</li>
+<li>解析是通过<strong>域名服务器程序</strong>， 而运行它的机器称为<strong>域名服务器</strong></li>
+<li>解析过程
+<ol>
+<li>当某一个应用进程需要把主机名解析为IP地址时， 它就调用<strong>解析程序（ resolver）</strong>， 并成为DNS的一个客户， 把带解析的域名放在DNS请求报文中， 以<code>UDP用户数据报</code>的方式发给<code>本地域名服务器</code>( 使用UDP是为了减小开销 )</li>
+<li>本地域名服务器在查找域名(递归, 迭代, 详见下文) 后, 把对应的IP地址放在回答报文中返回</li>
+<li>应用进程获得目的主机的IP地址后即可进行通讯</li>
+</ol>
+</li>
+</ul>
+<h2 id="其他服务"><a class="header-anchor" href="#其他服务"></a>其他服务</h2>
+<ul>
+<li>主机别名
+<ul>
+<li>原名称为“规范主机名”</li>
+</ul>
+</li>
+<li>邮件服务器别名</li>
+<li>负载分配：将一个IP地址集合（即服务器集合）映射到一个规范主机名。 每次client向集合中的一个元素请求时，DNS以整个集合进行响应（每次返回集合中的一个元素，而整个集合的次序在不断变化，这样就实现了负载分配）</li>
+</ul>
+<h2 id="互联网的域名结构"><a class="header-anchor" href="#互联网的域名结构"></a>互联网的域名结构</h2>
+<ul>
+<li>
+<p>任何连接在互联网的主机和路由器, 都有一个唯一的<strong>层次结构的名字</strong>, 即<strong>域名(Domain name )</strong>, <strong>域</strong>是一个可被管理的划分. 域可以被划分为子域, 再划分为子域的子域…</p>
+</li>
+<li>
+<p>每个域名都由一个 <em>label</em> 序列组成，各<em>label</em>间用 *.*隔开</p>
+<p>如： 三级域名 . 二级域名 . 顶级域名</p>
+</li>
+<li>
+<p><strong>不区分大小写</strong></p>
+</li>
+<li>
+<p>只是个逻辑概念</p>
+</li>
+</ul>
+<h2 id="域名服务器"><a class="header-anchor" href="#域名服务器"></a>域名服务器</h2>
+<ul>
+<li>
+<p>一个服务器管辖的范围叫做<strong>区(zone)</strong>. 每个区内的所有节点是连通的. 每个区设置相应的<strong>权限域名服务器( authoritative name server )</strong>, 用来保存该<u>区中所有主机的域名到IP地址的映射</u></p>
+</li>
+<li>
+<p>DNS查询报文用<strong>UDP</strong></p>
+</li>
+<li>
+<p>DNS服务器的管辖范围以<strong>区</strong>为单位, 区小于等于域, 是域的子集</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://xn--abc-q33er8o2xc8t5c.xn--comabc-dn7igl21d6wvi0bxbv127i.com">比如域名abc.com可以只设一个区abc.com</a>, 这样，区和域就是一回事（如左图）； 但域名abc.com也可以划分两个区：<a target="_blank" rel="noopener" href="http://abc.com">abc.com</a> 和 <a target="_blank" rel="noopener" href="http://y.abc.com">y.abc.com</a>  这两个区都隶属于域 <a target="_blank" rel="noopener" href="http://abc.com">abc.com</a> ，都各自设置了相应的权限域名服务器（如又图）</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/DNS%E5%9F%9F%E7%9A%84%E5%88%86%E5%8C%BA.png" alt=""></p>
+</li>
+</ul>
+<h2 id="DNS服务器层次"><a class="header-anchor" href="#DNS服务器层次"></a>DNS服务器层次</h2>
+<ul>
+<li>DNS服务器按层次安排, 分四种
+<ol>
+<li>根域名服务器( root name servevr )
+<ul>
+<li>最高层次</li>
+<li>直到所有的<code>顶级域名服务器</code>的域名和IP地址</li>
+<li><code>本地域名服务器</code>自己若无法解析,则首先求助于<code>根域名服务器</code></li>
+<li>**任播(anycast)**技术: 找到离DNS客户最近的一个<code>根域名服务器</code></li>
+</ul>
+</li>
+<li>顶级域名服务器( top level domain name server TLD服务器 )</li>
+<li>权限域名服务器
+<ul>
+<li>负责一个区的域名服务器。当它不能给出最后的查询回答时，就会告诉发出查询请求的DNS客户，下一步应该找哪一个权限域名服务器</li>
+</ul>
+</li>
+<li>本地域名服务器（ local name server ） ( 默认域名服务器 )
+<ul>
+<li>当一个主机发出DNS查询请求时，这个查询请求报文就发给LNS</li>
+<li>也称为“默认域名服务器”</li>
+<li>当所要查询的主机也属于同一个本地ISP时， 该本地域名服务器就能立即将所查询的主机名转换为IP地址</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>域名解析过程：
+<ul>
+<li>主机向本地域名服务器<strong>递归查询（ recursive query ）</strong>
+<ul>
+<li>本地域名服务器以DNS客户的身份，向其它根域名服务器发送查询报文</li>
+<li>因此递归查询的返回结果要么是要查的IP地址，要么是报错，表示没查到</li>
+</ul>
+</li>
+<li>本地域名服务器向<strong>根</strong>域名服务器<strong>迭代查询（iterative query）</strong>
+<ul>
+<li>让LNS去查，根域名服务器通常把自己知道的顶级域名服务器的IP地址告诉LNS,让LNS再向顶级域名服务器查询。</li>
+<li>顶级域名服务器收到LNS的查询请求后，要么给出所查询的IP地址，要么<u>告诉LNS下一步应当向哪个权限域名服务器进行查询</u></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="DNS缓存"><a class="header-anchor" href="#DNS缓存"></a>DNS缓存</h2>
+<ul>
+<li>DNS广泛使用<strong>高速缓存</strong>
+<ul>
+<li>为维护缓存中的内容正确，还应给每项内容设一个计时器</li>
+<li>主机也需要（DNS的）高速缓存，主机启动时从LNS中下载名字和地址的全部数据库，并且维护（DNS）存放自己最近使用的域名的高速缓存</li>
+</ul>
+</li>
+</ul>
+<h2 id="DNS记录和报文"><a class="header-anchor" href="#DNS记录和报文"></a>DNS记录和报文</h2>
+<ul>
+<li>
+<p><strong>资源记录</strong>Resource Record: 所有DNS服务器共同实现了DNS分布式数据库，其条目就是资源记录</p>
+<p><code>(Name, Value,Type,TTL)</code></p>
+</li>
+<li>
+<p>Name和Value值取决于Type:</p>
+<ul>
+<li><code>Type = A</code>: Name = 主机名，  Value = 主机名对应的IP地址</li>
+<li><code>Type = NS</code>：Name = 域名，Value = 知道如何获得该域中IP地址的权威DNS服务器的主机名
+<ul>
+<li>与<code>Type=A</code>记录结合，将权限DNS的主机名进一步映射到权限域名服务器的IP地址，方便<strong>迭代查询</strong></li>
+</ul>
+</li>
+<li><code>Type=CNAME</code>: Value = 别名为Name的主机的规范主机名</li>
+<li><code>Type = MX</code>： Value = 别名为Name的邮件服务器的规范主机名
+<ul>
+<li>使用<code>MX</code>记录使得邮件服务器可以和其他服务器使用相同的别名，DNS client得到别名后，只需请求一条<code>MX</code>记录，就能得到规范主机名</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>权威域名服务器包含其区内主机的<code>Type A</code>记录，非权威域名服务器包含的是包含主机名的域的<code>Type = NS</code>记录和<code>Type=A</code>记录，后者提供了<code>NS</code>记录对应的权限域名服务器的IP地址</p>
+<ul>
+<li>例子：假如<code>edu TLD</code>服务器不是主机<code>gaia.cs.umass.edu</code>的权限域名服务器，则该服务器将包含：
+<ul>
+<li>一条包括 主机<code>cs.umass.edu</code>的域记录，如<code>（umass.edu, dns.umass.edu, NS）</code></li>
+<li>一条A记录，与NS记录配套： <code>(dns.umass.edu, 128.119.40.111,A)</code></li>
+<li>这样就实现了迭代查询</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Tool： <code>nslookup</code></p>
+</li>
+<li>
+<p>DNS报文： 略</p>
+</li>
+<li>
+<p>向DNS数据库中插入记录： 要到注册登记机构<code>register</code> ,它负责验证域名的唯一性，将该域名输入DNS DataBase.  步骤为：</p>
+<ol>
+<li>
+<p>假设要开设网站，注册域名<code> LYK-love.cn</code>,你需要提交权威DNS服务器的域名和地址， 假设：权威DNS服务器名为<code>dns.LYK-love.cn</code>, 其IP地址为<code>212.212.212.1</code></p>
+</li>
+<li>
+<p>对每个权威DNS。该<code>register</code>确保将一个<code>NS</code>和<code>A</code>记录输入<code>TLD cn</code>服务器：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">( LYK-love.cn, dns.LYK-love.cn, NS )</span><br><span class="line">( dns.LYK-love.cn, 212.212.212.1,A )</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>还可以输入<code>MX</code>记录，与网站使用相同的别名</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">( LYK-love.cn, mail.LYK-love.cn, MX ) //别名使用LYK-love.cn</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<h1 id="P2P应用"><a class="header-anchor" href="#P2P应用"></a>P2P应用</h1>
+<ul>
+<li>CS体系依赖于服务器，P2P减少了对中心化的依赖</li>
+</ul>
+<h2 id="P2P文件分发"><a class="header-anchor" href="#P2P文件分发"></a>P2P文件分发</h2>
+<ul>
+<li>考虑一个应用，它从单一server向大量client（称为对等方<code>peer</code>）分发一个文件
+<ul>
+<li>CS：server负担大</li>
+<li>P2P: 每个对等方能重新分发它所拥有的该文件的任何部分</li>
+</ul>
+</li>
+<li>最流行的P2P文件共享协议：<code>BitTorrent</code></li>
+</ul>
+<h3 id="P2P体系的扩展性"><a class="header-anchor" href="#P2P体系的扩展性"></a>P2P体系的扩展性</h3>
+<ul>
+<li>
+<p>定义：</p>
+<ul>
+<li>$u_s$: server接入链路的上载速率</li>
+<li>$u_i$:第$i$对等方接入链路的上载速率</li>
+<li>$d_i$: 第$i$对等方接入链路的下载速率</li>
+<li>$F$: 被分发的文件大小（bit）</li>
+<li>$N$: 要获得该文件副本的对等方的数量</li>
+<li>$D$: <strong>分发时间</strong>, 所有 $N$ 个对等方得到该文件的副本所需的时间</li>
+<li>假设网络具有足够的带宽</li>
+</ul>
+</li>
+<li>
+<p>CS模式的分发时间(下界)：<br>
+$$<br>
+D_{cs} \geq \max{\frac{NF}{u_s}, \frac{F}{d_{\min}} }<br>
+$$</p>
+<ul>
+<li>server必须向 $N$个对等方的每个传输该文件的一个副本。因此server必须传输$NF$ bit， 因为其上载速率是<code>u_s</code>, 分发时间必定至少为$\frac{NF}{u_s}$</li>
+<li>令$d_{min}$表示具有最小下载速率的对等方的下载速率，后者获得该文件的 所有<code>F</code> bit的时间最少为$ \frac{F}{d_{\min}}$</li>
+</ul>
+</li>
+<li>
+<p>P2P模式的分发时间（下界）：<br>
+$$<br>
+D_{P2P} \geq \max{ \frac{F}{u_s}, \frac{F}{d_{\min}}, \frac{NF}{u_s + \sum\limits_{i=1}^{N}{u_i} } }<br>
+$$</p>
+<ul>
+<li>这里只是最小分发时间的简单表示式</li>
+<li>server必须向至少发送该文件的每个bit一次， $\frac{F}{u_s}$</li>
+<li>$ \frac{F}{d_{\min}}$与CS模式相同</li>
+<li>系统整体上载能力 $u_{total} = u_s + u_1 + u_2 + \dots + u_N$, 系统必须向这$N$个对等方的每个上载$F$比特，  因此总共上载$NF$ bit, 这不能以快于$u_{total}$的速率完成，因此，分发时间也至少是$\frac{NF}{u_s + \sum\limits_{i=1}^{N}{u_i} }$</li>
+</ul>
+</li>
+<li>
+<p>比较两种模式的最小分发时间关于 $N$的函数，发现P2P的最小分发时间更小</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/P2P%E5%92%8CCS%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%9C%80%E5%B0%8F%E5%88%86%E5%8F%91%E6%97%B6%E9%97%B4%E5%AF%B9%E6%AF%94.png" alt=""></p>
+</li>
+</ul>
+<h3 id="BitTorrent"><a class="header-anchor" href="#BitTorrent"></a>BitTorrent</h3>
+<ul>
+<li>洪流 <code>torrent</code>:   参与一个特定文件分发的所有对等方的集合</li>
+<li>块 <code>chunk</code>：在一个洪流中的对等方彼此下载等长度的文件<em>块</em>
+<ul>
+<li>256KB</li>
+</ul>
+</li>
+<li>任何对等方可能在任何时候加入或离开洪流</li>
+<li>追踪器<code> tracker</code>:   每个洪流一个，用于追踪洪流中的对等方
+<ul>
+<li>每当对等方加入一个洪流，就向其追踪器<code>register</code>自己，并周期性通知追踪器自己仍在该洪流中</li>
+</ul>
+</li>
+<li>workflow：
+<ol>
+<li>Alice 加入洪流，追踪器随机从对等方的集合中选一个子集（e.g. 50 个 ），并将它们的IP地址发给Alice</li>
+<li>Alice持有这张列表，试图与表上所有对等方建立TCP连接</li>
+<li>所有与Alice成功建立连接的对等方称为“邻近对等方”（  e.g. $L$个 ）
+<ul>
+<li>由于用户可随时加入、离开洪流，因此邻近对等方集合是动态的</li>
+</ul>
+</li>
+<li>在任何给定的时间，每个对等方将具有来自该文件的的块子集，Alice周期性地询问每个邻近对等方它们所具有的块列表，得到$L$个块列表，然后对她还没有的块发出请求
+<ul>
+<li>请求哪些块？
+<ul>
+<li>最稀缺优先（<code>rarest  first</code>）： （在Alice没有的块中）请求在邻居中副本数量最少的块</li>
+</ul>
+</li>
+<li>向哪些向她请求的块中发送？
+<ul>
+<li>“一报还一报”（<code>tit for tat</code>）: Alice 根据当前能够以<em>最高速率</em>向她提供数据的邻居，给出其优先权
+<ul>
+<li>“一报还一报”被证明可以被回避</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="分布式散列表"><a class="header-anchor" href="#分布式散列表"></a>分布式散列表</h2>
+<ul>
+<li>分布式散列表(<code> Distributed Hash Table, DHT</code> )： 一种分布式数据库，每个对等方仅保持总体数据库的一个子集
+<ul>
+<li>其条目是<code>(key - value) pair</code></li>
+</ul>
+</li>
+<li>为每个对等方分配 $n$ 位的标识符和<code>key</code>
+<ul>
+<li>值域: $[0,2^{n}-1]$</li>
+<li>对于不是整数的<code>key</code>，用一个散列函数映射到该区间， 以后我们提起<code>key</code>，指的是它的散列值</li>
+<li><em>最邻近后继</em>： 将最邻近对等方定义为<code>key</code>的最邻近后继， <code>key</code>就放在其最邻近后继上</li>
+</ul>
+</li>
+</ul>
+<h3 id="环形DHT"><a class="header-anchor" href="#环形DHT"></a>环形DHT</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/%20%20%E7%8E%AF%E5%BD%A2DHT.jpg" alt=""></p>
+<ul>
+<li>假设$n=4$, 区间为$[0,15]$,  因为对等方<code>12</code>是键<code>11</code>最邻近的后继， 因此将<code>(11, Johny)</code>存储在对等方<code>12</code>上</li>
+<li>查询<code>key</code>时，如何确定最邻近对等方？ 需要特殊的对等方拓扑结构：
+<ul>
+<li>所有对等方相连： 这样每个对等方，每个查询仅需一个报文，但这样的系统难以维护</li>
+<li>环形DHT： 如图，平均发送$\frac N 2$ 个报文</li>
+<li>“捷径对等方”：在环形基础上增加边
+<ul>
+<li>普遍采用，每个请求的报文数量能被优化到 $O(logN)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="对等方扰动"><a class="header-anchor" href="#对等方扰动"></a>对等方扰动</h3>
+<ul>
+<li>P2P系统中，对等方可以自由加入、退出，上述的拓扑结构会被破坏</li>
+<li>措施： 每个对等方联系其$n$个后继（和捷径对等方），这样一个节点消失或增加时，该链表能自己调整</li>
+</ul>
+<h1 id="文件传送协议"><a class="header-anchor" href="#文件传送协议"></a>文件传送协议</h1>
+<h2 id="FTP概述"><a class="header-anchor" href="#FTP概述"></a>FTP概述</h2>
+<ul>
+<li>FTP( File Transfer Protocal )： 文件传送协议</li>
+<li><strong>文件共享协议</strong>的两大类：
+<ol>
+<li><strong>复制整个文件</strong>，
+<ul>
+<li>特点是： <u>若要存取一个文件， 就要先获得一个本地的文件副本。 若要修改文件， 只能对文件的副本进行修改， 然后再将修改后的文件副本传回到原节点</u></li>
+<li>两种：
+<ol>
+<li><strong>FTP</strong>: 基于TCP</li>
+<li>TFTP: 基于UDP的简单文件传送协议</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><strong>联机访问</strong>
+<ul>
+<li>允许多个程序同时对一个系统进行存取</li>
+<li>由操作系统提供对远地共享文件进行访问的服务（ 不需要调用特殊的进程 ）， 就如同对本地文件的访问一样</li>
+<li>用户可以用远地文件作为输入和输出来运行任何应用程序， 而操作系统中的文件系统则提供对共享文件的<strong>透明存取</strong>， 其优点是： 将原来用于处理本地文件的应用程序用来处理远地文件时， 不需要对应用程序做明显的改动
+<ul>
+<li>类似云计算机</li>
+</ul>
+</li>
+<li>例子：
+<ul>
+<li>网络文件系统NFS（ Network File System ）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="FTP的基本工作原理"><a class="header-anchor" href="#FTP的基本工作原理"></a>FTP的基本工作原理</h2>
+<ul>
+<li>
+<p>CS模式， 一个FTP服务器进程可以同时为多个客户进程提供服务</p>
+</li>
+<li>
+<p>一个FTP服务器进程由两部分组成：</p>
+<ol>
+<li>主进程：负责接收新的请求</li>
+<li>若干个从属进程：负责处理单个请求</li>
+</ol>
+</li>
+<li>
+<p>主进程的工作步骤：</p>
+<ol>
+<li>打开熟知端口（21），使客户进程能连接上</li>
+<li>等待客户进程发出连接请求</li>
+<li>启动从属进程处理client process发来的请求。 从属进程对 client process 的请求处理完毕后即终止，但从属进程在运行期间还可能创建一些其他的子进程</li>
+<li>回到等待状态，继续接受其他客户进程发来的请求。主进程与从属进程的处理是<strong>并发</strong>进行的
+<ul>
+<li>并发： 在一个芯片上时分复用</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>FTP工作步骤：</p>
+<ul>
+<li>
+<p>服务器有<strong>控制进程</strong>。整个会话期间，客户和服务器一直保持<strong>控制连接</strong></p>
+</li>
+<li>
+<p>当客户进程向服务器进程发出建立连接请求时，要寻找连接服务器进程的熟知端口<code>21</code>，同时告诉服务器进程自己的另一个端口号码，用于建立“<strong>数据连接</strong>”。</p>
+</li>
+<li>
+<p>客户发送的传送请求，通过控制连接发送给服务器的控制进程</p>
+</li>
+<li>
+<p>控制进程在接收到文件传输请求后就创建“<strong>数据传送进程</strong>”和“<strong>数据连接</strong>”。数据传送进程实际完成文件的传送（通过数据连接），在传送完成后关闭“数据连接”。</p>
+<ul>
+<li>
+<p>服务器进程用自己传输数据的熟知端口<code>20</code>与客户进程所提供的端口号建立数据传送连接</p>
+</li>
+<li>
+<p>由于FTP将控制连接与数据连接分离，因此FTP的控制信息是<strong>带外</strong>( out of band )传送的.</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="简单文件传送协议TFTP"><a class="header-anchor" href="#简单文件传送协议TFTP"></a>简单文件传送协议TFTP</h2>
+<ul>
+<li>用于UDP</li>
+<li>所占内存较小</li>
+</ul>
+<h1 id="远程终端协议TELNET"><a class="header-anchor" href="#远程终端协议TELNET"></a>远程终端协议TELNET</h1>
+<ul>
+<li>用户用TELNET就能通过TCP连接登录到远地的另一台主机（使用主机名或IP地址），这种服务是透明的， 因此TELNET也称为<strong>终端仿真协议</strong></li>
+<li>为适应硬件和OS的差异，TELNET定义了数据和命令在互联网中的传输格式，即<strong>网络虚拟终端NVT</strong>( Network Virtual Terminal )，数据在传输时（C To S ， S To C）都被转为NVT格式</li>
+</ul>
+<h1 id="万维网WWW"><a class="header-anchor" href="#万维网WWW"></a>万维网WWW</h1>
+<ul>
+<li>万维网（World Wide Web）并非一个特殊的计算机网络，而是一个大规模的、联机式的信息储藏所。 万维网用链接的方法从互联网的一个站点访问另一个站点</li>
+<li>万维网是个分布式的<strong>超媒体</strong>（hypermedia）系统，它是<strong>超文本</strong>（hypertext）系统的扩充
+<ul>
+<li>超文本： 包含指向其它文档的链接的text，即，超文本由多个信息源链接成</li>
+<li>超媒体：超文本文档只能包含文本信息，超媒体文档还能包含其他表示方式的信息，如图形、声音…</li>
+</ul>
+</li>
+<li>万维网以CS模式工作， <strong>浏览器</strong>就是在用户主机上的<u>万维网客户程序</u>。 万维网文档所驻留的主机则运行服务器程序，该主机也称为万维网服务器。在一个客户程序主窗口上显示出的万维网文档称为<strong>页面</strong>（page）</li>
+</ul>
+<h2 id="统一资源定位符URL"><a class="header-anchor" href="#统一资源定位符URL"></a>统一资源定位符URL</h2>
+<ul>
+<li>
+<p>对资源的位置提供了抽象的识别方法，并用它来给资源定位</p>
+</li>
+<li>
+<p>&lt;协议&gt;://&lt;主机&gt;:&lt;端口&gt;/&lt;路径&gt;</p>
+<ul>
+<li>端口和路径可以省略。 省略“路径”，则URL指到<strong>主页</strong></li>
+<li>有些浏览器可以把&quot;http://&quot;和主机名最前面的&quot;www&quot;省略，当然浏览器会自动把它们添上</li>
+</ul>
+</li>
+</ul>
+<h2 id="超文本传送协议HTTP"><a class="header-anchor" href="#超文本传送协议HTTP"></a>超文本传送协议HTTP</h2>
+<h3 id="HTTP概述"><a class="header-anchor" href="#HTTP概述"></a>HTTP概述</h3>
+<ul>
+<li>面向<strong>事务</strong>的应用层协议，使用TCP
+<ul>
+<li>HTTP本身是<strong>无连接</strong>的，即无需事先建立HTTP连接</li>
+<li>HTTP是<strong>无状态</strong>的，不记得曾经的客户，也不记得客户访问了多少次</li>
+</ul>
+</li>
+<li>默认端口<code>80</code></li>
+<li>请求一个万维网文档所需的时间 = 该文档的传输时间 + 两倍RTT
+<ul>
+<li>一个RTT用于建立TCP连接，一个RTT用于请求和接收万维网文档</li>
+<li>TCP三报文握手的第三个报文段中的数据，就是客户对万维网文档的请求报文。 服务器收到HTTP请求报文后，就把所请求的文档作为响应报文返回给客户</li>
+</ul>
+</li>
+<li>为避免两倍RTT开销，HTTP/1.1使用了持续连接，它有两种工作方式：
+<ul>
+<li><strong>非流水线模式</strong>( without pipeling ): 客户收到前一个响应后才能发出下一个请求. 因此，在TCP连接已建立后访问一次对象就要用去一个RTT</li>
+<li><strong>流水线模式</strong>（ with pipelining ）： 客户在收到HTTP的响应报文之前就能够接着发送新的请求报文</li>
+</ul>
+</li>
+</ul>
+<h3 id="代理服务器"><a class="header-anchor" href="#代理服务器"></a>代理服务器</h3>
+<ul>
+<li>又称“<strong>万维网高速缓存</strong></li>
+<li>client要向互联网上的server发送请求时，就先和proxy server建立TCP连接，并向其发送HTTP报文。若proxy server没找到所请求的对象，则<strong>由proxy server代表client</strong>与互联网上的源点服务器（origin server）建立TCP连接，并发送HTTP报文</li>
+</ul>
+<h3 id="HTTP报文结构"><a class="header-anchor" href="#HTTP报文结构"></a>HTTP报文结构</h3>
+<p>ref: <a target="_blank" rel="noopener" href="https://blog.csdn.net/zephyr999/article/details/80055420">https://blog.csdn.net/zephyr999/article/details/80055420</a></p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/HTTP%E6%8A%A5%E6%96%87%E6%A0%BC%E5%BC%8F.png" alt=""></p>
+<ul>
+<li>开始行
+<ul>
+<li>在请求报文中称为“请求行”<code>request line</code>
+<ul>
+<li>方法 + url + HTTP版本</li>
+</ul>
+</li>
+<li>在响应报文中称为“状态行”<code>status line</code>
+<ul>
+<li>服务器HTTP协议版本，响应状态码，状态码的文本描述</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>首部行（请求头部<code>header</code>）
+<ul>
+<li>首部行后空一行</li>
+</ul>
+</li>
+<li>实体主体<code>entity body</code>
+<ul>
+<li>该字段可能缺失</li>
+</ul>
+</li>
+</ul>
+<h4 id="请求报文"><a class="header-anchor" href="#请求报文"></a>请求报文</h4>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/HTTP%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87.png" alt=""></p>
+<ul>
+<li>
+<p><strong>请求行</strong>由三部分组成：<strong>请求方法</strong>，<strong>请求URL</strong>（不包括域名），<strong>HTTP协议版本</strong></p>
+<p>请求方法比较多：<strong>GET、POST、HEAD、PUT、DELETE、OPTIONS、TRACE、CONNECT</strong></p>
+<p>最常用的是GET和POST</p>
+</li>
+<li>
+<p>首部行（请求头部， 报文头）：由 key/value 对组成，每行为一对，key 和 value 之间通过冒号(:)分割。请求头的作用主要用于通知服务端有关于客户端的请求信息</p>
+<ol>
+<li>
+<ul>
+<li>User-Agent：生成请求的浏览器类型</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>Accept：客户端可识别的响应内容类型列表；星号* 用于按范围将类型分组。*/*表示可接受全部类型，type/*表示可接受 type 类型的所有子类型。
+<ul>
+<li>Accept-Language: 客户端可接受的自然语言</li>
+</ul>
+</li>
+<li>Accept-Encoding: 客户端可接受的编码压缩格式
+<ul>
+<li>Accept-Charset： 可接受的字符集</li>
+<li>Host: 请求的主机名，允许多个域名绑定同一 IP 地址</li>
+</ul>
+</li>
+<li>connection：连接方式（close 或 keepalive）
+<ul>
+<li>Cookie: 存储在客户端的扩展字段</li>
+</ul>
+</li>
+<li>Content-Type:标识请求内容的类型
+<ul>
+<li>Content-Length:标识请求内容的长度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>请求体（报文体）: 主要用于 POST 请求，与 POST 请求方法配套的请求头字段一般有 Content-Type和 Content-Length</p>
+<p>常见的Content-Type：</p>
+<table>
+<thead>
+<tr>
+<th>Content-Type</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>text/html</td>
+<td>html格式</td>
+</tr>
+<tr>
+<td>text/plain</td>
+<td>纯文本格式</td>
+</tr>
+<tr>
+<td>text/css</td>
+<td>CSS格式</td>
+</tr>
+<tr>
+<td>text/javascript</td>
+<td>js格式</td>
+</tr>
+<tr>
+<td>image/gif</td>
+<td>gif图片格式</td>
+</tr>
+<tr>
+<td>image/jpeg</td>
+<td>jpg图片格式</td>
+</tr>
+<tr>
+<td>image/png</td>
+<td>png图片格式</td>
+</tr>
+<tr>
+<td>application/x-www-form-urlencoded</td>
+<td>POST专用：普通的表单提交默认是通过这种方式。form表单数据被编码为key/value格式发送到服务器。</td>
+</tr>
+<tr>
+<td>application/json</td>
+<td>POST专用：用来告诉服务端消息主体是序列化后的 JSON 字符串</td>
+</tr>
+<tr>
+<td>text/xml</td>
+<td>POST专用：发送xml数据</td>
+</tr>
+<tr>
+<td>multipart/form-data</td>
+<td>POST专用：下面讲解</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>multipart/form-data</strong></li>
+</ul>
+<p>用以支持向服务器发送二进制数据，以便可以在 POST 请求中实现文件上传等功能</p>
+</li>
+</ul>
+<h4 id="响应报文"><a class="header-anchor" href="#响应报文"></a>响应报文</h4>
+<p>由状态行、响应头、空行、响应内容四部分组成</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/%E5%BA%94%E7%94%A8%E5%B1%82/HTTP%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87.jpg" alt=""></p>
+<ul>
+<li>状态行</li>
+</ul>
+<p>状态行也由三部分组成：服务器HTTP协议版本，响应状态码，状态码的文本描述</p>
+<p>格式：HTTP-Version Status-Code Reason-Phrase CRLF</p>
+<p>比如：HTTP/1.1 200 OK</p>
+<ul>
+<li>响应头：
+<ul>
+<li>Location：服务器返回给客户端，用于重定向到新的位置</li>
+<li>Server： 包含服务器用来处理请求的软件信息及版本信息Vary：标识不可缓存的请求头列表</li>
+<li>Connection: 连接方式， close 是告诉服务端，断开连接，不用等待后续的请求了。 keep-alive 则是告诉服务端，在完成本次请求的响应后，保持连接</li>
+<li>Keep-Alive: 300，期望服务端保持连接多长时间（秒）</li>
+</ul>
+</li>
+<li>空行：(CR or LF )， 位于响应头和响应内容之间</li>
+<li>响应内容：服务端返回给请求端的文本信息</li>
+</ul>
+<h4 id="状态码"><a class="header-anchor" href="#状态码"></a>状态码</h4>
+<p><img data-src="https://img-blog.csdn.net/20180424090604643?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3plcGh5cjk5OQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt=""></p>
+<ul>
+<li>
+<p>1XX：服务器已接收了客户端的请求，客户端可以继续发送请求</p>
+</li>
+<li>
+<p>2XX：服务器已成功接收到请求并进行处理</p>
+<ul>
+<li>200：OK</li>
+<li>202：No Content</li>
+<li>206：Partial Content</li>
+</ul>
+</li>
+<li>
+<p>3XX：服务器要求客户端重定向， 这表明浏览器需要执行某些特殊的处理以正确处理请求。</p>
+<ul>
+<li>
+<p>301：Moved Permanently</p>
+<ul>
+<li>永久性重定向。 该状态码表示请求的资源已被分配了新的 URI， 以后应使用资源现在所指的 URI。</li>
+</ul>
+</li>
+<li>
+<p>302：Found 临时性重定向。 该状态码表示请求的资源已被分配了新的 URI， 希望用户（本次） 能使用新的 URI 访问。</p>
+</li>
+<li>
+<p>303：See Other， 表示由于请求对应的资源存在着另一个URI，应使用GET方法定向获取请求的资源。303状态码明确表示客户端应当采用GET方法获取资源，这点与302状态码有区别</p>
+<ul>
+<li>当301、302、303响应状态码返回时，几乎所有的浏览器都会<strong>把POST改成GET，并删除请求报文内的主体，之后请求会自动再次发送</strong></li>
+</ul>
+</li>
+<li>
+<p>304：Not Modified， 请求的资源没有修改过, 304 虽然被划分在 3XX 类别中， 但是和重定向没有关系</p>
+</li>
+<li>
+<p>307：Temporary Redirect， 与 302 Found 有着相同的含义，但浏览器不会把307从POST变成GET</p>
+</li>
+</ul>
+</li>
+<li>
+<p>4XX 客户端错误</p>
+<ul>
+<li>400 Bad Request：请求报文中存在语法错误；</li>
+<li>401 Unauthorized：该状态码表示发送的请求需要有通过 HTTP 认证（BASIC 认证、DIGEST 认证） 的认证信息。</li>
+<li>403 Forbidden：请求的资源被服务器拒绝；</li>
+<li>404 Not Found：服务器上无法找到资源；</li>
+</ul>
+</li>
+<li>
+<p>5XX服务器错误</p>
+<p>5XX的响应结果表明服务器本身发生错误</p>
+<ul>
+<li>500 Internal Server Error：服务器端在执行请求时发生了错误</li>
+<li>502 网关错误</li>
+<li>503 Service Unavailable ：服务器暂时处于超负载或正在进行停机维护， 现在无法处理请求</li>
+</ul>
+</li>
+</ul>
+<h3 id="Cookie"><a class="header-anchor" href="#Cookie"></a>Cookie</h3>
+<ul>
+<li>
+<p>为了避免HTTP无状态带来的不便，万维网站点可以用Cookie来跟踪用户</p>
+<ul>
+<li>Cookie： 在HTTP server 和 client间传递的状态信息</li>
+</ul>
+</li>
+<li>
+<p>Cookie工作步骤：</p>
+<ol>
+<li>
+<p>当用户A浏览某个使用Cookie的网站时，该网站的服务器就为A产生一个唯一的<strong>识别码</strong>， 并以此为索引在后端数据库建立一个项目。接着在给A的HTTP响应报文中添加一个叫做<code>Set Cookie</code>的首部行，其字段名为“Set Cookie”，值为识别码，如：</p>
+<p>Set-Cookie： 2134vsfva32ddf432</p>
+</li>
+<li>
+<p>当A收到这个响应时，其浏览器就在它管理的特点Cookie文件中添加一行，其中包括这个识别码和server的主机名。当A继续浏览这个网站时，每发送一个HTTP请求报文，其浏览器就会从其Cookie文件中取出这个网站的识别码，放到HTTP请求报文的首部行中：</p>
+<p>Set-Cookie： 2134vsfva32ddf432</p>
+</li>
+<li>
+<p>于是，网站就能够跟踪用户2134vsfva32ddf432（用户A）</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="Web-cache"><a class="header-anchor" href="#Web-cache"></a>Web cache</h3>
+<ul>
+<li>Web cache: 也称代理服务器（ proxy server ）, 被配置了 proxy server的浏览器的请求都会被定向到该proxy server
+<ul>
+<li>proxy server会查询缓存，未命中则请求web server，将后者的内容缓存，并发给浏览器
+<ul>
+<li>递归式查询</li>
+<li>proxy server既是server（对于浏览器）也是clinet（对于web server）</li>
+</ul>
+</li>
+<li>应用：<strong>内容分发网络</strong>（  <code>Content Distribution Network, CDN</code> ）</li>
+</ul>
+</li>
+</ul>
+<h3 id="Conditional-GET"><a class="header-anchor" href="#Conditional-GET"></a>Conditional GET</h3>
+<ul>
+<li>proxy cache带来“陈旧缓存”问题，为此proxy cache可以向web server发送<code>Conditional GET</code>
+<ul>
+<li>具体而言， server每次都会向 proxy server发送  <code>Last-Modified-Since：date</code>字段。 一段时间后，当用户请求代理服务器查询该资源时， proxy server会对web server发送<code>If-Modified-Since</code>: date 字段
+<ul>
+<li>如果未修改，则只返回一个响应报文，不用返回对象（ 状态码<code>304 Not Modified</code> ）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="万维网的文档"><a class="header-anchor" href="#万维网的文档"></a>万维网的文档</h2>
+<h3 id="静态文档"><a class="header-anchor" href="#静态文档"></a>静态文档</h3>
+<ul>
+<li>文档放在服务器中，在用户浏览过程中，内容不会改变</li>
+</ul>
+<h3 id="动态文档"><a class="header-anchor" href="#动态文档"></a>动态文档</h3>
+<ul>
+<li>文档是在client访问server时才由应用程序动态创建
+<ul>
+<li>当请求到达时，server要运行另一个应用程序。server把client发来的数据交给这个进程，且server能解释这个进程的输出，以及这个输出结果该如何使用，这就需要<strong>通用网关接口CGI</strong>( Common Gateway Interface )， 它既指CGI标准，也指程序</li>
+</ul>
+</li>
+</ul>
+<h3 id="活动文档"><a class="header-anchor" href="#活动文档"></a>活动文档</h3>
+<ul>
+<li>动态文档一旦生成，内容就固定了，无法及时刷新屏幕。为了屏幕的及时更新，有两种技术：
+<ol>
+<li>服务器推送（server push）:  将所有工作交给服务器，服务器不断运行与动态文档相关联的应用程序，定时更新信息，并发送更新过的文档
+<ul>
+<li>server要为每个client维持一个不释放的TCP连接</li>
+</ul>
+</li>
+<li>活动文档（active document）:  所有工作交给浏览器端。服务器返回一个程序，它在浏览器端运行
+<ul>
+<li>Java applet</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>服务器端的活动文档内容是不变的，从传送的角度看，两种技术都把活动文档看成静态文档</li>
+</ul>
+<h2 id="万维网的信息检索系统"><a class="header-anchor" href="#万维网的信息检索系统"></a>万维网的信息检索系统</h2>
+<ul>
+<li>
+<p>搜索引擎： 万维网中用来进行搜索的工具。 分为<strong>全文检索</strong>和<strong>分类目录</strong>两种。现在还出现了<strong>垂直搜索引擎</strong>和<strong>元搜索引擎</strong>，</p>
+<ul>
+<li>
+<p>全文检索：爬虫，建立索引，从已建立的索引数据库中查询</p>
+</li>
+<li>
+<p>分类目录：不主动采集网站的信息，由网站向搜索引擎主动提交信息，经人工审核编辑后，输入到分类目录的数据库中。 查询时不需要关键词，只需按照分类。</p>
+</li>
+<li>
+<p>垂直搜索引擎：也是关键词搜索，但只针对某一领域、某一人群等</p>
+</li>
+<li>
+<p>元搜索引擎：把请求发给多个搜索引擎，再把结果集中处理</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="电子邮件"><a class="header-anchor" href="#电子邮件"></a>电子邮件</h1>
+<ul>
+<li>
+<p>电子邮件系统三要素： 用户代理、邮件服务器、邮件发送协议(SMTP)和邮件读取协议（POP3）</p>
+<ul>
+<li>用户代理（UA）:就是电子邮件客户端软件</li>
+<li>邮件发送协议：用于UA向邮件服务器发送邮件或在邮件服务器之间发送邮件</li>
+<li>邮件读取协议： UA从邮件服务器读取邮件</li>
+<li>SMTP, POP3, IMAP都用TCP</li>
+</ul>
+</li>
+<li>
+<p>用户在浏览器中浏览信息需要HTTP. 因此浏览器和邮件服务器之间传送邮件时，用HTTP. 而各邮件服务器之间传送邮件时,仍然使用SMTP</p>
+</li>
+<li>
+<p>Email发送和接收步骤：</p>
+<ol>
+<li>用户发送邮件，把工作全部交给UA. 后者把邮件用SMTP协议发给<strong>发送方邮件服务器</strong>
+<ul>
+<li>此时UA充当SMTP客户，发送方邮件服务器充当SMTP服务器</li>
+</ul>
+</li>
+<li>SMTP服务器（即发送方邮件服务器）收到邮件后，将其暂放在邮件缓存队列中</li>
+<li>发送方邮件服务器与接收方邮件服务器建立TCP连接（<strong>不会中转</strong>），然后依次把邮件缓存队列的邮件发出去</li>
+<li>接收方邮件服务器中的SMTP服务器进程收到邮件后，把邮件放到收件人的信箱中</li>
+<li>收件人打算收信时，运行UA，使用POP3(or IMAP)协议拉取邮件
+<ul>
+<li>有些“”特快专递“服务能够让UA直接用SMTP发给接收方邮件服务器（ 不用发给发送方邮件服务器了 ）</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>Email由<strong>信封</strong>和<strong>内容</strong>组成</p>
+<ul>
+<li>
+<p>信封上最重要的就是收件人的地址，电子邮件地址格式：</p>
+<p>用户名 @ 邮件服务器的域名</p>
+</li>
+<li>
+<p>内容分为<strong>首部</strong>和<strong>主体</strong>，后者用户自己撰写</p>
+<ul>
+<li>首部包括一些关键字，最重要的有
+<ul>
+<li>To： 收件人的邮件地址</li>
+<li>Subject：主题</li>
+<li>Cc：抄送，即留下一个复写副本</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="简单邮件传送协议SMTP"><a class="header-anchor" href="#简单邮件传送协议SMTP"></a>简单邮件传送协议SMTP</h2>
+<ul>
+<li>不使用中间邮件服务器</li>
+<li>本用于传输ASCII码而不是二进制文件，后来虽然有了MIME可以传输二进制数据，但效率不高，为此有了Extended SMTP</li>
+</ul>
+<h2 id="邮件读取协议POP3"><a class="header-anchor" href="#邮件读取协议POP3"></a>邮件读取协议POP3</h2>
+<ul>
+<li>POP3: UA必须允许POP3 client ， 而收件人所连接的ISP的邮件服务器中则运行POP3 server，当然，它还要运行SMTP server以收信
+<ul>
+<li>POP3 server需要用户输入鉴别信息（ 用户名和口令 ）</li>
+</ul>
+</li>
+<li>流程： 特许<code>authorization</code>，事务处理， 更新
+<ul>
+<li>特许：UA以明文发送用户名和口令
+<ul>
+<li>主要命令：
+<ul>
+<li><code>user &lt;username&gt;</code></li>
+<li><code>pass &lt;passwd&gt;</code>(  现在一般要输入授权码而不是密码 )</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>事务处理：UA可以对邮箱做一些操作，如<code>list</code>, <code>retr</code>, <code>dele</code>, <code>quit</code>
+<ul>
+<li><code>quit</code>仅仅给邮件打上删除标记，并没有删除邮件</li>
+</ul>
+</li>
+<li>更新：客户发出<code>quit</code>之后，结束该pop3 session,并删除那些被标记为删除的报文</li>
+</ul>
+</li>
+<li>POP3用户将邮件从服务器下载到本地</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">telnet pop.qq.com 110 //qq官网给的端口是995,但我用995是无法访问的，不知道为什么</span><br><span class="line"></span><br><span class="line">Trying 120.241.186.196...</span><br><span class="line">Connected to pop.qq.com.</span><br><span class="line">Escape character is &#x27;^]&#x27;.</span><br><span class="line">+OK XMail POP3 Server v1.0 Service Ready(XMail v1.0)</span><br><span class="line"></span><br><span class="line">user 邮箱名</span><br><span class="line">+OK</span><br><span class="line">pass 授权吗</span><br><span class="line">+OK</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="邮件读取协议IMAP"><a class="header-anchor" href="#邮件读取协议IMAP"></a>邮件读取协议IMAP</h2>
+<ul>
+<li>IMAP:用户在自己的计算机上就可以操纵邮件服务器上的邮箱，就像在本地操纵一样
+<ul>
+<li>允许UA只获取邮件的一部分</li>
+</ul>
+</li>
+</ul>
+<h2 id="基于-web的电子邮件"><a class="header-anchor" href="#基于-web的电子邮件"></a>基于 web的电子邮件</h2>
+<ul>
+<li>UA就是浏览器</li>
+</ul>
+<h3 id="通用互联网邮件扩充MIME"><a class="header-anchor" href="#通用互联网邮件扩充MIME"></a>通用互联网邮件扩充MIME</h3>
+<ul>
+<li>新增了5个首部</li>
+<li>定义了许多邮件内容的格式，对多媒体邮件的表示方法进行了标准化</li>
+<li>定义了传送编码</li>
+</ul>
+<h1 id="动态主机配置协议DHCP"><a class="header-anchor" href="#动态主机配置协议DHCP"></a>动态主机配置协议DHCP</h1>
+<ul>
+<li>
+<p>DHCP步骤：</p>
+<ol>
+<li>需要IP地址的主机在启动时就<strong>广播</strong>发送<strong>DHCP发现报文</strong>（DHCPDISCOVER）
+<ul>
+<li>广播是因为此时不知道DHCP服务器在哪</li>
+<li>目的地址是全1</li>
+<li>源地址是全0，因为此时主机没有IP地址</li>
+</ul>
+</li>
+<li>本地网络上所有主机都能收到这个报文，但只有DHCP服务器才能对它回答。（返回报文称为”<strong>提供报文</strong>“）
+<ul>
+<li>DHCP服务器先在其数据库中查找该计算机的配置信息，若找到，则返回找到的信息；若没找到，则从其地址池（address pool）中取一个地址分配给主机</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>为每个网络都设置DHCP服务器代价太高，解决方案是每个网络至少有一个<strong>DHCP中继代理</strong>， 它配置了DHCP服务器的IP地址等信息</p>
+<ul>
+<li>当中继代理收到主机的DHCP广播发现报文后，就以<strong>单播</strong>方式向DHCP服务器转发此报文，收到<strong>提供报文</strong>后，中继代理再把此提供报文发给主机</li>
+</ul>
+</li>
+<li>
+<p>DHCP分配的地址是暂时的，称为“<strong>租用期</strong>”</p>
+</li>
+<li>
+<p>DHCO报文采用UDP</p>
+</li>
+</ul>
+<!--未完待续-->
+<p>希望我更新的话，请（以各种手段）催更我哦q(≧▽≦q)</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Networking/" rel="tag"># Computer Networking</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/26/C++%20IO/" rel="prev" title="C++ I/O">
+                  <i class="fa fa-chevron-left"></i> C++ I/O
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/26/Design-Pattern/" rel="next" title="Design Pattern">
+                  Design Pattern <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Modularity Information Hiding">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Modularity">
+<meta property="og:url" content="http://lyk-love.cn/2021/06/27/Modularity/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Modularity Information Hiding">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-06-27T11:14:38.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.934Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Software Engineering Methodology">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/06/27/Modularity/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/06/27/Modularity/","path":"2021/06/27/Modularity/","title":"Modularity"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Modularity | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Modularity"><span class="nav-text">Modularity</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#history"><span class="nav-text">history</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Module"><span class="nav-text">Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">模块化的作用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Interface-Implementation"><span class="nav-text">Interface &amp;&amp; Implementation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Interface"><span class="nav-text">Interface</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%BE%AF%E5%90%91%E5%AF%B9%E8%B1%A1%E4%B8%AD%E7%9A%84%E6%8E%A5%E2%BC%9D"><span class="nav-text">⾯向对象中的接⼝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Interface-vs-Implementation"><span class="nav-text">Interface vs. Implementation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E8%81%8C%E8%B4%A3"><span class="nav-text">类的职责</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Information"><span class="nav-text">Information</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E6%98%93%E6%9B%B4%E6%94%B9%E7%9A%84%E6%9E%B6%E6%9E%84%E5%85%83%E7%B4%A0"><span class="nav-text">容易更改的架构元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Information-Hiding"><span class="nav-text">Information Hiding</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/06/27/Modularity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Modularity | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Modularity
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-06-27 11:14:38" itemprop="dateCreated datePublished" datetime="2021-06-27T11:14:38Z">2021-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Software-Engineering/" itemprop="url" rel="index"><span itemprop="name">Software Engineering</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Modularity</li>
+<li>Information Hiding</li>
+</ul>
+<span id="more"></span>
+<h1 id="Modularity"><a class="header-anchor" href="#Modularity"></a>Modularity</h1>
+<ul>
+<li>Computer systems are not monolithic:   计算机系统并非铁板一块, 它是可分的, 通常由大量互相交互的<code>模块</code>组成
+<ul>
+<li>they are usually composed of multiple, interacting modules.</li>
+</ul>
+</li>
+<li><code>Modularity</code> has long been seen as a key to cheap, high quality software.</li>
+<li>The goal of <strong>system design</strong> is to decide:
+<ul>
+<li>– what the modules are;</li>
+<li>– what the modules should be;</li>
+<li>– how the modules interact with one-another.</li>
+</ul>
+</li>
+</ul>
+<h2 id="history"><a class="header-anchor" href="#history"></a>history</h2>
+<ul>
+<li>萌芽
+<ul>
+<li>Wirth1971; Parnas1972;</li>
+</ul>
+</li>
+<li>形成
+<ul>
+<li>Stevens1974; Parnas1978; Parnas1985</li>
+</ul>
+</li>
+<li>发展</li>
+<li>Eder1992; Hitz1995;</li>
+<li>反思</li>
+<li>McConnell1996; Demarco2002</li>
+</ul>
+<p>具体内容blabla一大堆,自己去看吧(っ °Д °;)っ</p>
+<h2 id="Module"><a class="header-anchor" href="#Module"></a>Module</h2>
+<p>What is a module?</p>
+<ul>
+<li>Common view: a piece of code. Too limited.</li>
+<li>Compilation unit, including related declarations and interface 编译单元, 包括相关的声明和接口, 这是狭隘的看法</li>
+<li><code>David Parnas</code>: a unit of work.  工作单元</li>
+<li><strong>Collection of programming units</strong> (procedures, classes, etc.)
+<ul>
+<li>with a well-defined <strong>interface and purpose</strong> within the entire system</li>
+<li>that can be <strong>independently</strong> assigned to a developer</li>
+</ul>
+</li>
+</ul>
+<h2 id="模块化的作用"><a class="header-anchor" href="#模块化的作用"></a>模块化的作用</h2>
+<ul>
+<li><strong>Management</strong>: Partition the overall development effort 对整个开发过程做划分
+<ul>
+<li>– Divide and conquer 分治策略(计算机经典思想无处不在)</li>
+</ul>
+</li>
+<li><strong>Evolution</strong>: Decouple parts of a system so that changes to one part are isolated from changes to other parts 对系统进行解耦, 使得对一个部分的改变不会影响其他部分
+<ul>
+<li>Principle of directness (clear allocation of requirements to modules, ideally one requirement (or more) maps to one module) 一个需求对应一个模块</li>
+<li>Principle of continuity/locality (small change in requirements triggers a change to one module only) 小型改动只需对一个模块做修改</li>
+</ul>
+</li>
+<li><strong>Understanding</strong>: Permit system to be understood
+<ul>
+<li>as composition of mind-sized chunks, e.g., the 7±2 Rule 把系统分成人脑可以理解的一个个区块</li>
+<li>with one issue at a time, e.g., principles of locality, encapsulation, separation of concerns 使得人脑同一时间只需处理一个问题,</li>
+<li>Key issue: what criteria to use for modularization?</li>
+<li><strong>Information Hiding</strong></li>
+</ul>
+</li>
+</ul>
+<h1 id="Interface-Implementation"><a class="header-anchor" href="#Interface-Implementation"></a>Interface &amp;&amp; Implementation</h1>
+<ul>
+<li>The interface is <u>the visible surface of the capsule</u>
+<ul>
+<li>describes the essential characteristics of objects of the class which are visible to the exterior world</li>
+</ul>
+</li>
+<li>The implementation is hidden in the capsule.
+<ul>
+<li>The implementation hiding means that data can only be manipulated, that is updated, within the class, but it does not mean hiding interface data.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Interface"><a class="header-anchor" href="#Interface"></a>Interface</h2>
+<ul>
+<li>Interface as a contract - whatever is published by a module that
+<ul>
+<li>Provided interface: clients of the module can depend on and</li>
+<li>Required interface: the module can depend on from other modules</li>
+</ul>
+</li>
+<li>Syntactic interfaces
+<ul>
+<li>How to call operations
+<ul>
+<li>List of operation signatures</li>
+<li>Sometimes also valid orders of calling operations</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Semantic interfaces
+<ul>
+<li>What the operations do, e.g.,
+<ul>
+<li>Pre- and post-conditions</li>
+<li>Use cases</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="⾯向对象中的接⼝"><a class="header-anchor" href="#⾯向对象中的接⼝"></a>⾯向对象中的接⼝</h3>
+<ul>
+<li>对象之间交互的消息（⽅法名）</li>
+<li>消息中的所有参数</li>
+<li>消息返回结果的类型</li>
+<li>与状态⽆关的不变量</li>
+<li>需要处理的异常</li>
+</ul>
+<h2 id="Interface-vs-Implementation"><a class="header-anchor" href="#Interface-vs-Implementation"></a>Interface vs. Implementation</h2>
+<ul>
+<li>Users and implementers of a module have different views of it.</li>
+<li><strong>Interface</strong>: user’s view of a module.</li>
+<li>describes only what a user needs to know to use the module</li>
+<li>makes it easier to understand and use</li>
+<li>describes what services the module provides, but not how it’s able to provide them</li>
+<li>只提供用户需要的服务, 但不提供实现</li>
+</ul>
+<h2 id="类的职责"><a class="header-anchor" href="#类的职责"></a>类的职责</h2>
+<ul>
+<li>
+<p>什么是职责</p>
+<ul>
+<li>类或对象维护⼀定的状态信息</li>
+<li><u>基于状态履行行为职能的能⼒</u></li>
+</ul>
+</li>
+<li>
+<p>职责的来源</p>
+<ul>
+<li>职责来源于需求,</li>
+</ul>
+</li>
+<li>
+<p>职责的体现</p>
+</li>
+<li>
+<p>封装Information Hiding</p>
+</li>
+</ul>
+<h1 id="Information"><a class="header-anchor" href="#Information"></a>Information</h1>
+<ul>
+<li><strong>Information -&gt;secrets</strong></li>
+<li>what’s a “secret”? -&gt; <strong>Change</strong>
+<ul>
+<li>Representation of data  信息的表示</li>
+<li>Properties of a device, other than required properties  设备的属性</li>
+<li>Implementation of world models  整个模型的实现</li>
+<li>Mechanisms that support policies 支持策略的机制</li>
+</ul>
+</li>
+</ul>
+<h2 id="容易更改的架构元素"><a class="header-anchor" href="#容易更改的架构元素"></a>容易更改的架构元素</h2>
+<ul>
+<li><strong>hardware dependencies</strong> 硬件设备的依赖(还有外部的软件系统,经常变)
+<ul>
+<li>External software system</li>
+</ul>
+</li>
+<li><strong>input and output formats</strong> 输入和输出的格式
+<ul>
+<li>DB, Internet, UI, …</li>
+</ul>
+</li>
+<li><strong>nonstandard language features and library routines</strong>; 非标准语言特性和库子程序,比如各大os
+<ul>
+<li>Platform: os, middleware, framework…</li>
+</ul>
+</li>
+<li><strong>difficult design and implementation areas</strong> 包含复杂决策和实现的模块(尤其是那些写得很简陋的)
+<ul>
+<li>especially areas that might be developed poorly and require redesign or reimplementation;</li>
+<li>Complex…, monitor, exception, log, … 异常类, log类等等</li>
+</ul>
+</li>
+<li><strong>complex data structures</strong>, data structures that are used by more than one class, or data structures you haven’t designed to your satisfaction;
+<ul>
+<li>Separate model from logic</li>
+</ul>
+</li>
+<li><strong>complex logic</strong>, which is almost as likely to change as complex data structures; 复杂的逻辑, 如果其依赖的数据结构变了, 那这部分基本也要变
+<ul>
+<li>Algorithm, schedule, time-critical, performance-critical, …</li>
+</ul>
+</li>
+<li><strong>global variables</strong>, which are probably never truly needed, but which always benefit from being hidden behind access routines; 全局变量, 尽量别用
+<ul>
+<li>Data Access Routines</li>
+</ul>
+</li>
+<li><strong>data-size constraints</strong> such as array declarations and loop limits; 数据大小的约束, 比如数组声明, 循环不变式之类</li>
+<li>and <strong>business rules</strong> such as the laws, regulations, policies, and procedures that are embedded into a computer system.</li>
+</ul>
+<h2 id="Information-Hiding"><a class="header-anchor" href="#Information-Hiding"></a>Information Hiding</h2>
+<ul>
+<li>
+<p>Try to <strong>localize future change</strong></p>
+<ul>
+<li>Hide system details likely to change independently  把容易独立改变的系统细节隐藏起来</li>
+<li>Separate parts that are likely to have a different rate of change 区分不同有改变速率的部分</li>
+<li>Expose in interfaces assumptions unlikely to change 把不可能改变的假设暴露在接口中</li>
+</ul>
+</li>
+<li>
+<p>the most common kind of secret is a design decision that you think might <strong>change</strong>.</p>
+</li>
+<li>
+<p>You then <strong>separate</strong> each design secret by assigning it to its own class, subroutine, or other design unit.</p>
+</li>
+<li>
+<p>Next you <strong>isolate</strong> (encapsulate) each secret so that if it does change, the change doesn’t affect the rest of the program.</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Software-Engineering-Methodology/" rel="tag"># Software Engineering Methodology</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/27/Coupling%20&&%20Cohension/" rel="prev" title="Coupling && Cohension">
+                  <i class="fa fa-chevron-left"></i> Coupling && Cohension
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/27/Sort/" rel="next" title="Sort">
+                  Sort <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

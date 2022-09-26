@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="There is no whiz, bang effect That’s made up of 1s and 0s That takes a special talent">
+<meta property="og:type" content="article">
+<meta property="og:title" content="L1 Model of Computation">
+<meta property="og:url" content="http://lyk-love.cn/2021/07/13/L1-Model-of-Computation/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="There is no whiz, bang effect That’s made up of 1s and 0s That takes a special talent">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-07-13T07:19:53.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.931Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Algorithm design and analysis">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/07/13/L1-Model-of-Computation/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/07/13/L1-Model-of-Computation/","path":"2021/07/13/L1-Model-of-Computation/","title":"L1 Model of Computation"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>L1 Model of Computation | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Computer-and-Computing"><span class="nav-text">Computer and Computing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm"><span class="nav-text">Algorithm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Model-of-Computation"><span class="nav-text">Model of Computation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Ram-Model-of-Computation"><span class="nav-text">The Ram Model of Computation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#To-Create-an-Algorithm"><span class="nav-text">To Create an Algorithm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Algorithm-Analysis"><span class="nav-text">Algorithm Analysis</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/07/13/L1-Model-of-Computation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="L1 Model of Computation | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          L1 Model of Computation
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-07-13 07:19:53" itemprop="dateCreated datePublished" datetime="2021-07-13T07:19:53Z">2021-07-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><i>There is no whiz, bang effect</i></p>
+<p><i>That’s made up of 1s and 0s</i></p>
+<p><i>That takes a special talent</i></p>
+<span id="more"></span>
+<h1 id="Computer-and-Computing"><a class="header-anchor" href="#Computer-and-Computing"></a>Computer and Computing</h1>
+<ul>
+<li>Computing: 计算机“无所不能”的核心在于<code>01编解码</code>,这是<u>使能技术</u>
+<ul>
+<li>Encoding everything into <code>0</code>s and <code>1</code>s</li>
+<li>Operations over <code>1</code>s and <code>0</code>s</li>
+<li>Decoding the <code>1</code>s and <code>0</code> s</li>
+</ul>
+</li>
+<li>Turing machine
+<ul>
+<li>An abstract/logical computer</li>
+</ul>
+</li>
+<li>&quot;<strong>计算</strong>&quot;就是对<code>01编码</code>的信息的操作</li>
+</ul>
+<h1 id="Algorithm"><a class="header-anchor" href="#Algorithm"></a>Algorithm</h1>
+<ul>
+<li>
+<p>Algorithm is the spirit of computing</p>
+<ul>
+<li>To solve a specific problem( so called an <code>algorithmic problem</code> )</li>
+<li>Combination of basic operations 指挥一个机器做事情,把机器的操作组合好
+<ul>
+<li>in a precise and elegant way 要清晰,优美</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Essential issues</p>
+<ul>
+<li>
+<p>Model of computation</p>
+</li>
+<li>
+<p>Algorithm design</p>
+</li>
+<li>
+<p>Algorithm analysis</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Model-of-Computation"><a class="header-anchor" href="#Model-of-Computation"></a>Model of Computation</h1>
+<ul>
+<li>Problems
+<ul>
+<li>Why the algorithms we learn can run  almost everywhere?</li>
+<li>Why the algorithms we learn can be implemented any language?</li>
+</ul>
+</li>
+<li>Machine- and language- independent algorithms, running on an <strong>abstract</strong> machine   算法是抽象概念,与机器\语言无关. 抽象的算法依赖于抽象的机器,这就是<strong>计算模型</strong>. 经典计算模型:
+<ul>
+<li>Turing machine: over-qualify</li>
+<li>RAM model: simple but power</li>
+</ul>
+</li>
+</ul>
+<h2 id="The-Ram-Model-of-Computation"><a class="header-anchor" href="#The-Ram-Model-of-Computation"></a>The Ram Model of Computation</h2>
+<ul>
+<li>Each <i>simple operation</i> takes one time step</li>
+<li>E.g., key comparison, +/-, memory access</li>
+<li>Non_simple operation should be decomposed
+<ul>
+<li>Loop</li>
+<li>Subroutine(子过程还可以递归 )</li>
+</ul>
+</li>
+<li>Memory
+<ul>
+<li>Memory access is a simple operation 对存储器某个位置的访问和读写被认为是简单操作</li>
+<li>Unlimited memory 我们认为RAM的内存是无限的</li>
+</ul>
+</li>
+<li>由于建模的本质是把不重要的细节抽象掉,把精髓留下来. 所以模型建得越精细,就越难用, 建得越粗糙,丢失的信息越多,就越好用,二者有一个Trade-off. 对于本科阶段,Ram模型够用了</li>
+</ul>
+<h1 id="To-Create-an-Algorithm"><a class="header-anchor" href="#To-Create-an-Algorithm"></a>To Create an Algorithm</h1>
+<ul>
+<li>Algorithm design
+<ul>
+<li>Composition of simple operations, to solve an algorithm problems</li>
+</ul>
+</li>
+<li>Algorithm analysis
+<ul>
+<li>Amount of work done / memory used
+<ul>
+<li>In the worst/ average cases</li>
+</ul>
+</li>
+<li>Advanced issues
+<ul>
+<li>Optimality, approximation ratio, …</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="Algorithm-Analysis"><a class="header-anchor" href="#Algorithm-Analysis"></a>Algorithm Analysis</h1>
+<ul>
+<li>
+<p>How to measure</p>
+<ul>
+<li>
+<p>Not too general 不能太粗糙</p>
+<ul>
+<li>Given essential indication in comparison  of algorithms</li>
+</ul>
+</li>
+<li>
+<p>Not too precise 不用那么精确</p>
+<ul>
+<li>Machine independent</li>
+<li>Language independent</li>
+<li>Programing paradigm independent</li>
+<li>implementation independent</li>
+</ul>
+</li>
+<li>
+<p>Criteria</p>
+</li>
+<li>
+<p>Critical operation</p>
+</li>
+<li>
+<p>How many critical operation are conducted 数关键操作个数!</p>
+</li>
+<li>
+<p>算法性能好坏由关键操作决定,辅助性操作与关键操作大致是线性关系. 所以只要关注关键操作</p>
+</li>
+</ul>
+</li>
+<li>
+<table>
+<thead>
+<tr>
+<th>Algorithm problem</th>
+<th>Critical operation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sorting, selection, searching, String matching</td>
+<td>Comparison(of keys)</td>
+</tr>
+<tr>
+<td>Graph traversal</td>
+<td>Processing a node</td>
+</tr>
+<tr>
+<td>Matrix multiplication</td>
+<td>Multiplication</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Amount of work done</p>
+<ul>
+<li>usually depends on <i>size of the input</i> 输入规模</li>
+<li>usually does not depends on size of the input only</li>
+</ul>
+</li>
+<li>
+<p>Worst -case  Complexity</p>
+</li>
+<li>
+<p>Average-case Complexity</p>
+</li>
+<li>
+<p>Advanced topics</p>
+<ul>
+<li>Lower bound(Selection)</li>
+<li>Optionality(Greedy , DP)</li>
+<li>Computation complexity</li>
+<li>Approximate/ online / randomized algothms</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Algorithm-design-and-analysis/" rel="tag"># Algorithm design and analysis</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/07/04/%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E5%8F%8D%E5%BA%94%E6%97%B6%E9%97%B4/" rel="prev" title="第四章-反应时间">
+                  <i class="fa fa-chevron-left"></i> 第四章-反应时间
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/13/L2-Asymptotics/" rel="next" title="L2 Asymptotics">
+                  L2 Asymptotics <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

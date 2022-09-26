@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  I&#x2F;O Devices File File System Locality and FFS Crush-Consistency Problem  Ref: OSTEP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS Persistence">
+<meta property="og:url" content="http://lyk-love.cn/2022/04/04/OS-Persistence/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  I&#x2F;O Devices File File System Locality and FFS Crush-Consistency Problem  Ref: OSTEP">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Arch.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Layers.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Layers.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VSFS%20Disk%20Image.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/Crush%20Consistency%20example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/Crush%20Consistency%20example%20expected%20result.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/ext3%20with%20journalist.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/data%20journaling.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/journaling%20circyling%20journalist.png">
+<meta property="article:published_time" content="2022-04-04T01:36:01.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.936Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Arch.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/04/04/OS-Persistence/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/04/04/OS-Persistence/","path":"2022/04/04/OS-Persistence/","title":"OS Persistence"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OS Persistence | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O-Devicecs"><span class="nav-text">I&#x2F;O Devicecs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O%E7%B3%BB%E7%BB%9F%E5%90%84%E5%B1%82%E8%BD%AF%E4%BB%B6%E5%8F%8A%E5%85%B6%E5%8A%9F%E8%83%BD"><span class="nav-text">I&#x2F;O系统各层软件及其功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unbuffered-I-O-Buffered-I-O"><span class="nav-text">Unbuffered I&#x2F;O &amp; Buffered I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RAID"><span class="nav-text">RAID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File"><span class="nav-text">File</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#File-System"><span class="nav-text">File System</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E4%BD%93%E7%BB%84%E7%BB%87"><span class="nav-text">整体组织</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%EF%BC%9A-inode"><span class="nav-text">文件组织： inode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E7%B4%A2%E5%BC%95"><span class="nav-text">多级索引</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%BB%84%E7%BB%87"><span class="nav-text">目录组织</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A9%BA%E9%97%B2%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86"><span class="nav-text">空闲空间管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE"><span class="nav-text">文件访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-text">缓存</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Locality-and-FFS"><span class="nav-text">Locality and FFS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Crush-Consistency-Problem"><span class="nav-text">Crush-Consistency Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FSCK"><span class="nav-text">FSCK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Journalist"><span class="nav-text">Journalist</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Journaling"><span class="nav-text">Data Journaling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metadata-Journaling"><span class="nav-text">Metadata Journaling</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/04/04/OS-Persistence/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OS Persistence | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS Persistence
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-04 01:36:01" itemprop="dateCreated datePublished" datetime="2022-04-04T01:36:01Z">2022-04-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>I/O Devices</li>
+<li>File</li>
+<li>File System</li>
+<li>Locality and FFS</li>
+<li>Crush-Consistency Problem</li>
+</ul>
+<p>Ref: <em>OSTEP</em></p>
+<span id="more"></span>
+<h1 id="I-O-Devicecs"><a class="header-anchor" href="#I-O-Devicecs"></a>I/O Devicecs</h1>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Arch.png" alt="IO Arch"></p>
+<ul>
+<li>CPU通过内存总线连接到内存</li>
+<li>图像和其他高性能IO设备连接到常规的IO总线（如PCI）</li>
+<li>最慢的设备，如键盘、鼠标等，连接到外围总线</li>
+</ul>
+<h2 id="I-O系统各层软件及其功能"><a class="header-anchor" href="#I-O系统各层软件及其功能"></a>I/O系统各层软件及其功能</h2>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Layers.png" alt="IO Layers"></p>
+<h2 id="Unbuffered-I-O-Buffered-I-O"><a class="header-anchor" href="#Unbuffered-I-O-Buffered-I-O"></a>Unbuffered I/O &amp; Buffered I/O</h2>
+<ul>
+<li>Unbuffered I/O:
+<ul>
+<li>read/write -&gt;System calls</li>
+<li>File descriptor</li>
+<li>Not in ANSI C, but in POSIX.1 and XPG3</li>
+</ul>
+</li>
+<li>Buffered I/O
+<ul>
+<li>Implemented in standard I/O library (属于库函数，而不是系统调用)</li>
+<li>处理很多细节, 如缓存分配, 以优化长度执行I/O等.</li>
+<li>Stream -&gt; a pointer to FILE</li>
+</ul>
+</li>
+</ul>
+<h1 id="RAID"><a class="header-anchor" href="#RAID"></a>RAID</h1>
+<p>略</p>
+<h1 id="File"><a class="header-anchor" href="#File"></a>File</h1>
+<ul>
+<li>进程是虚拟化的CPU, 地址空间是虚拟化的内存， 而文件和目录就是虚拟化的外部存储设备</li>
+<li>文件：线性字节数组，每个文件都有一个低级名称：<code>inode number</code></li>
+<li>目录：目录是特殊的文件，本身也有低级名称<code>inode number</code>，其内容为<code>（用户可读名字， 低级名称）</code>对的列表。
+<ul>
+<li>目录的每个对，即每个条目<code>dentry</code>，都指向文件或其他目录</li>
+<li>目录层次结构从根目录<code>/</code>开始</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/IO%20Layers.png" alt="File Structure"></p>
+<p>Linux文件的细节详见<em>Linux Programming</em></p>
+<h1 id="File-System"><a class="header-anchor" href="#File-System"></a>File System</h1>
+<h2 id="整体组织"><a class="header-anchor" href="#整体组织"></a>整体组织</h2>
+<p>我们实现极简版的VSFS（ <code>Very Simple File System</code> ）， VVFS与Linux的VFS（虚拟文件系统，提供了统一的文件系统模型，详见<em>Linux Basic</em>）大致相同：</p>
+<ul>
+<li>磁盘分块（block），文件系统由一系列块组成</li>
+<li>假定有64块，每块4KB. 数据块为最后56个，inode表占5个，两种位图各占一个，超级块占一个</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/VSFS%20Disk%20Image.png" alt="VSFS Disk Image"></p>
+<ul>
+<li><code>superblock</code>：位于第一块， 记录关于该文件系统的信息, 包括<code>inode</code>和数据块数量，inode表的起始地址等。 和一些标识文件系统类型的<code>magic number</code></li>
+<li>位图（bitmap）：记录inode或数据块是否已分配的数据结构，有<code>inode bitmap</code>和<code>data bitmap</code></li>
+<li><code>inode</code>表：就是 <code>inode</code>数组</li>
+<li>数据块</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>超级块</th>
+<th>inode bit map</th>
+<th>data bitmap</th>
+<th>inode table</th>
+<th>datablock</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>56</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>挂载文件系统时，OS首先读取<code>superblock</code>，初始化各种参数，然后将该卷添加到文件系统树中</strong>
+<ul>
+<li>也就是说挂载文件系统时，超级块必定被加载到内存里</li>
+</ul>
+</li>
+</ul>
+<h3 id="文件组织：-inode"><a class="header-anchor" href="#文件组织：-inode"></a>文件组织： inode</h3>
+<p>index node， named by Ken Thompson</p>
+<ul>
+<li>
+<p><code>inode</code>：保存给定文件的元数据的结构</p>
+</li>
+<li>
+<p><strong>由<code>inumber</code>隐式引用,</strong> 给定<code>inumber</code>，可以计算磁盘上相应节点的位置</p>
+</li>
+<li>
+<p>假设：</p>
+<ul>
+<li>inode表大小为20KB（5个4KB块）</li>
+<li>每个<code>inode</code>256字节，因此有80个<code>inode</code>；</li>
+<li>超级块0KB开始，<code>inode map</code>从4KB开始， <code>data map</code>从8KB开始，<code>inode table</code>从12字节开始</li>
+<li>要读取<code>inode number=32</code></li>
+</ul>
+</li>
+<li>
+<p>过程：</p>
+<ol>
+<li>
+<p>先得到inode表的起始地址：<code>12KB</code></p>
+</li>
+<li>
+<p>再加上此<code>inode</code>在表内的偏移量：<code>32 * 256B = 8192B</code>， <code>12KB + 8192B= 20KB</code></p>
+</li>
+<li>
+<p>由于磁盘不是字节可寻址的，而是由可寻址扇区组成（512B），因此为了获取<code>inumber=32</code>的<code>inode</code>块，文件系统将请求物理节点号<code>40</code>（ <code>20KB / 512B= 40</code> ）,获得期望的<code>inode</code>块</p>
+</li>
+</ol>
+   <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#通用算法： inumber -&gt; sector number</span></span><br><span class="line">blk = ( inumber * sizeof(inode_t) )/ blockSize; <span class="comment"># 得到该inode所在的块号</span></span><br><span class="line">sector = ((blk*blockSize)+ inodeStartAddr)/ sectorSize;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="多级索引"><a class="header-anchor" href="#多级索引"></a>多级索引</h4>
+<p>为了支持大文件，inode中除了直接指针外，还允许间接指针。 间接指针指向一个间接块（磁盘的数据块区域）。 假设一个块是4KB，磁盘地址空间是4Byte， 那就增加了1024个指针。 假设inode有12个直接指针和一个间接指针，则一个inode可以支持$(12+ 1 \times 1024) \times 4 \mathrm{KB}$</p>
+<p>按这个逻辑，还可以分配一个二重间接块，存放指向间接块的指针， inode存放一个二重间接指针， 这个指针就可以表示$1024 \times 1024 \mathrm{KB}$</p>
+<ul>
+<li>
+<p>注意到，使用了多级索引的文件系统的文件分配模型是一个不平衡树，这个设计的初衷是： 大部分文件都是小文件， 因此只需要对大文件进行特殊的设计， 小文件让直接指针指向就好了</p>
+</li>
+<li>
+<p>还有一种基于链表的方法，即inode只需存储一个指向第一个块的指针， 而数据区每个数据块的末尾都会有一个指向该文件下一个数据块的指针。但是这种方式对于某些workload效果不好，比如随机访问。</p>
+<ul>
+<li>windows采用FAT（File Allocation Table）, 指向下一块的指针不存在当前数据块中， 而是存在FAT（位于内存）中</li>
+</ul>
+</li>
+</ul>
+<h3 id="目录组织"><a class="header-anchor" href="#目录组织"></a>目录组织</h3>
+<p>目录是特殊的文件，它也有inode， 但是目录的内容（即数据块的内容）是目录条目（称为<code>dentry</code> )与该条目对应inode的映射</p>
+<p>打开目录，首先是打开目录的文件描述符</p>
+<p>目录基本上是一个<code>&lt;dentry， inode number&gt;</code>的列表。 其中条目名称还包括条目的记录长度（名称的总字节数 + 所有的剩余空间）和字符串长度（即条目名称的实际长度）。 每个目录还有两个额外的条目： <code>.</code>和<code>..</code> 用于表示当前目录和父目录</p>
+<ul>
+<li>目录就是特殊的文件， 它也有inode， 目录的数据块的内容就是以上说的<code>&lt;条目名称， inode number&gt;</code>的列表</li>
+</ul>
+<p>假设某目录（i number = 5）中有三个文件（foo, bar, foo bar）， i number分别为12，13和24，则dir在磁盘上的数据是：</p>
+<table>
+<thead>
+<tr>
+<th>inum</th>
+<th>reclen</th>
+<th>strlen</th>
+<th>name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5</td>
+<td>4</td>
+<td>2</td>
+<td>.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>4</td>
+<td>3</td>
+<td>…</td>
+</tr>
+<tr>
+<td>12</td>
+<td>4</td>
+<td>4</td>
+<td>foo</td>
+</tr>
+<tr>
+<td>13</td>
+<td>4</td>
+<td>4</td>
+<td>bar</td>
+</tr>
+<tr>
+<td>24</td>
+<td>8</td>
+<td>7</td>
+<td>foobar</td>
+</tr>
+</tbody>
+</table>
+<p>删除一个文件会在目录中留下一段空白空间， 一般是将该文件对应条目的inum设为一个保留的inum（例如0）</p>
+<p>目录的内容虽然位于数据块，但它一般被认为是<strong>元数据</strong>， 因此在写入日志时，会被当作元数据（而不是物理数据）处理</p>
+<h2 id="空闲空间管理"><a class="header-anchor" href="#空闲空间管理"></a>空闲空间管理</h2>
+<p>文件系统必须记录哪些inode和数据块是空闲的，这样在分配新文件/新目录时，就可以使用空闲的inode和数据块， 这就是空闲空间管理</p>
+<p>VFSFS中使用位图进行空闲空间管理， 然而也有别的方法， 比如空闲列表和B树等</p>
+<ul>
+<li>空闲列表：（超级块中的有一个空闲指针，指向第一个空闲块，此后每个空闲块内部都有指向下一个空闲块的指针</li>
+</ul>
+<h2 id="文件访问"><a class="header-anchor" href="#文件访问"></a>文件访问</h2>
+<p>假设文件系统已经挂载，要读取文件<code>/foo/bar</code>, 要读取该文件（也就是该文件的数据块），需要先找到该文件的inode， <strong>文件系统必须遍历路径名，才能找到inode， 所有遍历都从文件系统的根目录开始</strong>。 即文件系统会先读入inode为2的块， 然后找到<code>/foo</code>的inumber和块，最后找到<code>/foo/bar</code>的inumber和块</p>
+<ul>
+<li>一般而言，根目录的inode number为2</li>
+<li>这种遍历方式会导致， 访问文件导致的IO与路径长度成正比，路径上的每个目录都会被读取</li>
+<li><code>read()</code>系统调用不会查询位图，因为<strong>只有要分配空间时（比如write()）才需要查询分配结构</strong></li>
+</ul>
+<h2 id="缓存"><a class="header-anchor" href="#缓存"></a>缓存</h2>
+<p>如前所述，每次文件访问都会读取路径上的所有目录，为此可以用缓存，将数据保留在内存中， 分为读缓存和写缓存</p>
+<ul>
+<li>写缓存： 显然，写入数据最终必须要写入磁盘，这看上去和缓存没什么关系。然而，写缓存可以将一组写入操作编成一批（batch）, 再延迟写入， 一次延迟写入就处理一批写操作</li>
+</ul>
+<p>为了避免缓存，可以用<code>fsync()</code>来强制写入磁盘， 甚至可以不使用文件系统，直接使用原始磁盘接口（<code>raw disk interface</code>）来写入数据（数据库就经常这么干， 因为数据库坚持自己控制一切）</p>
+<h1 id="Locality-and-FFS"><a class="header-anchor" href="#Locality-and-FFS"></a>Locality and FFS</h1>
+<p><strong>内存是随机访问的，但目前为止的磁盘都是顺序访问的，OS通过抽象，把磁盘抽象成了内存，让程序以为所有空间都是随机访问的，这就导致了某些workload会导致磁盘性能不佳，因为毕竟底层是顺序访问</strong></p>
+<p>解决这个问题，需要文件系统面向磁盘设计。为此，Berkley的一个小组设计了FFS（Fast File System），它将磁盘分为一些组，称为柱面组（或称为块组），将两个<strong>有关联</strong>的块放到同一分组，这样访问的时候可以提高效率</p>
+<ul>
+<li>举例来说，FFS将文件的inode所在块和数据块放在一起（因为这二者必定有关联），避免长时间寻道</li>
+<li>“有关联”还可以建立在局部性原理上，例如，FFS将同一目录下的所有文件尽量放在一组，因为按照局部性原理，这些文件被经常一起访问</li>
+</ul>
+<p>由于大文件无法全部放入一个分组，因此FFS会将某些块（比如inode块）分配到一个组， 而大块房贷单独的分组。这会导致磁盘碎片化。 当然，允许的块越大，这种碎片也就越少</p>
+<p>FFS的贡献：</p>
+<ul>
+<li>引入了面向磁盘的文件系统</li>
+<li>引入了软链接</li>
+<li>引入了<code>rename()</code>系统调用</li>
+</ul>
+<h1 id="Crush-Consistency-Problem"><a class="header-anchor" href="#Crush-Consistency-Problem"></a>Crush-Consistency Problem</h1>
+<p>崩溃一致性问题 ： 更新持久数据结构时发生崩溃，解决方案有fsck和日志</p>
+<p>向文件写数据时，要更新至少三个块：更新的inode（比如，要增加新的指针）， 更新的数据块和更新的数据位图</p>
+<p>这三个块的写入操作，无论哪个出问题，都会导致崩溃后不一致</p>
+<p>在元数据日志中，我们会看到， 解决崩溃一致性的核心，就是<strong>先写入被指对象，再写入指针对象</strong>，这样能保证数据的正确性</p>
+<h2 id="示例"><a class="header-anchor" href="#示例"></a>示例</h2>
+<p>示例：对于如下文件系统结构，有一个inode位图，一个数据位图，一个inode表（包含8个inode）和一个数据块表（包含8个数据块）</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/Crush%20Consistency%20example.png" alt="Crush Consistency example"></p>
+<p>（ 这里inode bmap和data bmap实际指向了下标3和5，应该是图画错了 ）</p>
+<p>可以看到，已经分配了一个inode（inumber=2），它在inode位图中标记， 单个分配的数据块Da（数据块4）也在数据位图（记为<code>B[v1]</code>， 表示第一个版本)）中标记， inode表示为<code>I[v1]</code>，即该inode的第一个版本，<code>I[v1]</code>的内容有：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">owner						:lyk</span><br><span class="line">permissions			:read-write</span><br><span class="line">size						:1</span><br><span class="line">pointer				  :4</span><br><span class="line">pointer:				:null</span><br><span class="line">pointer:				:null</span><br><span class="line">pointer:				:null</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>文件大小为1 （ 有一个数据块 ）， 第一个直接指针指向块4， 且所有其他直接指针都是null</li>
+</ul>
+<p>假如要向文件追加内容，比如要增加一个数据块， 此时要更新至少三个块：更新的inode（比如，要增加新的指针）， 更新的数据块和更新的数据位图：</p>
+<p>我们希望更新后的inode（用<code>I[v2]</code>表示）内容如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">owner						:lyk</span><br><span class="line">permissions			:read-write</span><br><span class="line">size						:2</span><br><span class="line">pointer				  :4</span><br><span class="line">pointer:				:5</span><br><span class="line">pointer:				:null</span><br><span class="line">pointer:				:null</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更新后的数据位图(记为<code>B[v2]</code>)要变成： 00001100</li>
+<li>新增的数据块记为Db</li>
+</ul>
+<p>我们希望最终的文件系统如下所示：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/Crush%20Consistency%20example%20expected%20result.png" alt="Crush Consistency example expected result"></p>
+<p>然而，对<code>I[v2]</code>, <code>B[v2]</code>, Db 这三个块的写入操作，无论哪个出问题，都会导致崩溃后不一致</p>
+<h2 id="FSCK"><a class="header-anchor" href="#FSCK"></a>FSCK</h2>
+<p>File System Checker</p>
+<p>一个UNIX工具，在文件系统挂载之前执行， 可以保证，fsck检查结束后，文件系统时一致的</p>
+<p>fsc会检查超级块，空闲块，inode状态，inode链接等信息， 事实上，fsck会<strong>扫描整个磁盘</strong>（另一方面，出现不一致的可能只是几个数据块）， 因此fsck的代价非常大</p>
+<h2 id="Journalist"><a class="header-anchor" href="#Journalist"></a>Journalist</h2>
+<p>Linux的ext2文件系统没有日志 ，日志是由ext3引入的</p>
+<p>带有日志的ext3文件系统如下所示：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/ext3%20with%20journalist.png" alt="ext3 with journalist"></p>
+<ul>
+<li>可以看到，这里对块/柱面进行了分组</li>
+</ul>
+<h3 id="Data-Journaling"><a class="header-anchor" href="#Data-Journaling"></a>Data Journaling</h3>
+<p>数据日志就是将要更新的物理内容也写进日志里</p>
+<p>对于之前的示例，加入数据日志后，文件系统的日志区域如下所示：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/data%20journaling.png" alt="data journaling"></p>
+<p>这里写了五个块：</p>
+<ul>
+<li>事务开始TxB： 此更新的相关信息，以及事务标识符（TID）</li>
+<li>物理日志： 这里占三个块，就是更新的确切物理内容</li>
+<li>事务结束TxE： 也会包含TID</li>
+</ul>
+<p>更新文件系统分为三个步骤：</p>
+<ol>
+<li>
+<p>日志写入： 将食物的内容（包括TxB， 元数据和数据）写入日志，等待这些写入完成</p>
+</li>
+<li>
+<p>日志提交： 将事务提交块（包括TxE）写入日志，事务被认为已提交（committed）</p>
+</li>
+<li>
+<p>加检查点： 将更新内容（元数据和数据）写入磁盘</p>
+</li>
+<li>
+<p>释放： 一段时间后，通过更新日志超级块（不是主文件系统的超级块）， 在超级块中标识该事物为空闲</p>
+<ul>
+<li>这一步和事务的原子性没有关系，只是为了重用日志空间。日志空间如果满了，就无法提交事务了，因此日志被实现为循环数据结构，一旦事务被加检查点，文件系统就应该释放它在日志中占用的空间，允许重用日志空间
+<ul>
+<li>要达到这个目的有很多方法，比如在日志超级块中标记最新和最旧的事务</li>
+</ul>
+</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Persistence/journaling%20circyling%20journalist.png" alt="journaling circyling journalist"></p>
+</li>
+</ol>
+<p>注意，如果将TxE在日志写入阶段一并提交（即没有日志提交步骤），那么在日志写入阶段发生崩溃时（即将以上五个块发生崩溃时），会出现问题。 因此， <strong>日志总是要分为日志写入和提交两阶段，来确日志的原子性</strong></p>
+<p>崩溃恢复：</p>
+<ol>
+<li>如果在步骤2之前崩溃，那可以跳过这个更新（事务），因为没有该事物的日志，崩溃后的系统根本不知道这个事务的存在</li>
+<li>如果在步骤3之前崩溃，系统只需要replay日志中的食物，这称为redo logging</li>
+<li>如果在加检查点时发生崩溃，处理方式如步骤2</li>
+</ol>
+<p>缺点： 数据日志需要将待更新数据写入磁盘两次，一次写入日志空间，一次写入真正的待更新区域，这是巨大的开销，为此，我们一般使用<strong>元数据日志</strong></p>
+<h3 id="Metadata-Journaling"><a class="header-anchor" href="#Metadata-Journaling"></a>Metadata Journaling</h3>
+<p>元数据日志与数据日志几乎相同，但是物理数据没有写入日志，而是直接写入文件系统</p>
+<p>但是，物理数据不能在事务提交后再写入文件系统，否则即使replay日志，也无法恢复数据（因为此时的日志中没有物理数据），所以，应该<strong>首先进行数据写入，这可以保证指针永远不会指向垃圾</strong>， 其核心理念是<strong>先写入被指对象，再写入指针对象</strong>：</p>
+<ol>
+<li>物理数据写入</li>
+<li>日志元数据写入： 将开始块TxB和元数据写入日志</li>
+<li>日志提交</li>
+<li>加检查点元数据： 将元数据更新的内容写入文件系统</li>
+<li>释放</li>
+</ol>
+<p>元数据日志的缺点是<strong>块复用问题</strong>， 因为目录的内容被当作元数据而不是物理数据，这意味着（在元数据日志中）<strong>目录的内容会放在日志空间</strong>。 假设某目录的内容在日志空间中占用块1000， 随后用户删除该目录，并释放块1000， 最后用户创建了新文件，并复用了块1000（此时该块位于物理数据空间）， 此时，在日志提交后，加检查点完成之前发生了崩溃，在replay阶段， 会重放日志中所有内容， 那么新文件的内容（也就是块1000）就会被恢复为目录的内容！ 这都是因为目录的内容被视作元数据，而不是物理数据，保留在日志空间</p>
+<p>Linux ext3点解决方案是加入撤销（revoke）指令，在上例中，删除目录将导致revoke指令被添加到日志，在replay时，被revoke的数据（这里是目录的内容）将不会被重放</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/27/Hexo/" rel="prev" title="Hexo">
+                  <i class="fa fa-chevron-left"></i> Hexo
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/04/10/MYSQL-Management/" rel="next" title="MYSQL Management">
+                  MYSQL Management <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

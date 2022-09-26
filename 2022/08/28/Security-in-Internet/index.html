@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Intro Transport Layer:  TLS Network-Layer: IPsec and VPN Application Layer: Securing E-Mail">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Security in Internet">
+<meta property="og:url" content="http://lyk-love.cn/2022/08/28/Security-in-Internet/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Intro Transport Layer:  TLS Network-Layer: IPsec and VPN Application Layer: Securing E-Mail">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/TLS.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/TLS%20Handshake.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/TLS%20Record.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/SA%20Example.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/IPsec%20Datagram.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/Securing%20E-Mail.png">
+<meta property="article:published_time" content="2022-08-28T01:19:48.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.939Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Computer Networking">
+<meta property="article:tag" content="Network Security">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/TLS.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/08/28/Security-in-Internet/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/08/28/Security-in-Internet/","path":"2022/08/28/Security-in-Internet/","title":"Security in Internet"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Security in Internet | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Assumptions"><span class="nav-text">Assumptions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Transport-Layer-TLS"><span class="nav-text">Transport Layer:  TLS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TLS-Connection-Setup"><span class="nav-text">TLS Connection Setup</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Handshake"><span class="nav-text">Handshake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key-Derivation"><span class="nav-text">Key Derivation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Data-Transfer"><span class="nav-text">Data Transfer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLS-Connection-Closure"><span class="nav-text">TLS Connection Closure</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TLS-Record"><span class="nav-text">TLS Record</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Network-Layer-IPsec-and-VPN"><span class="nav-text">Network-Layer: IPsec and VPN</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AH-and-ESP"><span class="nav-text">AH and ESP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Security-Associations"><span class="nav-text">Security Associations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-text">Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPsec-Datagram"><span class="nav-text">IPsec Datagram</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IKE"><span class="nav-text">IKE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-Layer-Securing-E-Mail"><span class="nav-text">Application Layer: Securing E-Mail</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/08/28/Security-in-Internet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Security in Internet | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Security in Internet
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-28 01:19:48" itemprop="dateCreated datePublished" datetime="2022-08-28T01:19:48Z">2022-08-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Intro</li>
+<li>Transport Layer:  TLS</li>
+<li>Network-Layer: IPsec and VPN</li>
+<li>Application Layer: Securing E-Mail</li>
+</ul>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<p>先指出一些误解:</p>
+<ul>
+<li>“只要在低层, 比如IP层, 提供安全协议, IP层及以上的层就都安全了.” 这是错误的, 因为IP报文的内容安全, 不意味着应用层数据安全. 其他层也是同理.</li>
+<li>“在高层实现安全后, 底层可以不用实现安全”: 这显然是错的. 最简单的例子, 应用层程序只能改变报文内容, 不能改变报文头, 而很多攻击就是针对报文头的. 因此低层协议也有必要实现安全.</li>
+</ul>
+<p>因此, 需要在计算机网络的每一层都采取措施, 使得该层的通信安全.</p>
+<h2 id="Assumptions"><a class="header-anchor" href="#Assumptions"></a>Assumptions</h2>
+<p>本文和<a href="https://lyk-love.cn/2022/08/28/Network-Security/#more">Network Security</a> 一样, 以Bob, Alice 和 Trudy 的三角恋为例</p>
+<h1 id="Transport-Layer-TLS"><a class="header-anchor" href="#Transport-Layer-TLS"></a>Transport Layer:  TLS</h1>
+<ul>
+<li>
+<p>运输层的安全协议是TLS( Transport Layer Security ), 它的更早期版本是SSL( Secure Socket Layer ) version3.</p>
+<ul>
+<li>我们有时候也用SSL指代TLS.</li>
+</ul>
+</li>
+<li>
+<p>SSL( or TLS )位于网络层和运输层之间, 对<strong>TCP</strong>做了增强. 在开发者角度, SSL属于传输层.</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/TLS.png" alt="TLS"></p>
+<ul>
+<li>在发送方，SSL从SSL套接字接收应用层的数据( 如HTTP或IMAP报文 ), 对数据进行加密，然后把加密的数据送往TCP套接字; 在接收方，SSL从TCP套接字读取数据, 解密后, 通过SSL套接字把数据交给应用层.</li>
+<li>如果HTTP用了TLS, 则域名的协议名会变成<code>https</code></li>
+<li>SSL并非仅用于HTTP, 而是可用于任何应用层的协议. 例如，SSL也可用于IMAP邮件存取的鉴别和数据加密.</li>
+<li>TCP的HTTPS端口号是443，而不是平时使用的端口号80</li>
+</ul>
+</li>
+<li>
+<p>SSL提供的安全服务可归纳为以下三种：</p>
+<ol>
+<li>加密</li>
+<li>报文完整性</li>
+<li>鉴别, 包括报文鉴别, 实体鉴别, 以及允许SSL client查看server的CA.
+<ul>
+<li>当然SSL server也可以查看客户的CA, 这是可选的.</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="TLS-Connection-Setup"><a class="header-anchor" href="#TLS-Connection-Setup"></a>TLS Connection Setup</h2>
+<p>TLS协议有三个阶段: <em>handshake</em>, <em>key derivation</em>, and <em>data transfer</em>.</p>
+<h3 id="Handshake"><a class="header-anchor" href="#Handshake"></a>Handshake</h3>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/TLS%20Handshake.png" alt="TLS Handshake"></p>
+<ol>
+<li>
+<p>Bob和Alice建立TCP连接.</p>
+<ul>
+<li>TCP连接建立后, Bob和Alice就开始正式的TLS连接建立, 它们的数据传输单元就变成了TLS <strong>Record</strong></li>
+</ul>
+</li>
+<li>
+<p>Bob向Alice发一个message( TLS hello ). Alice将以下内容发送给Bob:</p>
+<ul>
+<li>可供选择的非对称加密算法( 例如, RSA with a specific key length ), 用于后续EMS的加解密</li>
+<li>可供选择的HMAC算法( 例如SHA-3或MD6 ), 用于后续的HMAC计算</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li>
+<p>一个nounce, 相当于TCP里的<code>seq</code>. 使用nounce可以避免message reordering等问题, 还可以避免重放攻击.</p>
+<ul>
+<li>后面通信中的报文都会带有nounce, 为了叙述方便我就省略了.</li>
+<li>Alice自己的证书, 其中包含了自己的公钥
+<ul>
+<li>由于证书由CA颁发, Alice于是就证明了自己确实是Alice</li>
+</ul>
+</li>
+</ul>
+<p>这一步完成了算法协商, 以及Alice的实体鉴别.</p>
+</li>
+</ul>
+<ol start="3">
+<li>Bob生成一个Master Secret (MS) (which will only be used for this TLS session), 用Alice的公钥加密成为Encrypted Master Secret (EMS), 然后发给Alice. Alice会用私钥解密EMS, 得到MS.</li>
+</ol>
+<p>Handshake结束后, Bob和Alice都知道MS了.</p>
+<h3 id="Key-Derivation"><a class="header-anchor" href="#Key-Derivation"></a>Key Derivation</h3>
+<p>你可能会认为Bob和Alice将把MS作为对称加密的密钥. 然而TLS做得更加复杂. MS被用来生成以下四个密钥:</p>
+<ul>
+<li>$\mathrm{E_B}$ = session encryption key for data sent from Bob to Alice</li>
+<li>$\mathrm{M_B}$ = session HMAC key for data sent from Bob to Alice, where HMAC [RFC 2104] is a standardized hashed message authentication code (MAC) that we encountered in section 8.3.2</li>
+<li>$\mathrm{E_A}$= session encryption key for data sent from Alice to Bob</li>
+<li>$\mathrm{M_A}$ = session HMAC key for data sent from Alice to Bob</li>
+</ul>
+<p>Bob和Alice各自用自己的MS生成这四个密钥, 由于两人的MS相同, 生成的密钥也是一样的. 这四个密钥中, 两个用于数据加密, 两个用于HMAC.</p>
+<ul>
+<li>根据MS生成四个密钥的步骤比较复杂, 这里不详细介绍了.</li>
+</ul>
+<h3 id="Data-Transfer"><a class="header-anchor" href="#Data-Transfer"></a>Data Transfer</h3>
+<p>数据传输过程依然采用TLS record作为数据传输单元</p>
+<ol>
+<li>Bob在要传输的DATA后添加HMAC
+<ul>
+<li>HMAC根据DATA, 使用密钥 $\mathrm{M_B}$ 生成</li>
+</ul>
+</li>
+<li>Bob将DATA + HMAC一起用密钥  $\mathrm{E_B}$  加密, 发给Alice
+<ul>
+<li>注意, 我们之前学的采用MAC的实体鉴别<u>只会对MAC加密</u>. 但这里把DATA + MAC一起加密了.</li>
+</ul>
+</li>
+<li>Alice收到后, 用 $\mathrm{E_A}$ 解密DATA + HMAC, 再用 $\mathrm{M_A}$ 检查HMAC, 进行报文鉴别和报文完整性检查. 后续Alice向Bob的通信也同理.</li>
+</ol>
+<p>TLS breaks the data stream into records, appends an HMAC to each record for integrity checking, and then encrypts the record + HMAC. To create the HMAC, Bob inputs the record data along with the key MB into a hash function, as discussed in Section 8.3. To encrypt the package record + HMAC, Bob uses his session encryption key EB.</p>
+<h2 id="TLS-Connection-Closure"><a class="header-anchor" href="#TLS-Connection-Closure"></a>TLS Connection Closure</h2>
+<ul>
+<li><em>truncation attack</em>: 错误的想法是, Bob和Alice只断开TCP连接就可以断开TLS连接. 问题在于<strong>TCP是不安全的</strong>, Trudy可以伪造一个Bob发送的TCP FIN报文给Alice, 这样Bob和Alice就无法通信了. 这种攻击称为truncation attack.
+<ul>
+<li>因此, TLS也有自己的连接释放报文. 使用TLS时先释放TLS连接, 再释放TCP连接.</li>
+</ul>
+</li>
+</ul>
+<h2 id="TLS-Record"><a class="header-anchor" href="#TLS-Record"></a>TLS Record</h2>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/TLS%20Record.png" alt="TLS Record"></p>
+<ul>
+<li>Type: 表明该Record是TLS Handshake报文, TLS Data Tranfer报文 还是 TLS连接释放报文</li>
+</ul>
+<h1 id="Network-Layer-IPsec-and-VPN"><a class="header-anchor" href="#Network-Layer-IPsec-and-VPN"></a>Network-Layer: IPsec and VPN</h1>
+<p>虚拟专用网VPN时中传送的信息都经过IPsec加密.</p>
+<p>IPsec并不是一个单一协议, 而是能够在IP层提供互联网通信安全的<u>协议族</u> （不太严格的名词“IPsec协议”也常见到）.IPsec并没有限定用户必须使用何种特定的加密和鉴别算法。实际上，IPsec是个框架，它允许通信双方选择合适的算法和参数.</p>
+<p>为保证互操作性，IPsec还包含了一套加密算法，所有IPsec的实现都必须使用。</p>
+<p>IPsec协议族中的协议分为以下三部分：</p>
+<ol>
+<li>IP安全数据报格式的两个协议：鉴别首部AH （Authentication Header）协议 和 封装安全有效载荷ESP （Encapsulation Security Payload）协议.
+<ul>
+<li>使用ESP或AH协议的IP数据报称为IPsec datagram</li>
+</ul>
+</li>
+<li>有关加密算法的三个协议( 在此不讨论 )</li>
+<li>互联网密钥交换 IKE（Internet Key Exchange）协议</li>
+</ol>
+<h2 id="AH-and-ESP"><a class="header-anchor" href="#AH-and-ESP"></a>AH and ESP</h2>
+<p>In the IPsec protocol suite, there are two principal protocols: the <strong>Authentication Header (AH)</strong> protocol and the <strong>Encapsulation Security Payload (ESP)</strong> protocol.</p>
+<p>AH协议提供源点鉴别和数据完整性，但不能保密。而ESP比AH协议复杂得多，它提供源点鉴别、数据完整性和保密。IPsec支持IPv4和IPv6。在IPv6中，AH和ESP都是扩展首部的一部分。AH协议的功能都已包含在ESP中，因此使用ESP就可以不使用AH协议。下面我们将不再讨论AH协议，而只介绍ESP.</p>
+<h2 id="Security-Associations"><a class="header-anchor" href="#Security-Associations"></a>Security Associations</h2>
+<ul>
+<li>安全关联SA （Security Association ): 在源实体和目的实体之间创建的网络层的逻辑连接. 因为网络层不一定是有连接的( UDP就是无连接的 ), IPsec需要SA来确保连接建立.
+<ul>
+<li>为了节约资源, SA是<strong>单向连接</strong></li>
+</ul>
+</li>
+<li>安全关联数据库 SAD（Security Association Database）: 一个 IPsec entity 把它的所有SA都存在SAD里. 当它要发送 IPsec数据报时, 就在SAD中查找相应的SA.
+<ul>
+<li>SAD在OS kernel中</li>
+</ul>
+</li>
+<li>安全策略数据库 SPD ( Security Policy Database ) : 一个主机需要判断哪些数据包要进行IPsec处理处理.  为此它需要维护一个SPD, 指明过滤规则. 这取决于源地址、源端口、目的地址、目的端口，以及协议的类型等.
+<ul>
+<li>一个路由器可以同时转发很多分组, 它会通过查找SPD来决定哪些分组需要IPsec</li>
+</ul>
+</li>
+<li>SA的内容包括:
+<ul>
+<li>A 32-bit identifier for the SA, called the <strong>Security Parameter Index (SPI, 安全参数索引)</strong></li>
+<li>安全关联SA的源点和终点的IP地址（即路由器R 1 和R 2 的IP地址, 在这里就是200.168.1.100 和 193.68.2.23</li>
+<li>The type of encryption to be used (for example, 3DES with CBC)</li>
+<li>The encryption key</li>
+<li>报文完整性和鉴别的类型 ( for example, HMAC with SHA-3 )</li>
+<li>The authentication key</li>
+</ul>
+</li>
+</ul>
+<h2 id="Example"><a class="header-anchor" href="#Example"></a>Example</h2>
+<p>假设公司总部和分公司各有路由器 R1 和 R2 (通常就是公司总部和分公司的防火墙中的路由器 ), R1和R2建立SA.</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/SA%20Example.png" alt="SA Example"></p>
+<p>现假定公司总部的主机H1 要和分公司的主机H2 通过互联网进行安全通信:</p>
+<ol>
+<li>H1 发送给 H2 的IP datagram, 必须先经过R1, 然后经IPsec的加密处理后，成为IPsec datagram. 其首部目的地址是R2</li>
+<li>IPIPsec datagram 经过互联网中很多路由器的转发, 最后到达R2</li>
+<li>R2对IPsec datagram解密, 还原出原始的IP datagram, 原始IP datagram的首部目的地址是H2</li>
+<li>R2把IP datagram发到H2</li>
+</ol>
+<ul>
+<li>如果总部的主机H1 要和总部的另一台主机H3 通信, 由于都在公司内部, 不需要加密( 不使用IPsec), 因此不需要建立SA</li>
+<li>从逻辑上看，IPsec datagram在SA上传送, 就好像通过一个安全的隧道. 这就是&quot;tunnel mode&quot;.</li>
+</ul>
+<h2 id="IPsec-Datagram"><a class="header-anchor" href="#IPsec-Datagram"></a>IPsec Datagram</h2>
+<ul>
+<li>
+<p>IPsec has two different packet forms:</p>
+<ul>
+<li><strong>tunnel mode</strong> : 在原始的IP数据报的前后分别添加若干控制信息，再加上新的IP首部，构成一个IP安全数据报</li>
+<li><strong>transport mode</strong>. 在整个<u>运输层</u>报文段的前后分别添加若干控制信息，再加上IP首部，构成IP安全数据报
+<ul>
+<li>我们<strong>只讨论 tunnel model</strong>, 因为VPN中广泛使用tunnel mode</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>无论使用哪种方式，最后得到的IPsec datagram的IP header都是<strong>不加密</strong>的, 否则互联网上的路由器就没法识别IP首部并进行转发了.</p>
+</li>
+<li>
+<p>通常把IP datagram的数据部分称为datagram的payload.</p>
+<ul>
+<li>ESP IPsec datagramd的数据部分就是IP datagram. 因此ESP payload就是IP datagram.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>我们假设公司总部的H1( 172.16.1.17 ) 向R1发送了IPv4 datagram, 目的地是公司分部的H2( 172.16.2.48 ). H1, H2不在同一个局域网, 二者通过VPN相连( 也就需要IPsec ). R1将 IPv4 datagram作为Payload, 转化成IPsec datagram:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/IPsec%20Datagram.png" alt="IPsec Datagram"></p>
+<ul>
+<li>Appends to the back of the original IPv4 datagram (which includes the original header fields!) an “ESP trailer” field
+<ul>
+<li>the ESP trailer consists of three fields:
+<ol>
+<li>padding: 用全0填充.</li>
+<li>pad length: 指出padding的字节数.
+<ul>
+<li>padding的目的是便于Block Cypher进行加密计算. 参见 <em><a href="https://lyk-love.cn/2022/08/28/Network-Security/#more">Network Security</a> -&gt; Confidentiality -&gt; Symmetric Key System -&gt; Block Cipher</em></li>
+</ul>
+</li>
+<li>next header: 指ESP payload的协议类型.
+<ul>
+<li>这里是tunnel mode, 因此ESP payload就是original IPv4 datagram, 它是IP协议.</li>
+<li>如果是transport mode, 那么ESP payload就是传输层报文段( TCP, UDP segment ), 它是传输层协议</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>The next header identifies the type (e.g., UDP) of data contained in the payload-data field. The payload data (typically the original IP datagram) and the ESP trailer are concatenated and then encrypted.</li>
+</ul>
+</li>
+<li><strong>Encrypts the result( ESP payload + ESP tailer )</strong> using the algorithm and key specified by the SA</li>
+<li>Appends to the front of this encrypted quantity a field called “ESP header”; the resulting package is called the “enchilada”
+<ul>
+<li>ESP header 不加密, 它包括两个field:
+<ul>
+<li>安全参数索引SPI: 用于标识一个SA. SPI可以作为SAD和SPD中的键.</li>
+<li>sequence number: 作用和TCP序号类似, 用于避免重放攻击</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><u>Creates an authentication MAC over the <em>whole enchilada</em></u> using the algorithm and key specified in the SA</li>
+<li>Appends the MAC to the back of the enchilada forming the <em>payload</em></li>
+<li>生成新的IP首部, 它和普通的IP数据报的首部的格式一样( normally 20 bytes long). 首部中的协议字段值是50, 表明这其实是个IPsec datagram using the ESP protocol.
+<ul>
+<li>最后生成的IPsec datagram在在格式上属于IP datagram, 但它的payload包括了: ESP header, 原始的IPsec datagram, ESP tailer, ESP MAC.</li>
+</ul>
+</li>
+</ul>
+<p>R2收到该datagram后, 查看其首部的协议字段号, 发现是50, 就把它作为IPsec datagram using the ESP protocol 处理:</p>
+<ol>
+<li>查看enchilada, 根据SPI来确定该报文属于哪条SA.</li>
+<li>重新根据enchilada计算MAC, 然后和报文中的ESP MAC比对, 验证报文完整性且进行报文鉴别.</li>
+<li>检查sequence-number field来确保这不是一个重放的报文.</li>
+<li>根据SA中的信息( 该SA使用的加解密算法, 使用的Key )将加密部分( original IP datagram + ESPtailer )解密.</li>
+<li>去掉padding, 得到original IP datagram.</li>
+<li>对该original IP datagram进行转发.</li>
+</ol>
+<p>注意到, 如果IPsec datagram被人截获, 则:</p>
+<ol>
+<li>截获者无法对其解密, 也就无法知道original IP datagram的内容.</li>
+<li>由于IPsec datagram使用了MAC, 截获者无法篡改IPsec datagram的内容.</li>
+<li>由于IPsec datagram使用了sequence-number, 因此截获者无法进行重放攻击.</li>
+</ol>
+<h2 id="IKE"><a class="header-anchor" href="#IKE"></a>IKE</h2>
+<ul>
+<li>互联网密钥交换 IKE（Internet Key Exchange）协议: an automated mechanism for creating the SAs
+<ul>
+<li>IKE非常复杂</li>
+</ul>
+</li>
+</ul>
+<h1 id="Application-Layer-Securing-E-Mail"><a class="header-anchor" href="#Application-Layer-Securing-E-Mail"></a>Application Layer: Securing E-Mail</h1>
+<p>我们以E-Mail为例介绍应用层安全的实现.</p>
+<p>E-Mail安全要实现以下几点:</p>
+<ol>
+<li>内容加密</li>
+<li>报文完整性检查</li>
+<li>双向鉴别</li>
+</ol>
+<p>此外, 对于电子邮件, 双方要共享对称密钥比较困难, 因此一般用非对称加密.</p>
+<p>Secure E-Mail的发送过程大概如下:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Security%20in%20Internet/Securing%20E-Mail.png" alt="Securing E-Mail"></p>
+<ol>
+<li>首先, Alice使用HMAC计算明文m的报文摘要 $H(m)$ , 然后用自己的私钥$K_A^-$ 加密 $H(M)$ , 得到 $K_A^-(H(M))$. 把m和 $K_A^-(H(M))$ 连接在一起, 作为一个 preliminary package
+<ul>
+<li>这一步实现了<strong>发送方鉴别和报文完整性</strong>.  <u>如果Alice身份属实</u>, 那么后面Bob可以用Alice的公钥 $K_A^+$  来解密$K_A^-(H(M))$得到 $H(M)$ , 将其和自己根据m计算的 $H(M)$ 比对. 如果正确, 则既证明了 $K_A^+$  确实属于Alice( 发送方鉴别 ), 也证明了报文完整性.</li>
+</ul>
+</li>
+<li>接着, Alice随机选择一个数作为session key $K_S$ , 用 $K_S$ 将 preliminary package 加密, 记为 $K_S(.)$ . 并且用Bob的公钥 $K_B^+$ 加密 $K_S$ . 记为 $K_B(K_s)$ . 将二者连接在一起, 发给Bob.
+<ul>
+<li>这一步实现了<strong>接收方鉴别和报文加密</strong>. <u>如果Bob身份属实</u>, 那么Bob应该可以用自己的私钥 $K_B^-$  解密得到 session key  $K_S$  , 再用  $K_S$ 解密得到preliminary package . 再进行步骤一所述的验证, 如果正确, 则既证明了  $K_B^+$ 确实属于Bob( 接收方鉴别 ), 又使用 $K_S$ 实现了报文加密.</li>
+</ul>
+</li>
+</ol>
+<p>上述过程使用了非对称加密, 对于E-Mail使用者, 可以自己生成公钥, 把它放在个人主页上. 当然也可以去CA注册得到证书, 对方要获得自己的公钥可以去CA查.</p>
+<p>目前常用的Secure E-Mail实现是<a href="https://lyk-love.cn/2022/02/10/GPG/">GPG</a>(  GPG是GNU的开源软件, 参考自功能相同的商业软件PGP ), 它的逻辑和上面所述的差不多.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Computer-Networking/" rel="tag"># Computer Networking</a>
+              <a href="/tags/Network-Security/" rel="tag"># Network Security</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/26/Python-Debugging/" rel="prev" title="Python Debugging">
+                  <i class="fa fa-chevron-left"></i> Python Debugging
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/28/Computer%20Networking%20Network-Security/" rel="next" title="Network Security">
+                  Network Security <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

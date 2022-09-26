@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Basic Idea Commands docker-stack.yml  Docker Stack是Docker Compose的进化版,  是Docker原生的部署和管理多服务应用的方案, 默认集成在Docker引擎中, 且提供了简单的声明式接口对应用进行部署和全生命周期管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker Stack">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/25/Docker-Stack/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Basic Idea Commands docker-stack.yml  Docker Stack是Docker Compose的进化版,  是Docker原生的部署和管理多服务应用的方案, 默认集成在Docker引擎中, 且提供了简单的声明式接口对应用进行部署和全生命周期管理">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-03-25T04:48:35.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.929Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/03/25/Docker-Stack/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/03/25/Docker-Stack/","path":"2022/03/25/Docker-Stack/","title":"Docker Stack"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Docker Stack | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Idea"><span class="nav-text">Basic  Idea</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Commands"><span class="nav-text">Commands</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-text">部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E5%87%BAStack"><span class="nav-text">列出Stack</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BStack%E8%AF%A6%E6%83%85"><span class="nav-text">查看Stack详情</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4Stack"><span class="nav-text">删除Stack</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-stack-yml"><span class="nav-text">docker-stack.yml</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C"><span class="nav-text">网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1"><span class="nav-text">服务</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/25/Docker-Stack/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Docker Stack | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Docker Stack
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-25 04:48:35" itemprop="dateCreated datePublished" datetime="2022-03-25T04:48:35Z">2022-03-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Basic Idea</li>
+<li>Commands</li>
+<li>docker-stack.yml</li>
+</ul>
+<p>Docker Stack是Docker Compose的进化版,  是Docker原生的部署和管理多服务应用的方案, 默认集成在Docker引擎中, 且提供了简单的声明式接口对应用进行部署和全生命周期管理</p>
+<span id="more"></span>
+<h1 id="Basic-Idea"><a class="header-anchor" href="#Basic-Idea"></a>Basic  Idea</h1>
+<p>虽然是Docker Compose的进化版, 但是Stack是Docker原生的, 和Swarm一样</p>
+<ul>
+<li>事实上, Docker Stack依赖于Docker Swarm, Stack将被部署到Swarm上</li>
+</ul>
+<p>对应用的任何变更都应该通过Stack文件进行声明, 然后用<code>docker stack deploy</code>部署</p>
+<ul>
+<li>Stack文件是Stack的配置的唯一声明, 所有Stack相关的改动都要体现在Stack文件中</li>
+<li>不要用命令来修改</li>
+</ul>
+<p>Docker Stack<strong>不支持build</strong>, 意味着在部署Stack之前, 所有镜像必须提前build, 这一点不同于Docker Compose</p>
+<p>具体细节就不赘述了, 用的时候再查</p>
+<h1 id="Commands"><a class="header-anchor" href="#Commands"></a>Commands</h1>
+<h2 id="部署"><a class="header-anchor" href="#部署"></a>部署</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker stack deploy</span><br></pre></td></tr></table></figure>
+<h2 id="列出Stack"><a class="header-anchor" href="#列出Stack"></a>列出Stack</h2>
+<p>列出Swarm集群的全部Stack:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker stack ls</span><br></pre></td></tr></table></figure>
+<h2 id="查看Stack详情"><a class="header-anchor" href="#查看Stack详情"></a>查看Stack详情</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker stack ps &lt;stack&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="删除Stack"><a class="header-anchor" href="#删除Stack"></a>删除Stack</h2>
+<p>从Swarm中移除Stack</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker stack rm &lt;stack&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>只会删除网络和服务, 不会删除密钥和卷</li>
+</ul>
+<h1 id="docker-stack-yml"><a class="header-anchor" href="#docker-stack-yml"></a>docker-stack.yml</h1>
+<p>Docker Stack根据Stack文件部署应用, 也就是<code>docker-stack.yml</code></p>
+<p><code>docker-stack.yml</code>就是<code>docker-compose.yml</code>,  唯一的区别就是Docker Stack文件的<code>version</code>要大于3.0</p>
+<ul>
+<li>二者文件格式相同</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/dockersamples/atsea-sample-shop-apps">项目地址</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3.2&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">reverse_proxy:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">dockersamples/atseasampleshopapp_reverse_proxy</span> <span class="comment"># 唯一的必填项,指定镜像</span></span><br><span class="line">    <span class="attr">ports:</span> <span class="comment"># 指定端口映射</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;443:443&quot;</span></span><br><span class="line">    <span class="attr">secrets:</span>  </span><br><span class="line">      <span class="bullet">-</span> <span class="attr">source:</span> <span class="string">revprox_cert</span> <span class="comment"># 定义了两个密钥,不同于网络, 密钥必须在顶级关键字secrets下定义, 且必须在系统上已存在</span></span><br><span class="line">        <span class="attr">target:</span> <span class="string">revprox_cert</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">source:</span> <span class="string">revprox_key</span></span><br><span class="line">        <span class="attr">target:</span> <span class="string">revprox_key</span></span><br><span class="line">    <span class="attr">networks:</span> <span class="comment"># 该网络要么已经存在，要么在networks一级key中指定, 后者会让Docker创建该网络</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">front-tier</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">database:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">dockersamples/atsea_db</span></span><br><span class="line">    <span class="attr">environment:</span> <span class="comment"># 向容器中注入环境变量, 一般都将它们以密钥形式传递</span></span><br><span class="line">      <span class="attr">POSTGRES_USER:</span> <span class="string">gordonuser</span></span><br><span class="line">      <span class="attr">POSTGRES_DB_PASSWORD_FILE:</span> <span class="string">/run/secrets/postgres_password</span></span><br><span class="line">      <span class="attr">POSTGRES_DB:</span> <span class="string">atsea</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">back-tier</span></span><br><span class="line">    <span class="attr">secrets:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">postgres_password</span></span><br><span class="line">    <span class="attr">deploy:</span> <span class="comment"># 定义服务约束</span></span><br><span class="line">      <span class="attr">placement:</span></span><br><span class="line">        <span class="attr">constraints:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&#x27;node.role == worker&#x27;</span> <span class="comment"># 当前服务只会运行在Swarm的worker上</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">appserver:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">dockersamples/atsea_app</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">front-tier</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">back-tier</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">payment</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">replicas:</span> <span class="number">2</span> <span class="comment"># 含义同docker swarm</span></span><br><span class="line">      <span class="attr">update_config:</span></span><br><span class="line">        <span class="attr">parallelism:</span> <span class="number">2</span></span><br><span class="line">        <span class="attr">failure_action:</span> <span class="string">rollback</span></span><br><span class="line">      <span class="attr">placement:</span></span><br><span class="line">        <span class="attr">constraints:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&#x27;node.role == worker&#x27;</span></span><br><span class="line">      <span class="attr">restart_policy:</span> <span class="comment"># 定义了Swarm针对容器异常退出的重启策略</span></span><br><span class="line">        <span class="attr">condition:</span> <span class="string">on-failure#</span> <span class="comment"># 如果容器以failure退出, 会立即重启当前容器,重启最多重试三次, </span></span><br><span class="line">        <span class="attr">delay:</span> <span class="string">5s</span>                        <span class="comment"># 每次都会等待120s来检测是否启动成功, 每次重启间隔5s</span></span><br><span class="line">        <span class="attr">max_attempts:</span> <span class="number">3</span></span><br><span class="line">        <span class="attr">window:</span> <span class="string">120s</span>  </span><br><span class="line">    <span class="attr">secrets:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">postgres_password</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">visualizer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">dockersamples/visualizer:stable</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8001:8080&quot;</span></span><br><span class="line">    <span class="attr">stop_grace_period:</span> <span class="string">1m30s</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">update_config:</span></span><br><span class="line">        <span class="attr">failure_action:</span> <span class="string">rollback</span></span><br><span class="line">      <span class="attr">placement:</span></span><br><span class="line">        <span class="attr">constraints:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&#x27;node.role == manager&#x27;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">payment_gateway:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">dockersamples/atseasampleshopapp_payment_gateway</span></span><br><span class="line">    <span class="attr">secrets:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">source:</span> <span class="string">staging_token</span></span><br><span class="line">        <span class="attr">target:</span> <span class="string">payment_token</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">payment</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">update_config:</span></span><br><span class="line">        <span class="attr">failure_action:</span> <span class="string">rollback</span></span><br><span class="line">      <span class="attr">placement:</span></span><br><span class="line">        <span class="attr">constraints:</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&#x27;node.role == worker&#x27;</span></span><br><span class="line">          <span class="bullet">-</span> <span class="string">&#x27;node.labels.pcidss == yes&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">front-tier:</span></span><br><span class="line">  <span class="attr">back-tier:</span></span><br><span class="line">  <span class="string">payment:`</span></span><br><span class="line">    <span class="attr">driver:</span> <span class="string">overlay</span></span><br><span class="line">    <span class="attr">driver_opts:</span></span><br><span class="line">      <span class="attr">encrypted:</span> <span class="string">&#x27;yes&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">secrets:</span></span><br><span class="line">  <span class="attr">postgres_password:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span> <span class="comment"># 指定在Stack部署之前, 该密钥必须存在</span></span><br><span class="line">  <span class="attr">staging_token:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">revprox_key:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">revprox_cert:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="关键字"><a class="header-anchor" href="#关键字"></a>关键字</h2>
+<p>顶级关键字:</p>
+<ul>
+<li><code>version</code>: 代表Compose文件格式的版本号.  要应用于Stack, 需要  &gt; 3.0</li>
+<li><code>services</code></li>
+<li><code>networks</code>: 默认用<code>overlay</code>网络, 因为是Swarm模式</li>
+<li><code>secrets</code>:
+<ul>
+<li><code>external</code>: 在Stack部署之前, 该密钥必须存在</li>
+</ul>
+</li>
+</ul>
+<h2 id="网络"><a class="header-anchor" href="#网络"></a>网络</h2>
+<p>Docker Stack首先会检查并创建<code>networks</code>,  因为服务依赖于网络</p>
+<p>默认情况下, overlay网络的控制层是加密的, 如果要加密数据层, 需要在Stack文件中<code>driver_opts</code>下指定<code>encrypted: 'yes'</code></p>
+<h2 id="服务"><a class="header-anchor" href="#服务"></a>服务</h2>
+<p>服务只有一个必填的下级关键字<code>image</code>, 指定构建服务副本所需的镜像</p>
+<p>其余下级关键字:</p>
+<ul>
+<li><code>Docker</code>: 指定Docker Registry, 默认是Docker Hub</li>
+<li><code>ports</code>: 定义端口映射, 注意由于是Swarm模式, 默认网络是Ingress模式, <code>port</code>项可以简写, 如果指定用Host模式, 则<code>port</code>项要写完整格式</li>
+<li><code>secrets</code>: 定义了密钥, 不同于网络, 密钥必须已经在顶级关键字secrets下定义, 且必须在系统上已存在</li>
+<li><code> envirenment</code>: 向容器中注入环境变量, 一般都将它们以密钥形式传递</li>
+<li><code>deploy</code>: 定义部署约束, 比如节点ID, 节点名称, 节点角色, 还有更新约束等待
+<ul>
+<li>更新约束就是<code>docker service uodate </code>的那些参数, <code>replicas</code>之类</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Docker/" rel="tag"># Docker</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/25/Docker-Volume/" rel="prev" title="Docker Volume">
+                  <i class="fa fa-chevron-left"></i> Docker Volume
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/03/27/Hexo/" rel="next" title="Hexo">
+                  Hexo <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

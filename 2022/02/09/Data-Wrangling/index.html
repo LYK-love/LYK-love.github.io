@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Some tools for data wrangling ref: MIT lesson">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Data Wrangling">
+<meta property="og:url" content="http://lyk-love.cn/2022/02/09/Data-Wrangling/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Some tools for data wrangling ref: MIT lesson">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-02-08T18:14:27.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.928Z">
+<meta property="article:author" content="有多远滚多远">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/02/09/Data-Wrangling/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/02/09/Data-Wrangling/","path":"2022/02/09/Data-Wrangling/","title":"Data Wrangling"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Data Wrangling | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#sed"><span class="nav-text">sed</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#REGEX"><span class="nav-text">REGEX</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#capture-groups"><span class="nav-text">capture groups</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#sort"><span class="nav-text">sort</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#uniq"><span class="nav-text">uniq</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tail"><span class="nav-text">tail</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#awk"><span class="nav-text">awk</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#paste"><span class="nav-text">paste</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#bc"><span class="nav-text">bc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#st"><span class="nav-text">st</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#R"><span class="nav-text">R</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#gnuplot"><span class="nav-text">gnuplot</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#xargs"><span class="nav-text">xargs</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/02/09/Data-Wrangling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Data Wrangling | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Data Wrangling
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-02-08 18:14:27" itemprop="dateCreated datePublished" datetime="2022-02-08T18:14:27Z">2022-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Some tools for data wrangling</p>
+<p>ref: <a target="_blank" rel="noopener" href="https://missing.csail.mit.edu/2020/data-wrangling/">MIT lesson</a></p>
+<span id="more"></span>
+<h1 id="sed"><a class="header-anchor" href="#sed"></a>sed</h1>
+<ul>
+<li>
+<p><code>sed</code> is a “stream editor” that builds on top of the old <code>ed</code> editor. In it, you basically give short <strong>commands</strong> for how to modify the file, rather than manipulate its contents directly (although you can do that too).</p>
+<ul>
+<li>one of the most common ones is <code>s</code>: substitution</li>
+<li><code> sed 's/REGEX/SUBSTITUTION/'</code>： Replace <strong>the first occurrence</strong> of a regular expression in <strong>each line</strong> of a file, and print the result
+<ul>
+<li><code>REGEX</code>:  the regular expression you want to search for</li>
+<li>SUBSTITUTION`: the text you want to substitute matching text with</li>
+<li><code>'s/REGEX/SUBSTITUTION/g'</code>:  Replace <strong>all occurrences</strong> of an extended regular expression in a <strong>file</strong></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh myserver journalctl</span><br><span class="line"> | grep sshd</span><br><span class="line"> | grep &quot;Disconnected from&quot;</span><br><span class="line"> | sed &#x27;s/.*Disconnected from //&#x27;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="REGEX"><a class="header-anchor" href="#REGEX"></a>REGEX</h2>
+<ul>
+<li>REGEX special characters:
+<ul>
+<li><code>.</code> means “any single character” except newline</li>
+<li><code>*</code> zero or more of the preceding match</li>
+<li><code>+</code> one or more of the preceding match</li>
+<li><code>[abc]</code> any one character of <code>a</code>, <code>b</code>, and <code>c</code></li>
+<li><code>(RX1|RX2)</code> either something that matches <code>RX1</code> or <code>RX2</code></li>
+<li><code>^</code> the start of the line</li>
+<li><code>$</code> the end of the line</li>
+</ul>
+</li>
+<li><code>sed</code>默认<strong>不转义特殊字符</strong>， 这与其他工具都相反。
+<ul>
+<li>使用<code>-E</code>开启转义</li>
+</ul>
+</li>
+<li><code>sed</code>的REGEX是贪婪匹配</li>
+</ul>
+<h2 id="capture-groups"><a class="header-anchor" href="#capture-groups"></a>capture groups</h2>
+<ul>
+<li>
+<p>使用捕获组来进行非贪婪匹配</p>
+</li>
+<li>
+<p>Any text matched by a regex surrounded by parentheses is stored in a numbered capture group. These are available in the substitution (and in some engines, even in the pattern itself!) as <code>\1</code>, <code>\2</code>, <code>\3</code>, etc. So:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">| sed -E &#x27;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#x27;</span><br></pre></td></tr></table></figure>
+<p>将输出username</p>
+</li>
+</ul>
+<h1 id="sort"><a class="header-anchor" href="#sort"></a>sort</h1>
+<ul>
+<li><code>sort</code> will sort its input
+<ul>
+<li>default: in lexicographic order</li>
+<li><code>-n</code>: in numeric order</li>
+<li><code>k, --key=KEYDEF</code> :sort via a key; KEYDEF gives location and type
+<ul>
+<li><code>KEYDEF</code> is <code>F[.C][OPTS][,F[.C][OPTS]]</code> for <strong>start and stop position</strong>, where F is a <strong>field number</strong> and C a character position in the field; both are origin 1, and the stop posi‐ tion defaults to the line’s end.</li>
+<li>If neither <strong>-t</strong> nor <strong>-b</strong> is in effect, characters in a field are counted from the beginning of the preceding whitespace.</li>
+<li>OPTS  is  one  or more single-letter ordering options <code>[bdfgiMhnRrV]</code>, which override global ordering options for that key.  If no key is given, use the entire line as the key.  Use <strong>–debug</strong> to diagnose incorrect key usage.</li>
+<li>example: <code>-k1,1</code>即以第一个field为key排序， 而<code>-k</code>1即以第一个field直到行的末尾为key进行排序
+<ul>
+<li><code>,n</code>:  sort until the <code>n</code>th field, where the default is the end of the line</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>-r</code>: sort in reverse order.</li>
+</ul>
+</li>
+</ul>
+<h1 id="uniq"><a class="header-anchor" href="#uniq"></a>uniq</h1>
+<ul>
+<li><code>uniq -c</code> will collapse consecutive lines that are the same into a single line, prefixed with a count of the number of occurrences</li>
+</ul>
+  <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh myserver journalctl</span><br><span class="line"> | grep sshd</span><br><span class="line"> | grep &quot;Disconnected from&quot;</span><br><span class="line"> | sed -E &#x27;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#x27;</span><br><span class="line"> | sort | uniq -c</span><br><span class="line"> | sort -nk1,1 | tail -n10</span><br></pre></td></tr></table></figure>
+<p>对username（sort默认按字典序）排序</p>
+<h1 id="tail"><a class="header-anchor" href="#tail"></a>tail</h1>
+<ul>
+<li>Display the last part of a file.</li>
+</ul>
+<h1 id="awk"><a class="header-anchor" href="#awk"></a>awk</h1>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &quot;sfsdfs\n asdfdas&quot; | awk &#x27;&#123;print $2&#125;&#x27; | paste -sd,</span><br></pre></td></tr></table></figure>
+<ul>
+<li>explain:  for every line, print the contents of the second field,</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span> &#123; rows = <span class="number">0</span> &#125;</span><br><span class="line"><span class="variable">$1</span> == <span class="number">1</span> &amp;&amp; <span class="variable">$2</span> ~ <span class="regexp">/^c[^ ]*e$/</span> &#123; rows += <span class="variable">$1</span> &#125;</span><br><span class="line"><span class="keyword">END</span> &#123; print rows &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="paste"><a class="header-anchor" href="#paste"></a>paste</h1>
+<ul>
+<li>
+<p><code>paste</code>: Merge lines of files</p>
+<ul>
+<li>
+<p><code>-s</code>: join all the lines into a single line, using TAB as delimiter</p>
+</li>
+<li>
+<p><code>-d</code>: using the specified delimiter</p>
+<ul>
+<li><code>paste -s -d delimiter file</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh myserver journalctl</span><br><span class="line"> | grep sshd</span><br><span class="line"> | grep &quot;Disconnected from&quot;</span><br><span class="line"> | sed -E &#x27;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#x27;</span><br><span class="line"> | sort | uniq -c</span><br><span class="line"> | sort -nk1,1 | tail -n10</span><br><span class="line"> | awk &#x27;&#123;print $2&#125;&#x27; | paste -sd,</span><br></pre></td></tr></table></figure>
+<p>extract the usernames as a comma-separated list instead of one per line</p>
+<h1 id="bc"><a class="header-anchor" href="#bc"></a>bc</h1>
+<p>You can do math directly in your shell using <code>bc</code>, a calculator that can read from STDIN! For example, add the numbers on each line together by concatenating them together, delimited by <code>+</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">| paste -sd+ | bc -l</span><br></pre></td></tr></table></figure>
+<p>Or produce more elaborate expressions:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo &quot;2*($(data | paste -sd+))&quot; | bc -l</span><br></pre></td></tr></table></figure>
+<p>You can get stats in a variety of ways</p>
+<h1 id="st"><a class="header-anchor" href="#st"></a>st</h1>
+<ul>
+<li>优雅简洁的数据处理工具https://github.com/nferraz/st</li>
+<li>与linux的<code>st</code>命令重名，需要改名(如<code>scal</code>)</li>
+</ul>
+<h1 id="R"><a class="header-anchor" href="#R"></a>R</h1>
+<ul>
+<li>
+<p>R is another (weird) programming language that’s great at data analysis and <a target="_blank" rel="noopener" href="https://ggplot2.tidyverse.org/">plotting</a>.</p>
+<ul>
+<li>相比之前的工具更重量级</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh myserver journalctl</span><br><span class="line"> | grep sshd</span><br><span class="line"> | grep &quot;Disconnected from&quot;</span><br><span class="line"> | sed -E &#x27;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#x27;</span><br><span class="line"> | sort | uniq -c</span><br><span class="line"> | awk &#x27;&#123;print $1&#125;&#x27; | R --no-echo -e &#x27;x &lt;- scan(file=&quot;stdin&quot;, quiet=TRUE); summary(x)&#x27;</span><br><span class="line">R is another (weird) programming language that’s great at data analysis and</span><br></pre></td></tr></table></figure>
+<p><code>summary</code> prints summary statistics for a vector, and we created a vector containing the input stream of numbers, so R gives us the statistics we wanted!</p>
+</li>
+</ul>
+<h1 id="gnuplot"><a class="header-anchor" href="#gnuplot"></a>gnuplot</h1>
+<ul>
+<li>simple plotting <a target="_blank" rel="noopener" href="http://www.gnuplot.info/">http://www.gnuplot.info/</a></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ssh myserver journalctl</span><br><span class="line"> | grep sshd</span><br><span class="line"> | grep &quot;Disconnected from&quot;</span><br><span class="line"> | sed -E &#x27;s/.*Disconnected from (invalid |authenticating )?user (.*) [^ ]+ port [0-9]+( \[preauth\])?$/\2/&#x27;</span><br><span class="line"> | sort | uniq -c</span><br><span class="line"> | sort -nk1,1 | tail -n10</span><br><span class="line"> | gnuplot -p -e &#x27;set boxwidth 0.5; plot &quot;-&quot; using 1:xtic(2) with boxes&#x27;</span><br></pre></td></tr></table></figure>
+<h1 id="xargs"><a class="header-anchor" href="#xargs"></a>xargs</h1>
+<ul>
+<li><code>xargs </code>： Execute a command with piped arguments coming from another command, a file, etc.<br>
+The input is treated as a single block of text and split into separate pieces on spaces, tabs, newlines and end-of-file.</li>
+</ul>
+  <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Run a <span class="built_in">command</span> using the input data as arguments:</span> </span><br><span class="line">arguments_source | xargs command</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>Sometimes you want to do data wrangling to find things to install or remove based on some longer list. The data wrangling we’ve talked about so far + <code>xargs</code> can be a powerful combo.</p>
+<p>For example, as seen in lecture, I can use the following command to uninstall old nightly builds of Rust from my system by extracting the old build names using data wrangling tools and then passing them via <code>xargs</code> to the uninstaller:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rustup toolchain list | grep nightly | grep -vE &quot;nightly-x86&quot; | sed &#x27;s/-x86.*//&#x27; | xargs rustup toolchain uninstall</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/02/09/awk/" rel="prev" title="awk">
+                  <i class="fa fa-chevron-left"></i> awk
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/02/10/debtap/" rel="next" title="debtap">
+                  debtap <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

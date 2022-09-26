@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Spring Boot工程 常用配置 Spring Boot Features  Spring Boot基于Spring提供了开箱即用的一组套件，可以简化spring开发，还提供了基于java的、面向REST的微服务框架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot Intro">
+<meta property="og:url" content="http://lyk-love.cn/2022/04/14/Spring-Boot-Basic/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Spring Boot工程 常用配置 Spring Boot Features  Spring Boot基于Spring提供了开箱即用的一组套件，可以简化spring开发，还提供了基于java的、面向REST的微服务框架">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190507163145255.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW9ob25nX2Jv,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2022-04-13T20:38:17.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.940Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190507163145255.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW9ob25nX2Jv,size_16,color_FFFFFF,t_70">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/04/14/Spring-Boot-Basic/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/04/14/Spring-Boot-Basic/","path":"2022/04/14/Spring-Boot-Basic/","title":"Spring Boot Intro"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Spring Boot Intro | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Boot%E5%B7%A5%E7%A8%8B"><span class="nav-text">Spring Boot工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#application-yml"><span class="nav-text">application.yml</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-text">配置的优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#yaml%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="nav-text">yaml文件格式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE"><span class="nav-text">常用配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%8D%95%E6%95%B0%E6%8D%AE%E6%BA%90"><span class="nav-text">配置单数据源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90"><span class="nav-text">配置多数据源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E4%BE%9D%E8%B5%96"><span class="nav-text">引入数据库驱动依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5"><span class="nav-text">配置数据库连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEMybatis%E7%9A%84%E6%89%AB%E6%8F%8F%E8%B7%AF%E5%BE%84"><span class="nav-text">配置Mybatis的扫描路径</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E6%95%B0%E6%8D%AE%E6%BA%90"><span class="nav-text">主数据源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E4%B8%AA%E6%95%B0%E6%8D%AE%E6%BA%90"><span class="nav-text">第二个数据源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E6%B1%A0"><span class="nav-text">连接池</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%97%A5%E5%BF%97"><span class="nav-text">配置日志</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEHTTPS"><span class="nav-text">配置HTTPS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Boot-Features"><span class="nav-text">Spring Boot Features</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#AutoConfiguration"><span class="nav-text">AutoConfiguration</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E7%9A%84%E7%BB%86%E8%8A%82"><span class="nav-text">自动配置的细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E8%A3%85%E9%85%8D%E7%9A%84%E7%BB%86%E8%8A%82"><span class="nav-text">条件装配的细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A6%86%E7%9B%96%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D"><span class="nav-text">覆盖自动装配</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Starter-Dependencies"><span class="nav-text">Starter Dependencies</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#parent"><span class="nav-text">parent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#devtools"><span class="nav-text">devtools</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E9%87%8D%E5%90%AF"><span class="nav-text">自动重启</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LiveReoload"><span class="nav-text">LiveReoload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%BB%98%E8%AE%A4%E7%9A%84%E5%BC%80%E5%8F%91%E6%97%B6%E5%B1%9E%E6%80%A7"><span class="nav-text">默认的开发时属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Boot-CLI"><span class="nav-text">Spring Boot CLI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BDSpiringBoot-Cli"><span class="nav-text">下载SpiringBoot Cli</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Profiles"><span class="nav-text">Profiles</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Actuator"><span class="nav-text">Actuator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#beans"><span class="nav-text">&#x2F;beans</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#autoconfig"><span class="nav-text">&#x2F;autoconfig</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/04/14/Spring-Boot-Basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Spring Boot Intro | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring Boot Intro
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-13 20:38:17" itemprop="dateCreated datePublished" datetime="2022-04-13T20:38:17Z">2022-04-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Spring Boot工程</li>
+<li>常用配置</li>
+<li>Spring Boot Features</li>
+</ul>
+<p>Spring Boot基于Spring提供了开箱即用的一组套件，可以简化spring开发，还提供了基于java的、面向REST的微服务框架</p>
+<span id="more"></span>
+<h1 id="Spring-Boot工程"><a class="header-anchor" href="#Spring-Boot工程"></a>Spring Boot工程</h1>
+<p>Spring Boot工程目录结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">springboot-hello</span><br><span class="line">├── pom.xml</span><br><span class="line">├── src</span><br><span class="line">│   └── main</span><br><span class="line">│       ├── java</span><br><span class="line">│       └── resources</span><br><span class="line">│           ├── application.yml</span><br><span class="line">│           ├── logback-spring.xml</span><br><span class="line">│           ├── static</span><br><span class="line">│           └── templates</span><br><span class="line">└── target</span><br></pre></td></tr></table></figure>
+<p>Spring Boot要求<code>main()</code>方法所在的启动类必须放到根package下，命名不做要求，这里我们以<code>Application.java</code>命名，它的内容如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>启动Spring Boot应用程序只需要加上注解<code>@SpringBootApplication</code>，该注解实际上又包含了：</p>
+<ul>
+<li>@SpringBootConfiguration
+<ul>
+<li>@Configuration</li>
+</ul>
+</li>
+<li>@EnableAutoConfiguration
+<ul>
+<li>@AutoConfigurationPackage</li>
+</ul>
+</li>
+<li>@ComponentScan</li>
+</ul>
+<p>这样一个注解就相当于启动了自动配置和自动扫描</p>
+<h2 id="application-yml"><a class="header-anchor" href="#application-yml"></a>application.yml</h2>
+<p>Spring Boot默认的配置文件是采用<a target="_blank" rel="noopener" href="https://yaml.org/">YAML</a>格式的<code>application.yml</code> ,当然你也可以继续沿用spring的<code>application.properties</code></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">$&#123;APP_NAME:unnamed&#125;</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:hsqldb:file:testdb</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">sa</span></span><br><span class="line">    <span class="attr">password:</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">org.hsqldb.jdbc.JDBCDriver</span></span><br><span class="line">    <span class="attr">hikari:</span></span><br><span class="line">      <span class="attr">auto-commit:</span> <span class="literal">false</span></span><br><span class="line">      <span class="attr">connection-timeout:</span> <span class="number">3000</span></span><br><span class="line">      <span class="attr">validation-timeout:</span> <span class="number">3000</span></span><br><span class="line">      <span class="attr">max-lifetime:</span> <span class="number">60000</span></span><br><span class="line">      <span class="attr">maximum-pool-size:</span> <span class="number">20</span></span><br><span class="line">      <span class="attr">minimum-idle:</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<h3 id="配置的优先级"><a class="header-anchor" href="#配置的优先级"></a>配置的优先级</h3>
+<p>和其他程序一样， 命令行手动指定的优先级最高。  对于配置文件而言，优先级取决于其所在位置，按优先级从高到低：</p>
+<ol>
+<li>外置,在相对于应用程序运行目录的/config子目录里。</li>
+<li>外置,在应用程序运行的目录里。</li>
+<li>内置,在config包内。</li>
+<li>内置,在Classpath根目录</li>
+</ol>
+<p>同一目录下，<code>application.yml</code> &gt;  <code>application.properties</code></p>
+<h3 id="环境变量"><a class="header-anchor" href="#环境变量"></a>环境变量</h3>
+<p>在配置文件中，我们经常使用如下的格式对某个key进行配置：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">app:</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="string">$&#123;DB_HOST:localhost&#125;</span></span><br><span class="line">    <span class="attr">user:</span> <span class="string">$&#123;DB_USER:root&#125;</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">$&#123;DB_PASSWORD:password&#125;</span></span><br></pre></td></tr></table></figure>
+<p>这种<code>$&#123;DB_HOST:localhost&#125;</code>意思是，首先从环境变量查找<code>DB_HOST</code>，如果环境变量定义了，那么使用环境变量的值，否则，使用默认值<code>localhost</code>。</p>
+<p>这使得我们在开发和部署时更加方便，因为开发时无需设定任何环境变量，直接使用默认值即本地数据库，而实际线上运行的时候，只需要传入环境变量即可：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DB_HOST=10.0.1.123 DB_USER=prod DB_PASSWORD=xxxx java -jar xxx.jar</span><br></pre></td></tr></table></figure>
+<h3 id="yaml文件格式"><a class="header-anchor" href="#yaml文件格式"></a>yaml文件格式</h3>
+<ul>
+<li>
+<p>使用缩进表示层级关系，不允许使用Tab键，只允许使用空格</p>
+</li>
+<li>
+<p><code>#</code> 表示注释，从这个字符一直到行尾，都会被解析器忽略。</p>
+</li>
+<li>
+<p>对象，键值对，使用冒号结构表示</p>
+</li>
+<li>
+<ul>
+<li>animal: pets</li>
+<li>hash: { name: Steve, foo: bar }</li>
+</ul>
+</li>
+<li>
+<p>数组,一组连词线开头的行，构成一个数组</p>
+</li>
+<li>
+<ul>
+<li>- Cat</li>
+<li>- Dog</li>
+<li>- Goldfish</li>
+<li>行内表示法：animal: [Cat, Dog]</li>
+</ul>
+</li>
+</ul>
+<h1 id="常用配置"><a class="header-anchor" href="#常用配置"></a>常用配置</h1>
+<ul>
+<li>
+<p>让服务器监听不同的端口：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">server:</span><br><span class="line">port: 8000</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用https：</p>
+<ol>
+<li>
+<p>使用JDK的keytool工具来创建一个密钥存储(keystore)</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">keytool</span> <span class="string">-keystore</span> <span class="string">mykeys.jks</span> <span class="string">-genkey</span> <span class="string">-alias</span> <span class="string">tomcat</span> <span class="string">-keyalg</span> <span class="string">RSA</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>配置文件如下：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">server:</span><br><span class="line">	port: 8443</span><br><span class="line">	ssl:</span><br><span class="line">		key-store:file:///path/to/mykeys.jks</span><br><span class="line">		key-store-password: letmein</span><br><span class="line">		key-password: letmein</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>server.ssl.key-store 属性指向密钥存储文件的存放路径。这里用了一个file://开头的URL,<br>
+从文件系统里加载该文件。你也可以把它打包在应用程序的JAR文件里,用classpath: URL来<br>
+引用它。server.ssl.key-store-password和server.ssl.key-password设置为创建该文<br>
+件时给定的密码。</p>
+</li>
+</ul>
+<h2 id="配置单数据源"><a class="header-anchor" href="#配置单数据源"></a>配置单数据源</h2>
+<p>数据源配置可以用Bean， 但更方便的做法是通过配置文件,以Mysql为例：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">datasource:</span></span><br><span class="line">		<span class="attr">url:</span> <span class="string">jdbc:mysql://localhost/readinglist</span></span><br><span class="line">		<span class="attr">username:</span> <span class="string">dbuser</span></span><br><span class="line">		<span class="attr">password:</span> <span class="string">dbpass</span></span><br></pre></td></tr></table></figure>
+<p>通常你都无需指定JDBC驱动,Spring Boot会根据数据库URL识别出需要的驱动,但如果识别出问题了,你还可以设置spring.datasource.driver-class-name属性:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">datasource:</span></span><br><span class="line">		<span class="attr">url:</span> <span class="string">jdbc:mysql://localhost/readinglist</span></span><br><span class="line">		<span class="attr">username:</span> <span class="string">dbuser</span></span><br><span class="line">		<span class="attr">password:</span> <span class="string">dbpass</span></span><br><span class="line">		<span class="attr">driver-class-name:</span> <span class="string">com.mysql.jdbc.Driver</span></span><br></pre></td></tr></table></figure>
+<p>在自动配置 DataSource Bean的时候,Spring Boot会使用这里的连接数据。 DataSource<br>
+Bean是一个连接池,如果Classpath里有Tomcat的连接池DataSource,那么就会使用这个连接池;<br>
+否则,Spring Boot会在Classpath里查找以下连接池:</p>
+<ul>
+<li>HikariCP</li>
+<li>Commons DBCP</li>
+<li>Commons DBCP 2</li>
+</ul>
+<p>这里列出的只是自动配置支持的连接池,你还可以自己配置DataSource Bean,使用你喜欢的各种连接池</p>
+<h2 id="配置多数据源"><a class="header-anchor" href="#配置多数据源"></a>配置多数据源</h2>
+<p>配置多数据源和单数据源没什么区别，但是如果使用了Mybatis等ORM框架，记得要额外配置一下ORM的扫描规则。 大概步骤为：</p>
+<ol>
+<li>（如果需要的话）引入新数据库的驱动的依赖</li>
+<li>在配置文件里面配置新的数据库连接</li>
+<li>新增配置类，在里面配置ORM框架的扫描规则</li>
+<li>（如果需要的话）使用新的连接池</li>
+</ol>
+<h3 id="引入数据库驱动依赖"><a class="header-anchor" href="#引入数据库驱动依赖"></a>引入数据库驱动依赖</h3>
+<p>如果你新增的数据库数据源和目前的数据库不同，记得引入新数据库的驱动依赖，比如 MySQL 和 PGSQL。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line"> <span class="language-xml"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></span><br><span class="line"> <span class="language-xml"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-java<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></span><br><span class="line"> <span class="language-xml"><span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span></span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.postgresql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>postgresql<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>42.2.7<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="配置数据库连接"><a class="header-anchor" href="#配置数据库连接"></a>配置数据库连接</h3>
+<p>因为数据源要有一个默认使用的数据源，最好在名称上有所区分（这里使用 <strong>primary</strong> 作为主数据源标识）</p>
+<figure class="highlight properties"><table><tr><td class="code"><pre><span class="line"><span class="comment">########################## 主数据源 ##################################</span></span><br><span class="line"><span class="attr">spring.datasource.primary.jdbc-url</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/demo1?characterEncoding=utf-8&amp;serverTimezone=GMT%2B8</span></span><br><span class="line"><span class="attr">spring.datasource.primary.driver-class-name</span>=<span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line"><span class="attr">spring.datasource.primary.username</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">spring.datasource.primary.password</span>=<span class="string"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">########################## 第二个数据源 ###############################</span></span><br><span class="line"><span class="attr">spring.datasource.datasource2.jdbc-url</span>=<span class="string">jdbc:mysql://127.0.0.1:3306/demo2?characterEncoding=utf-8&amp;serverTimezone=GMT%2B8</span></span><br><span class="line"><span class="attr">spring.datasource.datasource2.driver-class-name</span>=<span class="string">com.mysql.jdbc.Driver</span></span><br><span class="line"><span class="attr">spring.datasource.datasource2.username</span>=<span class="string">root</span></span><br><span class="line"><span class="attr">spring.datasource.datasource2.password</span>=<span class="string"></span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># mybatis</span></span><br><span class="line"><span class="attr">mybatis.mapper-locations</span>=<span class="string">classpath:mapper/*.xml</span></span><br><span class="line"><span class="attr">mybatis.type-aliases-package</span>=<span class="string">com.wdbyte.domain</span></span><br></pre></td></tr></table></figure>
+<p>注意，配置中的数据源连接 url 末尾使用的是 <code>jdbc-url</code>.</p>
+<p>因为使用了 Mybatis 框架，所以 Mybatis 框架的配置信息也是少不了的，指定扫描目录 <code>mapper</code> 下的<code>mapper xml</code> 配置文件。</p>
+<h3 id="配置Mybatis的扫描路径"><a class="header-anchor" href="#配置Mybatis的扫描路径"></a>配置Mybatis的扫描路径</h3>
+<p>到目前为止， Mybatis 多数据源和单数据源写法唯一的区别就是 Mapper 接口使用不同的目录分开了，那么这个不同点一定会在数据源配置中体现</p>
+<h4 id="主数据源"><a class="header-anchor" href="#主数据源"></a>主数据源</h4>
+<p>开始配置两个数据源信息，先配置主数据源，配置扫描的 <code>MapperScan</code> 目录为 <code>com.wdbyte.mapper.primary</code></p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 主数据源配置</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> <span class="variable">niujinpeng</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@website</span>: https://www.wdbyte.com</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2020/12/19</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@<span class="title class_">Configuration</span></span><br><span class="line">@<span class="title class_">MapperScan</span>(basePackages = &#123;<span class="string">&quot;com.wdbyte.mapper.primary&quot;</span>&#125;, sqlSessionFactoryRef = <span class="string">&quot;sqlSessionFactory&quot;</span>)</span><br><span class="line">public <span class="keyword">class</span> <span class="title class_">PrimaryDataSourceConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Bean</span>(name = <span class="string">&quot;dataSource&quot;</span>)</span><br><span class="line">    @<span class="title class_">ConfigurationProperties</span>(prefix = <span class="string">&quot;spring.datasource.primary&quot;</span>)</span><br><span class="line">    @<span class="title class_">Primary</span></span><br><span class="line">    public <span class="title class_">DataSource</span> <span class="title function_">dataSource</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">DataSourceBuilder</span>.<span class="title function_">create</span>().<span class="title function_">build</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Bean</span>(name = <span class="string">&quot;sqlSessionFactory&quot;</span>)</span><br><span class="line">    @<span class="title class_">Primary</span></span><br><span class="line">    public <span class="title class_">SqlSessionFactory</span> <span class="title function_">sqlSessionFactory</span>(@<span class="title class_">Qualifier</span>(<span class="string">&quot;dataSource&quot;</span>) <span class="title class_">DataSource</span> dataSource) throws <span class="title class_">Exception</span> &#123;</span><br><span class="line">        <span class="title class_">SqlSessionFactoryBean</span> bean = <span class="keyword">new</span> <span class="title class_">SqlSessionFactoryBean</span>();</span><br><span class="line">        bean.<span class="title function_">setDataSource</span>(dataSource);</span><br><span class="line">        bean.<span class="title function_">setMapperLocations</span>(<span class="keyword">new</span> <span class="title class_">PathMatchingResourcePatternResolver</span>().<span class="title function_">getResources</span>(<span class="string">&quot;classpath:mapper/*.xml&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> bean.<span class="title function_">getObject</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Bean</span>(name = <span class="string">&quot;transactionManager&quot;</span>)</span><br><span class="line">    @<span class="title class_">Primary</span></span><br><span class="line">    public <span class="title class_">DataSourceTransactionManager</span> <span class="title function_">transactionManager</span>(<span class="params">@Qualifier(<span class="string">&quot;dataSource&quot;</span>) DataSource dataSource</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DataSourceTransactionManager</span>(dataSource);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Bean</span>(name = <span class="string">&quot;sqlSessionTemplate&quot;</span>)</span><br><span class="line">    @<span class="title class_">Primary</span></span><br><span class="line">    public <span class="title class_">SqlSessionTemplate</span> <span class="title function_">sqlSessionTemplate</span>(<span class="params">@Qualifier(<span class="string">&quot;sqlSessionFactory&quot;</span>) SqlSessionFactory sqlSessionFactory</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">SqlSessionTemplate</span>(sqlSessionFactory);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>和单数据源不同的是这里把</p>
+<ul>
+<li><code>dataSource</code></li>
+<li><code>sqlSessionFactory</code></li>
+<li><code>transactionManager</code></li>
+<li><code>sqlSessionTemplate</code></li>
+</ul>
+<p>都单独进行了配置，简单的 bean 创建，下面是用到的一些注解说明。</p>
+<ul>
+<li><code>@ConfigurationProperties(prefix = &quot;spring.datasource.primary&quot;)</code>：使用spring.datasource.primary 开头的配置。</li>
+<li><code>@Primary</code> ：声明这是一个主数据源（默认数据源），多数据源配置时<strong>必不可少</strong>。</li>
+<li><code>@Qualifier</code>：显式选择传入的 Bean。</li>
+</ul>
+<h4 id="第二个数据源"><a class="header-anchor" href="#第二个数据源"></a>第二个数据源</h4>
+<p>第二个数据源和主数据源唯一不同的只是 <code>MapperScan</code> 扫描路径和创建的 Bean 名称，同时没有 <code>@Primary</code> 主数据源的注解。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 第二个数据源配置</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> <span class="variable">niujinpeng</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@website</span>: https://www.wdbyte.com</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2020/12/19</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">@<span class="title class_">Configuration</span></span><br><span class="line">@<span class="title class_">MapperScan</span>(basePackages = &#123;<span class="string">&quot;com.wdbyte.mapper.datasource2&quot;</span>&#125;, sqlSessionFactoryRef = <span class="string">&quot;sqlSessionFactory2&quot;</span>)</span><br><span class="line">public <span class="keyword">class</span> <span class="title class_">SecondDataSourceConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Bean</span>(name = <span class="string">&quot;dataSource2&quot;</span>)</span><br><span class="line">    @<span class="title class_">ConfigurationProperties</span>(prefix = <span class="string">&quot;spring.datasource.datasource2&quot;</span>)</span><br><span class="line">    public <span class="title class_">DataSource</span> <span class="title function_">dataSource</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title class_">DataSourceBuilder</span>.<span class="title function_">create</span>().<span class="title function_">build</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Bean</span>(name = <span class="string">&quot;sqlSessionFactory2&quot;</span>)</span><br><span class="line">    public <span class="title class_">SqlSessionFactory</span> <span class="title function_">sqlSessionFactory</span>(@<span class="title class_">Qualifier</span>(<span class="string">&quot;dataSource2&quot;</span>) <span class="title class_">DataSource</span> dataSource) throws <span class="title class_">Exception</span> &#123;</span><br><span class="line">        <span class="title class_">SqlSessionFactoryBean</span> bean = <span class="keyword">new</span> <span class="title class_">SqlSessionFactoryBean</span>();</span><br><span class="line">        bean.<span class="title function_">setDataSource</span>(dataSource);</span><br><span class="line">        bean.<span class="title function_">setMapperLocations</span>(<span class="keyword">new</span> <span class="title class_">PathMatchingResourcePatternResolver</span>().<span class="title function_">getResources</span>(<span class="string">&quot;classpath:mapper/*.xml&quot;</span>));</span><br><span class="line">        <span class="keyword">return</span> bean.<span class="title function_">getObject</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Bean</span>(name = <span class="string">&quot;transactionManager2&quot;</span>)</span><br><span class="line">    public <span class="title class_">DataSourceTransactionManager</span> <span class="title function_">transactionManager</span>(<span class="params">@Qualifier(<span class="string">&quot;dataSource2&quot;</span>) DataSource dataSource</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DataSourceTransactionManager</span>(dataSource);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @<span class="title class_">Bean</span>(name = <span class="string">&quot;sqlSessionTemplate2&quot;</span>)</span><br><span class="line">    public <span class="title class_">SqlSessionTemplate</span> <span class="title function_">sqlSessionTemplate</span>(<span class="params">@Qualifier(<span class="string">&quot;sqlSessionFactory2&quot;</span>) SqlSessionFactory sqlSessionFactory</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">SqlSessionTemplate</span>(sqlSessionFactory);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：因为已经在两个数据源中分别配置了扫描的 Mapper 路径，如果你之前在 SpringBoot 启动类中也使用了 Mapper 扫描注解，<strong>需要删掉</strong>。</p>
+<h3 id="连接池"><a class="header-anchor" href="#连接池"></a>连接池</h3>
+<p>其实在多数据源改造中，我们一般情况下都不会使用默认的 JDBC 连接方式，往往都需要引入连接池进行连接优化，不然你可能会经常遇到数据源连接被断开等报错日志。其实数据源切换连接池数据源也是十分简单的，直接引入连接池依赖，然后把创建 dataSource 的部分换成连接池数据源创建即可</p>
+<p>下面以阿里的 Druid 为例，先引入连接池数据源依赖。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span></span><br><span class="line">   <span class="language-xml"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>druid<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span></span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>添加 Druid 的一些配置。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">spring.<span class="property">datasource</span>.<span class="property">datasource2</span>.<span class="property">initialSize</span>=<span class="number">3</span> # 根据自己情况设置</span><br><span class="line">spring.<span class="property">datasource</span>.<span class="property">datasource2</span>.<span class="property">minIdle</span>=<span class="number">3</span></span><br><span class="line">spring.<span class="property">datasource</span>.<span class="property">datasource2</span>.<span class="property">maxActive</span>=<span class="number">20</span></span><br></pre></td></tr></table></figure>
+<p>改写 dataSource Bean 的创建代码部分。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">@<span class="title class_">Value</span>(<span class="string">&quot;$&#123;spring.datasource.datasource2.jdbc-url&#125;&quot;</span>)</span><br><span class="line">private <span class="title class_">String</span> url;</span><br><span class="line">@<span class="title class_">Value</span>(<span class="string">&quot;$&#123;spring.datasource.datasource2.driver-class-name&#125;&quot;</span>)</span><br><span class="line">private <span class="title class_">String</span> driverClassName;</span><br><span class="line">@<span class="title class_">Value</span>(<span class="string">&quot;$&#123;spring.datasource.datasource2.username&#125;&quot;</span>)</span><br><span class="line">private <span class="title class_">String</span> username;</span><br><span class="line">@<span class="title class_">Value</span>(<span class="string">&quot;$&#123;spring.datasource.datasource2.password&#125;&quot;</span>)</span><br><span class="line">private <span class="title class_">String</span> password;</span><br><span class="line">@<span class="title class_">Value</span>(<span class="string">&quot;$&#123;spring.datasource.datasource2.initialSize&#125;&quot;</span>)</span><br><span class="line">private int initialSize;</span><br><span class="line">@<span class="title class_">Value</span>(<span class="string">&quot;$&#123;spring.datasource.datasource2.minIdle&#125;&quot;</span>)</span><br><span class="line">private int minIdle;</span><br><span class="line">@<span class="title class_">Value</span>(<span class="string">&quot;$&#123;spring.datasource.datasource2.maxActive&#125;&quot;</span>)</span><br><span class="line">private int maxActive;</span><br><span class="line"></span><br><span class="line">@<span class="title class_">Bean</span>(name = <span class="string">&quot;dataSource2&quot;</span>)</span><br><span class="line">public <span class="title class_">DataSource</span> <span class="title function_">dataSource</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="title class_">DruidDataSource</span> dataSource = <span class="keyword">new</span> <span class="title class_">DruidDataSource</span>();</span><br><span class="line">    dataSource.<span class="title function_">setUrl</span>(url);</span><br><span class="line">    dataSource.<span class="title function_">setDriverClassName</span>(driverClassName);</span><br><span class="line">    dataSource.<span class="title function_">setUsername</span>(username);</span><br><span class="line">    dataSource.<span class="title function_">setPassword</span>(password);</span><br><span class="line">    dataSource.<span class="title function_">setInitialSize</span>(initialSize);</span><br><span class="line">    dataSource.<span class="title function_">setMinIdle</span>(minIdle);</span><br><span class="line">    dataSource.<span class="title function_">setMaxActive</span>(maxActive);</span><br><span class="line">    <span class="keyword">return</span> dataSource;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里只是简单的提一下使用连接池的重要性，Druid 的详细用法还请参考官方文档</p>
+<h2 id="配置日志"><a class="header-anchor" href="#配置日志"></a>配置日志</h2>
+<p>默认情况下,Spring Boot会用Logback(<a target="_blank" rel="noopener" href="http://logback.qos.ch">http://logback.qos.ch</a>)来记录日志,并用INFO级别输<br>
+出到控制台。在运行应用程序和其他例子时,你应该已经看到很多INFO级别的日志了。</p>
+<p>一般来说,你不需要切换日志实现;Logback能很好地满足你的需要。但是,如果决定使<br>
+用Log4j或者Log4j2,那么你只需要修改依赖,引入对应该日志实现的起步依赖,同时排除掉<br>
+Logback。<br>
+以Maven为例,应排除掉根起步依赖传递引入的默认日志起步依赖,这样就能排除<br>
+Logback了:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">exclusions</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">exclusion</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">exclusion</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">exclusions</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在Gradle里,在 configurations下排除该起步依赖是最简单的办法:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">configurations &#123;</span><br><span class="line">	all*.exclude <span class="attr">group:</span><span class="string">&#x27;org.springframework.boot&#x27;</span>,</span><br><span class="line">	<span class="symbol">module:</span><span class="string">&#x27;spring-boot-starter-logging&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>排除默认日志的起步依赖后,就可以引入你想用的日志实现的起步依赖了。在Maven里可<br>
+以这样添加Log4j:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-log4j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在Gradle里可以这样添加Log4j:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">compile(<span class="string">&quot;org.springframework.boot:spring-boot-starter-log4j&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>要完全掌握日志配置,可以在Classpath的根目录(src/main/resources)里创建logback.xml文<br>
+件。下面是一个logback.xml的简单例子:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">&quot;STDOUT&quot;</span> <span class="attr">class</span>=<span class="string">&quot;ch.qos.logback.core.ConsoleAppender&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">encoder</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">pattern</span>&gt;</span></span><br><span class="line">%d&#123;HH:mm:ss.SSS&#125; [%thread] %-5level %logger&#123;36&#125; - %msg%n</span><br><span class="line"><span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">logger</span> <span class="attr">name</span>=<span class="string">&quot;root&quot;</span> <span class="attr">level</span>=<span class="string">&quot;INFO&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">&quot;INFO&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">&quot;STDOUT&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>除了日志格式之外,这个Logback配置和不加logback.xml文件的默认配置差不多。但是,通<br>
+过编辑logback.xml,你可以完全掌控应用程序的日志文件。哪些配置应该放进logback.xml这个话<br>
+题不在本书的讨论范围内,请参考Logback的文档以了解更多信息。<br>
+即使如此,你对日志配置最常做的改动就是修改日志级别和指定日志输出的文件。使用了<br>
+Spring Boot的配置属性后,你可以在不创建logback.xml文件的情况下修改那些配置。<br>
+要设置日志级别,你可以创建以logging.level开头的属性,后面是要日志名称。如果根<br>
+日志级别要设置为WARN,但Spring Security的日志要用DEBUG级别,可以在application.yml里加入<br>
+以下内容:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">WARN</span></span><br><span class="line">		<span class="attr">org:</span></span><br><span class="line">			<span class="attr">springframework:</span></span><br><span class="line">			<span class="attr">security:</span> <span class="string">DEBUG</span></span><br></pre></td></tr></table></figure>
+<p>另外,你也可以把Spring Security的包名写成一行:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">WARN</span></span><br><span class="line">		<span class="attr">org.springframework.security:</span> <span class="string">DEBUG</span></span><br></pre></td></tr></table></figure>
+<p>现在,假设你想把日志写到位于/var/logs/目录里的BookWorm.log文件里。使用 logging.<br>
+path和loggin.file属性就行了:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">path:</span> <span class="string">/var/logs/</span></span><br><span class="line">	<span class="attr">file:</span> <span class="string">BookWorm.log</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="attr">root:</span> <span class="string">WARN</span></span><br><span class="line">		<span class="attr">org:</span></span><br><span class="line">			<span class="attr">springframework:</span></span><br><span class="line">				<span class="attr">security:</span> <span class="string">DEBUG</span></span><br></pre></td></tr></table></figure>
+<p>假设应用程序有/var/logs/的写权限,日志就能被写入/var/logs/BookWorm.log。默认情况下,<br>
+日志文件的大小达到10MB时会切分一次。<br>
+与之类似,这些属性也能在application.properties里设置:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">logging.path=/var/logs/</span><br><span class="line">logging.file=BookWorm.log</span><br><span class="line">logging.level.root=WARN</span><br><span class="line">logging.level.root.org.springframework.security=DEBUG</span><br></pre></td></tr></table></figure>
+<p>如果你还是想要完全掌控日志配置,但是又不想用logback.xml作为Logback配置的名字,可<br>
+以通过logging.config属性指定自定义的名字:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">config:</span></span><br><span class="line">		<span class="attr">classpath:</span> <span class="string">logging-config.xml</span></span><br></pre></td></tr></table></figure>
+<p>虽然一般并不需要改变配置文件的名字,但是如果你想针对不同运行时Profile使用不同的日<br>
+志配置(见3.2.3节),这个功能会很有用。</p>
+<h2 id="配置HTTPS"><a class="header-anchor" href="#配置HTTPS"></a>配置HTTPS</h2>
+<ol>
+<li>
+<p>用JDK的keytool工具来创建一个密钥存储(keystore):</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">keytool -keystore mykeys.jks -genkey -alias tomcat -keyalg RSA</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>将生成的密钥（的路径）放在配置文件中:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">server:</span></span><br><span class="line">	<span class="attr">port:</span> <span class="number">8443</span></span><br><span class="line">	<span class="attr">ssl:</span></span><br><span class="line">		<span class="attr">key-store:</span> <span class="string">file:///path/to/mykeys.jks</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Spring-Boot-Features"><a class="header-anchor" href="#Spring-Boot-Features"></a>Spring Boot Features</h1>
+<p>Spring Boot提供了许多Spring没有的新特性</p>
+<h2 id="AutoConfiguration"><a class="header-anchor" href="#AutoConfiguration"></a>AutoConfiguration</h2>
+<p>Spring Boot提供了自动装配<code>XxxAutoConfiguration</code>，使得许多组件被自动化配置并创建,  这通过自动扫描+ 条件装配<code>@Conditional</code>实现, 步骤为:</p>
+<ol>
+<li>引入各种依赖（由于是spring boot， 因此一般是起步依赖 ）， 依赖中会有<code>XxxAutoConfiguration</code>类</li>
+<li>Spring Boot启动时会自动扫描所有的<code>XxxAutoConfiguration</code></li>
+<li>对于每个<code>XXAutoConfiguratio</code>, 它一般带有注解:
+<ul>
+<li><code>@ConditionalOnClass（XX.class）</code>： 在classpath中能找XX；</li>
+<li><code>@EnableConfigurationProperties(XX.class)</code>： 在当前Bean的定义中能找到唯一的<code>DataSource</code>；</li>
+<li>各种<code>@Conditional</code>…</li>
+<li><code>@Import(XXConfiguration）</code>:注入某个配置类</li>
+</ul>
+</li>
+<li>如果符合条件，该<code>XXConfiguration</code>就会被装配。而各种Bean的实际创建由其导入的<code>XXeConfiguration</code>完成</li>
+<li>XXConfiguration一般会带有注解<code>@ConditionalOnMissingBean(XX.class)</code>，即不存在<code>XX</code>的Bean时，就会自动注入，这就完成了Bean的自动装配</li>
+</ol>
+<h3 id="自动配置的细节"><a class="header-anchor" href="#自动配置的细节"></a>自动配置的细节</h3>
+<p>例如，引入<code>spring-boot-starter-jdbc</code>后，启动时：</p>
+<ul>
+<li><code>DataSourceAutoConfiguration</code>：自动创建一个<code>DataSource</code>，其中配置项从<code>application.yml</code>的<code>spring.datasource</code>读取</li>
+<li><code>DataSourceTransactionManagerAutoConfiguration</code>：自动创建了一个基于JDBC的事务管理器</li>
+<li><code>JdbcTemplateAutoConfiguration</code>：自动创建了一个<code>JdbcTemplate</code></li>
+</ul>
+<p>因此，我们自动得到了一个<code>DataSource</code>、一个<code>DataSourceTransactionManager</code>和一个<code>JdbcTemplate</code></p>
+<p>类似地，当我们引入<code>spring-boot-starter-web</code>时，自动创建了：</p>
+<ul>
+<li><code>ServletWebServerFactoryAutoConfiguration</code>：自动创建一个嵌入式Web服务器，默认是Tomcat</li>
+<li><code>DispatcherServletAutoConfiguration</code>：自动创建一个<code>DispatcherServlet</code></li>
+<li><code>HttpEncodingAutoConfiguration</code>：自动创建一个<code>CharacterEncodingFilter</code></li>
+<li><code>WebMvcAutoConfiguration</code>：自动创建若干与MVC相关的Bean</li>
+<li>…</li>
+</ul>
+<p>引入第三方<code>pebble-spring-boot-starter</code>时，自动创建了：</p>
+<ul>
+<li><code>PebbleAutoConfiguration</code>：自动创建了一个<code>PebbleViewResolver</code></li>
+</ul>
+<h3 id="条件装配的细节"><a class="header-anchor" href="#条件装配的细节"></a>条件装配的细节</h3>
+<p>我们观察<code>JdbcTemplateAutoConfiguration</code>，它的代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration(proxyBeanMethods = false)</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(&#123; DataSource.class, JdbcTemplate.class &#125;)</span></span><br><span class="line"><span class="meta">@ConditionalOnSingleCandidate(DataSource.class)</span></span><br><span class="line"><span class="meta">@AutoConfigureAfter(DataSourceAutoConfiguration.class)</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(JdbcProperties.class)</span></span><br><span class="line"><span class="meta">@Import(&#123; JdbcTemplateConfiguration.class, NamedParameterJdbcTemplateConfiguration.class &#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">JdbcTemplateAutoConfiguration</span> &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当满足条件：</p>
+<ul>
+<li><code>@ConditionalOnClass</code>：在classpath中能找到<code>DataSource</code>和<code>JdbcTemplate</code>；</li>
+<li><code>@ConditionalOnSingleCandidate(DataSource.class)</code>：在当前Bean的定义中能找到唯一的<code>DataSource</code>；</li>
+</ul>
+<p>该<code>JdbcTemplateAutoConfiguration</code>就会起作用。实际创建由导入的<code>JdbcTemplateConfiguration</code>完成：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Configuration(proxyBeanMethods = false)</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean(JdbcOperations.class)</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">JdbcTemplateConfiguration</span> &#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@Primary</span></span><br><span class="line">    JdbcTemplate <span class="title function_">jdbcTemplate</span><span class="params">(DataSource dataSource, JdbcProperties properties)</span> &#123;</span><br><span class="line">        <span class="type">JdbcTemplate</span> <span class="variable">jdbcTemplate</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JdbcTemplate</span>(dataSource);</span><br><span class="line">        JdbcProperties.<span class="type">Template</span> <span class="variable">template</span> <span class="operator">=</span> properties.getTemplate();</span><br><span class="line">        jdbcTemplate.setFetchSize(template.getFetchSize());</span><br><span class="line">        jdbcTemplate.setMaxRows(template.getMaxRows());</span><br><span class="line">        <span class="keyword">if</span> (template.getQueryTimeout() != <span class="literal">null</span>) &#123;</span><br><span class="line">            jdbcTemplate.setQueryTimeout((<span class="type">int</span>) template.getQueryTimeout().getSeconds());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> jdbcTemplate;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建<code>JdbcTemplate</code>之前，要满足<code>@ConditionalOnMissingBean(JdbcOperations.class)</code>，即不存在<code>JdbcOperations</code>的Bean。</p>
+<h3 id="覆盖自动装配"><a class="header-anchor" href="#覆盖自动装配"></a>覆盖自动装配</h3>
+<p>由于Spring Boot自动装配功能通过自动扫描+条件装配实现， 想要覆盖Spring Boot的自动配置,只需编写一个显式的配置。根据条件<code>@ConditionalOnMissingBean([XX.class])</code>， Spring Boot就不会再创建一个重复的Bean</p>
+<h2 id="Starter-Dependencies"><a class="header-anchor" href="#Starter-Dependencies"></a>Starter Dependencies</h2>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>starter是一组依赖集合，用户不需要再单独依赖，只需要依赖Starter，就可以<strong>一站式</strong>解决所需的依赖</p>
+<ul>
+<li>
+<p>简单来说，starter是帮用户简化配置的， 在“约定大于配置”的理念下，starter把繁琐的配置交给自己，而把简单的交给用户。 用户也可以覆盖默认配置</p>
+<ul>
+<li>“约定大于配置”：starter使用ConfigurationProperties来保存配置，且配置都有默认值，用户可以覆盖</li>
+<li>ConfigurationProperties还使得所有的配置属性被聚集到一个文件中（一般在resources目录下的<code>application.properties/yml</code>），这样我们就告别了Spring项目中XML地狱</li>
+</ul>
+</li>
+<li>
+<p>注意，不同的starter是为了解决不同的依赖，所以它们内部的实现可能会有很大的差异，例如jpa的starter和Redis的starter可能实现就不一样<img data-src="https://img-blog.csdnimg.cn/20190507163145255.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW9ob25nX2Jv,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+</li>
+</ul>
+<h3 id="parent"><a class="header-anchor" href="#parent"></a>parent</h3>
+<p>starter的版本号不需要指定，而是继承自父级依赖<code>spring-boot-starter-parent</code>， parent是一个特殊的starter，用于管理所有子starter的依赖, 也就是说，只需要指定parent的版本，不需要关心普通starter的版本</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="示例"><a class="header-anchor" href="#示例"></a>示例</h3>
+<p>普通soringboot项目的依赖：</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">     <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>springBootLearn<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springBootLearn<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.0.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="devtools"><a class="header-anchor" href="#devtools"></a>devtools</h2>
+<p>gradle:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">compile <span class="string">&quot;org.springframework.boot:spring-boot-devtools&quot;</span></span><br></pre></td></tr></table></figure>
+<p>maven:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-devtools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Spring Boot以依赖的形式引入了一组开发者工具,包括如下功能：</p>
+<ul>
+<li>自动重启: 当Classpath里的文件发生变化时,自动重启运行中的应用程序。</li>
+<li>LiveReload支持:对资源的修改自动触发浏览器刷新。</li>
+<li>远程开发:远程部署时支持自动重启和LiveReload。</li>
+<li>默认的开发时属性值:为一些属性提供有意义的默认开发时属性值</li>
+</ul>
+<p>当应用程序以完整打包好的JAR或WAR文件形式运行时,开发者工具会被禁用,所以没有必要在构建包前移除这个依赖</p>
+<h3 id="自动重启"><a class="header-anchor" href="#自动重启"></a>自动重启</h3>
+<p>激活了devtools后,Classpath里对文件做任何修改都会触发应用程序重启</p>
+<p>为了让重启速度够快,不会修改的类(比如第三方JAR文件里的类)都加载到了基础类加载器里,而应用程序的代码则会加载到一个单独的<strong>重启类加载器</strong>里。检测到变更时,只有重启类加载器重启</p>
+<p>有些Classpath里的资源变更后不需要重启应用程序。像Thymeleaf这样的视图模板可以直接编辑,不用重启应用程序。在/static或/public里的静态资源也不用重启应用程序,所以Spring Boot开发者工具会在重启时排除掉如下目录:/META-INF/resources、/resources、/static、/public和/templates。</p>
+<p>可以设置<code>spring.devtools.restart.exclude</code>属性来覆盖默认的重启排除目录:</p>
+<p>例如,只排除/static和/templates目录:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">devtools:</span></span><br><span class="line">		<span class="attr">restart:</span></span><br><span class="line">			<span class="attr">exclude:</span> <span class="string">/static/**,/templates/**</span></span><br></pre></td></tr></table></figure>
+<p>关闭自动重启:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">devtools:</span></span><br><span class="line">		<span class="attr">restart:</span></span><br><span class="line">			<span class="attr">enabled:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<p>还可以设置一个触发文件,必须修改这个文件才能触发重启。例如,在修改名为.trigger的文件前你都不希望执行重启:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">devtools:</span></span><br><span class="line">		<span class="attr">restart:</span></span><br><span class="line">			<span class="attr">trigger-file:</span> <span class="string">.trigger</span></span><br></pre></td></tr></table></figure>
+<h3 id="LiveReoload"><a class="header-anchor" href="#LiveReoload"></a>LiveReoload</h3>
+<p>用于web页面，devtools集成了<a target="_blank" rel="noopener" href="http://livereload.com">LiveReload</a>,  Sprign Boot启动时会启动一个内嵌的LiveReload服务器,在资源文件变化时会触发浏览器刷新</p>
+<ul>
+<li>不过很少有人开发MVC，这功能也没啥用</li>
+</ul>
+<p>禁 用 内 嵌 的 LiveReload 服 务 器 ：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">devtools:</span></span><br><span class="line">		<span class="attr">livereload:</span></span><br><span class="line">			<span class="attr">enabled:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h3 id="默认的开发时属性"><a class="header-anchor" href="#默认的开发时属性"></a>默认的开发时属性</h3>
+<p>有些配置属性通常在开发时设置,从来不用在生产环境里。比如视图模板缓存,在开发时最好关掉,这样你可以立刻看到修改的结果。但在生产环境里,为了追求更好的性能,应该开启视图模版缓存。默认情况下,Spring Boot会为其支持的各种视图模板(Thymeleaf、Freemarker、Velocity、Mustache和Groovy模板)开启缓存选项。但如果存在Spring Boot的开发者工具,这些缓存就会禁用</p>
+<p>这就是说在devtools激活后,如下属性会设置为false:</p>
+<ul>
+<li>spring.thymeleaf.cache</li>
+<li>spring.freemarker.cache</li>
+<li>spring.velocity.cache</li>
+<li>spring.mustache.cache</li>
+<li>spring.groovy.template.cache</li>
+</ul>
+<p>这样一来,就不用在开发时(在一个开发时使用的Profile配置里)禁用它们了</p>
+<h2 id="Spring-Boot-CLI"><a class="header-anchor" href="#Spring-Boot-CLI"></a>Spring Boot CLI</h2>
+<p><a target="_blank" rel="noopener" href="http://start.spring.xn--ioSpring-0i5q">http://start.spring.io是Spring</a> Boot提供的项目构建工具，位于Web端， 它的命令行访问工具是Spring Boot CLI</p>
+<ul>
+<li>Spring Boot CLI实际上会请求http://start.spring.io， 因此二者是一个东西</li>
+</ul>
+<p>Spring Boot CLI也不是万能的，比如它无法指定root package name ( 默认是 “demo”)</p>
+<h3 id="下载SpiringBoot-Cli"><a class="header-anchor" href="#下载SpiringBoot-Cli"></a>下载SpiringBoot Cli</h3>
+<p>Mac:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew tap spring-io/tap</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew uninstall springboot</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">brew install spring-boot</span><br></pre></td></tr></table></figure>
+<h3 id="使用"><a class="header-anchor" href="#使用"></a>使用</h3>
+<p>Initialize a new project using Spring Initializr (<a target="_blank" rel="noopener" href="http://start.spring.io">start.spring.io</a>):</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">spring init</span><br></pre></td></tr></table></figure>
+<p>可以指定项目依赖：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ spring init -dweb,jpa,security</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><code>--dependencies</code>or <code>-d</code></p>
+</li>
+<li>
+<p><code>--build gradle</code>: 默认项目构建工具是maven，可以指定使用gradle</p>
+</li>
+<li>
+<p><code>-packaging</code> or <code> -p</code> : 默认构建为JAR包，可以指定构建为WAR包： <code>-p war</code></p>
+</li>
+<li>
+<p><code>-n, --name &lt;String&gt;</code>: Project name; infer application name</p>
+</li>
+</ul>
+<p>查看命令帮助：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ spring help init</span><br></pre></td></tr></table></figure>
+<h2 id="Profiles"><a class="header-anchor" href="#Profiles"></a>Profiles</h2>
+<p>Profile本身是Spring提供的功能，它和@Conditional一样，属于条件装配，表示一个环境的概念，如开发、测试和生产这3个环境：</p>
+<ul>
+<li>native</li>
+<li>test</li>
+<li>production</li>
+</ul>
+<p>或者按git分支定义master、dev这些环境：</p>
+<ul>
+<li>master</li>
+<li>dev</li>
+</ul>
+<p>在启动一个Spring应用程序的时候，可以传入一个或多个环境，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-Dspring.profiles.active=test,master</span><br></pre></td></tr></table></figure>
+<p>Spring Boot对Profiles的支持在于，可以在<code>application.yml</code>中配置多个环境：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">application:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">$&#123;APP_NAME:unnamed&#125;</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:hsqldb:file:testdb</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">sa</span></span><br><span class="line">    <span class="attr">password:</span></span><br><span class="line">    <span class="attr">dirver-class-name:</span> <span class="string">org.hsqldb.jdbc.JDBCDriver</span></span><br><span class="line">    <span class="attr">hikari:</span></span><br><span class="line">      <span class="attr">auto-commit:</span> <span class="literal">false</span></span><br><span class="line">      <span class="attr">connection-timeout:</span> <span class="number">3000</span></span><br><span class="line">      <span class="attr">validation-timeout:</span> <span class="number">3000</span></span><br><span class="line">      <span class="attr">max-lifetime:</span> <span class="number">60000</span></span><br><span class="line">      <span class="attr">maximum-pool-size:</span> <span class="number">20</span></span><br><span class="line">      <span class="attr">minimum-idle:</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="attr">pebble:</span></span><br><span class="line">  <span class="attr">suffix:</span></span><br><span class="line">  <span class="attr">cache:</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="string">$&#123;APP_PORT:8080&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">8000</span></span><br><span class="line"></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">profiles:</span> <span class="string">production</span></span><br><span class="line"></span><br><span class="line"><span class="attr">server:</span></span><br><span class="line">  <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="attr">pebble:</span></span><br><span class="line">  <span class="attr">cache:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>注意到分隔符<code>---</code>，最前面的配置是默认配置，不需要指定Profile，后面的每段配置都必须以<code>spring.profiles: xxx</code>开头，表示一个Profile。上述配置默认使用8080端口，但是在<code>test</code>环境下，使用<code>8000</code>端口，在<code>production</code>环境下，使用<code>80</code>端口，并且启用Pebble的缓存</p>
+<ul>
+<li>如果不指定任何Profile，那么Profile实际上是<code>default</code>，可以从Spring Boot启动日志看出</li>
+</ul>
+<p>启用profile：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">	<span class="attr">profiles:</span></span><br><span class="line">	<span class="string">active:production</span></span><br></pre></td></tr></table></figure>
+<h2 id="Actuator"><a class="header-anchor" href="#Actuator"></a>Actuator</h2>
+<p>Actuator会把它能收集到的所有信息都暴露给JMX。此外，Actuator还可以通过URL挂载一些endpoint(作为web接口)，通过它们了解应用程序运行时的内部状况</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>Actuator默认把所有访问点暴露给JMX，但出于安全原因，只有<code>health</code>和<code>info</code>会暴露给Web, 所有默认端点增加了<code>/actuator</code>前缀</p>
+<ul>
+<li>例如，可以查看health: 	<a target="_blank" rel="noopener" href="http://localhost:8080/actuator/health">http://localhost:8080/actuator/health</a></li>
+<li>注意，这是Actuator 2.x 中的新特性， 在 Actuator 1.x中，默认开放所有端点，也没有/actuator前缀</li>
+</ul>
+</li>
+<li>
+<p>要暴露更多endpoint给Web，需要在<code>application.yml</code>中加上配置：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">management:</span></span><br><span class="line">  <span class="attr">endpoints:</span></span><br><span class="line">    <span class="attr">web:</span></span><br><span class="line">      <span class="attr">exposure:</span></span><br><span class="line">        <span class="attr">include:</span> <span class="string">info,</span> <span class="string">health,</span> <span class="string">beans,</span> <span class="string">env,</span> <span class="string">metrics</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Actuator 提供了 13 个接口，可以分为三大类：</p>
+<ul>
+<li><strong>应用配置类</strong>：获取应用程序中加载的应用配置、环境变量、自动化配置报告等与Spring Boot应用密切相关的配置类信息。</li>
+<li><strong>度量指标类</strong>：获取应用程序运行过程中用于监控的度量指标，比如：内存信息、线程池信息、HTTP请求统计等。</li>
+<li><strong>操作控制类</strong>：提供了对应用的关闭等操作类功能</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>HTTP 方法</th>
+<th>路径</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/autoconfig</td>
+<td>提供了一份自动配置报告，记录哪些自动配置条件通过了，哪些没通过</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/configprops</td>
+<td>描述配置属性(包含默认值)如何注入Bean</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/beans</td>
+<td>描述应用程序上下文里全部的Bean，以及它们的关系</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/dump</td>
+<td>获取线程活动的快照</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/env</td>
+<td>获取全部环境属性</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/env/{name}</td>
+<td>根据名称获取特定的环境属性值</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/health</td>
+<td>报告应用程序的健康指标，这些值由HealthIndicator的实现类提供</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/info</td>
+<td>获取应用程序的定制信息，这些信息由info打头的属性提供</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/mappings</td>
+<td>描述全部的URI路径，以及它们和控制器(包含Actuator端点)的映射关系</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/metrics</td>
+<td>报告各种应用程序度量信息，比如内存用量和HTTP请求计数</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/metrics/{name}</td>
+<td>报告指定名称的应用程序度量值</td>
+</tr>
+<tr>
+<td>POST</td>
+<td>/shutdown</td>
+<td>关闭应用程序，要求endpoints.shutdown.enabled设置为true</td>
+</tr>
+<tr>
+<td>GET</td>
+<td>/trace</td>
+<td>提供基本的HTTP请求跟踪信息(时间戳、HTTP头等)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="beans"><a class="header-anchor" href="#beans"></a>/beans</h3>
+<p>/beans接口会返回一个 JSON 文档，描述上下文里每个 bean 的情况，包括其 Java 类型以及注入的其它 bean</p>
+<p>bean：Spring 应用程序上下文中的 Bean 名称或 ID。</p>
+<p>resource：.class 文件的物理位置，通常是一个 URL，指向构建出的 JAR 文件。这会随着应用程序的构建和运行方式发生变化。</p>
+<p>dependencies：当前 Bean 注入的 Bean ID 列表。</p>
+<p>scope：Bean 的作用域（通常是单例，这也是默认作用域）。</p>
+<p>type：Bean 的 Java 类型。</p>
+<h3 id="autoconfig"><a class="header-anchor" href="#autoconfig"></a>/autoconfig</h3>
+<p><code>/autoconfig</code>接口能告诉你为什么会有这个 bean ，或者为什么没有这个 bean</p>
+<p>提供endpoint可访问，如：</p>
+<ul>
+<li>/health，查看这个微服务的健康状况</li>
+<li>/bean，创建的bean</li>
+<li>/env，查看环境变量信息</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Spring/" rel="tag"># Spring</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/11/String-Algorithms/" rel="prev" title="String Algorithms">
+                  <i class="fa fa-chevron-left"></i> String Algorithms
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/04/17/OS-Virtualization/" rel="next" title="OS Virtualization">
+                  OS Virtualization <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

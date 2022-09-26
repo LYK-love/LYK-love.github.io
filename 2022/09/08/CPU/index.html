@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Basic Concepts …">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CPU">
+<meta property="og:url" content="http://lyk-love.cn/2022/09/08/CPU/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Basic Concepts …">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/CPU/CPU%20Package.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/CPU/EPYC.png">
+<meta property="article:published_time" content="2022-09-08T00:41:56.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.926Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Hardware">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/CPU/CPU%20Package.png">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/09/08/CPU/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/09/08/CPU/","path":"2022/09/08/CPU/","title":"CPU"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CPU | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Concepts"><span class="nav-text">Basic Concepts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-Package"><span class="nav-text">CPU( Package )</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-Core"><span class="nav-text">CPU Core</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-Die"><span class="nav-text">CPU Die</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU-Cache"><span class="nav-text">CPU Cache</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-text">缓存的设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-core"><span class="nav-text">Multi-core</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-CPU"><span class="nav-text">Multi-CPU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%B8%E6%98%BE-APU%E2%80%A6"><span class="nav-text">核显, APU…</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/09/08/CPU/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CPU | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CPU
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-09-08 00:41:56" itemprop="dateCreated datePublished" datetime="2022-09-08T00:41:56Z">2022-09-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Basic Concepts</li>
+<li>…</li>
+</ul>
+<span id="more"></span>
+<h1 id="Basic-Concepts"><a class="header-anchor" href="#Basic-Concepts"></a>Basic Concepts</h1>
+<h2 id="CPU-Package"><a class="header-anchor" href="#CPU-Package"></a>CPU( Package )</h2>
+<ul>
+<li>
+<p>CPU:( Central Processing Unit): 中央处理单元. CPU是一个很模糊的概念, 它一般指的是“CPU package”</p>
+<ul>
+<li>一个CPU可以有多个物理核. 如果开启了超线程, 一个物理核可以分成n个逻辑核, n为超线程的数量</li>
+<li>举例来说, AMD的桌面级CPU<a target="_blank" rel="noopener" href="https://www.amd.com/zh-hans/products/apu/amd-ryzen-5-5600g">Ryzen™ 5 5600G</a>是6核12线程, 这意味着它有6个物理核, 通过超线程最大可以达到12个逻辑核</li>
+</ul>
+</li>
+<li>
+<p>CPU package: 就是我们通常说的CPU, 它包含了外壳( 里面是一个或多个Die )和外面的镀金针脚等. 主板上的每个CPU插槽( socket )只能接受一个CPU Package</p>
+<ul>
+<li>这就是CPU Package:<br>
+<img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/CPU/CPU%20Package.png" alt="CPU Package"></li>
+</ul>
+</li>
+<li>
+<p>Linux上查看CPU信息:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">lscpu | grep <span class="string">&#x27;CPU(s)&#x27;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="CPU-Core"><a class="header-anchor" href="#CPU-Core"></a>CPU Core</h2>
+<ul>
+<li>CPU Core: 就是CPU的物理核 ( physical core )  , 是一个完整且独立的执行单元. 有独立的电路元件以及L1,L2缓存.</li>
+<li>Hyper-threading( 超线程 ), aka HT: 让一个core并发的执行多个控制流( 线程 ), 也就是把一个core虚拟化为多个虚拟核( Or 逻辑核 logical core )
+<ul>
+<li>超线程在一个逻辑核等待指令执行的间隔把时间片分配到另一个逻辑核</li>
+</ul>
+</li>
+</ul>
+<h2 id="CPU-Die"><a class="header-anchor" href="#CPU-Die"></a>CPU Die</h2>
+<ul>
+<li>CPU Die:  就是一个半导体( usually silicon )片, 它包含了任意数量的core
+<ul>
+<li>CPU Die之间通过片外总线（Infinity Fabric）互联, 并且不同CPU Die上的CPU内核不能共享CPU Cache.
+<ul>
+<li>同一个Die内的Core也许能共享某些Cache, 这取决于具体设计</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Die是处理器在生产过程中引入的概念. 总的来说，Die或者CPU Die指的是处理器在生产过程中，从晶圆( Silicon Wafer) 上切割下来的一个个小方块( 这也是消费者看到的CPU芯片都是方形的原因 ), 在切割下来之前，每个小方块（Die）都需要经过各种加工，将电路逻辑刻到该Die上</li>
+</ul>
+<h2 id="CPU-Cache"><a class="header-anchor" href="#CPU-Cache"></a>CPU Cache</h2>
+<ul>
+<li>
+<p>一般L1、L2为每个物理核独占.</p>
+</li>
+<li>
+<p>曾经有过L4 Cache, 是个eDRAM,(Haswell/Broadwell:在Iris系列中)</p>
+</li>
+</ul>
+<h3 id="缓存的设计"><a class="header-anchor" href="#缓存的设计"></a>缓存的设计</h3>
+<ul>
+<li>exclusive：L1 cahce中的内容不能包含在L2中</li>
+<li>strictly inclusive：L1cache的内容一定严格包含在L2中。</li>
+<li>Third one（没有正式名字）:不要求L1的一定包含在L2中</li>
+</ul>
+<h2 id="Multi-core"><a class="header-anchor" href="#Multi-core"></a>Multi-core</h2>
+<ul>
+<li>
+<p>Multi-core: 多核处理器, 就是有多个core的CPU ( 严谨地说, 是CPU Package ), 这些核心可以在同一个Die, 也可以在不同的Die. 现代CPU一般都有多个Die.</p>
+</li>
+<li>
+<p>如下是AMD的64核/128线程CPU EPYC , 它含有4个Die:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/CPU/EPYC.png" alt="EPYC"></p>
+</li>
+</ul>
+<h2 id="Multi-CPU"><a class="header-anchor" href="#Multi-CPU"></a>Multi-CPU</h2>
+<ul>
+<li>有些主板支持Multi-CPU, 顾名思义也就是多个CPU. 这需要主板上有多个CPU Socket, 多个CPU通过 QPI 链路相连.</li>
+<li>多CPU属于并行技术了</li>
+</ul>
+<h2 id="核显-APU…"><a class="header-anchor" href="#核显-APU…"></a>核显, APU…</h2>
+<p>参见我的 <a href="https://lyk-love.cn/2022/08/01/GPU/">GPU</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Hardware/" rel="tag"># Hardware</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/09/08/%E5%87%8F%E8%82%A5%E9%A3%9F%E7%89%A9%E5%A4%A7%E6%B5%8B%E8%AF%84/" rel="prev" title="减肥食物大测评">
+                  <i class="fa fa-chevron-left"></i> 减肥食物大测评
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/09/11/Regular-Expression/" rel="next" title="Regular Expression">
+                  Regular Expression <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  Intro Basic Function …">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript Basic">
+<meta property="og:url" content="http://lyk-love.cn/2022/08/23/Javascript-Basic/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  Intro Basic Function …">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-08-22T18:51:59.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.931Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="JS">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2022/08/23/Javascript-Basic/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/08/23/Javascript-Basic/","path":"2022/08/23/Javascript-Basic/","title":"Javascript Basic"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Javascript Basic | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic"><span class="nav-text">Basic</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Object"><span class="nav-text">Object</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%90%E5%91%98%E8%AE%BF%E9%97%AE"><span class="nav-text">成员访问</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Function"><span class="nav-text">Function</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Destructuring"><span class="nav-text">Destructuring</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="nav-text">数组的解构赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="nav-text">对象的解构赋值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8"><span class="nav-text">应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#object-spread-syntax"><span class="nav-text">object spread syntax</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8-2"><span class="nav-text">应用</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/08/23/Javascript-Basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Javascript Basic | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Javascript Basic
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-08-22 18:51:59" itemprop="dateCreated datePublished" datetime="2022-08-22T18:51:59Z">2022-08-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>Intro</li>
+<li>Basic</li>
+<li>Function</li>
+<li>…</li>
+</ul>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">MDN -&gt; JS</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.liaoxuefeng.com/wiki/1022910821149312">廖雪峰 -&gt;JS</a></li>
+</ul>
+<h1 id="Basic"><a class="header-anchor" href="#Basic"></a>Basic</h1>
+<h2 id="Object"><a class="header-anchor" href="#Object"></a>Object</h2>
+<p>JavaScript的对象是一种无序的集合数据类型，它由若干键值对组成.</p>
+<p>JavaScript用一个<code>&#123;...&#125;</code>表示一个对象，键值对以<code>xxx: xxx</code>形式申明，用<code>,</code>隔开。注意，最后一个键值对不需要在末尾加<code>,</code>，如果加了，有的浏览器（如低版本的IE）将报错.</p>
+<p>JS对象的属性的key是一个<strong>字符串</strong>, value可以是任意类型.</p>
+<p>JS中访问不存在的属性会返回<code>undefined</code>：</p>
+<h2 id="成员访问"><a class="header-anchor" href="#成员访问"></a>成员访问</h2>
+<p>如果属性名包含特殊字符，就必须用<code>''</code>括起来：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> xiaohong = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;小红&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;middle-school&#x27;</span>: <span class="string">&#x27;No.1 Middle School&#x27;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>xiaohong</code>的属性名<code>middle-school</code>不是一个有效的变量，就需要用<code>''</code>括起来。访问这个属性也无法使用<code>.</code>操作符，必须用<code>['xxx']</code>来访问：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">xiaohong[&#x27;middle-school&#x27;]; // &#x27;No.1 Middle School&#x27;</span><br><span class="line">xiaohong[&#x27;name&#x27;]; // &#x27;小红&#x27;</span><br><span class="line">xiaohong.name; // &#x27;小红&#x27;</span><br></pre></td></tr></table></figure>
+<p>也可以用<code>xiaohong['name']</code>来访问<code>xiaohong</code>的<code>name</code>属性，不过<code>xiaohong.name</code>的写法更简洁。我们在编写JavaScript代码的时候，属性名尽量使用标准的变量名，这样就可以直接通过<code>object.prop</code>的形式访问一个属性了。</p>
+<h1 id="Function"><a class="header-anchor" href="#Function"></a>Function</h1>
+<h2 id="Destructuring"><a class="header-anchor" href="#Destructuring"></a>Destructuring</h2>
+<p>ES6支持解构赋值. 这是对容器、对象等对象赋值的语法糖.</p>
+<p>解构赋值可以支持<strong>嵌套结构</strong>, 只需保持赋值时的嵌套的层次一致</p>
+<h3 id="数组的解构赋值"><a class="header-anchor" href="#数组的解构赋值"></a>数组的解构赋值</h3>
+<p>对数组:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">let [x, y, z] = [&#x27;hello&#x27;, &#x27;JavaScript&#x27;, &#x27;ES6&#x27;];</span><br></pre></td></tr></table></figure>
+<p>对嵌套的数组元素的解构赋值:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [x, [y, z]] = [<span class="string">&#x27;hello&#x27;</span>, [<span class="string">&#x27;JavaScript&#x27;</span>, <span class="string">&#x27;ES6&#x27;</span>]];</span><br></pre></td></tr></table></figure>
+<p>解构赋值还可以忽略某些元素：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> [, , z] = [<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;JavaScript&#x27;</span>, <span class="string">&#x27;ES6&#x27;</span>]; <span class="comment">// 忽略前两个元素，只对z赋值第三个元素</span></span><br><span class="line">z; <span class="comment">// &#x27;ES6&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3 id="对象的解构赋值"><a class="header-anchor" href="#对象的解构赋值"></a>对象的解构赋值</h3>
+<p>对象的解构赋值是按成员名字匹配的:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">20</span>,</span><br><span class="line">    <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>,</span><br><span class="line">    <span class="attr">passport</span>: <span class="string">&#x27;G-12345678&#x27;</span>,</span><br><span class="line">    <span class="attr">school</span>: <span class="string">&#x27;No.4 middle school&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> &#123;name, age, passport&#125; = person;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">20</span>,</span><br><span class="line">    <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>,</span><br><span class="line">    <span class="attr">passport</span>: <span class="string">&#x27;G-12345678&#x27;</span>,</span><br><span class="line">    <span class="attr">school</span>: <span class="string">&#x27;No.4 middle school&#x27;</span>,</span><br><span class="line">    <span class="attr">address</span>: &#123;</span><br><span class="line">        <span class="attr">city</span>: <span class="string">&#x27;Beijing&#x27;</span>,</span><br><span class="line">        <span class="attr">street</span>: <span class="string">&#x27;No.1 Road&#x27;</span>,</span><br><span class="line">        <span class="attr">zipcode</span>: <span class="string">&#x27;100001&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">var</span> &#123;name, <span class="attr">address</span>: &#123;city, zip&#125;&#125; = person;</span><br><span class="line">name; <span class="comment">// &#x27;小明&#x27;</span></span><br><span class="line">city; <span class="comment">// &#x27;Beijing&#x27;</span></span><br><span class="line">zip; <span class="comment">// undefined, 因为属性名是zipcode而不是zip</span></span><br><span class="line"><span class="comment">// 注意: address不是变量，而是为了让city和zip获得嵌套的address对象的属性:</span></span><br><span class="line">address; <span class="comment">// Uncaught ReferenceError: address is not defined</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>变量名<code>zip</code>不匹配对象的<code>address</code>属性的<code>zipcode</code>, 所以是<code>undefined</code></li>
+<li><code>address</code>没有被赋值为变量</li>
+</ul>
+<p>如果要使用的变量名和属性名不一致，可以用下面的语法获取：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">var person = &#123;</span><br><span class="line">    name: &#x27;小明&#x27;,</span><br><span class="line">    age: 20,</span><br><span class="line">    gender: &#x27;male&#x27;,</span><br><span class="line">    passport: &#x27;G-12345678&#x27;,</span><br><span class="line">    school: &#x27;No.4 middle school&#x27;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 把passport属性赋值给变量id:</span><br><span class="line">let &#123;name, passport:id&#125; = person;</span><br><span class="line">name; // &#x27;小明&#x27;</span><br><span class="line">id; // &#x27;G-12345678&#x27;</span><br><span class="line">// 注意: passport不是变量，而是为了让变量id获得passport属性:</span><br><span class="line">passport; // Uncaught ReferenceError: passport is not defined</span><br></pre></td></tr></table></figure>
+<p>解构赋值还可以使用默认值，这样就避免了不存在的属性返回<code>undefined</code>的问题：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    <span class="attr">name</span>: <span class="string">&#x27;小明&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>: <span class="number">20</span>,</span><br><span class="line">    <span class="attr">gender</span>: <span class="string">&#x27;male&#x27;</span>,</span><br><span class="line">    <span class="attr">passport</span>: <span class="string">&#x27;G-12345678&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果person对象没有single属性，默认赋值为true:</span></span><br><span class="line"><span class="keyword">var</span> &#123;name, single=<span class="literal">true</span>&#125; = person;</span><br><span class="line">name; <span class="comment">// &#x27;小明&#x27;</span></span><br><span class="line">single; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>有些时候，如果变量已经被声明了，再次赋值的时候，正确的写法也会报语法错误：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 声明变量:</span></span><br><span class="line"><span class="keyword">let</span> x, y;</span><br><span class="line"><span class="comment">// 解构赋值:</span></span><br><span class="line">&#123;x, y&#125; = &#123; <span class="attr">name</span>: <span class="string">&#x27;小明&#x27;</span>, <span class="attr">x</span>: <span class="number">100</span>, <span class="attr">y</span>: <span class="number">200</span>&#125;;</span><br><span class="line"><span class="comment">// 语法错误: Uncaught SyntaxError: Unexpected token =</span></span><br></pre></td></tr></table></figure>
+<p>这是因为JavaScript引擎把<code>&#123;</code>开头的语句当作了块处理，于是<code>=</code>不再合法。解决方法是用小括号括起来：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">(&#123;x, y&#125; = &#123; <span class="attr">name</span>: <span class="string">&#x27;小明&#x27;</span>, <span class="attr">x</span>: <span class="number">100</span>, <span class="attr">y</span>: <span class="number">200</span>&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="应用"><a class="header-anchor" href="#应用"></a>应用</h3>
+<p>假设<code>props</code>为:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">props = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Arto Hellas&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">35</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>React中:</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Hello</span> = (<span class="params">props</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; name, age &#125; = props</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">bornYear</span> = (<span class="params"></span>) =&gt; <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getFullYear</span>() - age</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>Hello &#123;name&#125;, you are &#123;age&#125; years old<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>So you were probably born in &#123;bornYear()&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以更加简化, 在形参中写解构赋值:</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Hello</span> = (<span class="params">&#123; name, age &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="object-spread-syntax"><a class="header-anchor" href="#object-spread-syntax"></a>object spread syntax</h2>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">ref</a></p>
+<p><strong>Spread syntax</strong> (<code>...</code>) allows an iterable, such as an array or string, to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected. In an object literal, the spread syntax enumerates the properties of an object and adds the key-value pairs to the object being created.</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sum</span>(<span class="params">x, y, z</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> x + y + z;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">sum</span>(...numbers));</span><br><span class="line"><span class="comment">// expected output: 6</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(sum.<span class="title function_">apply</span>(<span class="literal">null</span>, numbers));</span><br><span class="line"><span class="comment">// expected output: 6</span></span><br></pre></td></tr></table></figure>
+<h3 id="应用-2"><a class="header-anchor" href="#应用-2"></a>应用</h3>
+<p>在React中, <code>useState()</code>可以和解构赋值结合:</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">App</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> [clicks, setClicks] = <span class="title function_">useState</span>(&#123;</span><br><span class="line">    <span class="attr">left</span>: <span class="number">0</span>, <span class="attr">right</span>: <span class="number">0</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleLeftClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> newClicks = &#123; </span><br><span class="line">      <span class="attr">left</span>: clicks.<span class="property">left</span> + <span class="number">1</span>, </span><br><span class="line">      <span class="attr">right</span>: clicks.<span class="property">right</span> </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">setClicks</span>(newClicks)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleRightClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> newClicks = &#123; </span><br><span class="line">      <span class="attr">left</span>: clicks.<span class="property">left</span>, </span><br><span class="line">      <span class="attr">right</span>: clicks.<span class="property">right</span> + <span class="number">1</span> </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">setClicks</span>(newClicks)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;clicks.left&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleLeftClick&#125;</span>&gt;</span>left<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleRightClick&#125;</span>&gt;</span>right<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;clicks.right&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意到, 状态<code>clicks</code>有两部分: <code>clicks.left</code>, <code>clicks.right</code>. 每次更新其中一部分时, 还要写另一部分:</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">handleLeftClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> newClicks = &#123; </span><br><span class="line">    <span class="attr">left</span>: clicks.<span class="property">left</span> + <span class="number">1</span>, </span><br><span class="line">    <span class="attr">right</span>: clicks.<span class="property">right</span> <span class="comment">// clicks.right没有改变, 但setter里还是要写</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">setClicks</span>(newClicks)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//handleRightClick同理</span></span><br></pre></td></tr></table></figure>
+<p>这样很冗余,可以用object spread syntax来简化:</p>
+<figure class="highlight jsx"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">handleLeftClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> newClicks = &#123; </span><br><span class="line">    ...clicks, </span><br><span class="line">    <span class="attr">left</span>: clicks.<span class="property">left</span> + <span class="number">1</span> </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">setClicks</span>(newClicks)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">handleRightClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> newClicks = &#123; </span><br><span class="line">    ...clicks, </span><br><span class="line">    <span class="attr">right</span>: clicks.<span class="property">right</span> + <span class="number">1</span> </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title function_">setClicks</span>(newClicks)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里的<code>...clicks</code>实际上被展开为:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">//以handleLeftClick内为例</span></span><br><span class="line"><span class="keyword">const</span> newClicks = &#123; </span><br><span class="line">    <span class="comment">//...clicks 被展开为:</span></span><br><span class="line">    <span class="attr">left</span>: xx</span><br><span class="line">    <span class="attr">right</span>: xx</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 这里重新声明了right属性,也就覆盖了前面的right</span></span><br><span class="line">    <span class="attr">left</span>: clicks.<span class="property">left</span> + <span class="number">1</span> </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>由于JS对象支持重复声明属性, 并且后面的属性会覆盖前面同名的属性, 这样做实际上就保留了<code>left</code>属性, 只更改<code>right</code>属性</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JS/" rel="tag"># JS</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/08/23/React-Basic/" rel="prev" title="React Basic">
+                  <i class="fa fa-chevron-left"></i> React Basic
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/08/23/HTML-Basic/" rel="next" title="HTML Basic">
+                  HTML Basic <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

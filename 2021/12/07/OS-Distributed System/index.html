@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline:  通信 NFS AFS  ref: Operating Systems Three Easy pieces">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OS Distributed System">
+<meta property="og:url" content="http://lyk-love.cn/2021/12/07/OS-Distributed%20System/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline:  通信 NFS AFS  ref: Operating Systems Three Easy pieces">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-12-06T21:27:15.000Z">
+<meta property="article:modified_time" content="2022-09-26T06:39:34.935Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="OS Basic">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2021/12/07/OS-Distributed%20System/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2021/12/07/OS-Distributed%20System/","path":"2021/12/07/OS-Distributed System/","title":"OS Distributed System"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OS Distributed System | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1"><span class="nav-text">通信</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E6%8A%BD%E8%B1%A1"><span class="nav-text">通信抽象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DSM"><span class="nav-text">DSM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC"><span class="nav-text">RPC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Stub-Generator"><span class="nav-text">Stub Generator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Run-time-Library"><span class="nav-text">Run-time Library</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NFS"><span class="nav-text">NFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E7%8A%B6%E6%80%81%E5%8D%8F%E8%AE%AE"><span class="nav-text">无状态协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%93%E5%AD%98"><span class="nav-text">客户端缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E7%BC%93%E5%86%B2"><span class="nav-text">写缓冲</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#AFS"><span class="nav-text">AFS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B4%A9%E6%BA%83%E6%81%A2%E5%A4%8D"><span class="nav-text">崩溃恢复</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2021/12/07/OS-Distributed%20System/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OS Distributed System | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OS Distributed System
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-12-06 21:27:15" itemprop="dateCreated datePublished" datetime="2021-12-06T21:27:15Z">2021-12-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-Science/" itemprop="url" rel="index"><span itemprop="name">Computer Science</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline:</p>
+<ul>
+<li>通信</li>
+<li>NFS</li>
+<li>AFS</li>
+</ul>
+<p>ref: <em>Operating Systems Three Easy pieces</em></p>
+<span id="more"></span>
+<h1 id="通信"><a class="header-anchor" href="#通信"></a>通信</h1>
+<ul>
+<li>现代网络核心原则： <strong>通信是不可靠的</strong></li>
+<li>有可靠的传输出协议进行消息传递</li>
+<li>接下来的问题是： 使用什么样的抽象进行通信</li>
+</ul>
+<h2 id="通信抽象"><a class="header-anchor" href="#通信抽象"></a>通信抽象</h2>
+<h3 id="DSM"><a class="header-anchor" href="#DSM"></a>DSM</h3>
+<ul>
+<li>分布式共享内存（ <code>Distributed Shared Memory</code>  ）:   使不同机器上的同一个进程可以共享一个大的地址空间
+<ul>
+<li>用户访问页面时，要么页面在本机，要么发生页错误，页错误处理程序请求其他计算机，获取页面</li>
+<li>属于操作系统抽象，给分布式系统提供内存抽象</li>
+</ul>
+</li>
+<li>DSM很少被采用
+<ul>
+<li>不够 Robunt：假如一台机器出现故障，整个地址空间就不可用了（ 比如一个链表的一个节点消失 ）</li>
+<li>性能：跨计算机访问资源开销很大，DSM系统的设计者必须小心地组织计算，以便几乎不发生任何通信， 而这与DSM的初衷（跨计算机通信）违背*</li>
+</ul>
+</li>
+</ul>
+<h3 id="RPC"><a class="header-anchor" href="#RPC"></a>RPC</h3>
+<ul>
+<li>DSM的失败表明： <strong>OS抽象对分布式系统来说是个糟糕的选择</strong></li>
+<li><strong>PL抽象更有意义</strong>
+<ul>
+<li>最主要的抽象是远程过程调用（<code>Remote Procedure Call</code>）</li>
+</ul>
+</li>
+<li>RPC的目标： 使在远程机器上执行代码的过程像调用本地函数那样直接
+<ul>
+<li>client： 进行过程调用</li>
+<li>server： 只是定义了一些希望导出的例程。 其余的由RPC系统处理</li>
+</ul>
+</li>
+<li>RPC系统：
+<ul>
+<li>存根生成器(<code>stub generator</code>), 也称为协议编译器（ <code>protocol compiler</code> ）</li>
+<li>运行时库（ <code>run-time library</code> ）</li>
+</ul>
+</li>
+</ul>
+<h4 id="Stub-Generator"><a class="header-anchor" href="#Stub-Generator"></a>Stub Generator</h4>
+<ul>
+<li>
+<p><code>Stub Generator</code>  作为中介，与client和server交互</p>
+</li>
+<li>
+<p>目的：消除将函数和参数打包成消息的复杂度</p>
+</li>
+<li>
+<p>协议编译器的输入：server希望导出给client的一组调用：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">interface&#123;</span><br><span class="line">	<span class="type">int</span> <span class="title function_">func1</span><span class="params">(<span class="type">int</span> arg1)</span>;</span><br><span class="line">	<span class="type">int</span> <span class="title function_">func2</span><span class="params">(<span class="type">int</span> arg1, <span class="type">int</span> arg2)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>stub generator</code>接受这样的接口，并对 client 和 server 生成一些不同的代码片段（ <code>stub</code> ）</p>
+</li>
+<li>
+<p><code>client stub</code>: client链接此<code>client stub</code>，调用它进行RPC,，客户端只能看到函数调用，在<code>stub</code>内部有如下操作：</p>
+<ul>
+<li>创建 <code>message  buffer</code> ： 一个字节数组</li>
+<li>将所需信息打包到 <code>message  buffer</code>， 也称为消息的序列化（<code>serialization</code>）</li>
+<li>将消息发送到目标RPC server</li>
+<li>与RPC server的通信，以及使其运行所需的细节都由RPC运行时库处理</li>
+<li>等待回复</li>
+<li>解包返回代码和其他参数（反序列化）</li>
+</ul>
+</li>
+<li>
+<p><code>server stub</code>:</p>
+<ul>
+<li>解包消息，即反序列化</li>
+<li>调用实际函数</li>
+<li>打包结果，放入一个回复缓冲区</li>
+<li>发送回复</li>
+</ul>
+</li>
+<li>
+<p>问题：</p>
+<ul>
+<li>一个包如何发送复杂的数据结构：比如，如何解释一个指针
+<ul>
+<li>通过众所周知的类型（<code>int</code>之类）</li>
+<li>使用更多信息注释数据结构</li>
+</ul>
+</li>
+<li>并发性服务器组织方式：
+<ul>
+<li>线程池</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Run-time-Library"><a class="header-anchor" href="#Run-time-Library"></a>Run-time Library</h4>
+<p>运行时库处理RPC系统中大部分工作，这里讨论构建它时的一些困难</p>
+<ul>
+<li>命名问题： 如何找到远程服务
+<ul>
+<li>采用现有的命名系统（  <code>ip + port</code> ）</li>
+</ul>
+</li>
+<li>RPC传输协议的构建
+<ul>
+<li>为了效率，很多rpc采用UDP</li>
+<li>如果建立在不可靠的传输层上，RPC需要提供可靠性，比如提供超时/重试</li>
+</ul>
+</li>
+<li>字节序：
+<ul>
+<li>RPC包在其消息格式中指定字节序</li>
+</ul>
+</li>
+<li>是否向client暴露通信的异步性质，实现性能优化</li>
+</ul>
+<h1 id="NFS"><a class="header-anchor" href="#NFS"></a>NFS</h1>
+<ul>
+<li>
+<p>分布式文件系统</p>
+<ul>
+<li>由客户端文件系统 + 文件服务器组成</li>
+<li>提供对文件的透明访问</li>
+</ul>
+</li>
+<li>
+<p>Sun的NFS只是一个协议，允许不同的实现，这里讨论NFS v2</p>
+</li>
+<li>
+<p>目的是“<strong>简单快速的服务器崩溃恢复</strong>”</p>
+</li>
+</ul>
+<h2 id="无状态协议"><a class="header-anchor" href="#无状态协议"></a>无状态协议</h2>
+<ul>
+<li>NFS采用“<strong>无状态</strong>”协议: 每个client操作都包含完成请求所需的全部信息
+<ul>
+<li>有状态协议会在client和server间共享状态。 比如文件描述符，如果服务器发生错误，收到客户端第二次读取时将不知道<code>fd</code>指的是哪个文件</li>
+<li>有状态协议很难处理客户端崩溃情况，如果client在崩溃前用掉了一个<code>fd</code>， server将无法知道什么之后收回该<code>fd</code></li>
+</ul>
+</li>
+<li><strong>重试请求</strong>：解决服务器没有及时回复的问题</li>
+<li><strong>幂等</strong>（<code>idempotent</code>）   操作： NFS的操作是幂等的，这就确保了它能简单地重试请求</li>
+<li>除了<code>READ</code>, <code>LOOKUP</code>, 就连<code>WRITE</code>也是幂等的
+<ul>
+<li><code>WRITE</code>包含写入数据的偏移量，实现了其幂等性</li>
+</ul>
+</li>
+<li>但是，有些操作无法幂等，比如<code>mkdir</code>，这也是NFS的bug</li>
+</ul>
+<h2 id="客户端缓存"><a class="header-anchor" href="#客户端缓存"></a>客户端缓存</h2>
+<p>客户端缓存可以提升性能，但会导致<strong>缓存一致性问题</strong>（ <code>cache consistency problem</code> ）</p>
+<ul>
+<li>假设有客户端<code>C1</code>, <code>C2</code>, <code>C3</code>, 服务器<code>S</code>。 <code>C1</code>从<code>S</code>读取了文件<code>F</code>，并将副本存在本地缓存中， 而<code>C2</code>覆盖文件<code>F</code>，从未而改变其内容
+<ul>
+<li>问题一： <code>C2</code>将它的写入缓存一段时间再发送，而这之前如果<code>C3</code>访问<code>F</code>，得到的还是未改变的<code>F</code>，这称为<code>update visibility</code>
+<ul>
+<li>client实现<strong>关闭时刷新</strong><code> flush-on-close</code>（即<code>close-to-open</code>）: 当一个client写入文件并关闭文件时，将其所有更新刷新到服务器，这样<code>C3</code>从服务器你拿到的确保是最新的版本</li>
+</ul>
+</li>
+<li>问题二： 即使<code>C2</code>立即发送其写入，<code>C1</code>的缓存依然是陈旧的（ <code> stale cache</code> ）, 此时<code>C1</code>上的程序只能读取陈旧的缓存
+<ul>
+<li>CLIENT在打开文件时，会先发送<code>GETATTR</code>请求到服务器，检查其是否被更改，如果是，则删除缓存并重新请求
+<ul>
+<li><code>GETATTR</code>返回文件信息，其中包括服务器上次修改文件的信息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>可以想见，<code>GETATTR</code>请求会非常频繁，为此NFS设计了“属性缓存”，允许文件属性缓存在本地，3s后超时。 但这就使得NFS无法知道文件的确切版本，“陈旧缓存”问题无法彻底解决</li>
+</ul>
+<h2 id="写缓冲"><a class="header-anchor" href="#写缓冲"></a>写缓冲</h2>
+<ul>
+<li>为了确保服务器写入正确， 服务I其必须在完成写入后，才通知客户端写入成功</li>
+<li>带来写入性能的瓶颈</li>
+</ul>
+<h1 id="AFS"><a class="header-anchor" href="#AFS"></a>AFS</h1>
+<ul>
+<li>
+<p>原则： 在<strong>client的本地磁盘</strong>进行<strong>全文件缓存</strong></p>
+<ul>
+<li>后续<code>read()</code>, <code>write()</code>操作是严格本地的，被重定向到本地磁盘上</li>
+<li>当然，客户端每次操作前，会发送<code>TestAuth</code>给server, 查看文件是否被修改，这类似NFS的<code>GETATTR</code>
+<ul>
+<li><code>AFS v2</code>引入<strong>回调</strong>， server向client承诺，当client缓存的文件被修改时， 会通知client. 这减少了网络通信</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>AFS也采用关闭时刷新</p>
+</li>
+<li>
+<p>最后关闭者胜出<code> last closer win</code>: 最后一个更新该文件的client的内容会被接受</p>
+<ul>
+<li>AFS是基于文件的，而NFS是基于块的。 对后者而言，如果每个客户端都更新文件，会将不同的块的写入刷新到服务器，这样的文件内容没什么意义</li>
+</ul>
+</li>
+</ul>
+<h2 id="崩溃恢复"><a class="header-anchor" href="#崩溃恢复"></a>崩溃恢复</h2>
+<ul>
+<li>回调可能会丢失，比如该client缓存的文件被另一个client改变，服务器发送回调时，前者还在重启。
+<ul>
+<li>此时前者必须发送<code>TestAuth</code>来验证缓存正确性。</li>
+</ul>
+</li>
+<li>崩溃后的服务器恢复也更复杂。 因为回调被保存在server内存中。 因此server重启后，不知道server的情况。
+<ul>
+<li>因此，server重启后，每个client都必须意识到server已崩溃。 比如，server重启后向每个client发送消息“不要信任你的缓存！”</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OS-Basic/" rel="tag"># OS Basic</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/12/03/OS-lab3/" rel="prev" title="OS lab3">
+                  <i class="fa fa-chevron-left"></i> OS lab3
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/12/09/Computer%20Networking-Introduction/" rel="next" title="Computer Networking Introduction">
+                  Computer Networking Introduction <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
