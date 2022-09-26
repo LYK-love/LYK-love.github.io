@@ -307,7 +307,7 @@
 <h1 id="MergeSort"><a class="header-anchor" href="#MergeSort"></a><code>MergeSort</code></h1>
 <h2 id="Space-Complexity-of-Merge"><a class="header-anchor" href="#Space-Complexity-of-Merge"></a>Space Complexity of Merge</h2>
 <ul>
-<li>A algorithm is “in space”
+<li>A algorithm is &quot;in space&quot;
 <ul>
 <li>If the extra space it has to use is in Omega(1)</li>
 </ul>
@@ -337,7 +337,7 @@
 <ul>
 <li>
 <p>Choose keys so that:</p>
-<p>b0 &lt; a0 &lt; b1 &lt; a1 &lt; … &lt; bi &lt; ai&lt; bi+1,…, &lt; bm-1 &lt; ak-1</p>
+<p>b0 &lt; a0 &lt; b1 &lt; a1 &lt; ... &lt; bi &lt; ai&lt; bi+1,..., &lt; bm-1 &lt; ak-1</p>
 </li>
 <li>
 <p>Then the algorithm must  compare ai with bi for every i in [ 0, m - 1 ], and must compare ai with bi+1 for every i in [0, m - 1], so there are <i>n - 1</i> comparisons</p>
@@ -348,7 +348,7 @@
 <p>先考虑最好情况,也就是两边数组大小不一样的时候,一个数组全部比完了,那么另一个数组的剩余部分就在这次比较后全部插入辅助数组中, 比较次数小于 <i>n - 1</i></p>
 </li>
 <li>
-<p>反之,最坏情况就是&quot;其中一个数组比完了&quot;这个情况不发生,也就是两个数组一直比到最后, 也就是两个数组的最后一个元素相互比较( “comparison is conducted between A[k-1] and B[m-1]” ), 这就要求k = m = n/2</p>
+<p>反之,最坏情况就是&quot;其中一个数组比完了&quot;这个情况不发生,也就是两个数组一直比到最后, 也就是两个数组的最后一个元素相互比较( &quot;comparison is conducted between A[k-1] and B[m-1]&quot; ), 这就要求k = m = n/2</p>
 </li>
 <li>
 <p>可能有人会疑惑, 如果两数组大小极度不均衡,但是较小数组的最后一个元素远大于较大数组的所有元素,这不也是比到最后吗? 也是 <i>n - 1 </i> 吗? 为什么最坏情况的构造里, 还要要求 k = m = n/2 呢?</p>
@@ -395,7 +395,7 @@
 <li>
 <p>Sorted subarrays</p>
 <ul>
-<li>A[ 0… k-1] and B[ 0 … m-1 ]</li>
+<li>A[ 0... k-1] and B[ 0 ... m-1 ]</li>
 </ul>
 </li>
 <li>
@@ -411,8 +411,8 @@
 <p>(i,j) is an inversion</p>
 </li>
 <li>
-<p>For all i’  &gt; j</p>
-<p>( i’ , j) are inversions ( i’ &gt; i )</p>
+<p>For all i'  &gt; j</p>
+<p>( i' , j) are inversions ( i' &gt; i )</p>
 </li>
 <li>
 <p>B[j] is selected</p>
@@ -493,14 +493,14 @@
 <li>即高度为h，  h &gt;= log L , L = n！,   所以  h &gt;= log( n! )</li>
 </ul>
 </li>
-<li>log( n! ) &gt;= … &gt;= log( (n/2)^ (n/2) ) = n/2log(n/2) ∈ <strong>Omega( nlogn )</strong></li>
+<li>log( n! ) &gt;= ... &gt;= log( (n/2)^ (n/2) ) = n/2log(n/2) ∈ <strong>Omega( nlogn )</strong></li>
 </ul>
 </li>
 <li>因此，worst-case的下界为<code>nlogn</code></li>
 </ul>
 <h2 id="External-Path-Length-EPL"><a class="header-anchor" href="#External-Path-Length-EPL"></a>External Path Length( EPL )</h2>
 <ul>
-<li><strong>EPL — sum of path length to every leaf</strong>
+<li><strong>EPL --- sum of path length to every leaf</strong>
 <ul>
 <li>The  EPL <i>t</i> is recursively defined as follows:</li>
 <li>[Base case] 0 for a  single external node</li>

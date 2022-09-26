@@ -321,7 +321,7 @@
 <ul>
 <li><i>Local comparison</i> is done between is done between two adjacent elements</li>
 <li>At most <strong>one</strong> inversion is removed by a <i>local comparison</i></li>
-<li>There do exist inputs with <i>n(n-1)/2</i> inversions, such as ( n, n-1, …, 3, 2, 1 ) （最坏情况，inversion最多）</li>
+<li>There do exist inputs with <i>n(n-1)/2</i> inversions, such as ( n, n-1, ...., 3, 2, 1 ) （最坏情况，inversion最多）</li>
 <li><strong>The worst-case behavior of any sorting algorithm that remove at most one inversion per key comparison must in $\Omega(n^2)$​​​</strong></li>
 </ul>
 <h2 id="Average-Case"><a class="header-anchor" href="#Average-Case"></a>Average Case</h2>
@@ -361,11 +361,11 @@ $$</p>
 <p>For a range of <i>k</i> positions, <i>k - 1</i> keys are compared with the pivot( one is vacant )</p>
 <ul>
 <li>
-<p>if the pivot is the smallest, than the “large” segment has all the remaining <i>k - 1</i>, and the small segment is empty 最坏情况,每次问题的规模只减少1, 每次PARTITION代价是O(n)</p>
+<p>if the pivot is the smallest, than the &quot;large&quot; segment has all the remaining <i>k - 1</i>, and the small segment is empty 最坏情况,每次问题的规模只减少1, 每次PARTITION代价是O(n)</p>
 </li>
 <li>
 <p>If the elements in the array to be sorted has already ascending order( the <strong>Goal</strong> ), then the number os comparison that Partition has to do is:</p>
-<p>$n - 1 + n - 2 + … + 1 = n(n-1)/2 ∈ O(n^2)$​</p>
+<p>$n - 1 + n - 2 + ... + 1 = n(n-1)/2 ∈ O(n^2)$​</p>
 </li>
 <li>
 <p>考虑到所有输入等概率的情况,最坏情况的出现概率是很低的.</p>

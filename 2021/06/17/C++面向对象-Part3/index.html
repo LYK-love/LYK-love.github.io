@@ -515,7 +515,7 @@
 </ul>
 </li>
 <li>
-<p>catch( … )</p>
+<p>catch( ... )</p>
 <ul>
 <li>默认异常处理</li>
 </ul>
@@ -558,13 +558,13 @@
 <ul>
 <li>有名称的、可以获取到存储地址的表达式即为左值；反之则是右值</li>
 </ul>
-<p>其实 C++98/03 标准中就有引用，使用 “&amp;” 表示。但此种引用方式有一个缺陷，即正常情况下只能操作 C++ 中的左值，无法对右值添加引用。举个例子：</p>
+<p>其实 C++98/03 标准中就有引用，使用 &quot;&amp;&quot; 表示。但此种引用方式有一个缺陷，即正常情况下只能操作 C++ 中的左值，无法对右值添加引用。举个例子：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> &amp;b = num; <span class="comment">//正确int &amp;c = 10; //错误</span></span><br></pre></td></tr></table></figure>
 <p>如上所示，编译器允许我们为<code>num</code>左值建立一个引用，但不可以为 10 这个右值建立引用。因此，C++98/03 标准中的引用又称为<strong>左值引用</strong>。</p>
 <p>注意，虽然 C++98/03 标准不支持为右值建立非常量左值引用，但允许使用<strong>常量左值引用引用右值</strong>(但不能修改)。也就是说，常量左值引用既可以操作左值，也可以操作右值，例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int num = 10;const int &amp;b = num;const int &amp;c = 10;</span><br></pre></td></tr></table></figure>
 <p>我们知道，右值往往是没有名称的，因此要使用它只能借助引用的方式。这就产生一个问题，实际开发中我们可能需要对右值进行修改（实现移动语义时就需要），显然左值引用的方式是行不通的。</p>
-<p>为此，C++11 标准新引入了另一种引用方式，称为右值引用，用 “&amp;&amp;” 表示。</p>
+<p>为此，C++11 标准新引入了另一种引用方式，称为右值引用，用 &quot;&amp;&amp;&quot; 表示。</p>
 <p>需要注意的，和声明左值引用一样，右值引用也必须<strong>立即进行初始化操作</strong>，且<strong>只能使用右值进行初始化</strong>，比如：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="comment">//int &amp;&amp; a = num;  //右值引用不能初始化为左值int &amp;&amp; a = 10;</span></span><br></pre></td></tr></table></figure>
 <p>和常量左值引用不同的是，右值引用还可以对右值进行修改。例如：</p>
@@ -658,7 +658,7 @@
 </tr>
 <tr>
 <td>[bar]</td>
-<td>Capture bar by making a copy; don’t copy anything else</td>
+<td>Capture bar by making a copy; don't copy anything else</td>
 </tr>
 </tbody>
 </table>
@@ -731,19 +731,19 @@
 <td>只有一个 &amp; 符号，表示以引用传递的方式导入所有外部变量；</td>
 </tr>
 <tr>
-<td>[val1,val2,…]</td>
+<td>[val1,val2,...]</td>
 <td>表示以值传递的方式导入 val1、val2 等指定的外部变量，同时多个变量之间没有先后次序；</td>
 </tr>
 <tr>
-<td>[&amp;val1,&amp;val2,…]</td>
+<td>[&amp;val1,&amp;val2,...]</td>
 <td>表示以引用传递的方式导入 val1、val2等指定的外部变量，多个变量之间没有前后次序；</td>
 </tr>
 <tr>
-<td>[val,&amp;val2,…]</td>
+<td>[val,&amp;val2,...]</td>
 <td>以上 2 种方式还可以混合使用，变量之间没有前后次序。</td>
 </tr>
 <tr>
-<td>[=,&amp;val1,…]</td>
+<td>[=,&amp;val1,...]</td>
 <td>表示除 val1 以引用传递的方式导入外，其它外部变量都以值传递的方式导入。</td>
 </tr>
 <tr>

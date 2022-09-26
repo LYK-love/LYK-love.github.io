@@ -421,7 +421,7 @@
 <p><code>readelf -l a.out</code></p>
 <p>可以看到：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Elf file type is EXEC (Executable file)</span><br><span class="line">Entry point 0x401000</span><br><span class="line">There are 2 program headers, starting at offset 64</span><br><span class="line"></span><br><span class="line">Program Headers:</span><br><span class="line">  Type           Offset             VirtAddr           PhysAddr</span><br><span class="line">                 FileSiz            MemSiz              Flags  Align</span><br><span class="line">  LOAD           0x0000000000000000 0x0000000000400000 0x0000000000400000</span><br><span class="line">                 0x00000000000000b0 0x00000000000000b0  R      0x1000</span><br><span class="line">  LOAD           0x0000000000001000 0x0000000000401000 0x0000000000401000</span><br><span class="line">                 0x0000000000000001 0x0000000000000001  R E    0x1000</span><br><span class="line"></span><br><span class="line"> Section to Segment mapping:</span><br><span class="line">  Segment Sections...</span><br><span class="line">   00     </span><br><span class="line">   01     .text </span><br></pre></td></tr></table></figure>
-<p>The first (lowest) <code>LOAD</code> segment’s virtual address is the default load base of the file. You can see it’s <code>0x0000000000400000</code> for this file.</p>
+<p>The first (lowest) <code>LOAD</code> segment's virtual address is the default load base of the file. You can see it's <code>0x0000000000400000</code> for this file.</p>
 </li>
 </ul>
 <h1 id="实验相关内容"><a class="header-anchor" href="#实验相关内容"></a>实验相关内容</h1>

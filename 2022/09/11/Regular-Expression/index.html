@@ -298,7 +298,7 @@
 <h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
 <ul>
 <li>
-<p>每个正则表达式$r$可以描述一个语言$L®$, 也即其定义的正则集合( Regular Set)</p>
+<p>每个正则表达式$r$可以描述一个语言$L(r)$, 也即其定义的正则集合( Regular Set)</p>
 <ul>
 <li>例如, C语言标识符的语言, 可以用如下正则表达式来表示:<br>
 $$<br>
@@ -315,14 +315,14 @@ $$</li>
 <ol>
 <li>$\epsilon$是正则表达式,它描述了语言$L(\epsilon) = { \epsilon }$</li>
 <li>$\forall a \in \sum$ , $a$是正则表达式, 它描述了语言$L(a) = { a }$</li>
-<li>选择: $® | (s)$ 是正则表达式, $L(® | (s))=L® \cup L(s)$</li>
-<li>连接: $®(s)$ 是正则表达式, $L(®(s))=L®L(s)$</li>
-<li>闭包: $®^<em>$ 是正则表达式 , $L(®^</em>)=(L®)^*$</li>
-<li>括号: $®$ 是正则表达式, $L(®)=L®$</li>
+<li>选择: $(r) | (s)$ 是正则表达式, $L((r) | (s))=L(r) \cup L(s)$</li>
+<li>连接: $(r)(s)$ 是正则表达式, $L((r)(s))=L(r)L(s)$</li>
+<li>闭包: $(r)^<em>$ 是正则表达式 , $L((r)^</em>)=(L(r))^*$</li>
+<li>括号: $(r)$ 是正则表达式, $L((r))=L(r)$</li>
 </ol>
 <p>运算的优先级: $*$ &gt; 连接符 &gt; $|$</p>
 <ul>
-<li>$(a)|((b)<em>©)$可以改写为 $a|b</em>c$</li>
+<li>$(a)|((b)<em>(c))$可以改写为 $a|b</em>c$</li>
 </ul>
 <h2 id="Example"><a class="header-anchor" href="#Example"></a>Example</h2>
 <p>C语言的标识符集合:</p>
@@ -356,7 +356,7 @@ $$</li>
 </li>
 <li><code>.</code>: 匹配任意字符.
 <ul>
-<li><code>'py.'</code>可以匹配<code>'pyc'</code>、<code>'pyo'</code>、<code>'py!'</code>…</li>
+<li><code>'py.'</code>可以匹配<code>'pyc'</code>、<code>'pyo'</code>、<code>'py!'</code>...</li>
 </ul>
 </li>
 <li><code>\s</code>可以匹配一个空格(也包括Tab等空白符), 所以<code>\s+</code>表示至少有一个空格, 例如匹配<code>' '</code>，<code>' '</code>等；</li>
@@ -425,7 +425,7 @@ $$</li>
 <p>$\mathrm{digits}$: $\mathrm{digit}?$</p>
 </li>
 <li>
-<p>$\mathrm{num}$: $\mathrm{digits} \ (. \mathrm{digits})? \ (\mathrm{E}[±]? \ \mathrm{digits})?$</p>
+<p>$\mathrm{num}$: $\mathrm{digits} \ (. \mathrm{digits})? \ (\mathrm{E}[+-]? \ \mathrm{digits})?$</p>
 </li>
 </ul>
 

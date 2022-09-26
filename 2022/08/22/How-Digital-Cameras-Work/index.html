@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Outline:  Pixel’s Color Bayer Array Interpolation&#x2F;Approximation Other applications of interpolation">
+    <meta name="description" content="Outline:  Pixel&#39;s Color Bayer Array Interpolation&#x2F;Approximation Other applications of interpolation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="How Digital Cameras Work">
 <meta property="og:url" content="http://lyk-love.cn/2022/08/22/How-Digital-Cameras-Work/index.html">
 <meta property="og:site_name" content="LYK-love">
-<meta property="og:description" content="Outline:  Pixel’s Color Bayer Array Interpolation&#x2F;Approximation Other applications of interpolation">
+<meta property="og:description" content="Outline:  Pixel&#39;s Color Bayer Array Interpolation&#x2F;Approximation Other applications of interpolation">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Potpourri/How%20Digital%20Cameras%20Work/red%2C%20green%2C%20blue.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Potpourri/How%20Digital%20Cameras%20Work/human%20eyes%27%20color%20sensor%20distribution.png">
@@ -179,7 +179,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pixel%E2%80%99s-Color"><span class="nav-text">Pixel’s Color</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bayer-Array"><span class="nav-text">Bayer Array</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Uneven-Distribution-of-Filters"><span class="nav-text">Uneven Distribution of Filters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mind-the-Gap"><span class="nav-text">Mind the Gap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Interpolation-Approximation"><span class="nav-text">Interpolation&#x2F;Approximation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nearest-neighbor"><span class="nav-text">Nearest-neighbor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear"><span class="nav-text">Linear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quadratic"><span class="nav-text">Quadratic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cubic"><span class="nav-text">Cubic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Catmull-Rom-Splines"><span class="nav-text">Catmull-Rom Splines</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#General-Case"><span class="nav-text">General Case</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Half-Cosine"><span class="nav-text">Half-Cosine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Smoothstep"><span class="nav-text">Smoothstep</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Other-applications-of-interpolation"><span class="nav-text">Other applications of interpolation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Damping-motion"><span class="nav-text">Damping motion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-text">Ref</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Pixel-s-Color"><span class="nav-text">Pixel&#39;s Color</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bayer-Array"><span class="nav-text">Bayer Array</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Uneven-Distribution-of-Filters"><span class="nav-text">Uneven Distribution of Filters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mind-the-Gap"><span class="nav-text">Mind the Gap</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Interpolation-Approximation"><span class="nav-text">Interpolation&#x2F;Approximation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Nearest-neighbor"><span class="nav-text">Nearest-neighbor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linear"><span class="nav-text">Linear</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quadratic"><span class="nav-text">Quadratic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cubic"><span class="nav-text">Cubic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Catmull-Rom-Splines"><span class="nav-text">Catmull-Rom Splines</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#General-Case"><span class="nav-text">General Case</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Half-Cosine"><span class="nav-text">Half-Cosine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Smoothstep"><span class="nav-text">Smoothstep</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Other-applications-of-interpolation"><span class="nav-text">Other applications of interpolation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Damping-motion"><span class="nav-text">Damping motion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-text">Ref</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -322,13 +322,13 @@
     <div class="post-body" itemprop="articleBody">
         <p>Outline:</p>
 <ul>
-<li>Pixel’s Color</li>
+<li>Pixel's Color</li>
 <li>Bayer Array</li>
 <li>Interpolation/Approximation</li>
 <li>Other applications of interpolation</li>
 </ul>
 <span id="more"></span>
-<h1 id="Pixel’s-Color"><a class="header-anchor" href="#Pixel’s-Color"></a>Pixel’s Color</h1>
+<h1 id="Pixel-s-Color"><a class="header-anchor" href="#Pixel-s-Color"></a>Pixel's Color</h1>
 <p>在<a href="https://lyk-love.cn/2022/08/14/Resolution-on-Screen/#more">Resolution on Screen</a>中, 我介绍了Pixel的概念. 我们也知道颜色是由红, 绿, 蓝 三原色组成的:</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Potpourri/How%20Digital%20Cameras%20Work/red%2C%20green%2C%20blue.png" alt="read, green, blue"></p>
 <p>每个像素都有颜色和亮度. 但是感光元件只能衡量亮度, 无法衡量光的波长(颜色), 要想感知色彩，需要在每个感光元件前加滤色片( filter ), 滤色片是<strong>单色</strong>的.</p>
@@ -441,15 +441,15 @@
 $$<br>
 \begin{align}<br>
 f(x) = ax^3 + bx^2 + cx + d \nonumber \<br>
-f’(x) = 3ax^2 + 2bx + c \nonumber \<br>
-f’(x) = 3ax^2 + 2bx + c \nonumber<br>
+f'(x) = 3ax^2 + 2bx + c \nonumber \<br>
+f'(x) = 3ax^2 + 2bx + c \nonumber<br>
 \end{align}<br>
 $$<br>
 我们已经知道了$f(x_0), f(x_1)$, Catmull-Rom Splines要求设3阶方程在$x_0, x_1$处的斜率分别是直线$x_{-1}x_1, x_0x_2$的斜率. 也就是：<br>
 $$<br>
 \begin{align}<br>
-f’(x_0) = \frac {y_1 - y_{-1}}{2} \nonumber \newline<br>
-f’(x_1) = \frac {y_2 - y_0}{2} \nonumber<br>
+f'(x_0) = \frac {y_1 - y_{-1}}{2} \nonumber \newline<br>
+f'(x_1) = \frac {y_2 - y_0}{2} \nonumber<br>
 \end{align}<br>
 $$</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Potpourri/How%20Digital%20Cameras%20Work/Catmull-Rom%20Splines.png" alt="Catmull-Rom Splines"></p>
@@ -480,8 +480,8 @@ $$</p>
 <h2 id="Smoothstep"><a class="header-anchor" href="#Smoothstep"></a>Smoothstep</h2>
 <p>此外还可以将高阶多项式近似继续推广. Smoothstep只用于奇数阶多项式, 为了不产生过高/过低的估计值, 它假设段点处的高阶导数为0.</p>
 <p>假设$x \in [0,1], y \in [0,1]$, 已知$f(0), f(1)$</p>
-<p>3阶Smoothstep就是3阶多项式, 并且其$f’(0) = f’(1) = 1$</p>
-<p>5阶Smoothstep就是5阶多项式, 并且其$f’‘(0) = f’‘(1) = f’(0) = f’(1) = 1$</p>
+<p>3阶Smoothstep就是3阶多项式, 并且其$f'(0) = f'(1) = 1$</p>
+<p>5阶Smoothstep就是5阶多项式, 并且其$f''(0) = f''(1) = f'(0) = f'(1) = 1$</p>
 <p>以此类推</p>
 <h1 id="Other-applications-of-interpolation"><a class="header-anchor" href="#Other-applications-of-interpolation"></a>Other applications of interpolation</h1>
 <h2 id="Damping-motion"><a class="header-anchor" href="#Damping-motion"></a>Damping motion</h2>

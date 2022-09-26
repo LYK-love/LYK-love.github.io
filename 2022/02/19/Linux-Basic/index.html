@@ -743,9 +743,9 @@ Byte, short, ushort, int, uint, long, ulong, bool, charp Array (module_param_arr
 <h1 id="Linux设备"><a class="header-anchor" href="#Linux设备"></a>Linux设备</h1>
 <p>Linux系统将设备分为3种类型，对应三种驱动</p>
 <ul>
-<li>字符设备 – Character Driver</li>
-<li>块设备 – Block Driver</li>
-<li>网络接口设备 – Network Driver</li>
+<li>字符设备 -- Character Driver</li>
+<li>块设备 -- Block Driver</li>
+<li>网络接口设备 -- Network Driver</li>
 </ul>
 <h2 id="设备驱动的加载过程"><a class="header-anchor" href="#设备驱动的加载过程"></a>设备驱动的加载过程</h2>
 <p>以字符设备驱动为例，它的加载过程是：</p>
@@ -831,7 +831,7 @@ Byte, short, ushort, int, uint, long, ulong, bool, charp Array (module_param_arr
 <p>从开机到启动OS的过程为：</p>
 <ol>
 <li>
-<p>BIOS:开机时主动加载，BIOS会通过加载CMOS中的信息，得到主机的硬件配置信息（包括启动设备的查找顺序、硬盘的大小与类型、系统时间…）; 得到这些信息后，BIOS会进行启动自我检测（ Power-on Self Test, POST ）, 然后开始执行硬件的初始化、设置PnP设备，再<strong>定义出可启动的设备顺序</strong>，接下来开始读取启动设备的MBR，其中安装了boot loader程序</p>
+<p>BIOS:开机时主动加载，BIOS会通过加载CMOS中的信息，得到主机的硬件配置信息（包括启动设备的查找顺序、硬盘的大小与类型、系统时间...）; 得到这些信息后，BIOS会进行启动自我检测（ Power-on Self Test, POST ）, 然后开始执行硬件的初始化、设置PnP设备，再<strong>定义出可启动的设备顺序</strong>，接下来开始读取启动设备的MBR，其中安装了boot loader程序</p>
 <ul>
 <li>这里的MBR泛指启动扇区，GPT也有MBR扇区</li>
 </ul>

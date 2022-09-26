@@ -324,7 +324,7 @@
 <ul>
 <li><em>Message Authentication</em>: 对报文的鉴别, 即报文是不是对方发的, 是不是别人伪造的
 <ul>
-<li>很多书( 谢希仁, 自顶而下… ) 都把报文鉴别也放到 <em>Message integrity</em> 的范畴, 我觉得这样会引起混淆. 因此我用自己的分类方式.</li>
+<li>很多书( 谢希仁, 自顶而下... ) 都把报文鉴别也放到 <em>Message integrity</em> 的范畴, 我觉得这样会引起混淆. 因此我用自己的分类方式.</li>
 <li>事实上, <strong>实现报文鉴别的方法, 也都实现了报文完整性, 因此我不会单独介绍<em>Message integrity</em>和<em>Message Authentication</em>, 而是直接介绍实现了这两个特性的方法</strong>:
 <ol>
 <li><strong>数字签名</strong></li>
@@ -389,7 +389,7 @@ $$</p>
 <h3 id="Decryption"><a class="header-anchor" href="#Decryption"></a>Decryption</h3>
 <p>Bob收到密文$c$后，提供一个密钥$K_B$，解密算法( decryption algorithm ) $D$接受$c$和$K_B$，得到明文$m$:<br>
 $$<br>
-m = D_{K_B}© = D_{K_B}( E_{K_A}(m) )<br>
+m = D_{K_B}(c) = D_{K_B}( E_{K_A}(m) )<br>
 $$</p>
 <ul>
 <li>解密算法是加密算法的逆运算，在进行解密运算时，如果不使用事先约定好的密钥就无法解出明文</li>
@@ -427,7 +427,7 @@ $$</p>
 <li>很容易破解</li>
 </ul>
 </li>
-<li>单字母加密( monoalphabetic cipher ): 使用一张明文字母 &lt;–&gt; 密文字母的映射表，将明文按表加密</li>
+<li>单字母加密( monoalphabetic cipher ): 使用一张明文字母 &lt;--&gt; 密文字母的映射表，将明文按表加密</li>
 <li>多字母加密( polyalphabetic encryption ): 对明文的每个字母，先后使用多个映射表加密</li>
 </ul>
 <p>这些加密算法都很简陋，即使攻击者不知道任何明文( 即Ciphertext-only attack )，也可以根据一些手段进行破解：</p>
@@ -498,11 +498,11 @@ $$<br>
 注意到，CBC就是将$c(i-1)$作为$r(i)$.</p>
 </li>
 <li>
-<p>对于第$i$组，发送方只需发送其密文$c(i)$.  因此接收方总共接收到$c(0), c(1), c(2), …$， 总共只增加了$c(0)$的带宽</p>
+<p>对于第$i$组，发送方只需发送其密文$c(i)$.  因此接收方总共接收到$c(0), c(1), c(2), ...$， 总共只增加了$c(0)$的带宽</p>
 </li>
 </ol>
 <h3 id="Modern-Ciphers"><a class="header-anchor" href="#Modern-Ciphers"></a>Modern Ciphers</h3>
-<p>如前所述，现代的公钥加密算法采用分组加密，且都用函数F( 而非图上的表T )加密， 算法都接受一个密钥，来决定每个块的加密函数($F_1, F_2,F_3…$)以及重排时的规则等等。</p>
+<p>如前所述，现代的公钥加密算法采用分组加密，且都用函数F( 而非图上的表T )加密， 算法都接受一个密钥，来决定每个块的加密函数($F_1, F_2,F_3...$)以及重排时的规则等等。</p>
 <ul>
 <li>当然，该密钥还会用于CBC</li>
 </ul>
@@ -541,7 +541,7 @@ $$</p>
 <li>
 <p>B用自己的私钥$SK_{B}$通过D运算进行解密，恢复出明文，即:<br>
 $$<br>
-m = D_{SK_{B}}© = D_{SK_{B}}( \  E_{PK_{B}}(m) \ )<br>
+m = D_{SK_{B}}(c) = D_{SK_{B}}( \  E_{PK_{B}}(m) \ )<br>
 $$</p>
 </li>
 <li>
@@ -567,17 +567,17 @@ $$</p>
 <p>a hash function takes an input, $m$, and computes a fixed-size string $H(m)$ known as a hash.</p>
 <ul>
 <li>
-<p><strong>cryptographic hash function</strong>: 哈希函数, 且满足 It is <strong>computationally infeasible</strong> to find any two different messages <em>x</em> and <em>y</em> such that $H(x) = H(y)$ , which means it’s a one-way function.</p>
+<p><strong>cryptographic hash function</strong>: 哈希函数, 且满足 It is <strong>computationally infeasible</strong> to find any two different messages <em>x</em> and <em>y</em> such that $H(x) = H(y)$ , which means it's a one-way function.</p>
 <ul>
 <li>cryptographic hash function 就是比较难发生碰撞的Hash函数, 常见的Checksum和CRC校验都属于Hash函数, 但都很容易碰撞, 因此不适合作为“加密哈希函数”. 具体例子见<a target="_blank" rel="noopener" href="https://github.com/LYK-love/Lazy-Scripts/blob/master/checksum.py">我的checksum实现</a></li>
-<li>对于$(m, H(m))$ , 入侵者不可能使用$m’$替换$m$并使得$H(m’) == H(m)$</li>
+<li>对于$(m, H(m))$ , 入侵者不可能使用$m'$替换$m$并使得$H(m') == H(m)$</li>
 </ul>
 </li>
 <li>
 <p>最初的著名的加密哈希函数是MD5 ( Message Digest version 5 ), 由Rivest发明. 不过MD5在2004年被王小云给破解了.</p>
 </li>
 <li>
-<p>后来, 美国标准与技术协会NIST又提出了SHA( Secure Hash Algorithm ), SHA-1也被破解了. 现在一般用SHA-2, 3 …</p>
+<p>后来, 美国标准与技术协会NIST又提出了SHA( Secure Hash Algorithm ), SHA-1也被破解了. 现在一般用SHA-2, 3 ...</p>
 </li>
 </ul>
 <h3 id="MD5"><a class="header-anchor" href="#MD5"></a>MD5</h3>
@@ -739,7 +739,7 @@ $$</p>
 <li>KDC( Key Distribution Center ): KDC是大家都信任的机构，其任务就是给需要进行秘密通信的用户临时分配一个会话密钥（仅使用一次）.</li>
 </ul>
 <h2 id="Public-Key-Distribution"><a class="header-anchor" href="#Public-Key-Distribution"></a>Public Key Distribution</h2>
-<p><strong>认证中心CA ( Certification Authority )</strong>: 一个权威机构, 用于接受用户认证, 向用户发放证书（certificate）, 证书内容是用户的公钥和个人信息( 比如IP, 人名… ).</p>
+<p><strong>认证中心CA ( Certification Authority )</strong>: 一个权威机构, 用于接受用户认证, 向用户发放证书（certificate）, 证书内容是用户的公钥和个人信息( 比如IP, 人名... ).</p>
 <ul>
 <li>CA对证书进行数字签名, 这样用户就保证了该证书真的属于改CA.</li>
 <li>当然, CA的安全性取决于其权威性. 我自己也可以作为CA生成一个证书, 但是这样的证书肯定没人信.</li>
@@ -783,7 +783,7 @@ $$</p>
 </li>
 </ol>
 </li>
-<li><em>Shared symmetric session key distribution.</em> 步骤二中, mobile device和AS都拥有了session key, 此时还需要把session key也传输给AP. ( 不然mobile device和AP通信怎么加密呢… )</li>
+<li><em>Shared symmetric session key distribution.</em> 步骤二中, mobile device和AS都拥有了session key, 此时还需要把session key也传输给AP. ( 不然mobile device和AP通信怎么加密呢.... )</li>
 <li><em>Encrypted communication between mobile device and a remote host <strong>via the AP</strong>.</em></li>
 </ol>
 <h3 id="Mutual-Authentication-and-Shared-Symmetric-Session-Key-Derivation"><a class="header-anchor" href="#Mutual-Authentication-and-Shared-Symmetric-Session-Key-Derivation"></a><strong>Mutual Authentication and Shared Symmetric Session Key Derivation</strong></h3>
@@ -823,7 +823,7 @@ $$</p>
 <ul>
 <li>4G/5G蜂窝网络的安全性要求和WIFI差不多, 都需要:
 <ul>
-<li>双向鉴别: 基站当然有必要鉴别手机. 但因为基站也有可能被黑, 所以手机也有必要鉴别基站…</li>
+<li>双向鉴别: 基站当然有必要鉴别手机. 但因为基站也有可能被黑, 所以手机也有必要鉴别基站....</li>
 <li>加密: 手机和基站依然需要生成一个对称加密密钥, 用来加密M和BS之间通信的链路层frame</li>
 </ul>
 </li>
@@ -873,7 +873,7 @@ MME于是知道了mobile device拥有和HSS相同的key ,因此蜂窝网络<stro
 </ol>
 <h3 id="Changes-in-5G"><a class="header-anchor" href="#Changes-in-5G"></a>Changes in 5G</h3>
 <ol>
-<li>5G的鉴别和加密协议是AKA’ , 它继承了4G的AKA. 此外, 5G还采用了WIFI中的EAP, 因此报文格式和4G的不同. 并且5G还新增了一个协议用于IoT场景, 该协议不需要$K_{HSS-M}$ .</li>
+<li>5G的鉴别和加密协议是AKA' , 它继承了4G的AKA. 此外, 5G还采用了WIFI中的EAP, 因此报文格式和4G的不同. 并且5G还新增了一个协议用于IoT场景, 该协议不需要$K_{HSS-M}$ .</li>
 <li>4G的鉴别中, 是被访网络的MME做了mobile device的鉴别决定, 在5G中, 一般都由家庭网络来进行这个鉴别.</li>
 <li>5G中的IMSI是被非对称加密的.</li>
 </ol>

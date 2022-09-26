@@ -324,7 +324,7 @@
 <h2 id="MSD"><a class="header-anchor" href="#MSD"></a>MSD</h2>
 <p>MSD同样是key indexed count的桶排序，但是是从左向右扫，并且能允许不同长度的字符串</p>
 <p>MSD可以看作是从左往右的LSD，并且将空key（因为字符串长度可能不够了，那一位的key可能为空）放在一个特别的空桶上，其余性质不变。 因此MSD也是稳定, 线性时间的</p>
-<p>由于要处理空key，我们将空key的key定义为-1 (见<code>CharAt()</code>函数 )， 本来按LSD算法，桶的大小要存放在下一个count中，比如key为A的元素的个数（即A桶的大小）存放在<code>count[B]</code>。 由于count[0]必须是0值，所以只能把-1桶放在<code>count[1]</code>, 0桶放在<code>count[2]</code>… 相当于所有count后延一位.这样, -1取代0成为符号表最初的元素，-1桶元素的下标也就从<code>count[0]</code>和<code>count[1]</code>的空间中分配。</p>
+<p>由于要处理空key，我们将空key的key定义为-1 (见<code>CharAt()</code>函数 )， 本来按LSD算法，桶的大小要存放在下一个count中，比如key为A的元素的个数（即A桶的大小）存放在<code>count[B]</code>。 由于count[0]必须是0值，所以只能把-1桶放在<code>count[1]</code>, 0桶放在<code>count[2]</code>... 相当于所有count后延一位.这样, -1取代0成为符号表最初的元素，-1桶元素的下标也就从<code>count[0]</code>和<code>count[1]</code>的空间中分配。</p>
 <p>总体思路和LSD一模一样，只不过是从左到右的，并且count要后延一位</p>
 <ul>
 <li>注意到MSD对短字符串的处理性能不佳，因此对于短字符串( <code>hi - lo &lt;= M </code>)就直接用插入排序了。 这一步还顺便处理了递归的终止条件，即<code>hi - lo &lt;= 0 </code>的情况</li>

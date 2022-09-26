@@ -304,12 +304,12 @@
 <ul>
 <li>OLTP: using a database to run your business
 <ul>
-<li>对OLTP 数据库的查询形如: “one Honda Civic by Jane Doe in the London branch on the 1st of January, 2020”;</li>
+<li>对OLTP 数据库的查询形如: &quot;one Honda Civic by Jane Doe in the London branch on the 1st of January, 2020&quot;;</li>
 </ul>
 </li>
 <li>OLAP: using a database to understand your business
 <ul>
-<li>对OLAP数据库的查询形如: “give me the total sales of green Honda Civics in the UK for the past 6 months”</li>
+<li>对OLAP数据库的查询形如: &quot;give me the total sales of green Honda Civics in the UK for the past 6 months&quot;</li>
 </ul>
 </li>
 </ul>
@@ -344,7 +344,7 @@
 <ol>
 <li>对于&quot;Read only&quot;的OLAP workload(也就是有好多维度的只读查询)，这种存储方式是完美契合的，每个维度查一列就行了
 <ul>
-<li>同时也可以看到列数据库的缺点 — 修改既有数据的效率非常低，因为要把该行的每一列进行一次删除。 好在OLAP workload大部分是Read Only的， 事实上很多OLAP查询根本就不允许修改原有数据</li>
+<li>同时也可以看到列数据库的缺点 --- 修改既有数据的效率非常低，因为要把该行的每一列进行一次删除。 好在OLAP workload大部分是Read Only的， 事实上很多OLAP查询根本就不允许修改原有数据</li>
 </ul>
 </li>
 <li>由于数据按列存储，而同一列的数据一般而言格式相似，因此列数据库比行数据库更容易压缩，减少内存占用</li>

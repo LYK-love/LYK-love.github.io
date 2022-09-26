@@ -346,9 +346,9 @@
 <li><code>-n</code>: in numeric order</li>
 <li><code>k, --key=KEYDEF</code> :sort via a key; KEYDEF gives location and type
 <ul>
-<li><code>KEYDEF</code> is <code>F[.C][OPTS][,F[.C][OPTS]]</code> for <strong>start and stop position</strong>, where F is a <strong>field number</strong> and C a character position in the field; both are origin 1, and the stop posi‐ tion defaults to the line’s end.</li>
+<li><code>KEYDEF</code> is <code>F[.C][OPTS][,F[.C][OPTS]]</code> for <strong>start and stop position</strong>, where F is a <strong>field number</strong> and C a character position in the field; both are origin 1, and the stop posi‐ tion defaults to the line's end.</li>
 <li>If neither <strong>-t</strong> nor <strong>-b</strong> is in effect, characters in a field are counted from the beginning of the preceding whitespace.</li>
-<li>OPTS  is  one  or more single-letter ordering options <code>[bdfgiMhnRrV]</code>, which override global ordering options for that key.  If no key is given, use the entire line as the key.  Use <strong>–debug</strong> to diagnose incorrect key usage.</li>
+<li>OPTS  is  one  or more single-letter ordering options <code>[bdfgiMhnRrV]</code>, which override global ordering options for that key.  If no key is given, use the entire line as the key.  Use <strong>--debug</strong> to diagnose incorrect key usage.</li>
 <li>example: <code>-k1,1</code>即以第一个field为key排序， 而<code>-k</code>1即以第一个field直到行的末尾为key进行排序
 <ul>
 <li><code>,n</code>:  sort until the <code>n</code>th field, where the default is the end of the line</li>

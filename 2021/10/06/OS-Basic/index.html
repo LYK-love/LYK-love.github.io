@@ -624,7 +624,7 @@ may not have kernel mode) or interpreted systems (such as Java-based systems tha
 <li>boot loader读取核心文件</li>
 <li>核心文件会加载OS</li>
 <li>OS问询BIOS，得到配置信息，对每个设备，OS检查自己是否有对应驱动，若没有，则通知用户去下载。</li>
-<li>当所有设备驱动都齐备时，OS将它们加载进kernel. 并初始化分区表，启动各种程序…(如登陆程序和GUI)</li>
+<li>当所有设备驱动都齐备时，OS将它们加载进kernel. 并初始化分区表，启动各种程序....(如登陆程序和GUI)</li>
 </ol>
 <h1 id="The-OS-Zoo"><a class="header-anchor" href="#The-OS-Zoo"></a>The OS Zoo</h1>
 <h2 id="Mainframe-Operating-Systems"><a class="header-anchor" href="#Mainframe-Operating-Systems"></a>Mainframe Operating Systems</h2>
@@ -769,7 +769,7 @@ may not have kernel mode) or interpreted systems (such as Java-based systems tha
 <h2 id="Protection"><a class="header-anchor" href="#Protection"></a>Protection</h2>
 <ul>
 <li>
-<p>protection code: each file in UNIX are protected by assigning each one a 9-bit binary protection code, which consists of three 3-bit fields, one for the owner, one for the owner’s group, one for everyone else.</p>
+<p>protection code: each file in UNIX are protected by assigning each one a 9-bit binary protection code, which consists of three 3-bit fields, one for the owner, one for the owner's group, one for everyone else.</p>
 <ul>
 <li>例如<code>rwxr-x--x</code>意味着拥有者可读可写可执行， 群组可读可执行，其他人可执行</li>
 </ul>
@@ -859,7 +859,7 @@ may not have kernel mode) or interpreted systems (such as Java-based systems tha
 <p><code>main( argc, argv, envp )</code></p>
 <ul>
 <li><code>argc</code>: 参数数量，包括程序名在内，这里是3</li>
-<li><code>argc</code>：参数名（都是字符串）指针. <code>argv[0]</code>指向string “cp”</li>
+<li><code>argc</code>：参数名（都是字符串）指针. <code>argv[0]</code>指向string &quot;cp&quot;</li>
 <li><code>envp</code>: 环境指针， 一个string的键值对数组，这里没有环境要传递，因此是0</li>
 </ul>
 </li>
@@ -949,7 +949,7 @@ may not have kernel mode) or interpreted systems (such as Java-based systems tha
 </ul>
 <h2 id="Microkernels"><a class="header-anchor" href="#Microkernels"></a>Microkernels</h2>
 <ul>
-<li>Layered system的设计者可以划分kernel-user的界限，传统的Layered system全部运行在kernel，而这是不必要的。microkernel的理念是将OS分离为不同模块，其中只有一个 — 称作microkernel 运行在内核层，其余的运行在用户层，以实现高可靠性</li>
+<li>Layered system的设计者可以划分kernel-user的界限，传统的Layered system全部运行在kernel，而这是不必要的。microkernel的理念是将OS分离为不同模块，其中只有一个 --- 称作microkernel 运行在内核层，其余的运行在用户层，以实现高可靠性</li>
 <li>除了OS X( based on Mach microkernel ), 通常的桌面OS都不用microkernel</li>
 <li>著名的有塞班和MINIX 3</li>
 <li>MINIX 3的结构：

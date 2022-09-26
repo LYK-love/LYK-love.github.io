@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Outline:  Variable String Array Quoting Mechanism Control Flow I&#x2F;O redirection Function …  ref:  shell tutorial">
+    <meta name="description" content="Outline:  Variable String Array Quoting Mechanism Control Flow I&#x2F;O redirection Function .....  ref:  shell tutorial">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell Script">
 <meta property="og:url" content="http://lyk-love.cn/2022/03/18/Shell-Script/index.html">
 <meta property="og:site_name" content="LYK-love">
-<meta property="og:description" content="Outline:  Variable String Array Quoting Mechanism Control Flow I&#x2F;O redirection Function …  ref:  shell tutorial">
+<meta property="og:description" content="Outline:  Variable String Array Quoting Mechanism Control Flow I&#x2F;O redirection Function .....  ref:  shell tutorial">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-17T17:06:52.000Z">
 <meta property="article:modified_time" content="2022-09-26T06:39:34.939Z">
@@ -297,7 +297,7 @@
 <li>Control Flow</li>
 <li>I/O redirection</li>
 <li>Function</li>
-<li>…</li>
+<li>.....</li>
 </ul>
 <p>ref:  <a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/unix/unix-shell-functions.htm">shell tutorial</a></p>
  <span id="more"></span>
@@ -871,7 +871,7 @@
 </li>
 </ul>
 <h2 id="operator"><a class="header-anchor" href="#operator"></a>operator</h2>
-<p>Bourne shell didn’t originally have any mechanism to perform simple arithmetic operations but it uses external programs, either <strong>awk</strong> or <strong>expr</strong>.</p>
+<p>Bourne shell didn't originally have any mechanism to perform simple arithmetic operations but it uses external programs, either <strong>awk</strong> or <strong>expr</strong>.</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line"></span><br><span class="line">val=`expr 2 + 2`</span><br><span class="line">echo &quot;Total value : $val&quot;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>There must be spaces between operators and expressions.
@@ -948,7 +948,7 @@
 <h3 id="Relational-Operators"><a class="header-anchor" href="#Relational-Operators"></a>Relational Operators</h3>
 <p>These operators do not work for <strong>string</strong> values <strong>unless their value is numeric</strong>.</p>
 <ul>
-<li>For example, following operators will work to check a relation between 10 and 20 as well as in between “10” and “20” but not in between “ten” and “twenty”.</li>
+<li>For example, following operators will work to check a relation between 10 and 20 as well as in between &quot;10&quot; and &quot;20&quot; but not in between &quot;ten&quot; and &quot;twenty&quot;.</li>
 </ul>
 <p>Assume variable <strong>a</strong> holds 10 and variable <strong>b</strong> holds 20 then −</p>
 <table>
@@ -1023,7 +1023,7 @@
 </table>
 <h3 id="String-Operators"><a class="header-anchor" href="#String-Operators"></a>String Operators</h3>
 <p>The following string operators are supported by Bourne Shell.</p>
-<p>Assume variable <strong>a</strong> holds “abc” and variable <strong>b</strong> holds “efg” then −</p>
+<p>Assume variable <strong>a</strong> holds &quot;abc&quot; and variable <strong>b</strong> holds &quot;efg&quot; then −</p>
 <table>
 <thead>
 <tr>
@@ -1062,7 +1062,7 @@
 </table>
 <h3 id="File-Test-Operators"><a class="header-anchor" href="#File-Test-Operators"></a>File Test Operators</h3>
 <p>We have a few operators that can be used to test various properties associated with a Unix file.</p>
-<p>Assume a variable <strong>file</strong> holds an existing file name “test” the size of which is 100 bytes and has <strong>read</strong>, <strong>write</strong> and <strong>execute</strong> permission on −</p>
+<p>Assume a variable <strong>file</strong> holds an existing file name &quot;test&quot; the size of which is 100 bytes and has <strong>read</strong>, <strong>write</strong> and <strong>execute</strong> permission on −</p>
 <table>
 <thead>
 <tr>
@@ -1242,7 +1242,7 @@
 <p>For example, if a script is named with the path <em>path/to/script</em>, and it starts with the following line, <code>#!/bin/sh</code>, then the program loader is instructed to run the program <em>/bin/sh</em>, passing <em>path/to/script</em> as the first argument. In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linux">Linux</a>, this behavior is the result of both kernel and user-space code.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shebang_(Unix)#cite_note-9">9]</a></p>
 </li>
 <li>
-<p>The shebang line is usually ignored by the interpreter, because the “#” character is a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Comment_(computer_programming)">comment</a> marker in many scripting languages; some language interpreters that do not use the hash mark to begin comments still may ignore the shebang line in recognition of its purpose.</p>
+<p>The shebang line is usually ignored by the interpreter, because the &quot;#&quot; character is a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Comment_(computer_programming)">comment</a> marker in many scripting languages; some language interpreters that do not use the hash mark to begin comments still may ignore the shebang line in recognition of its purpose.</p>
 </li>
 </ul>
 </li>

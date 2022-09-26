@@ -313,7 +313,7 @@
 <li>
 <p>换源阿里云,需要去阿里云“容器镜像服务” --&gt; “镜像加速器” 生成镜像url：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://zz1b9pta.mirror.aliyuncs.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
-<p>*mac用户可在setting – docker engine中修改<code>daemon.json</code>文件</p>
+<p>*mac用户可在setting -- docker engine中修改<code>daemon.json</code>文件</p>
 </li>
 <li>
 <p>终端输入docker info查看是否配置成功</p>
@@ -397,7 +397,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm version</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">kubeadm version: &amp;version.Info&#123;Major:&quot;1&quot;, Minor:&quot;24&quot;, GitVersion:&quot;v1.24.1&quot;, GitCommit:&quot;3ddd0f45aa91e2f30c70734b175631bec5b5825a&quot;, GitTreeState:&quot;clean&quot;, BuildDate:&quot;2022-05-24T12:24:38Z&quot;, GoVersion:&quot;go1.18.2&quot;, Compiler:&quot;gc&quot;, Platform:&quot;linux/amd64&quot;&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>``GitVersion:“v1.24.1&quot;”` 即为版本号</li>
+<li>``GitVersion:&quot;v1.24.1&quot;&quot;` 即为版本号</li>
 </ul>
 </li>
 </ol>

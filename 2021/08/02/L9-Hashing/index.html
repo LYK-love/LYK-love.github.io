@@ -327,12 +327,12 @@
 <li>$O(logn)$</li>
 </ul>
 </li>
-<li><strong>Hashing — almost constant time</strong>
+<li><strong>Hashing --- almost constant time</strong>
 <ul>
 <li>$O( 1 + \alpha)$</li>
 </ul>
 </li>
-<li>“Mission impossible”
+<li>&quot;Mission impossible&quot;
 <ul>
 <li>$O(1)$​</li>
 </ul>
@@ -437,10 +437,10 @@ $$</li>
 <li>All elements  are stored in the  hash table
 <ul>
 <li>No linked list is used</li>
-<li>The <em>load factor</em> $\alpha$ can’t be larger than 1</li>
+<li>The <em>load factor</em> $\alpha$ can't be larger than 1</li>
 </ul>
 </li>
-<li>Collision is settled by “rehashing”
+<li>Collision is settled by &quot;rehashing&quot;
 <ul>
 <li>A function is used to get a new hashing address for each collided address
 <ul>
@@ -456,18 +456,18 @@ $$</li>
 <li>
 <p>Linear probing:</p>
 <ul>
-<li>Given an ordinary hash function <em>h’</em>, which is called an auxiliary hash function, the hash function is:( clustering may occur )<br>
+<li>Given an ordinary hash function <em>h'</em>, which is called an auxiliary hash function, the hash function is:( clustering may occur )<br>
 $$<br>
-h(k,i) = (h’(k)+i)\quad mod \quad m \quad ( i = 0,1, \dots, m-1 )<br>
+h(k,i) = (h'(k)+i)\quad mod \quad m \quad ( i = 0,1, \dots, m-1 )<br>
 $$</li>
 </ul>
 </li>
 <li>
 <p>Quadratic Probing:</p>
 <ul>
-<li>Given auxiliary function <em>h’</em> and nonzero auxiliary constant $c_1$ and $c_2$​, the hash function is: (secondary clustering may occur)<br>
+<li>Given auxiliary function <em>h'</em> and nonzero auxiliary constant $c_1$ and $c_2$​, the hash function is: (secondary clustering may occur)<br>
 $$<br>
-h(k,i) = (h’(k)+c_1 i + c_2 i^2)\quad mod \quad m \quad ( i = 0,1, \dots, m-1<br>
+h(k,i) = (h'(k)+c_1 i + c_2 i^2)\quad mod \quad m \quad ( i = 0,1, \dots, m-1<br>
 $$</li>
 </ul>
 </li>

@@ -325,13 +325,13 @@
 <li>
 <p>有可能会出现这种情况：</p>
 <blockquote>
-<p>直接使用 nvim … 打开文件时一切正常，配置也生效;<br>
-但当你使用 sudo nvim … 打开文件时，配置文件并没有生效</p>
+<p>直接使用 nvim ... 打开文件时一切正常，配置也生效;<br>
+但当你使用 sudo nvim ... 打开文件时，配置文件并没有生效</p>
 </blockquote>
 <p>出现这种情况的原因是：当你使用 sudo命令的时候，用户的身份切换了（默认是root）,此时你的环境变量也被重置了，系统当然就找不到你的配置文件。</p>
 <p>解决的方案大致有2种：</p>
 <ol>
-<li>使用 sudo -E nvim … 打开文件 （最快速的方法，不过每次都需要加上 -E, 有点麻烦）</li>
+<li>使用 sudo -E nvim ... 打开文件 （最快速的方法，不过每次都需要加上 -E, 有点麻烦）</li>
 <li>修改 sudo 的配置文件: /etc/sudoers(如果用nvim打开是空文件的话，可以试一下用vim 或者 visudo打开，后面就不细说了，超纲了)</li>
 </ol>
 </li>
@@ -351,11 +351,11 @@
 <li><code>keymap</code> directory contains keybindings of plugins.</li>
 <li><code>modules</code> directory contains 5 parts.
 <ul>
-<li><code>completion</code> directory contains code completion’s configuration.</li>
-<li><code>editor</code> directory contains plugins’ configuration about editing.</li>
-<li><code>lang</code> directory contains plugins’ configuration about specific language.</li>
-<li><code>tools</code> directory contains telescope and its extensions’ configuration.</li>
-<li><code>ui</code> directory contains plugins’ configuration about ui.</li>
+<li><code>completion</code> directory contains code completion's configuration.</li>
+<li><code>editor</code> directory contains plugins' configuration about editing.</li>
+<li><code>lang</code> directory contains plugins' configuration about specific language.</li>
+<li><code>tools</code> directory contains telescope and its extensions' configuration.</li>
+<li><code>ui</code> directory contains plugins' configuration about ui.</li>
 </ul>
 </li>
 </ul>
@@ -416,7 +416,7 @@
 </ul>
 <h1 id="Dap"><a class="header-anchor" href="#Dap"></a>Dap</h1>
 <p><a target="_blank" rel="noopener" href="https://github.com/mfussenegger/nvim-dap">Official Repositoty</a></p>
-<p>nvim-dap is a Debug Adapter Protocol client, or “debugger”, or “debug-frontend”.</p>
+<p>nvim-dap is a Debug Adapter Protocol client, or &quot;debugger&quot;, or &quot;debug-frontend&quot;.</p>
 <p>With the help of a debug adapter it can:</p>
 <ol>
 <li>Launch an application to debug</li>
@@ -427,7 +427,7 @@
 <p>Dap插件的配置代码位于: <code>~/.config/nvim/lua/modules/editor/plugins.lua</code>, 我们不需要改动.</p>
 <figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">editor[<span class="string">&quot;rcarriga/nvim-dap-ui&quot;</span>] = &#123;</span><br><span class="line">	opt = <span class="literal">false</span>,</span><br><span class="line">	<span class="built_in">config</span> = conf.dapui,</span><br><span class="line">	requires = &#123;</span><br><span class="line">		&#123; <span class="string">&quot;mfussenegger/nvim-dap&quot;</span>, <span class="built_in">config</span> = conf.dap &#125;,</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="string">&quot;Pocco81/dap-buddy.nvim&quot;</span>,</span><br><span class="line">			opt = <span class="literal">true</span>,</span><br><span class="line">			cmd = &#123; <span class="string">&quot;DIInstall&quot;</span>, <span class="string">&quot;DIUninstall&quot;</span>, <span class="string">&quot;DIList&quot;</span> &#125;,</span><br><span class="line">			commit = <span class="string">&quot;24923c3819a450a772bb8f675926d530e829665f&quot;</span>,</span><br><span class="line">			<span class="built_in">config</span> = conf.dapinstall,</span><br><span class="line">		&#125;,</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <h2 id="Structure-2"><a class="header-anchor" href="#Structure-2"></a>Structure</h2>
-<p>You’ll need to install and configure a debug adapter per language. See</p>
+<p>You'll need to install and configure a debug adapter per language. See</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://github.com/mfussenegger/nvim-dap/blob/master/doc/dap.txt">:help dap.txt</a></li>
 <li>the <a target="_blank" rel="noopener" href="https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation">Debug-Adapter Installation</a> wiki</li>

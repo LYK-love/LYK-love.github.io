@@ -377,7 +377,7 @@
 <p>常见例子是大部分分布式数据库以及银行系统</p>
 <h2 id="Availability-Consistency"><a class="header-anchor" href="#Availability-Consistency"></a>Availability &gt; Consistency</h2>
 <p>如果一个系统是AP的, 也就是提供可用性( A ), 而不是一致性( C ), 它将对所有的请求做出响应，可能会返回旧的读和接受冲突的写.</p>
-<p>有很多数据模型可以接受旧的读, 比如金融行业, 淘宝, 12306 …</p>
+<p>有很多数据模型可以接受旧的读, 比如金融行业, 淘宝, 12306 ...</p>
 <h1 id="Yield-Harvest"><a class="header-anchor" href="#Yield-Harvest"></a>Yield &amp;&amp; Harvest</h1>
 <p>有许多种对分布式系统的度量, 其中很有名的是 Fox 和 Brewer在“Harvest, Yield, and Scalable Tolerant Systems”[^3]中提出的<strong>yield</strong> and <strong>harvest</strong>.</p>
 <ul>
@@ -393,7 +393,7 @@ $$<br>
 \mathrm{harvest}= \frac{\mathrm{total \ data}}{\mathrm{data \ available}}<br>
 $$</p>
 <ul>
-<li>例如, 假设我们在一个搜索引擎上工作，我们可以想象每个词都有单独的索引。使用 &quot;cute &quot;一词的网页的索引在$A$节点上，使用 &quot;婴儿 &quot;一词的网页的索引在$B$节点上，而 &quot;动物 &quot;一词的索引在$C$机器上。那么，搜索 “cute baby animals”，结合来自节点$A,B,C$的结果，${A,B,C}$将有100%的$\mathrm{harvest}$. 然而, 如果节点$BB$不可用，我们可能只返回 &quot;cute animals&quot;的结果，这将是一个66%的$\mathrm{harvest}$.</li>
+<li>例如, 假设我们在一个搜索引擎上工作，我们可以想象每个词都有单独的索引。使用 &quot;cute &quot;一词的网页的索引在$A$节点上，使用 &quot;婴儿 &quot;一词的网页的索引在$B$节点上，而 &quot;动物 &quot;一词的索引在$C$机器上。那么，搜索 &quot;cute baby animals&quot;，结合来自节点$A,B,C$的结果，${A,B,C}$将有100%的$\mathrm{harvest}$. 然而, 如果节点$BB$不可用，我们可能只返回 &quot;cute animals&quot;的结果，这将是一个66%的$\mathrm{harvest}$.</li>
 <li>例如, 一个存储文件版本的系统在一些节点瘫痪的情况下, 可以选择呈现它能找到的最新版本的文件，即使它知道这有可能不是它所存储的最新版本.</li>
 </ul>
 </li>

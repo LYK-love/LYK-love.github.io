@@ -364,7 +364,7 @@
 </ul>
 <h1 id="Accelerated-HeapSort"><a class="header-anchor" href="#Accelerated-HeapSort"></a><code>Accelerated HeapSort</code></h1>
 <ul>
-<li>采用折半查找, 子元素不和父元素比较,只和兄弟元素比较,比较完后与父元素交换,即父元素直接下沉. 元素每次下沉到剩余高度一半的时候,和PQRENT比较一次(由于只有一个父元素,比较次数为1),若大于父元素,则上浮, 否则递归执行上述操作( 继续下沉,比较… )</li>
+<li>采用折半查找, 子元素不和父元素比较,只和兄弟元素比较,比较完后与父元素交换,即父元素直接下沉. 元素每次下沉到剩余高度一半的时候,和PQRENT比较一次(由于只有一个父元素,比较次数为1),若大于父元素,则上浮, 否则递归执行上述操作( 继续下沉,比较... )</li>
 <li>这样做基于的假设是: 对于一个很深的堆,<code>FixHeap</code>时,替换而来的根元素极有可能比两个子元素都要小,因此不用将根元素带入比较,以减少一次比较次数.</li>
 </ul>
 <h2 id="Extension"><a class="header-anchor" href="#Extension"></a>Extension</h2>

@@ -323,7 +323,7 @@
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> INDEX <span class="keyword">FROM</span> runoob_tbl;</span><br><span class="line"><span class="operator">+</span><span class="comment">------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">Table</span>      <span class="operator">|</span> Non_unique <span class="operator">|</span> Key_name <span class="operator">|</span> Seq_in_index <span class="operator">|</span> Column_name <span class="operator">|</span> <span class="keyword">Collation</span> <span class="operator">|</span> <span class="keyword">Cardinality</span> <span class="operator">|</span> Sub_part <span class="operator">|</span> Packed <span class="operator">|</span> <span class="keyword">Null</span> <span class="operator">|</span> Index_type <span class="operator">|</span> Comment <span class="operator">|</span> Index_comment <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span></span><br><span class="line"><span class="operator">|</span> runoob_tbl <span class="operator">|</span>          <span class="number">0</span> <span class="operator">|</span> <span class="keyword">PRIMARY</span>  <span class="operator">|</span>            <span class="number">1</span> <span class="operator">|</span> runoob_id   <span class="operator">|</span> A         <span class="operator">|</span>           <span class="number">2</span> <span class="operator">|</span>     <span class="keyword">NULL</span> <span class="operator">|</span> <span class="keyword">NULL</span>   <span class="operator">|</span>      <span class="operator">|</span> BTREE      <span class="operator">|</span>         <span class="operator">|</span>               <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">------------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span> (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p><strong>SHOW TABLE STATUS [FROM db_name] [LIKE ‘pattern’] \G:</strong><br>
+<p><strong>SHOW TABLE STATUS [FROM db_name] [LIKE 'pattern'] \G:</strong><br>
 该命令将输出Mysql数据库管理系统的性能及统计信息。</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> <span class="keyword">TABLE</span> STATUS  <span class="keyword">FROM</span> RUNOOB;   # 显示数据库 RUNOOB 中所有表的信息</span><br><span class="line"></span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> <span class="keyword">TABLE</span> STATUS <span class="keyword">from</span> RUNOOB <span class="keyword">LIKE</span> <span class="string">&#x27;runoob%&#x27;</span>;     # 表名以runoob开头的表的信息</span><br><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> <span class="keyword">TABLE</span> STATUS <span class="keyword">from</span> RUNOOB <span class="keyword">LIKE</span> <span class="string">&#x27;runoob%&#x27;</span>\G;   # 加上 \G，查询结果按列打印</span><br></pre></td></tr></table></figure>
 </li>
@@ -383,7 +383,7 @@
 <h2 id="修改用户名和密码"><a class="header-anchor" href="#修改用户名和密码"></a>修改用户名和密码</h2>
 <h3 id="在登陆MySQL的情况下"><a class="header-anchor" href="#在登陆MySQL的情况下"></a>在登陆MySQL的情况下</h3>
 <p>方法一：通过sql命令修改密码<br>
-命令格式：set password for 用户名@localhost = password(‘新密码’);</p>
+命令格式：set password for 用户名@localhost = password('新密码');</p>
 <p>新版本mysql 命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alter user 用户名@localhos identified by &#x27;新密码&#x27;;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -392,11 +392,11 @@
 <p>例子：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set password for root@localhost = password(&#x27;123&#x27;); </span><br><span class="line"># or</span><br><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;123&#x27;;</span><br></pre></td></tr></table></figure>
 <p>方法二：用UPDATE直接修改user表<br>
-–使用mysql数据库</p>
+--使用mysql数据库</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use mysql; </span><br></pre></td></tr></table></figure>
-<p>–更改user表中指定用户的密码</p>
+<p>--更改user表中指定用户的密码</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update user set password=password(&#x27;123&#x27;) where user=&#x27;root&#x27; and host=&#x27;localhost&#x27;; </span><br></pre></td></tr></table></figure>
-<p>–权限刷新</p>
+<p>--权限刷新</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
 <h3 id="在没有登陆的情况下"><a class="header-anchor" href="#在没有登陆的情况下"></a>在没有登陆的情况下</h3>
 <p><code>mysqladmin</code> 命令<br>
@@ -454,7 +454,7 @@
 <p>你可以通过 mysql&gt; 命令提示窗口中向数据表中插入数据，或者通过PHP脚本来插入数据。</p>
 <p>以下为向MySQL数据表插入数据通用的 <strong>INSERT INTO</strong> SQL语法：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO table_name ( field1, field2,...fieldN )</span><br><span class="line">                       VALUES</span><br><span class="line">                       ( value1, value2,...valueN );</span><br></pre></td></tr></table></figure>
-<p>如果数据是字符型，必须使用单引号或者双引号，如：“value”。</p>
+<p>如果数据是字符型，必须使用单引号或者双引号，如：&quot;value&quot;。</p>
 <p>如果数据是DATE类型， 则不需要输入连字符， 如<code>2019-08-01</code>， 则插入<code>20190721</code></p>
 <h3 id="修改字段"><a class="header-anchor" href="#修改字段"></a>修改字段</h3>
 <ul>

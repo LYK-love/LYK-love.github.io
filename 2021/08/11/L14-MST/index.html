@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Greedy-Strategy-for-Optimization-Problems"><span class="nav-text">Greedy Strategy for Optimization Problems</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Greedy-Fails-Sometimes"><span class="nav-text">Greedy Fails Sometimes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Greedy-Strategy"><span class="nav-text">Greedy Strategy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Undirected-Weighted-Graph-and-MST"><span class="nav-text">Undirected Weighted Graph and MST</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Greedy-Algorithms-for-MST"><span class="nav-text">Greedy Algorithms for MST</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Prim%E2%80%99s-algorithm"><span class="nav-text">Prim’s algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Correctness"><span class="nav-text">Correctness</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MST-Property"><span class="nav-text">MST Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Complexity"><span class="nav-text">Complexity</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kruskal%E2%80%99s-algorithm"><span class="nav-text">Kruskal’s algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Correctness-2"><span class="nav-text">Correctness</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-2"><span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Complexity-2"><span class="nav-text">Complexity</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Greedy-Strategy-for-Optimization-Problems"><span class="nav-text">Greedy Strategy for Optimization Problems</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Greedy-Fails-Sometimes"><span class="nav-text">Greedy Fails Sometimes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Greedy-Strategy"><span class="nav-text">Greedy Strategy</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Undirected-Weighted-Graph-and-MST"><span class="nav-text">Undirected Weighted Graph and MST</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Greedy-Algorithms-for-MST"><span class="nav-text">Greedy Algorithms for MST</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Prim-s-algorithm"><span class="nav-text">Prim&#39;s algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Correctness"><span class="nav-text">Correctness</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MST-Property"><span class="nav-text">MST Property</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Complexity"><span class="nav-text">Complexity</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kruskal-s-algorithm"><span class="nav-text">Kruskal&#39;s algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Correctness-2"><span class="nav-text">Correctness</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0-2"><span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Complexity-2"><span class="nav-text">Complexity</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -326,9 +326,9 @@
 <li>Expanding the partial solution <strong>step by step</strong></li>
 <li>In each step, a selection is made from a  set of candidates. The choice made must be:
 <ul>
-<li>[<strong>Feasible</strong>] it has to satisfy the problem’s constraints</li>
+<li>[<strong>Feasible</strong>] it has to satisfy the problem's constraints</li>
 <li>[<strong>Locally optimal</strong>] it has to be the best local choice among all feasible choices on the step</li>
-<li>[<strong>Irrevocable</strong>] the choice can’t be revoked in subsequent steps</li>
+<li>[<strong>Irrevocable</strong>] the choice can't be revoked in subsequent steps</li>
 </ul>
 </li>
 </ul>
@@ -346,20 +346,20 @@
 </ul>
 <h2 id="Greedy-Algorithms-for-MST"><a class="header-anchor" href="#Greedy-Algorithms-for-MST"></a>Greedy Algorithms for MST</h2>
 <ul>
-<li>Prim’s algorithm
+<li>Prim's algorithm
 <ul>
-<li>Difficult selecting: “best local optimization means <strong>no cycle and small weight under limitation</strong>”</li>
+<li>Difficult selecting: &quot;best local optimization means <strong>no cycle and small weight under limitation</strong>&quot;</li>
 <li>Easy checking: doing nothing</li>
 </ul>
 </li>
-<li>Kruskal’s algorithm:
+<li>Kruskal's algorithm:
 <ul>
 <li>Easy selecting: smallest in primitive meaning</li>
 <li>Difficult checking: <strong>no cycle</strong></li>
 </ul>
 </li>
 </ul>
-<h1 id="Prim’s-algorithm"><a class="header-anchor" href="#Prim’s-algorithm"></a>Prim’s algorithm</h1>
+<h1 id="Prim-s-algorithm"><a class="header-anchor" href="#Prim-s-algorithm"></a>Prim's algorithm</h1>
 <p>选顶点</p>
 <h2 id="Correctness"><a class="header-anchor" href="#Correctness"></a>Correctness</h2>
 <ul>
@@ -415,7 +415,7 @@ $$</p>
 <p>Implementing priority queue using array. we can get $\Theta(n^2 + m)$</p>
 </li>
 </ul>
-<h1 id="Kruskal’s-algorithm"><a class="header-anchor" href="#Kruskal’s-algorithm"></a>Kruskal’s algorithm</h1>
+<h1 id="Kruskal-s-algorithm"><a class="header-anchor" href="#Kruskal-s-algorithm"></a>Kruskal's algorithm</h1>
 <p>选边</p>
 <h2 id="Correctness-2"><a class="header-anchor" href="#Correctness-2"></a>Correctness</h2>
 <p>归纳法</p>

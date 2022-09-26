@@ -389,7 +389,7 @@
 <p>所有节点采用lyk用户</p>
 <h2 id="集群环境"><a class="header-anchor" href="#集群环境"></a>集群环境</h2>
 <p>这里的环境是集群的环境，与我做作业时单机配置的版本不同</p>
-<p>注意，hadoop+spark+scala的版本管理非常混乱，因此要<strong>严格按照文档里的版本来安装</strong>（要么用下面集群这套( hadoop3.2.3… )， 要么用上面单机那套（hadoop2.7.4…））</p>
+<p>注意，hadoop+spark+scala的版本管理非常混乱，因此要<strong>严格按照文档里的版本来安装</strong>（要么用下面集群这套( hadoop3.2.3... )， 要么用上面单机那套（hadoop2.7.4...））</p>
 <p>除了jdk和scala， 其他用户软件都安装在lyk用户目录下</p>
 <ul>
 <li>JDK：<code>usr/lib/jvm/java-8-openjdk-amd64</code>
@@ -581,7 +581,7 @@
 <ul>
 <li>初始化之前需要删掉配置文件的tmp目录下的所有内容</li>
 <li>如果不初始化，则启动时无法启动namenode</li>
-<li>最终会输出SHUTTING DOWN…</li>
+<li>最终会输出SHUTTING DOWN....</li>
 </ul>
 </li>
 <li>
@@ -771,7 +771,7 @@
 <p>注意，m1无法安装用软件包clickhouse，只能手动编译，clickhouse官网有<a target="_blank" rel="noopener" href="https://clickhouse.com/docs/zh/development/build-osx">教程</a>。 然而m1默认的编译器是apple clang，而clickhouse只推荐clang编译(教程也是用的clang)，因此m1用户还得把默认编译器换成clang， 由于特别麻烦，因此我在服务器上搭建了clickhouse，没有用mac本机</p>
 <ul>
 <li>
-<p>[Apple clang无法编译clickhouse，只能用clang](<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/64497835/clickhouse-installation-for-mac-fails-appleclang-is-not-supported-you-should">Clickhouse installation for mac fails: “AppleClang is not supported, you should install clang from brew.”</a>)</p>
+<p>[Apple clang无法编译clickhouse，只能用clang](<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/64497835/clickhouse-installation-for-mac-fails-appleclang-is-not-supported-you-should">Clickhouse installation for mac fails: &quot;AppleClang is not supported, you should install clang from brew.&quot;</a>)</p>
 </li>
 <li>
 <p><a target="_blank" rel="noopener" href="https://embeddedartistry.com/blog/2017/02/24/installing-llvm-clang-on-osx/">Installing LLVM/Clang on OS X</a></p>

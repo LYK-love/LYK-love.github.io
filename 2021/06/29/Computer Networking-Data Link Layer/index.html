@@ -321,7 +321,7 @@
 <ul>
 <li>分组交换: 所有在互联网上传送的数据都以<code>IP数据报(packet)</code> 为传送单位. <code>packet</code>到数据链路层就成为帧的数据部分, 加上首部和尾部就成为完整的帧</li>
 <li>首部和尾部的一个重要作用是<strong>帧定界</strong>, 此外, 首部和尾部还包含许多必要的控制信息</li>
-<li>每一种链路层协议都规定了<strong>所能传输的帧的数据部分长度上限 — 最大传送单元MTU( Maximum Transfer Unit )</strong></li>
+<li>每一种链路层协议都规定了<strong>所能传输的帧的数据部分长度上限 --- 最大传送单元MTU( Maximum Transfer Unit )</strong></li>
 </ul>
 <h3 id="透明传输"><a class="header-anchor" href="#透明传输"></a><strong>透明传输</strong></h3>
 <ul>
@@ -407,7 +407,7 @@
 <li>适配器和局域网之间的通信通过<code>电缆</code>或者<code>双绞线</code>以<code>串行</code>传输方式进行</li>
 <li>适配器和计算机之间的通信通过计算机主板上的<code>IO总线</code>以<code>并行</code>传输方式进行</li>
 <li>适配器的一个重要功能是进行数据串行传输和并行传输的转换</li>
-<li>计算机的<code>硬件地址</code>就在适配器的<code>ROM</code>中, 而计算机的软件地址—<code>IP地址</code>, 则在计算机的存储器中</li>
+<li>计算机的<code>硬件地址</code>就在适配器的<code>ROM</code>中, 而计算机的软件地址---<code>IP地址</code>, 则在计算机的存储器中</li>
 <li>适配器在接受和发送各种帧时, 不使用计算机的CPU. 当适配器收到有差错的帧时, 就把这个帧<u>直接丢弃而不必通知计算机</u>. 当收到正确的帧时, 它就使用<code>中断</code>来通知计算机, 并交付协议栈中的网络层.</li>
 <li>当计算机要发送<code>IP数据报</code>时, 就由协议栈把<code>IP数据报</code>向下交给适配器, 组装成<code>帧</code>后发送到<code>局域网</code></li>
 </ul>

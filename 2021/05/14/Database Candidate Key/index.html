@@ -298,7 +298,7 @@
 <h1 id="候选键定义"><a class="header-anchor" href="#候选键定义"></a>候选键定义</h1>
 <p>首先来看候选键的定义：若关系中的某一属性组的值能唯一地标识一个元组，则称该属性组为候选键。</p>
 <p>若W是候选键，则必须满足两个条件：W的闭包是U；W没有冗余。</p>
-<p>设关系模式R中U=ABC…等N个属性，U中的属性在FD中有四种范围：</p>
+<p>设关系模式R中U=ABC.......等N个属性，U中的属性在FD中有四种范围：</p>
 <p>(1)左右出现;<br>
 (2)只在左部出现;<br>
 (3)只在右部出现;<br>
@@ -310,19 +310,19 @@
 3.外部属性一定存在于任何候选码当中;<br>
 4.其他属性逐个与2,3的属性组合，求属性闭包，直至X的闭包等于U,若等于U,则X为候选码。</p>
 <h1 id="示例"><a class="header-anchor" href="#示例"></a>示例</h1>
-<p>例1：R&lt;U,F&gt;,U=(A,B,C,D,E,G),F={AB–&gt;C,CD–&gt;E,E–&gt;A.A–&gt;G},求候选码。</p>
+<p>例1：R&lt;U,F&gt;,U=(A,B,C,D,E,G),F={AB--&gt;C,CD--&gt;E,E--&gt;A.A--&gt;G},求候选码。</p>
 <p>因G只在右边出现,所以G一定不属于候选码;而B,D只在左边出现,所以B,D一定属于候选码;BD的闭包还是BD,则对BD进行组合,除了G以外,BD可以跟A,C,E进行组合<br>
 先看ABD<br>
-ABD本身自包ABD,而AB–&gt;C,CD–&gt;E,A–&gt;G,所以ABD的闭包为ABDCEG=U<br>
+ABD本身自包ABD,而AB--&gt;C,CD--&gt;E,A--&gt;G,所以ABD的闭包为ABDCEG=U<br>
 再看BDC<br>
-CD–&gt;E,E–&gt;A,A–&gt;G,BDC本身自包,所以BDC的闭包为BDCEAG=U<br>
+CD--&gt;E,E--&gt;A,A--&gt;G,BDC本身自包,所以BDC的闭包为BDCEAG=U<br>
 最后看BDE<br>
-E–&gt;A,A–&gt;G,AB–&gt;C,BDE本身自包,所以BDE的闭包为BDEAGC=U</p>
+E--&gt;A,A--&gt;G,AB--&gt;C,BDE本身自包,所以BDE的闭包为BDEAGC=U</p>
 <p>因为(ABD)、(BCD)、(BDE)的闭包都是ABCDEG所以本问题的候选码有3个分别是ABC、BCD和BDE</p>
-<p>例2：R&lt;U,F&gt;,U=(A,B,C),F={AB–&gt;C,C–&gt;B},求候选码。</p>
+<p>例2：R&lt;U,F&gt;,U=(A,B,C),F={AB--&gt;C,C--&gt;B},求候选码。</p>
 <p>因为A只出现在左边，所以A一定是候选键。A的闭包还是A，则对A进行组合，可以和B,C进行组合。</p>
-<p>首先看AB，AB本身自包AB，而AB–&gt;C，所以AB的闭包是ABC=U。</p>
-<p>再看AC，AC本身自包AC，而C–&gt;B，所以AC的闭包是ABC=U。</p>
+<p>首先看AB，AB本身自包AB，而AB--&gt;C，所以AB的闭包是ABC=U。</p>
+<p>再看AC，AC本身自包AC，而C--&gt;B，所以AC的闭包是ABC=U。</p>
 <p>因为AB,AC的闭包都是ABC，也就是U，所以候选键是AB，AC。</p>
 
     </div>

@@ -330,15 +330,15 @@ a^{\phi(n)} \equiv 1 \pmod n<br>
 $$<br>
 注意到, 如果$p$为质数, 则有:<br>
 $$<br>
-\phi§ = p - 1<br>
+\phi(p) = p - 1<br>
 $$<br>
 欧拉定理的证明比较复杂，这里就省略了.</p>
 <p>例如, 7 和 10 互质, $7^{\phi(10)} = 7^4 = 2401$, 减去 1 等于 2400, 可以整除 10.</p>
 <p>同理, $10^{\phi(7)} = 10^6 = 1000000$, 减去 1 等于 999999, 可以整除 7.</p>
 <h2 id="费马小定理"><a class="header-anchor" href="#费马小定理"></a>费马小定理</h2>
-<p>欧拉定理存在一个特殊情况：如果 $p$ 是质数，而 $a $ 不是 $p$ 的倍数，此时 $a$ 和 $p$ 必然互质. 因为$\phi§ = p - 1$, 所以<br>
+<p>欧拉定理存在一个特殊情况：如果 $p$ 是质数，而 $a $ 不是 $p$ 的倍数，此时 $a$ 和 $p$ 必然互质. 因为$\phi(p) = p - 1$, 所以<br>
 $$<br>
-a^{\phi§} = a^{p - 1} \equiv 1 \pmod p<br>
+a^{\phi(p)} = a^{p - 1} \equiv 1 \pmod p<br>
 $$<br>
 这就是 <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hans/%E8%B4%B9%E9%A9%AC%E5%B0%8F%E5%AE%9A%E7%90%86">费马小定理</a>,它是欧拉定理的特例.</p>
 <h2 id="模反元素"><a class="header-anchor" href="#模反元素"></a>模反元素</h2>
@@ -415,7 +415,7 @@ m \equiv c^d \pmod n<br>
 $$</p>
 </li>
 </ol>
-<p>注意到加密函数$E_{(n,e)}(m)  \equiv m^e \pmod n $,  解密函数$D_{(n,d)}©  \equiv m^d \pmod n $, 它们其实是一个函数在形式上都是:<br>
+<p>注意到加密函数$E_{(n,e)}(m)  \equiv m^e \pmod n $,  解密函数$D_{(n,d)}(c)  \equiv m^d \pmod n $, 它们其实是一个函数在形式上都是:<br>
 $$<br>
 f(m, n, e) \equiv m^e \pmod n<br>
 $$</p>
@@ -563,9 +563,9 @@ $$</p>
 $$<br>
 (kn + 1)^h = (kn)^h + \complement_h^1 (kn)^{h-1} + \dots + \complement_h^{h-1} (kn) + 1<br>
 $$<br>
-let $k’ = k^hn^{h-1} + \complement_h^1 k^{h-1}n^{h-2} + \dots$ , 得到:<br>
+let $k' = k^hn^{h-1} + \complement_h^1 k^{h-1}n^{h-2} + \dots$ , 得到:<br>
 $$<br>
-(m^{\phi(n)})^h = k’n + 1, k’ \in N<br>
+(m^{\phi(n)})^h = k’n + 1, k' \in N<br>
 $$</p>
 <p>也就是:<br>
 $$<br>
@@ -703,7 +703,7 @@ $$</p>
 <p>上面我们提到的 RSA 加密过程，也就是 ，也被称为教科书式 RSA。工程应用中，不会直接这样处理，而是会存在一个 Padding 的过程，具体不再展开，感兴趣可以去看 <a target="_blank" rel="noopener" href="https://eli.thegreenplace.net/2019/rsa-theory-and-implementation/">RSA - theory and implementation</a>。</p>
 <p>注意，密码学中有很多微妙的问题要考虑。我们这里所做的一切都是为了学习和理解他们的工作原理，而不是为了自己去实现他们。<strong>千万不要自己去实现任何加密解密算法，专业的事情交给专业的人员处理就好</strong>.</p>
 <p>[^1]: $m$​, $n$​ 不互质, 则$m$​与$n$​有1以外的公因数.  $m = pq$​ , $m$​ 的因数有: 1, $p$​, $q$​, $pq$​ . 因此 $n$​ 必定至少有因数 $p$​, $q$​, $pq$​ 之一, 因此 $m$​ 为 $p$​ 或 $q$​ 的倍数<br>
-[^2]: “若一个数是质数, 则两个数互质 == 另一个数不是前者的倍数”</p>
+[^2]: &quot;若一个数是质数, 则两个数互质 == 另一个数不是前者的倍数&quot;</p>
 
     </div>
 

@@ -419,7 +419,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">test</span>:</span><br><span class="line"> @<span class="comment"># 这是测试</span></span><br><span class="line"> @<span class="built_in">echo</span> TODO</span><br></pre></td></tr></table></figure>
 </blockquote>
 <h3 id="通配符"><a class="header-anchor" href="#通配符"></a>通配符</h3>
-<p>通配符（wildcard）用来指定一组符合条件的文件名。Makefile 的通配符与 Bash 一致，主要有星号（*）、问号（？）和 […] 。比如， *.o 表示所有后缀名为o的文件。</p>
+<p>通配符（wildcard）用来指定一组符合条件的文件名。Makefile 的通配符与 Bash 一致，主要有星号（*）、问号（？）和 [...] 。比如， *.o 表示所有后缀名为o的文件。</p>
 <blockquote>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">clean:</span><br><span class="line">     <span class="built_in">rm</span> -f *.o</span><br></pre></td></tr></table></figure>
 </blockquote>
@@ -566,8 +566,8 @@
 <li>例子
 <ol>
 <li>目标从$object中获取</li>
-<li>“%.o&quot;表明要所有以”.o&quot;结尾的目标，即&quot;foo.o bar.o&quot;，就是变量$object集合的模式</li>
-<li>依赖模式&quot;%.c&quot;则取模式&quot;%.o&quot;的&quot;%“，也就是&quot;foo bar”，并为其加下&quot;.c&quot;的后缀，于是依赖的目标就是&quot;foo.c bar.c&quot;</li>
+<li>&quot;%.o&quot;表明要所有以&quot;.o&quot;结尾的目标，即&quot;foo.o bar.o&quot;，就是变量$object集合的模式</li>
+<li>依赖模式&quot;%.c&quot;则取模式&quot;%.o&quot;的&quot;%&quot;，也就是&quot;foo bar&quot;，并为其加下&quot;.c&quot;的后缀，于是依赖的目标就是&quot;foo.c bar.c&quot;</li>
 </ol>
 </li>
 </ol>
@@ -589,10 +589,10 @@
 <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">objects = foo.o bar.o</span><br><span class="line"><span class="section">all: <span class="variable">$(objects)</span></span></span><br><span class="line"><span class="variable">$(objects)</span>: %.o: %.</span><br><span class="line">   c<span class="variable">$(CC)</span> -c <span class="variable">$(CFLAGS)</span> <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br></pre></td></tr></table></figure>
 <ol start="5">
 <li>目标从$object中获取</li>
-<li>“%.o&quot;表明要所有以”.o&quot;结尾的目标，即&quot;foo.o bar.o&quot;，就是变量$object集合的模式</li>
+<li>&quot;%.o&quot;表明要所有以&quot;.o&quot;结尾的目标，即&quot;foo.o bar.o&quot;，就是变量$object集合的模式</li>
 </ol>
 <ul>
-<li>依赖模式&quot;%.c&quot;则取模式&quot;%.o&quot;的&quot;%“，也就是&quot;foo bar”，并为其加下&quot;.c&quot;的后缀，于是依赖的目标就是&quot;foo.c bar.c&quot;</li>
+<li>依赖模式&quot;%.c&quot;则取模式&quot;%.o&quot;的&quot;%&quot;，也就是&quot;foo bar&quot;，并为其加下&quot;.c&quot;的后缀，于是依赖的目标就是&quot;foo.c bar.c&quot;</li>
 </ul>
 <p>上述规则等价于</p>
 <figure class="highlight makefile"><table><tr><td class="code"><pre><span class="line">foo.o : foo.c<span class="variable">$(CC)</span> -c <span class="variable">$(CFLAGS)</span> foo.c -o foo.o</span><br><span class="line"></span><br><span class="line">bar.o : bar.c<span class="variable">$(CC)</span> -c <span class="variable">$(CFLAGS)</span> bar.c -o bar.o </span><br></pre></td></tr></table></figure>

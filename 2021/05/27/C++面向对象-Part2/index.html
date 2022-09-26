@@ -529,7 +529,7 @@
 <p>需要哑元参数, 哑元参数的作用是创建一个唯一的前面来区分前缀和后缀运算符, 这在程序中被忽略</p>
 </li>
 <li>
-<p>返回对象是在更改前创建的临时对象,这意味着我们不能通过引用返回该对象. <strong>返回的对象是常量( 右值 )</strong> , 因为C++ 不允许级联操作, 例如 a+±- 或 a----</p>
+<p>返回对象是在更改前创建的临时对象,这意味着我们不能通过引用返回该对象. <strong>返回的对象是常量( 右值 )</strong> , 因为C++ 不允许级联操作, 例如 a++-- 或 a----</p>
 </li>
 </ul>
 </li>
@@ -603,7 +603,7 @@
 <p>首先, 按照一元操作符描述, <code>a.operator-&gt;( f );</code> 会被描述为``a.operator -&gt;()<code>. 实际上</code>a.operator -&gt;()<code> 返回的是</code>a的指针<code>, 然后编译器将其改写, 再加上不重载的</code> -&gt; f()`</p>
 </li>
 <li>
-<p>实际上<code>a.operator -&gt;()</code>可以返回一个也重载了<code>-&gt;</code>的对象, 然后<code>-&gt; f()</code>再进行重载… 你可以这么写, 但是非常蠢</p>
+<p>实际上<code>a.operator -&gt;()</code>可以返回一个也重载了<code>-&gt;</code>的对象, 然后<code>-&gt; f()</code>再进行重载..... 你可以这么写, 但是非常蠢</p>
 </li>
 </ul>
 <h3 id="new-、delete"><a class="header-anchor" href="#new-、delete"></a><code>new</code> 、<code>delete</code></h3>

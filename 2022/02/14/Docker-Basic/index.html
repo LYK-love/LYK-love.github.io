@@ -731,8 +731,8 @@
 <li>on-failed： 在退出容器且返回值不是0的时候重启容器，与always相同，如果重启daemon, 明确被停止的容器（包括<code>stop</code>!!）也会被重启</li>
 </ul>
 <h3 id="example"><a class="header-anchor" href="#example"></a>example</h3>
-<p>下面创建两个新容器,其中“always”容器指定–restart always 策略,另一个“unless- stopped”<br>
-器指定了–restart unless-stopped 策略。两个容器均通过docker container stop 命令<br>
+<p>下面创建两个新容器,其中“always”容器指定--restart always 策略,另一个“unless- stopped”<br>
+器指定了--restart unless-stopped 策略。两个容器均通过docker container stop 命令<br>
 止,接着重启Docker。结果“always”容器会重启,但是“unless-stopped”容器不会</p>
 <ol>
 <li>
@@ -848,7 +848,7 @@
 <li>json-file: 默认</li>
 <li>journald: 只在运行<code>systemd</code>的linux主机有效</li>
 <li>syslog</li>
-<li>…</li>
+<li>...</li>
 </ul>
 <h3 id="查看容器日志-2"><a class="header-anchor" href="#查看容器日志-2"></a>查看容器日志</h3>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container logs &lt;container-name&gt;</span><br><span class="line">docker service logs &lt;service-name&gt; # 针对Swarm服务</span><br></pre></td></tr></table></figure>
