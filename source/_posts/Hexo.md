@@ -17,9 +17,9 @@ Hexo版本: 6.2.0
 Next版本: 8.12.3
 
 * [Hexo官网](https://hexo.io/zh-cn/)
-* [NeXt官网](https://hexo-next.readthedocs.io/zh_CN/latest), 里面有几乎全部的主题配置教程
-* [最新版(v8)NeXt仓库](https://github.com/next-theme/hexo-theme-next)
-* [Next官方的博客](https://theme-next.js.org/)
+* [NeXt Tutor](https://hexo-next.readthedocs.io/zh_CN/latest), 里面有几乎全部的主题配置教程
+* [最新版(v8)NeXt Github仓库](https://github.com/next-theme/hexo-theme-next)
+* [Next Official Blog](https://theme-next.js.org/)
 * [Awesome NexT](https://github.com/theme-next/awesome-next) : 有很多别人的Next博客, 非常值得借鉴
 
 
@@ -94,22 +94,8 @@ Next的配置目录位于`<hexo>/_cofig.next.yml`.
    | source       | [资源文件夹](https://hexo.io/zh-cn/docs/asset-folders.html)是存放用户资源的地方。除 *posts 文件夹之外，开头命名为*  (下划线)的文件 / 文件夹和隐藏的文件将会被忽略。Markdown 和 HTML 文件会被解析并放到 public 文件夹，而其他文件会被拷贝过去 |
    | themes       | [主题](https://hexo.io/zh-cn/docs/themes.html)文件夹。Hexo 会根据主题来生成静态页面 |
 
-4. 下载主题: 由于下文说的多主机同步的原因, 我直接新开了一个[自己的主题仓库](https://github.com/LYK-love/Next)
+4. 安装主题, 见下文
 
-   ```shell
-   cd <your-hexo-site>
-   git clone git@github.com:LYK-love/Next.git
-   ```
-
-5. 启用主题:
-
-   编辑 hexo配置文件:
-
-   ```yaml
-   theme: next
-   ```
-
-# Hexo配置
 
 ## 部署到GitPage
 
@@ -196,62 +182,42 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
   - Games
   ```
 
-  
+
+## Configuring Author
+
+Edit Hexo config file and set the value of `author` to your nickname.
+
+```yaml
+Hexo config file
+# Site
+author:
+```
+
+## Configuring Description
+
+Edit Hexo config file and set the value of `description` to your description, which can be a sentence you like.
+
+```yaml
+Hexo config file
+# Site
+description:
+```
+
+## Enabling Theme
+
+Like all Hexo themes, after you download it, open Hexo config file, find `theme` option, and change its value to `next` (or another theme directory name).
+
+Edit Hexo config file:
+
+```yaml
+theme: next
+```
+
+Now you have installed NexT theme and enabled it. The following steps will help you verify whether NexT is enabled correctly.
 
 # NeXt配置
 
 [进阶配置](https://convivae.top/posts/hexo-bo-ke-cai-keng/)
-
-* 设置站点图标:
-
-  ```yaml
-  favicon:
-    # small: /images/favicon-16x16-next.png
-    small: /images/white_flower1.jpg
-    # medium: /images/favicon-32x32-next.png
-    medium: /images/white_flower1.jpg
-    # apple_touch_icon: /images/apple-touch-icon-next.png
-    apple_touch_icon: /images/white_flower1.jpg
-  ```
-
-* 设置菜单: 真不知道about页面有啥用
-
-  ```yaml
-  menu:
-    home: / || home
-    # about: /about/ || user
-    tags: /tags/ || tags
-    categories: /categories/ || th
-    archives: /archives/ || archive
-    #schedule: /schedule/ || calendar
-    #sitemap: /sitemap.xml || sitemap
-    #commonweal: /404/ || heartbeat
-  
-  # Enable / Disable menu icons / item badges.
-  menu_settings:
-    icons: true
-    badges: false
-  ```
-
-* 设置sidebar avatar, 并且让图片圆形显示
-
-  ```yaml
-  # Sidebar Avatar
-  avatar:
-    # Replace the default image and set the url here.
-    url: /images/white_flower1.jpg
-    # If true, the avatar will be displayed in circle.
-    # 圆形显示
-    rounded: true
-    # If true, the avatar will be rotated with the cursor.
-    rotated: false
-  ```
-
-  头像必须存放在`<next>/themes/source/images/`
-
-  
-
-  
 
 * Schemes: 目前觉得Mist比较好看
 
@@ -321,6 +287,81 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
     number: false
   ```
 
+
+## Configuring Favicon
+
+By default the Hexo site use NexT favicons in `[hexo-site]/themes/next/source/images/` directory with different size for different device. You can replace them with your own favicons.
+
+但是, 如果使用npm安装Next, 则主题文件夹是`[hexo-site]/node_modules/hexo-theme-next`, 无法进行版本管理. 
+
+因此, Hexo也支持将图片放在`[hexo-site]/source/images/`. 我也**强烈推荐**这么做, 这样就可以进行版本管理了:
+
+1. 先手动创建文件夹: 
+
+   ```sh
+   cd [hexo-site]/source
+   mkdir images
+   ```
+
+2. 后续在Next配置文件中使用`images`路径来找到图片:
+
+   * 由于`themes/next/source/images/`和`source/images/`都可以放图片, 该操作实际上会扫描这两个文件夹
+
+```
+mkdir images
+```
+
+
+
+* 设置站点图标:
+
+  ```yaml
+  favicon:
+    # small: /images/favicon-16x16-next.png
+    small: /images/white_flower1.jpg
+    # medium: /images/favicon-32x32-next.png
+    medium: /images/white_flower1.jpg
+    # apple_touch_icon: /images/apple-touch-icon-next.png
+    apple_touch_icon: /images/white_flower1.jpg
+  ```
+
+* 设置菜单: 真不知道about页面有啥用
+
+  ```yaml
+  menu:
+    home: / || home
+    # about: /about/ || user
+    tags: /tags/ || tags
+    categories: /categories/ || th
+    archives: /archives/ || archive
+    #schedule: /schedule/ || calendar
+    #sitemap: /sitemap.xml || sitemap
+    #commonweal: /404/ || heartbeat
+  
+  # Enable / Disable menu icons / item badges.
+  menu_settings:
+    icons: true
+    badges: false
+  ```
+
+* 设置sidebar avatar, 并且让图片圆形显示
+
+  ```yaml
+  # Sidebar Avatar
+  avatar:
+    # Replace the default image and set the url here.
+    url: /images/white_flower1.jpg
+    # If true, the avatar will be displayed in circle.
+    # 圆形显示
+    rounded: true
+    # If true, the avatar will be rotated with the cursor.
+    rotated: false
+  ```
+
+  头像必须存放在`<next>/themes/source/images/`
+
+  
+
   
 
 ## 搜索服务
@@ -355,7 +396,7 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
 ## 百度统计
 
-当然也可以添加Google统计, 都差不多
+也可以添加Google统计, 都差不多
 
 1. 开通百度统计帐号: 在 [**百度统计**](https://tongji.baidu.com/web/welcome/login) 注册帐号. 帐号注册成功后，在侧边栏`账户管理 -> 网站列表`，点击右侧`新增网站`按钮
 
@@ -393,18 +434,40 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
 [Next Mathjax高级特性](https://theme-next.js.org/docs/third-party-services/math-equations.html?highlight=mathjax#mjx-eqn%3Aeq2)
 
-目前Latex的渲染引擎有 [MathJax](https://www.mathjax.org/) 和 [Katex](https://khan.github.io/KaTeX/), `MathJax`完美支持Latex, `Katex`速度更快, 但是有些语法不支持. 综合来看还是选择Mathjax.
+目前的Latex渲染引擎有 [MathJax](https://www.mathjax.org/) 和 [Katex](https://khan.github.io/KaTeX/), `MathJax`完美支持Latex, `Katex`速度更快, 但是有些语法不支持. 综合来看还是选择Mathjax.
 
-`NexT`默认使用的markdown渲染引擎是`hexo-renderer-marked`, 它支持`MathJax`, 但支持得不好. 
+`NexT`默认使用的markdown渲染引擎是[hexo-renderer-marked](https://github.com/hexojs/hexo-renderer-marked), 它不支持Mathjax，不支持插件扩展，不支持emoji表情, 因此我们需要卸载它, 并替换为别的引擎.
 
-Next还支持两个渲染引擎:
+注意, 不同的渲染引擎是不能共存的( [hexo-filter-mathjax](https://github.com/next-theme/hexo-filter-mathjax)除外, 它是server端的渲染引擎 ), 因此在使用一个渲染引擎之前, 需要卸载掉其他全部的渲染引擎/
 
-- `hexo-renderer-pandoc`：很好地支持`MathJax`
-- [hexo-renderer-kramed](https://github.com/sun11/hexo-renderer-kramed): 亲测它比`hexo-renderer-pandoc`**快一点**. 但是有bug, 需要自己配置. 由于它太老了,就不推荐了. 
-- `hexo-renderer-markdown-it-plus/hexo-renderer-markdown-it`：支持`KeTex`
-- [hexo-filter-mathjax](https://github.com/next-theme/hexo-filter-mathjax): 这是个server端端hexo渲染引擎. 要使用它,需要卸载掉其他latex引擎( 当然, 你得保留一个`hexo-renderer-marked` 来渲染markdown ). 它的缺点是有些语法不支持, 而且无法渲染目录里的LaTex.
+### Engines
 
- 我们一般选择`hexo-renderer-pandoc`
+Next支持的渲染引擎:
+
+#### Mathjax
+
+If you use MathJax to render Math Equations, you can choose one of the Markdown renderers below:
+
+- [hexo-renderer-pandoc](https://github.com/wzpan/hexo-renderer-pandoc)
+  * 支持Mathjax语法, 不仅可以渲染markdown, 还支持textile, reStructedText和许多其他格式, 仍然不支持emoji表情
+  * 内建的汇总文件`db.json`将来可能会非常大, 同步到 Github 可能会比较慢, 博客内建的搜索功能也可能会变得非常慢.
+    * 亲测, 博客生成和博客的搜索功能都慢得离谱, 而且它和Next的集成有问题, 无法正确把生成的HTML文件的标题加入Anchor.
+- [hexo-renderer-kramed](https://github.com/sun11/hexo-renderer-kramed): 基于hexo-renderer-marked二次开发的渲染器，完善了对Mathjax的支持, 仍然不支持插件的扩展，不支持emoji表情.
+  * 亲测它比`hexo-renderer-pandoc`**快一点**. 但是有bug, 需要自己配置. 由于它太老了,就不推荐了. 
+- [hexo-renderer-markdown-it](https://github.com/hexojs/hexo-renderer-markdown-it)：支持`MathJax`, 并可以通过插件支持`KeTex`. 
+  * 支持Markdown以及CommonMark语法.
+  * 支持插件配置, 支持标题带安全的id信息
+  * 支持脚注（上标, 下标, 下划线）
+  * **我最后选择`hexo-renderer-markdown-it`**
+-  [hexo-renderer-markdown-it-plus](https://github.com/CHENXCHEN/hexo-renderer-markdown-it-plus): 支持Katex插件并默认启用
+- [hexo-filter-mathjax](https://github.com/next-theme/hexo-filter-mathjax): Server side [MathJax](http://www.mathjax.org/) Renderer Plugin for [Hexo](http://hexo.io/). 要使用它,需要卸载掉除`hexo-renderer-marked` ( 用于渲染markdown )之外的LaTex引擎. 它的缺点是有些语法不支持, 而且无法渲染目录里的LaTex.
+
+#### KaTex
+
+If you use KaTeX to render Math Equations, you can choose one of the Markdown renderers below:
+
+- [hexo-renderer-markdown-it-plus](https://github.com/CHENXCHEN/hexo-renderer-markdown-it-plus): 没用过
+- [hexo-renderer-markdown-it](https://github.com/hexojs/hexo-renderer-markdown-it): 亲测它也支持Mathjax, 并支持Hexo支持的Mathjax特性
 
 
 
@@ -414,14 +477,20 @@ Next还支持两个渲染引擎:
 
 支持Latex步骤:
 
-1. 卸载`hexo-renderer-marked`, 安装`hexo-renderer-pandoc`:
+1. 卸载`hexo-renderer-marked`, 安装`hexo-renderer-pandoc` `hexo-renderer-markdown-it`:
 
    ```shell
    npm un hexo-renderer-marked
-   npm i hexo-renderer-pandoc --save
    ```
 
-2. 额外需要安装[pandoc](https://github.com/jgm/pandoc/blob/master/INSTALL.md): for Mac
+   ```sh
+   # npm i hexo-renderer-pandoc --save 有问题, 废弃
+   npm i hexo-renderer-markdown-it --save
+   ```
+
+2. 如果选择`hexo-renderer-pandoc` , 还需要额外安装[pandoc](https://github.com/jgm/pandoc/blob/master/INSTALL.md)
+
+   for Mac:
 
    ```shell
    brew install pandoc
@@ -441,10 +510,10 @@ Next还支持两个渲染引擎:
        # Available values: none | ams | all
        tags: ams # ams: 开启公式自动编号
    ```
-   
+
    * `per_page`: 设置为false, 这样只会渲染添加了`mathjax: true`的文章
      * 在低版本的NeXt,这句话上面的注释是反的, 即“false”只会渲染指定文章. 
-   
+
 4. 在需要渲染Latex的文章的Front-matter里打开mathjax开关，如下：
 
    ```markdown
@@ -456,11 +525,77 @@ Next还支持两个渲染引擎:
    --
    ```
 
+### Configuring `hexo-renderer-markdown-it`
+
+`hexo-renderer-markdown-it`的[默认配置](https://github.com/hexojs/hexo-renderer-markdown-it)是无法正确给标题添加anchor的, 需要做一些修改, 并将配置添加到Hexo中.
+
+
+
+编辑Hexo配置文件 `_config.yml`,  插入以下内容:
+
+```yaml
+# Config of hexo-renderer-markdown-it
+markdown:
+  preset: 'default' # 渲染器默认预设 # "commonmark": 使用严格 CommandMark 规定. # "default": 默认配置, 类似于 GFM # "zero": 禁用所有预设.
+  render:
+    html: true
+    xhtmlOut: false # 将 HTML 内容渲染为 XHTML 的形式 (XHTML 语法非常严格, 比如原 HTML 中的 <br> 标签必须要使用 <br/> 这样的形式进行 "自闭和") 可能会出现兼容性问题.
+    langPrefix: 'language-'
+    breaks: true # true 则将所有换行渲染为 <br> 标签 # 这种行为不属于 CommandMark 和 GFM.
+    linkify: true # true 则自动解析链接并添加为 <a> 标签, false 则将链接渲染为文本.
+    typographer: false # 默认 true # 自动转义各种排版用字符, 如 ©. 这甚至会转义掉LaTex中的字符, 所以不能开启
+    quotes: '“”‘’' # 当 typographer 定义为 true 时的自动转换引号的行为, quotes: '“”‘’' 则表示将 "123" '123'转换为 “123” ‘123’
+  enable_rules:
+  disable_rules:
+  plugins:
+  anchors:
+    level: 1 # 开始创建锚点的等级, 默认为2,表示从 H2 开始创建一直到 H6(最后).
+    collisionSuffix: '' # 如果遇到重复的锚点 ID 为其添加数字编号时在这个数字后添加的后缀.
+    permalink: true #  默认为false, 需要更改为true, 来创建一个除标题外带有固定地址的的锚点标签.
+    permalinkClass: 'header-anchor'
+    permalinkSide: 'left' # 设定为 right 则会在标题后添加固定链接.
+    permalinkSymbol: '' # 更改为空字符串
+    case: 0 # 转换锚点 ID 中的字母为大写或小写 # "0" 不转换, "1" 为小写, "2" 为大写. “不转换”是为了方便手写Anchor
+    separator: '-' # 用于替换空格的符号. # 默认为 "-"
+  # images:
+  #   lazyload: false
+  #   prepend_root: false
+  #   post_asset: false
+```
+
+
+
+当然你也可以直接更改依赖的代码, 但是这样做无法进行版本管理, 所以**不推荐**:
+
+1. 进入包目录:
+
+   ```
+   cd [hexo-site]/node_modules/hexo-renderer-markdown-it
+   ```
+
+2. 编辑`index.js`:
+
+   ```java
+   hexo.config.markdown.anchors = Object.assign({
+     level: 2,
+     collisionSuffix: '',
+     permalink: true, //更改为true
+     permalinkClass: 'header-anchor',
+     permalinkSide: 'left',
+     permalinkSymbol: '', //更改为空字符串
+     case: 0,
+     separator: '-'
+   }, hexo.config.markdown.anchors);
+   ```
+
+
+
+
 ### 公式自动编号和引用
 
 To enable this feature, you need to set `mathjax.tags` to `ams` in NexT config file.
 
-```
+```yaml
 math:
   mathjax:
     enable: true
@@ -468,11 +603,11 @@ math:
     tags: ams
 ```
 
-为了使用这项功能，一般来说，你必须把所使用的 LaTeX 公式放在 `equation` 环境里面，采用旧的方法（也就是说，仅仅把公式的每一边用两个 $ 符号包含起来）是无效的。如何引用公式？你只需要在书写公式的时候给公式一个 `\label{}` 标记（tag），然后在正文中，可以使用 `\ref{}` 或者 `\eqref{}` 命令来引用对应的公式。使用 `\eqref{}` 是推荐的方式，因为如果你使用 `\ref{}`，公式在文中的引用编号将没有圆括号包围。下面介绍几种常见的公式编号例子.
+为了使用这项功能，一般来说，你必须把所使用的 LaTeX 公式放在 `equation` 环境里面，采用旧的方法（也就是说，仅仅把公式的每一边用两个 `$` 符号包含起来）是无效的。如何引用公式？你只需要在书写公式的时候给公式一个 `\label{}` 标记（tag），然后在正文中，可以使用 `\ref{}` 或者 `\eqref{}` 命令来引用对应的公式。使用 `\eqref{}` 是推荐的方式，因为如果你使用 `\ref{}`，公式在文中的引用编号将没有圆括号包围。下面介绍几种常见的公式编号例子.
 
 对于简单的公式，使用下面的方式给公式一个标记，
 
-```
+```latex
 $$\begin{equation}\label{eq1}
 e=mc^2
 \end{equation}$$
@@ -488,7 +623,7 @@ e=mc^2
 
 对于多行公式，在 `equation` 环境中，你可以使用 `aligned` 环境把公式分成多行，
 
-```
+```latex
 $$\begin{equation}\label{eq2}
 \begin{aligned}
 a &= b + c \\
@@ -502,7 +637,7 @@ a &= b + c \\
 
 要对齐多个公式，我们需要使用 `align` 环境。align 环境中的每个公式都有自己的编号：
 
-```
+```latex
 $$\begin{align}
 a &= b + c \label{eq3} \\
 x &= yz \label{eq4}\\
@@ -771,10 +906,6 @@ creative_commons:
 
 多主机同步主要的坑在于主题的管理
 
-Ref:
-
-* [ 在 hexo 中使用 git submodules 管理主题 ](https://juejin.cn/post/6844903751908605965)
-
 ## 多分支
 
 在安装插件后,`hexo d`会生成网页文件, 并将其部署到GitHub和GitPage. 但是不会把源文件也push到github. 我们需要:
@@ -817,17 +948,27 @@ Ref:
 
 
 
-事实上,主题文件夹不仅不会被push, 每次主题更新时,都会被overwritten, 所以不要更改主题文件夹到任何内容.
+主题文件夹不会被push, 且每次主题更新时,都会被overwritten, 所以不要更改主题文件夹到任何内容.
 
 对于**主题配置文件**. Next官方提供[Alternate Theme Config机制](https://theme-next.js.org/docs/getting-started/configuration)来让用户自定义主题配置:
 
 1. 把主题配置文件复制到Hexo项目目录下, 取名为 `_config.[name].yml`. Replace `[name]` with the value of `theme` option in Hexo config file. For NexT theme, the file name is `_config.next.yml` by default
+
 2. 现在主题的配置文件就会读取Hexo项目目录的`_config.[name].yml`, 而不是主题目录的`_config.yml`. 由于位于Hexo项目目录下, `_config.[name].yml`会随着每次的push被push到Hexo项目的仓库. 不用担心**子项目问题**
-3. 多主机同步时, 新主机只需clone
 
-对于其他文件, 比如CSS之类, 反正我是不会改的, 所以无所谓. 但是images文件存放了我自定义的图像, 所以也得改. 目前看来没有什么解决方案. 只能把图片存放在Hexo项目文件夹,然后每次更新主题, 都把图片copy进主题文件夹内.
+3. 多主机同步时, 新主机只需clone整个项目:
 
-下面介文的**@Deprecated 同步步骤**是被废弃的方案, 它使用git modules, 这种方案新建了主题仓库, 然后用git module同步整个主题文件夹, 问题在于这样做就**没法进行主题的更新**了, 因此废弃
+   ```sh
+   git clone https://github.com/LYK-love/LYK-love.github.io
+   ```
+
+   
+
+对于CSS之类的文件, 反我是不会改的, 所以无所谓同步. 对于图片, [之前](#Configuring-Favicon)讲了,可以放在项目的`/source/images/`进行同步( 而不是主题的`themes/next/images`).
+
+当然为了保险, 我也另外在项目文件夹内备份了图片文件.
+
+下文的**@Deprecated 同步步骤**是被废弃的方案, 它使用git modules, 这种方案新建了主题仓库, 然后用git module同步整个主题文件夹, 问题在于这样做就没法进行主题的更新了, 因此废弃
 
 ## @New 同步步骤
 
@@ -845,15 +986,39 @@ Ref:
    npm install
    ```
 
-2. 由于下文介绍的Next主题的Alternate Theme Config机制, 主题配置文件已经在Hexo项目文件夹中被我们clone下来了, 也就是说已经同步了, 万事大吉.
+   可能会遇到报错:
 
-3. 但是, images等文件没有同步, 我把images放在Hexo项目文件夹下, 需要手动把它copy到主机文件夹的`source/images`中
+   ```
+   ERROR Cannot find module 'hexo' from '/Users/lyk/Documents/LYK-love.github.io'
+   <Snip>
+   ERROR Try running: 'rm -rf node_modules && npm install --force'
+   ```
 
-   
+   只需按照提示操作即可:
+
+   ```sh
+   rm -rf node_modules && npm install --force
+   ```
+
+2. 安装主题
+
+3. 由于下文介绍的Next主题的Alternate Theme Config机制, 主题配置文件已经在Hexo项目文件夹中被我们clone下来了, 也就是说已经同步了, 万事大吉.
+
+   * 由前文知, hexo-renderer-markdown-it的配置也放在主题配置文件中进行同步了. 
+
+4. 但是, images等文件没有同步, 我把images放在Hexo项目文件夹下, 需要手动把它copy到主机文件夹的`source/images`中
+
+
 
 ## @Deprecated 同步步骤
 
 **注: 该方案已经被废弃**
+
+
+
+Ref:
+
+* [ 在 hexo 中使用 git submodules 管理主题 ](https://juejin.cn/post/6844903751908605965)
 
 在Hexo多主机同步时, 我们当然希望自己的主题配置文件也同步. 
 
@@ -964,13 +1129,15 @@ git pull
 
   YAMLException: can not read a block mapping entry; a multiline key may not be an implicit key
 
-* 如果表哥多了行/列,在显示时会很丑
+* 如果表格多了行/列,在显示时会很丑
 
 * 极其罕见的Bug, 花了我大半天: Hexo和Next分别更新, 结果Latex不能显示, hexo g巨慢, 页面闪烁, back2top小箭头图表消失等等等等... 最好他居然神奇地好了. 我猜是package.json冲突了. 不过具体原因我也不知道... .气死我了.
 
-# Hexo Upgrade
+# Hexo Doc
 
-如果想要安装指定版本的Hexo, 网上都没有教程. 我的做法是抄一份指定版本的`package.json`然后`npm install`
+网上没有关于安装指定版本的Hexo的教程. 我的做法是抄一份指定版本的`package.json`然后`npm install`
+
+## Version
 
 1. 查看本地Hexo版本:
 
@@ -984,69 +1151,82 @@ git pull
    npm outdated
    ```
 
-3. 升级所有插件:
+## Install
+
+```
+npm install -g hexo-cli
+```
+
+## Ungrade
+
+1. 安装hexo时需要安装hexo-cli(它包含了hexo在内的一大堆依赖), 而升级hexo只需升级所有插件:
 
    ```sh
    npm install -g npm-upgrade
    ```
 
-4. 升级作为`dependency`的hexo:
+   * `npm-upgrade`: 升级作为`dependency`的hexo
 
-   ```sh
-   npm-upgrade
-   ```
-
-   此时package.json里的hexo -> version字段依然是老版本, 只有"dependencies"字段是新版本
-
-5. 升级hexo:
-
-   ```shell
-   npm install
-   ```
-
-6. 查看是否更新成功:
+2. 查看是否更新成功:
 
    ```shell
    hexo version
    ```
 
-   
+## Uninstall
 
-   
+* Uninstall:
 
-   
-   
-   
+  ```sh
+  npm uninstall hexo
+  ```
 
-# NeXt Upgrade
+  
+
+
+# NeXt Doc
 
 NexT 每个月都会发布新版本
 
 [安装文档](https://theme-next.js.org/docs/getting-started/installation.html)
 
-NeXt < 8的版本好像没办法查看, 
+## Version
+
+NeXt < 8的版本好像没办法查看
 
 Next >=8 之后, 每次`hexo s/d`时在命令行的输出里都有Next版本信息. 此外`hexo version`也会显示next版本.
 
+## Installation
 
+由于我不对主题做版本管理, 也就不新开仓库了.
 
-Next更新步骤: 首先要更新到最新的Hexo
+无论是下载还是更新Next, 都要先更新到最新的Hexo.
 
-1. 备份old主题文件夹的文件. 由于该文件夹一般什么都不会改,所以不备份也没啥关系
-
-2. 把旧主题文件夹rename为`next-old`
-
-3. clone新的主题仓库:
-
-   ```shell
-   git clone https://github.com/next-theme/hexo-theme-next themes/next
-   ```
-
-
-
-当然, 如果已经采用了Alternate Theme Config的话, 就可以平滑地升级:
+### Using npm
 
 ```
+npm install hexo-theme-next@latest
+```
+
+* npm会把主题文件夹下载到`/node_modules/hexo-theme-next`
+
+### Using git
+
+```
+git clone https://github.com/next-theme/hexo-theme-next themes/next
+```
+
+* 注意, 如果在`themes/`下已经存在了主题文件夹, 则Hexo会忽略`node_modules/`中可能存在的/主题文件夹. 也就是说要么用git, 要么用npm, 两者不能共存
+
+## Upgrade
+
+记得备份old主题文件夹的文件, 把旧主题文件夹rename为`next-old`. 当然, 由于该文件夹一般什么都不会改,所以不备份也没啥关系
+
+
+
+已经采用了Alternate Theme Config, 因此可以平滑地升级:
+
+```sh
 git pull
 ```
 
@@ -1056,27 +1236,42 @@ git pull
 
 ## 页面内跳转
 
-Markdown的一个标题会被渲染成:
 
-```
+
+## Anchor
+
+### Auto
+
+只需要使用`hexo-renderer-markdown-it`, 并修改其配置文件, 就可以使文章Header自带Anchor
+
+### Manual
+
+例子: 
+
+Markdown的一个标题: 
+
+```markdown
 // in markdown:
 # Ha ha
 dadads
 ```
 
-```
+会被Hexo渲染成:
+
+```html
 //in html
 <id = "ha-ha">
 <h1>dadads</h1>
 ```
 
-* 空格会被转换为连字符, 大写会被转换为小写
+* 空格会被转换为连字符, 大写会被转换为小写.
+  * 由于我在`hexo-renderer-markdown-it`中的配置, 空格会被转换为`-`, 而大小写是**不转换**的
 
 ---
 
 如果有重名的标题(即使处于不同的标题层次), 就会在html的标签的id属性中予以区分:
 
-```
+```markdown
 // in markdown:
 # haha
 dadads
@@ -1086,7 +1281,7 @@ dadads
 asa
 ```
 
-```
+```html
 //in html
 <id = "haha-1">
 <h1>dadads</h1>
@@ -1115,11 +1310,7 @@ asa
 # 标题
 ```
 
-
-
 可以看到, 这是基于Html的标签id匹配的, 而Markdown标题生成的Html标签的id和标题级别没有关系, 只和标题名字有关系. 所以
-
-
 
 ```
 [显示的内容](#KKK)
@@ -1132,5 +1323,4 @@ asa
 ## KKK
 ```
 
-的二级标题`KKK`
-
+中的二级标题`KKK`

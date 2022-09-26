@@ -152,6 +152,34 @@ feed:
   autodiscovery: true
   template:
 
+# Config of hexo-renderer-markdown-it
+markdown:
+  preset: 'default' # 渲染器默认预设 # "commonmark": 使用严格 CommandMark 规定. # "default": 默认配置, 类似于 GFM # "zero": 禁用所有预设.
+  render:
+    html: true
+    xhtmlOut: false # 将 HTML 内容渲染为 XHTML 的形式 (XHTML 语法非常严格, 比如原 HTML 中的 <br> 标签必须要使用 <br/> 这样的形式进行 "自闭和") 可能会出现兼容性问题.
+    langPrefix: 'language-'
+    breaks: true # true 则将所有换行渲染为 <br> 标签 # 这种行为不属于 CommandMark 和 GFM.
+    linkify: true # true 则自动解析链接并添加为 <a> 标签, false 则将链接渲染为文本.
+    typographer: false # 默认 true # 自动转义各种排版用字符, 如 ©. 这甚至会转义掉LaTex中的字符, 所以不能开启
+    quotes: '“”‘’' # 当 typographer 定义为 true 时的自动转换引号的行为, quotes: '“”‘’' 则表示将 "123" '123'转换为 “123” ‘123’
+  enable_rules:
+  disable_rules:
+  plugins:
+  anchors:
+    level: 1 # 开始创建锚点的等级, 默认为2,表示从 H2 开始创建一直到 H6(最后).
+    collisionSuffix: '' # 如果遇到重复的锚点 ID 为其添加数字编号时在这个数字后添加的后缀.
+    permalink: true #  默认为false, 需要更改为true, 来创建一个除标题外带有固定地址的的锚点标签.
+    permalinkClass: 'header-anchor'
+    permalinkSide: 'left' # 设定为 right 则会在标题后添加固定链接.
+    permalinkSymbol: '' # 更改为空字符串
+    case: 0 # 转换锚点 ID 中的字母为大写或小写 # "0" 不转换, "1" 为小写, "2" 为大写. “不转换”是为了方便手写Anchor
+    separator: '-' # 用于替换空格的符号. # 默认为 "-"
+  # images:
+  #   lazyload: false
+  #   prepend_root: false
+  #   post_asset: false
+
 
 # moon_menu:
 #   back2top:

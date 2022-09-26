@@ -10,11 +10,22 @@ categories: Toolkit
 
 全面介绍了Git的原理和使用
 
-ref:  [廖雪峰的教程](https://www.liaoxuefeng.com/wiki/896043488029600)
+
 
 <!-- more-->
 
-## Intro 
+ref: 
+
+*  [廖雪峰的教程](https://www.liaoxuefeng.com/wiki/896043488029600)
+
+* [git使用技巧和笔记](https://wangchujiang.com/git-tips/)
+* [Learn Git Branching](https://learngitbranching.js.org/?locale=zh_CN)
+
+Tools:
+
+* [Git Command Explorer](https://gitexplorer.com/)
+
+# Intro 
 
 * Git是Linus用**C**写的分布式版本管理系统
 
@@ -31,7 +42,7 @@ ref:  [廖雪峰的教程](https://www.liaoxuefeng.com/wiki/896043488029600)
 [^1]: Concurrent Versions System
 [^2]:Apache Subversion
 
-#### 创建版本库
+## 创建版本库
 
 版本库:*repository*
 
@@ -57,7 +68,7 @@ Initialized empty Git repository in /c/Users/陆昱宽/Desktop/DOC/.git/
 
 `.git`目录默认是隐藏的,用`ls -ah`命令就能看见
 
-####  把文件添加到版本库
+## 把文件添加到版本库
 
 所有版本控制系统,只能跟踪文本文件的改动,比如txt,网页,代码等. 而图片,视频这些二进制文件,虽然也能由版本控制系统管理,但没法跟踪文件的变化,就是说知道改了,但不知道改了啥. 
 
@@ -88,11 +99,9 @@ $ git  commit -m'1
 
   A：添加某个文件时，该文件必须在当前目录下存在，用`ls`或者`dir`命令查看当前目录的文件，看看文件是否存在，或者是否写错了文件名。
 
+# 基本操作
 
-
-## 基本操作
-
-### 提交和查看修改
+## git add
 
 我们修改Git.md文件,运行`git.status`看看结果:
 
@@ -183,7 +192,7 @@ Git告诉我们当前没有需要提交的修改,且工作目录是干净(workin
 * 如果`git status`告诉你文件有被修改过,用`git diff 文件名` 可以查看修改内容
 * `commit`的message千万不能有中文,否则会乱码
 
-### 版本回退
+## 版本回退
 
 先提交文件,message为"origin";再输入"初次修改"并提交,message为"chucixiugai";再输入"再次修改"
 并提交,message为"再次修改".
@@ -308,7 +317,7 @@ cdd92a6 HEAD@{4}: commit: 初次修改
 * 要回到未来,可以用`git reflog`来确定要回到未来的哪个版本.
 * 如果commit（提交）比较多，git log 的内容就会比较多；当满屏放不下，就会显示冒号，回车（往下滚一行）、空格（往下滚一页）可以继续查看剩余内容；**退出**：英文状态下 按 **q** 可以退出git log 状态。
 
-### 工作区和暂存区
+## 工作区和暂存区
 
 Git和其他版本控制系统如SVN的一个不同之处就是有暂存区的概念.
 
@@ -390,9 +399,7 @@ nothing to commit, working tree clean
 
   如果是输入`git diff`，查看到的是**工作区和暂存区**(上次git add 的内容)的不同，如果是`git diff --cached`，查看到的是**暂存区和HEAD**的不同。 
 
-
-
-### 撤销修改
+## 撤销修改
 
 在`readme .txt`中添加了一行,但还没有`git add`:
 
@@ -472,7 +479,7 @@ Over!
 
 如果我不仅把那句话`git add`了,我还`git commit`到了版本库, 我们可以用*版本回退*. 但如果你还把它`git push`到了 远程版本库,那就完蛋了.
 
-### 删除文件
+## 删除文件
 
 情况一: 工作区文件删除,无其它操作
 
@@ -492,20 +499,7 @@ Over!
 
 `rm`是DOS命令,在各个shell都可以用. 用在git仓库中,是删除工作区的文件,用 `git restore readme.txt`可以还原. 而`git rm readme.txt`是删除工作区和暂存区的文件, **由于`git restore`的原理是将工作复原为暂存区中的版本**,而暂存区中该文件也被删除了,所以恢复不了, 分支里还有这个文件,所以用版本回退`git reset --hard HEAD^`
 
-### 关联分支
-
-将本地分支与远程同名分支相关联
-
-pull和push同
-
-```she l
-git push --set-upstream origin <本地分支名>
-
-# 简写方式： 
-# git push -u origin <本地分支名>
-```
-
-### git pull
+## git pull
 
 1、将远程指定分支 拉取到 本地指定分支上：
 
@@ -527,7 +521,7 @@ git pull
 
 在克隆远程项目的时候，本地分支会自动与远程仓库建立追踪关系，可以使用默认的origin来替代远程仓库名
 
-#### pull强制覆盖本地文件
+### pull强制覆盖本地文件
 
 ref： https://www.jianshu.com/p/1ac2e1f99166
 
@@ -576,7 +570,7 @@ git reset --hard origin/master
 
 在此之后，所有旧的提交都将保存在new-branch-to-save-current-commits中。然而，没有提交的更改(即使staged)将会丢失。确保存储和提交任何你需要的东西。
 
-### git push
+## git push
 
 1、将本地当前分支 推送到 **远程指定分支上**：
 
@@ -678,28 +672,70 @@ origin  https://github.com/LYK-love/Learning.git (push)
 
   第二种级别不仅加密所有传送的数据，而且“中间人”这种攻击方式也是不可能的（因为他没有你的私人密匙）。但是整个登录的过程可能需要10秒  。
 
+# Branch
+
+## 创建分支
+
+创建`dev`分支, 然后切换到`dev`分支：
+
+```Git
+$ git switch -c dev 
+Switched to a new branch 'dev'
+```
+
+## 切换分支
+
+```
+git switch dev 
+```
 
 
-## 分支管理
 
-### 创建与合并分支
+## 查看分支
 
-在版本回退里，你已经知道，每次提交，Git都把它们串成一条时间线，这条时间线就是一个分支。截止到目前，只有一条时间线，在Git里，这个分支叫主分支，即`master`分支。`HEAD`严格来说不是指向提交，而是指向`master`，`master`才是指向提交的，所以，`HEAD`指向的就是当前分支。
+查看当前分支：
+
+```
+$ git branch
+* dev
+  master
+```
+
+
+
+## 关联分支
+
+将本地分支与远程同名分支相关联
+
+```
+git branch --set-upstream-to=origin/develop develop
+```
+
+
+
+也可以在push时设置:
+
+```she l
+git push --set-upstream origin <本地分支名>
+
+# 简写方式： 
+# git push -u origin <本地分支名>
+```
+
+pull和push同.
+
+## 创建与合并分支
+
+`HEAD`严格来说不是指向提交，而是指向`master`，`master`才是指向提交的，所以，`HEAD`指向的就是当前分支。
 
 * 首先，我们创建`dev`分支，然后切换到`dev`分支：
 
-  ```Git
-  $ git switch -c dev 
-  Switched to a new branch 'dev'
-  ```
-
+  
+  
 * 然后，用`git branch`命令查看当前分支：
 
-  ```
-  $ git branch
-  * dev
-    master
-  ```
+
+
 
 * 然后提交:
 
@@ -1375,7 +1411,7 @@ $ git log --graph --pretty=oneline --abbrev-commit
 - rebase操作可以把本地未push的分叉提交历史整理成直线；
 - rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
 
-## 标签管理
+# 标签管理
 
 ***
 
@@ -1397,7 +1433,7 @@ Git有commit，为什么还要引入tag？
 
 所以，tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。
 
-### 创建标签
+## 创建标签
 
 在Git中打标签非常简单，首先，切换到需要打标签的分支上：
 
@@ -1501,7 +1537,7 @@ diff --git a/readme.txt b/readme.txt
 ...
 ```
 
-### 操作标签
+## 操作标签
 
 如果标签打错了，也可以删除：
 
@@ -1552,9 +1588,9 @@ To github.com:michaelliao/learngit.git
 - 命令`git tag -d <tagname>`可以删除一个本地标签；
 - 命令`git push origin :refs/tags/<tagname>`可以删除一个远程标签
 
-## 自定义Git
+# 自定义Git
 
-### 忽略特殊文件
+## 忽略特殊文件
 
 有些时候，你必须把某些文件放到Git工作目录中，但又不能提交它们，比如保存了数据库密码的配置文件啦，等等，每次`git status`都会显示`Untracked files ...`，有强迫症的童鞋心里肯定不爽。
 
