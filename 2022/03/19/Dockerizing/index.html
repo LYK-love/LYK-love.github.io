@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20image%20squash.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20push%20information.png">
 <meta property="article:published_time" content="2022-03-19T01:04:45.000Z">
-<meta property="article:modified_time" content="2022-09-26T06:39:34.930Z">
+<meta property="article:modified_time" content="2022-09-29T13:58:55.441Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -151,7 +151,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E4%BD%93%E5%BA%94%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8C%96"><span class="nav-text">单体应用容器化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile"><span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Options"><span class="nav-text">Options</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="nav-text">构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E9%95%9C%E5%83%8F%E5%B1%82"><span class="nav-text">增加镜像层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#build-cache"><span class="nav-text">build cache</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#squash-image"><span class="nav-text">squash image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F"><span class="nav-text">推送镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#preparation"><span class="nav-text">preparation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2"><span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%95%9C%E5%83%8F%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="nav-text">查看镜像构建过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="nav-text">运行容器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E9%98%B6%E6%AE%B5%E6%9E%84%E5%BB%BA"><span class="nav-text">多阶段构建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F%E4%BC%98%E5%8C%96"><span class="nav-text">构建镜像优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8alpine"><span class="nav-text">使用alpine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%89%8D%E4%B8%8B%E8%BD%BD%E4%BE%9D%E8%B5%96"><span class="nav-text">提前下载依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%A4%9A%E9%98%B6%E6%AE%B5%E6%9E%84%E5%BB%BA"><span class="nav-text">利用多阶段构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#github-%E7%9A%84-actions-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F%E9%97%AE%E9%A2%98"><span class="nav-text">github 的 actions 构建镜像问题</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%95%E4%BD%93%E5%BA%94%E7%94%A8%E5%AE%B9%E5%99%A8%E5%8C%96"><span class="nav-text">单体应用容器化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Dockerfile"><span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Options"><span class="nav-text">Options</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="nav-text">构建镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4"><span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A2%9E%E5%8A%A0%E9%95%9C%E5%83%8F%E5%B1%82"><span class="nav-text">增加镜像层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#build-cache"><span class="nav-text">build cache</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#squash-image"><span class="nav-text">squash image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F"><span class="nav-text">推送镜像</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#preparation"><span class="nav-text">preparation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%AA%A4-2"><span class="nav-text">步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%95%9C%E5%83%8F%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="nav-text">查看镜像构建过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E5%AE%B9%E5%99%A8"><span class="nav-text">运行容器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E9%98%B6%E6%AE%B5%E6%9E%84%E5%BB%BA"><span class="nav-text">多阶段构建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F%E4%BC%98%E5%8C%96"><span class="nav-text">构建镜像优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8alpine"><span class="nav-text">使用alpine</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%BD%AF%E4%BB%B6%E7%9A%84alpine%E7%89%88%E6%9C%AC"><span class="nav-text">使用软件的alpine版本</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8alpine-linux"><span class="nav-text">使用alpine linux</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%89%8D%E4%B8%8B%E8%BD%BD%E4%BE%9D%E8%B5%96"><span class="nav-text">提前下载依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E5%A4%9A%E9%98%B6%E6%AE%B5%E6%9E%84%E5%BB%BA"><span class="nav-text">利用多阶段构建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#github-%E7%9A%84-actions-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F%E9%97%AE%E9%A2%98"><span class="nav-text">github 的 actions 构建镜像问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Examples"><span class="nav-text">Examples</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-app"><span class="nav-text">Vue app</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Dockerfile-2"><span class="nav-text">Dockerfile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8node%E7%9A%84alpine"><span class="nav-text">使用node的alpine:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8alpine-linux-2"><span class="nav-text">使用alpine linux</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dockerignore"><span class="nav-text">.dockerignore</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Commands"><span class="nav-text">Commands</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -166,7 +166,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">191</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -263,7 +263,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+      <time title="Modified: 2022-09-29 13:58:55" itemprop="dateModified" datetime="2022-09-29T13:58:55Z">2022-09-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -388,9 +388,21 @@
 <h2 id="构建镜像"><a class="header-anchor" href="#构建镜像"></a>构建镜像</h2>
 <h3 id="步骤"><a class="header-anchor" href="#步骤"></a>步骤</h3>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image build [选项] path</span><br></pre></td></tr></table></figure>
-<p>docker daemon按行来读取path下（包括子目录）的 Dockerfile，并将该path下的所有内容发送给 Docker 服务端，由服务端来创建镜像</p>
+<p>docker daemon按行来读取path下（包括子目录）的 Dockerfile，并将该path下的所有内容发送给 Docker 服务端，由服务端来创建镜像,</p>
 <ul>
-<li><code>-t</code> : 指定镜像的标签信息,即<code>&lt;image&gt;</code></li>
+<li>
+<p><code>-t</code> : 指定镜像的标签信息,即<code>&lt;image&gt;</code>, 注意镜像名必须是<strong>全小写</strong></p>
+<ul>
+<li>
+<p>可以在构建时指定tag:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker build -t hangge_server:2.4 .</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li>
+<p><code>-f</code>: 指定dockerfile</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker build -f /path/to/a/Dockerfile .</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <h3 id="原理"><a class="header-anchor" href="#原理"></a>原理</h3>
 <h4 id="增加镜像层"><a class="header-anchor" href="#增加镜像层"></a>增加镜像层</h4>
@@ -440,7 +452,7 @@
 <p>假设镜像仓库名是web, 那么push后，镜像位于<code>docker.io/web:latest</code>,然而用户一般没有一级命名空间的权限,  因此<strong>需要为当前镜像重新打一个标签， 这个标签指定了要推送的用户空间</strong>：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image tag &lt;image-qith-current-wothtag&gt; &lt;image-with-new-tag&gt;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">该命令会为镜像添加额外的标签，不会删除已有的标签. 可以通过`docker image <span class="built_in">ls</span>` 查看，发现镜像拥有了两个标签</span> </span><br></pre></td></tr></table></figure>
 <p>如果你的标签上的用户名不等于你当前登陆的docker hub id, push会失败：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> 当前登陆用户为lyklove</span></span><br><span class="line">❯ docker image ls</span><br><span class="line">REPOSITORY           TAG       IMAGE ID       CREATED        SIZE</span><br><span class="line">hello-world          latest    feb5d9fea6a5   5 months ago   13.3kB</span><br><span class="line">lyk/hello-world      latest    feb5d9fea6a5   5 months ago   13.3kB</span><br><span class="line"></span><br><span class="line">❯ docker image push lyk/hello-world:latest</span><br><span class="line">The push refers to repository [docker.io/lyk/hello-world] </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 可以看到docker试图push到lyk的目录下，但是当前用户是lyklove, 不具有用户lyk的权限， 因此push会失败</span></span></span><br><span class="line"></span><br><span class="line">e07ee1baac5f: Preparing </span><br><span class="line">denied: requested access to the resource is denied</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash"> 当前登陆用户为lyklove</span></span><br><span class="line">❯ docker image ls</span><br><span class="line">REPOSITORY           TAG       IMAGE ID       CREATED        SIZE</span><br><span class="line">hello-world          latest    feb5d9fea6a5   5 months ago   13.3kB</span><br><span class="line">lyk/hello-world      latest    feb5d9fea6a5   5 months ago   13.3kB</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">错误示范</span></span><br><span class="line">❯ docker image push lyk/hello-world:latest</span><br><span class="line">The push refers to repository [docker.io/lyk/hello-world] </span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 可以看到docker试图push到lyk的目录下，但是当前用户是lyklove, 不具有用户lyk的权限， 因此push会失败</span></span></span><br><span class="line"></span><br><span class="line">e07ee1baac5f: Preparing </span><br><span class="line">denied: requested access to the resource is denied</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="步骤-2"><a class="header-anchor" href="#步骤-2"></a>步骤</h3>
 <ol>
 <li>
@@ -545,20 +557,41 @@
 </ul>
 <h2 id="使用alpine"><a class="header-anchor" href="#使用alpine"></a>使用alpine</h2>
 <p>基础镜像层可以使用alpine, 这是一个超级小的Linux镜像. 上例的基础镜像层是node, 可以:</p>
-<ol>
-<li>
+<h3 id="使用软件的alpine版本"><a class="header-anchor" href="#使用软件的alpine版本"></a>使用软件的alpine版本</h3>
+<p><a href="https://link.juejin.cn/?target=https%3A%2F%2Fhub.docker.com%2F_%2Fnode%3Ftab%3Ddescription%26page%3D1%26ordering%3Dlast_updated">dockerhub</a> 查看 node 版本</p>
 <p>对于node等基础软件,使用其alpine版本:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM node:14.17.4-alpine</span><br></pre></td></tr></table></figure>
-<p>可以去 <a href="https://link.juejin.cn/?target=https%3A%2F%2Fhub.docker.com%2F_%2Fnode%3Ftab%3Ddescription%26page%3D1%26ordering%3Dlast_updated">dockerhub</a> 查看 node 有哪些版本标签</p>
+<p>可以去</p>
+<h4 id="使用alpine-linux"><a class="header-anchor" href="#使用alpine-linux"></a>使用alpine linux</h4>
+<p><a target="_blank" rel="noopener" href="https://pkgs.alpinelinux.org/packages?name=npm&amp;branch=edge&amp;repo=&amp;arch=&amp;maintainer=">apk官网</a> 查看查看apk包版本</p>
+<p>使用alpine linux作为基础镜像层,然后手动装node等基础软件. 这个效果最显著:</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> alpine:<span class="number">3.13</span> AS base</span><br><span class="line"><span class="keyword">LABEL</span><span class="language-bash"> maintainer=<span class="string">&quot;LYK-love&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># RUN echo &quot;http://mirrors.aliyun.com/alpine/edge/main/&quot; &gt; /etc/apk/repositories \</span></span><br><span class="line"><span class="comment">#     &amp;&amp; echo &quot;http://mirrors.aliyun.com/alpine/edge/community/&quot; &gt;&gt; /etc/apk/repositories \</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk update \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; apk add --no-cache --update nodejs=14.20.0-r0 npm=14.20.0-r0 \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; npm config <span class="built_in">set</span> registry http://r.cnpmjs.org/ --production</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ... 后面的步骤不变</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>用户软件( node, yarn等 )最好都要<strong>指定依赖版本</strong>, alpine使用apk作为包管理工具</p>
 </li>
 <li>
-<p>使用alpine linux作为基础镜像层,然后手动装node等基础软件. 这个效果最显著:</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> alpine:<span class="number">3.14</span> AS base</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 apk 命令安装 nodejs 和 yarn，如果使用 npm 启动，就不需要装 yarn</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk add --no-cache --update nodejs=14.17.4-r0 yarn=1.22.10-r0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ... 后面的步骤不变</span></span><br></pre></td></tr></table></figure>
-<p>用户软件( node, yarn等 )最好都要<strong>指定依赖版本</strong></p>
-<p>alpine版本也一定要指定, <strong>不要选择 latest 版本</strong>( <code>From alpine:latest</code>)，因为后面要装的软件版本可能会在 alpine 的 latest 版本没有对应软件的版本号.</p>
-<p><strong>我们选择方案2</strong></p>
+<p><strong>下面的例子中使用方案2</strong></p>
 </li>
-</ol>
+<li>
+<p>注意:</p>
+<ul>
+<li>
+<p>首先 , 就算使用了官方源, 也要注意镜像版本. 比如如果我使用的镜像是alpine:3.16, 而我需要的nodejs版本只在alpine3.13有, 就会拉不到.</p>
+<ul>
+<li>即: 一定要指定alpine版本, <strong>不要选择 latest 版本</strong>( <code>From alpine:latest</code>)</li>
+</ul>
+</li>
+<li>
+<p>其次, 有人会用<a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/alpine/?spm=a2c6h.25603864.0.0.133a2f83TmQnBB">阿里云的apk源</a>, 此时也要注意选择alpine镜像的版本</p>
+</li>
+<li>
+<p><code>apk</code>和其他工具不同, 不会在下载node时顺便下载npm, 所以如果使用npm, 需要手动下载:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">apk add --no-cache --update nodejs=14.17.4-r0 npm=8.19.1-r0 </span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
 <h2 id="提前下载依赖"><a class="header-anchor" href="#提前下载依赖"></a>提前下载依赖</h2>
 <ul>
 <li>
@@ -570,10 +603,10 @@
 <h2 id="利用多阶段构建"><a class="header-anchor" href="#利用多阶段构建"></a>利用多阶段构建</h2>
 <p>运行 node 程序只需要生产的依赖和最终 node 可以运行的文件，就是说我们运行项目只需要 package.js 文件里 dependencies 里的依赖，devDependencies 依赖只是编译阶段用的</p>
 <ul>
-<li>比如 <u>eslint 等这些工具在项目运行时是用不到的</u>，再比如我们项目是用 typescript 写的，node 是不能直接运行 ts 文件，ts 文件需要编译成 js 文件，</li>
+<li>比如 <u>eslint 等这些工具在项目运行时是用不到的</u>，再比如我们项目是用 typescript 写的，node 不能直接运行 ts 文件，ts 文件需要编译成 js 文件，</li>
 </ul>
 <p><u>运行项目我们只需要编译后的文件和 dependencies 里的依赖就可以运行，也就是说最终镜像只需要我们需要的东西</u>，任何其他东西都可以删掉，下面我们使用多阶段改写 Dockerfile:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 构建基础镜像</span><br><span class="line">    FROM alpine:3.14 AS base</span><br><span class="line"></span><br><span class="line">    # 设置环境变量</span><br><span class="line">    ENV NODE_ENV=production \</span><br><span class="line">        APP_PATH=/node/app</span><br><span class="line">    </span><br><span class="line">    # 设置工作目录</span><br><span class="line">    WORKDIR $APP_PATH</span><br><span class="line"></span><br><span class="line">    # 安装 nodejs 和 yarn</span><br><span class="line">    RUN apk add --no-cache --update nodejs=14.17.4-r0 yarn=1.22.10-r0</span><br><span class="line"></span><br><span class="line"># 使用基础镜像 装依赖阶段</span><br><span class="line">    FROM base AS install</span><br><span class="line"></span><br><span class="line">    # 拷贝 package.json 到工作跟目录下</span><br><span class="line">    COPY package.json ./</span><br><span class="line"></span><br><span class="line">    # 安装依赖</span><br><span class="line">    RUN yarn</span><br><span class="line"></span><br><span class="line"># 最终阶段，也就是输出的镜像是这个阶段构建的，前面的阶段都是为这个阶段做铺垫</span><br><span class="line">    FROM base</span><br><span class="line"></span><br><span class="line">    # 拷贝 装依赖阶段 生成的 node_modules 文件夹到工作目录下</span><br><span class="line">    COPY --from=install $APP_PATH/node_modules ./node_modules</span><br><span class="line"></span><br><span class="line">    # 将当前目录下的所有文件（除了.dockerignore排除的路径），都拷贝进入镜像的工作目录下</span><br><span class="line">    COPY . .</span><br><span class="line"></span><br><span class="line">    # 启动</span><br><span class="line">    CMD yarn start</span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 构建基础镜像</span></span><br><span class="line">    <span class="keyword">FROM</span> alpine:<span class="number">3.16</span>.<span class="number">2</span> AS base</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 设置环境变量</span></span><br><span class="line">    <span class="keyword">ENV</span> NODE_ENV=production \</span><br><span class="line">        APP_PATH=/node/app</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 设置工作目录</span></span><br><span class="line">    <span class="keyword">WORKDIR</span><span class="language-bash"> <span class="variable">$APP_PATH</span></span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 安装 nodejs 和 yarn</span></span><br><span class="line">    <span class="keyword">RUN</span><span class="language-bash"> apk add --no-cache --update nodejs=14.17.4-r0 yarn=1.22.10-r0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用基础镜像 装依赖阶段</span></span><br><span class="line">    <span class="keyword">FROM</span> base AS install</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 拷贝 package.json 到工作跟目录下</span></span><br><span class="line">    <span class="keyword">COPY</span><span class="language-bash"> package.json ./</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 安装依赖</span></span><br><span class="line">    <span class="keyword">RUN</span><span class="language-bash"> yarn</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最终阶段，也就是输出的镜像是这个阶段构建的，前面的阶段都是为这个阶段做铺垫</span></span><br><span class="line">    <span class="keyword">FROM</span> base</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 拷贝 装依赖阶段 生成的 node_modules 文件夹到工作目录下</span></span><br><span class="line">    <span class="keyword">COPY</span><span class="language-bash"> --from=install <span class="variable">$APP_PATH</span>/node_modules ./node_modules</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将当前目录下的所有文件（除了.dockerignore排除的路径），都拷贝进入镜像的工作目录下</span></span><br><span class="line">    <span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 启动</span></span><br><span class="line">    <span class="keyword">CMD</span><span class="language-bash"> yarn start</span></span><br></pre></td></tr></table></figure>
 <h2 id="github-的-actions-构建镜像问题"><a class="header-anchor" href="#github-的-actions-构建镜像问题"></a>github 的 actions 构建镜像问题</h2>
 <p>github 提供的 actions，每次都是一个干净的实例，什么意思，就是每次执行，都是干净的机器，这会导致一个问题，会导致 docker 没法使用缓存，那有没有解决办法呢，我想到了两种解决办法：</p>
 <ol>
@@ -588,6 +621,31 @@
 <li>
 <p>先构建一个已经安装好依赖包的镜像，然后基于此镜像再次构建，相当于多阶段构建，把前两个阶段构建的镜像产物推送到镜像仓库，再以这个镜像为基础去构建后续部分。借助镜像仓库存储基础镜像从而达到缓存的效果（此方案来源于评论里的大佬）</p>
 <figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 以这个镜像为基础去构建，这个镜像是已经装好项目依赖的镜像并推送到镜像仓库里，这里从镜像仓库拉下来</span></span><br><span class="line"><span class="keyword">FROM</span> project-base-image:latest</span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> yarn start</span></span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Examples"><a class="header-anchor" href="#Examples"></a>Examples</h1>
+<h2 id="Vue-app"><a class="header-anchor" href="#Vue-app"></a>Vue app</h2>
+<h3 id="Dockerfile-2"><a class="header-anchor" href="#Dockerfile-2"></a>Dockerfile</h3>
+<h4 id="使用node的alpine"><a class="header-anchor" href="#使用node的alpine"></a>使用node的alpine:</h4>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># build stage</span></span><br><span class="line"><span class="comment"># FROM node:14.20.1-slim  as build-stage</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">14.16</span>.<span class="number">0</span>-alpine3.<span class="number">13</span> AS build-stage</span><br><span class="line"><span class="keyword">LABEL</span><span class="language-bash"> maintainer=<span class="string">&quot;LYK-love&quot;</span></span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> node -v &amp;&amp; npm -v \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; npm config <span class="built_in">set</span> registry http://r.cnpmjs.org/ \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; npm install </span></span><br><span class="line">    <span class="comment"># &amp;&amp; vue --version</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm run build</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># production stage</span></span><br><span class="line"><span class="comment"># FROM nginx:1.21.5 as production-stage</span></span><br><span class="line"><span class="keyword">FROM</span> nginx:<span class="number">1.21</span>.<span class="number">5</span>-alpine as production-stage</span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> nginx -v</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=build-stage /app/dist/ /usr/share/nginx/html/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=build-stage /app/default.conf /etc/nginx/conf.d/default.conf</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [ <span class="string">&quot;nginx&quot;</span>,<span class="string">&quot;-g&quot;</span>,<span class="string">&quot;daemon off;&quot;</span> ]</span></span><br></pre></td></tr></table></figure>
+<p>我实验了一下, 如果全都使用标准镜像(<code>node:14.20.1-slim</code> +  <code>nginx:1.21.5</code> ), 则镜像总大小为151.42MB. 而全都使用alpine镜像后, 总大小为39.03MB, 这是惊人的提升.</p>
+<h4 id="使用alpine-linux-2"><a class="header-anchor" href="#使用alpine-linux-2"></a>使用alpine linux</h4>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk update \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; apk add --no-cache --update nodejs=14.20.0-r0 npm=14.20.0-r0 \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; npm config <span class="built_in">set</span> registry http://r.cnpmjs.org/ --production</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ENV NODE_ENV production</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> base AS build-stage</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> node -v &amp;&amp; npm -v \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; npm install </span></span><br><span class="line">    <span class="comment"># &amp;&amp; npm install -g @vue/cli@5.0.1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm run build</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># production stage</span></span><br><span class="line"><span class="keyword">FROM</span> nginx:<span class="number">1.21</span>.<span class="number">5</span>-alpine as production-stage</span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=build-stage /app/dist/ /usr/share/nginx/html/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=build-stage /app/default.conf /etc/nginx/conf.d/default.conf</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [ <span class="string">&quot;nginx&quot;</span>,<span class="string">&quot;-g&quot;</span>,<span class="string">&quot;daemon off;&quot;</span> ]</span></span><br></pre></td></tr></table></figure>
+<p>总体大小为39.03MB, 感觉反而不如node-alpine呢...... 为啥啊??</p>
+<h3 id="dockerignore"><a class="header-anchor" href="#dockerignore"></a>.dockerignore</h3>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#Dependency directory</span><br><span class="line"># https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git</span><br><span class="line">node_modules</span><br><span class="line">.DS_Store</span><br><span class="line">dist</span><br><span class="line"></span><br><span class="line"># node-waf configuration</span><br><span class="line">.lock-wscript</span><br><span class="line"></span><br><span class="line"># Compiled binary addons (http://nodejs.org/api/addons.html)</span><br><span class="line">build/Release</span><br><span class="line">.dockerignore</span><br><span class="line">Dockerfile</span><br><span class="line">*docker-compose*</span><br><span class="line"></span><br><span class="line"># Logs</span><br><span class="line">logs</span><br><span class="line">*.log</span><br><span class="line"></span><br><span class="line"># Runtime data</span><br><span class="line">.idea</span><br><span class="line">.vscode</span><br><span class="line">*.suo</span><br><span class="line">*.ntvs*</span><br><span class="line">*.njsproj</span><br><span class="line">*.sln</span><br><span class="line">*.sw*</span><br><span class="line">pids</span><br><span class="line">*.pid</span><br><span class="line">*.seed</span><br><span class="line">.git</span><br><span class="line">.hg</span><br><span class="line">.svn</span><br></pre></td></tr></table></figure>
+<h3 id="Commands"><a class="header-anchor" href="#Commands"></a>Commands</h3>
+<ol>
+<li>
+<p>build:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker build -t Frontend_VolatileReborn . </span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>run:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -it -p 8080:80 --rm --name Frontend_VolatileReborn Frontend_VolatileReborn:latest </span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>visit: localhost:8080</p>
 </li>
 </ol>
 

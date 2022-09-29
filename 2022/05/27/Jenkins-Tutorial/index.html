@@ -28,7 +28,7 @@
 <meta property="og:description" content="Outline:  Jenkins SCM Access Token Credentials Webhook slave Jenkinsfile 日志">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-05-26T22:48:57.000Z">
-<meta property="article:modified_time" content="2022-09-26T06:39:34.931Z">
+<meta property="article:modified_time" content="2022-09-29T10:25:40.666Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="CICD">
 <meta name="twitter:card" content="summary">
@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Jenkins"><span class="nav-text">Jenkins</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E9%99%86"><span class="nav-text">登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5jenkins%E5%AE%B9%E5%99%A8"><span class="nav-text">进入jenkins容器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SCM"><span class="nav-text">SCM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Access-Token"><span class="nav-text">Access Token</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Credentials"><span class="nav-text">Credentials</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0Credential"><span class="nav-text">添加Credential</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#webhook"><span class="nav-text">webhook</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#slave"><span class="nav-text">slave</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0slave"><span class="nav-text">添加slave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jenkinsfile"><span class="nav-text">Jenkinsfile</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9slave"><span class="nav-text">选择slave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workspace"><span class="nav-text">workspace</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#example"><span class="nav-text">example</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E5%BF%97"><span class="nav-text">日志</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Jenkins"><span class="nav-text">Jenkins</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E9%99%86"><span class="nav-text">登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5jenkins%E5%AE%B9%E5%99%A8"><span class="nav-text">进入jenkins容器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Steps"><span class="nav-text">Steps</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Create-a-Jenkins-Item"><span class="nav-text">Create a Jenkins Item</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configure-the-Hook-Trigger"><span class="nav-text">Configure the Hook Trigger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configure-Webhook-on-Registry"><span class="nav-text">Configure Webhook on Registry</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Github"><span class="nav-text">Github</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gitlab"><span class="nav-text">Gitlab</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-SCM"><span class="nav-text">Use SCM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Build-Manually"><span class="nav-text">Build Manually</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Access-Token"><span class="nav-text">Access Token</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Credentials"><span class="nav-text">Credentials</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Credential-Type"><span class="nav-text">Credential Type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-Credential"><span class="nav-text">Add Credential</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-Credential"><span class="nav-text">Use Credential</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#API-Token"><span class="nav-text">API Token</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Github-2"><span class="nav-text">Github</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Get-PAT"><span class="nav-text">Get PAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-PAT"><span class="nav-text">Use PAT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gitlab-2"><span class="nav-text">Gitlab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Plugins"><span class="nav-text">Plugins</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Get-Access-Token"><span class="nav-text">Get Access Token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Configure-Access-Token"><span class="nav-text">Configure Access Token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Use-API-Token"><span class="nav-text">Use API Token</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DockerHub"><span class="nav-text">DockerHub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Get-API-Token"><span class="nav-text">Get API Token</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-API-Token-2"><span class="nav-text">Use API Token</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Build"><span class="nav-text">Build</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#slave"><span class="nav-text">slave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0slave"><span class="nav-text">添加slave</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Environment-Variable"><span class="nav-text">Environment Variable</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Global-Env"><span class="nav-text">Global Env</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E7%BD%AEEnv"><span class="nav-text">内置Env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89Env"><span class="nav-text">自定义Env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8Env"><span class="nav-text">常用Env</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Local-Env"><span class="nav-text">Local Env</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%94%9F%E6%95%88%E9%A1%BA%E5%BA%8F"><span class="nav-text">环境变量生效顺序</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jenkinsfile"><span class="nav-text">Jenkinsfile</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%89%E6%8B%A9slave"><span class="nav-text">选择slave</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#workspace"><span class="nav-text">workspace</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jenkinsfile-Example"><span class="nav-text">Jenkinsfile Example</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Integration-with-Shell"><span class="nav-text">Integration with Shell</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Integration-with-Git"><span class="nav-text">Integration with Git</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Integration-with-Docker"><span class="nav-text">Integration with Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-the-execution-environment"><span class="nav-text">Customizing the execution environment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Volumes"><span class="nav-text">Volumes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multiple-Containers"><span class="nav-text">Multiple Containers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Build-Image"><span class="nav-text">Build Image</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Build-with-Tag"><span class="nav-text">Build with Tag</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Using-Dockerfile"><span class="nav-text">Using Dockerfile</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Push-to-Registry"><span class="nav-text">Push to Registry</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bugs"><span class="nav-text">Bugs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Frontend"><span class="nav-text">Frontend</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Integration-with-Gitlab"><span class="nav-text">Integration with Gitlab</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Plugins-2"><span class="nav-text">Plugins</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85GitHub-Plugin"><span class="nav-text">安装GitHub Plugin</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%A5%E5%BF%97"><span class="nav-text">日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Ref"><span class="nav-text">Ref</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">190</span>
+          <span class="site-state-item-count">191</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,7 +259,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+      <time title="Modified: 2022-09-29 10:25:40" itemprop="dateModified" datetime="2022-09-29T10:25:40Z">2022-09-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -303,45 +303,184 @@
 <h1 id="Jenkins"><a class="header-anchor" href="#Jenkins"></a>Jenkins</h1>
 <p>Jenkins是一个开源的CICD工具</p>
 <h2 id="安装"><a class="header-anchor" href="#安装"></a>安装</h2>
-<p>建议以容器形式安装并运行jenkins</p>
+<p>建议<a target="_blank" rel="noopener" href="https://www.jenkins.io/doc/book/installing/docker/">以容器形式安装并运行jenkins</a></p>
 <p>容器形式运行jenkins，需要注意jenkins的数据持久化， jenkins的数据目录为<code>/var/jenkins_home</code> ， 需要将其挂载到宿主机的某个目录</p>
 <p>注意，以容器形式运行的jenkins，其<strong>主体是容器</strong>，因此后续配置SSH 公钥，SSH私钥等等操作，都是对于Jenkins容器（而非宿主机）的。 甚至Jenkins容器对宿主机的ssh登陆也需要手动配置</p>
 <ol>
 <li>
 <p>pull镜像：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull jenkins/jenkins</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker pull jenkins/jenkins</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>启动容器：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d -uroot -p 8081:8080 -p 50000:50000 --name jenkins -v /home/jenkins_home:/var/jenkins_home -v /etc/localtime:/etc/localtime jenkins/jenkins</span><br><span class="line"></span><br><span class="line">参数说明：</span><br><span class="line">-d                 	 # -d:后台启动</span><br><span class="line">-u root              # 指定容器的用户</span><br><span class="line">--name jenkins       # 容器实例名</span><br><span class="line">--restart=always     # 容器随docker自启动，因为重启docker时，默认容器都会被关闭</span><br><span class="line">-p                   # -p host_port:container_port: 指定将主机的端口映射到容器的端口</span><br><span class="line">-v                   # 映射目录（给容器挂载存储卷）</span><br><span class="line">-e                   # 指定环境变量</span><br><span class="line"></span><br><span class="line">注意：</span><br><span class="line">1. 将宿主机端口映射到容器端口，映射端口不要和宿主机冲突</span><br><span class="line">2. 将容器对应的数据目录映射到宿主机上（实现数据持久化）</span><br><span class="line">3. 将宿主机node、maven等前后台构建工具（环境变量）映射到容器中</span><br><span class="line">4. Jenkins镜像创建的容器自带Git工具（/usr/bin/git）</span><br><span class="line">5. Jenkins镜像创建的容器自带java环境（/usr/local/openjdk-8/bin/java）</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>接下来就可以通过浏览器访问jenkins</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d -uroot -p 8081:8080 -p 50000:50000 --name jenkins -v /home/jenkins_home:/var/jenkins_home -v /etc/localtime:/etc/localtime jenkins/jenkins</span><br><span class="line"></span><br><span class="line">参数说明：</span><br><span class="line">-d                 	 # -d:后台启动</span><br><span class="line">-u root              # 指定容器的用户</span><br><span class="line">--privileged				 # 	Running Docker in Docker currently requires privileged access to function properly. </span><br><span class="line">--name jenkins       # 容器实例名</span><br><span class="line">--restart=always     # 容器随docker自启动，因为重启docker时，默认容器都会被关闭</span><br><span class="line">-p                   # -p host_port:container_port: 指定将主机的端口映射到容器的端口</span><br><span class="line">-v                   # 映射目录（给容器挂载存储卷）</span><br><span class="line">-e                   # 指定环境变量</span><br><span class="line"></span><br><span class="line">注意：</span><br><span class="line">1. 将宿主机端口映射到容器端口，映射端口不要和宿主机冲突</span><br><span class="line">2. 将容器对应的数据目录映射到宿主机上（实现数据持久化）</span><br><span class="line">3. 将宿主机node、maven等前后台构建工具（环境变量）映射到容器中</span><br><span class="line">4. Jenkins镜像创建的容器自带Git工具（/usr/bin/git）</span><br><span class="line">5. Jenkins镜像创建的容器自带java环境（/usr/local/openjdk-8/bin/java）</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
+<p>接下来就可以通过浏览器访问jenkins</p>
 <h2 id="登陆"><a class="header-anchor" href="#登陆"></a>登陆</h2>
 <p>密码保存在容器的<code>/var/jenkins_home/secrets/initialAdminPassword</code>中，如果忘记了登录密码，可以查看该文件</p>
 <h2 id="进入jenkins容器"><a class="header-anchor" href="#进入jenkins容器"></a>进入jenkins容器</h2>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container exec jenkins bash</span><br></pre></td></tr></table></figure>
-<h1 id="SCM"><a class="header-anchor" href="#SCM"></a>SCM</h1>
-<p>SCM就是Source Code Management， 即github， gitlab这样的代码托管平台， jenkins可以用git从SCM上clone代码，并进行构建</p>
+<h1 id="Steps"><a class="header-anchor" href="#Steps"></a>Steps</h1>
+<h2 id="Create-a-Jenkins-Item"><a class="header-anchor" href="#Create-a-Jenkins-Item"></a>Create a Jenkins Item</h2>
+<ol>
+<li>点击&quot;New Item&quot;, 选择&quot;Pipeline&quot;形式
 <ul>
-<li>jenkins要从SCM上clone代码，需要先在SCM上配置jenkins的ssh公钥
+<li>因为我喜欢用pipeline script. 而Freestyle我还不会..</li>
+</ul>
+</li>
+<li>进入Jenkins的 job configuration页面</li>
+</ol>
+<h2 id="Configure-the-Hook-Trigger"><a class="header-anchor" href="#Configure-the-Hook-Trigger"></a>Configure the Hook Trigger</h2>
+<p>在<strong>Build Triggers</strong> 勾选:</p>
 <ul>
-<li>注意，如果是以容器形式运行的jenkins，这个“公钥”也必须是jenkins容器而非宿主机的公钥</li>
+<li>Github: <strong>GitHub hook trigger for GITScm polling</strong>
+<ul>
+<li>by selecting this trigger, this job will run whenever Jenkins receive git hub webhook request from git hub. Git hub webhook will send request according to your choices which you selected in “which events would you like to trigger this webhook” option in git hub webhooks.<br>
+That’s all we have successfully configured git hub webhook for Jenkins.</li>
+</ul>
+</li>
+<li>Gitlab:  <strong>Build when a change is pushed to GitLab. GitLab webhook URL</strong>
+<ul>
+<li>这需要Jenkins安装gitlab插件</li>
 </ul>
 </li>
 </ul>
-<p>在job configuration页面，可以配置job的SCM， 由于Jenkins构建需要jenkinsfile， 因此还需要指定jenkinsfile在代码仓库中的位置（所在分支、脚本名等）</p>
+<h2 id="Configure-Webhook-on-Registry"><a class="header-anchor" href="#Configure-Webhook-on-Registry"></a>Configure Webhook on Registry</h2>
+<blockquote>
+<p>Webhooks are <strong>event</strong>s sent by a webhook provider to your app</p>
+</blockquote>
+<p>jenkins + github配置 webhook教程：<a target="_blank" rel="noopener" href="https://www.decodingdevops.com/configure-github-web-hook-for-jenkins/">https://www.decodingdevops.com/configure-github-web-hook-for-jenkins/</a></p>
+<p>jenkins可以暴露给github和gitlab等代码托管平台一个webhook url, 每当用户在代码托管平台触发某些事件时（比如进行了push，merge等），后者就可以给jenkins发送一个hook，让jenkins进行构建</p>
 <ul>
-<li>Branches to build：即要clone的代码分支</li>
-<li>Script Path： jenkinsfile所在目录，包括其名字
+<li>
+<p>jenkins在收到SCM的hook后，会检查在jenkins上注册的SCM 仓库，如果发现某个仓库的信息和hook信息一致，jenkins的SCM插件（gitlab插件/github插件）就会去检查SCM上的仓库内容，如果该仓库内容有改动，就会发起一次build</p>
 <ul>
-<li>jenkinsfile不一定名为<code>jenkinsfile</code>, 它可以自由命名， jenkins根据Script Path来找到jenkinsfile</li>
+<li>这意味着如果本次push没有对内容做更改，jenjins插件就不会检查出变动，也就不会发起构建。 对于用户来说，这意味着jenkins正常收到了hook消息，却一直无法触发构建，jenkins log中也查不到信息（GitHub Hook Log到了“Changes not found”就结束了，没有下文）， <strong>需要在job的<code>Github Hook Log</code>页面查看信息</strong>（该页面只有github插件有）</li>
+</ul>
+</li>
+<li>
+<p>Note: Jenkins默认暴露8080端口，与github通信，因此要确保8080端口开放，否则github发送的消息无法到达jenkins.</p>
+<ul>
+<li>由于我设置了容器的端口映射, Jenkins容器的8080端口实际被映射到了宿主机的8081端口, 因此下文的Payload URL中的端口是8081</li>
 </ul>
 </li>
 </ul>
-<p>Jenkins从SCM得到代码以及jenkins脚本后，就要根据脚本进行项目构建， 而项目构建不一定由jenkins主机来做。 jenkins采用master - slave模式， jenkins主机作为master，可以将代码和脚本交给slave，让脚本执行构建过程</p>
+<h3 id="Github"><a class="header-anchor" href="#Github"></a>Github</h3>
+<p>默认是<code>http://[jenkins-host-ip]:[port]/github-webhook/</code>, 也可以在配置页面override该url</p>
+<p>先进入对应的仓库.</p>
+<ol>
+<li>
+<p>click on the <strong>Settings</strong> tab</p>
+</li>
+<li>
+<p>then click <strong>Webhooks</strong> from the left panel.</p>
+</li>
+<li>
+<p>Now, click on the <strong>Add webhook</strong>  button at the right.</p>
+</li>
+<li>
+<p>接下来你可以看到一个表单:</p>
+<ol>
+<li>
+<p><strong>Payload URL</strong> : <code>http://[jenkins-host-ip]:[port]/github-webhook/</code>, 最终的Payload URL形如:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://124.222.135.47:8081/github-webhook/</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Jenkins域名必须是可被Github可访问到的, 所以一般都是公网IP</li>
+<li>也可以在配置页面override该url</li>
+</ul>
+</li>
+<li>
+<p><strong>Content type</strong>:  pick <strong>application/json</strong></p>
+</li>
+<li>
+<p>Leave the rest of the options as they are, with the <strong>Just the push event</strong> option selected. For simplicity, I said before that GitHub would call Jenkins only when there’s a push in the repo. If you want to configure other actions, you’ll have to select <strong>Let me select individual events</strong>, but for now, let’s keep it simple.</p>
+</li>
+<li>
+<p>Finally, click on the green <strong>Add webhook</strong> button.</p>
+</li>
+</ol>
+</li>
+<li>
+<p>现在已经Webhook配置完毕了. 每当仓库被push, Github就会向设置好的Payload URL发送webhook</p>
+</li>
+</ol>
+<h3 id="Gitlab"><a class="header-anchor" href="#Gitlab"></a>Gitlab</h3>
+<p>jenkins + gitlab配置webhook很简单</p>
+<ol>
+<li>得到<strong>Payload URL</strong>: 之前在<strong>Build Triggers ** 勾选</strong>Build when a change is pushed to GitLab. GitLab webhook URL: [xxx] **时就可以得到Payload URL
+<ul>
+<li>形如<code>https://JENKINS_URL/project/YOUR_JOB</code></li>
+</ul>
+</li>
+<li>复制Payload URL</li>
+<li>进入Gitlab对应仓库, 进入<strong>Settings</strong> -&gt; <strong>Webhooks</strong>,
+<ul>
+<li><strong>URL</strong>: 填写 Payload URL</li>
+<li><strong>Secret Token</strong>: 可以不填. 配置步骤:
+<ol>
+<li>In the configuration of your Jenkins job, in the GitLab configuration section, select <strong>Advanced</strong>.</li>
+<li>Under <strong>Secret Token</strong>, select <strong>Generate</strong>.</li>
+<li>将生成的<strong>Secret Token</strong>粘贴到Gitlab的<strong>Secret Token</strong></li>
+</ol>
+</li>
+<li><strong>Trigger</strong>: 选择<strong>Push events</strong></li>
+<li><strong>SSL verification</strong>: 可以勾上<strong>Enable SSL verification</strong></li>
+</ul>
+</li>
+<li>Finally, click on the green <strong>Add webhook</strong> button.</li>
+<li>To test the webhook, select <strong>Test</strong>.</li>
+</ol>
+<h2 id="Use-SCM"><a class="header-anchor" href="#Use-SCM"></a>Use SCM</h2>
+<p>SCM就是Source Code Management， 即github/gitlab上的repository. jenkins可以用git从SCM上clone代码，并进行构建.</p>
+<ul>
+<li>jenkins需要SCM上clone Jenkinsfile,甚至有可能调用其他的API. 这就需要在Jenkins上[配置Credential](# Credentials)
+<ul>
+<li>对于SSH Key而言, 需要先在对应的Registry上配置Jenkins endpoint的公钥
+<ul>
+<li>注意, 由于容器和宿主机的公私钥不一样. 所以如果是以容器形式运行的jenkins, 这个“公钥”也必须是jenkins容器而非宿主机的公钥</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>我选择的Jenkinsfile形式是Pipeline, 且Jenkinsfile放在SCM中. 因此我在<strong>Pipleline</strong>区域设置:</p>
+<ol>
+<li>
+<p><strong>Definition</strong>: <strong>Pipeline script from SCM</strong></p>
+<ul>
+<li>这样Jenkins就会拉取SCM中的Jenkinsfile.</li>
+<li>如果选择<strong>Pipeline script</strong>, 则会在Jenkins中设置Jenkinsfile, 这样太僵硬了</li>
+</ul>
+</li>
+<li>
+<p><strong>Repositories</strong>: 指定要clone的jenkinsfile的位置（ SCM地址, 所在分支, 脚本名 ）</p>
+<ol>
+<li><strong>Repository URL</strong>: 使用HTTPS url和ssh url都可以</li>
+<li><strong>Credentials</strong>: 指定Jenkins使用的私钥, 由于是容器形式的Jenkins ,就选择容器的私钥</li>
+</ol>
+</li>
+<li>
+<p><strong>Branches to build</strong>: 选择使用的分支, 我只用master分支</p>
+<ul>
+<li>
 <p>注意：</p>
 <p>使用github作为SCM时， 如果<code>Branches to build</code> 设为空，则必须取消lightweight checkout，详见https://issues.jenkins.io/browse/JENKINS-46588</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Script Path</strong>: 指定SCM中的Jenkinsfile的名字</p>
+<ul>
+<li>注意要写全名. 比如我的脚本为: <code>Jenkinsfile-fast.groovy</code>, 则在该栏填这个名字</li>
+</ul>
+</li>
+</ol>
+<h2 id="Build-Manually"><a class="header-anchor" href="#Build-Manually"></a>Build Manually</h2>
+<p>Webhook会自动触发构建, 当然也可以手动构建:</p>
+<ol>
+<li>click on the <strong>Build Now</strong> link</li>
+</ol>
 <h1 id="Access-Token"><a class="header-anchor" href="#Access-Token"></a>Access Token</h1>
 <p>jenkins与SCM交互，需要配置对这些SCM的Access Token</p>
 <ol>
@@ -353,7 +492,7 @@
 </ul>
 </li>
 <li>
-<p>在jenkins， 系统管理 -&gt; Manage Credentials -&gt; Stores scoped to Jenkins -&gt; 添加该Token作为凭据</p>
+<p>在jenkins， 系统管理 -&gt; Manage Credentials -&gt; Stores scoped to Jenkins -&gt; 全局凭据 添加该Token作为凭据</p>
 <ul>
 <li>类型选择Username and password</li>
 <li>在用户名中输入一个不存在的用户名</li>
@@ -382,55 +521,185 @@
 </li>
 </ol>
 <h1 id="Credentials"><a class="header-anchor" href="#Credentials"></a>Credentials</h1>
-<p>Jenkins采用CS模式与其他服务通信（比如gitlab的webhook、 jenkins slave节点）， 通信的建立需要有<strong>凭据（Credential）</strong></p>
-<h2 id="添加Credential"><a class="header-anchor" href="#添加Credential"></a>添加Credential</h2>
+<p><a target="_blank" rel="noopener" href="https://www.jenkins.io/zh/doc/book/using/using-credentials/">https://www.jenkins.io/zh/doc/book/using/using-credentials/</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/elva1087penny/article/details/115387664">https://blog.csdn.net/elva1087penny/article/details/115387664</a></p>
+<p>Jenkins要调用其他服务的API, 这需要Credential( 凭据, 事实上就是一种密钥 ).</p>
+<p>根据目标平台的不同, Jenkins可以使用SSH Key, Username and password, API Token 等形式的凭据</p>
+<ul>
+<li>Credential不仅可以用于免密登陆平台, 免密clone, 还可以调用平台的各种API</li>
+</ul>
+<h2 id="Credential-Type"><a class="header-anchor" href="#Credential-Type"></a>Credential Type</h2>
+<p>Jenkins可以存储以下类型的credentials:</p>
+<ul>
+<li><strong>Secret text</strong> - API token之类的token (如GitHub个人访问token)</li>
+<li><strong>Username and password</strong> - 可以为独立的字段，也可以为冒号分隔的字符串：<code>username:password</code>(更多信息请参照 <a target="_blank" rel="noopener" href="https://www.jenkins.io/zh/doc/book/pipeline/jenkinsfile#handling-credentials">处理 credentials</a>),</li>
+<li><strong>Secret file</strong> - 保存在文件中的加密内容</li>
+<li><strong>SSH Username with private key</strong>: 需要jenkins终端已经将ssh 公钥发送给了目标主机,  以后只需要私钥就可以登录目标主机 )
+<ul>
+<li>Github和Gitlab都可以使用SSH Username with private key</li>
+</ul>
+</li>
+<li><strong>Certificate</strong> - a <a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc7292">PKCS#12 证书文件</a> 和可选密码</li>
+<li>此外, 通过安装第三方插件, 还可以使用别的类型的凭据:
+<ul>
+<li><strong>Docker Host Certificate Authentication</strong> credentials: 需要安装Docker插件</li>
+<li><strong>Gitlab API Token</strong>: 同理, 使用API Token
+<ul>
+<li>注意, Gitlab认证不仅需要配置Credential, 还需要额外的步骤, [参见下文](#Configure Access Token)</li>
+</ul>
+</li>
+<li><strong>Github App</strong>: 同理, 但我不知道有什么用, 也不知道怎么用. Github认证我使用的是SSH Key</li>
+</ul>
+</li>
+</ul>
+<h2 id="Add-Credential"><a class="header-anchor" href="#Add-Credential"></a>Add Credential</h2>
+<p>需要<strong>Credentials</strong>插件</p>
 <ol>
-<li>
-<p>进入<code>Manage Jenkins</code> --&gt; <code>Manage Credentials</code> --&gt; <code>Stores scoped to Jenkins</code> --&gt; <code>Global Credentials(unrestricted)</code>, 点击<code>Add Credentials</code></p>
+<li>进入<code>Manage Jenkins</code> --&gt; <code>Manage Credentials</code> --&gt; <code>Stores scoped to Jenkins</code> --&gt; <code>Global Credentials(unrestricted)</code>, 点击<code>Add Credentials</code></li>
+<li>填写表单:
+<ul>
+<li><strong>Type</strong>: 根据不同的通信类型选择不同的凭据形式</li>
+<li><strong>Scope</strong>: 选择Global</li>
+<li><strong>Description</strong>: 可用于标记别名方便区别或记录凭据作用, 写上为妙</li>
+<li><strong>ID</strong>: Credential的唯一标识, 会显示在项目构建时的Credentials插件选项中.
+<ul>
+<li>可自定义, 若为空则自动生成.</li>
+</ul>
 </li>
-<li>
-<p>根据不同的通信类型选择不同的凭据形式，并填写即可</p>
+</ul>
 </li>
-<li>
-<p>以ssh私钥连接（ 这意味着jenkins主机已经将ssh 公钥发送给了目标主机， 以后只需要私钥就可以登录目标主机 ）为例，需要填写:</p>
+</ol>
+<ul>
+<li>对于SSH Key, 需要填写( 前提是已经在Github上配置了Jenkins的公钥 ):
 <ul>
 <li>Username: ssh连接采用的的用户名</li>
 <li>Private Key：ssh连接所需的私钥</li>
 </ul>
 </li>
-</ol>
-<h1 id="webhook"><a class="header-anchor" href="#webhook"></a>webhook</h1>
-<blockquote>
-<p>Webhooks are <strong>event</strong>s sent by a webhook provider to your app</p>
-</blockquote>
-<p>jenkins + github配置 webhook教程：<a target="_blank" rel="noopener" href="https://www.decodingdevops.com/configure-github-web-hook-for-jenkins/">https://www.decodingdevops.com/configure-github-web-hook-for-jenkins/</a></p>
-<p>jenkins + gitlab配置webhook很简单</p>
-<p>jenkins可以暴露给github和gitlab等代码托管平台一个webhook url, 每当用户在代码托管平台触发某些事件时（比如进行了push，merge等），后者就可以给jenkins发送一个hook，让jenkins进行构建</p>
+</ul>
+<h2 id="Use-Credential"><a class="header-anchor" href="#Use-Credential"></a>Use Credential</h2>
+<h1 id="API-Token"><a class="header-anchor" href="#API-Token"></a>API Token</h1>
+<p>API Token是一种用于认证的密钥, 其 作用SSH Key, Username and password 一样. 可以用API Token来访问平台提供的各种服务.</p>
+<h2 id="Github-2"><a class="header-anchor" href="#Github-2"></a>Github</h2>
+<p>Github中的API Token称作“PAT”( Personal Access Token ).</p>
+<p>Github的Credential支持SSH Key, 也支持PAT. 虽然我使用前者, 但用后者也是可行的</p>
 <ul>
-<li>
-<p>jenkins在收到SCM的hook后，会检查在jenkins上注册的SCM 仓库，如果发现某个仓库的信息和hook信息一致，jenkins的SCM插件（gitlab插件/github插件）就会去检查SCM上的仓库内容，如果该仓库内容有改动，就会发起一次build</p>
+<li>Github API Token: 首先要[得到PAT](Get Get API Token), 然后将其[添加进Crendential](#Add Credential), 可以以两种Type添加
 <ul>
-<li>这意味着如果本次push没有对内容做更改，jenjins插件就不会检查出变动，也就不会发起构建。 对于用户来说，这意味着jenkins正常收到了hook消息，却一直无法触发构建，jenkins log中也查不到信息（GitHub Hook Log到了“Changes not found”就结束了，没有下文）， <strong>需要在job的<code>Github Hook Log</code>页面查看信息</strong>（该页面只有github插件有）</li>
+<li><strong>Username and password</strong> : <code>Username</code> is the GitHub user ID and <code>Password</code> is the Password or a <a target="_blank" rel="noopener" href="https://github.com/blog/1509-personal-api-tokens">personal API Token</a> (recommended).</li>
+<li>However, <a target="_blank" rel="noopener" href="https://developer.github.com/changes/2020-02-14-deprecating-password-auth/">use of a password with the GitHub API is now <strong>deprecated</strong></a>.</li>
+<li><strong>Secret Text</strong>:
+<ul>
+<li>Scope: Global</li>
+<li>Secret: 填写之前生成的PAT</li>
+<li>ID: 写一个名字</li>
+<li>Description：可以填入一些描述，如 GitHub with token</li>
 </ul>
 </li>
 </ul>
-<p>下面演示github的webhook配置过程：</p>
+</li>
+</ul>
+<h3 id="Get-PAT"><a class="header-anchor" href="#Get-PAT"></a>Get PAT</h3>
+<p><a target="_blank" rel="noopener" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token">Creating a personal access token</a></p>
 <ol>
-<li>得到webhook url
+<li>On Github, click <strong>Settings</strong></li>
+<li>In the left sidebar, click <strong>Developer settings</strong>.</li>
+<li>In the left sidebar, click <strong>Personal access tokens</strong>.</li>
+<li>Click <strong>Generate new token</strong>.</li>
+<li>Give your token a descriptive name.</li>
+<li>To give your token an expiration, select the <strong>Expiration</strong> drop-down menu, then click a default or use the calendar picker.</li>
+<li>Select the scopes, or permissions, you'd like to grant this token. To use your token to access repositories from the command line, select <strong>repo</strong>.</li>
+<li>Click <strong>Generate token</strong>.
 <ul>
-<li>对于gitlab，jenkins在安装gitlab插件后，可以在job configuration页面的**Build Triggers ** 勾选： <code>Build when a change is pushed to GitLab. GitLab webhook URL ***</code>, 并复制webhook url</li>
-<li>对于github: 默认是<code>http://[jenkins-host-ip]:[port]/github-webhook/</code>， 也可以在配置页面override该url</li>
+<li><strong>Warning:</strong> Treat your tokens like passwords and keep them secret. When working with the API, use tokens as environment variables instead of hardcoding them into your programs.</li>
 </ul>
 </li>
-<li>在gitlab/github 仓库的设置里面添加webhook
-<ul>
-<li>github： 填写<strong>Payload URL</strong>字段</li>
-</ul>
-</li>
-<li>在Jenkins的 job configuration页面的 <strong>Build Triggers</strong> 勾选 <strong>GitHub hook trigger for GITScm polling.</strong></li>
 </ol>
-<p>Note: Jenkins默认暴露8080端口，与github通信，因此要确保8080端口开放，否则github发送的消息无法到达jenkins</p>
-<h1 id="slave"><a class="header-anchor" href="#slave"></a>slave</h1>
+<h3 id="Use-PAT"><a class="header-anchor" href="#Use-PAT"></a>Use PAT</h3>
+<p><em>For more information, see <a target="_blank" rel="noopener" href="https://github.com/jenkinsci/gitlab-plugin#jenkins-to-gitlab-authentication">Jenkins-to-GitLab authentication</a>.</em></p>
+<p>根据[Add Credential](# Add Credential)将之前配置的API Token配置为Credential</p>
+<ul>
+<li><strong>Type</strong>: <strong>Gitlab API Token</strong></li>
+<li><strong>API Token</strong>: 填写之前生成的API Token</li>
+</ul>
+<h2 id="Gitlab-2"><a class="header-anchor" href="#Gitlab-2"></a>Gitlab</h2>
+<p>Gitlab和Github一样, 可以用SSH Username with private key (这里就不演示了) 和 Gitlab API Token.</p>
+<h3 id="Plugins"><a class="header-anchor" href="#Plugins"></a>Plugins</h3>
+<p>Gitlab API Token</p>
+<p>需要安装插件:</p>
+<ul>
+<li>GitLab Plugin ;</li>
+<li>Gitlab Hook</li>
+<li>Build Authorization Token Root</li>
+</ul>
+<h3 id="Get-Access-Token"><a class="header-anchor" href="#Get-Access-Token"></a>Get Access Token</h3>
+<p>Create a personal access token to authorize Jenkins to access GitLab.</p>
+<ol>
+<li>Sign in to GitLab as the user to be used with Jenkins.</li>
+<li>On the top bar, in the top right corner, select your avatar.</li>
+<li>Select <strong>Edit profile</strong>.</li>
+<li>On the left sidebar, select <strong>Access Tokens</strong>.</li>
+<li>Select the cope.
+<ul>
+<li><strong>api</strong>: 选上</li>
+<li><strong>read_user</strong>: 选上</li>
+<li><strong>read_repository</strong>: 选上</li>
+<li><strong>write_repository</strong>: 选上</li>
+</ul>
+</li>
+<li>点击 <strong>Create a <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html">personal access token</a></strong></li>
+<li>Copy the personal access token. You need it to <a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/integration/jenkins.html#configure-the-jenkins-server">configure the Jenkins server</a>.</li>
+</ol>
+<h3 id="Configure-Access-Token"><a class="header-anchor" href="#Configure-Access-Token"></a>Configure Access Token</h3>
+<p><em>For more information, see <a target="_blank" rel="noopener" href="https://github.com/jenkinsci/gitlab-plugin#jenkins-to-gitlab-authentication">Jenkins-to-GitLab authentication</a>.</em></p>
+<p>根据[Add Credential](# Add Credential)将之前配置的API Token配置为Credential</p>
+<ul>
+<li><strong>Type</strong>: <strong>Gitlab API Token</strong></li>
+<li><strong>API Token</strong>: 填写之前生成的API Token</li>
+</ul>
+<hr>
+<p>理论上讲, 这样做之后Credential配置就结束了, 但是Gitlab插件还提供了一些深层次的Jenkins集成功能, 所以需要在Jenkins中继续配置, 来开启这些功能:</p>
+<ol>
+<li>Select <strong>Manage Jenkins &gt; Configure System</strong>.</li>
+<li>In the <strong>GitLab</strong> section, select <strong>Enable authentication for ‘/project’ end-point</strong>.</li>
+<li>然后填写表单:
+<ol>
+<li><strong>Connection name</strong>: 自定义</li>
+<li><strong>GitLab host URL</strong>: Enter the GitLab server’s URL, 比如校园网公网的gitlab: <code>https://git.nju.edu.cn/</code></li>
+<li><strong>Credentials</strong>: 选择之前配置的Credential</li>
+</ol>
+</li>
+<li>点击 <strong>Test Connection</strong>, 出现 Success, 表示成功</li>
+</ol>
+<h3 id="Use-API-Token"><a class="header-anchor" href="#Use-API-Token"></a>Use API Token</h3>
+<ol>
+<li>进入Jenkins Item的GitLab Connection, 填写GitLab Connection</li>
+<li>选择Use alternative credential</li>
+<li><strong>Credential</strong> : 选择之前生成的API Token</li>
+</ol>
+<h2 id="DockerHub"><a class="header-anchor" href="#DockerHub"></a>DockerHub</h2>
+<p>我们需要Credential来<strong>log in</strong> Dockerhub, 以从Dockerhub pull或者向其push镜像</p>
+<p>Dockerhub支持username-password和API Token作为Credential</p>
+<h2 id="Get-API-Token"><a class="header-anchor" href="#Get-API-Token"></a>Get API Token</h2>
+<ol>
+<li>
+<p>Get the token using the following link.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">https://hub.docker.com/settings/security</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>Create an access token using the New Access Token button on the security page.</p>
+</li>
+</ol>
+<hr>
+<h2 id="Use-API-Token-2"><a class="header-anchor" href="#Use-API-Token-2"></a>Use API Token</h2>
+<p>假设我们把username-password 或者 API Token 配置为了Credential, 就可以在jenkinsfile中使用:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">stage(<span class="string">&quot;login to dockerhub&quot;</span>)&#123;</span><br><span class="line">        withCredentials([usernamePassword(<span class="attr">credentialsId:</span> <span class="string">&#x27;DOCKERHUB_KEY&#x27;</span>, <span class="attr">passwordVariable:</span> <span class="string">&#x27;password&#x27;</span>, <span class="attr">usernameVariable:</span> <span class="string">&#x27;username&#x27;</span>)]) &#123;</span><br><span class="line">            sh <span class="string">&#x27;docker login -u $username -p $password&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Credential:<code>DOCKERHUB_KEY</code></li>
+</ul>
+<h1 id="Build"><a class="header-anchor" href="#Build"></a>Build</h1>
+<p>Jenkins从SCM得到代码以及jenkins脚本后，就要根据脚本进行项目构建， 而项目构建不一定由jenkins主机来做。 jenkins采用master - slave模式， jenkins主机作为master，可以将代码和脚本交给slave，让脚本执行构建过程</p>
+<h2 id="slave"><a class="header-anchor" href="#slave"></a>slave</h2>
 <p>jenkins是master-slave模式， jenkins自身只是指挥者， 它<strong>根据jenkinsfile的内容选择slave</strong>，指挥slave运行脚本</p>
 <ul>
 <li>
@@ -495,12 +764,125 @@
 <p>也就是说，如果在配置好slave主机的docker之前（即将用户添加至docker群组并重新登录），就令主机成为slave节点，这就会导致jenkins agent使用不了docker，报错:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Got permission denied while trying to connect to the Docker daemon socket</span><br></pre></td></tr></table></figure>
 <p>解决方法是删除该节点，重新配置节点</p>
-<h2 id=""><a class="header-anchor" href="#"></a></h2>
 </li>
 </ol>
+<h1 id="Environment-Variable"><a class="header-anchor" href="#Environment-Variable"></a>Environment Variable</h1>
+<ul>
+<li>
+<p>Jenkins<strong>内置</strong>了一系列环境变量, 它们都是<strong>global</strong>的, 即可以在所有Jenkinsfile使用, 且作用域是整个Jenkinsfile</p>
+</li>
+<li>
+<p>用户也可以在Jenkinsfike中自定义环境变量, 它们都是local per stage的(即只在指定的stage生效).</p>
+</li>
+<li>
+<p>用法: (前提是环境变量在作用域内)</p>
+<ul>
+<li>可以在Jenkinsfile中通过 <code>env</code> 关键字使用: <code>$&#123;env.BUILD_ID&#125;$</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Global-Env"><a class="header-anchor" href="#Global-Env"></a>Global Env</h2>
+<h3 id="内置Env"><a class="header-anchor" href="#内置Env"></a>内置Env</h3>
+<ul>
+<li>
+<p>可以通过<code>$&#123;YOUR_JENKINS_HOST&#125;/env-vars.html</code> 查看所有内置环境变量</p>
+</li>
+<li>
+<p>通过执行 <code>printenv</code> shell 命令获取：</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">sh <span class="string">&quot;printenv&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>使用Jenkins的<strong>内置</strong>环境变量时:</p>
+<ul>
+<li>
+<p>可以不写<code>env</code>, 如:<code>$&#123;BUILD_ID&#125;</code></p>
+</li>
+<li>
+<p>如果使用shell 命令, 甚至可以不用写 <code>&#123;&#125;</code>, 如: <code>$BUILD_ID</code></p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">stage(<span class="string">&quot;Read Env Variables&quot;</span>) &#123;</span><br><span class="line">                echo <span class="string">&quot;带 env 的读取方式：$&#123;env.BUILD_NUMBER&#125;&quot;</span></span><br><span class="line">                echo <span class="string">&quot;不带 env 的读取方式：$&#123;BUILD_NUMBER&#125;&quot;</span></span><br><span class="line">                sh <span class="string">&#x27;echo &quot;shell 中读取方式 $BUILD_NUMBER&quot;&#x27;</span></span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>以上用法会让人困惑, 保险起见还是全部用<code>$&#123;env.BUILD_ID&#125;$</code>吧</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="自定义Env"><a class="header-anchor" href="#自定义Env"></a>自定义Env</h3>
+<p>在Jenkins→Manage Jenkins→Confiure System找到Global properties→勾选”Environment variables”选框，单击“Add”按钮，在输入框中输入变量名和变量值即可。</p>
+<p>自定义全局环境变量也会被加入<code>env</code>的属性列表中</p>
+<h3 id="常用Env"><a class="header-anchor" href="#常用Env"></a>常用Env</h3>
+<ul>
+<li>
+<p>BUILD_NUMBER 构建号，累加的数字。在打包时，它可作为制品名称的一部分，比如server-${BUILD_NUMBER}.jar</p>
+</li>
+<li>
+<p>BRANCH_NAME 多分支pipeline项目支持。当需要根据不同的分支做不同的事情时就会用到，比如通过代码将release分支发布到生产环境中、master分支发布到测试环境中。</p>
+</li>
+<li>
+<p>BUILD_URL 当前构建的页面URL。如果构建失败，则需要将失败的构建链接放到邮件通知中，这个链接就可以是BUILD_URL</p>
+</li>
+<li>
+<p>GIT_BRANCH 通过git拉取的源码构建的项目才会有此变量。在使用env变量时，需要注意不同类型的项目，env变量所包含的属性及其值是不一样的。比如普通pipeline任务中的GIT_BRANCH变量值为roigin/master，在多分支pipeline中GIT BRANCH变量的值为master</p>
+<p>所以，在pipeline中根据分支进行不同行为的逻辑处理时，需要留意。</p>
+</li>
+<li>
+<p>BUILD_ID 当前版本ID，与BUILD_NUMBER相同，用于在1.597+中创建的构建，但较旧版本的YYYY-MM-DD_hh-mm-ss时间戳记</p>
+</li>
+<li>
+<p>BUILD_DISPLAY_NAME 当前版本的显示名称，默认为“＃153”</p>
+</li>
+<li>
+<p>JOB_NAME 此构建项目的名称，如“foo”或“foo / bar”</p>
+</li>
+<li>
+<p>JOB_BASE_NAME 此建立项目的名称将剥离文件夹路径，例如“bar / foo”的“foo”</p>
+</li>
+<li>
+<p>BUILD_TAG: <code>jenkins- $ &#123;JOB_NAME&#125; - $ &#123;BUILD_NUMBER&#125; </code>的字符串。JOB_NAME中的所有正斜杠（/）都会用破折号（ - ）替换。方便放入资源文件，jar文件等，以方便识别</p>
+</li>
+<li>
+<p>EXECUTOR_NUMBER 识别执行此构建的当前执行程序（在同一台计算机的执行程序中）的唯一编号。这是您在“构建执行者状态”中看到的数字，但数字从0开始，而不是1。</p>
+</li>
+<li>
+<p>NODE_NAME 代理的名称</p>
+</li>
+<li>
+<p>NODE_LABELS 空格分隔的节点分配的标签列表</p>
+</li>
+<li>
+<p>WORKSPACE 分配给构建作为工作区的目录的绝对路径</p>
+</li>
+<li>
+<p>JENKINS_HOME Jenkins主节点上分配的目录绝对路径存储数据</p>
+</li>
+<li>
+<p>JENKINS_URL 完整的Jenkins网址，例如<a href="http://server:port/jenkins/">http://server：port/jenkins/</a> （注意：只有在系统配置中设置了Jenkins URL）</p>
+</li>
+<li>
+<p>JOB_URL 此作业的完整URL，如<a href="http://server:port/jenkins/job/foo/">http://server：port/jenkins/job/foo/</a> （必须设置Jenkins URL）</p>
+</li>
+</ul>
+<h2 id="Local-Env"><a class="header-anchor" href="#Local-Env"></a>Local Env</h2>
+<p>在Jenkinsfile中可以通过内置函数<code>withEnc(['key=value'])</code>来自定义环境变量, 注意它们都是local per stage的:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">node(<span class="string">&#x27;!windows&#x27;</span>) &#123;</span><br><span class="line">    withEnv([<span class="string">&#x27;DISABLE_AUTH=true&#x27;</span>,</span><br><span class="line">             <span class="string">&#x27;DB_ENGINE=sqlite&#x27;</span>]) &#123;</span><br><span class="line">        stage(<span class="string">&#x27;Build&#x27;</span>) &#123;</span><br><span class="line">            echo <span class="string">&quot;Database engine is $&#123;DB_ENGINE&#125;&quot;</span></span><br><span class="line">            echo <span class="string">&quot;DISABLE_AUTH is $&#123;DISABLE_AUTH&#125;&quot;</span></span><br><span class="line">            sh <span class="string">&#x27;printenv&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p><strong>这里的 = 号两侧不能有空格</strong>, 必须是 <code>key=value</code> 的形式</p>
+</li>
+<li>
+<p>如果使用Declarerative Script, 也可以用:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">stage(<span class="string">&#x27;Build&#x27;</span>) &#123;</span><br><span class="line">  environment &#123;</span><br><span class="line">        NAME = <span class="string">&quot;RGYB&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="环境变量生效顺序"><a class="header-anchor" href="#环境变量生效顺序"></a>环境变量生效顺序</h2>
+<p>安装插件：</p>
+<p><a target="_blank" rel="noopener" href="https://wiki.jenkins.io/display/JENKINS/Build+Environment+Plugin">https://</a><a target="_blank" rel="noopener" href="https://wiki.jenkins.io/display/JENKINS/Build+Environment+Plugin">wiki.jenkins.io/display/JENKINS/Build+Environment+Plugin</a></p>
+<p><a target="_blank" rel="noopener" href="https://wiki.jenkins-ci.org/display/JENKINS/EnvInject+Plugin">https://</a><a target="_blank" rel="noopener" href="https://wiki.jenkins-ci.org/display/JENKINS/EnvInject+Plugin">wiki.jenkins-ci.org/display/JENKINS/EnvInject+Plugin</a></p>
+<p>全局环境变量 &lt; Slave 配置环境变量 &lt; Job 参数 &lt; Job injected 环境变量</p>
+<p>一般不Override 全局环境变量, 否则可能出现不可预知的问题</p>
 <h1 id="Jenkinsfile"><a class="header-anchor" href="#Jenkinsfile"></a>Jenkinsfile</h1>
 <p>官网教程：<a target="_blank" rel="noopener" href="https://www.jenkins.io/doc/book/pipeline/">https://www.jenkins.io/doc/book/pipeline/</a></p>
-<p>jenkins根据jenkinsfile来进行构建，该文件有两种写法： <code>Declarative</code>和<code>pipeline script</code>，后者使用groovy语言，表达能力比较强，推荐使用</p>
+<p>jenkins根据jenkinsfile来进行构建，该文件有两种写法： <code>Declarative</code>和<code>pipeline script</code>, 后者使用groovy语言，表达能力比较强，推荐使用</p>
 <p>pipeline script由一个个stage组成，在每个stage内执行一些指令</p>
 <h2 id="选择slave"><a class="header-anchor" href="#选择slave"></a>选择slave</h2>
 <p>后面会看到，jenkins由slave来负责实际的构建过程，而slave就是根据jenkinsfile选择的:</p>
@@ -514,10 +896,104 @@
 <p>输出为<code>[Remote root directory]/workspace</code></p>
 </li>
 </ul>
-<h2 id="example"><a class="header-anchor" href="#example"></a>example</h2>
+<h1 id="Jenkinsfile-Example"><a class="header-anchor" href="#Jenkinsfile-Example"></a>Jenkinsfile Example</h1>
+<h1 id="Integration-with-Shell"><a class="header-anchor" href="#Integration-with-Shell"></a>Integration with Shell</h1>
+<p>Many Pipeline steps also use the named-parameter syntax as a shorthand for creating a Map in Groovy, which uses the syntax <code>[key1: value1, key2: value2]</code>.</p>
+<p>For convenience, when calling steps taking only one parameter (or only one mandatory parameter), the parameter name may be omitted, for example:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">sh <span class="string">&#x27;echo hello&#x27;</span> <span class="comment">/* short form  */</span></span><br><span class="line">sh([<span class="attr">script:</span> <span class="string">&#x27;echo hello&#x27;</span>])  <span class="comment">/* long form */</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Jenkins没有Terminal, 所以shell里面没法用<code>sh 'sudo [...]'</code></li>
+</ul>
+<p>可以利用Shell的返回值:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">sh(<span class="attr">script:</span> <span class="string">&#x27;cmd&#x27;</span>, <span class="attr">returnStdout:</span><span class="literal">true</span>)</span><br></pre></td></tr></table></figure>
+<p>例如:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">LS_RESULT = <span class="string">&quot;$&#123;sh(script:&#x27;ls -lah&#x27;, returnStdout: true).trim()&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+<h1 id="Integration-with-Git"><a class="header-anchor" href="#Integration-with-Git"></a>Integration with Git</h1>
+<p>Many Pipeline steps also use the named-parameter syntax as a shorthand for creating a Map in Groovy, which uses the syntax <code>[key1: value1, key2: value2]</code>. Making statements like the following functionally equivalent:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">git <span class="attr">url:</span> <span class="string">&#x27;git://example.com/amazing-project.git&#x27;</span>, <span class="attr">branch:</span> <span class="string">&#x27;master&#x27;</span></span><br><span class="line">git([<span class="attr">url:</span> <span class="string">&#x27;git://example.com/amazing-project.git&#x27;</span>, <span class="attr">branch:</span> <span class="string">&#x27;master&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<p>e.g.</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">def</span> git_branch = <span class="string">&#x27;master&#x27;</span></span><br><span class="line">   <span class="keyword">def</span> git_repository = <span class="string">&#x27;git@github.com:VolatileReborn/Frontend-VolatileReborn.git&#x27;</span> <span class="comment">//Github</span></span><br><span class="line">   </span><br><span class="line">&lt;Snip&gt;</span><br><span class="line">  </span><br><span class="line">   stage(<span class="string">&#x27;clone from github into slave\&#x27;s workspace. Using branch: &#x27;</span> + <span class="string">&quot;master&quot;</span>) &#123;</span><br><span class="line">        echo <span class="string">&quot;workspace: $&#123;workspace&#125;&quot;</span></span><br><span class="line">        git <span class="attr">branch:</span> <span class="string">&quot;$&#123;git_branch&#125;&quot;</span>, <span class="attr">url:</span> <span class="string">&quot;$&#123;git_repository&#125;&quot;</span></span><br><span class="line">     </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Integration-with-Docker"><a class="header-anchor" href="#Integration-with-Docker"></a>Integration with Docker</h1>
+<p><a target="_blank" rel="noopener" href="https://www.jenkins.io/doc/book/pipeline/docker/">Using Docker with Pipeline </a></p>
+<p>Starting with Pipeline versions 2.5 and higher, Pipeline has built-in support for interacting with Docker from within a <code>Jenkinsfile</code>.</p>
+<ul>
+<li>注意, Jenkins所在主机(宿主机或者容器)必须要安装Docker</li>
+</ul>
+<h3 id="Customizing-the-execution-environment"><a class="header-anchor" href="#Customizing-the-execution-environment"></a>Customizing the execution environment</h3>
+<p>Pipeline is designed to easily use <a target="_blank" rel="noopener" href="https://docs.docker.com/">Docker</a> images as the execution environment for a single <a target="_blank" rel="noopener" href="https://www.jenkins.io/doc/book/glossary/#stage">Stage</a> or the entire Pipeline. Meaning that a user can define the tools required for their Pipeline, without having to manually configure agents.</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    <span class="comment">/* Requires the Docker Pipeline plugin to be installed */</span></span><br><span class="line">    docker.image(<span class="string">&#x27;node:16.13.1-alpine&#x27;</span>).inside &#123;</span><br><span class="line">        stage(<span class="string">&#x27;Test&#x27;</span>) &#123;</span><br><span class="line">            sh <span class="string">&#x27;node --version&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Volumes"><a class="header-anchor" href="#Volumes"></a>Volumes</h3>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    <span class="comment">/* Requires the Docker Pipeline plugin to be installed */</span></span><br><span class="line">    docker.image(<span class="string">&#x27;maven:3.8.1-adoptopenjdk-11&#x27;</span>).inside(<span class="string">&#x27;-v $HOME/.m2:/root/.m2&#x27;</span>) &#123;</span><br><span class="line">        stage(<span class="string">&#x27;Build&#x27;</span>) &#123;</span><br><span class="line">            sh <span class="string">&#x27;mvn -B&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Multiple-Containers"><a class="header-anchor" href="#Multiple-Containers"></a>Multiple Containers</h3>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    <span class="comment">/* Requires the Docker Pipeline plugin to be installed */</span></span><br><span class="line"></span><br><span class="line">    stage(<span class="string">&#x27;Back-end&#x27;</span>) &#123;</span><br><span class="line">        docker.image(<span class="string">&#x27;maven:3.8.1-adoptopenjdk-11&#x27;</span>).inside &#123;</span><br><span class="line">            sh <span class="string">&#x27;mvn --version&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    stage(<span class="string">&#x27;Front-end&#x27;</span>) &#123;</span><br><span class="line">        docker.image(<span class="string">&#x27;node:16.13.1-alpine&#x27;</span>).inside &#123;</span><br><span class="line">            sh <span class="string">&#x27;node --version&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Build-Image"><a class="header-anchor" href="#Build-Image"></a>Build Image</h3>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    checkout scm</span><br><span class="line">    <span class="keyword">def</span> customImage = docker.build(<span class="string">&quot;my-image:$&#123;env.BUILD_ID&#125;&quot;</span>)</span><br><span class="line">    customImage.push()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Build-with-Tag"><a class="header-anchor" href="#Build-with-Tag"></a>Build with Tag</h4>
+<p>One common usage of image &quot;tags&quot; is to specify a <code>latest</code> tag for the most recently, validated, version of a Docker image. The <code>push()</code> method accepts an optional <code>tag</code> parameter, allowing the Pipeline to push the <code>customImage</code> with different tags, for example:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    checkout scm</span><br><span class="line">    def customImage = docker.build(&quot;my-image:$&#123;env.BUILD_ID&#125;&quot;)</span><br><span class="line">    customImage.push()</span><br><span class="line"></span><br><span class="line">    customImage.push(&#x27;latest&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Using-Dockerfile"><a class="header-anchor" href="#Using-Dockerfile"></a>Using Dockerfile</h4>
+<p>The <code>build()</code> method builds the <code>Dockerfile</code> in the current directory by default. This can be overridden by providing a directory path containing a <code>Dockerfile</code> as the second argument of the <code>build()</code> method, for example:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    checkout scm</span><br><span class="line">    <span class="keyword">def</span> testImage = docker.build(<span class="string">&quot;test-image&quot;</span>, <span class="string">&quot;./dockerfiles/test&quot;</span>) </span><br><span class="line"></span><br><span class="line">    testImage.inside &#123;</span><br><span class="line">        sh <span class="string">&#x27;make test&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Builds <code>test-image</code> from the Dockerfile found at <code>./dockerfiles/test/Dockerfile</code>.</li>
+</ul>
+<p>It is possible to pass other arguments to <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/build/">docker build</a> by adding them to the second argument of the <code>build()</code> method. When passing arguments this way, the last value in the that string must be the path to the docker file and should end with the folder to use as the build context)</p>
+<p>This example overrides the default <code>Dockerfile</code> by passing the <code>-f</code> flag:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    checkout scm</span><br><span class="line">    def dockerfile = &#x27;Dockerfile.test&#x27;</span><br><span class="line">    def customImage = docker.build(&quot;my-image:$&#123;env.BUILD_ID&#125;&quot;,</span><br><span class="line">                                   &quot;-f $&#123;dockerfile&#125; ./dockerfiles&quot;) </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Builds <code>my-image:$&#123;env.BUILD_ID&#125;</code> from the Dockerfile found at <code>./dockerfiles/Dockerfile.test</code>.</li>
+</ul>
+<h3 id="Push-to-Registry"><a class="header-anchor" href="#Push-to-Registry"></a>Push to Registry</h3>
+<p>In order to use a custom Docker Registry, users of Scripted Pipeline can wrap steps with the <code>withRegistry()</code> method, passing in the custom Registry URL, for example:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    checkout scm</span><br><span class="line"></span><br><span class="line">    docker.withRegistry(<span class="string">&#x27;https://registry.example.com&#x27;</span>) &#123;</span><br><span class="line"></span><br><span class="line">        docker.image(<span class="string">&#x27;my-custom-image&#x27;</span>).inside &#123;</span><br><span class="line">            sh <span class="string">&#x27;make test&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>For a Docker Registry which requires authentication, add a &quot;Username/Password&quot; Credentials item from the Jenkins home page and use the Credentials ID as a second argument to <code>withRegistry()</code>:</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">    checkout scm</span><br><span class="line"></span><br><span class="line">    docker.withRegistry(<span class="string">&#x27;https://registry.example.com&#x27;</span>, <span class="string">&#x27;credentials-id&#x27;</span>) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">def</span> customImage = docker.build(<span class="string">&quot;my-image:$&#123;env.BUILD_ID&#125;&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Push the container to the custom Registry */</span></span><br><span class="line">        customImage.push()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Bugs"><a class="header-anchor" href="#Bugs"></a>Bugs</h3>
+<ul>
+<li><code>docker run -it ...</code>报错: the input device is not a TTY
+<ul>
+<li>Jenkins没有TTY, 所以不要使用<code>-it</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="Frontend"><a class="header-anchor" href="#Frontend"></a>Frontend</h2>
 <figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">node(<span class="string">&quot;volatile-ai-slave&quot;</span>) &#123;</span><br><span class="line">    <span class="keyword">def</span> workspace = pwd()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> git_branch = <span class="string">&#x27;**&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> git_repository = <span class="string">&#x27;**&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> vm_ip = <span class="string">&#x27;**&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> vm_port = <span class="string">&#x27;**&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> vm_user = <span class="string">&#x27;**&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> IMAGE_NAME = <span class="string">&#x27;volatile_ai&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> IMAGE_NAME_WITH_TAG = <span class="string">&#x27;volatile_ai:latest&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> IMAGE_TO_RUN = <span class="string">&#x27;lyklove/volatile_ai:latest&#x27;</span></span><br><span class="line">    <span class="keyword">def</span> CONTAINER_NAME = <span class="string">&#x27;volatile_ai&#x27;</span></span><br><span class="line"></span><br><span class="line">    stage(<span class="string">&#x27;clone from gitlab into slave\&#x27;s workspace&#x27;</span>) &#123;</span><br><span class="line">        echo <span class="string">&quot;workspace: $&#123;workspace&#125;&quot;</span></span><br><span class="line">        git <span class="attr">branch:</span> <span class="string">&quot;$&#123;git_branch&#125;&quot;</span>, <span class="attr">url:</span> <span class="string">&quot;$&#123;git_repository&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    stage(<span class="string">&#x27;cd to build context&#x27;</span>) &#123;</span><br><span class="line">        echo <span class="string">&quot;the context now is:&quot;</span></span><br><span class="line">        sh <span class="string">&quot;ls -al&quot;</span></span><br><span class="line">        sh <span class="string">&quot;cd $&#123;workspace&#125;&quot;</span></span><br><span class="line">        echo <span class="string">&quot;cd to build context, now the context is:&quot;</span></span><br><span class="line">        sh <span class="string">&quot;ls -al&quot;</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    stage(<span class="string">&quot;build docker image&quot;</span>)&#123;</span><br><span class="line">        sh <span class="string">&quot;docker build -t $&#123;IMAGE_NAME&#125; .&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//     stage(&quot;login to dockerhub&quot;)&#123;</span></span><br><span class="line"><span class="comment">//         withCredentials([usernamePassword(credentialsId: &#x27;DOCKERHUB_KEY&#x27;, passwordVariable: &#x27;password&#x27;, usernameVariable: &#x27;username&#x27;)]) &#123;</span></span><br><span class="line"><span class="comment">//             sh &#x27;docker login -u $username -p $password&#x27;</span></span><br><span class="line"><span class="comment">//         &#125;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line">    stage(<span class="string">&quot;push to dockerhub&quot;</span>)&#123;</span><br><span class="line"><span class="comment">//         echo &quot;begin push to dockerhub&quot;</span></span><br><span class="line">        sh <span class="string">&quot;docker image tag $&#123;IMAGE_NAME_WITH_TAG&#125; lyklove/$&#123;IMAGE_NAME_WITH_TAG&#125;&quot;</span></span><br><span class="line"><span class="comment">//         sh &quot;docker image push lyklove/$&#123;IMAGE_NAME_WITH_TAG&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    stage(<span class="string">&quot;clean previous image and container&quot;</span>)&#123;</span><br><span class="line">        sh <span class="string">&quot;docker container rm -f $&#123;CONTAINER_NAME&#125;&quot;</span></span><br><span class="line"><span class="comment">//         sh &quot;docker image rm $&#123;IMAGE_NAME_WITH_TAG&#125;&quot;</span></span><br><span class="line"><span class="comment">//         sh &quot;docker image rm $&#123;IMAGE_TO_RUN&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//     stage( &quot;pull image&quot; )&#123;</span></span><br><span class="line"><span class="comment">//         sh &quot;docker pull  lyklove/$&#123;IMAGE_NAME_WITH_TAG&#125;&quot;</span></span><br><span class="line"><span class="comment">//     &#125;</span></span><br><span class="line">    stage(<span class="string">&quot;run container&quot;</span>) &#123;</span><br><span class="line">        sh <span class="string">&quot;docker image ls&quot;</span></span><br><span class="line">        sh <span class="string">&quot;docker container run --name $&#123;CONTAINER_NAME&#125; --net=host  -d $&#123;IMAGE_TO_RUN&#125;&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">    stage(<span class="string">&quot;signal gitlab: deployed&quot;</span>)&#123;</span><br><span class="line">        updateGitlabCommitStatus <span class="attr">name:</span> <span class="string">&#x27;deployed&#x27;</span>, <span class="attr">state:</span> <span class="string">&#x27;success&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="Integration-with-Gitlab"><a class="header-anchor" href="#Integration-with-Gitlab"></a>Integration with Gitlab</h1>
+<p><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/integration/jenkins.html">Jenkins integration </a>, 我的过程和文档上的略有不同</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line"><span class="comment">//Gitlab</span></span><br><span class="line">stage(<span class="string">&quot;signal github: deployed&quot;</span>)&#123;</span><br><span class="line">    echo <span class="string">&#x27;Notify GitLab&#x27;</span></span><br><span class="line">    updateGitlabCommitStatus <span class="attr">name:</span> <span class="string">&#x27;build&#x27;</span>, <span class="attr">state:</span> <span class="string">&#x27;pending&#x27;</span></span><br><span class="line">    updateGitlabCommitStatus <span class="attr">name:</span> <span class="string">&#x27;build&#x27;</span>, <span class="attr">state:</span> <span class="string">&#x27;success&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Plugins-2"><a class="header-anchor" href="#Plugins-2"></a>Plugins</h1>
+<ul>
+<li>
+<p>可以在 <a target="_blank" rel="noopener" href="https://plugins.jenkins.io/">Jenkins plugins</a> 搜索</p>
+</li>
+<li>
+<p>也可以在 Manage Jenkins --&gt; Manage Plugins --&gt;可选插件 中选择</p>
+</li>
+<li>
+<p>在jenkins安装时, 勾选推荐安装的插件(包括了Git插件)</p>
+</li>
+<li>
+<p>需要手动安装:</p>
+<ul>
+<li>Install the <a target="_blank" rel="noopener" href="https://wiki.jenkins.io/display/JENKINS/GitLab+Plugin">Jenkins GitLab Plugin</a>.</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>
+<h3 id="安装GitHub-Plugin"><a class="header-anchor" href="#安装GitHub-Plugin"></a>安装GitHub Plugin</h3>
+<blockquote>
+<p>系统管理--&gt;插件管理--&gt;可选插件</p>
+</blockquote>
+<p>直接安装Github Plugin, jenkins会自动帮你解决其他插件的依赖，直接安装该插件Jenkins会自动帮你安装plain-credentials 、<a target="_blank" rel="noopener" href="http://lib.csdn.net/base/git">Git</a> 、 credentials 、 github-api</p>
+</li>
+</ol>
 <h1 id="日志"><a class="header-anchor" href="#日志"></a>日志</h1>
 <p>日志是最好的debug工具， jenkins日志位于：Dashboard -&gt; System Log</p>
+<h1 id="Ref"><a class="header-anchor" href="#Ref"></a>Ref</h1>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://docs.gitlab.com/ee/integration/jenkins.html">Gitlab Jenkins integration</a></li>
+</ul>
 
     </div>
 
