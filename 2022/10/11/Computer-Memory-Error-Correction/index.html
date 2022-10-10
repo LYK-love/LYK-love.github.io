@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Computer%20Architecture/SEC-DED.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Computer%20Architecture/CRC.png">
 <meta property="article:published_time" content="2022-10-10T20:41:28.000Z">
-<meta property="article:modified_time" content="2022-10-10T13:08:48.062Z">
+<meta property="article:modified_time" content="2022-10-10T13:21:22.632Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Computer Architecture">
 <meta name="twitter:card" content="summary">
@@ -264,7 +264,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-10-10 20:41:28 / Modified: 13:08:48" itemprop="dateCreated datePublished" datetime="2022-10-10T20:41:28Z">2022-10-10</time>
+      <time title="Created: 2022-10-10 20:41:28 / Modified: 13:21:22" itemprop="dateCreated datePublished" datetime="2022-10-10T20:41:28Z">2022-10-10</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -412,8 +412,9 @@ $$</p>
 <li><strong>只能检测和纠正1-bit errors</strong></li>
 </ul>
 <h2 id="Idea"><a class="header-anchor" href="#Idea"></a>Idea</h2>
+<p>见如下Venn diagram:</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Computer%20Architecture/Hamming%20Code.png" alt="Hamming Code"></p>
-<p>使用Venn diagram来表示Hamming code的思想. 假设$ M = 4 $ :</p>
+<p>假设$ M = 4 $ :</p>
 <ul>
 <li>我们画三个圆, 中间相交的四个部分分别填4 data bits ( 如图a ).</li>
 <li>剩下的最外面三个部分填 <strong>parity bits</strong> ( 也就是checkcode ). Each parity bit is chosen so that the total number of 1s in its circle is <strong>even</strong>( 如图b )</li>
@@ -436,7 +437,7 @@ $$</p>
 <h2 id="Check-Code-Length"><a class="header-anchor" href="#Check-Code-Length"></a>Check Code Length</h2>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Computer%20Architecture/Increase%20in%20Word%20Length%20with%20Error%20Correction.png" alt="Increase in Word Length with Error Correction"></p>
 <ul>
-<li>从上表可以看到, 使用checkcode会使得实际可用的主存( 用户可见的主存 ) 比 事实上的主存大小更小. 对于64-bit的内存, 如果使用7bit的hamming code, 它实际上有71bit, 而用户只能看见其中的64bit.</li>
+<li>从上表可以看到, 使用checkcode会使得实际可用的主存( 用户可见的主存 ) 比 事实上的主存 大小更小. 对于64-bit的内存, 如果使用7bit的hamming code, 它的实际word-size是 64 + 7 = 71bit, 而用户只能看见其中的64bit.</li>
 </ul>
 <p>假设最多1位发生错误, 可能的情况有:</p>
 <ul>
@@ -457,8 +458,6 @@ E.g. for a word of 8 data bits ( $M = 8$ ), we have</p>
 <h2 id="Checkbit"><a class="header-anchor" href="#Checkbit"></a>Checkbit</h2>
 <p>假设$M=8, K=4$</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Computer%20Architecture/Layout%20of%20Data%20Bits%20and%20Check%20Bits.png" alt="Layout of Data Bits and Check Bits"></p>
-<p>checkbit计算如下:</p>
-<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Computer%20Architecture/checkbit%20cal.png" alt="checkbit cal"></p>
 <ul>
 <li>
 <p><strong>checkbit的position number是2的幂</strong>:</p>
@@ -478,6 +477,7 @@ E.g. for a word of 8 data bits ( $M = 8$ ), we have</p>
 <ul>
 <li>bit positions 3, 6, 7, 10, and 11 all contain a 1 in the second bit position, as does C2;</li>
 </ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Computer%20Architecture/checkbit%20cal.png" alt="checkbit cal"></p>
 </li>
 <li>
 <p>Looked at another way, bit position <em>n</em> is checked by those bits $C_i$ such that<br>
@@ -540,10 +540,10 @@ $$</p>
 <li>
 <p>SED-DED的故障字 $S$ 的分析:</p>
 <ul>
-<li>都是0:没有检测到错误</li>
-<li>1位为1:在5个校验位中有一个发生了错误, 不需要修正</li>
-<li>2位为1:有2位数据和校验位出现错误，但找不到错误的位置</li>
-<li>3位为1:8位数据位中有1位发生了错误，该错误可以被纠正</li>
+<li>都是0: 没有检测到错误</li>
+<li>1位为1: 在5个校验位中有一个发生了错误, 不需要修正</li>
+<li>2位为1: 有2位数据和校验位出现错误，但找不到错误的位置</li>
+<li>3位为1: 8位数据位中有1位发生了错误，该错误可以被纠正</li>
 <li>3位以上均为1: 严重情况，检查硬件</li>
 </ul>
 </li>
