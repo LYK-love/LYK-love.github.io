@@ -28,7 +28,7 @@
 <meta property="og:description" content="Outline:  Mysql Management Mysql Database Management Mysql Table Management">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-04-09T16:44:41.000Z">
-<meta property="article:modified_time" content="2022-09-26T06:39:34.934Z">
+<meta property="article:modified_time" content="2022-09-30T17:37:54.953Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Database">
 <meta name="twitter:card" content="summary">
@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mysql-Management"><span class="nav-text">Mysql Management</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7"><span class="nav-text">创建用户帐户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA-%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">导出&#x2F;入数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E7%94%A8%E6%88%B7%E6%8E%88%E6%9D%83"><span class="nav-text">给用户授权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90"><span class="nav-text">查看用户权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81"><span class="nav-text">修改用户名和密码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%99%BB%E9%99%86MySQL%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B"><span class="nav-text">在登陆MySQL的情况下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%B2%A1%E6%9C%89%E7%99%BB%E9%99%86%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B"><span class="nav-text">在没有登陆的情况下</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MYSQL-Database-Management"><span class="nav-text">MYSQL Database Management</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">MySQL创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#drop-%E5%91%BD%E4%BB%A4%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">drop 命令删除数据库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MYSQL-Table-Management"><span class="nav-text">MYSQL Table Management</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="nav-text">创建表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="nav-text">删除表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%A1%A8"><span class="nav-text">查看表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E8%AE%B0%E5%BD%95"><span class="nav-text">插入记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5"><span class="nav-text">修改字段</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Mysql-Management"><span class="nav-text">Mysql Management</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E5%B8%90%E6%88%B7"><span class="nav-text">创建用户帐户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E5%87%BA-%E5%85%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">导出&#x2F;入数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%99%E7%94%A8%E6%88%B7%E6%8E%88%E6%9D%83"><span class="nav-text">给用户授权</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90"><span class="nav-text">查看用户权限</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81"><span class="nav-text">修改用户名和密码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E7%99%BB%E9%99%86MySQL%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B"><span class="nav-text">在登陆MySQL的情况下</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Plan-A-%E9%80%9A%E8%BF%87sql%E5%91%BD%E4%BB%A4%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81"><span class="nav-text">Plan A: 通过sql命令修改密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Plan-B-%E7%94%A8UPDATE%E7%9B%B4%E6%8E%A5%E4%BF%AE%E6%94%B9user%E8%A1%A8"><span class="nav-text">Plan B: 用UPDATE直接修改user表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%B2%A1%E6%9C%89%E7%99%BB%E9%99%86%E7%9A%84%E6%83%85%E5%86%B5%E4%B8%8B"><span class="nav-text">在没有登陆的情况下</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MYSQL-Database-Management"><span class="nav-text">MYSQL Database Management</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MySQL%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">MySQL创建数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#drop-%E5%91%BD%E4%BB%A4%E5%88%A0%E9%99%A4%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-text">drop 命令删除数据库</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MYSQL-Table-Management"><span class="nav-text">MYSQL Table Management</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E8%A1%A8"><span class="nav-text">创建表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E8%A1%A8"><span class="nav-text">删除表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E8%A1%A8"><span class="nav-text">查看表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E8%AE%B0%E5%BD%95"><span class="nav-text">插入记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AD%97%E6%AE%B5"><span class="nav-text">修改字段</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">191</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -173,7 +173,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,7 +259,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+      <time title="Modified: 2022-09-30 17:37:54" itemprop="dateModified" datetime="2022-09-30T17:37:54Z">2022-09-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -329,45 +329,52 @@
 </li>
 </ul>
 <h2 id="创建用户帐户"><a class="header-anchor" href="#创建用户帐户"></a>创建用户帐户</h2>
-<p>MySQL提供了<code>CREATE USER</code>语句，允许您创建一个新的用户帐户。 <code>CREATE USER</code>语句的语法如下：</p>
+<p><code>CREATE USER</code>:</p>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> user_account IDENTIFIED <span class="keyword">BY</span> password;</span><br></pre></td></tr></table></figure>
-<p>用户帐号(<code>user_account</code>)是以<code>username@hostname</code>格式跟在<code>CREATE USER</code>子句之后。</p>
-<p>密码(<code>password</code>)在<code>IDENTIFIED BY</code>子句中指定。<code>password</code>必须是明文。 在将用户帐户保存到用户表之前，MySQL将加密明文密码。</p>
-<p>例如，要创建一个新的用户<code>dbadmin</code>，这个用户只允许从<code>localhost</code>主机并使用密码为<code>pwd123</code>连接到MySQL数据库服务器，使用<code>CREATE USER</code>语句，如下所示：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;lyk&#x27;</span>@<span class="string">&#x27;%&#x27;</span></span><br><span class="line">IDENTIFIED <span class="keyword">BY</span> <span class="string">&#x27;&#x27;</span>;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>'[user]@[允许登录的host]'</code></li>
+<li>
+<p><code>user_account</code>: 格式为<code>username@hostname</code></p>
+<ul>
+<li>
+<p><code>localhost</code>: 只允许从本机连接</p>
+</li>
+<li>
+<p><code>%</code>: 相当于通配, <strong>但是不能匹配到 <code>locahost</code></strong></p>
+<ul>
+<li>
+<p>例如,要允许<code>mysqladmin</code>用户帐户从<code>yiibai.com</code>主机的任何子域连接到数据库服务:</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> mysqladmin@<span class="string">&#x27;%.yiibai.com&#x27;</span></span><br><span class="line">IDENTIFIED <span class="keyword">by</span> <span class="string">&#x27;mypassword&#x27;</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>如果只写<code>username@%</code>, 则相当于允许 <code>locahost</code>外的所有ip</p>
+</li>
+<li>
+<p>也就是说, <code>username@%</code>和<code>username@localhost</code>是两个用户!</p>
+</li>
 </ul>
-<p>要查看用户帐户的权限，请使用<code>SHOW GRANTS</code>语句，如下所示：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> GRANTS <span class="keyword">FOR</span> dbadmin<span class="variable">@localhost</span>;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
-<p>执行上面查询语句，得到以下结果 -</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">mysql&gt; </span><span class="language-bash">SHOW GRANTS FOR dbadmin@localhost;</span></span><br><span class="line">+---------------------------------------------+</span><br><span class="line">| Grants for dbadmin@localhost                |</span><br><span class="line">+---------------------------------------------+</span><br><span class="line">| GRANT USAGE ON *.* TO &#x27;dbadmin&#x27;@&#x27;localhost&#x27; |</span><br><span class="line">+---------------------------------------------+</span><br><span class="line">1 row in set</span><br><span class="line">Shell</span><br></pre></td></tr></table></figure>
-<p>上面结果中的<code>*.*</code>显示<code>dbadmin</code>用户帐户只能登录到数据库服务器，没有其他权限。 要授予用户权限，您可以使用<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/grant.html">GRANT语句</a>，有关<code>Grant</code>语句，我们将在<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/grant.html">下一个教程</a>中介绍。</p>
-<p>请注意，点(<code>.</code>)之前的部分表示数据库，点(<code>.</code>)后面的部分表示表，例如<code>database.table</code>，<code>testdb.offices</code>等等。</p>
-<p>要允许用户帐户从任何主机连接，请使用百分比(<code>%</code>)通配符，如以下示例所示：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE USER superadmin@&#x27;%&#x27; IDENTIFIED BY &#x27;mypassword&#x27;;</span><br></pre></td></tr></table></figure>
-<p>百分比通配符<code>%</code>与<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/like.html">LIKE</a>运算符中使用的效果相同，例如，要允许<code>mysqladmin</code>用户帐户从<code>yiibai.com</code>主机的任何子域连接到数据库服务器，请使用百分比通配符<code>%</code>，如下所示：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> mysqladmin@<span class="string">&#x27;%.yiibai.com&#x27;</span></span><br><span class="line">IDENTIFIED <span class="keyword">by</span> <span class="string">&#x27;mypassword&#x27;</span>;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>请注意，也可以在<code>CREATE USER</code>语句中使用下划线通配符<code>_</code>。</p>
-</blockquote>
-<p>如果您省略了用户帐户的主机名部分，MySQL也会接受它，并允许用户从任何主机进行连接。 例如，以下语句创建一个名为<code>remote_user</code>的新用户帐户，可以从任何主机连接到数据库服务器：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> remote_user;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
-<p>可以看到授予远程用户帐户(<code>remote_user</code>)的权限如下：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> GRANTS <span class="keyword">FOR</span> remote_user;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
-<p>执行上面查询语句，得到以下结果 -</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> GRANTS <span class="keyword">FOR</span> remote_user;</span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> Grants <span class="keyword">for</span> remote_user@<span class="operator">%</span>                <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">GRANT</span> USAGE <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;remote_user&#x27;</span>@<span class="string">&#x27;%&#x27;</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-----------------------------------------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span></span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
-<p>要注意，引用是非常重要的，特别是当用户帐户包含特殊字符(如<code>_</code>或<code>%</code>)时。</p>
-<p>如果您不小心引用<code>&quot;username@hostname&quot;</code>这样的用户帐户，MySQL将创建一个<code>username@hostname</code>的用户，并允许用户从任何主机进行连接，这可能不是您预期的。</p>
-<p>例如，以下语句创建可以从任何主机连接到MySQL数据库服务器的新用户<code>api@localhost</code>(这是用户名，并非用户账号)。</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 常用创建用户为：CREATE USER api@&#x27;localhost&#x27; 与下面语句不同 -</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> <span class="string">&#x27;api@localhost&#x27;</span>;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
-<p>查看上面创建的用户的权限 -</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">mysql<span class="operator">&gt;</span> <span class="keyword">SHOW</span> GRANTS <span class="keyword">FOR</span> <span class="string">&#x27;api@localhost&#x27;</span>;</span><br><span class="line"><span class="operator">+</span><span class="comment">-------------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> Grants <span class="keyword">for</span> api<span class="variable">@localhost</span>@<span class="operator">%</span>                <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-------------------------------------------+</span></span><br><span class="line"><span class="operator">|</span> <span class="keyword">GRANT</span> USAGE <span class="keyword">ON</span> <span class="operator">*</span>.<span class="operator">*</span> <span class="keyword">TO</span> <span class="string">&#x27;api@localhost&#x27;</span>@<span class="string">&#x27;%&#x27;</span> <span class="operator">|</span></span><br><span class="line"><span class="operator">+</span><span class="comment">-------------------------------------------+</span></span><br><span class="line"><span class="number">1</span> <span class="type">row</span> <span class="keyword">in</span> <span class="keyword">set</span></span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
-<p>如果创建一个已经存在的用户，MySQL会发出一个错误。 例如，以下语句创建一个名为<code>remote_user</code>的用户帐户已经存在：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">USER</span> remote_user;</span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
-<p>上面语句执行后，MySQL发出以下错误信息：</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="number">1396</span> <span class="operator">-</span> Operation <span class="keyword">CREATE</span> <span class="keyword">USER</span> failed <span class="keyword">for</span> <span class="string">&#x27;remote_user&#x27;</span>@<span class="string">&#x27;%&#x27;</span></span><br><span class="line"><span class="keyword">SQL</span></span><br></pre></td></tr></table></figure>
-<p>请注意，<code>CREATE USER</code>语句只是创建一个没有任何权限的新用户帐户。如果要<a target="_blank" rel="noopener" href="http://www.yiibai.com/mysql/grant.html">向用户授予使用权限</a>，则使用<code>GRANT</code>语句</p>
+</li>
+<li>
+<p>可以不写hostname, 此时相当于<code>%</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>password</code>: 在<code>IDENTIFIED BY</code>子句中指定.</p>
+<ul>
+<li><code>password</code>必须是明文, 它会被MySQL加密</li>
+<li>空密码就是<code>IDENTIFIED BY ''</code></li>
+</ul>
+</li>
+<li>
+<p>新创建的用户只能登录到mysql, 没有其他权限</p>
+</li>
+<li>
+<p>要注意引号<code>''</code>, 特别当用户帐户包含特殊字符(如<code>_</code>或<code>%</code>)时, 比如, 如果你写了<code>&quot;username@hostname&quot;</code>, 这其实是一整个username, 而没有包含hostname, 而hostname会被默认设置为<code>%</code></p>
+</li>
+<li>
+<p>这样的用户帐户，MySQL将创建一个<code>username@hostname</code>的用户，并允许用户从任何主机进行连接，这可能不是您预期的。</p>
+</li>
+</ul>
 <h2 id="导出-入数据库"><a class="header-anchor" href="#导出-入数据库"></a>导出/入数据库</h2>
 <p>导出：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mysqldump -u [user] [database_name] &gt; [filename].sql</span><br></pre></td></tr></table></figure>
@@ -375,15 +382,25 @@
 <figure class="highlight plaintext"><figcaption><span>y</span></figcaption><table><tr><td class="code"><pre><span class="line">mysql&gt; source c:\temp\mysqlsampledatabase.sql</span><br></pre></td></tr></table></figure>
 <h2 id="给用户授权"><a class="header-anchor" href="#给用户授权"></a>给用户授权</h2>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">GRANT ALL ON *.* TO &#x27;super&#x27;@&#x27;localhost&#x27; WITH GRANT OPTION;</span><br></pre></td></tr></table></figure>
-<p><code>ON *.*</code>子句表示MySQL中的所有数据库和所有对象。<code>WITH GRANT OPTION</code>允许<code>super@localhost</code>向其他用户授予权限</p>
+<ul>
+<li>
+<p><code>ON *.*</code>: 表示MySQL中的所有数据库和所有对象</p>
+<ul>
+<li><code>.</code>之前的部分表示数据库, <code>.</code>后面的部分表示表, 例如<code>database.table</code>, <code>testdb.offices</code>等等</li>
+</ul>
+</li>
+<li>
+<p><code>WITH GRANT OPTION</code>: 允许<code>super@localhost</code>向其他用户授予权限</p>
+</li>
+</ul>
+<p>授权后需要刷新权限:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flush privileges</span><br></pre></td></tr></table></figure>
-<p>刷新权限</p>
 <h2 id="查看用户权限"><a class="header-anchor" href="#查看用户权限"></a>查看用户权限</h2>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">show grants for [user]</span><br></pre></td></tr></table></figure>
 <h2 id="修改用户名和密码"><a class="header-anchor" href="#修改用户名和密码"></a>修改用户名和密码</h2>
 <h3 id="在登陆MySQL的情况下"><a class="header-anchor" href="#在登陆MySQL的情况下"></a>在登陆MySQL的情况下</h3>
-<p>方法一：通过sql命令修改密码<br>
-命令格式：set password for 用户名@localhost = password('新密码');</p>
+<h3 id="Plan-A-通过sql命令修改密码"><a class="header-anchor" href="#Plan-A-通过sql命令修改密码"></a>Plan A: 通过sql命令修改密码</h3>
+<p>命令格式：set password for 用户名@localhost = password('新密码');</p>
 <p>新版本mysql 命令：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">alter user 用户名@localhos identified by &#x27;新密码&#x27;;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -391,16 +408,23 @@
 </ul>
 <p>例子：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">set password for root@localhost = password(&#x27;123&#x27;); </span><br><span class="line"># or</span><br><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;123&#x27;;</span><br></pre></td></tr></table></figure>
-<p>方法二：用UPDATE直接修改user表<br>
---使用mysql数据库</p>
+<h3 id="Plan-B-用UPDATE直接修改user表"><a class="header-anchor" href="#Plan-B-用UPDATE直接修改user表"></a>Plan B: 用UPDATE直接修改user表</h3>
+<ol>
+<li>
+<p>使用mysql数据库</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">use mysql; </span><br></pre></td></tr></table></figure>
-<p>--更改user表中指定用户的密码</p>
+</li>
+<li>
+<p>更改user表中指定用户的密码</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">update user set password=password(&#x27;123&#x27;) where user=&#x27;root&#x27; and host=&#x27;localhost&#x27;; </span><br></pre></td></tr></table></figure>
-<p>--权限刷新</p>
+</li>
+<li>
+<p>权限刷新</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 <h3 id="在没有登陆的情况下"><a class="header-anchor" href="#在没有登陆的情况下"></a>在没有登陆的情况下</h3>
-<p><code>mysqladmin</code> 命令<br>
-命令格式:</p>
+<p><code>mysqladmin</code> 命令:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqladmin -u用户名 -p旧密码 password 新密码 </span><br></pre></td></tr></table></figure>
 <p>例子：将root用户的密码由123456改为123</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">mysqladmin   -u root -p 123456 password 123</span><br></pre></td></tr></table></figure>

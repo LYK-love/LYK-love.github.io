@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/Docker%20Security%20with%20Linux.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Basic/Docker%20Secret%20example.png">
 <meta property="article:published_time" content="2022-02-13T16:08:27.000Z">
-<meta property="article:modified_time" content="2022-09-29T14:01:45.447Z">
+<meta property="article:modified_time" content="2022-10-01T10:11:07.450Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -174,7 +174,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">191</span>
+          <span class="site-state-item-count">192</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">45</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -271,7 +271,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-29 14:01:45" itemprop="dateModified" datetime="2022-09-29T14:01:45Z">2022-09-29</time>
+      <time title="Modified: 2022-10-01 10:11:07" itemprop="dateModified" datetime="2022-10-01T10:11:07Z">2022-10-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -514,6 +514,12 @@
 <h3 id="查看镜像"><a class="header-anchor" href="#查看镜像"></a>查看镜像</h3>
 <p>列出镜像细节：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image inspect</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>To list all the images and their respective OSs</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `docker images --format &#123;&#123;.ID&#125;&#125;`; <span class="keyword">do</span> <span class="built_in">echo</span> <span class="variable">$i</span> `docker image inspect <span class="variable">$i</span> |grep Os`; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h3 id="删除镜像"><a class="header-anchor" href="#删除镜像"></a>删除镜像</h3>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker image rm &lt;image&gt;</span><br></pre></td></tr></table></figure>
 <p>删除全部的悬虚镜像：</p>
@@ -643,6 +649,14 @@
 <li>
 <p><code>-rm</code>: Automatically remove the container when it exits. 也就是自动移除之前的同名的容器</p>
 </li>
+<li>
+<p><code> --restart</code>: 设置重启策略:</p>
+<ul>
+<li><code>unless-stopped</code></li>
+<li><code>always</code></li>
+<li><code>no</code>: Do not automatically restart the container. (the default)</li>
+</ul>
+</li>
 </ul>
 <p><code> &lt;Ctrl PQ&gt;</code>： detach容器</p>
 <h3 id="启动已停止运行的容器"><a class="header-anchor" href="#启动已停止运行的容器"></a>启动已停止运行的容器</h3>
@@ -675,6 +689,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container stop</span><br></pre></td></tr></table></figure>
 <ul>
 <li>向容器内pid=1的进程发送<code>SIGTERM</code>， 如果10s内得到清理并停止运行，则会接着发送<code>SIGKILL</code>强制停止该容器</li>
+<li><code>docker stop $(docker ps -a -q)</code></li>
 </ul>
 <hr>
 <h3 id="删除容器"><a class="header-anchor" href="#删除容器"></a>删除容器</h3>
@@ -682,6 +697,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container rm</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>-f</code>:    发送<code>Sigkill</code>停止容器（无需先stop），然后删除（<code>rm</code>）</li>
+<li><code>docker rm $(docker ps -a -q)</code></li>
 </ul>
 <p>批量删除容器：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker container rm -f $(docker container ls -aq | cut -d &quot; &quot; -f 1) </span><br></pre></td></tr></table></figure>

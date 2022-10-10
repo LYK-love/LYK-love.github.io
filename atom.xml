@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2022-09-29T07:16:19.673Z</updated>
+  <updated>2022-10-10T13:08:48.062Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Computer Memory Error Correction</title>
+    <link href="http://lyk-love.cn/2022/10/11/Computer-Memory-Error-Correction/"/>
+    <id>http://lyk-love.cn/2022/10/11/Computer-Memory-Error-Correction/</id>
+    <published>2022-10-10T20:41:28.000Z</published>
+    <updated>2022-10-10T13:08:48.062Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Intro&lt;/li&gt;
+&lt;li&gt;Error Correction&lt;/li&gt;
+&lt;li&gt;Odd-Even Check&lt;/li&gt;
+&lt;li&gt;Hamming Code&lt;/li&gt;
+&lt;li&gt;Cyclic Redundancy Check&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="Computer Science" scheme="http://lyk-love.cn/categories/Computer-Science/"/>
+    
+    
+    <category term="Computer Architecture" scheme="http://lyk-love.cn/tags/Computer-Architecture/"/>
+    
+  </entry>
   
   <entry>
     <title>Github</title>
@@ -344,7 +370,7 @@
     <link href="http://lyk-love.cn/2022/09/26/Git/"/>
     <id>http://lyk-love.cn/2022/09/26/Git/</id>
     <published>2022-09-26T06:39:34.930Z</published>
-    <updated>2022-09-28T10:15:30.957Z</updated>
+    <updated>2022-10-01T10:56:37.492Z</updated>
     
     
     <summary type="html">&lt;p&gt;全面介绍了Git的原理和使用&lt;/p&gt;</summary>
@@ -455,33 +481,6 @@
 &lt;li&gt;使用命名空间成员&lt;/li&gt;
 &lt;li&gt;类、命名空间与作用域&lt;/li&gt;
 &lt;li&gt;重载与命名空间&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="Language" scheme="http://lyk-love.cn/categories/Language/"/>
-    
-    
-    <category term="C++" scheme="http://lyk-love.cn/tags/C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C++ 泛型算法</title>
-    <link href="http://lyk-love.cn/2022/09/26/C++%20%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/"/>
-    <id>http://lyk-love.cn/2022/09/26/C++%20%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95/</id>
-    <published>2022-09-26T06:39:34.925Z</published>
-    <updated>2022-09-26T06:39:34.925Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Outline：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;概述&lt;/li&gt;
-&lt;li&gt;泛型算法概览&lt;/li&gt;
-&lt;li&gt;定制操作&lt;/li&gt;
-&lt;li&gt;再探迭代器&lt;/li&gt;
-&lt;li&gt;泛型算法结构&lt;/li&gt;
-&lt;li&gt;特定容器算法&lt;/li&gt;
 &lt;/ul&gt;</summary>
     
     
