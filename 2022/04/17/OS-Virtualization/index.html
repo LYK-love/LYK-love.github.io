@@ -49,7 +49,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Memory%20Access%20using%20TLB.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/swap%20space.png">
 <meta property="article:published_time" content="2022-04-16T22:38:59.000Z">
-<meta property="article:modified_time" content="2022-11-30T13:21:32.775Z">
+<meta property="article:modified_time" content="2022-11-30T13:35:02.457Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="OS Basic">
 <meta name="twitter:card" content="summary">
@@ -281,7 +281,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-11-30 13:21:32" itemprop="dateModified" datetime="2022-11-30T13:21:32Z">2022-11-30</time>
+      <time title="Modified: 2022-11-30 13:35:02" itemprop="dateModified" datetime="2022-11-30T13:35:02Z">2022-11-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -439,21 +439,25 @@
 <p>详见<em>OS Thread Sheduling Algorithm</em></p>
 <h1 id="Memory-Virtualization"><a class="header-anchor" href="#Memory-Virtualization"></a>Memory Virtualization</h1>
 <p>计算机的physical memory可以被虚拟化virtual memory. 由硬件<strong>MMU</strong>( Memory Management Unit ) 和 OS 共同实现.</p>
-<p>虚拟化后,   <u>physical address space(PAS)</u>被映射为<u>virtual address space (VAS)</u>. <strong>程序使用的只是virtual address</strong>, 在底层由MMU和OS将其转换为physical address, 即需要<strong>address translation</strong>:</p>
+<p>虚拟化后,   <u>physical address space(PAS)</u>被映射为<u>virtual address space (VAS)</u>. <strong>程序使用的只是virtual address</strong>, 在底层由MMU和OS将其转换为physical address, 即需要**[address translation](#Address Translation)**:</p>
 <p>$$<br>
 \operatorname{MAP}: \mathrm{VAS} → \mathrm{PAS} \cup \emptyset<br>
 $$<br>
 where<br>
 $$<br>
-\operatorname{MAP}(A)=\left{\begin{array}{l}<br>
+\begin{equation}</p>
+<p>\operatorname{MAP}(A)=</p>
+<p>\left{<br>
+\begin{array}{lr}<br>
 A^{\prime},\text{if data at virtual addr. A are present at physical addr. A′ in PAS} \<br>
-\emptyset, \text{if data at virtual addr. A are not present in physical memory<br>
-}<br>
-\end{array}\right.<br>
+\emptyset, \text{if data at virtual addr. A are not present in physical memory}<br>
+\end{array}<br>
+\right.<br>
+\end{equation}<br>
 $$</p>
 <ul>
 <li>程序使用的只是virtual address, 因此我们常说的<strong>Address space</strong> 是VAS</li>
-<li>一个VAS的例子是: 我们编写和编译程序时<u>假定内存从0开始</u></li>
+<li>一个使用VAS的例子是: 我们编写和编译程序时<u>假定内存从0开始</u></li>
 </ul>
 <h2 id="Address-Space"><a class="header-anchor" href="#Address-Space"></a>Address Space</h2>
 <h3 id="Address-Space-of-Linux-process"><a class="header-anchor" href="#Address-Space-of-Linux-process"></a>Address Space of Linux process</h3>
@@ -590,7 +594,7 @@ $$</p>
 <ul>
 <li>页表项的索引就等于VPN， 比如VPN为2， 那就对应着页表中下标为2的PFN</li>
 </ul>
-<p>页表基址寄存器（ page table base register ）: 存储了页表的起始位置的物理地址，用于访问PTE：</p>
+<p>页表基址寄存器（ PTBR, page table base register ）: 存储了页表的起始位置的物理地址，用于访问PTE：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 得到VPN</span></span><br><span class="line">VPN = ( VirtualAddress &amp; VPN_MASK ) &gt;&gt; SHIFT;</span><br><span class="line"></span><br><span class="line"><span class="comment">// VPN就是PTE的索引，得到PTE在页表中的偏移，加上页表的起始地址，就是该PTE的物理地址</span></span><br><span class="line">PTEAddr = PageTableBaseRegister + (VPN + <span class="keyword">sizeof</span>(PTE));</span><br></pre></td></tr></table></figure>
 <p>只要查询页表，找到PTE（VPN就是PTE的下标），读取PTE，将VPN转换为PFN，再加上业内偏移，就得到了物理地址：</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/virtual%20address%20to%20physical%20address.png" alt="virtual address to physical address"></p>
@@ -738,7 +742,7 @@ $$</p>
 <h3 id="TLB"><a class="header-anchor" href="#TLB"></a>TLB</h3>
 <p>TLB( Translation Look_aside Buffer )就是上面思想的一个实现, 它是种特殊的cache, OS把一部分常用的PTE存入TLB.</p>
 <h4 id="TLB-Organization"><a class="header-anchor" href="#TLB-Organization"></a>TLB Organization</h4>
-<p>TLB一般是set associative cache(详见Cache Memory). 在TLB视角下, virtual address被划分如下:</p>
+<p>TLB一般是set associative cache(详见<a href="https://lyk-love.cn/2022/12/01/Cache-Memory/">Cache Memory</a>). 在TLB视角下, virtual address被划分如下:</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20Organization.png" alt="TLB Organization"></p>
 <ul>
 <li>注意: <strong>和main memory cache不同, TLB划分的是虚拟地址, 而不是物理地址</strong></li>
