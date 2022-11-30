@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/DRAM%20addressing%202.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/Memory%20Module.png">
 <meta property="article:published_time" content="2022-07-31T22:02:16.000Z">
-<meta property="article:modified_time" content="2022-09-26T06:39:34.928Z">
+<meta property="article:modified_time" content="2022-11-29T12:35:20.967Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Hardware">
 <meta name="twitter:card" content="summary">
@@ -156,7 +156,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Basic-Ideas"><span class="nav-text">Basic Ideas</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache"><span class="nav-text">Cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Main-Memory"><span class="nav-text">Main Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VRAM"><span class="nav-text">VRAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disk"><span class="nav-text">Disk</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Storage-Material"><span class="nav-text">Storage Material</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RAM"><span class="nav-text">RAM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SRAM"><span class="nav-text">SRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DRAM"><span class="nav-text">DRAM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DRAM-Structure"><span class="nav-text">DRAM Structure</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pin"><span class="nav-text">pin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DRAM-Addressing"><span class="nav-text">DRAM Addressing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Memory-Module"><span class="nav-text">Memory Module</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enhanced-DRAMs"><span class="nav-text">Enhanced DRAMs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FPM-DRAM"><span class="nav-text">FPM DRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EDO-DRAM"><span class="nav-text">EDO DRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SDRAM"><span class="nav-text">SDRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDR-SDRAM"><span class="nav-text">DDR SDRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDDR"><span class="nav-text">GDDR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROM"><span class="nav-text">ROM</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Memory-Hierarchy"><span class="nav-text">The Memory Hierarchy</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache"><span class="nav-text">Cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Main-Memory"><span class="nav-text">Main Memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VRAM"><span class="nav-text">VRAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disk"><span class="nav-text">Disk</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Locality"><span class="nav-text">Locality</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Storage-Technologies"><span class="nav-text">Storage Technologies</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RAM"><span class="nav-text">RAM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SRAM"><span class="nav-text">SRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DRAM"><span class="nav-text">DRAM</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DRAM-Structure"><span class="nav-text">DRAM Structure</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pin"><span class="nav-text">pin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DRAM-Addressing"><span class="nav-text">DRAM Addressing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Memory-Module"><span class="nav-text">Memory Module</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Enhanced-DRAMs"><span class="nav-text">Enhanced DRAMs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FPM-DRAM"><span class="nav-text">FPM DRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EDO-DRAM"><span class="nav-text">EDO DRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SDRAM"><span class="nav-text">SDRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DDR-SDRAM"><span class="nav-text">DDR SDRAM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GDDR"><span class="nav-text">GDDR</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROM"><span class="nav-text">ROM</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -171,7 +171,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">194</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -182,7 +182,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -268,7 +268,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+      <time title="Modified: 2022-11-29 12:35:20" itemprop="dateModified" datetime="2022-11-29T12:35:20Z">2022-11-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -315,7 +315,7 @@
 </li>
 </ul>
 <span id="more"></span>
-<h1 id="Basic-Ideas"><a class="header-anchor" href="#Basic-Ideas"></a>Basic Ideas</h1>
+<h1 id="The-Memory-Hierarchy"><a class="header-anchor" href="#The-Memory-Hierarchy"></a>The Memory Hierarchy</h1>
 <p>计算机的存储架构是分层的：</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/memory%20hierarchy.png" alt="memory hierarchy"></p>
 <ul>
@@ -325,7 +325,8 @@
 <li>disk: 硬盘，是一种外部存储设备，最慢</li>
 </ul>
 <p>越上层速度越快，价格越贵，其容量也就越小</p>
-<p>还有<em>虚拟内存</em> , 这是进程视角下的内存， 包含了主存和一部分从硬盘中置换出来的存储空间, 由<strong>MMU</strong>( Memory Management Unit )完成。总之，虚拟内存是一个抽象的内存概念，和现实的存储结构没有关系。</p>
+<p>还有<em>虚拟内存</em> , 这是进程视角下的内存， 包含了主存和一部分从硬盘中置换出来的存储空间. 通过硬件<strong>MMU</strong>( Memory Management Unit )实现虚拟内存地址和物理内存地址的转换.</p>
+<p>总之，虚拟内存是一个抽象的内存概念, 和现实的存储结构没有关系.</p>
 <h2 id="Cache"><a class="header-anchor" href="#Cache"></a>Cache</h2>
 <ul>
 <li>Cache， 位于CPU内部的存储设备，其材质一般是SRAM. 一般有多级cache, 如L1/L2/L3</li>
@@ -402,7 +403,8 @@
 </ul>
 <p>机械硬盘只能实现 50-120 MB/秒的写入速度，而固态硬盘能达到 550 MB/秒的 SATA 总线极限值</p>
 <p>注意，虽然SSD材料是ROM，但磁盘和ROM是两个概念。 现代的磁盘包括了HDD和SSD， 已经不是一个材料概念，而是一个计算机架构中的抽象的功能的概念。 而ROM是一个材料的概念。不能把ROM和Disk混为一谈。</p>
-<h1 id="Storage-Material"><a class="header-anchor" href="#Storage-Material"></a>Storage Material</h1>
+<h1 id="Locality"><a class="header-anchor" href="#Locality"></a>Locality</h1>
+<h1 id="Storage-Technologies"><a class="header-anchor" href="#Storage-Technologies"></a>Storage Technologies</h1>
 <h2 id="RAM"><a class="header-anchor" href="#RAM"></a>RAM</h2>
 <p>RAM（ random access memory ）： 是volatile（易失性）的存储材料， 也就是说断电就会丢失所有信息。 RAM常用来做计算机的内存，包括cache和主存等</p>
 <p>RAM分为两类：</p>
@@ -440,7 +442,7 @@
 <ul>
 <li>也就是说SRAM在通电时不需要刷新就能保存数据</li>
 </ul>
-<p>但没有电的话, 双稳态的状态就不能保持了, 意味着数据也就丢失了. 这就是我们常说, 电脑断电后内存数据就会丢失的原因.</p>
+<p>但是, 如果没有电,  双稳态就不能保持, 意味着数据也就丢失了. 这就是“电脑断电后内存数据就会丢失”的原因.</p>
 <h3 id="DRAM"><a class="header-anchor" href="#DRAM"></a>DRAM</h3>
 <p>DRAM将每个位存储为对一个电容的充电。DRAM可以制造得非常密集——每个单元由一个电容和一个访问晶体管组成。但是与SRAM不同的是，DRAM存储器的单元对干扰非常敏感.当电容的电压被扰乱之后，它就永远不会恢复了.</p>
 <ul>
@@ -453,7 +455,7 @@
 <li>即， 一个$d \times w$的DRAM总共存储了$d \times w $ bit</li>
 </ul>
 </li>
-<li>supercell被组织成一个$r$行$c$列的长方形阵列，其中$r \times c = d$.  每个DRAM内使用$(i,j)$二维地址对supercell进行寻址( 即$(行号， 列号)$ )
+<li>supercell被组织成一个$r$行$c$列的长方形阵列，其中$r \times c = d$.  每个DRAM内使用$(i,j)$二维地址( 即$(行号， 列号)$  )对supercell进行寻址
 <ul>
 <li>也就是说，DRAM的<strong>寻址的基本单位</strong>是supercell， DRAM没有提供机制给supercell内部的cell寻址</li>
 </ul>

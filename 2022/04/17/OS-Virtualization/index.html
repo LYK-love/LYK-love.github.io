@@ -38,9 +38,18 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20implementation%202.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/virtual%20address%20to%20physical%20address.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/segment%20plus%20page.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20translation%20with%20a%20page%20table.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20translation%20Page%20hit.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20translation%20Page%20fault.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Integrating%20VM%20with%20a%20physically%20addressed%20cache.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20Organization.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20Translation%20with%20TLB.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20hit.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20miss.png">
+<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Memory%20Access%20using%20TLB.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/swap%20space.png">
 <meta property="article:published_time" content="2022-04-16T22:38:59.000Z">
-<meta property="article:modified_time" content="2022-09-26T06:39:34.936Z">
+<meta property="article:modified_time" content="2022-11-30T13:21:32.775Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="OS Basic">
 <meta name="twitter:card" content="summary">
@@ -160,7 +169,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="nav-text">CPU虚拟化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-text">进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8BAPI"><span class="nav-text">进程API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fork%EF%BC%88%EF%BC%89"><span class="nav-text">fork（）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wait%EF%BC%88%EF%BC%89"><span class="nav-text">wait（）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exec%EF%BC%88%EF%BC%89"><span class="nav-text">exec（）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%8F%99-Shell"><span class="nav-text">插叙 Shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Limited-directed-execution"><span class="nav-text">Limited directed execution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OS%E9%87%8D%E8%8E%B7CPU%E6%8E%A7%E5%88%B6%E6%9D%83"><span class="nav-text">OS重获CPU控制权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#context-switch"><span class="nav-text">context switch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%8F%99-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">插叙 系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%8F%99-%E4%B8%AD%E6%96%AD"><span class="nav-text">插叙 中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread-Scheduling"><span class="nav-text">Thread Scheduling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="nav-text">内存虚拟化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Address-Space"><span class="nav-text">Address Space</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Address-Space-of-Linux-process"><span class="nav-text">Address Space of Linux process</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Segmaentation"><span class="nav-text">Segmaentation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB"><span class="nav-text">共享</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Free-Space-Management"><span class="nav-text">Free Space Management</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B2%E5%88%97%E8%A1%A8"><span class="nav-text">空闲列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E5%9D%97"><span class="nav-text">头块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E5%9D%97-%E7%A9%BA%E9%97%B2%E5%88%97%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-text">头块 + 空闲列表的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paging"><span class="nav-text">Paging</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TLB"><span class="nav-text">TLB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F"><span class="nav-text">段页式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="nav-text">多级页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E9%A1%B5%E8%A1%A8"><span class="nav-text">反向页表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-text">虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E7%A9%BA%E9%97%B4"><span class="nav-text">交换空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#page-fault"><span class="nav-text">page fault</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4"><span class="nav-text">内核虚拟内存空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#page-scheduling"><span class="nav-text">page scheduling</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU-Virtualization"><span class="nav-text">CPU Virtualization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B"><span class="nav-text">进程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8BAPI"><span class="nav-text">进程API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fork%EF%BC%88%EF%BC%89"><span class="nav-text">fork（）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wait%EF%BC%88%EF%BC%89"><span class="nav-text">wait（）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#exec%EF%BC%88%EF%BC%89"><span class="nav-text">exec（）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%8F%99-Shell"><span class="nav-text">插叙 Shell</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Limited-directed-execution"><span class="nav-text">Limited directed execution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OS%E9%87%8D%E8%8E%B7CPU%E6%8E%A7%E5%88%B6%E6%9D%83"><span class="nav-text">OS重获CPU控制权</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#context-switch"><span class="nav-text">context switch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%8F%99-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-text">插叙 系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%8F%99-%E4%B8%AD%E6%96%AD"><span class="nav-text">插叙 中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread-Scheduling"><span class="nav-text">Thread Scheduling</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Memory-Virtualization"><span class="nav-text">Memory Virtualization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Address-Space"><span class="nav-text">Address Space</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Address-Space-of-Linux-process"><span class="nav-text">Address Space of Linux process</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Segmaentation"><span class="nav-text">Segmaentation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E4%BA%AB"><span class="nav-text">共享</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Free-Space-Management"><span class="nav-text">Free Space Management</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B2%E5%88%97%E8%A1%A8"><span class="nav-text">空闲列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E5%9D%97"><span class="nav-text">头块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%B4%E5%9D%97-%E7%A9%BA%E9%97%B2%E5%88%97%E8%A1%A8%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-text">头块 + 空闲列表的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paging"><span class="nav-text">Paging</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F"><span class="nav-text">段页式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="nav-text">多级页表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E9%A1%B5%E8%A1%A8"><span class="nav-text">反向页表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Address-Translation"><span class="nav-text">Address Translation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Symbol-table"><span class="nav-text">Symbol table</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Process"><span class="nav-text">Process</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Page-Hit"><span class="nav-text">Page Hit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Page-Fault"><span class="nav-text">Page Fault</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Integrating-Caches-and-VM"><span class="nav-text">Integrating Caches and VM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TLB"><span class="nav-text">TLB</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TLB-Organization"><span class="nav-text">TLB Organization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Address-Translation-Using-TLB"><span class="nav-text">Address Translation Using TLB</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#TLB-Hit"><span class="nav-text">TLB Hit</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#TLB-Miss"><span class="nav-text">TLB Miss</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Memory-Access-Using-TLB"><span class="nav-text">Memory Access Using TLB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TLB-Refresh"><span class="nav-text">TLB Refresh</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="nav-text">虚拟内存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E7%A9%BA%E9%97%B4"><span class="nav-text">交换空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#page-fault"><span class="nav-text">page fault</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E6%A0%B8%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4"><span class="nav-text">内核虚拟内存空间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#page-scheduling"><span class="nav-text">page scheduling</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,7 +184,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">192</span>
+          <span class="site-state-item-count">194</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -186,7 +195,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">45</span>
+        <span class="site-state-item-count">46</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -272,7 +281,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+      <time title="Modified: 2022-11-30 13:21:32" itemprop="dateModified" datetime="2022-11-30T13:21:32Z">2022-11-30</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -307,7 +316,7 @@
 <li>内存虚拟化</li>
 </ul>
 <span id="more"></span>
-<h1 id="CPU虚拟化"><a class="header-anchor" href="#CPU虚拟化"></a>CPU虚拟化</h1>
+<h1 id="CPU-Virtualization"><a class="header-anchor" href="#CPU-Virtualization"></a>CPU Virtualization</h1>
 <h2 id="进程"><a class="header-anchor" href="#进程"></a>进程</h2>
 <ul>
 <li>
@@ -428,10 +437,23 @@
 </ol>
 <h2 id="Thread-Scheduling"><a class="header-anchor" href="#Thread-Scheduling"></a>Thread Scheduling</h2>
 <p>详见<em>OS Thread Sheduling Algorithm</em></p>
-<h1 id="内存虚拟化"><a class="header-anchor" href="#内存虚拟化"></a>内存虚拟化</h1>
-<p>我们的编写和编译程序时假定内存从0开始，事实上，程序执行时，OS会决定其在物理内存中的实际加载地址</p>
+<h1 id="Memory-Virtualization"><a class="header-anchor" href="#Memory-Virtualization"></a>Memory Virtualization</h1>
+<p>计算机的physical memory可以被虚拟化virtual memory. 由硬件<strong>MMU</strong>( Memory Management Unit ) 和 OS 共同实现.</p>
+<p>虚拟化后,   <u>physical address space(PAS)</u>被映射为<u>virtual address space (VAS)</u>. <strong>程序使用的只是virtual address</strong>, 在底层由MMU和OS将其转换为physical address, 即需要<strong>address translation</strong>:</p>
+<p>$$<br>
+\operatorname{MAP}: \mathrm{VAS} → \mathrm{PAS} \cup \emptyset<br>
+$$<br>
+where<br>
+$$<br>
+\operatorname{MAP}(A)=\left{\begin{array}{l}<br>
+A^{\prime},\text{if data at virtual addr. A are present at physical addr. A′ in PAS} \<br>
+\emptyset, \text{if data at virtual addr. A are not present in physical memory<br>
+}<br>
+\end{array}\right.<br>
+$$</p>
 <ul>
-<li>前者称为地址空间（虚拟空间），后者称为物理空间</li>
+<li>程序使用的只是virtual address, 因此我们常说的<strong>Address space</strong> 是VAS</li>
+<li>一个VAS的例子是: 我们编写和编译程序时<u>假定内存从0开始</u></li>
 </ul>
 <h2 id="Address-Space"><a class="header-anchor" href="#Address-Space"></a>Address Space</h2>
 <h3 id="Address-Space-of-Linux-process"><a class="header-anchor" href="#Address-Space-of-Linux-process"></a>Address Space of Linux process</h3>
@@ -547,33 +569,32 @@
 <li>假设要<code>free(16500)</code>（ 即16384( 16KB ) + 前一块的108 ），也就是图上的<code>sptr</code>指针, 则令head指向sptr前的头块，得到sptr（开头的）内存块的信息，然后删除头块和sptr内存块</li>
 </ul>
 <h2 id="Paging"><a class="header-anchor" href="#Paging"></a>Paging</h2>
-<p>分页将一个进程的地址空间分割成固定大小的单元，称为page, 并将物理内存也分割成相同的固定大小的单元，称为frame, 每个frame装一个page, 将page和frame编号</p>
+<p>分页将进程的地址空间分割成固定大小的单元，称为page, 并将物理内存也分割成相同的固定大小的单元，称为frame, 每个frame装一个page, 将page和frame编号</p>
 <ul>
 <li>虚拟页号（ virtual page number, VPN ）， 因为地址空间都属于虚拟内存（虚拟空间），因此称为“虚拟”页号</li>
 <li>物理帧号（ physical  ）：因为帧都处于物理内存（物理空间）中，因此称为“物理”帧号</li>
 </ul>
-<p><strong>每个进程都有一个页表(page table)</strong>, 页表就是页表项的列表。 每个页表项( page table entry, PTE )存储了一个page到 frame 的映射（即虚拟页号到物理页号到映射）</p>
+<p>分页视角下的地址空间为:</p>
+<ul>
+<li>
+<p><strong>虚拟地址 = VPN + 页内偏移</strong></p>
+</li>
+<li>
+<p><strong>物理地址 = PFN + 页框内偏移</strong></p>
+<ul>
+<li>稍后我们会看到, 虚拟地址(VA, virtual address) 到 物理地址( PA, hysical address )的转换其实只需要转换VPN到PFN, 偏移量是不变的. 因此<strong>页内偏移 = 页框内偏移</strong></li>
+</ul>
+</li>
+</ul>
+<p>在分页机制下, <strong>每个进程都有一个页表(page table)</strong>, 页表就是页表项的列表. 每个<strong>页表项</strong>( page table entry, PTE )存储了一个page到 frame 的映射（即虚拟页号到物理页号到映射）</p>
 <ul>
 <li>页表项的索引就等于VPN， 比如VPN为2， 那就对应着页表中下标为2的PFN</li>
 </ul>
 <p>页表基址寄存器（ page table base register ）: 存储了页表的起始位置的物理地址，用于访问PTE：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 得到VPN</span></span><br><span class="line">VPN = ( VirtualAddress &amp; VPN_MASK ) &gt;&gt; SHIFT;</span><br><span class="line"></span><br><span class="line"><span class="comment">// VPN就是PTE的索引，得到PTE在页表中的偏移，加上页表的起始地址，就是该PTE的物理地址</span></span><br><span class="line">PTEAddr = PageTableBaseRegister + (VPN + <span class="keyword">sizeof</span>(PTE));</span><br></pre></td></tr></table></figure>
-<p>对于一个虚拟地址，它由两部分组成： VPN + 业内偏移。 只要查询页表，找到PTE（VPN就是PTE的下标），读取PTE，将VPN转换为PFN，再加上业内偏移，就得到了物理地址：</p>
+<p>只要查询页表，找到PTE（VPN就是PTE的下标），读取PTE，将VPN转换为PFN，再加上业内偏移，就得到了物理地址：</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/virtual%20address%20to%20physical%20address.png" alt="virtual address to physical address"></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">offset = VirtualAddress &amp; OFFSET_MASK PhysAddr = (PFN &lt;&lt; SHIFT) | offset</span><br><span class="line"><span class="comment">// Extract the VPN from the virtual address</span></span><br><span class="line">VPN = (VirtualAddress &amp; VPN_MASK) &gt;&gt; SHIFT</span><br><span class="line"></span><br><span class="line"><span class="comment">// Form the address of the page-table entry (PTE)</span></span><br><span class="line">PTEAddr = PTBR + (VPN * <span class="keyword">sizeof</span>(PTE))</span><br><span class="line"></span><br><span class="line"><span class="comment">// Fetch the PTE</span></span><br><span class="line">PTE = AccessMemory(PTEAddr)</span><br><span class="line">  </span><br><span class="line"><span class="comment">// Check if process can access the page </span></span><br><span class="line"><span class="keyword">if</span> (PTE.Valid == False)</span><br><span class="line">	RaiseException(SEGMENTATION_FAULT)</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (CanAccess(PTE.ProtectBits) == False)</span><br><span class="line">    RaiseException(PROTECTION_FAULT)</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="comment">// Access is OK: form physical address and fetch it offset = VirtualAddress &amp; OFFSET_MASK</span></span><br><span class="line">	PhysAddr = (PTE.PFN &lt;&lt; PFN_SHIFT) | offset</span><br><span class="line">	Register = AccessMemory(PhysAddr)</span><br></pre></td></tr></table></figure>
-<h3 id="TLB"><a class="header-anchor" href="#TLB"></a>TLB</h3>
-<p><em>Translation Look_aside Buffer</em></p>
-<p>可以把部分PTE存入TLB，对每次内存访问，先查看TLB，看是否有期望的转换映射，有的话（TLB hit）就直接得到了PFN，不需要查页表。 没有的话(.TLB miss )就继续<strong>查页表，得到PTE，然后将该PTE写入TLB，再重试查TLB的指令</strong>，这次会命中(hit)，得到PFN</p>
-<p>TLB存放了PTE集合，PTE只对页表有效，页表只对所属的进程有效，因此TLB只对所属进程有效。 context switch时，要刷新TLB</p>
-<ul>
-<li>刷新TLB会导致每次上下午切换后，都会有大量TLB miss， 为此，TLB实际上会存储多个进程（即多个页表）的PTE，并增加一个地址空间标识符字段（相当于PID），不同进程的PTE就用地址空间标识符来区分</li>
-<li>除此之外，TLB项还有一些其他的控制位，比如有效位
-<ul>
-<li>TLB的有效位和页表的有效位不同，如果PTE无效，表面该页没有被进程申请使用，访问该页是非法的；而TLB项无效，仅仅表明该TLB项不是有效的地址映射</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">VPN = (VirtualAddress &amp; VPN_MASK) &gt;&gt; SHIFT </span><br><span class="line">(Success, TlbEntry) = TLB_Lookup(VPN)</span><br><span class="line"><span class="keyword">if</span> (Success == True) <span class="comment">// TLB Hit</span></span><br><span class="line">	<span class="keyword">if</span> (CanAccess(TlbEntry.ProtectBits) == True) <span class="comment">//查TLB控制位，看该TLB项是否有效</span></span><br><span class="line">		Offset = VirtualAddress &amp; OFFSET_MASK </span><br><span class="line">		PhysAddr = (TlbEntry.PFN &lt;&lt; SHIFT) | Offset 		<span class="comment">//得到物理地址</span></span><br><span class="line">		AccessMemory(PhysAddr)</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line"> 		RaiseException(PROTECTION_FAULT) <span class="number">10</span> <span class="comment">//该TLB项无效，进入异常处理程序，其实一般就是进入下一步的页表读取步骤</span></span><br><span class="line"> 	</span><br><span class="line"><span class="comment">// TLB Miss，进入常规的页表读取步骤</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	PTEAddr = PTBR + (VPN * <span class="keyword">sizeof</span>(PTE)) </span><br><span class="line">  PTE = AccessMemory(PTEAddr)</span><br><span class="line">	<span class="keyword">if</span> (PTE.Valid == False) </span><br><span class="line">	RaiseException(SEGMENTATION_FAULT)</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (CanAccess(PTE.ProtectBits) == False) </span><br><span class="line">		RaiseException(PROTECTION_FAULT)</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		TLB_Insert(VPN, PTE.PFN, PTE.ProtectBits) RetryInstruction()</span><br></pre></td></tr></table></figure>
 <h3 id="段页式"><a class="header-anchor" href="#段页式"></a>段页式</h3>
 <p>段页式就是将分段和分页结合，给进程的每个逻辑段分配一个页表。 此时段基址寄存器指向的就不是段的物理基址，而是段对应的页表的物理基址</p>
 <p>示例， 假设 32 位虚拟地址空间包含 4KB 页面，并且地址空间分为 4 个段。在这个例子中，我们只使用 3 个段:代码，堆，栈</p>
@@ -591,6 +612,167 @@
 </ul>
 <h3 id="反向页表"><a class="header-anchor" href="#反向页表"></a>反向页表</h3>
 <p>传统页表是每个进程一个，而反向页表是整个系统一个。每个PTE带有所属进程的标识符。 要搜索反向页表，需要借助散列表等数据结构</p>
+<h2 id="Address-Translation"><a class="header-anchor" href="#Address-Translation"></a>Address Translation</h2>
+<p>我们以分页作为虚拟化手段, 解释地址转换的过程:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20translation%20with%20a%20page%20table.png" alt="Address translation with a page table"></p>
+<h3 id="Symbol-table"><a class="header-anchor" href="#Symbol-table"></a>Symbol table</h3>
+<p>Summary of address translation symbols:</p>
+<ul>
+<li>
+<p>Basic parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$N = 2^n$</td>
+<td>Number of addresses in virtual address space</td>
+</tr>
+<tr>
+<td>$M = 2^m$</td>
+<td>Number of addresses in physical address space</td>
+</tr>
+<tr>
+<td>$P = 2^p$</td>
+<td>Page size (bytes)</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Components of a virtual address (VA)</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VPO</td>
+<td>Virtual page offset (bytes)</td>
+</tr>
+<tr>
+<td>VPN    $M = 2^m$</td>
+<td>Virtual page number</td>
+</tr>
+<tr>
+<td>TLBI</td>
+<td>TLB index</td>
+</tr>
+<tr>
+<td>TLBT</td>
+<td>TLB tag</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Components of a physical address (PA):</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PPO</td>
+<td>Physical page offset (bytes)</td>
+</tr>
+<tr>
+<td>PPN</td>
+<td>Physical page number</td>
+</tr>
+<tr>
+<td>CO</td>
+<td>Byte offset within cache block</td>
+</tr>
+<tr>
+<td>CI</td>
+<td>Cache index</td>
+</tr>
+<tr>
+<td>CT</td>
+<td>Cache tag</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h3 id="Process"><a class="header-anchor" href="#Process"></a>Process</h3>
+<h4 id="Page-Hit"><a class="header-anchor" href="#Page-Hit"></a>Page Hit</h4>
+<p>如果Page hit, 即PTE正确地存在页表中, 则:</p>
+<ol>
+<li>CPU生成一个virtual address, 送给MMU处理</li>
+<li>MMU根据VPN, 从cache/main memory中查找PTE</li>
+<li>The cache/main memory returns the PTE to the MMU.</li>
+<li>MMU根据PTE的内容(VPN - PFN的mapping), 组合出physical address, 然后送给cache/main memory.</li>
+<li>The cache/main memory returns the requested data word to the processor.</li>
+</ol>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20translation%20Page%20hit.png" alt="Address translation Page hit"></p>
+<p>此时Address Translation是纯硬件的(CPU, MMU).</p>
+<h4 id="Page-Fault"><a class="header-anchor" href="#Page-Fault"></a>Page Fault</h4>
+<p>如果发生了page fault( MMU发现PTE的valid bit为false ), 则会由硬件和OS(负责中断)共同处理:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20translation%20Page%20fault.png" alt="Address translation Page fault"></p>
+<p>1~3. 和之前的步骤1~3一样,</p>
+<ol start="4">
+<li>MMU发现PTE是invalid的, so the MMU triggers an exception, which transfers control in the CPU to a <u>page fault</u> exception handler in the operating system kernel.</li>
+<li>The fault handler identifies a victim page in physical memory, and if that page has been modified, pages it out to disk.</li>
+<li>The fault handler pages in the new page and <u>updates the PTE in memory</u>.</li>
+<li>和其他异常中断一样, the fault handler返回原进程, CPU <strong>replay</strong>那条之前引起page fault的指令, 将virtual address再次送给MMU, 但由于此时的PTE已经存储在页表中了, 因此这是个<strong>page hit</strong>. 之后的过程就如之前page hit的情况</li>
+</ol>
+<h3 id="Integrating-Caches-and-VM"><a class="header-anchor" href="#Integrating-Caches-and-VM"></a>Integrating Caches and VM</h3>
+<p>采用虚拟化后, 指令执行就多了一次VA -&gt; PA的映射, 对于分页来说, 也就是也就是查询页表. 为了提高效率, 考虑到内存访问的Locality, 我们采用Cache的思想, 把常用的PTE存入一个Cache, 不需要每次都查页表了.</p>
+<p>The main idea is that <strong>the address translation occurs <u>before</u> the cache lookup</strong>.</p>
+<ul>
+<li>Cache属于内存系统一部分, <strong>面对的是Physical Address, cache对于物理地址是透明的</strong>.</li>
+</ul>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Integrating%20VM%20with%20a%20physically%20addressed%20cache.png" alt="Integrating VM with a physically addressed cache."></p>
+<h3 id="TLB"><a class="header-anchor" href="#TLB"></a>TLB</h3>
+<p>TLB( Translation Look_aside Buffer )就是上面思想的一个实现, 它是种特殊的cache, OS把一部分常用的PTE存入TLB.</p>
+<h4 id="TLB-Organization"><a class="header-anchor" href="#TLB-Organization"></a>TLB Organization</h4>
+<p>TLB一般是set associative cache(详见Cache Memory). 在TLB视角下, virtual address被划分如下:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20Organization.png" alt="TLB Organization"></p>
+<ul>
+<li>注意: <strong>和main memory cache不同, TLB划分的是虚拟地址, 而不是物理地址</strong></li>
+<li>TLB高位存储tag, 低位存储set index</li>
+</ul>
+<h4 id="Address-Translation-Using-TLB"><a class="header-anchor" href="#Address-Translation-Using-TLB"></a>Address Translation Using TLB</h4>
+<p>使用TLB后, Address Translation过程如下:</p>
+<ol>
+<li>对每次内存访问，OS先查看TLB，看是否有期望的转换映射.</li>
+<li>有的话（TLB hit）就直接得到了PFN，不需要查页表. 没有的话( TLB miss )就继续<strong>查页表，得到PTE，然后将该PTE写入TLB，再重试查TLB的指令</strong>，这次会命中(hit)，得到PFN. 拼接出PA</li>
+<li>用PA来进行后续的内存访问( main memory cache, main memory, disk ...)</li>
+</ol>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20Translation%20with%20TLB.png" alt="Address Translation with TLB"></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">VPN = (VirtualAddress &amp; VPN_MASK) &gt;&gt; SHIFT </span><br><span class="line">(Success, TlbEntry) = TLB_Lookup(VPN)</span><br><span class="line"><span class="keyword">if</span> (Success == True) <span class="comment">// TLB Hit</span></span><br><span class="line">	<span class="keyword">if</span> (CanAccess(TlbEntry.ProtectBits) == True) <span class="comment">//查TLB控制位，看该TLB项是否有效</span></span><br><span class="line">		Offset = VirtualAddress &amp; OFFSET_MASK </span><br><span class="line">		PhysAddr = (TlbEntry.PFN &lt;&lt; SHIFT) | Offset 		<span class="comment">//得到物理地址</span></span><br><span class="line">		AccessMemory(PhysAddr)</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line"> 		RaiseException(PROTECTION_FAULT) <span class="number">10</span> <span class="comment">//该TLB项无效，进入异常处理程序，其实一般就是进入下一步的页表读取步骤</span></span><br><span class="line"> 	</span><br><span class="line"><span class="comment">// TLB Miss，进入常规的页表读取步骤</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	PTEAddr = PTBR + (VPN * <span class="keyword">sizeof</span>(PTE)) </span><br><span class="line">  PTE = AccessMemory(PTEAddr)</span><br><span class="line">	<span class="keyword">if</span> (PTE.Valid == False) </span><br><span class="line">	RaiseException(SEGMENTATION_FAULT)</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (CanAccess(PTE.ProtectBits) == False) </span><br><span class="line">		RaiseException(PROTECTION_FAULT)</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		TLB_Insert(VPN, PTE.PFN, PTE.ProtectBits) RetryInstruction()</span><br></pre></td></tr></table></figure>
+<h5 id="TLB-Hit"><a class="header-anchor" href="#TLB-Hit"></a>TLB Hit</h5>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20hit.png" alt="TLB hit"></p>
+<h5 id="TLB-Miss"><a class="header-anchor" href="#TLB-Miss"></a>TLB Miss</h5>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20miss.png" alt="TLB miss"></p>
+<h4 id="Memory-Access-Using-TLB"><a class="header-anchor" href="#Memory-Access-Using-TLB"></a>Memory Access Using TLB</h4>
+<p>采用TLB后, 完整的内存访问过程如下:</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Memory%20Access%20using%20TLB.png" alt="Memory Access using TLB"></p>
+<h4 id="TLB-Refresh"><a class="header-anchor" href="#TLB-Refresh"></a>TLB Refresh</h4>
+<ul>
+<li>TLB存放了PTE集合，PTE只对页表有效，页表只对所属的进程有效，因此<strong>TLB只对所属进程有效</strong>. <strong>context switch时，要刷新TLB</strong>
+<ul>
+<li>刷新TLB会导致每次上下文切换后，都会有大量TLB miss， 为此，TLB实际上会<u>存储多个进程（即多个页表）的PTE，并增加一个地址空间标识符字段（相当于PID），不同进程的PTE就用地址空间标识符来区分</u></li>
+</ul>
+</li>
+<li>除此之外，TLB项还有一些其他的控制位，比如有效位
+<ul>
+<li>TLB的有效位和页表的有效位不同，<strong>如果PTE无效，表面该页没有被进程申请使用，访问该页是非法的；而TLB项无效，仅仅表明该TLB项不是有效的地址映射</strong></li>
+</ul>
+</li>
+</ul>
 <h2 id="虚拟内存"><a class="header-anchor" href="#虚拟内存"></a>虚拟内存</h2>
 <p>通过设置交换空间，可以将内存容量（在逻辑上）扩大，用户看到的不是实际内存大小，而是虚拟内存大小</p>
 <h3 id="交换空间"><a class="header-anchor" href="#交换空间"></a>交换空间</h3>
