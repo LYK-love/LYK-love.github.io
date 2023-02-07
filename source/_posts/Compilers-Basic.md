@@ -146,7 +146,7 @@ The front end determines if the input code is well formed, in terms of **lexical
 
 * Semantic Analysis: 一个语法正确的句子未必是有意义的, 比如: “Rocks are green vegetables” 符合上述的语法, 但是没有意义. 
 
-* 程序语言的语义分析一般比较简单, 主要包括Type check, 空指针判断等等. Analyser使用语法树和符号表来检查源程序的语义, 使得源程序和目标程序的语义一致. 
+* 程序语言的语义分析一般比较简单, 主要包括Type check, Object binding等等. Analyser使用语法树和符号表来检查源程序的语义, 使得源程序和目标程序的语义一致. 
 
   同时会收集类型信息，存入语法树或符号表，用于后续的中间代码生成.
 

@@ -3,6 +3,7 @@ title: MYSQL Management
 tags: Database
 categories: Technology
 date: 2022-04-09 16:44:41
+
 ---
 
 
@@ -104,132 +105,37 @@ mysql> SHOW DATABASES;
 
 ## 创建用户帐户
 
-MySQL提供了`CREATE USER`语句，允许您创建一个新的用户帐户。 `CREATE USER`语句的语法如下：
+ `CREATE USER`:
 
 ```sql
 CREATE USER user_account IDENTIFIED BY password;
 ```
 
-用户帐号(`user_account`)是以`username@hostname`格式跟在`CREATE USER`子句之后。
+* `user_account`: 格式为`username@hostname`
 
-密码(`password`)在`IDENTIFIED BY`子句中指定。`password`必须是明文。 在将用户帐户保存到用户表之前，MySQL将加密明文密码。
+  * `localhost`: 只允许从本机连接
 
-例如，要创建一个新的用户`dbadmin`，这个用户只允许从`localhost`主机并使用密码为`pwd123`连接到MySQL数据库服务器，使用`CREATE USER`语句，如下所示：
+  * `%`: 相当于通配, **但是不能匹配到 `locahost`**
 
-```sql
-CREATE USER 'lyk'@'%'
-IDENTIFIED BY '';
-```
+    * 例如,要允许`mysqladmin`用户帐户从`yiibai.com`主机的任何子域连接到数据库服务:
 
-* `'[user]@[允许登录的host]'`
+      ```sql
+      CREATE USER mysqladmin@'%.yiibai.com'
+      IDENTIFIED by 'mypassword';
+      ```
 
-要查看用户帐户的权限，请使用`SHOW GRANTS`语句，如下所示：
+    * 如果只写`username@%`, 则相当于允许 `locahost`外的所有ip
 
-```sql
-SHOW GRANTS FOR dbadmin@localhost;
-SQL
-```
+    * 也就是说, `username@%`和`username@localhost`是两个用户!
 
-执行上面查询语句，得到以下结果 - 
+  * 可以不写hostname, 此时相当于`%`
 
-```shell
-mysql> SHOW GRANTS FOR dbadmin@localhost;
-+---------------------------------------------+
-| Grants for dbadmin@localhost                |
-+---------------------------------------------+
-| GRANT USAGE ON *.* TO 'dbadmin'@'localhost' |
-+---------------------------------------------+
-1 row in set
-Shell
-```
-
-上面结果中的`*.*`显示`dbadmin`用户帐户只能登录到数据库服务器，没有其他权限。 要授予用户权限，您可以使用[GRANT语句](http://www.yiibai.com/mysql/grant.html)，有关`Grant`语句，我们将在[下一个教程](http://www.yiibai.com/mysql/grant.html)中介绍。
-
-请注意，点(`.`)之前的部分表示数据库，点(`.`)后面的部分表示表，例如`database.table`，`testdb.offices`等等。
-
-要允许用户帐户从任何主机连接，请使用百分比(`%`)通配符，如以下示例所示：
-
-```
-CREATE USER superadmin@'%' IDENTIFIED BY 'mypassword';
-```
-
-百分比通配符`%`与[LIKE](http://www.yiibai.com/mysql/like.html)运算符中使用的效果相同，例如，要允许`mysqladmin`用户帐户从`yiibai.com`主机的任何子域连接到数据库服务器，请使用百分比通配符`%`，如下所示：
-
-```sql
-CREATE USER mysqladmin@'%.yiibai.com'
-IDENTIFIED by 'mypassword';
-SQL
-```
-
-> 请注意，也可以在`CREATE USER`语句中使用下划线通配符`_`。
-
-如果您省略了用户帐户的主机名部分，MySQL也会接受它，并允许用户从任何主机进行连接。 例如，以下语句创建一个名为`remote_user`的新用户帐户，可以从任何主机连接到数据库服务器：
-
-```sql
-CREATE USER remote_user;
-SQL
-```
-
-可以看到授予远程用户帐户(`remote_user`)的权限如下：
-
-```sql
-SHOW GRANTS FOR remote_user;
-SQL
-```
-
-执行上面查询语句，得到以下结果 - 
-
-```sql
-mysql> SHOW GRANTS FOR remote_user;
-+-----------------------------------------+
-| Grants for remote_user@%                |
-+-----------------------------------------+
-| GRANT USAGE ON *.* TO 'remote_user'@'%' |
-+-----------------------------------------+
-1 row in set
-SQL
-```
-
-要注意，引用是非常重要的，特别是当用户帐户包含特殊字符(如`_`或`%`)时。
-
-如果您不小心引用`"username@hostname"`这样的用户帐户，MySQL将创建一个`username@hostname`的用户，并允许用户从任何主机进行连接，这可能不是您预期的。
-
-例如，以下语句创建可以从任何主机连接到MySQL数据库服务器的新用户`api@localhost`(这是用户名，并非用户账号)。
-
-```sql
--- 常用创建用户为：CREATE USER api@'localhost' 与下面语句不同 -
-CREATE USER 'api@localhost';
-SQL
-```
-
-查看上面创建的用户的权限 - 
-
-```sql
-mysql> SHOW GRANTS FOR 'api@localhost';
-+-------------------------------------------+
-| Grants for api@localhost@%                |
-+-------------------------------------------+
-| GRANT USAGE ON *.* TO 'api@localhost'@'%' |
-+-------------------------------------------+
-1 row in set
-SQL
-```
-
-如果创建一个已经存在的用户，MySQL会发出一个错误。 例如，以下语句创建一个名为`remote_user`的用户帐户已经存在：
-
-```sql
-CREATE USER remote_user;
-SQL
-```
-
-上面语句执行后，MySQL发出以下错误信息：
-
-```sql
-1396 - Operation CREATE USER failed for 'remote_user'@'%'
-SQL
-```
-
-请注意，`CREATE USER`语句只是创建一个没有任何权限的新用户帐户。如果要[向用户授予使用权限](http://www.yiibai.com/mysql/grant.html)，则使用`GRANT`语句
+* `password`: 在`IDENTIFIED BY`子句中指定.
+  * `password`必须是明文, 它会被MySQL加密
+  * 空密码就是`IDENTIFIED BY ''`
+* 新创建的用户只能登录到mysql, 没有其他权限
+* 要注意引号`''`, 特别当用户帐户包含特殊字符(如`_`或`%`)时, 比如, 如果你写了`"username@hostname"`, 这其实是一整个username, 而没有包含hostname, 而hostname会被默认设置为`%`
+* 这样的用户帐户，MySQL将创建一个`username@hostname`的用户，并允许用户从任何主机进行连接，这可能不是您预期的。
 
 ## 导出/入数据库
 
@@ -238,8 +144,6 @@ SQL
 ```shell
 mysqldump -u [user] [database_name] > [filename].sql
 ```
-
-
 
 
 
@@ -255,15 +159,20 @@ mysql> source c:\temp\mysqlsampledatabase.sql
 GRANT ALL ON *.* TO 'super'@'localhost' WITH GRANT OPTION;
 ```
 
-`ON *.*`子句表示MySQL中的所有数据库和所有对象。`WITH GRANT OPTION`允许`super@localhost`向其他用户授予权限
+* `ON *.*`: 表示MySQL中的所有数据库和所有对象
+  * `.`之前的部分表示数据库, `.`后面的部分表示表, 例如`database.table`, `testdb.offices`等等
+
+* `WITH GRANT OPTION`: 允许`super@localhost`向其他用户授予权限
 
 
 
-```
+授权后需要刷新权限:
+
+```mysql
 flush privileges
 ```
 
-刷新权限
+
 
 ## 查看用户权限
 
@@ -277,7 +186,8 @@ show grants for [user]
 
 ### 在登陆MySQL的情况下
 
-方法一：通过sql命令修改密码
+### Plan A: 通过sql命令修改密码
+
 命令格式：set password for 用户名@localhost = password('新密码'); 
 
 新版本mysql 命令：
@@ -298,32 +208,31 @@ alter user 'root'@'localhost' identified by '123';
 
 
 
-方法二：用UPDATE直接修改user表
---使用mysql数据库
+### Plan B: 用UPDATE直接修改user表
 
-```mysql
-use mysql; 
-```
+1. 使用mysql数据库
 
+   ```mysql
+   use mysql; 
+   ```
 
---更改user表中指定用户的密码
+2. 更改user表中指定用户的密码
 
-```mysql
-update user set password=password('123') where user='root' and host='localhost'; 
-```
+   ```mysql
+   update user set password=password('123') where user='root' and host='localhost'; 
+   ```
 
---权限刷新
+3. 权限刷新
 
-```mysql
-flush privileges;
-```
+   ```mysql
+   flush privileges;
+   ```
 
-
+   
 
 ### 在没有登陆的情况下
 
-`mysqladmin` 命令
-命令格式:   
+`mysqladmin` 命令:
 
 ```mysql
 mysqladmin -u用户名 -p旧密码 password 新密码 

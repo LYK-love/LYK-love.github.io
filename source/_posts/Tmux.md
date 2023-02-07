@@ -122,4 +122,3 @@ For further reading, [here](https://www.hamvocke.com/blog/a-quick-and-easy-guide
     tmux rename-session -t 0 database
     ```
 
-# 

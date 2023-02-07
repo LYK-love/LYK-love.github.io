@@ -26,7 +26,7 @@ Outline:
 
 每个像素都有颜色和亮度. 但是感光元件只能衡量亮度, 无法衡量光的波长(颜色), 要想感知色彩，需要在每个感光元件前加滤色片( filter ), 滤色片是**单色**的.
 
-感光元件的材料有CCD (charge coupled device), and CMOS (complementary metal oxide semiconductor )
+感光元件的材料有CCD (charge coupled device), and CMOS (complementary metal oxide semiconductor ). 对应人眼球的中央凹(当然中央凹不仅可以感知光的强度, 还能感知色彩)
 
 * CMOS作为一种SDRAM,也被用于计算机领域,参见[Computer Storage](https://lyk-love.cn/2022/08/01/Computer-Storage/?highlight=stora)
 

@@ -20,7 +20,9 @@ Outline:
 
 <!--more-->
 
-# Basic Ideas
+
+
+# The Memory Hierarchy
 
 计算机的存储架构是分层的：
 
@@ -35,7 +37,11 @@ Outline:
 
 
 
-还有*虚拟内存* , 这是进程视角下的内存， 包含了主存和一部分从硬盘中置换出来的存储空间, 由**MMU**( Memory Management Unit )完成。总之，虚拟内存是一个抽象的内存概念，和现实的存储结构没有关系。
+还有*虚拟内存* , 这是进程视角下的内存， 包含了主存和一部分从硬盘中置换出来的存储空间. 通过硬件**MMU**( Memory Management Unit )实现虚拟内存地址和物理内存地址的转换.
+
+总之，虚拟内存是一个抽象的内存概念, 和现实的存储结构没有关系.
+
+
 
 ## Cache
 
@@ -93,7 +99,9 @@ Disk：称为硬盘，是非易失的外部存储设备。因为早期的硬盘�
 
 注意，虽然SSD材料是ROM，但磁盘和ROM是两个概念。 现代的磁盘包括了HDD和SSD， 已经不是一个材料概念，而是一个计算机架构中的抽象的功能的概念。 而ROM是一个材料的概念。不能把ROM和Disk混为一谈。
 
-# Storage Material
+# Locality
+
+# Storage Technologies
 
 ## RAM
 
@@ -142,7 +150,7 @@ SRAM 将每个bit存储在一个 *bistable* ( 双稳态 )的cell里。每个cell
 
 * 也就是说SRAM在通电时不需要刷新就能保存数据
 
-但没有电的话, 双稳态的状态就不能保持了, 意味着数据也就丢失了. 这就是我们常说, 电脑断电后内存数据就会丢失的原因.
+但是, 如果没有电,  双稳态就不能保持, 意味着数据也就丢失了. 这就是“电脑断电后内存数据就会丢失”的原因.
 
 ### DRAM
 
@@ -154,7 +162,7 @@ DRAM将每个位存储为对一个电容的充电。DRAM可以制造得非常密
 
 * DRAM芯片的每$w$个cell组成一个supercell，每$d$个supercell组成一个DRAM芯片的存储部分。
   * 即， 一个$d \times w$的DRAM总共存储了$d \times w $ bit
-* supercell被组织成一个$r$行$c$列的长方形阵列，其中$r \times c = d$.  每个DRAM内使用$(i,j)$二维地址对supercell进行寻址( 即$(行号， 列号)$ )
+* supercell被组织成一个$r$行$c$列的长方形阵列，其中$r \times c = d$.  每个DRAM内使用$(i,j)$二维地址( 即$(行号， 列号)$  )对supercell进行寻址
   * 也就是说，DRAM的**寻址的基本单位**是supercell， DRAM没有提供机制给supercell内部的cell寻址
 
 

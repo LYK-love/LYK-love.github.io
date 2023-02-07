@@ -14,7 +14,7 @@ Outline:
 
 <!--more-->
 
-# CPU虚拟化
+# CPU Virtualization
 
 ## 进程
 
@@ -232,11 +232,33 @@ OS首先（在启动时）设置`trap table`并开启时钟中断 （都是特�
 
 详见*OS Thread Sheduling Algorithm*
 
-#  内存虚拟化
+#  Memory Virtualization
 
-我们的编写和编译程序时假定内存从0开始，事实上，程序执行时，OS会决定其在物理内存中的实际加载地址
+计算机的physical memory可以被虚拟化virtual memory. 由硬件**MMU**( Memory Management Unit ) 和 OS 共同实现.
 
-* 前者称为地址空间（虚拟空间），后者称为物理空间
+虚拟化后,   <u>physical address space(PAS)</u>被映射为<u>virtual address space (VAS)</u>. **程序使用的只是virtual address**, 在底层由MMU和OS将其转换为physical address, 即需要**[address translation](#Address Translation)**:
+
+
+$$
+\operatorname{MAP}: \mathrm{VAS} → \mathrm{PAS} \cup \emptyset
+$$
+where
+$$
+\begin{equation}
+
+\operatorname{MAP}(A)=
+
+\left\{
+             \begin{array}{lr}
+             A^{\prime},\text{if data at virtual addr. A are present at physical addr. A′ in PAS} \\
+						\emptyset, \text{if data at virtual addr. A are not present in physical memory}
+             \end{array}
+\right.
+\end{equation}
+$$
+
+* 程序使用的只是virtual address, 因此我们常说的**Address space** 是VAS
+* 一个使用VAS的例子是: 我们编写和编译程序时<u>假定内存从0开始</u>
 
 ## Address Space
 
@@ -449,18 +471,29 @@ head -> next = NULL;
 
 ## Paging
 
-分页将一个进程的地址空间分割成固定大小的单元，称为page, 并将物理内存也分割成相同的固定大小的单元，称为frame, 每个frame装一个page, 将page和frame编号
+分页将进程的地址空间分割成固定大小的单元，称为page, 并将物理内存也分割成相同的固定大小的单元，称为frame, 每个frame装一个page, 将page和frame编号
 
 * 虚拟页号（ virtual page number, VPN ）， 因为地址空间都属于虚拟内存（虚拟空间），因此称为“虚拟”页号
 * 物理帧号（ physical  ）：因为帧都处于物理内存（物理空间）中，因此称为“物理”帧号
 
-**每个进程都有一个页表(page table)**, 页表就是页表项的列表。 每个页表项( page table entry, PTE )存储了一个page到 frame 的映射（即虚拟页号到物理页号到映射）
+
+
+分页视角下的地址空间为:
+
+* **虚拟地址 = VPN + 页内偏移**
+
+* **物理地址 = PFN + 页框内偏移**
+  * 稍后我们会看到, 虚拟地址(VA, virtual address) 到 物理地址( PA, hysical address )的转换其实只需要转换VPN到PFN, 偏移量是不变的. 因此**页内偏移 = 页框内偏移**
+
+
+
+在分页机制下, **每个进程都有一个页表(page table)**, 页表就是页表项的列表. 每个**页表项**( page table entry, PTE )存储了一个page到 frame 的映射（即虚拟页号到物理页号到映射）
 
 * 页表项的索引就等于VPN， 比如VPN为2， 那就对应着页表中下标为2的PFN
 
 
 
-页表基址寄存器（ page table base register ）: 存储了页表的起始位置的物理地址，用于访问PTE：
+页表基址寄存器（ PTBR, page table base register ）: 存储了页表的起始位置的物理地址，用于访问PTE：
 
 ```c
 // 得到VPN
@@ -472,11 +505,7 @@ PTEAddr = PageTableBaseRegister + (VPN + sizeof(PTE));
 
 
 
-
-
-
-
-对于一个虚拟地址，它由两部分组成： VPN + 业内偏移。 只要查询页表，找到PTE（VPN就是PTE的下标），读取PTE，将VPN转换为PFN，再加上业内偏移，就得到了物理地址：
+只要查询页表，找到PTE（VPN就是PTE的下标），读取PTE，将VPN转换为PFN，再加上业内偏移，就得到了物理地址：
 
 ![virtual address to physical address](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/virtual%20address%20to%20physical%20address.png)
 
@@ -504,45 +533,7 @@ else
 	Register = AccessMemory(PhysAddr)
 ```
 
-### TLB
 
-*Translation Look_aside Buffer*
-
-可以把部分PTE存入TLB，对每次内存访问，先查看TLB，看是否有期望的转换映射，有的话（TLB hit）就直接得到了PFN，不需要查页表。 没有的话(.TLB miss )就继续**查页表，得到PTE，然后将该PTE写入TLB，再重试查TLB的指令**，这次会命中(hit)，得到PFN
-
-
-
-TLB存放了PTE集合，PTE只对页表有效，页表只对所属的进程有效，因此TLB只对所属进程有效。 context switch时，要刷新TLB
-
-* 刷新TLB会导致每次上下午切换后，都会有大量TLB miss， 为此，TLB实际上会存储多个进程（即多个页表）的PTE，并增加一个地址空间标识符字段（相当于PID），不同进程的PTE就用地址空间标识符来区分
-* 除此之外，TLB项还有一些其他的控制位，比如有效位
-  * TLB的有效位和页表的有效位不同，如果PTE无效，表面该页没有被进程申请使用，访问该页是非法的；而TLB项无效，仅仅表明该TLB项不是有效的地址映射
-
-
-
-```c
-
-VPN = (VirtualAddress & VPN_MASK) >> SHIFT 
-(Success, TlbEntry) = TLB_Lookup(VPN)
-if (Success == True) // TLB Hit
-	if (CanAccess(TlbEntry.ProtectBits) == True) //查TLB控制位，看该TLB项是否有效
-		Offset = VirtualAddress & OFFSET_MASK 
-		PhysAddr = (TlbEntry.PFN << SHIFT) | Offset 		//得到物理地址
-		AccessMemory(PhysAddr)
-	else
- 		RaiseException(PROTECTION_FAULT) 10 //该TLB项无效，进入异常处理程序，其实一般就是进入下一步的页表读取步骤
- 	
-// TLB Miss，进入常规的页表读取步骤
-else
-	PTEAddr = PTBR + (VPN * sizeof(PTE)) 
-  PTE = AccessMemory(PTEAddr)
-	if (PTE.Valid == False) 
-	RaiseException(SEGMENTATION_FAULT)
-	else if (CanAccess(PTE.ProtectBits) == False) 
-		RaiseException(PROTECTION_FAULT)
-	else
-		TLB_Insert(VPN, PTE.PFN, PTE.ProtectBits) RetryInstruction()
-```
 
 
 
@@ -581,6 +572,153 @@ AddressOfPTE = Base[SN] + (VPN * sizeof(PTE))
 ### 反向页表
 
 传统页表是每个进程一个，而反向页表是整个系统一个。每个PTE带有所属进程的标识符。 要搜索反向页表，需要借助散列表等数据结构
+
+## Address Translation
+
+我们以分页作为虚拟化手段, 解释地址转换的过程:
+
+![Address translation with a page table](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20translation%20with%20a%20page%20table.png)
+
+### Symbol table
+
+Summary of address translation symbols:
+
+* Basic parameters:
+
+  | Symbol    | Description                                   |
+  | --------- | --------------------------------------------- |
+  | $N = 2^n$ | Number of addresses in virtual address space  |
+  | $M = 2^m$ | Number of addresses in physical address space |
+  | $P = 2^p$ | Page size (bytes)                             |
+
+* Components of a virtual address (VA)
+
+  | Symbol           | Description                 |
+  | ---------------- | --------------------------- |
+  | VPO              | Virtual page offset (bytes) |
+  | VPN    $M = 2^m$ | Virtual page number         |
+  | TLBI             | TLB index                   |
+  | TLBT             | TLB tag                     |
+
+* Components of a physical address (PA):
+
+  | Symbol | Description                    |
+  | ------ | ------------------------------ |
+  | PPO    | Physical page offset (bytes)   |
+  | PPN    | Physical page number           |
+  | CO     | Byte offset within cache block |
+  | CI     | Cache index                    |
+  | CT     | Cache tag                      |
+
+### Process
+
+#### Page Hit
+
+如果Page hit, 即PTE正确地存在页表中, 则:
+
+1. CPU生成一个virtual address, 送给MMU处理
+2. MMU根据VPN, 从cache/main memory中查找PTE
+3. The cache/main memory returns the PTE to the MMU.
+4. MMU根据PTE的内容(VPN - PFN的mapping), 组合出physical address, 然后送给cache/main memory.
+5. The cache/main memory returns the requested data word to the processor.
+
+![Address translation Page hit](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20translation%20Page%20hit.png)
+
+此时Address Translation是纯硬件的(CPU, MMU). 
+
+
+
+#### Page Fault
+
+如果发生了page fault( MMU发现PTE的valid bit为false ), 则会由硬件和OS(负责中断)共同处理:
+
+![Address translation Page fault](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20translation%20Page%20fault.png)
+
+ 1~3. 和之前的步骤1~3一样,
+
+4. MMU发现PTE是invalid的, so the MMU triggers an exception, which transfers control in the CPU to a <u>page fault</u> exception handler in the operating system kernel.
+5. The fault handler identifies a victim page in physical memory, and if that page has been modified, pages it out to disk.
+6. The fault handler pages in the new page and <u>updates the PTE in memory</u>.
+7. 和其他异常中断一样, the fault handler返回原进程, CPU **replay**那条之前引起page fault的指令, 将virtual address再次送给MMU, 但由于此时的PTE已经存储在页表中了, 因此这是个**page hit**. 之后的过程就如之前page hit的情况
+
+### Integrating Caches and VM
+
+采用虚拟化后, 指令执行就多了一次VA -> PA的映射, 对于分页来说, 也就是也就是查询页表. 为了提高效率, 考虑到内存访问的Locality, 我们采用Cache的思想, 把常用的PTE存入一个Cache, 不需要每次都查页表了.
+
+The main idea is that **the address translation occurs <u>before</u> the cache lookup**.
+
+* Cache属于内存系统一部分, **面对的是Physical Address, cache对于物理地址是透明的**.
+
+![Integrating VM with a physically addressed cache.](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Integrating%20VM%20with%20a%20physically%20addressed%20cache.png)
+
+### TLB
+
+TLB( Translation Look_aside Buffer )就是上面思想的一个实现, 它是种特殊的cache, OS把一部分常用的PTE存入TLB. 
+
+#### TLB Organization
+
+TLB一般是set associative cache(详见[Cache Memory](https://lyk-love.cn/2022/12/01/Cache-Memory/)). 在TLB视角下, virtual address被划分如下: 
+
+![TLB Organization](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20Organization.png)
+
+* 注意: **和main memory cache不同, TLB划分的是虚拟地址, 而不是物理地址**
+* TLB高位存储tag, 低位存储set index
+
+#### Address Translation Using TLB
+
+使用TLB后, Address Translation过程如下:
+
+1. 对每次内存访问，OS先查看TLB，看是否有期望的转换映射.
+2. 有的话（TLB hit）就直接得到了PFN，不需要查页表. 没有的话( TLB miss )就继续**查页表，得到PTE，然后将该PTE写入TLB，再重试查TLB的指令**，这次会命中(hit)，得到PFN. 拼接出PA
+3. 用PA来进行后续的内存访问( main memory cache, main memory, disk ...)
+
+![Address Translation with TLB](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20Translation%20with%20TLB.png)
+
+
+
+```c
+VPN = (VirtualAddress & VPN_MASK) >> SHIFT 
+(Success, TlbEntry) = TLB_Lookup(VPN)
+if (Success == True) // TLB Hit
+	if (CanAccess(TlbEntry.ProtectBits) == True) //查TLB控制位，看该TLB项是否有效
+		Offset = VirtualAddress & OFFSET_MASK 
+		PhysAddr = (TlbEntry.PFN << SHIFT) | Offset 		//得到物理地址
+		AccessMemory(PhysAddr)
+	else
+ 		RaiseException(PROTECTION_FAULT) 10 //该TLB项无效，进入异常处理程序，其实一般就是进入下一步的页表读取步骤
+ 	
+// TLB Miss，进入常规的页表读取步骤
+else
+	PTEAddr = PTBR + (VPN * sizeof(PTE)) 
+  PTE = AccessMemory(PTEAddr)
+	if (PTE.Valid == False) 
+	RaiseException(SEGMENTATION_FAULT)
+	else if (CanAccess(PTE.ProtectBits) == False) 
+		RaiseException(PROTECTION_FAULT)
+	else
+		TLB_Insert(VPN, PTE.PFN, PTE.ProtectBits) RetryInstruction()
+```
+
+##### TLB Hit
+
+![TLB hit](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20hit.png)
+
+##### TLB Miss
+
+![TLB miss](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20miss.png)
+
+#### Memory Access Using TLB
+
+采用TLB后, 完整的内存访问过程如下:
+
+![Memory Access using TLB](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Memory%20Access%20using%20TLB.png)
+
+#### TLB Refresh
+
+* TLB存放了PTE集合，PTE只对页表有效，页表只对所属的进程有效，因此**TLB只对所属进程有效**. **context switch时，要刷新TLB**
+  * 刷新TLB会导致每次上下文切换后，都会有大量TLB miss， 为此，TLB实际上会<u>存储多个进程（即多个页表）的PTE，并增加一个地址空间标识符字段（相当于PID），不同进程的PTE就用地址空间标识符来区分</u>
+* 除此之外，TLB项还有一些其他的控制位，比如有效位
+  * TLB的有效位和页表的有效位不同，**如果PTE无效，表面该页没有被进程申请使用，访问该页是非法的；而TLB项无效，仅仅表明该TLB项不是有效的地址映射**
 
 
 

@@ -115,16 +115,30 @@ Outline:
 
 ### dependency categories
 
-`package.json`中记录的依赖有三种:
+* `package.json`中记录的依赖有三种
+
+* `npm install`默认会下载pro和dev的依赖.
+  * 参见[dev](https://docs.npmjs.com/cli/v8/configuring-npm/package-json#devdependencies): *These things will be installed when doing `npm link` or `npm install` from the root of a package*
+
+  
+
+#### pro
 
 * production dependencies: **是依赖的默认种类**.在项目开发和运行阶段都需要的依赖。
 
   * 在添加依赖时( 使用`npm install [包名]`/ `yarn add [包名]` )，如果不手动指定，则都添加为producrtion dependencies
   * 被记录在`package.json`的`dependencies`属性
 
-* dev dependencies: 只在开发过程中需要，而运行时不需要的依赖（比如 Babel 和 Flow）
+#### dev
 
-  * 被记录在`devDependencies`属性
+* dev dependencies: 只在开发过程中需要，而运行时不需要的依赖
+
+  * 比如 Babel, Flow 和`"@vue/cli-service": "xx"`）
+  * 被记录在`package.json`的`devDependencies`属性
+
+  * 除非是想要把包发布在npm上, 否则pro和dev没什么区别, 都会被`npm install`下载.
+
+#### peer
 
 * peer dependencies: 在发布包的时候需要的依赖。有这种依赖意味着安装包的用户也需要和包同样的依赖。 这对于像 react 这样也被人安装的、需要单一 react-dom 副本的包很有用
 
@@ -133,6 +147,23 @@ Outline:
     > 我们组件的包需要react，使用者的项目也需要react，两个react的版本可能不一致，这个时候可以使用`peer-dependencies`来安装我们的react，避免与使用者冲突。
 
   * 被记录在`peerDependencies` 属性
+
+* 可以用`export NODE_ENV=production`来制定默认依赖环境
+
+## Env
+
+可以通过环境变量来指定下载的依赖类型:
+
+```
+export NODE_ENV = production
+```
+
+https://juejin.cn/post/6844903681192804359
+
+https://cli.vuejs.org/zh/guide/mode-and-env.html#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F
+
+
+
 
 
 ## 具体依赖管理文件
@@ -374,6 +405,8 @@ nvm ls
 
 # npm
 
+[npm doc](https://docs.npmjs.com/cli/v6/configuring-npm)
+
 ## npm vs yarn
 
 | **npm**                      | **yarn**             | **说明**                                           |
@@ -390,11 +423,16 @@ nvm ls
 
 node自带了npm，所以安装node后就默认安装了对应版本的npm
 
+## Problems
 
+1. This version of npm is compatible with lockfileVersion@1, but package-lock.json was generated for lockfileVersion@2. I’ll try to do my best with it!
 
+   这是因为npm的版本和依赖文件中某些依赖所需的npm版本不同. 
 
+   从报错可以看出npm适用于lockfileVersion@1, 但是`package-lock.json`是源于lockfileVersion@2的.
 
-
+   * 这时就需要更改npm版本
+   * 还有一种可能, 注意到`npm -g`和`npm`使用的是不同的npm, 所以出现这个问题很有可能是错误使用了`npm -g`
 
 ## Commands
 
@@ -409,7 +447,7 @@ node自带了npm，所以安装node后就默认安装了对应版本的npm
 * 安装/更新到最新版本:
 
   ```shell
-  npm install -g npm
+  npm -g install  npm
   ```
 
   
@@ -524,13 +562,73 @@ npm set <key> <value> [--global]
 
 
 
-
-
 命令行操作说明：
 
 在设置配置属性时属性值默认是被存储于用户配置文件中，如果加上--global，则被存储在全局配置文件中。
 
 如果要查看npm的所有配置属性（包括默认配置），可以使用`npm config ls -l`
+
+## npm run
+
+https://www.cnblogs.com/goloving/p/16306638.html
+
+## Problems
+
+### Dockerizing
+
+使用Docker构建vue镜像:
+
+```dockerfile
+# ENV NODE_ENV production
+RUN node -v && npm -v \
+    && npm config set registry http://r.cnpmjs.org/ \
+    && npm install
+
+
+COPY . .
+RUN npm run build
+```
+
+其中的`npm run build`会调用package.json中的build字段的命令:
+
+```json
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+```
+
+可以看到, `vue-cli-service **`都使用了`vue-cli-service`这个命令, 他对应了一系列依赖:
+
+```json
+...    
+		"@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+		...
+```
+
+这些依赖默认全部被安装到了devDependencies. 因此, 如果在install时使用了pro模式, 即只下载pro依赖, 则不会下载上述依赖, 也就会在`npm run build`时报错:
+
+```
+Error: Cannot find module '@vue/cli-plugin-babel'
+//OR:
+vue-cli-service: not found
+```
+
+* 该问题发生的常见情况是, 在Dockerfile里配置了`ENV NODE_ENV production`, 
+
+因此, **千万不要在install的时候用production**, 当然你可以在build和run的时候开启:
+
+```json
+  "scripts": {
+    "serve": "vue-cli-service serve  --open  --mode development",
+    "build": "vue-cli-service build --mode production",
+    "lint": "vue-cli-service lint"
+  },
+```
+
+
 
 ## npx
 
@@ -872,6 +970,22 @@ This will initialise Tailwind with a new configuration file in the root of your 
 
 # Vue
 
+* vue是构建用户界面的渐进式JavaScript 框架
+
+* vue-cli是vue的一个官方脚手架工具（快速工程化命令工具）, 用来帮助程序员们快速搭建基于vue框架的开发环境。
+  * vue有很多脚手架工具，vue-cli只是其中一种，侧重于单页面应用 (SPA) 的快速搭建，网址：cli.vuejs.org/zh/guide/
+  * Vue-cli = Vue + 一堆的js插件
+  * vue-cli 4.5以下, 对应的是Vue2
+  * vue-cli 4.5及以上, 对应的是Vue3
+
+* @vue/cli是新版vue-cli，提供了GUI维护界面，@vue/cli 安装的是vue3及以上版本, vue-cli 安装的是vue2
+* 命令行的`vue`命令其实是对应`vue-cli`这个程序, 而不是`vue`
+
+
+
+
+
+
 ## vue-cli 安装
 
 安装之前先卸载旧版本
@@ -894,7 +1008,7 @@ npm install -g vue-cli@2.x
 
 
 
-查看vue-cli版本
+查看vue-cli 版本
 
 ```
 vue -V

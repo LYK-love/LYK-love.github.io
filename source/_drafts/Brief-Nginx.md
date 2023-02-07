@@ -16,6 +16,14 @@ nginx -t
 
 
 
+版本:
+
+```sh
+nginx -v
+```
+
+
+
 
 
 # Problems

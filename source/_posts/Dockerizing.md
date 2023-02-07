@@ -123,9 +123,23 @@ ENTRYPOINT ["node", "./app.js"]
 docker image build [选项] path
 ```
 
-docker daemon按行来读取path下（包括子目录）的 Dockerfile，并将该path下的所有内容发送给 Docker 服务端，由服务端来创建镜像
+docker daemon按行来读取path下（包括子目录）的 Dockerfile，并将该path下的所有内容发送给 Docker 服务端，由服务端来创建镜像,
 
-* `-t` : 指定镜像的标签信息,即`<image>`
+* `-t` : 指定镜像的标签信息,即`<image>`, 注意镜像名必须是**全小写**
+
+  * 可以在构建时指定tag:
+
+    ```sh
+    docker build -t hangge_server:2.4 .
+    ```
+
+* `-f`: 指定dockerfile
+
+  ```sh
+  docker build -f /path/to/a/Dockerfile .
+  ```
+
+  
 
 ###  原理
 
@@ -250,6 +264,7 @@ REPOSITORY           TAG       IMAGE ID       CREATED        SIZE
 hello-world          latest    feb5d9fea6a5   5 months ago   13.3kB
 lyk/hello-world      latest    feb5d9fea6a5   5 months ago   13.3kB
 
+# 错误示范
 ❯ docker image push lyk/hello-world:latest
 The push refers to repository [docker.io/lyk/hello-world] 
 ## 可以看到docker试图push到lyk的目录下，但是当前用户是lyklove, 不具有用户lyk的权限， 因此push会失败
@@ -502,30 +517,57 @@ CMD yarn start
 
 基础镜像层可以使用alpine, 这是一个超级小的Linux镜像. 上例的基础镜像层是node, 可以:
 
-1. 对于node等基础软件,使用其alpine版本:
+### 使用软件的alpine版本
 
-   ```
-   FROM node:14.17.4-alpine
-   ```
+[dockerhub](https://link.juejin.cn/?target=https%3A%2F%2Fhub.docker.com%2F_%2Fnode%3Ftab%3Ddescription%26page%3D1%26ordering%3Dlast_updated) 查看 node 版本
 
-   可以去 [dockerhub](https://link.juejin.cn/?target=https%3A%2F%2Fhub.docker.com%2F_%2Fnode%3Ftab%3Ddescription%26page%3D1%26ordering%3Dlast_updated) 查看 node 有哪些版本标签
+对于node等基础软件,使用其alpine版本:
 
-2. 使用alpine linux作为基础镜像层,然后手动装node等基础软件. 这个效果最显著:
+```
+FROM node:14.17.4-alpine
+```
 
-   ```dockerfile
-   FROM alpine:3.14 AS base
-   
-   # 使用 apk 命令安装 nodejs 和 yarn，如果使用 npm 启动，就不需要装 yarn
-   RUN apk add --no-cache --update nodejs=14.17.4-r0 yarn=1.22.10-r0
-   
-   # ... 后面的步骤不变
-   ```
+可以去 
 
-   用户软件( node, yarn等 )最好都要**指定依赖版本**
+#### 使用alpine linux
 
-   alpine版本也一定要指定, **不要选择 latest 版本**( `From alpine:latest`)，因为后面要装的软件版本可能会在 alpine 的 latest 版本没有对应软件的版本号. 
+使用alpine linux作为基础镜像层,然后手动装node等基础软件. 该方法效果最显著.
 
-   **我们选择方案2**
+alpine使用apk作为包管理工具, 可以到 [apk官网](https://pkgs.alpinelinux.org/packages?name=npm&branch=edge&repo=&arch=&maintainer=) 查看apk包版本
+
+* 需要注意alpine镜像版本. 比如, 如果使用镜像alpine:3.16, 而我需要的nodejs版本只存在于alpine3.13, 就会无法拉取该依赖
+
+  * 即: 一定要指定alpine版本. **不要选择 latest 版本**( `From alpine:latest`) 
+* 其次, 有人会用[阿里云的apk源](http://mirrors.aliyun.com/alpine/?spm=a2c6h.25603864.0.0.133a2f83TmQnBB), 此时也要注意选择alpine镜像的版本
+
+
+
+```dockerfile
+FROM alpine:3.13 AS base
+LABEL maintainer="LYK-love"
+
+# RUN echo "http://mirrors.aliyun.com/alpine/edge/main/" > /etc/apk/repositories \
+#     && echo "http://mirrors.aliyun.com/alpine/edge/community/" >> /etc/apk/repositories \
+RUN apk update \
+    && apk add --no-cache --update nodejs=14.20.0-r0 npm=14.20.0-r0 \
+    && npm config set registry http://r.cnpmjs.org/ --production
+
+# ... 后面的步骤不变
+```
+
+* 用户软件( node, yarn等 )也最好要**指定版本**, 
+
+* **下面的例子中使用方案2**
+
+* 注意:
+
+  * `apk`和其他工具不同, 不会在下载node时顺便下载npm, 所以如果使用npm, 需要手动下载:
+
+    ```sh
+    apk add --no-cache --update nodejs=14.17.4-r0 npm=8.19.1-r0 
+    ```
+
+    
 
 ## 提前下载依赖
 
@@ -568,13 +610,13 @@ CMD yarn start
 
 运行 node 程序只需要生产的依赖和最终 node 可以运行的文件，就是说我们运行项目只需要 package.js 文件里 dependencies 里的依赖，devDependencies 依赖只是编译阶段用的
 
-* 比如 <u>eslint 等这些工具在项目运行时是用不到的</u>，再比如我们项目是用 typescript 写的，node 是不能直接运行 ts 文件，ts 文件需要编译成 js 文件，
+* 比如 <u>eslint 等这些工具在项目运行时是用不到的</u>，再比如我们项目是用 typescript 写的，node 不能直接运行 ts 文件，ts 文件需要编译成 js 文件，
 
 <u>运行项目我们只需要编译后的文件和 dependencies 里的依赖就可以运行，也就是说最终镜像只需要我们需要的东西</u>，任何其他东西都可以删掉，下面我们使用多阶段改写 Dockerfile:
 
-```
+```dockerfile
 # 构建基础镜像
-    FROM alpine:3.14 AS base
+    FROM alpine:3.16.2 AS base
 
     # 设置环境变量
     ENV NODE_ENV=production \
@@ -632,3 +674,124 @@ github 提供的 actions，每次都是一个干净的实例，什么意思，�
    复制代码
    ```
 
+# Examples
+
+## Vue app
+
+### Dockerfile
+
+#### 使用node的alpine:
+
+```dockerfile
+# build stage
+# FROM node:14.20.1-slim  as build-stage
+FROM node:14.16.0-alpine3.13 AS build-stage
+LABEL maintainer="LYK-love"
+WORKDIR /app
+COPY package*.json ./
+RUN node -v && npm -v \
+    && npm config set registry http://r.cnpmjs.org/ \
+    && npm install 
+
+COPY . .
+RUN npm run build
+
+
+
+# production stage
+# FROM nginx:1.21.5 as production-stage
+FROM nginx:1.21.5-alpine as production-stage
+RUN nginx -v
+COPY --from=build-stage /app/dist/ /usr/share/nginx/html/
+COPY --from=build-stage /app/default.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD [ "nginx","-g","daemon off;" ]
+```
+
+我实验了一下, 如果全都使用标准镜像(`node:14.20.1-slim` +  `nginx:1.21.5` ), 则镜像总大小为151.42MB. 而全都使用alpine镜像后, 总大小为39.03MB, 这是惊人的提升.
+
+#### 使用alpine linux
+
+```dockerfile
+RUN apk update \
+    && apk add --no-cache --update nodejs=14.20.0-r0 npm=14.20.0-r0 \
+    && npm config set registry http://r.cnpmjs.org/ --production
+
+# ENV NODE_ENV production
+
+
+FROM base AS build-stage
+WORKDIR /app
+COPY package*.json ./
+RUN node -v && npm -v \
+    && npm install 
+    # && npm install -g @vue/cli@5.0.1
+
+COPY . .
+RUN npm run build
+
+# production stage
+FROM nginx:1.21.5-alpine as production-stage
+COPY --from=build-stage /app/dist/ /usr/share/nginx/html/
+COPY --from=build-stage /app/default.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80
+CMD [ "nginx","-g","daemon off;" ]
+```
+
+总体大小为39.03MB, 感觉反而不如node-alpine呢...... 为啥啊??
+
+
+
+### .dockerignore
+
+```
+#Dependency directory
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
+node_modules
+.DS_Store
+dist
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build/Release
+.dockerignore
+Dockerfile
+*docker-compose*
+
+# Logs
+logs
+*.log
+
+# Runtime data
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
+pids
+*.pid
+*.seed
+.git
+.hg
+.svn
+```
+
+### Commands
+
+1. build:
+
+   ```
+   docker build -t Frontend_VolatileReborn . 
+   ```
+
+2. run:
+
+   ```
+   docker run -it -p 8080:80 --rm --name Frontend_VolatileReborn Frontend_VolatileReborn:latest 
+   ```
+
+3. visit: localhost:8080

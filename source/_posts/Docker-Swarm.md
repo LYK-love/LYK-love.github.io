@@ -167,9 +167,10 @@ docker swarm ca
 docker swarm init
 ```
 
-* `--advertise-addr <ip:port>`: 指定该节点公布给外界的ip和端口.  这是可选的,但建议总是手动设置这两个属性
+* `--advertise-addr <ip:port>`: 指定该节点公布给外界的ip和端口( 用于让其他服务器加入swarm ).  这是可选的,但建议总是手动设置这两个属性
   * 可以指定一个节点上没有的ip用于负载均衡
   * 端口默认是`2377/tcp`
+  * 最好**一定要指定一个公网ip**. 否则默认会公布一个内网ip, 例如 `10.0.16.7`, 假如其它服务器不在同一个内网, 是无法通过该节点的令牌( 带有其公布的ip )加入swarm的
 * `--listen-addr <ip:port>`: 指定用于承载Swarm流量的ip和端口, 通常与`--advertise-addr`相匹配
 * `--autolock`: 开启swarm锁
 * ` --external-ca`: 指定外部CA
@@ -219,10 +220,39 @@ docker node ls
 ```
 
 * 仅限Manager使用, worker无权查看集群状态
+
 * `MANAGER  STATUS` 一列没有任何显示的是worker
+
 * ID列显示星号( `*` )的是执行该命令的节点
 
+* 注意, 节点名就是主机名. 如果你觉得主机名没有可读性, 可以改名, 然后重启docker:
+
+  ```sh
+  hostnamectl set-hostname acs-services-node1
+  service docker restart
+  ```
+
+* **STATUS**:
+
+  * Ready：集群中的节点
+  * Down：集群中 leave 的节点
+
+* **MANAGER STATUS**
+
+  * **无值：表示该节点是worker**
+  * Leader：集群的第一个管理者，管理整个集群，编排决策
+  * Reachable：属于管理节点，当Leader节点不可用后，该节点有权利竞选Leader
+  * Unreachable：管理节点不可用，无法与其它管理节点连接(节点退出集群)
+
+* **availability**
+
+  * Active：活动的节点，可以被调度器分配任务
+  * Pause：不能分配新任务，已存在的任务继续运行
+  * Drain：不能分配新任务，已存在的任务会被停止，并将这些任务调度到在可用节点上：
+
 ## 离开Swarm
+
+节点主动离开swarm:
 
 ```shell
 docker swarm leave
@@ -230,13 +260,35 @@ docker swarm leave
 
 * `--force`: Manager leave需要加`--force`
 
+## 删除节点
 
+有时只能在其他节点上强制删除另一些节点( 比如, 某些节点是云服务器, 已经过期了, 此时没办法登录这些节点让它们主动`leave`, 只能在其他节点上删除它 ):
+
+```
+docker node rm <noce>
+```
+
+* 仅能删除worker, 如果要删除manager, 需要降级为worker. 或者也可以用`-rm`
+
+## 更改节点角色
+
+* 将manager角色降级为worker:
+
+  ```sh
+  docker node demote <hostname>
+  ```
+
+* 将worker角色升级为manager:
+
+  ```sh
+  docker node promote <hostname>
+  ```
+
+  
 
 ##   创建Service
 
-
-
-创建新服务,  
+创建新服务:
 
 ```shell
 docker service create --name <service-name> \
@@ -260,11 +312,45 @@ docker service create --name <service-name> \
   No such image: <imaeg>
   ```
   
-  
-  
-  
+* 即使该service创建失败, 也依然会占用端口等资源.
+
+*  `--resolve-image never` : 在[很少见的情况下](https://stackoverflow.com/questions/48962399/no-suitable-node-unable-to-deploy-image-using-docker-service), 加了这个选项可以避免平台不支持的问题, 不过我没遇到过
+
+* swam集群中如果管理节点使用一个本地镜像创建服务,在给子节点分配任务时, 子节点就无法从公共docker hub上拉取到这个自建的镜像. 可以使用自建的本地registry. 
+
+  也就是说, **swarm集群没法使用本地镜像**, 即使集群中全都是manager也不行, 因为manager也是worker; 甚至**即使集群中只有一个节点, 它是manager, 且它本地有同名镜像, 也依然会使用registry的而不是本地的**. 
+
+  一个例子是, 我在macbook上build了镜像 `lyklove/frontend_volatile_reborn:latest`, 然后push到了dockerhub, 结果在linux服务器上使用:
+
+  ```sh
+  docker service create \
+  --name frontend_volatile_reborn_svc \
+  --network volatile_reborn -p 81:80 \
+  --replicas 1 \
+  lyklove/frontend_volatile_reborn:latest
+  ```
+
+  报错:
+
+  ```
+  1/1: no suitable node (unsupported platform on 1 node) 
+  ```
+
+  显然,这说明了我service基于的镜像是mac的, 不是linux的, 尽管我的在服务器上也有同名的该镜像. 
+
+  * 当然, 你也可以使用[自建的本地registry](https://hub.docker.com/_/registry), 不过也太麻烦了, 还是每次都push到dockerhub吧.
+
+* e.g.
+
+  ```shell
+  ❯ docker service create --name web-fe \
+  > -p 4000:8080 \
+  > --replicas 5 \
+  > nigelpoulton/pluralsight-docker-ci 
+  ```
 
 
+---
 
 Swarm会持续确保服务的实际状态和期望状态一致(也就是K8S中的调协循环)
 
@@ -280,6 +366,14 @@ Swarm会持续确保服务的实际状态和期望状态一致(也就是K8S中�
 
 ```shell
 docker service ls
+```
+
+
+
+查看service在哪个node:
+
+```
+docker service ps vo 
 ```
 
 
@@ -383,18 +477,9 @@ docker service logs
 
 # Swarm Service
 
-## 创建Swarm服务
+## 创建Service
 
-创建新服务,:
-
-```shell
-❯ docker service create --name web-fe \
-> -p 4000:8080 \
-> --replicas 5 \
-> nigelpoulton/pluralsight-docker-ci 
-```
-
-
+创建新服务:
 
  ## 副本模式 vs 全局模式
 
@@ -552,11 +637,11 @@ error response from daemon: Swarm is encrypted and needs to be unlocked before i
  # 然后会要求你输入解锁码
 ```
 
-# swarm实战
+# Swarm实战: volatile
 
-我们要将前端服务`volatile_frontend_svc`(容器监听80端口)部署到集群，对外暴露集群的80端口
+我们要将前端服务`volatile_frontend_svc`(容器监听80端口)部署到集群，对外暴露集群的81端口
 
-## 配置
+## Server Config
 
 | 主机名          | 主机ip | 角色                 |
 | --------------- | ------ | -------------------- |
@@ -566,21 +651,16 @@ error response from daemon: Swarm is encrypted and needs to be unlocked before i
 
 3台Master， 3台Worker（ Master也同时作为Worker，因此实际上只有三台主机 ）
 
-
-
-
-
-## 准备
+## Prerequists
 
 前置准备：所有节点必须打开：
 
 - UDP/4789： 绑定到VTE
 - TCP/2377： Swarm的集群管理默认使用2377端口
 - TCP/7946, UDP/7946: Swarm的节点发现使用7946端口
+- TCP81: 暴露所有运行前端server的node的的81端口
 
 ## 步骤
-
-
 
 1. 先在阿里云主机上创建第一个master节点：
 
@@ -592,7 +672,7 @@ error response from daemon: Swarm is encrypted and needs to be unlocked before i
 
 2. 生成令节点作为master加入集群的令牌：
 
-   ```
+   ```sh
    docker swarm join-token manager
    ```
 
@@ -600,7 +680,7 @@ error response from daemon: Swarm is encrypted and needs to be unlocked before i
 
 3. 在其他节点上使用上述令牌，使其作为master加入该swarm集群。 成功后执行下述命令，查看集群中的节点：
 
-   ```
+   ```sh
    docker node ls 
    ```
 
@@ -610,14 +690,20 @@ error response from daemon: Swarm is encrypted and needs to be unlocked before i
    docker network create -d overlay volatile
    ```
 
+   * 一定要先创建网络, 否则其他节点无法加入该网络
+
 5. 在master上基于镜像创建新服务`volatile_frontend_svc`，并使用网络`volatile`:
 
-   ```
-   docker service create --name volatile_frontend_svc --network volatile -p 80:80 --replicas 3 lyklove/volatile_frontend:latest
+   ```sh
+   docker service create --name volatile_frontend_svc \
+   --network volatile \
+   -p 81:80 \
+   --replicas 3 \
+   lyklove/volatile_frontend:latest
    ```
 
    * 这里设置服务实例数为3
-   * 我们将集群的80端口映射到了容器的80端口。 因此访问集群的任意节点的80端口的流量最终都会被抓发到运行了该服务副本的节点
+   * 我们将集群的81端口映射到了容器的80端口。 因此访问集群的任意节点的81端口的流量最终都会被转发到运行了该服务副本的节点
 
 6. （后续）滚动更新:
 
@@ -644,8 +730,83 @@ stage("update service by built image"){
     }
 ```
 
+* 注意, jenkinsfile里只写了`docker service update`, 而没有create. 因此, 需要先手动在server上create service, 后续cicd时才能够update
+
 ## 集群使用
 
-通过`[host-ip]:80`访问前端
+通过`[host-ip]:81`访问前端
 
 其中`host-ip`可以是集群中任意节点的ip
+
+# Swarm实战: volatile_reborn
+
+## Server Config
+
+由于华为云服务器过期了, 这次只有两个节点. 这也意味着只能有一个专业的worker, 否则会发生brain-split
+
+| 主机名          | 主机ip | 角色                 |
+| --------------- | ------ | -------------------- |
+| lyk腾讯云服务器 | **     | master, CICD工作节点 |
+| lyk阿里云服务器 | **     | master               |
+
+1台Master， 2台Worker(算上Master)
+
+## Steps
+
+1. 照常配置服务器端口
+
+2. 把之前volatile时期配置的华为云的node删掉. 由于server已经登陆不上了, 没法主动leave, 只能在其他节点上删除:
+
+   ```sh
+   docker node rm  k8s-master //k8s-master是华为云服务器的hostname
+   ```
+
+3. Create Token:
+
+   ```
+   docker  swarm init --advertise-addr 123.56.20.222:2377
+   ```
+
+4. Let other nodes join the swarm with this token
+
+5. Create overlay network on  any master, 名为`volatile_reborn`:
+
+   ```
+   docker network create -d overlay volatile_reborn
+   ```
+
+6. Create frontend service on manager:
+
+   ```sh
+   docker service create \
+   --name frontend_volatile_reborn_svc \
+   --network volatile_reborn -p 81:80 \
+   --replicas 2 lyklove/frontend_volatile_reborn:latest-linux 
+   ```
+
+7. Create backend  service on manager:
+
+   ```sh
+   docker service create \
+   --name backend_volatile_reborn_svc \
+   --network volatile_reborn -p 8000:8000 \
+   --replicas 1 lyklove/backend_volatile_reborn:latest-linux 
+   ```
+
+8. Create eureka service on manager:
+
+   ```
+   docker service create \
+   --name backend_eureka_volatile_reborn_svc \
+   --network volatile_reborn -p 8001:8001 \
+   --replicas 1 lyklove/backend_eureka_volatile_reborn:latest-linux 
+   ```
+
+9. 后续滚动更新和集成cicd都和volatile类似
+
+
+
+# Problems
+
+* swarm面对一个镜像名, 似乎会优先使用dockerhub的镜像? 
+*  --resolve-image never

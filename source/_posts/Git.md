@@ -46,27 +46,16 @@ Tools:
 
 版本库:*repository*
 
-第一步,选一个地方,创建一个空目录
 
-```
-$ mkdir Doc
-$ cd Doc
-$ pwd
-/c/Users/陆昱宽/Desktop/DOC
-```
-
-`pwd`命令用于显示当前目录,在我的电脑上,这个仓库位于`/c/Users/陆昱宽/Desktop/DOC`.
-
-第二步,通过`git init`命令把这个目录变成git可以管理的仓库
 
 ```
 $ git init
 Initialized empty Git repository in /c/Users/陆昱宽/Desktop/DOC/.git/
 ```
 
-仓库建好了,而且是空的. 当前目录下多了个`.git`的目录,这个目录是Git来跟踪管理版本库的,不要乱碰.
+自动生成`.git`目录, 用于跟踪管理版本库; 以及在 project 和 每个 module 中生成一个 `.gitgnore` 文件
 
-`.git`目录默认是隐藏的,用`ls -ah`命令就能看见
+
 
 ## 把文件添加到版本库
 
@@ -78,9 +67,13 @@ Initialized empty Git repository in /c/Users/陆昱宽/Desktop/DOC/.git/
 
 编写一个`Git.md`文件,放到`Doc`目录下(子目录也行)
 
-1. 先add
+1. stage file:
 
-`$ git add Git.md`
+   ```
+   git add Git.md
+   ```
+
+   
 
 执行上面的命令,没有任何反馈,OK了,说明添加成功
 
@@ -186,11 +179,9 @@ nothing to commit, working tree clean
 
 Git告诉我们当前没有需要提交的修改,且工作目录是干净(working tree clean)的.
 
-**小结**
 
-*  要随时掌握工作区的状态,使用`git status`命令
-* 如果`git status`告诉你文件有被修改过,用`git diff 文件名` 可以查看修改内容
-* `commit`的message千万不能有中文,否则会乱码
+
+*  windows下`commit`的message千万不能有中文,否则会乱码
 
 ## 版本回退
 
@@ -693,15 +684,37 @@ git switch dev
 
 ## 查看分支
 
-查看当前分支：
+* 查看本地所有分支：
 
-```
-$ git branch
-* dev
-  master
-```
+  ```
+  git branch
+  ```
 
+* 查看远程所有分支
 
+  ```
+  git branch -r
+  ```
+
+* 查看本地及远程的所有分支:
+
+  ```
+  git branch -a 
+  ```
+
+## 删除分支
+
+* 删除远程分支:
+
+  ```
+  git push origin :br  (origin 后面有空格)
+  ```
+
+* 删除本地分支:
+
+  ```
+  git branch -D br
+  ```
 
 ## 关联分支
 
@@ -1411,6 +1424,34 @@ $ git log --graph --pretty=oneline --abbrev-commit
 - rebase操作可以把本地未push的分叉提交历史整理成直线；
 - rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
 
+## 合并远程分支
+
+假设你本地在使用的分支为a, 需要合并的远程分支为b
+
+1. 新建和远程分支对应的本地分支:
+
+   ```
+   git switch -c b origin/b
+   ```
+
+2. 将远程代码pull到本地:
+
+   ```
+   git pull origin b
+   ```
+
+3. 返回到你的分支a
+
+   ```
+   git switch a
+   ```
+
+4. 合并分支a与分支b
+
+   ```
+   git merge b
+   ```
+
 # 标签管理
 
 ***
@@ -1588,116 +1629,93 @@ To github.com:michaelliao/learngit.git
 - 命令`git tag -d <tagname>`可以删除一个本地标签；
 - 命令`git push origin :refs/tags/<tagname>`可以删除一个远程标签
 
-# 自定义Git
+# .gitignore
 
-## 忽略特殊文件
+[Tutor](https://www.pluralsight.com/guides/how-to-use-gitignore-file)
 
-有些时候，你必须把某些文件放到Git工作目录中，但又不能提交它们，比如保存了数据库密码的配置文件啦，等等，每次`git status`都会显示`Untracked files ...`，有强迫症的童鞋心里肯定不爽。
+[现成的配置](https://github.com/github/gitignore)
 
-好在Git考虑到了大家的感受，这个问题解决起来也很简单，在Git工作区的根目录下创建一个特殊的`.gitignore`文件，然后把要忽略的文件名填进去，Git就会自动忽略这些文件。
 
-不需要从头写`.gitignore`文件，GitHub已经为我们准备了各种配置文件，只需要组合一下就可以使用了。所有配置文件可以直接在线浏览：https://github.com/github/gitignore
 
-忽略文件的原则是：
+当远程仓库或者缓存区已经存在被忽略文件的情况下，这个时候相应的忽略规则是不起作用的. 如果先commit了, 再写`.gitignore`文件, 则后者不起作用, 需要:
 
-1. 忽略操作系统自动生成的文件，比如缩略图等；
-2. 忽略编译生成的中间文件、可执行文件等，也就是如果一个文件是通过另一个文件自动生成的，那自动生成的文件就没必要放进版本库，比如Java编译产生的`.class`文件；
-3. 忽略你自己的带有敏感信息的配置文件，比如存放口令的配置文件。
+1. 已经add了:
 
-举个例子：
+   * 文件较少时：
 
-假设你在Windows下进行Python开发，Windows会自动在有图片的目录下生成隐藏的缩略图文件，如果有自定义目录，目录下就会有`Desktop.ini`文件，因此你需要忽略Windows自动生成的垃圾文件：
+     ```sh
+     git rm --cached <filename>
+     ```
 
-```
-# Windows:
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-```
+   * 文件较多时：
 
-然后，继续忽略Python编译产生的`.pyc`、`.pyo`、`dist`等文件或目录：
+     ```
+     git rm -r --cached .
+     ```
 
-```
-# Python:
-*.py[cod]
-*.so
-*.egg
-*.egg-info
-dist
-build
-```
+1. 已经commit了:
 
-加上你自己定义的文件，最终得到一个完整的`.gitignore`文件，内容如下：
+   ```
+git reset <commit_id> //这个命令, 把 commit 历史撤销，对应缓存区内容也撤销，工作区内容不变
+   git add .
+   git commit -m 'XXXX'
+   ```
 
-```
-# Windows:
-Thumbs.db
-ehthumbs.db
-Desktop.ini
+3. 已经push了: 只能手动把远程的也删了
 
-# Python:
-*.py[cod]
-*.so
-*.egg
-*.egg-info
-dist
-build
+## 验证
 
-# My configurations:
-db.ini
-deploy_key_rsa
+验证`.gitignore`是否生效,可以尝试:
+
+```sh
+ git add <filename>
 ```
 
-最后一步就是把`.gitignore`也提交到Git，就完成了！当然检验`.gitignore`的标准是`git status`命令是不是说`working directory clean`。
+添加被忽略的文件，查看是否能添加成功, 如果`.gitignore`已经生效, 则不会添加成功
 
-使用Windows的童鞋注意了，如果你在资源管理器里新建一个`.gitignore`文件，它会非常弱智地提示你必须输入文件名，但是在文本编辑器里“保存”或者“另存为”就可以把文件保存为`.gitignore`了。
 
-有些时候，你想添加一个文件到Git，但发现添加不了，原因是这个文件被`.gitignore`忽略了：
 
-```
-$ git add App.class
-The following paths are ignored by one of your .gitignore files:
-App.class
-Use -f if you really want to add them.
+还可以使用:
+
+```sh
+ git check-ignore -v <filename>
 ```
 
-如果你确实想添加该文件，可以用`-f`强制添加到Git：
+定位到对应规则 在 .gitignore 文件中的具体位置
 
+## Example
+
+What Kind of Files Should You Ignore?
+
+- Log files
+- Files with API keys/secrets, credentials, or sensitive information
+- Useless system files like `.DS_Store` on macOS
+- Generated files like `dist` folders
+- Dependencies which can be downloaded from a package manager
+- And there might be other reasons (maybe you make little `todo.md` files)
+
+You can get an idea for what sort of files to ignore on [gitignore.io](https://www.gitignore.io/), by selecting your operating system, text editor or IDE, languages, and frameworks.
+
+## Grammar
+
+- 空行或是以`#`开头的行即注释行将被忽略。
+- 可以在前面添加正斜杠`/`来避免递归,下面的例子中可以很明白的看出来与下一条的区别。
+- 可以在后面添加正斜杠`/`来忽略文件夹，例如`build/`即忽略build文件夹。
+- 可以使用`!`来否定忽略，即比如在前面用了`*.apk`，然后使用`!a.apk`，则这个a.apk不会被忽略。
+- `*`用来匹配零个或多个字符，如`*.[oa]`忽略所有以".o"或".a"结尾，`*~`忽略所有以`~`结尾的文件（这种文件通常被许多编辑器标记为临时文件）；`[]`用来匹配括号内的任一字符，如`[abc]`，也可以在括号内加连接符，如`[0-9]`匹配0至9的数；`?`用来匹配单个字符。
+   看了这么多，还是应该来个栗子：
+
+```bash
+# 忽略 .a 文件
+*.a
+# 但否定忽略 lib.a, 尽管已经在前面忽略了 .a 文件
+!lib.a
+# 仅在当前目录下忽略 TODO 文件， 但不包括子目录下的 subdir/TODO
+/TODO
+# 忽略 build/ 文件夹下的所有文件
+build/
+# 忽略 doc/notes.txt, 不包括 doc/server/arch.txt
+doc/*.txt
+# 忽略所有的 .pdf 文件 在 doc/ directory 下的
+doc/**/*.pdf
 ```
-$ git add -f App.class
-```
-
-或者你发现，可能是`.gitignore`写得有问题，需要找出来到底哪个规则写错了，可以用`git check-ignore`命令检查：
-
-```
-$ git check-ignore -v App.class
-.gitignore:3:*.class	App.class
-```
-
-Git会告诉我们，`.gitignore`的第3行规则忽略了该文件，于是我们就可以知道应该修订哪个规则。
-
-还有些时候，当我们编写了规则排除了部分文件时：
-
-```
-# 排除所有.开头的隐藏文件:
-.*
-# 排除所有.class文件:
-*.class
-```
-
-但是我们发现`.*`这个规则把`.gitignore`也排除了，并且`App.class`需要被添加到版本库，但是被`*.class`规则排除了。
-
-虽然可以用`git add -f`强制添加进去，但有强迫症的童鞋还是希望不要破坏`.gitignore`规则，这个时候，可以添加两条例外规则：
-
-```
-# 排除所有.开头的隐藏文件:
-.*
-# 排除所有.class文件:
-*.class
-
-# 不排除.gitignore和App.class:
-!.gitignore
-!App.class
-```
-
-把指定文件排除在`.gitignore`规则外的写法就是`!`+文件名，所以，只需把例外文件添加进去即可。

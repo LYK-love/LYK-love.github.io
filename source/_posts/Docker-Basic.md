@@ -340,7 +340,11 @@ docker image ls
 docker image inspect
 ```
 
+* To list all the images and their respective OSs
 
+  ```sh
+  for i in `docker images --format {{.ID}}`; do echo $i `docker image inspect $i |grep Os`; done
+  ```
 
  ### 删除镜像
 
@@ -349,8 +353,6 @@ docker image inspect
 ```shell
 docker image rm <image>
 ```
-
-
 
  删除全部的悬虚镜像：
 
@@ -556,19 +558,21 @@ alpine       latest    sha256:21a3deaa0d32a8057914f36584b5288d2e5ecc984380bc0118
 
 ### 启动容器
 
-
-
-运行容器：`docker client`会用API与`docker daemon`通信，后者**先查询本地有无该镜像，如果没有，就从（默认）docker hub pull到本地**
+[运行容器](https://docs.docker.com/engine/reference/run/#docker-run-reference)：`docker client`会用API与`docker daemon`通信，后者**先查询本地有无该镜像，如果没有，就从（默认）docker hub pull到本地**
 
 ```shell
 docker container run [options] <image> <app>
 ```
 
-* `-i`: 交互式
+* `-i`: Keep STDIN open even if not attached
 
-* `-t`: 终端，`-it`可以将当前终端连接到容器的shell终端上
+* `-t`: Allocate a pseudo-tty 终端
 
-* `-d`： daemon模式: 在后台运行
+  * For interactive processes (like a shell), you must use `-i -t` together in order to allocate a tty for the container process. 
+
+    `-i -t` is often written `-it` as you’ll see in later examples.
+
+* `-d=true` or just `-d`： daemon模式: 在后台运行
 
 * `<app>`: 容器中运行的**主进程**（领头进程）
 
@@ -583,7 +587,13 @@ docker container run [options] <image> <app>
   * `--net=bridge `: bridge网络，这是默认设置
   * `--net=container:<container>`: 与指定容器共享一个Network Namespace，但其他的namespace还是隔离的
 
-  
+* `-rm`: Automatically remove the container when it exits. 也就是自动移除之前的同名的容器
+
+* ` --restart`: 设置重启策略:
+
+  * `unless-stopped`
+  * `always`
+  * `no`: Do not automatically restart the container. (the default)
 
 
 
@@ -646,6 +656,7 @@ docker container stop
 ```
 
 * 向容器内pid=1的进程发送`SIGTERM`， 如果10s内得到清理并停止运行，则会接着发送`SIGKILL`强制停止该容器
+* `docker stop $(docker ps -a -q)`
 
 ----
 
@@ -658,8 +669,7 @@ docker container rm
 ```
 
 * `-f`:    发送`Sigkill`停止容器（无需先stop），然后删除（`rm`）
-
-
+* `docker rm $(docker ps -a -q)`
 
 批量删除容器：
 
@@ -1079,3 +1089,58 @@ $ mv /var/lib/docker ～/data/docker
 # 进行链接
 $ ln -sf ～/data/docker /var/lib/docker
 ```
+
+
+
+# Others
+
+## 常见镜像版本
+
+### full official image
+
+事实上的标准镜像:
+
+- python:3.8.3
+- node:14.1.1
+
+如果不关心最终镜像的大小, 完整镜像是最安全的选择
+
+### buster/stretch/jessie
+
+- buster:Debian 10
+- stretch:Debian 9
+- jessie:Debian 8
+
+带有stretch、buster或jessie标签的镜像是不同Debian发行版的代号。
+
+在撰写本文时，稳定的Debian发行版是10.4，它的代号是“buster”。 “stretch”是所有版本9变种的代号，“jessie”是所有版本8变种的代号。
+
+正在开发的未来版本是“bullseye ”和“bookworm”，但还不稳定。你可能会在DockerHub上的镜像版本列表中看到这些标签。
+
+如果您的代码与Debian操作系统的特定版本兼容，请选择其中一个镜像。在开始一个新项目时，你很少需要使用旧版本的Debian。
+
+### slim
+
+slim的镜像是完整镜像的配对版本, 这个镜像通常只安装运行特定工具所需的最小包
+
+**但是，在使用这个镜像时，一定要进行彻底的测试！**如果您遇到无法解释的错误，请尝试切换到完整的镜像，看看是否能够解决问题。
+
+### alpine
+
+alipine镜像基于alpine linux项目，这是一个专门为容器内部使用而构建的操作系统。在很长一段时间里，这些是最受欢迎的镜像变体，因为它们的尺寸很小。
+
+然而，一些团队正在弃用alpine镜像，因为这些镜像可能会导致难以调试的兼容性问题。具体来说，如果使用python镜像，一些 wheels将被构建成与Debian兼容，并且需要重新编译，才能与基于apline的镜像一起工作。
+
+使用alpine镜像的主要原因是使你得到的镜像尽可能小。基础镜像将小于5MB。python基础镜像(将python添加到基础alpine镜像)目前是78.9MB。这仍然很小。
+
+**如果考虑到空间问题，强烈推荐使用此镜像。**
+
+它的缺点是不包含一些你可能会需要的包。主要是，它使用了一个更小的musl lib代替glibc。如果您的应用程序有特定的libc需求，您可能会遇到问题。
+
+如果你发现Alpine镜像缺少你需要的东西，你可以直接在Dockerfile中安装它，这样能确保镜像只包含你需要的内容。需要注意，如果您正在安装外部包，您的Dockerfile将会更改。主要的区别是，您将使用apk而不是apt-get来安装包。
+
+对alpine镜像的使用有很多担心之处，所以你需要充分了解它。需要充分阅读文档并研究。 同样，如果您在构建Dockerfile时遇到了无法解释的问题，请尝试切换到完整的镜像，看看是否能解决问题
+
+### windowsservercore
+
+windows或windows Server平台的镜像
