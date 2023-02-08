@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2022-11-30T13:32:21.042Z</updated>
+  <updated>2023-02-07T18:20:31.285Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -17,11 +17,30 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>满江红</title>
+    <link href="http://lyk-love.cn/2023/02/08/%E6%BB%A1%E6%B1%9F%E7%BA%A2/"/>
+    <id>http://lyk-love.cn/2023/02/08/%E6%BB%A1%E6%B1%9F%E7%BA%A2/</id>
+    <published>2023-02-08T01:59:49.000Z</published>
+    <updated>2023-02-07T18:20:31.285Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;我给这部电影打满分.&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Art" scheme="http://lyk-love.cn/categories/Art/"/>
+    
+    
+    <category term="Movie" scheme="http://lyk-love.cn/tags/Movie/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Cache Memory</title>
     <link href="http://lyk-love.cn/2022/12/01/Cache-Memory/"/>
     <id>http://lyk-love.cn/2022/12/01/Cache-Memory/</id>
     <published>2022-11-30T21:22:01.000Z</published>
-    <updated>2022-11-30T13:32:21.042Z</updated>
+    <updated>2022-12-09T14:08:40.433Z</updated>
     
     
     <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;</summary>
@@ -450,34 +469,6 @@
     
     <category term="Software Engineering" scheme="http://lyk-love.cn/categories/Software-Engineering/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>Application Layer</title>
-    <link href="http://lyk-love.cn/2022/09/26/Computer%20Networking-Application%20Layer/"/>
-    <id>http://lyk-love.cn/2022/09/26/Computer%20Networking-Application%20Layer/</id>
-    <published>2022-09-26T06:39:34.927Z</published>
-    <updated>2022-09-26T06:39:34.927Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;DNS&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;P2P&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;文件传送协议&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;TELNET&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;万维网&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Email&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;DHCP&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="Computer Science" scheme="http://lyk-love.cn/categories/Computer-Science/"/>
-    
-    
-    <category term="Computer Networking" scheme="http://lyk-love.cn/tags/Computer-Networking/"/>
     
   </entry>
   
