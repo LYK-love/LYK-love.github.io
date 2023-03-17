@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Computer%20Architecture/SEC-DED.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Computer%20Architecture/CRC.png">
 <meta property="article:published_time" content="2022-10-10T20:41:28.000Z">
-<meta property="article:modified_time" content="2022-10-10T13:21:22.632Z">
+<meta property="article:modified_time" content="2023-02-25T08:41:34.148Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Computer Architecture">
 <meta name="twitter:card" content="summary">
@@ -158,7 +158,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Error-Correction"><span class="nav-text">Error Correction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Odd-Even-Check"><span class="nav-text">Odd-Even Check</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Steps"><span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Drawbacks"><span class="nav-text">Drawbacks</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hamming-Code"><span class="nav-text">Hamming Code</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Idea"><span class="nav-text">Idea</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Steps-2"><span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-Code-Length"><span class="nav-text">Check Code Length</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Checkbit"><span class="nav-text">Checkbit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-text">Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-Only-One-Bit-Errors"><span class="nav-text">Why Only One-Bit Errors?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SEC-DED"><span class="nav-text">SEC-DED</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Idea-2"><span class="nav-text">Idea</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Steps-3"><span class="nav-text">Steps</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Drawbacks-2"><span class="nav-text">Drawbacks</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cyclic-Redundancy-Check"><span class="nav-text">Cyclic Redundancy Check</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Steps-4"><span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-2"><span class="nav-text">Example</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Error-Correction"><span class="nav-text">Error Correction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Odd-Even-Check"><span class="nav-text">Odd-Even Check</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Steps"><span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Error-Detection"><span class="nav-text">Error Detection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Drawbacks"><span class="nav-text">Drawbacks</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hamming-Code"><span class="nav-text">Hamming Code</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Idea"><span class="nav-text">Idea</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Steps-2"><span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Check-Code-Length"><span class="nav-text">Check Code Length</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Checkbit"><span class="nav-text">Checkbit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example"><span class="nav-text">Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-Only-One-Bit-Errors"><span class="nav-text">Why Only One-Bit Errors?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SEC-DED"><span class="nav-text">SEC-DED</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Idea-2"><span class="nav-text">Idea</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Steps-3"><span class="nav-text">Steps</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Drawbacks-2"><span class="nav-text">Drawbacks</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cyclic-Redundancy-Check"><span class="nav-text">Cyclic Redundancy Check</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Steps-4"><span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Example-2"><span class="nav-text">Example</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -262,9 +262,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2022-10-10 20:41:28 / Modified: 13:21:22" itemprop="dateCreated datePublished" datetime="2022-10-10T20:41:28Z">2022-10-10</time>
+      <time title="Created: 2022-10-10 20:41:28" itemprop="dateCreated datePublished" datetime="2022-10-10T20:41:28Z">2022-10-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-02-25 08:41:34" itemprop="dateModified" datetime="2023-02-25T08:41:34Z">2023-02-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -351,47 +357,45 @@ $$</p>
 <p>最简单的方法是奇偶校验.</p>
 <ul>
 <li>
-<p>增加1位checkbit $C$ , 表示$D$中1的数量是奇数还是偶数.</p>
+<p>为了方便说明, 我们用“奇偶性”来代指$D$所含有的1的个数是奇数还是偶数. 并定义比特串$D$的奇偶性为$f(D)$.</p>
+<ul>
+<li>当$1$的个数为奇数时, $f(D)=1$, 反之为$0$.</li>
+</ul>
+</li>
+<li>
+<p>定义1位checkbit $C$ ,  $C = f(D)$</p>
 </li>
 <li>
 <p>假设数据为$𝐷=𝐷_M \cdots 𝐷_2𝐷_1$:</p>
-<ul>
+</li>
 <li>
 <p>奇校验:<br>
 $$<br>
-C=D_{M} \oplus \cdots \oplus D_{2} \oplus D_{1} \oplus<br>
-$$</p>
-</li>
-<li>
-<p>偶校验:<br>
+C=D_{M} \oplus \cdots \oplus D_{2} \oplus D_{1} \oplus 1<br>
+$$<br>
+偶校验:<br>
 $$<br>
 C=D_{M} \oplus \cdots \oplus D_{2} \oplus D_{1}<br>
 $$</p>
 </li>
-</ul>
-</li>
 <li>
-<p>Error Detection:<br>
-$$<br>
-S = C' \oplus C''<br>
-$$</p>
-<ul>
-<li>$𝑆 = 0$ : $C + D$ 正确 or 其中出错的位数为偶数</li>
-<li>$𝑆 = 1$ : $C+D$ 中出错, 且出错的位数为奇数</li>
-</ul>
+<p>奇偶校验的区别仅仅是$C = f(D)$的计算方式不同.</p>
 </li>
 </ul>
 <h2 id="Steps"><a class="header-anchor" href="#Steps"></a>Steps</h2>
 <p>以偶校验为例:</p>
 <ol>
 <li>
-<p>发送方计算$C$. 将 $C$ 与 $D$ 一同发送</p>
+<p>发送方计算$C = f(D)$.  将 $C$ 与 $D$ 一同发送</p>
 </li>
 <li>
-<p>接收方收到$C'$ 和 $D'$, 计算 $C''$ :<br>
+<p>接收方收到$C'$ 和 $D'$, 计算 $C'' = f(D')$ :　　<br>
 $$<br>
 C''=D'<em>{M} \oplus \cdots \oplus D'</em>{2} \oplus D'_{1}<br>
 $$</p>
+<ul>
+<li>如果是奇校验, 则$C''=D'<em>{M} \oplus \cdots \oplus D'</em>{2} \oplus D'_{1} \oplus 1$</li>
+</ul>
 </li>
 <li>
 <p>计算$S$<br>
@@ -400,10 +404,56 @@ S = C' \oplus C''<br>
 $$</p>
 </li>
 </ol>
+<h2 id="Error-Detection"><a class="header-anchor" href="#Error-Detection"></a>Error Detection</h2>
+<p>$$<br>
+S = C' \oplus C''<br>
+$$</p>
+<p>已知$C = f(D), C'' = f(D')$. 现在根据 $C$, $D$在传输过程中的出错情况进行分类讨论:</p>
+<ul>
+<li>
+<p>$D$:</p>
+<ol>
+<li>如果$D$在传输过程中没有出错, 则$D' = D, C'' = f(D') = f(D) $;</li>
+<li>如果$D$在传输过程中出错了, 但出错位数为偶数位, 则$C'' = f(D') = f(D)$</li>
+<li>如果$D$在传输过程中出错了, 且出错位数为奇数位, 则$C'' = f(D') = \neg f(D)$</li>
+</ol>
+</li>
+<li>
+<p>$C$: 注意到$C$仅有1位</p>
+<ol>
+<li>如果$C$在传输过程中没有出错, 则$C' = C, C' = C = f(D)$</li>
+<li>如果$C$在传输过程中出错了, 则$C' = \neg C = \neg f(D)$</li>
+</ol>
+</li>
+</ul>
+<p>也就是说:</p>
+<ul>
+<li>如果$D$在传输过程中没有出错, 或仅仅出错了偶数位, 则$C'' = f(D)$. 否则$C'' = \neg f(D)$</li>
+<li>如果$C$在传输过程中没有出错, 则$C' = f(D)$. 否则$C' = \neg f(D)$</li>
+</ul>
+<p>现在我们考虑$S$:</p>
+<ul>
+<li>
+<p>$𝑆 = 0$ : $C' =C''$, 则:</p>
+<ol>
+<li>要么$C' = C'' = f(D)$, 即$D$没出错或仅仅出错了偶数位, 且$C$没出错;</li>
+<li>要么$C' = C'' = \neg f(D)$, 即$D$出错了奇数位, 且$C$也出错.</li>
+<li>在这两种情况下, $C+D$ <strong>要么没出错, 要么只出错了偶数位</strong>
+<ul>
+<li>$+$表示比特串的concataion</li>
+<li>注意到$C$只有一位, 因此$C$出错(1位)且$D$出错奇数位时,  $C+D$ 就出错了偶数位</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>$S = 1$: $C' \ne C''$, 则$C+D$ <strong>出错了奇数位</strong></p>
+</li>
+</ul>
 <h2 id="Drawbacks"><a class="header-anchor" href="#Drawbacks"></a>Drawbacks</h2>
 <ul>
-<li>不能检测到偶数个bit出错</li>
-<li>发现错误后不能校正, 因为不能定位到出错的bit</li>
+<li>不能检测到偶数个bit出错的情况</li>
+<li>发现错误后不能校正, 因为不能定位到出错的bit.</li>
 </ul>
 <h1 id="Hamming-Code"><a class="header-anchor" href="#Hamming-Code"></a>Hamming Code</h1>
 <p>The simplest of the error-correcting codes is the <strong>Hamming code</strong> devised by <em>Richard Hamming</em> at Bell Laboratories.</p>
@@ -418,15 +468,15 @@ $$</p>
 <ul>
 <li>我们画三个圆, 中间相交的四个部分分别填4 data bits ( 如图a ).</li>
 <li>剩下的最外面三个部分填 <strong>parity bits</strong> ( 也就是checkcode ). Each parity bit is chosen so that the total number of 1s in its circle is <strong>even</strong>( 如图b )</li>
-<li>Now, if an error changes one of the data bits ( 如图c ), it is eas- ily found.</li>
+<li>Now, if an error changes one of the data bits ( 如图c ), it is easily found.</li>
 <li>By checking the parity bits, discrepancies are found in circle A and circle C but not in circle B. Only one of the seven compartments is in A and C but not B ( 如图d ). The error can therefore be corrected by changing that bit.</li>
 </ul>
 <h2 id="Steps-2"><a class="header-anchor" href="#Steps-2"></a>Steps</h2>
 <ul>
-<li>将数据分成几组, 对每一组都使用奇偶校验进行检错. 我们默认使用偶校验</li>
-<li>数据输入:为数据 $D$ 中每组生成checkbit, 合并得到 $K$ 位check code $C$</li>
-<li>数据输出:为数据 $D'$ 中每组生成checkbit, 合并得到 $K$ 位check code $C''$</li>
-<li>检错:将 $C''$ 和取出的 $C’$ 按位进行异或, 生成 $K $位 syndrome word $S$
+<li>将数据分成几组, 对每一组都使用奇偶校验. 我们默认使用偶校验</li>
+<li>数据输入: 为数据 $D$ 中的每组都生成checkbit, 合并得到 $K$ 位check code $C$</li>
+<li>数据输出: 为数据 $D'$ 中的每组都生成checkbit, 合并得到 $K$ 位check code $C''$</li>
+<li>检错:将 $C''$ 和取出的 $C’$ 按位进行异或, 生成 $K $位 syndrome word $S$. 对$S$分类讨论:
 <ul>
 <li>全部是0:没有检测到错误</li>
 <li>有且仅有1位是1:错误发生在校验码中的某一位，不需要纠正</li>
@@ -441,9 +491,9 @@ $$</p>
 </ul>
 <p>假设最多1位发生错误, 可能的情况有:</p>
 <ul>
-<li>$D$ 中有1位出现错误: $M$</li>
-<li>$C$ 中有1位出现错误: $K$</li>
-<li>没有错误: $1$</li>
+<li>$D$ 中有1位出现错误: 有 $M$ 种情况</li>
+<li>$C$ 中有1位出现错误: 有 $K$ 种情况</li>
+<li>没有错误: 有 $1$ 种情况</li>
 </ul>
 <p>因此, $K$ 位的$S$ 需要能表示 $M + K + 1$ 种情况, 即满足:<br>
 $$<br>
@@ -456,14 +506,14 @@ E.g. for a word of 8 data bits ( $M = 8$ ), we have</p>
 </ul>
 <p>因此, $M=8$ 时 $K=4$</p>
 <h2 id="Checkbit"><a class="header-anchor" href="#Checkbit"></a>Checkbit</h2>
-<p>假设$M=8, K=4$</p>
+<p>假设$M=8, K=4$. 则数据最终被表示为12bit. 下表中的Position number是这12位中每个bit的的位置(十进制)的二进制表示.</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Computer%20Architecture/Layout%20of%20Data%20Bits%20and%20Check%20Bits.png" alt="Layout of Data Bits and Check Bits"></p>
 <ul>
 <li>
 <p><strong>checkbit的position number是2的幂</strong>:</p>
 <ul>
 <li>$\mathrm{C}1$: 0001</li>
-<li>$\mathrm{C}3$: 0010</li>
+<li>$\mathrm{C}2$: 0010</li>
 <li>$\mathrm{C}4$: 0100</li>
 <li>$\mathrm{C}8$: 1000</li>
 <li>...</li>
@@ -473,7 +523,7 @@ E.g. for a word of 8 data bits ( $M = 8$ ), we have</p>
 <p><strong>Each check bit operates on every data bit whose position number contains a 1 in the same bit position as the position number of that check bit.</strong></p>
 <ul>
 <li>
-<p>比如说, $\mathrm{C}1$ 是 $0001$ , 因此$\mathrm{C}1$ 就和所有的 position number 的第一位为 $1$ 的 databit 有关, 即data bit positions 3, 5, 7, 9, and 11 (D1, D2, D4, D5, D7)</p>
+<p>比如说, $\mathrm{C}1$ 是 $0001$ , 因此$\mathrm{C}1$ 就和所有的 position number 的第一位为 $1$ 的 databit 有关, 即data bit positions 3, 5, 7, 9 and 11 (D1, D2, D4, D5, D7)</p>
 <ul>
 <li>bit positions 3, 6, 7, 10, and 11 all contain a 1 in the second bit position, as does C2;</li>
 </ul>
@@ -556,14 +606,18 @@ $$</p>
 <h1 id="Cyclic-Redundancy-Check"><a class="header-anchor" href="#Cyclic-Redundancy-Check"></a>Cyclic Redundancy Check</h1>
 <p>循环冗余校验(Cyclic Redundancy Check, CRC)</p>
 <ul>
-<li>适用于以流格式存储和传输大量数据</li>
+<li>适用于以<strong>流格式</strong>存储和传输大量数据</li>
 <li>用数学函数生成数据和校验码之间的关系</li>
 </ul>
 <h2 id="Steps-4"><a class="header-anchor" href="#Steps-4"></a>Steps</h2>
 <ul>
 <li>Get Check Code:
 <ul>
-<li>假设数据有 $M$ 位，左移数据 $K$ 位(右侧补0), 并用 $K+1$ 位<strong>生成多项式</strong>除它(<strong>模2运算</strong>)</li>
+<li>假设数据有 $M$ 位，左移数据 $K$ 位(右侧补0), 并用 $K+1$ 位<strong>生成多项式</strong>除它(<strong>模2运算</strong>)
+<ul>
+<li>模2除法与算术除法类似，但每一位除的结果不影响其它位，即不向上一位借位，所以实际上就是异或</li>
+</ul>
+</li>
 <li>采用 $K$ 位余数作为checkcode</li>
 <li>把checkcode放在数据(不含补的0 )后面, 一同存储或传输</li>
 </ul>

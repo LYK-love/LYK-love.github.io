@@ -4385,6 +4385,15 @@ int main()
     <content><![CDATA[<p>Outline:</p>
 <span id="more"></span>
 <h1 id="Cache-Memory-Principles"><a class="header-anchor" href="#Cache-Memory-Principles"></a>Cache Memory Principles</h1>
+<p>程序访问的局部性原理：</p>
+<ul>
+<li>
+<p>时间局部性：在相对较短的时间周期内，重复访问特定的信息</p>
+</li>
+<li>
+<p>空间局部性：在相对较短的时间周期内，访问相邻位置的数据</p>
+</li>
+</ul>
 <h1 id="Elements-of-Cache-Design"><a class="header-anchor" href="#Elements-of-Cache-Design"></a>Elements of Cache Design</h1>
 <h2 id="Cache-Addresses"><a class="header-anchor" href="#Cache-Addresses"></a>Cache Addresses</h2>
 <h2 id="Cache-Size"><a class="header-anchor" href="#Cache-Size"></a>Cache Size</h2>
@@ -4392,9 +4401,130 @@ int main()
 <h2 id="Line-Size"><a class="header-anchor" href="#Line-Size"></a>Line Size</h2>
 <h2 id="Number-of-Caches"><a class="header-anchor" href="#Number-of-Caches"></a>Number of Caches</h2>
 <h1 id="Cache-Organization"><a class="header-anchor" href="#Cache-Organization"></a>Cache Organization</h1>
-<p>![image-20221209220834951](/Users/lyk/Library/Application Support/typora-user-images/image-20221209220834951.png)</p>
+<ul>
+<li>组号不会存储在Cache行中, 因为组号是系统默认分配的.</li>
+<li>因此Cahce行大小 = 各种标识位 + Tag+ block</li>
+</ul>
+<h2 id="Generic-Cache-Memory-Organization"><a class="header-anchor" href="#Generic-Cache-Memory-Organization"></a>Generic Cache Memory Organization</h2>
+<p>![image-20230220140706649](/Users/lyk/Library/Application Support/typora-user-images/image-20230220140706649.png)</p>
+<p>Consider a computer system where each memory address has m bits that form $M = 2^m$ unique addresses. As illustrated in Figure 6.25(a),</p>
+<p>a cache for such a machine is organized as an array of $S = 2^s$ <em>cache sets</em>. Each set consists of $E$ <em>cache lines</em>.</p>
+<p>Each line consists of a data <em>block</em> of $B = 2^b$ bytes, a <em>valid bit</em> that indicates whether or not the line contains meaningful information,</p>
+<p>and $t = m − (b + s)$ <strong>tag bits</strong> (a subset of the bits from the current block’s memory address) that uniquely identify the block stored in the cache line.</p>
+<p>In general, a cache’s organization can be characterized by the tuple $(S, E, B, m)$. The size (or capacity) of a cache, $C$, is stated in terms of the aggregate size of all the blocks. The tag bits and valid bit are not included. Thus, $C = S × E × B$.</p>
+<hr>
+<p>![image-20230220140723458](/Users/lyk/Library/Application Support/typora-user-images/image-20230220140723458.png)</p>
+<p>The parameters $S$ and $B$ induce a partitioning of the $m$ address bits into the three fields</p>
+<ul>
+<li>The $s$ <em>set index bits</em> in A form an index into the array of $S$ sets. The first set is set 0, the second set is set 1, and so on. When interpreted as an unsigned integer, the set index bits tell us which set the word must be stored in.</li>
+<li>Once we know which set the word must be contained in, the $t$ tag bits in A tell us which line (if any) in the set contains the word. A line in the set contains the word <strong>if and only if the valid bit is set and the tag bits in the line match the tag bits</strong> in the address A.</li>
+<li>Once we have located the line identified by the tag in the set identified by the set index, then the $b$ <em>block offset bits</em> give us the offset of the word in the B-byte data block.</li>
+<li>组号 = 块号 mod 每组行数. 也就是说, 第0, 4, 8, ...块在第0组‘ 第1, 5, 9, ...块在第1组</li>
+</ul>
+<h2 id="Direct-Mapped-Caches"><a class="header-anchor" href="#Direct-Mapped-Caches"></a>Direct-Mapped Caches</h2>
+<p>Caches are grouped into different classes based on $E$, the number of cache lines per set.</p>
+<p><strong>A cache with exactly one line per set (E = 1) is known as a <em>direct-mapped</em> cache</strong></p>
+<p>![image-20230220140155600](/Users/lyk/Library/Application Support/typora-user-images/image-20230220140155600.png)</p>
+<h3 id="Set-Selection"><a class="header-anchor" href="#Set-Selection"></a>Set Selection</h3>
+<p>In this example, the set index bits $00001_2$ are interpreted as an integer index that selects set 1.</p>
+<p>![Set selection in a direct-mapped cache](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141928582.png)</p>
+<p>In this step, the cache:</p>
+<ol>
+<li>extracts the $s$ set index bits from the middle of the address for $w$.</li>
+<li>These bits are interpreted as <strong>an unsigned integer</strong> that corresponds to <strong>a set number</strong>.</li>
+</ol>
+<h3 id="Line-Matching-and-Word-Selection"><a class="header-anchor" href="#Line-Matching-and-Word-Selection"></a>Line Matching and Word Selection</h3>
+<p>Now that we have selected some set i in the previous step, the next step is to determine if a copy of the word $w$ is stored in one of the cache lines contained in set $i$.</p>
+<p>In a direct-mapped cache, this is easy and fast because <u>there is exactly one line per set.</u></p>
+<p>A copy of $w$ is contained in the line <strong>if and only if the valid bit is set and the tag in the cache line matches the tag</strong> in the address of $w$.</p>
+<p>在下图中, valit bit = 1,  且该cache line的tag bits和所给地址中的tag bits相同, 因此Cache hit. 反之则cache miss.</p>
+<p>![Line matching and word selection in a direct-mapped cache](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141831370.png)</p>
+<h2 id="Set-Associative-Caches"><a class="header-anchor" href="#Set-Associative-Caches"></a>Set Associative Caches</h2>
+<p>The problem with conflict misses in direct-mapped caches stems from the constraint that <u>each set has exactly one line</u> (or in our terminology, E = 1). A <em>set associative cache</em> relaxes this constraint so that each set holds more than one cache line.</p>
+<p>A cache with $1 &lt; E &lt; C/B$ is often called an <strong>E-way set associative cache</strong>.</p>
+<h3 id="Set-Selection-2"><a class="header-anchor" href="#Set-Selection-2"></a>Set Selection</h3>
+<p>![Set Selection in Set Associative Caches](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141655020.png)</p>
+<p>Set selection is identical to a direct-mapped cache, with the set index bits identi- fying the set. Figure 6.33 summarizes this principle.</p>
+<h3 id="Line-Matching-and-Word-Selection-2"><a class="header-anchor" href="#Line-Matching-and-Word-Selection-2"></a>Line Matching and Word Selection</h3>
+<p>![Line Matching and Word Selection in Set Associative Caches](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141013402.png)</p>
+<p>Line Matching and Word Selection in Set Associative Caches</p>
+<ul>
+<li>A <strong>conventional memory</strong> is an array of values that <u>takes an address as input and returns the value stored at that address.</u></li>
+<li>An <em>associative memory</em>, on the other hand, is an array of (key, value) pairs that <u>takes as input the key and returns a value from one of the (key, value) pairs that matches the input key.</u></li>
+<li>Thus, we can think of each set in a set associative cache as a small associative memory where the keys are the concatenation of the tag and valid bits, and the values are the contents of a block.</li>
+<li>Figure 6.34 shows the basic idea of line matching in an associative cache. An important idea here is that <strong>any</strong> line in the set <strong>can</strong> contain any of the memory blocks that map to that set. So the cache <strong>must search each line in the set</strong> for a valid line whose tag matches the tag in the address.</li>
+</ul>
+<p><strong>if there is an empty line</strong>, then it would be a good candidate.</p>
+<p>But if there are no empty lines in the set, then we must <strong>choose one of the nonempty lines</strong> and hope that the CPU does not reference the replaced line anytime soon.</p>
+<h2 id="Fully-Associative-Caches"><a class="header-anchor" href="#Fully-Associative-Caches"></a>Fully Associative Caches</h2>
+<p>A <em>fully associative cache</em> consists of a single set (i.e., E = C/B) that contains all of the cache lines.</p>
+<p>![Fully Associative Caches](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141301248.png)</p>
+<h3 id="Set-Selection-3"><a class="header-anchor" href="#Set-Selection-3"></a>Set Selection</h3>
+<p>![Set Selection in Fully Associative Caches](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141432658.png)</p>
+<p>Set selection in a fully associative cache is trivial because there is only one set, summarized in Figure 6.36. Notice that there are no set index bits in the address, which is partitioned into only a tag and a block offset.</p>
+<p>根本没有set index</p>
+<h3 id="Line-Matching-and-Word-Selection-3"><a class="header-anchor" href="#Line-Matching-and-Word-Selection-3"></a>Line Matching and Word Selection</h3>
+<p>Line Matching and Word Selection in Fully Associative Caches</p>
+<p>![Line Matching and Word Selection in Fully Associative Caches](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141412164.png)</p>
+<p>Line matching and word selection in a fully associative cache work the same as with a set associative cache, as we show in Figure 6.37. The difference is mainly <strong>a question of scale.</strong></p>
+<ul>
+<li>
+<p>a question of scale:</p>
+<p>Because the cache circuitry must search for many matching tags in parallel, it is difficult and expensive to build an associative cache that is both large and fast. As a result, fully associative caches are only appropriate for small caches, such as the translation lookaside buffers (TLBs) in virtual memory systems that cache page table entries (Section 9.6.2).</p>
+</li>
+</ul>
 <p>On power-up, the hardware sets all the valid bits in all the caches to &quot;invalid&quot;. Some systems also set a valid bit to &quot;invalid&quot; at other times （电源启动的时候，硬件设置所有的真实位为“非真实”，一些系统也在其他时候设置一个真实位为非真实）</p>
 <p>A data cache typically requires two flag bits per cache row entry: a valid bit and also a <a href="http://en.wikipedia.org/wiki/Dirty_bit">dirty bit</a>. The dirty bit indicates whether that block has been unchanged since it was read from main memory -- &quot;clean&quot; -- or whether the processor has written data to that block (and the new value has not yet made it all the way to main memory) -- &quot;dirty&quot;.（一个数据缓存行一般需要两个标志位：真实位和脏位。脏位表明缓存块中的数据是否遭到修改并且没有被写入内存）。</p>
+<h1 id="Why-index-with-the-middle-bits"><a class="header-anchor" href="#Why-index-with-the-middle-bits"></a>Why index with the middle bits?</h1>
+<p>Cache将物理地址中中间(而不是高位)的几位作为Cache Line的组号, 这是为了提高Cache效率, 使得Cache尽快加载尽可能多的Cache Line</p>
+<p>考虑如下情况, 一个4路组Cache将物理地址的高两位作为组号:</p>
+<p>![image-20230224161509761](/Users/lyk/Library/Application Support/typora-user-images/image-20230224161509761.png)</p>
+<p>我们看到, 这会导致连续的主存块被映射到相同的组. 例如, 在上图中, 第0,1, 2,3个块都被映射到第0组; 第4,5, 6,7个块都被映射到第1组...</p>
+<p>如果一个程序拥有比较好的空间局部性, 那么在该程序运行期间, Cache可能只会加载几个组, 剩下几个组的Cache line一直不会被加载.</p>
+<p>因此我们将物理地址的中间几位作为组号, 如上图, 此时第0,4, 8,12个块都被映射到第0组, 则当程序运行时, 尽可能多的Cache Line会被加载.</p>
+<p>You may be wondering why caches use the middle bits for the set index instead of the high-order bits. There is a good reason why the middle bits are better. Figure 6.31 shows why. If the high-order bits are used as an index, then some contiguous memory blocks will map to the same cache set. For example, in the figure, the first four blocks map to the first cache set, the second four blocks map to the second set, and so on. If a program has good spatial locality and scans the elements of an array sequentially, then the cache can only hold a block-size chunk of the array at any point in time. This is an inefficient use of the cache. Contrast this with middle-bit indexing, where adjacent blocks always map to different cache sets. In this case, the cache can hold an entire C-size chunk of the array, where C is the cache size</p>
+<h1 id="Line-Replacement"><a class="header-anchor" href="#Line-Replacement"></a>Line Replacement</h1>
+<h2 id="FIFO"><a class="header-anchor" href="#FIFO"></a>FIFO</h2>
+<h2 id="LFU"><a class="header-anchor" href="#LFU"></a>LFU</h2>
+<p>a <em>least frequently used (LFU)</em> policy will replace the line that has been referenced the fewest times over some past time window.</p>
+<h2 id="LRU"><a class="header-anchor" href="#LRU"></a>LRU</h2>
+<p>A <em>least recently used (LRU)</em> policy will replace the line that was last accessed the furthest in the past.</p>
+<p>“访问”指的是访问对应内存. 仅仅将block从主存中取出来, 而没有“访问”它. 就不算“访问”.</p>
+<h1 id="写操作策略"><a class="header-anchor" href="#写操作策略"></a>写操作策略</h1>
+<h2 id="直写"><a class="header-anchor" href="#直写"></a>直写</h2>
+<p>为保证 Cache 与主存的一致性，往 Cache 写入时同时也要往主存写入 但降低写入速度，容易产生瓶颈</p>
+<h2 id="写回"><a class="header-anchor" href="#写回"></a>写回</h2>
+<p>在 Cache 中增加一位(脏位)表示是否被修改过，若“脏”，则替换整个块时前将其写回 减少写入操作，但会有不必要的麻烦(如输出时会取得主存中未修改的数据) 策略:输出时候强制修改主存</p>
+<h1 id="Questions"><a class="header-anchor" href="#Questions"></a>Questions</h1>
+<p>COA22 06</p>
+<blockquote>
+<p>Q: 为什么 Cache 可以采用直写策略，而修改页面内容时总是采用回写策略?</p>
+</blockquote>
+<p>Answer:</p>
+<ol>
+<li>因为采用直写策略时需要同时写快速存储器和慢速存储器，而写磁盘比写主存慢很多，所以在</li>
+</ol>
+<p>Cache-主存层次，Cache 可以采用直写策略，而在主存-外存(磁盘)层次，修改页面内容时总是采用回写策略。</p>
+<hr>
+<p>![image-20230225191658506](/Users/lyk/Library/Application Support/typora-user-images/image-20230225191658506.png)</p>
+<hr>
+<p>![image-20230225191713106](/Users/lyk/Library/Application Support/typora-user-images/image-20230225191713106.png)</p>
+<hr>
+<p>![image-20230225231434651](/Users/lyk/Library/Application Support/typora-user-images/image-20230225231434651.png)</p>
+<hr>
+<p>![image-20230225234729675](/Users/lyk/Library/Application Support/typora-user-images/image-20230225234729675.png)</p>
+<hr>
+<p>![image-20230225235137362](/Users/lyk/Library/Application Support/typora-user-images/image-20230225235137362.png)</p>
+<p>不要忘了Valid Bit</p>
+<hr>
+<p>![image-20230225235736774](/Users/lyk/Library/Application Support/typora-user-images/image-20230225235736774.png)</p>
+<p>注意, 每个循环都要读一次写一次.</p>
+<hr>
+<p>2015 mid</p>
+<p>![image-20230226010637925](/Users/lyk/Library/Application Support/typora-user-images/image-20230226010637925.png)</p>
+<p>时间 = Cache访问时间 + 主存访问时间 * Cache miss概率</p>
+<p>Cache miss概率 = 指令丢失概率 + 数据丢失概率</p>
+<p>数据丢失概率 = ( 30% + 10 * 2 ) * 5%</p>
 ]]></content>
       <categories>
         <category>Computer Science</category>
@@ -9189,47 +9319,45 @@ $$</p>
 <p>最简单的方法是奇偶校验.</p>
 <ul>
 <li>
-<p>增加1位checkbit $C$ , 表示$D$中1的数量是奇数还是偶数.</p>
+<p>为了方便说明, 我们用“奇偶性”来代指$D$所含有的1的个数是奇数还是偶数. 并定义比特串$D$的奇偶性为$f(D)$.</p>
+<ul>
+<li>当$1$的个数为奇数时, $f(D)=1$, 反之为$0$.</li>
+</ul>
+</li>
+<li>
+<p>定义1位checkbit $C$ ,  $C = f(D)$</p>
 </li>
 <li>
 <p>假设数据为$𝐷=𝐷_M \cdots 𝐷_2𝐷_1$:</p>
-<ul>
+</li>
 <li>
 <p>奇校验:<br>
 $$<br>
-C=D_{M} \oplus \cdots \oplus D_{2} \oplus D_{1} \oplus<br>
-$$</p>
-</li>
-<li>
-<p>偶校验:<br>
+C=D_{M} \oplus \cdots \oplus D_{2} \oplus D_{1} \oplus 1<br>
+$$<br>
+偶校验:<br>
 $$<br>
 C=D_{M} \oplus \cdots \oplus D_{2} \oplus D_{1}<br>
 $$</p>
 </li>
-</ul>
-</li>
 <li>
-<p>Error Detection:<br>
-$$<br>
-S = C' \oplus C''<br>
-$$</p>
-<ul>
-<li>$𝑆 = 0$ : $C + D$ 正确 or 其中出错的位数为偶数</li>
-<li>$𝑆 = 1$ : $C+D$ 中出错, 且出错的位数为奇数</li>
-</ul>
+<p>奇偶校验的区别仅仅是$C = f(D)$的计算方式不同.</p>
 </li>
 </ul>
 <h2 id="Steps"><a class="header-anchor" href="#Steps"></a>Steps</h2>
 <p>以偶校验为例:</p>
 <ol>
 <li>
-<p>发送方计算$C$. 将 $C$ 与 $D$ 一同发送</p>
+<p>发送方计算$C = f(D)$.  将 $C$ 与 $D$ 一同发送</p>
 </li>
 <li>
-<p>接收方收到$C'$ 和 $D'$, 计算 $C''$ :<br>
+<p>接收方收到$C'$ 和 $D'$, 计算 $C'' = f(D')$ :　　<br>
 $$<br>
 C''=D'<em>{M} \oplus \cdots \oplus D'</em>{2} \oplus D'_{1}<br>
 $$</p>
+<ul>
+<li>如果是奇校验, 则$C''=D'<em>{M} \oplus \cdots \oplus D'</em>{2} \oplus D'_{1} \oplus 1$</li>
+</ul>
 </li>
 <li>
 <p>计算$S$<br>
@@ -9238,10 +9366,56 @@ S = C' \oplus C''<br>
 $$</p>
 </li>
 </ol>
+<h2 id="Error-Detection"><a class="header-anchor" href="#Error-Detection"></a>Error Detection</h2>
+<p>$$<br>
+S = C' \oplus C''<br>
+$$</p>
+<p>已知$C = f(D), C'' = f(D')$. 现在根据 $C$, $D$在传输过程中的出错情况进行分类讨论:</p>
+<ul>
+<li>
+<p>$D$:</p>
+<ol>
+<li>如果$D$在传输过程中没有出错, 则$D' = D, C'' = f(D') = f(D) $;</li>
+<li>如果$D$在传输过程中出错了, 但出错位数为偶数位, 则$C'' = f(D') = f(D)$</li>
+<li>如果$D$在传输过程中出错了, 且出错位数为奇数位, 则$C'' = f(D') = \neg f(D)$</li>
+</ol>
+</li>
+<li>
+<p>$C$: 注意到$C$仅有1位</p>
+<ol>
+<li>如果$C$在传输过程中没有出错, 则$C' = C, C' = C = f(D)$</li>
+<li>如果$C$在传输过程中出错了, 则$C' = \neg C = \neg f(D)$</li>
+</ol>
+</li>
+</ul>
+<p>也就是说:</p>
+<ul>
+<li>如果$D$在传输过程中没有出错, 或仅仅出错了偶数位, 则$C'' = f(D)$. 否则$C'' = \neg f(D)$</li>
+<li>如果$C$在传输过程中没有出错, 则$C' = f(D)$. 否则$C' = \neg f(D)$</li>
+</ul>
+<p>现在我们考虑$S$:</p>
+<ul>
+<li>
+<p>$𝑆 = 0$ : $C' =C''$, 则:</p>
+<ol>
+<li>要么$C' = C'' = f(D)$, 即$D$没出错或仅仅出错了偶数位, 且$C$没出错;</li>
+<li>要么$C' = C'' = \neg f(D)$, 即$D$出错了奇数位, 且$C$也出错.</li>
+<li>在这两种情况下, $C+D$ <strong>要么没出错, 要么只出错了偶数位</strong>
+<ul>
+<li>$+$表示比特串的concataion</li>
+<li>注意到$C$只有一位, 因此$C$出错(1位)且$D$出错奇数位时,  $C+D$ 就出错了偶数位</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>
+<p>$S = 1$: $C' \ne C''$, 则$C+D$ <strong>出错了奇数位</strong></p>
+</li>
+</ul>
 <h2 id="Drawbacks"><a class="header-anchor" href="#Drawbacks"></a>Drawbacks</h2>
 <ul>
-<li>不能检测到偶数个bit出错</li>
-<li>发现错误后不能校正, 因为不能定位到出错的bit</li>
+<li>不能检测到偶数个bit出错的情况</li>
+<li>发现错误后不能校正, 因为不能定位到出错的bit.</li>
 </ul>
 <h1 id="Hamming-Code"><a class="header-anchor" href="#Hamming-Code"></a>Hamming Code</h1>
 <p>The simplest of the error-correcting codes is the <strong>Hamming code</strong> devised by <em>Richard Hamming</em> at Bell Laboratories.</p>
@@ -9256,15 +9430,15 @@ $$</p>
 <ul>
 <li>我们画三个圆, 中间相交的四个部分分别填4 data bits ( 如图a ).</li>
 <li>剩下的最外面三个部分填 <strong>parity bits</strong> ( 也就是checkcode ). Each parity bit is chosen so that the total number of 1s in its circle is <strong>even</strong>( 如图b )</li>
-<li>Now, if an error changes one of the data bits ( 如图c ), it is eas- ily found.</li>
+<li>Now, if an error changes one of the data bits ( 如图c ), it is easily found.</li>
 <li>By checking the parity bits, discrepancies are found in circle A and circle C but not in circle B. Only one of the seven compartments is in A and C but not B ( 如图d ). The error can therefore be corrected by changing that bit.</li>
 </ul>
 <h2 id="Steps-2"><a class="header-anchor" href="#Steps-2"></a>Steps</h2>
 <ul>
-<li>将数据分成几组, 对每一组都使用奇偶校验进行检错. 我们默认使用偶校验</li>
-<li>数据输入:为数据 $D$ 中每组生成checkbit, 合并得到 $K$ 位check code $C$</li>
-<li>数据输出:为数据 $D'$ 中每组生成checkbit, 合并得到 $K$ 位check code $C''$</li>
-<li>检错:将 $C''$ 和取出的 $C’$ 按位进行异或, 生成 $K $位 syndrome word $S$
+<li>将数据分成几组, 对每一组都使用奇偶校验. 我们默认使用偶校验</li>
+<li>数据输入: 为数据 $D$ 中的每组都生成checkbit, 合并得到 $K$ 位check code $C$</li>
+<li>数据输出: 为数据 $D'$ 中的每组都生成checkbit, 合并得到 $K$ 位check code $C''$</li>
+<li>检错:将 $C''$ 和取出的 $C’$ 按位进行异或, 生成 $K $位 syndrome word $S$. 对$S$分类讨论:
 <ul>
 <li>全部是0:没有检测到错误</li>
 <li>有且仅有1位是1:错误发生在校验码中的某一位，不需要纠正</li>
@@ -9279,9 +9453,9 @@ $$</p>
 </ul>
 <p>假设最多1位发生错误, 可能的情况有:</p>
 <ul>
-<li>$D$ 中有1位出现错误: $M$</li>
-<li>$C$ 中有1位出现错误: $K$</li>
-<li>没有错误: $1$</li>
+<li>$D$ 中有1位出现错误: 有 $M$ 种情况</li>
+<li>$C$ 中有1位出现错误: 有 $K$ 种情况</li>
+<li>没有错误: 有 $1$ 种情况</li>
 </ul>
 <p>因此, $K$ 位的$S$ 需要能表示 $M + K + 1$ 种情况, 即满足:<br>
 $$<br>
@@ -9294,14 +9468,14 @@ E.g. for a word of 8 data bits ( $M = 8$ ), we have</p>
 </ul>
 <p>因此, $M=8$ 时 $K=4$</p>
 <h2 id="Checkbit"><a class="header-anchor" href="#Checkbit"></a>Checkbit</h2>
-<p>假设$M=8, K=4$</p>
+<p>假设$M=8, K=4$. 则数据最终被表示为12bit. 下表中的Position number是这12位中每个bit的的位置(十进制)的二进制表示.</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Computer%20Architecture/Layout%20of%20Data%20Bits%20and%20Check%20Bits.png" alt="Layout of Data Bits and Check Bits"></p>
 <ul>
 <li>
 <p><strong>checkbit的position number是2的幂</strong>:</p>
 <ul>
 <li>$\mathrm{C}1$: 0001</li>
-<li>$\mathrm{C}3$: 0010</li>
+<li>$\mathrm{C}2$: 0010</li>
 <li>$\mathrm{C}4$: 0100</li>
 <li>$\mathrm{C}8$: 1000</li>
 <li>...</li>
@@ -9311,7 +9485,7 @@ E.g. for a word of 8 data bits ( $M = 8$ ), we have</p>
 <p><strong>Each check bit operates on every data bit whose position number contains a 1 in the same bit position as the position number of that check bit.</strong></p>
 <ul>
 <li>
-<p>比如说, $\mathrm{C}1$ 是 $0001$ , 因此$\mathrm{C}1$ 就和所有的 position number 的第一位为 $1$ 的 databit 有关, 即data bit positions 3, 5, 7, 9, and 11 (D1, D2, D4, D5, D7)</p>
+<p>比如说, $\mathrm{C}1$ 是 $0001$ , 因此$\mathrm{C}1$ 就和所有的 position number 的第一位为 $1$ 的 databit 有关, 即data bit positions 3, 5, 7, 9 and 11 (D1, D2, D4, D5, D7)</p>
 <ul>
 <li>bit positions 3, 6, 7, 10, and 11 all contain a 1 in the second bit position, as does C2;</li>
 </ul>
@@ -9394,14 +9568,18 @@ $$</p>
 <h1 id="Cyclic-Redundancy-Check"><a class="header-anchor" href="#Cyclic-Redundancy-Check"></a>Cyclic Redundancy Check</h1>
 <p>循环冗余校验(Cyclic Redundancy Check, CRC)</p>
 <ul>
-<li>适用于以流格式存储和传输大量数据</li>
+<li>适用于以<strong>流格式</strong>存储和传输大量数据</li>
 <li>用数学函数生成数据和校验码之间的关系</li>
 </ul>
 <h2 id="Steps-4"><a class="header-anchor" href="#Steps-4"></a>Steps</h2>
 <ul>
 <li>Get Check Code:
 <ul>
-<li>假设数据有 $M$ 位，左移数据 $K$ 位(右侧补0), 并用 $K+1$ 位<strong>生成多项式</strong>除它(<strong>模2运算</strong>)</li>
+<li>假设数据有 $M$ 位，左移数据 $K$ 位(右侧补0), 并用 $K+1$ 位<strong>生成多项式</strong>除它(<strong>模2运算</strong>)
+<ul>
+<li>模2除法与算术除法类似，但每一位除的结果不影响其它位，即不向上一位借位，所以实际上就是异或</li>
+</ul>
+</li>
 <li>采用 $K$ 位余数作为checkcode</li>
 <li>把checkcode放在数据(不含补的0 )后面, 一同存储或传输</li>
 </ul>
@@ -10416,6 +10594,13 @@ The input is treated as a single block of text and split into separate pieces on
 </li>
 </ul>
 <span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<p>存储器由一定数量的单元构成，每个单元可以被唯一标识，每个单元都有存储一个数值的能力。</p>
+<ul>
+<li>地址：单元的唯一标识符（采用二进制）</li>
+<li>地址空间：可唯一标识的单元总数</li>
+<li>寻址能力：存储在每个单元中的信息的位数•大多数存储器是字节寻址的，而执行科学计算的计算机通常是64位寻址的</li>
+</ul>
 <h1 id="The-Memory-Hierarchy"><a class="header-anchor" href="#The-Memory-Hierarchy"></a>The Memory Hierarchy</h1>
 <p>计算机的存储架构是分层的：</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20Storage/memory%20hierarchy.png" alt="memory hierarchy"></p>
@@ -10510,14 +10695,14 @@ The input is treated as a single block of text and split into separate pieces on
 <p>RAM（ random access memory ）： 是volatile（易失性）的存储材料， 也就是说断电就会丢失所有信息。 RAM常用来做计算机的内存，包括cache和主存等</p>
 <p>RAM分为两类：</p>
 <ul>
-<li>SRAM( Static RAM ):  “静态”是指只要不掉电, 存储在SRAM中的数据就不会丢失
+<li>SRAM( Static RAM ):  “静态”是指<strong>只要不掉电, 存储在SRAM中的数据就不会丢失</strong>
 <ul>
-<li>更快更贵，一般用作Cache</li>
+<li>更快更贵，一般用作Cache( 包括TLB )</li>
 </ul>
 </li>
 </ul>
 <ul>
-<li>DRAM( Dynamic RAM ): 在通电时还需要进行周期性的刷新操作, 才能保证数据不丢失
+<li>DRAM( Dynamic RAM ): 在通电时还需要<strong>进行周期性的刷新操作, 才能保证数据不丢失</strong>
 <ul>
 <li>比SRAM慢，也更便宜，一般用作主存和显存</li>
 </ul>
@@ -10651,8 +10836,13 @@ The input is treated as a single block of text and split into separate pieces on
 <li><em>Extended data out DRAM (EDO DRAM)</em>: 比FPM DRAM更先进， 可以把多个CAS缓冲CAS为一组，一起发送</li>
 </ul>
 <h3 id="SDRAM"><a class="header-anchor" href="#SDRAM"></a>SDRAM</h3>
+<p><strong>采用外部时钟与处理器同步，具有更高的数据传输速率</strong></p>
 <ul>
-<li><em>Synchronous DRAM (SDRAM)</em>： 传统DRAM, FPM DRAM, EDO DRAM都是以异步方式进行I/O的( 使用RAS和CAS两个独立的信号 ). 而SDRAM的I/O都在系统时钟的上升沿执行，这使得它可以同步地存取数据. 简言之，SDRAM比传统DRAM快很多</li>
+<li><em>Synchronous DRAM (SDRAM)</em>： 传统DRAM, FPM DRAM, EDO DRAM都是以异步方式进行I/O的( 使用RAS和CAS两个独立的信号 ). 而SDRAM的I/O都在系统时钟的上升沿执行，这使得它可以同步地存取数据. 简言之，SDRAM比传统DRAM快很多
+<ul>
+<li>SDRAM属于RAM, 因此也需要周期性刷新</li>
+</ul>
+</li>
 <li>SDRAM的材质分为双极性与CMOS( Complementary Metal Oxide Semiconductor, 互补金属氧化物半导体 )
 <ul>
 <li>CMOS还被用于在数字影像领域. 市面上常见的数码产品, 其感光元件主要就是CCD或者CMOS, 尤其是低端摄像头产品, 而通常高端摄像头都是CCD感光元件.</li>
@@ -10662,8 +10852,14 @@ The input is treated as a single block of text and split into separate pieces on
 </ul>
 <h3 id="DDR-SDRAM"><a class="header-anchor" href="#DDR-SDRAM"></a>DDR SDRAM</h3>
 <ul>
-<li><em>Double Data-Rate Synchronous DRAM (DDR SDRAM)</em>：双通道DDR SDRAM, 是SDRAM的增强版, 在上升/下降沿都执行I/O</li>
-<li>随着 <em>prefetch buffer</em> ( 预取缓冲区，决定了有效带宽 ) 的增大，DDR已经分为DDR (2 bits), DDR2 (4 bits), DDR3 (8 bits), DDR4(  ) and  DDR5( 16 bits )
+<li>
+<p><em>Double Data-Rate Synchronous DRAM (DDR SDRAM)</em>：双通道DDR SDRAM, 是SDRAM的增强版, 在上升/下降沿都执行I/O</p>
+</li>
+<li>
+<p>DDR 是一种特殊的 SDRAM，也采用外部时钟与处理器同步，但是与 SDRAM 相比，DDR 允许在一 个时钟周期内读/写两次数据，可以加快数据传输速率</p>
+</li>
+<li>
+<p>随着 <em>prefetch buffer</em> ( 预取缓冲区，决定了有效带宽 ) 的增大，DDR已经分为DDR (2 bits), DDR2 (4 bits), DDR3 (8 bits), DDR4(  ) and  DDR5( 16 bits )</p>
 <ul>
 <li>注意， DDR4的prefetch和3一样，都是8 bit，但是DDR4提高了核心频率，所以总线速度得以提高</li>
 <li>DDR的&quot;Double Data-Rate&quot;指的是会在系统时钟的<strong>上升和下降沿都执行I/O</strong>，并不意味着DDR的速度是SDRAM的两倍。 事实上，随着DDR技术的进步，速度差距是越来越大的。</li>
@@ -10711,8 +10907,147 @@ The input is treated as a single block of text and split into separate pieces on
 <li>不过，“不可写”其实是生产工艺的限制，而不是什么设计上的特性。</li>
 <li>后来ROM发展出了可擦写的存储材质EPROM和EEPROM，因为是可擦写的，所以严格来讲不算&quot;Read-Only&quot;， 但是它们确实是在ROM技术上发展出来的，因此也称为ROM。 后来在这两种技术的发展上又发展出了<strong>NAND FLASH</strong>闪存，这就是我们现在用的U盘中用到的技术，同样，因为其体积小，容量和速度均不错，现在手机存储中的emmc颗粒也是用的这种技术，所以有手机厂商就把手机的存储容量约定俗成为ROM，其继承ROM断电不丢失数据的特性，而且有着较快的速度。（但是是<strong>可擦写</strong>的哦）</li>
 <li>EEPROM和flash都有写入次数限制</li>
+<li>因此, 闪存(Flash)依然是 ROM 的一种, 写入Flash时必须先擦除原有数据，因此写速度比读速度要慢不少.</li>
 </ul>
 <p>refs: CSAPP</p>
+<h1 id="Others"><a class="header-anchor" href="#Others"></a>Others</h1>
+<ul>
+<li>
+<p>PROM， 可编程只读存储器，<strong>非易失，可以一次电写入，但之后无法修改</strong></p>
+</li>
+<li>
+<p>EPROM 可擦除可编程只读存储器，<strong>可以写入多次，但需要通过紫外光</strong>擦除整个芯片的信息，时间长，但是造价相对较低集成度高</p>
+</li>
+<li>
+<p>EEPROM:  电子 EPROM,可以<strong>擦除单个字节</strong>，消耗时间相对较短，但是造价贵且集成度低</p>
+</li>
+<li>
+<p>CD-ROM: 采用串行存储, 并非随机访问</p>
+</li>
+</ul>
+<h1 id="内存的刷新策略"><a class="header-anchor" href="#内存的刷新策略"></a>内存的刷新策略</h1>
+<ul>
+<li>
+<p>集中式刷新：</p>
+<ul>
+<li>方式：停止读写操作，刷新每一行</li>
+<li>缺点：刷新时无法操作内存</li>
+</ul>
+</li>
+<li>
+<p>分散式刷新：</p>
+<ul>
+<li>方式：每个存储周期内，读写操作完成时进行刷新</li>
+<li>对集中式的改进：用户不会感受到内存停止</li>
+<li>缺点：会增加每个存储周期的时间</li>
+</ul>
+</li>
+<li>
+<p>异步刷新：</p>
+<ul>
+<li>方式：每行各自以64ms间隔刷新；两个时间间隔内保证每一行被刷新一次</li>
+<li>优点：刷新不需要占用读写时间，效率高，常用</li>
+</ul>
+</li>
+</ul>
+<h1 id="内存的模块组织策略"><a class="header-anchor" href="#内存的模块组织策略"></a>内存的模块组织策略</h1>
+<ul>
+<li>
+<p>位扩展：地址线不变，数据线增加</p>
+<ul>
+<li>使用8个4<em>1b芯片组成4</em>8b存储器（注意此时每个地址都会同时选中八个芯片上的对应位置）</li>
+</ul>
+</li>
+<li>
+<p>字扩展：数据线不变，地址线增加</p>
+<ul>
+<li>使用8个4<em>8b芯片组成32</em>8b存储器（高3位用于选片）</li>
+</ul>
+</li>
+<li>
+<p>字、位扩展：数据线和地址线同时增加</p>
+<ul>
+<li>使用8个4<em>4b芯片组成16</em>8b存储器（高2位选片；每次同时选中两片）</li>
+</ul>
+</li>
+</ul>
+<h1 id="Questions"><a class="header-anchor" href="#Questions"></a>Questions</h1>
+<p>COA2022 05</p>
+<blockquote>
+<p>Q:</p>
+<p>已知某机主存容量为 64KB，按字节编址。假定用 1K×4 位的 DRAM 芯片构成该存储器，</p>
+<p>请问:<br>
+a) 需要多少个这样的 DRAM 芯片?</p>
+<p>b) 主存地址共多少位?哪几位用于选片?哪几位用于片内选址?</p>
+</blockquote>
+<p>Answer:</p>
+<ul>
+<li>
+<p>a):</p>
+<p>1B=8bit</p>
+<p>所以 N=64KB/(1K<em>4it)=16</em>8=128 个</p>
+</li>
+<li>
+<p>b):</p>
+<p>按字节选址的话 64K=2^6*2^10=2^16B, 所以主存地址一共 16 位.</p>
+<p>由于片内为 1K 个地址，所以低 10 位为片内地址，高 16-10=6 位用于选片。</p>
+<p>注意，此处不能算为 128=27，所以高 7 位选片，低 16-7=9 位用于片内选址。因为片内的选址单元是 4 位，需要位扩展后才能按字节编址(整体上是字位扩展)，即选片时都是同 时选中 2 个芯片</p>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p>Q: 假定用 8K×8 位的 EPROM 芯片组成 32K×16 位的只读存储器，请问</p>
+<p>a) 数据寄存器(用于存放数据)最少应有多少位?</p>
+<p>b) 地址寄存器(用于存放地址)最少应有多少位?</p>
+<p>c) 共需要多少个 EPROM 芯片</p>
+</blockquote>
+<p>Answer:</p>
+<ul>
+<li>a) 6 位，与每个寻址单元中数据的长度相同</li>
+<li>b) 32K=2^15bit 所以最少15位</li>
+<li>c) 32/8*16/8=8 个</li>
+</ul>
+<p>1B=8bit</p>
+<p>所以 N=64KB/(1K<em>4it)=16</em>8=128 个</p>
+<hr>
+<p>![image-20230225223940002](/Users/lyk/Library/Application Support/typora-user-images/image-20230225223940002.png)</p>
+<p>?? 为什么用后面的数字作为位元阵列的数量?</p>
+<hr>
+<blockquote>
+<p>Q:下列各类存储器中，不采用随机存取方式的是( )。</p>
+<p>A. EPROM</p>
+<p>B. CD-ROM</p>
+<p>C. DRAM</p>
+<p>D. SRAM</p>
+</blockquote>
+<p>Answer: B</p>
+<p>随机存取是指 CPU 可对存储器的任一存储单元中的内容随机存取，而且<strong>存取时间与存储单元的物理位置无关</strong>。</p>
+<p>A、C 和 D 均采用随机存取方式，CD-ROM 即光盘，采用<strong>串行存取</strong>方式。注意，CD-ROM 是只读型光盘存储器，其访问方式是顺序访问，不属于只读存储器 ROM。</p>
+<hr>
+<blockquote>
+<p>Q:</p>
+<p>某容量为256MB的存储器由若干4M×8位的DRAM芯片构成，该DRAM 芯片的地址引脚和数据引脚总数是( )。</p>
+<p>A. 19 B. 22 C. 30 D. 36</p>
+</blockquote>
+<p>4M×8 位的芯片数据线应为 8 根，地址线应为 log24M = 22 根，而 <strong>DRAM 采用地址复用 技术</strong>，地址线是原来的 1/2，且地址信号分行、列两次传送。地址线数为 22/2=11 根，所以地址引脚与数据引脚的总数为 11 +8= 19 根，选 A。此题需要注意 DRAM 采用的是传两次 地址的策略，所以<strong>地址线为正常的一半</strong>，这是很多考生容易忽略的地方。</p>
+<ul>
+<li>回顾一下, 内存采用DRAM, 因此地址线复用. 地址线复用可以在线不变的情况下增大地址空间, 缺点是每次访问都需要两次传输, 降低速度. 内存需要更大的地址空间, 因此用DRAM;</li>
+<li>而Cache采用SRAM, 地址线不会复用. 这可以增大访问速度, 缺点是需要的地址线较多. 对于Cache最关键的是速度, 因此Cache使用SRAM( 或者说不复用地址线 )</li>
+</ul>
+<hr>
+<p>![image-20230225230037825](/Users/lyk/Library/Application Support/typora-user-images/image-20230225230037825.png)</p>
+<p>看不懂. 总之前面的数字代表的是地址线</p>
+<hr>
+<p>![image-20230225230209721](/Users/lyk/Library/Application Support/typora-user-images/image-20230225230209721.png)</p>
+<hr>
+<p>![image-20230225230232733](/Users/lyk/Library/Application Support/typora-user-images/image-20230225230232733.png)</p>
+<p>先把word拼起来, 每行都是1word</p>
+<hr>
+<p>![image-20230225230349734](/Users/lyk/Library/Application Support/typora-user-images/image-20230225230349734.png)</p>
+<p>看不懂, 总之是低位表示芯片编号, 因此查到芯片编号. 接着由于一个周期只能访问一个芯片, 所以第三个周期到了第二个芯片, 但我没搞懂, 读取数据(8B)不需要时间吗?</p>
+<hr>
+<p>![image-20230225230523504](/Users/lyk/Library/Application Support/typora-user-images/image-20230225230523504.png)</p>
+<p>看不懂, 只需知道4次访问都不能在同一模块内</p>
 ]]></content>
       <categories>
         <category>Computer Science</category>
@@ -15463,7 +15798,7 @@ also lets you change behavior at runtime.</li>
   </entry>
   <entry>
     <title>Git</title>
-    <url>/2022/09/26/Git/</url>
+    <url>/2023/02/08/Git/</url>
     <content><![CDATA[<p>全面介绍了Git的原理和使用</p>
 <span id="more"></span>
 <p>ref:</p>
@@ -16091,6 +16426,18 @@ also lets you change behavior at runtime.</li>
 <li>命令<code>git tag -d &lt;tagname&gt;</code>可以删除一个本地标签；</li>
 <li>命令<code>git push origin :refs/tags/&lt;tagname&gt;</code>可以删除一个远程标签</li>
 </ul>
+<h2 id="git-diff"><a class="header-anchor" href="#git-diff"></a>git diff</h2>
+<p>git-diff - Show changes between commits, commit and working tree, etc</p>
+<p>git diff 显示提交与提交之间、提交与工作树之间的文件修改。</p>
+<ol>
+<li>git diff <strong>显示本地开发工作中已经修改但未提交至暂存区的文件和已经提交至暂存区文件的修改</strong></li>
+<li>**git diff HEAD *<em>**显示的是已提交到工作树中文件和未提交到工作树中文件的所有修改。**</em>***查看已缓存的与未缓存的所有改动。</li>
+<li>**git diff --cached 上一次最后一次提交到工作树中文件（也就是*<em>head*</em>）与暂存区内文件的改动。**查看已缓存的改动。</li>
+</ol>
+<p>总结一下，可以想象有三个环境，一个是我们本地正在编辑的开发环境，一个我们提交的版本库环境，还有中间一个暂时存放代码的暂存区。</p>
+<p>git diff 就是我们本地正在开发的但未提交到暂存区文件和之前已经提交到暂存区里的文件的对比；</p>
+<p>git diff head 就是已经提交到版本库环境中的文件和未提交到版本库环境中文件的所有修改对比；</p>
+<p>git diff --cached 最后一次提交到版本库环境中文件和暂存区中文件的修改对比；</p>
 <h1 id="gitignore"><a class="header-anchor" href="#gitignore"></a>.gitignore</h1>
 <p><a href="https://www.pluralsight.com/guides/how-to-use-gitignore-file">Tutor</a></p>
 <p><a href="https://github.com/github/gitignore">现成的配置</a></p>
@@ -18459,7 +18806,7 @@ ClassNotFoundException – if the class cannot be located</li>
 <li><code>equals()</code></li>
 <li><code>==</code></li>
 </ul>
-<h1 id="反射"><a class="header-anchor" href="#反射"></a>反射</h1>
+<h1 id="Reflection"><a class="header-anchor" href="#Reflection"></a>Reflection</h1>
 <h2 id="利用反射来查看类"><a class="header-anchor" href="#利用反射来查看类"></a>利用反射来查看类</h2>
 <p><code>getDeclaredXX()</code> 方法可以无视访问权限</p>
 <ul>
@@ -30970,14 +31317,14 @@ $$</p>
 <p>如果用户程序通过 <code>free(ptr)</code>归还一些内存，那无非是让head指向<code>ptr - 8</code>,读取8字节的头块，得到要释放的内存信息，然后释放头块+紧跟的内存块：</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20implementation%202.png" alt="free list implementation 2"></p>
 <ul>
-<li>这个堆堆起始地址是16KB</li>
+<li>这个堆的起始地址是16KB</li>
 <li>假设要<code>free(16500)</code>（ 即16384( 16KB ) + 前一块的108 ），也就是图上的<code>sptr</code>指针, 则令head指向sptr前的头块，得到sptr（开头的）内存块的信息，然后删除头块和sptr内存块</li>
 </ul>
 <h2 id="Paging"><a class="header-anchor" href="#Paging"></a>Paging</h2>
 <p>分页将进程的地址空间分割成固定大小的单元，称为page, 并将物理内存也分割成相同的固定大小的单元，称为frame, 每个frame装一个page, 将page和frame编号</p>
 <ul>
-<li>虚拟页号（ virtual page number, VPN ）， 因为地址空间都属于虚拟内存（虚拟空间），因此称为“虚拟”页号</li>
-<li>物理帧号（ physical  ）：因为帧都处于物理内存（物理空间）中，因此称为“物理”帧号</li>
+<li>虚拟页号( virtual page number, VPN ): 因为地址空间都属于虚拟内存（虚拟空间），因此称为“虚拟”页号</li>
+<li>物理帧号( physical frame number, PFN ): 因为帧都处于物理内存（物理空间）中，因此称为“物理”帧号</li>
 </ul>
 <p>分页视角下的地址空间为:</p>
 <ul>
@@ -30993,7 +31340,23 @@ $$</p>
 </ul>
 <p>在分页机制下, <strong>每个进程都有一个页表(page table)</strong>, 页表就是页表项的列表. 每个<strong>页表项</strong>( page table entry, PTE )存储了一个page到 frame 的映射（即虚拟页号到物理页号到映射）</p>
 <ul>
-<li>页表项的索引就等于VPN， 比如VPN为2， 那就对应着页表中下标为2的PFN</li>
+<li><strong>页表项的索引就等于VPN</strong>， 比如VPN为2， 那就对应着页表中下标为2的PFN.</li>
+<li>因此, PTE是不包含VPN的, PTE只包含PFN和一些控制位.</li>
+</ul>
+<p>一个Page和一个Frame是大小相等的, 由于整个内存(or 物理地址空间)都被划分成了一个个Frame或者Page, 所以Frame/Page都从0开始.</p>
+<ul>
+<li>在十进制下:
+<ul>
+<li>Frame的起始地址 = PFN * page_size</li>
+<li>Page的起始地址 = VPN * page_size</li>
+</ul>
+</li>
+<li>在二进制下:
+<ul>
+<li>Frame的起始地址 = <code>[PFN:offset]</code>, <code>offset</code>为全0</li>
+<li>Page的起始地址 =<code>[VPN:offset]</code>, <code>offset</code>为全0</li>
+</ul>
+</li>
 </ul>
 <p>页表基址寄存器（ PTBR, page table base register ）: 存储了页表的起始位置的物理地址，用于访问PTE：</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 得到VPN</span></span><br><span class="line">VPN = ( VirtualAddress &amp; VPN_MASK ) &gt;&gt; SHIFT;</span><br><span class="line"></span><br><span class="line"><span class="comment">// VPN就是PTE的索引，得到PTE在页表中的偏移，加上页表的起始地址，就是该PTE的物理地址</span></span><br><span class="line">PTEAddr = PageTableBaseRegister + (VPN + <span class="keyword">sizeof</span>(PTE));</span><br></pre></td></tr></table></figure>
@@ -31009,14 +31372,16 @@ $$</p>
 <p>在 TLB 未命中时(假设硬件管理的 TLB，即硬件负责处理 TLB 未命中)，硬件使用分段位(SN)来确定段号（也确定了要用哪个基址和界限寄存器对）。然后硬件将段基址寄存器中的物理地址（就是页表的物理地址）与 VPN 结合起来， 形成页表项(PTE)的地址:</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">SN = (VirtualAddress &amp; SEG_MASK) &gt;&gt; SN_SHIFT </span><br><span class="line">VPN = (VirtualAddress &amp; VPN_MASK) &gt;&gt; VPN_SHIFT </span><br><span class="line">AddressOfPTE = Base[SN] + (VPN * <span class="keyword">sizeof</span>(PTE))</span><br></pre></td></tr></table></figure>
 <h3 id="多级页表"><a class="header-anchor" href="#多级页表"></a>多级页表</h3>
-<p>多级页表就是把页表本身也分页，每个页就是页表的sublist.对页表页，用页目录(.page directory )来管理，页目录的每一项就是页目录项（.page directory entry， PDE ）, 它存储了<strong>虚拟页号 - 页帧号的</strong>映射，以及对应页表页的有效位。 我们只讨论两级页表，更高级的页表可以以此类推</p>
+<p>多级页表就是把页表本身也分页，每个页就是页表的sublist.对页表页，用页目录( page directory )来管理，页目录的每一项就是页目录项（.page directory entry， PDE ）, 它存储了<strong>虚拟页号 - 页帧号的</strong>映射，以及对应页表页的有效位。 我们只讨论两级页表，更高级的页表可以以此类推</p>
 <ul>
 <li>注意，这里“虚拟页号 - 页帧号映射“中的页帧号，指的是<strong>页表页的所在的页帧号</strong>。因为页表分页了，每一页自然就是物理内存中的物理帧，PDE就是将虚拟页号转换成页表页的物理帧号，根据虚拟页号来读取页表页。 因此，实际上<strong>PDE是“VPN - 页表页”的映射</strong></li>
 <li>“有效位”是面向页表页的，而一个页表页“有效”，指的是该页表页（就是PTE的集合）中至少一个PTE有效。 反之，一个无效的页表页就是所有PTE都无效，该页表页会被分配PDE，但不会再</li>
 <li>好处是，假设一个页表有100项，可以每10项一页，分10页， 其中有七页都无效（即70个PTE都为空），按照传统的页表，我依然要分配100项的空间，但是按照多级页表，只需要为三页（30项）分配空间</li>
 </ul>
+<p>//TODO</p>
 <h3 id="反向页表"><a class="header-anchor" href="#反向页表"></a>反向页表</h3>
 <p>传统页表是每个进程一个，而反向页表是整个系统一个。每个PTE带有所属进程的标识符。 要搜索反向页表，需要借助散列表等数据结构</p>
+<p># TODO</p>
 <h2 id="Address-Translation"><a class="header-anchor" href="#Address-Translation"></a>Address Translation</h2>
 <p>我们以分页作为虚拟化手段, 解释地址转换的过程:</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20translation%20with%20a%20page%20table.png" alt="Address translation with a page table"></p>
@@ -31134,27 +31499,43 @@ $$</p>
 <li>和其他异常中断一样, the fault handler返回原进程, CPU <strong>replay</strong>那条之前引起page fault的指令, 将virtual address再次送给MMU, 但由于此时的PTE已经存储在页表中了, 因此这是个<strong>page hit</strong>. 之后的过程就如之前page hit的情况</li>
 </ol>
 <h3 id="Integrating-Caches-and-VM"><a class="header-anchor" href="#Integrating-Caches-and-VM"></a>Integrating Caches and VM</h3>
-<p>采用虚拟化后, 指令执行就多了一次VA -&gt; PA的映射, 对于分页来说, 也就是也就是查询页表. 为了提高效率, 考虑到内存访问的Locality, 我们采用Cache的思想, 把常用的PTE存入一个Cache, 不需要每次都查页表了.</p>
+<p>采用虚拟化后, 指令执行就多了一次VA -&gt; PA的映射, 对于分页来说, 也就是查询页表. 为了提高效率, 考虑到内存访问的Locality, 我们采用Cache的思想, 把常用的PTE存入一个Cache, 不需要每次都查页表了.</p>
 <p>The main idea is that <strong>the address translation occurs <u>before</u> the cache lookup</strong>.</p>
 <ul>
 <li>Cache属于内存系统一部分, <strong>面对的是Physical Address, cache对于物理地址是透明的</strong>.</li>
 </ul>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Integrating%20VM%20with%20a%20physically%20addressed%20cache.png" alt="Integrating VM with a physically addressed cache."></p>
 <h3 id="TLB"><a class="header-anchor" href="#TLB"></a>TLB</h3>
-<p>TLB( Translation Look_aside Buffer )就是上面思想的一个实现, 它是种特殊的cache, OS把一部分常用的PTE存入TLB.</p>
+<p>TLB( Translation Lookaside Buffer )就是上面思想的一个实现, 它是种特殊的cache, OS把一部分常用的<strong>PTE</strong>存入TLB. 通过查TLB, 得到</p>
 <h4 id="TLB-Organization"><a class="header-anchor" href="#TLB-Organization"></a>TLB Organization</h4>
 <p>TLB一般是set associative cache(详见<a href="https://lyk-love.cn/2022/12/01/Cache-Memory/">Cache Memory</a>). 在TLB视角下, virtual address被划分如下:</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20Organization.png" alt="TLB Organization"></p>
 <ul>
 <li>注意: <strong>和main memory cache不同, TLB划分的是虚拟地址, 而不是物理地址</strong></li>
-<li>TLB高位存储tag, 低位存储set index</li>
+<li>在TLB视角下, VPN部分的高位存储tag, 低位存储set index; <strong>VPO部分似乎没有用???</strong></li>
+<li>TLB是set associative cache, TLBE(TLB Entry)作为cache line, 里面也不会存储组号. 由于TLBE一般也不会存储标志位, 因此TLBE大小 = Tag大小 + PTE大小</li>
+<li>TLB 即为快表，快表只是慢表(Page)的小小副本，因此 TLB 命中，必然 Page 也命中，而当 Page 命中，TLB 则未必命中.</li>
 </ul>
 <h4 id="Address-Translation-Using-TLB"><a class="header-anchor" href="#Address-Translation-Using-TLB"></a>Address Translation Using TLB</h4>
 <p>使用TLB后, Address Translation过程如下:</p>
 <ol>
-<li>对每次内存访问，OS先查看TLB，看是否有期望的转换映射.</li>
-<li>有的话（TLB hit）就直接得到了PFN，不需要查页表. 没有的话( TLB miss )就继续<strong>查页表，得到PTE，然后将该PTE写入TLB，再重试查TLB的指令</strong>，这次会命中(hit)，得到PFN. 拼接出PA</li>
-<li>用PA来进行后续的内存访问( main memory cache, main memory, disk ...)</li>
+<li>
+<p>对每次内存访问，OS先查看TLB，看是否有期望的转换映射.</p>
+</li>
+<li>
+<p>有的话（TLB hit）就直接得到了PFN，不需要查页表. 没有的话( TLB miss )就继续**查页表, **</p>
+<ol>
+<li>**如果PTE Valid, 则进入步骤3. **</li>
+<li><strong>如果PTE Invalid, 则从外部存储中得到PTE, 更新页表, 再重试查TLB的指令, 接着TLB会继续miss, 但查页表时会得到PTE Valid, 进入步骤3</strong>.</li>
+<li><strong>更新TLB, 并得到PFN, 拼接出PA</strong>.</li>
+</ol>
+<ul>
+<li>可以看到, TLB 要么hit, 要么会有连续两次miss被年过半百</li>
+</ul>
+</li>
+<li>
+<p>用PA来进行后续的内存访问( main memory cache, main memory, disk ...)</p>
+</li>
 </ol>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20Translation%20with%20TLB.png" alt="Address Translation with TLB"></p>
 <figure class="highlight c"><table><tr><td class="code"><pre><span class="line">VPN = (VirtualAddress &amp; VPN_MASK) &gt;&gt; SHIFT </span><br><span class="line">(Success, TlbEntry) = TLB_Lookup(VPN)</span><br><span class="line"><span class="keyword">if</span> (Success == True) <span class="comment">// TLB Hit</span></span><br><span class="line">	<span class="keyword">if</span> (CanAccess(TlbEntry.ProtectBits) == True) <span class="comment">//查TLB控制位，看该TLB项是否有效</span></span><br><span class="line">		Offset = VirtualAddress &amp; OFFSET_MASK </span><br><span class="line">		PhysAddr = (TlbEntry.PFN &lt;&lt; SHIFT) | Offset 		<span class="comment">//得到物理地址</span></span><br><span class="line">		AccessMemory(PhysAddr)</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line"> 		RaiseException(PROTECTION_FAULT) <span class="number">10</span> <span class="comment">//该TLB项无效，进入异常处理程序，其实一般就是进入下一步的页表读取步骤</span></span><br><span class="line"> 	</span><br><span class="line"><span class="comment">// TLB Miss，进入常规的页表读取步骤</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	PTEAddr = PTBR + (VPN * <span class="keyword">sizeof</span>(PTE)) </span><br><span class="line">  PTE = AccessMemory(PTEAddr)</span><br><span class="line">	<span class="keyword">if</span> (PTE.Valid == False) </span><br><span class="line">	RaiseException(SEGMENTATION_FAULT)</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (CanAccess(PTE.ProtectBits) == False) </span><br><span class="line">		RaiseException(PROTECTION_FAULT)</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		TLB_Insert(VPN, PTE.PFN, PTE.ProtectBits) RetryInstruction()</span><br></pre></td></tr></table></figure>
@@ -31193,6 +31574,24 @@ $$</p>
 <ul>
 <li>放在内核虚拟空间的页表不会被切换，这也意味着其寄存器（基址/界限寄存器）不会被刷新</li>
 </ul>
+<h2 id="Questions"><a class="header-anchor" href="#Questions"></a>Questions</h2>
+<blockquote>
+<p>Q: 假设一个分页虚拟存储系统的虚拟地址为 40 位，物理地址为 36 位，页大小为 16KB，按字节编址。 若页表中的有效位、存储保护位、修改位、使用位共占 4 位，磁盘地址不在页表中。则该存储系统 中每个程序的页表大小为多少(单位:MB)?</p>
+<p>(说明:</p>
+<p>1.假设每个程序都能使用全部的虚拟内存;</p>
+<p>2.页表项的长度必须为字节的整数倍</p>
+<p>)</p>
+</blockquote>
+<p>Answer:</p>
+<blockquote>
+<p>按字节编址, 故:</p>
+<p>虚拟主存页面个数:2^(40-14)=2^26</p>
+<p>物理主存页面数:2^(36-14)=2^22 页表项的最小长度:22+4=26</p>
+<p>根据说明 2，取 32 位(4B) 页表大小:2^26*4B=256MB</p>
+</blockquote>
+<hr>
+<p>COA2015</p>
+<p>![image-20230226013719425](/Users/lyk/Library/Application Support/typora-user-images/image-20230226013719425.png)</p>
 <h2 id="page-scheduling"><a class="header-anchor" href="#page-scheduling"></a>page scheduling</h2>
 <p>详见<em>OS Page Sheduling Algorithm</em></p>
 ]]></content>
@@ -33002,34 +33401,6 @@ $$</p>
 <li><code>y</code> 代表更新本地存储库</li>
 <li><code>u</code> 代表系统更新</li>
 </ul>
-<h2 id="conda"><a class="header-anchor" href="#conda"></a>conda</h2>
-<p>推荐<code>miniconda</code>， 直接去NJU MIRROR下载：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
-<ul>
-<li>清华源</li>
-</ul>
-<p>然后安装：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bash /path/to/miniconda</span><br></pre></td></tr></table></figure>
-<p>重启终端，检查安装是否成功：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda -V</span><br></pre></td></tr></table></figure>
-<h3 id="换源"><a class="header-anchor" href="#换源"></a>换源</h3>
-<p>conda换源建议用nju源  （清华源早就不行了，建议别用）， <a href="https://mirrors.nju.edu.cn/help/anaconda">具体指导</a></p>
-<ol>
-<li>
-<p>先执行 <code>conda config --set show_channel_urls yes</code> 生成用户目录下的 <code>.condarc</code> 文件</p>
-</li>
-<li>
-<p>编辑该文件：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br></pre></td></tr></table></figure>
-<p>即可添加 Anaconda Python 免费仓库。</p>
-</li>
-<li>
-<p>运行 <code>conda clean -i</code> 清除索引缓存，保证用的是镜像站提供的索引。</p>
-</li>
-<li>
-<p>运行 <code>conda create -n myenv numpy</code> 测试一下吧</p>
-</li>
-</ol>
 <h1 id="For-OSX"><a class="header-anchor" href="#For-OSX"></a>For OSX</h1>
 <h2 id="brew"><a class="header-anchor" href="#brew"></a>brew</h2>
 <p>brew安装的软件位置千奇百怪, 但都会在<code>/opt/homebrew/opt</code>留下软链接</p>
@@ -33071,7 +33442,52 @@ $$</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew list &lt;package&gt;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="For-Languages"><a class="header-anchor" href="#For-Languages"></a>For Languages</h1>
+<h1 id="For-Programing-Languages"><a class="header-anchor" href="#For-Programing-Languages"></a>For Programing Languages</h1>
+<h2 id="conda"><a class="header-anchor" href="#conda"></a>conda</h2>
+<p>推荐<code>miniconda</code>， 直接去NJU MIRROR下载：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>清华源</li>
+</ul>
+<p>然后安装：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bash /path/to/miniconda</span><br></pre></td></tr></table></figure>
+<p>重启终端，检查安装是否成功：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">conda -V</span><br></pre></td></tr></table></figure>
+<h3 id="换源"><a class="header-anchor" href="#换源"></a>换源</h3>
+<p>conda换源建议用nju mirror,  <a href="https://mirrors.nju.edu.cn/help/anaconda">具体指导</a>. ( 其实nju源就是从<a href="https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/">tuna</a>搬运的, 直接用tuna也可以)</p>
+<ol>
+<li>
+<p>先执行 <code>conda config --set show_channel_urls yes</code> 生成用户目录下的 <code>.condarc</code> 文件( 即<code>~/.condarc</code>)</p>
+</li>
+<li>
+<p>编辑该文件：</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line">  </span><br><span class="line">   <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br></pre></td></tr></table></figure>
+<p>即可添加 Anaconda Python 免费仓库。</p>
+</li>
+<li>
+<p>运行 <code>conda clean -i</code> 清除索引缓存，保证用的是镜像站提供的索引。</p>
+</li>
+<li>
+<p>运行 <code>conda create -n myenv numpy</code> 测试一下吧</p>
+</li>
+</ol>
+<h3 id="commands"><a class="header-anchor" href="#commands"></a>commands</h3>
+<p>Display Conda environment information:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda info</span><br></pre></td></tr></table></figure>
+<p>list all existing  environments.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda env list</span><br></pre></td></tr></table></figure>
+<p>Create a new environment</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda create --name [project-env] python=3.7</span><br></pre></td></tr></table></figure>
+<p><u>The environments created by Conda is always located in <code>/Users/.../anaconda3/envs/</code>. You may change the default location by using the following command but it is not encouraged.</u> Conda can no longer find your environment by your environment name, you will have to specify the environment’s full path to activate it every time.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda create --prefix /path/project-env</span><br></pre></td></tr></table></figure>
+<p>Activate your new environment:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda activate project-env</span><br></pre></td></tr></table></figure>
+<p>display all packages in this environment:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda list</span><br></pre></td></tr></table></figure>
+<p><code>conda list</code> also supports revision history.:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda list --revision</span><br></pre></td></tr></table></figure>
+<p>remove the environment:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda env remove --name [project-env]</span><br></pre></td></tr></table></figure>
 <h2 id="pip3"><a class="header-anchor" href="#pip3"></a>pip3</h2>
 <p>pip是python的一个包管理工具，python2:使用<code>pip</code>, python3使用<code>pip3</code></p>
 <ul>
@@ -41708,10 +42124,7 @@ $$<br>
 </ol>
 </li>
 <li>
-<p>字体: 由于我的Zsh主题是p10k, 使用的默认字体是Meslo Nerd Font, 而Alacritty默认使用的不是Meslo Nerd Font, 因此Alacritty中很多图标无法正常显示. 所以需要[安装字体](# p10k Fonts)</p>
-</li>
-<li>
-<p>这一步我之前的[p10k字体配置]里</p>
+<p>字体: 由于我的Zsh主题是p10k, 使用的默认字体是Meslo Nerd Font, 而Alacritty默认使用的不是Meslo Nerd Font, 这会导致p10k的很多图标在Alacritty中无法正常显示. 所以需要[安装Meslo Nerd Font字体](#p10k Fonts)</p>
 </li>
 <li>
 <p>配色: 使用下文所述的[Dracula](# Color: Dracula), 配色文件是一个符号链接, 指向dotfile, 纳入了版本管理</p>
@@ -41822,19 +42235,33 @@ $$<br>
 </li>
 <li>
 <p>开启主题配置：<code>p10k configure</code></p>
+<ul>
+<li>这会开启一个交互式程序, 根据用户的设定在<code>~/.p10k.zsh</code>生成主题的配置文件</li>
+</ul>
 </li>
 <li>
 <p>后续可以继续用<code>p10k configure</code>重新开始配置， 或者手动更改配置文件：<code>~/.p10k.zsh</code></p>
 <ul>
-<li>注意, 我使用了符号链接.  <code>~/.p10k.zsh</code>实际是指向<code>/Users/lyk/Projects/MyOfficialProjects/dotfiles/.p10k.zsh</code>的符号链接. 因此每次<code>p10k configure</code>后, 都不能正确地在<code>~/.p10k.zsh</code>生成配置文件,<strong>需要手动修</strong>改.</li>
+<li>为了对配置文件进行版本管理, 我对<code>~/.p10k.zsh</code>使用了符号链接.  <code>~/.p10k.zsh</code>实际是指向<code>/Users/lyk/Projects/MyOfficialProjects/dotfiles/.p10k.zsh</code>的符号链接.</li>
+<li>新版p10k是可以正确识别符号链接的, 因此<code>p10k configure</code>会在<code>/Users/lyk/Projects/MyOfficialProjects/dotfiles/.p10k.zsh</code>处生成配置文件.</li>
+<li>但老版本p10k没有这个支持, 每次<code>p10k configure</code>后, 生存的配置文件都位于<code>~/.p10k.zsh</code>, 覆盖了原来的符号链接, ,<strong>需要手动修</strong>改.</li>
 </ul>
 </li>
 </ol>
+<h2 id="p10k"><a class="header-anchor" href="#p10k"></a>p10k</h2>
+<h2 id="Notes"><a class="header-anchor" href="#Notes"></a>Notes</h2>
+<ul>
+<li>
+<p>Linux上默认配置不开启username@hostname 的显示，参加官方文档的“How do I add username and/or hostname to prompt?”. 也可以将这行注释掉：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Don<span class="string">&#x27;t show context unless running with privileges or in SSH.</span></span></span><br><span class="line">typeset -g POWERLEVEL9K_CONTEXT_&#123;DEFAULT,SUDO&#125;_&#123;CONTENT,VISUAL_IDENTIFIER&#125;_EXPANSION=</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Font"><a class="header-anchor" href="#Font"></a>Font</h1>
 <h2 id="p10k-Fonts"><a class="header-anchor" href="#p10k-Fonts"></a>p10k Fonts</h2>
 <p><a href="https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k">For Details Go To Github</a></p>
 <blockquote>
 <p>Powerlevel10k doesn't require custom fonts but can take advantage of them if they are available. It works well with <a href="https://github.com/ryanoasis/nerd-fonts">Nerd Fonts</a>, <a href="https://github.com/adobe-fonts/source-code-pro">Source Code Pro</a>, <a href="https://fontawesome.com/">Font Awesome</a>, <a href="https://github.com/powerline/fonts">Powerline</a>, and even the default system fonts. The full choice of style options is available only when using <a href="https://github.com/ryanoasis/nerd-fonts">Nerd Fonts</a>.</p>
-<p>👇 <strong>Recommended font</strong>: Meslo Nerd Font patched for Powerlevel10k. 👇</p>
+<p>👇 <strong>Recommended font</strong>: <strong>Meslo Nerd Font</strong> patched for Powerlevel10k. 👇</p>
 </blockquote>
 <p>If you are using iTerm2 or Termux, <code>p10k configure</code> can <strong>install the recommended font for you.</strong> Simply answer <code>Yes</code> when asked whether to install <em>Meslo Nerd Font</em>.</p>
 <h3 id="Manual-font-installation"><a class="header-anchor" href="#Manual-font-installation"></a>Manual font installation</h3>
@@ -41869,11 +42296,20 @@ $$<br>
 </ul>
 </li>
 </ol>
-<h2 id="Notes"><a class="header-anchor" href="#Notes"></a>Notes</h2>
+<h2 id="IDE-Font-Support-Problem"><a class="header-anchor" href="#IDE-Font-Support-Problem"></a>IDE Font Support Problem</h2>
 <ul>
 <li>
-<p>Linux上默认配置不开启username@hostname 的显示，参加官方文档的“How do I add username and/or hostname to prompt?”. 也可以将这行注释掉：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Don<span class="string">&#x27;t show context unless running with privileges or in SSH.</span></span></span><br><span class="line">typeset -g POWERLEVEL9K_CONTEXT_&#123;DEFAULT,SUDO&#125;_&#123;CONTENT,VISUAL_IDENTIFIER&#125;_EXPANSION=</span><br></pre></td></tr></table></figure>
+<p>采用前面的步骤, 我们的Terminal的字体就变成了Meslo Nerd Font, 具体而言是<strong>MesloLGS NF</strong>, 而很多IDE的默认Terminal字体不是Meslo Nerd Font, 因此p10k的图标在这些IDE的Terminal里还是不能正常显示, 因为没有对应字体支持.</p>
+</li>
+<li>
+<p>Jetbrains IDE: 例如IDEA, 默认使用的Terminal字体是Jetbrains Mono, 需要在<code>Setting</code> -&gt;<code> Editor</code> -&gt; <code>Font</code> 里将字体改成MesloLGS NF</p>
+</li>
+<li>
+<p>VSCode: <code>Settings -&gt; ``terminal</code>, 在<code>Font Family</code>中可以看到</p>
+<blockquote>
+<p>Controls the font family of the terminal. Defaults to [Editor: Font Family](vscode-file://vscode-app/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)'s value.</p>
+</blockquote>
+<p>这里的字体默认和 [Editor: Font Family](vscode-file://vscode-app/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)的相同,但后者一般不用终端的字体. 我们将Terminal的字体单独设置为<code>MesloLGS NF</code></p>
 </li>
 </ul>
 <h1 id="General-Terminal-Emulater-Config"><a class="header-anchor" href="#General-Terminal-Emulater-Config"></a>General Terminal Emulater Config</h1>
@@ -42766,6 +43202,8 @@ $$<br>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install $(cat [packages].txt)</span><br></pre></td></tr></table></figure>
 <p>for other platform just replace brew with your correspondding package manager</p>
 <h1 id="File-and-Dir"><a class="header-anchor" href="#File-and-Dir"></a>File and Dir</h1>
+<p>For mac:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">brew install coreutils</span><br></pre></td></tr></table></figure>
 <p><code>File&amp;Dir_Operations_Packages_General.txt</code>: 没安装broot</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">exa	ranger	bat	diff-so-fancy	fd	ripgrep</span><br></pre></td></tr></table></figure>
 <p><code>File&amp;Dir_Operations_Packages_Advanced.txt</code>: 把broot加上了</p>

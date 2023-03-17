@@ -28,7 +28,7 @@
 <meta property="og:description" content="Outline:">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-11-30T21:22:01.000Z">
-<meta property="article:modified_time" content="2022-12-09T14:08:40.433Z">
+<meta property="article:modified_time" content="2023-02-25T17:08:08.552Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Computer Architecture">
 <meta name="twitter:card" content="summary">
@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cache-Memory-Principles"><span class="nav-text">Cache Memory Principles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Elements-of-Cache-Design"><span class="nav-text">Elements of Cache Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-Addresses"><span class="nav-text">Cache Addresses</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-Size"><span class="nav-text">Cache Size</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mapping-Function-Replacement-Algorithms-Write-Policy"><span class="nav-text">Mapping Function Replacement Algorithms Write Policy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Line-Size"><span class="nav-text">Line Size</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Number-of-Caches"><span class="nav-text">Number of Caches</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cache-Organization"><span class="nav-text">Cache Organization</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cache-Memory-Principles"><span class="nav-text">Cache Memory Principles</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Elements-of-Cache-Design"><span class="nav-text">Elements of Cache Design</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-Addresses"><span class="nav-text">Cache Addresses</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-Size"><span class="nav-text">Cache Size</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mapping-Function-Replacement-Algorithms-Write-Policy"><span class="nav-text">Mapping Function Replacement Algorithms Write Policy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Line-Size"><span class="nav-text">Line Size</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Number-of-Caches"><span class="nav-text">Number of Caches</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cache-Organization"><span class="nav-text">Cache Organization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Generic-Cache-Memory-Organization"><span class="nav-text">Generic Cache Memory Organization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Direct-Mapped-Caches"><span class="nav-text">Direct-Mapped Caches</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-Selection"><span class="nav-text">Set Selection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Line-Matching-and-Word-Selection"><span class="nav-text">Line Matching and Word Selection</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Set-Associative-Caches"><span class="nav-text">Set Associative Caches</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-Selection-2"><span class="nav-text">Set Selection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Line-Matching-and-Word-Selection-2"><span class="nav-text">Line Matching and Word Selection</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fully-Associative-Caches"><span class="nav-text">Fully Associative Caches</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Set-Selection-3"><span class="nav-text">Set Selection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Line-Matching-and-Word-Selection-3"><span class="nav-text">Line Matching and Word Selection</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Why-index-with-the-middle-bits"><span class="nav-text">Why index with the middle bits?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Line-Replacement"><span class="nav-text">Line Replacement</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#FIFO"><span class="nav-text">FIFO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LFU"><span class="nav-text">LFU</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LRU"><span class="nav-text">LRU</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E6%93%8D%E4%BD%9C%E7%AD%96%E7%95%A5"><span class="nav-text">写操作策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B4%E5%86%99"><span class="nav-text">直写</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9B%9E"><span class="nav-text">写回</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Questions"><span class="nav-text">Questions</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -259,7 +259,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-12-09 14:08:40" itemprop="dateModified" datetime="2022-12-09T14:08:40Z">2022-12-09</time>
+      <time title="Modified: 2023-02-25 17:08:08" itemprop="dateModified" datetime="2023-02-25T17:08:08Z">2023-02-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -291,6 +291,15 @@
         <p>Outline:</p>
 <span id="more"></span>
 <h1 id="Cache-Memory-Principles"><a class="header-anchor" href="#Cache-Memory-Principles"></a>Cache Memory Principles</h1>
+<p>程序访问的局部性原理：</p>
+<ul>
+<li>
+<p>时间局部性：在相对较短的时间周期内，重复访问特定的信息</p>
+</li>
+<li>
+<p>空间局部性：在相对较短的时间周期内，访问相邻位置的数据</p>
+</li>
+</ul>
 <h1 id="Elements-of-Cache-Design"><a class="header-anchor" href="#Elements-of-Cache-Design"></a>Elements of Cache Design</h1>
 <h2 id="Cache-Addresses"><a class="header-anchor" href="#Cache-Addresses"></a>Cache Addresses</h2>
 <h2 id="Cache-Size"><a class="header-anchor" href="#Cache-Size"></a>Cache Size</h2>
@@ -298,9 +307,130 @@
 <h2 id="Line-Size"><a class="header-anchor" href="#Line-Size"></a>Line Size</h2>
 <h2 id="Number-of-Caches"><a class="header-anchor" href="#Number-of-Caches"></a>Number of Caches</h2>
 <h1 id="Cache-Organization"><a class="header-anchor" href="#Cache-Organization"></a>Cache Organization</h1>
-<p>![image-20221209220834951](/Users/lyk/Library/Application Support/typora-user-images/image-20221209220834951.png)</p>
+<ul>
+<li>组号不会存储在Cache行中, 因为组号是系统默认分配的.</li>
+<li>因此Cahce行大小 = 各种标识位 + Tag+ block</li>
+</ul>
+<h2 id="Generic-Cache-Memory-Organization"><a class="header-anchor" href="#Generic-Cache-Memory-Organization"></a>Generic Cache Memory Organization</h2>
+<p>![image-20230220140706649](/Users/lyk/Library/Application Support/typora-user-images/image-20230220140706649.png)</p>
+<p>Consider a computer system where each memory address has m bits that form $M = 2^m$ unique addresses. As illustrated in Figure 6.25(a),</p>
+<p>a cache for such a machine is organized as an array of $S = 2^s$ <em>cache sets</em>. Each set consists of $E$ <em>cache lines</em>.</p>
+<p>Each line consists of a data <em>block</em> of $B = 2^b$ bytes, a <em>valid bit</em> that indicates whether or not the line contains meaningful information,</p>
+<p>and $t = m − (b + s)$ <strong>tag bits</strong> (a subset of the bits from the current block’s memory address) that uniquely identify the block stored in the cache line.</p>
+<p>In general, a cache’s organization can be characterized by the tuple $(S, E, B, m)$. The size (or capacity) of a cache, $C$, is stated in terms of the aggregate size of all the blocks. The tag bits and valid bit are not included. Thus, $C = S × E × B$.</p>
+<hr>
+<p>![image-20230220140723458](/Users/lyk/Library/Application Support/typora-user-images/image-20230220140723458.png)</p>
+<p>The parameters $S$ and $B$ induce a partitioning of the $m$ address bits into the three fields</p>
+<ul>
+<li>The $s$ <em>set index bits</em> in A form an index into the array of $S$ sets. The first set is set 0, the second set is set 1, and so on. When interpreted as an unsigned integer, the set index bits tell us which set the word must be stored in.</li>
+<li>Once we know which set the word must be contained in, the $t$ tag bits in A tell us which line (if any) in the set contains the word. A line in the set contains the word <strong>if and only if the valid bit is set and the tag bits in the line match the tag bits</strong> in the address A.</li>
+<li>Once we have located the line identified by the tag in the set identified by the set index, then the $b$ <em>block offset bits</em> give us the offset of the word in the B-byte data block.</li>
+<li>组号 = 块号 mod 每组行数. 也就是说, 第0, 4, 8, ...块在第0组‘ 第1, 5, 9, ...块在第1组</li>
+</ul>
+<h2 id="Direct-Mapped-Caches"><a class="header-anchor" href="#Direct-Mapped-Caches"></a>Direct-Mapped Caches</h2>
+<p>Caches are grouped into different classes based on $E$, the number of cache lines per set.</p>
+<p><strong>A cache with exactly one line per set (E = 1) is known as a <em>direct-mapped</em> cache</strong></p>
+<p>![image-20230220140155600](/Users/lyk/Library/Application Support/typora-user-images/image-20230220140155600.png)</p>
+<h3 id="Set-Selection"><a class="header-anchor" href="#Set-Selection"></a>Set Selection</h3>
+<p>In this example, the set index bits $00001_2$ are interpreted as an integer index that selects set 1.</p>
+<p>![Set selection in a direct-mapped cache](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141928582.png)</p>
+<p>In this step, the cache:</p>
+<ol>
+<li>extracts the $s$ set index bits from the middle of the address for $w$.</li>
+<li>These bits are interpreted as <strong>an unsigned integer</strong> that corresponds to <strong>a set number</strong>.</li>
+</ol>
+<h3 id="Line-Matching-and-Word-Selection"><a class="header-anchor" href="#Line-Matching-and-Word-Selection"></a>Line Matching and Word Selection</h3>
+<p>Now that we have selected some set i in the previous step, the next step is to determine if a copy of the word $w$ is stored in one of the cache lines contained in set $i$.</p>
+<p>In a direct-mapped cache, this is easy and fast because <u>there is exactly one line per set.</u></p>
+<p>A copy of $w$ is contained in the line <strong>if and only if the valid bit is set and the tag in the cache line matches the tag</strong> in the address of $w$.</p>
+<p>在下图中, valit bit = 1,  且该cache line的tag bits和所给地址中的tag bits相同, 因此Cache hit. 反之则cache miss.</p>
+<p>![Line matching and word selection in a direct-mapped cache](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141831370.png)</p>
+<h2 id="Set-Associative-Caches"><a class="header-anchor" href="#Set-Associative-Caches"></a>Set Associative Caches</h2>
+<p>The problem with conflict misses in direct-mapped caches stems from the constraint that <u>each set has exactly one line</u> (or in our terminology, E = 1). A <em>set associative cache</em> relaxes this constraint so that each set holds more than one cache line.</p>
+<p>A cache with $1 &lt; E &lt; C/B$ is often called an <strong>E-way set associative cache</strong>.</p>
+<h3 id="Set-Selection-2"><a class="header-anchor" href="#Set-Selection-2"></a>Set Selection</h3>
+<p>![Set Selection in Set Associative Caches](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141655020.png)</p>
+<p>Set selection is identical to a direct-mapped cache, with the set index bits identi- fying the set. Figure 6.33 summarizes this principle.</p>
+<h3 id="Line-Matching-and-Word-Selection-2"><a class="header-anchor" href="#Line-Matching-and-Word-Selection-2"></a>Line Matching and Word Selection</h3>
+<p>![Line Matching and Word Selection in Set Associative Caches](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141013402.png)</p>
+<p>Line Matching and Word Selection in Set Associative Caches</p>
+<ul>
+<li>A <strong>conventional memory</strong> is an array of values that <u>takes an address as input and returns the value stored at that address.</u></li>
+<li>An <em>associative memory</em>, on the other hand, is an array of (key, value) pairs that <u>takes as input the key and returns a value from one of the (key, value) pairs that matches the input key.</u></li>
+<li>Thus, we can think of each set in a set associative cache as a small associative memory where the keys are the concatenation of the tag and valid bits, and the values are the contents of a block.</li>
+<li>Figure 6.34 shows the basic idea of line matching in an associative cache. An important idea here is that <strong>any</strong> line in the set <strong>can</strong> contain any of the memory blocks that map to that set. So the cache <strong>must search each line in the set</strong> for a valid line whose tag matches the tag in the address.</li>
+</ul>
+<p><strong>if there is an empty line</strong>, then it would be a good candidate.</p>
+<p>But if there are no empty lines in the set, then we must <strong>choose one of the nonempty lines</strong> and hope that the CPU does not reference the replaced line anytime soon.</p>
+<h2 id="Fully-Associative-Caches"><a class="header-anchor" href="#Fully-Associative-Caches"></a>Fully Associative Caches</h2>
+<p>A <em>fully associative cache</em> consists of a single set (i.e., E = C/B) that contains all of the cache lines.</p>
+<p>![Fully Associative Caches](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141301248.png)</p>
+<h3 id="Set-Selection-3"><a class="header-anchor" href="#Set-Selection-3"></a>Set Selection</h3>
+<p>![Set Selection in Fully Associative Caches](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141432658.png)</p>
+<p>Set selection in a fully associative cache is trivial because there is only one set, summarized in Figure 6.36. Notice that there are no set index bits in the address, which is partitioned into only a tag and a block offset.</p>
+<p>根本没有set index</p>
+<h3 id="Line-Matching-and-Word-Selection-3"><a class="header-anchor" href="#Line-Matching-and-Word-Selection-3"></a>Line Matching and Word Selection</h3>
+<p>Line Matching and Word Selection in Fully Associative Caches</p>
+<p>![Line Matching and Word Selection in Fully Associative Caches](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141412164.png)</p>
+<p>Line matching and word selection in a fully associative cache work the same as with a set associative cache, as we show in Figure 6.37. The difference is mainly <strong>a question of scale.</strong></p>
+<ul>
+<li>
+<p>a question of scale:</p>
+<p>Because the cache circuitry must search for many matching tags in parallel, it is difficult and expensive to build an associative cache that is both large and fast. As a result, fully associative caches are only appropriate for small caches, such as the translation lookaside buffers (TLBs) in virtual memory systems that cache page table entries (Section 9.6.2).</p>
+</li>
+</ul>
 <p>On power-up, the hardware sets all the valid bits in all the caches to &quot;invalid&quot;. Some systems also set a valid bit to &quot;invalid&quot; at other times （电源启动的时候，硬件设置所有的真实位为“非真实”，一些系统也在其他时候设置一个真实位为非真实）</p>
 <p>A data cache typically requires two flag bits per cache row entry: a valid bit and also a <a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Dirty_bit">dirty bit</a>. The dirty bit indicates whether that block has been unchanged since it was read from main memory -- &quot;clean&quot; -- or whether the processor has written data to that block (and the new value has not yet made it all the way to main memory) -- &quot;dirty&quot;.（一个数据缓存行一般需要两个标志位：真实位和脏位。脏位表明缓存块中的数据是否遭到修改并且没有被写入内存）。</p>
+<h1 id="Why-index-with-the-middle-bits"><a class="header-anchor" href="#Why-index-with-the-middle-bits"></a>Why index with the middle bits?</h1>
+<p>Cache将物理地址中中间(而不是高位)的几位作为Cache Line的组号, 这是为了提高Cache效率, 使得Cache尽快加载尽可能多的Cache Line</p>
+<p>考虑如下情况, 一个4路组Cache将物理地址的高两位作为组号:</p>
+<p>![image-20230224161509761](/Users/lyk/Library/Application Support/typora-user-images/image-20230224161509761.png)</p>
+<p>我们看到, 这会导致连续的主存块被映射到相同的组. 例如, 在上图中, 第0,1, 2,3个块都被映射到第0组; 第4,5, 6,7个块都被映射到第1组...</p>
+<p>如果一个程序拥有比较好的空间局部性, 那么在该程序运行期间, Cache可能只会加载几个组, 剩下几个组的Cache line一直不会被加载.</p>
+<p>因此我们将物理地址的中间几位作为组号, 如上图, 此时第0,4, 8,12个块都被映射到第0组, 则当程序运行时, 尽可能多的Cache Line会被加载.</p>
+<p>You may be wondering why caches use the middle bits for the set index instead of the high-order bits. There is a good reason why the middle bits are better. Figure 6.31 shows why. If the high-order bits are used as an index, then some contiguous memory blocks will map to the same cache set. For example, in the figure, the first four blocks map to the first cache set, the second four blocks map to the second set, and so on. If a program has good spatial locality and scans the elements of an array sequentially, then the cache can only hold a block-size chunk of the array at any point in time. This is an inefficient use of the cache. Contrast this with middle-bit indexing, where adjacent blocks always map to different cache sets. In this case, the cache can hold an entire C-size chunk of the array, where C is the cache size</p>
+<h1 id="Line-Replacement"><a class="header-anchor" href="#Line-Replacement"></a>Line Replacement</h1>
+<h2 id="FIFO"><a class="header-anchor" href="#FIFO"></a>FIFO</h2>
+<h2 id="LFU"><a class="header-anchor" href="#LFU"></a>LFU</h2>
+<p>a <em>least frequently used (LFU)</em> policy will replace the line that has been referenced the fewest times over some past time window.</p>
+<h2 id="LRU"><a class="header-anchor" href="#LRU"></a>LRU</h2>
+<p>A <em>least recently used (LRU)</em> policy will replace the line that was last accessed the furthest in the past.</p>
+<p>“访问”指的是访问对应内存. 仅仅将block从主存中取出来, 而没有“访问”它. 就不算“访问”.</p>
+<h1 id="写操作策略"><a class="header-anchor" href="#写操作策略"></a>写操作策略</h1>
+<h2 id="直写"><a class="header-anchor" href="#直写"></a>直写</h2>
+<p>为保证 Cache 与主存的一致性，往 Cache 写入时同时也要往主存写入 但降低写入速度，容易产生瓶颈</p>
+<h2 id="写回"><a class="header-anchor" href="#写回"></a>写回</h2>
+<p>在 Cache 中增加一位(脏位)表示是否被修改过，若“脏”，则替换整个块时前将其写回 减少写入操作，但会有不必要的麻烦(如输出时会取得主存中未修改的数据) 策略:输出时候强制修改主存</p>
+<h1 id="Questions"><a class="header-anchor" href="#Questions"></a>Questions</h1>
+<p>COA22 06</p>
+<blockquote>
+<p>Q: 为什么 Cache 可以采用直写策略，而修改页面内容时总是采用回写策略?</p>
+</blockquote>
+<p>Answer:</p>
+<ol>
+<li>因为采用直写策略时需要同时写快速存储器和慢速存储器，而写磁盘比写主存慢很多，所以在</li>
+</ol>
+<p>Cache-主存层次，Cache 可以采用直写策略，而在主存-外存(磁盘)层次，修改页面内容时总是采用回写策略。</p>
+<hr>
+<p>![image-20230225191658506](/Users/lyk/Library/Application Support/typora-user-images/image-20230225191658506.png)</p>
+<hr>
+<p>![image-20230225191713106](/Users/lyk/Library/Application Support/typora-user-images/image-20230225191713106.png)</p>
+<hr>
+<p>![image-20230225231434651](/Users/lyk/Library/Application Support/typora-user-images/image-20230225231434651.png)</p>
+<hr>
+<p>![image-20230225234729675](/Users/lyk/Library/Application Support/typora-user-images/image-20230225234729675.png)</p>
+<hr>
+<p>![image-20230225235137362](/Users/lyk/Library/Application Support/typora-user-images/image-20230225235137362.png)</p>
+<p>不要忘了Valid Bit</p>
+<hr>
+<p>![image-20230225235736774](/Users/lyk/Library/Application Support/typora-user-images/image-20230225235736774.png)</p>
+<p>注意, 每个循环都要读一次写一次.</p>
+<hr>
+<p>2015 mid</p>
+<p>![image-20230226010637925](/Users/lyk/Library/Application Support/typora-user-images/image-20230226010637925.png)</p>
+<p>时间 = Cache访问时间 + 主存访问时间 * Cache miss概率</p>
+<p>Cache miss概率 = 指令丢失概率 + 数据丢失概率</p>
+<p>数据丢失概率 = ( 30% + 10 * 2 ) * 5%</p>
 
     </div>
 

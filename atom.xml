@@ -74,6 +74,25 @@
   </entry>
   
   <entry>
+    <title>Git</title>
+    <link href="http://lyk-love.cn/2023/02/08/Git/"/>
+    <id>http://lyk-love.cn/2023/02/08/Git/</id>
+    <published>2023-02-08T07:44:07.943Z</published>
+    <updated>2023-03-10T14:43:06.743Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;全面介绍了Git的原理和使用&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Toolkit" scheme="http://lyk-love.cn/categories/Toolkit/"/>
+    
+    
+    <category term="Git" scheme="http://lyk-love.cn/tags/Git/"/>
+    
+  </entry>
+  
+  <entry>
     <title>满江红</title>
     <link href="http://lyk-love.cn/2023/02/08/%E6%BB%A1%E6%B1%9F%E7%BA%A2/"/>
     <id>http://lyk-love.cn/2023/02/08/%E6%BB%A1%E6%B1%9F%E7%BA%A2/</id>
@@ -97,7 +116,7 @@
     <link href="http://lyk-love.cn/2022/12/01/Cache-Memory/"/>
     <id>http://lyk-love.cn/2022/12/01/Cache-Memory/</id>
     <published>2022-11-30T21:22:01.000Z</published>
-    <updated>2022-12-09T14:08:40.433Z</updated>
+    <updated>2023-02-25T17:08:08.552Z</updated>
     
     
     <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;</summary>
@@ -140,7 +159,7 @@
     <link href="http://lyk-love.cn/2022/10/11/Computer-Memory-Error-Correction/"/>
     <id>http://lyk-love.cn/2022/10/11/Computer-Memory-Error-Correction/</id>
     <published>2022-10-10T20:41:28.000Z</published>
-    <updated>2022-10-10T13:21:22.632Z</updated>
+    <updated>2023-02-25T08:41:34.148Z</updated>
     
     
     <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
@@ -444,25 +463,6 @@
     
     
     <category term="Algorithm design and analysis" scheme="http://lyk-love.cn/tags/Algorithm-design-and-analysis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Love, Death and Robots</title>
-    <link href="http://lyk-love.cn/2022/09/26/Love-Death-and-Robots/"/>
-    <id>http://lyk-love.cn/2022/09/26/Love-Death-and-Robots/</id>
-    <published>2022-09-26T06:39:34.933Z</published>
-    <updated>2022-09-26T06:39:34.933Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Sorted by episode&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Art" scheme="http://lyk-love.cn/categories/Art/"/>
-    
-    
-    <category term="Movie" scheme="http://lyk-love.cn/tags/Movie/"/>
     
   </entry>
   
