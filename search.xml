@@ -34292,8 +34292,8 @@ $$</p>
 <li><strong>函数的参数传递是值传递( Call by Value )</strong>: Call by Value就是将variable parameter指向的value赋值给variable argument. 即让实际参数指向形式参数的value.</li>
 </ul>
 <p>因此:</p>
-<p><strong>对于基本类型的变量, 它们指向的value就是具体数值, 因此“按值传递”会把具体数值赋给实际参数.</strong></p>
-<p><strong>对于引用类型的变量, 它们指向的value是对一个对象的引用(或者说指针), 因此“按值传递”会把该引用赋给实际参数.</strong></p>
+<p><strong>对于基本类型的变量, 它们指向的value就是具体数值( e.g. 1, 5, 1.11f, .... ), 因此“按值传递”会把具体数值赋给形式参数.</strong></p>
+<p><strong>对于引用类型的变量, 它们指向的value是对一个对象的引用(或者说指针), 因此“按值传递”会把该引用赋给形式参数.</strong></p>
 <p><strong>无论如何, Java中的参数传递都是按值传递.</strong></p>
 <p><strong>我们常说Java中的某变量被改变了, 这个说法的详细版本是:</strong></p>
 <ul>
