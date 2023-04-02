@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2023-02-12T14:16:56.404Z</updated>
+  <updated>2023-04-02T12:36:13.007Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Parallel Desktop</title>
+    <link href="http://lyk-love.cn/2023/04/03/Parallel-Desktop/"/>
+    <id>http://lyk-love.cn/2023/04/03/Parallel-Desktop/</id>
+    <published>2023-04-02T20:36:12.000Z</published>
+    <updated>2023-04-02T12:36:13.007Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Intro&lt;/li&gt;
+&lt;li&gt;Download&lt;/li&gt;
+&lt;li&gt;Use&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="Toolkit" scheme="http://lyk-love.cn/categories/Toolkit/"/>
+    
+    
+    <category term="Linux" scheme="http://lyk-love.cn/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>GRE Hometest Experience</title>
@@ -440,29 +464,6 @@
     
     
     <category term="Database" scheme="http://lyk-love.cn/tags/Database/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>L8 logn search</title>
-    <link href="http://lyk-love.cn/2022/09/26/L8-logn-search/"/>
-    <id>http://lyk-love.cn/2022/09/26/L8-logn-search/</id>
-    <published>2022-09-26T06:39:34.933Z</published>
-    <updated>2022-09-26T06:39:34.933Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;Binary-Search-Generalized&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#Binary-Search-Generalized&quot;&gt;&lt;/a&gt;Binary Search Generalized&lt;/h1&gt;
-&lt;p&gt;Outline：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Red-Black Tree&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="Algorithm" scheme="http://lyk-love.cn/categories/Algorithm/"/>
-    
-    
-    <category term="Algorithm design and analysis" scheme="http://lyk-love.cn/tags/Algorithm-design-and-analysis/"/>
     
   </entry>
   

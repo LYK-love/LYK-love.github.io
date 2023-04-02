@@ -52258,4 +52258,49 @@ $$</p>
         <tag>Study Abroad</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Parallel Desktop</title>
+    <url>/2023/04/03/Parallel-Desktop/</url>
+    <content><![CDATA[<p>Outline:</p>
+<ul>
+<li>Intro</li>
+<li>Download</li>
+<li>Use</li>
+</ul>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<ul>
+<li><a href="https://www.parallels.com/eu/">PD</a>: 支持M1 Mac的虚拟机工具</li>
+<li><a href="https://github.com/MikeWang000000/PD-Runner-Revived/tree/pdp">PD Runner</a>: A tool for <code>Parallels Desktop</code> can start VMs <strong>even expired</strong>
+<ul>
+<li><a href="https://github.com/MikeWang000000/PD-Runner-Revived/releases/tag/18.1.1r1">Releases</a>. 会下载对应所有支持的PD版本的PD Patcher</li>
+</ul>
+</li>
+</ul>
+<h1 id="Download"><a class="header-anchor" href="#Download"></a>Download</h1>
+<ul>
+<li>
+<p>Parallels Desktop</p>
+<ul>
+<li><a href="https://www.parallels.com/products/desktop/download/">Releases</a></li>
+</ul>
+</li>
+<li>
+<p>PD Runner: 已改名为PD Patcher,</p>
+<ul>
+<li><a href="https://github.com/MikeWang000000/PD-Runner-Revived/releases/tag/18.1.1r1">Releases</a>. 会下载对应所有支持的PD版本的PD Patcher.</li>
+<li>PD的最新版本是18.2, 但PD Patcher只支持到PD 18.1.1. 因此, 需要到<a href="(https://www.parallels.com/products/desktop/download/)">PD官网</a>下载老版本的PD .</li>
+</ul>
+</li>
+</ul>
+<h1 id="Use"><a class="header-anchor" href="#Use"></a>Use</h1>
+<p>按照并打开PD Patcher后, 再启动PD, 即可绕过授权检查.</p>
+]]></content>
+      <categories>
+        <category>Toolkit</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
 </search>
