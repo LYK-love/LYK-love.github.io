@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2023-04-02T12:36:13.007Z</updated>
+  <updated>2023-04-13T07:42:47.434Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -17,11 +17,75 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Transport Buses, Tranfer Protocals and Physical Interfaces</title>
+    <link href="http://lyk-love.cn/2023/04/13/Transport-Buses-Tranfer-Protocals-and-Physical-Interfaces/"/>
+    <id>http://lyk-love.cn/2023/04/13/Transport-Buses-Tranfer-Protocals-and-Physical-Interfaces/</id>
+    <published>2023-04-13T15:42:47.000Z</published>
+    <updated>2023-04-13T07:42:47.434Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Transport Buses&lt;/li&gt;
+&lt;li&gt;Transfer Protocals&lt;/li&gt;
+&lt;li&gt;Physical Interfaces&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Common HDMI Products</title>
+    <link href="http://lyk-love.cn/2023/04/13/Common-HDMI-Products/"/>
+    <id>http://lyk-love.cn/2023/04/13/Common-HDMI-Products/</id>
+    <published>2023-04-13T14:53:20.000Z</published>
+    <updated>2023-04-13T07:01:38.061Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HDMI Types&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="Electronic Engineering" scheme="http://lyk-love.cn/categories/Electronic-Engineering/"/>
+    
+    
+    <category term="Hardware" scheme="http://lyk-love.cn/tags/Hardware/"/>
+    
+    <category term="Camera" scheme="http://lyk-love.cn/tags/Camera/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Cammera Manuel</title>
+    <link href="http://lyk-love.cn/2023/04/13/Cammera-Manuel/"/>
+    <id>http://lyk-love.cn/2023/04/13/Cammera-Manuel/</id>
+    <published>2023-04-13T14:51:42.000Z</published>
+    <updated>2023-04-13T06:55:42.907Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;For Fuji XA-7&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://fujifilm-dsc.com/en/manual/x-a7/&quot;&gt;FUJIFILM X-A7 Owner’s Manual&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Other Hobbies" scheme="http://lyk-love.cn/categories/Other-Hobbies/"/>
+    
+    
+    <category term="Camera" scheme="http://lyk-love.cn/tags/Camera/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Parallel Desktop</title>
     <link href="http://lyk-love.cn/2023/04/03/Parallel-Desktop/"/>
     <id>http://lyk-love.cn/2023/04/03/Parallel-Desktop/</id>
     <published>2023-04-02T20:36:12.000Z</published>
-    <updated>2023-04-02T12:36:13.007Z</updated>
+    <updated>2023-04-04T06:57:44.088Z</updated>
     
     
     <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
@@ -102,7 +166,7 @@
     <link href="http://lyk-love.cn/2023/02/08/Git/"/>
     <id>http://lyk-love.cn/2023/02/08/Git/</id>
     <published>2023-02-08T07:44:07.943Z</published>
-    <updated>2023-03-10T14:43:06.743Z</updated>
+    <updated>2023-04-05T08:32:25.321Z</updated>
     
     
     <summary type="html">&lt;p&gt;全面介绍了Git的原理和使用&lt;/p&gt;</summary>
@@ -386,84 +450,6 @@
     
     
     <category term="Algorithm design and analysis" scheme="http://lyk-love.cn/tags/Algorithm-design-and-analysis/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Shell Basic</title>
-    <link href="http://lyk-love.cn/2022/09/26/Shell-Basic/"/>
-    <id>http://lyk-love.cn/2022/09/26/Shell-Basic/</id>
-    <published>2022-09-26T06:39:34.939Z</published>
-    <updated>2022-09-26T06:39:34.939Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Shell Basic&lt;/li&gt;
-&lt;li&gt;Shell and Syscall&lt;/li&gt;
-&lt;li&gt;User Environment&lt;/li&gt;
-&lt;li&gt;Linux Shell&lt;/li&gt;
-&lt;li&gt;Windows Shell&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="Toolkit" scheme="http://lyk-love.cn/categories/Toolkit/"/>
-    
-    
-    <category term="shell" scheme="http://lyk-love.cn/tags/shell/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python Basic</title>
-    <link href="http://lyk-love.cn/2022/09/26/Python%20Basic/"/>
-    <id>http://lyk-love.cn/2022/09/26/Python%20Basic/</id>
-    <published>2022-09-26T06:39:34.937Z</published>
-    <updated>2022-09-26T06:39:34.937Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Basic&lt;/li&gt;
-&lt;li&gt;Basic Data Types&lt;/li&gt;
-&lt;li&gt;Function&lt;/li&gt;
-&lt;li&gt;Advanced Features&lt;/li&gt;
-&lt;li&gt;OOP&lt;/li&gt;
-&lt;li&gt;Error Handling&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="Language" scheme="http://lyk-love.cn/categories/Language/"/>
-    
-    
-    <category term="Python" scheme="http://lyk-love.cn/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MySQL Data Manipulation</title>
-    <link href="http://lyk-love.cn/2022/09/26/MySQL%20Data%20Manipulation/"/>
-    <id>http://lyk-love.cn/2022/09/26/MySQL%20Data%20Manipulation/</id>
-    <published>2022-09-26T06:39:34.934Z</published>
-    <updated>2022-09-26T06:39:34.934Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SELECT&lt;/li&gt;
-&lt;li&gt;ORDER BY&lt;/li&gt;
-&lt;li&gt;...&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Mysql语法简介&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Technology" scheme="http://lyk-love.cn/categories/Technology/"/>
-    
-    
-    <category term="Database" scheme="http://lyk-love.cn/tags/Database/"/>
     
   </entry>
   

@@ -20,22 +20,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Outline:  Device Controller Device Driver Driver Devices  Transport Buses Transfer Protocals Physical Interfaces">
+    <meta name="description" content="Outline:  Device Controller Device Driver Driver">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Computer I&#x2F;O Device">
 <meta property="og:url" content="http://lyk-love.cn/2022/08/06/Computer-I:O-Device/index.html">
 <meta property="og:site_name" content="LYK-love">
-<meta property="og:description" content="Outline:  Device Controller Device Driver Driver Devices  Transport Buses Transfer Protocals Physical Interfaces">
+<meta property="og:description" content="Outline:  Device Controller Device Driver Driver">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/PCIe%20Link%20Performance.png">
-<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/%E6%8E%A5%E5%8F%A3%2C%20%E6%80%BB%E7%BA%BF%E5%92%8C%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%85%B3%E7%B3%BB.png">
-<meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/Type%20A%3AB%3AC.png">
 <meta property="article:published_time" content="2022-08-06T13:11:23.000Z">
-<meta property="article:modified_time" content="2022-09-26T06:39:34.928Z">
+<meta property="article:modified_time" content="2023-04-13T07:39:55.078Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Hardware">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/PCIe%20Link%20Performance.png">
 
 
 <link rel="canonical" href="http://lyk-love.cn/2022/08/06/Computer-I:O-Device/">
@@ -151,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Device-Controller"><span class="nav-text">Device Controller</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Device-Register"><span class="nav-text">Device Register</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Driver"><span class="nav-text">Driver</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Devices"><span class="nav-text">Devices</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Transport-Buses"><span class="nav-text">Transport Buses</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ATA"><span class="nav-text">ATA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SATA"><span class="nav-text">SATA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PCIe"><span class="nav-text">PCIe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SCSI"><span class="nav-text">SCSI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SAS"><span class="nav-text">SAS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FC"><span class="nav-text">FC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USB"><span class="nav-text">USB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thunder-bolt"><span class="nav-text">Thunder bolt</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transfer-Protocals"><span class="nav-text">Transfer Protocals</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AHCI"><span class="nav-text">AHCI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NVMe"><span class="nav-text">NVMe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PCIe-2"><span class="nav-text">PCIe</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#USB-2"><span class="nav-text">USB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Thunder-bolt-2"><span class="nav-text">Thunder bolt</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Physical-Interfaces"><span class="nav-text">Physical Interfaces</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SATA-Interface"><span class="nav-text">SATA Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PCIe-Interface"><span class="nav-text">PCIe Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#M-2-Interface"><span class="nav-text">M.2 Interface</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Type-A-B-C"><span class="nav-text">Type A&#x2F;B&#x2F;C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HDMI"><span class="nav-text">HDMI</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Device-Controller"><span class="nav-text">Device Controller</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Device-Register"><span class="nav-text">Device Register</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Driver"><span class="nav-text">Driver</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -166,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">199</span>
+          <span class="site-state-item-count">202</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -263,7 +259,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+      <time title="Modified: 2023-04-13 07:39:55" itemprop="dateModified" datetime="2023-04-13T07:39:55Z">2023-04-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -297,13 +293,6 @@
 <li>Device Controller</li>
 <li>Device Driver</li>
 <li>Driver</li>
-<li>Devices
-<ul>
-<li>Transport Buses</li>
-<li>Transfer Protocals</li>
-<li>Physical Interfaces</li>
-</ul>
-</li>
 </ul>
 <span id="more"></span>
 <h1 id="Device-Controller"><a class="header-anchor" href="#Device-Controller"></a>Device Controller</h1>
@@ -337,10 +326,15 @@
 </li>
 </ul>
 <h1 id="Driver"><a class="header-anchor" href="#Driver"></a>Driver</h1>
-<p>在OS kernel层面, 使用device driver( 设备驱动 )来控制各种controller</p>
+<blockquote>
+<p>driver talks to a controller, giving it commands and accepting responses</p>
+</blockquote>
+<p>各种设备都暴露<strong>物理接口</strong>, 通过<strong>总线</strong>连接到计算机, 最终到达计算机的Controller被统一传输. OS在kernel层面通过driver来控制controller.</p>
+<p>虽然通过controller, 可以抽象数据的读取. 但是由于总线的传输需要遵守<strong>数据传输协议</strong>, <u>不同的数据传输协议就对应着不同的driver</u>. OS需要调用相应的driver来解析从controller读出的数据.</p>
+<p><strong>因此,  OS不需要关心物理硬件(总线, 物理接口), 只需要关心driver.</strong></p>
 <ul>
 <li>
-<p>driver talks to a controller, giving it commands and accepting responses</p>
+<p>总线, 物理接口, 数据传输协议的内容参见</p>
 </li>
 <li>
 <p>每个controller厂商需要为每个操作系统提供一个driver</p>
@@ -360,187 +354,7 @@
 </ul>
 </li>
 </ul>
-<h1 id="Devices"><a class="header-anchor" href="#Devices"></a>Devices</h1>
-<p>计算机物理设备及其接口, 都被对应的device controller处理, OS通过driver来处理controller, 不需要关心真正的物理硬件</p>
-<p>既然各种设备都通过物理接口, 由总线连接到计算机. 我们只需要关心<strong>总线</strong>以及<strong>数据传输协议</strong>就行了. 并且我还简要介绍了连接总线的<strong>物理接口规范</strong>.  注意到, 传输协议在软件层对应着不同的driver</p>
-<h2 id="Transport-Buses"><a class="header-anchor" href="#Transport-Buses"></a>Transport Buses</h2>
-<p>ref: <a target="_blank" rel="noopener" href="https://www.cnblogs.com/liuzhengliang/p/5548451.html">讲总线的文章</a></p>
-<p>存储领域的总线ATA/SATA/PCIe/SCSI/SAS/FC， 对应<strong>同名的物理接口</strong>, 比如SATA接口, PCIe接口, SCSI接口....</p>
-<p>此外，还有我们很熟悉的USB和雷电总线</p>
-<p>注意, 有些人用&quot;通道&quot;来指总线</p>
-<h3 id="ATA"><a class="header-anchor" href="#ATA"></a>ATA</h3>
-<ul>
-<li>AT A（AT Attachment）：总的来说，ATA是一个总线技术，它并行传输数据, 总线位宽为 16bits. 因此ATA也称为<strong>PATA</strong>(Parallel ATA, 并行ATA )
-<ul>
-<li>In case you are curious what AT stands for, this was IBM’s second generation &quot;Personal Computer Advanced Technology&quot; built around the then-extremely-potent 6-MHz 80286 processor that the company introduced in 1984.</li>
-</ul>
-</li>
-<li>ATA对应的物理接口就是ATA( or PATA )， 现在都没人用了</li>
-</ul>
-<h3 id="SATA"><a class="header-anchor" href="#SATA"></a>SATA</h3>
-<ul>
-<li><strong>SATA</strong> ( <strong>Serial ATA</strong>, 串行ATA )对PATA进行了改进， 故名思义就是使用了串行, 规避了并行总线在高速下的串扰和同步问题</li>
-<li>在2000 年发明</li>
-<li>SATA 只有 4 根线，分别为：发送数据线，接收数据线，电源线，地线。</li>
-<li>SATA 有两个标准，分别为 SATA 和 SATA II.  SATA 的有效带宽为 150MB/s ，数据速率为 1.5Gbps( 传输的数据经过了8B/10B 变换， 150MB/s*10=1.5Gbps) ， SATA II 的有效带宽为 300MB/s ，数据速率为 3Gbps</li>
-<li>SATA配套的传输协议是AHCI, SATA和AHCI是HDD时代的产物, ATA总线的传输速率上限也就是几百MB, 所以SATA + AHCI在HDD时代是够用的, 虽然目前主流SSD依然支持它们, 但其实已经不够用了</li>
-</ul>
-<h3 id="PCIe"><a class="header-anchor" href="#PCIe"></a>PCIe</h3>
-<ul>
-<li><strong>PCIe( Peripheral Component Interconnect Express )</strong>: 是一个比SATA快好几倍的总线, 2004年发明
-<ul>
-<li>PCIe是PCI的后继, 而PCI总线取代了更古老的ISA (Industry Standard Architecture)总线
-<ul>
-<li>2004年PCIe刚发明时，流行<strong>shared bus architecture</strong>，许多设备用一条线传输数据，需要一个arbiter来调度</li>
-</ul>
-</li>
-<li><strong>PCIe可以连接各种设备</strong>, 包括<strong>显卡</strong>、SSD（需要M.2接口或者PCIe接口）、无线网卡、有线网卡、声卡、视频采集卡、PCIe转接M.2接口、PCIe转接USB接口、PCIe转接Tpye-C接口</li>
-<li>PCI使用<strong>parallel bus architecture</strong>，即将每个数据字分多条线传输。 比如32-bit数据需要32根并行的线</li>
-<li>PCIe使用<strong>serial bus architecture</strong>，把数据包装成一个message， 点对点传输（一次连接称为一个<strong>lane</strong>）。</li>
-<li>PICe也支持并行传输，按lane( 通道 )的个数可分为 x1 x2 x4 x8 x16 x32（最大可支持32个通道）
-<ul>
-<li>如果PCI e x1接口的网卡插x16的插槽， 只占用一条lane</li>
-</ul>
-</li>
-<li>微星的B450主板支持的就是PCI-E 3.0, B550支持PCI-E 4.0</li>
-<li>现在的PCIe 5.0 已经支持132GB/s 了</li>
-<li>此外，PCIe还对应着同名的传输协议( PCIe )</li>
-</ul>
-</li>
-</ul>
-<p>PCIe性能：</p>
-<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/PCIe%20Link%20Performance.png" alt="PCIe Link Performance"></p>
-<p>PCIe 与 PCI 的区别:</p>
-<table>
-<thead>
-<tr>
-<th>category</th>
-<th>speed</th>
-<th></th>
-<th>transport model</th>
-<th></th>
-<th>hardware</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PCI</td>
-<td>PCI的工作频率分为33MHz和66MHz，最大吞吐率 266MB/s</td>
-<td></td>
-<td>PCI 是并行数据传输，一次传输4字节/8字节，半双工</td>
-<td></td>
-<td>传输PCI信号的是普通电平</td>
-</tr>
-<tr>
-<td>PCIe</td>
-<td>PCIe 1.0 x1 的吞吐率就达到了250MB/s</td>
-<td></td>
-<td>PCIe是串行数据传输，全双工. 而且是<strong>点对点传输</strong>(当然也可以并行)</td>
-<td></td>
-<td>传输PCIe信号的是差分电平</td>
-</tr>
-</tbody>
-</table>
-<h3 id="SCSI"><a class="header-anchor" href="#SCSI"></a>SCSI</h3>
-<ul>
-<li>SCSI( Small Computer System Interfae, 小型计算机系统专用接口 ) : 一种连接主机和外围设备的接口，支持包括硬盘、光驱及扫描仪在内的多种设备。SCSI 总线是一种<strong>并行</strong>总线，其优点是适应面广，性能高；缺点是价格昂贵，安装复杂</li>
-</ul>
-<h3 id="SAS"><a class="header-anchor" href="#SAS"></a>SAS</h3>
-<ul>
-<li>
-<p>SAS( Serial Attached SCSI, 串行连接SCSI) : 串行化的SCSI. 和SATA总线类似, 都采用串行技术以获得更高的传输速度. 一般用于企业级硬盘</p>
-</li>
-<li>
-<p>SAS 的接口技术可以向下兼容SATA 。具体来说，二者的兼容性主要体现在物理层和协议层的兼容:</p>
-<ul>
-<li>在物理层，<strong>SAS 接口和SATA 接口完全兼容</strong>，SATA 硬盘可以直接使用在SAS 的环境中，</li>
-<li>从接口标准上而言，SATA 是SAS 的一个子标准，因此SAS 控制器可以直接操控SATA 硬盘，但是SAS 却不能直接使用在SATA 的环境中，因为SATA 控制器并不能对SAS 硬盘进行控制</li>
-</ul>
-</li>
-</ul>
-<h3 id="FC"><a class="header-anchor" href="#FC"></a>FC</h3>
-<ul>
-<li>FC: 用于光纤</li>
-</ul>
-<h3 id="USB"><a class="header-anchor" href="#USB"></a>USB</h3>
-<ul>
-<li><strong>USB</strong> (Universal Serial Bus, 通用串行总线) : 用于连接计算机的外部设备, 它们的I/O通常很慢</li>
-<li>此外，USB还对应着同名的传输协议( USB )</li>
-</ul>
-<h3 id="Thunder-bolt"><a class="header-anchor" href="#Thunder-bolt"></a>Thunder bolt</h3>
-<ul>
-<li>大名鼎鼎的雷电总线，由Intel研发，用于取代电脑上奇奇怪怪的各种总线( SCSI, SATA, USB, PCIe ... )，如果成功的话，以后电脑里只有一种总线了
-<ul>
-<li>拿<a target="_blank" rel="noopener" href="https://support.apple.com/kb/SP854?viewlocale=zh_CN&amp;locale=zh_CN">Macbook 2021</a>来说, 它拥有3个Type-C雷电4接口, 这里的</li>
-</ul>
-</li>
-<li>和USB一样，对应着同名的传输协议( Thunder bolt ). 我们说雷电的时候，既指总线也指协议，因为雷电总线好像只支持雷电协议</li>
-</ul>
-<h2 id="Transfer-Protocals"><a class="header-anchor" href="#Transfer-Protocals"></a>Transfer Protocals</h2>
-<p>有了总线和对应的物理接口，还需要抽象的数据传输协议规范（ 就和计算机网络的协议一样 ）, 在软件层面，针对协议来编写驱动，来实现数据I/O</p>
-<h3 id="AHCI"><a class="header-anchor" href="#AHCI"></a>AHCI</h3>
-<ul>
-<li>AHCI( Serial ATA Advanced Host Controller Interface, 串行ATA高级主控接口/高级主机控制器接 ): 适配SATA和PCIe( 主要是适配SATA )， 是HDD时代的通信标准，速度比较慢</li>
-</ul>
-<h3 id="NVMe"><a class="header-anchor" href="#NVMe"></a>NVMe</h3>
-<ul>
-<li>NVMe( Non-Volatile Memory express, 非易失性内存主机控制器接口规范 )， 适配SATA和PCIe接口. 简而言之NVMe比AHCI快好几倍，是SSD时代的传输协议
-<ul>
-<li>NVMe建立在M.2接口上, 且使用PCIe总线</li>
-<li>NVMe1.X只支持SSD,  从2.X开始也支持HDD了. 不过话说回来，现在谁还用HDD呢...</li>
-</ul>
-</li>
-</ul>
-<h3 id="PCIe-2"><a class="header-anchor" href="#PCIe-2"></a>PCIe</h3>
-<ul>
-<li>这个协议没有自己的名字，因为用于PCIe总线，就用PCIe来命名了...</li>
-</ul>
-<h3 id="USB-2"><a class="header-anchor" href="#USB-2"></a>USB</h3>
-<ul>
-<li>和PCIe协议一样, 没有自己的名字...</li>
-<li>USB协议目前发展到USB4</li>
-</ul>
-<h3 id="Thunder-bolt-2"><a class="header-anchor" href="#Thunder-bolt-2"></a>Thunder bolt</h3>
-<ul>
-<li>和USB协议一样, 没有自己的名字... 一般称为雷电协议, 目前发展到雷电4( <strong>Thunderbolt™4</strong> )</li>
-<li>雷电4相比USB4, 带宽更高, 兼容的传输协议也更多
-<ul>
-<li>雷电4适配了PCIe协议和Displayport协议</li>
-</ul>
-</li>
-</ul>
-<h2 id="Physical-Interfaces"><a class="header-anchor" href="#Physical-Interfaces"></a>Physical Interfaces</h2>
-<p>总线需要连接到主板的物理接口上, 这里的“接口”指的是<u>物理尺寸和形状</u>, 内部的电路逻辑不做讨论</p>
-<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/%E6%8E%A5%E5%8F%A3%2C%20%E6%80%BB%E7%BA%BF%E5%92%8C%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt="接口, 总线和协议的关系"></p>
-<p>接口, 总线和协议的关系</p>
-<h3 id="SATA-Interface"><a class="header-anchor" href="#SATA-Interface"></a>SATA Interface</h3>
-<ul>
-<li>SATA接口只能接SATA总线. 这个接口比较悲催，没有自己的名字, 我们用它适配的总线( SATA )称呼它</li>
-<li>SATA2和SATA3总线对应不同的SATA2接口和SATA3接口</li>
-</ul>
-<h3 id="PCIe-Interface"><a class="header-anchor" href="#PCIe-Interface"></a>PCIe Interface</h3>
-<ul>
-<li>PCIe接口只能接PCIe总线. 这个接口和SATA接口一样, 也没有自己的名字....</li>
-</ul>
-<h3 id="M-2-Interface"><a class="header-anchor" href="#M-2-Interface"></a>M.2 Interface</h3>
-<ul>
-<li>M.2( 以前叫 NGFF( Next Generation Form Factor )，现在统一叫 M.2 了) 接口可以接SATA和 PCIe总线</li>
-<li>M.2接口有两种类型：Socket 2和Socket 3
-<ul>
-<li>Socket2只能接SATA总线, 可以等价于SATA接口</li>
-<li>Socket3兼容Socket2, 并且能接PCIe总线</li>
-</ul>
-</li>
-</ul>
-<h3 id="Type-A-B-C"><a class="header-anchor" href="#Type-A-B-C"></a>Type A/B/C</h3>
-<p>常见的Type A/B/C也是一种物理接口</p>
-<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/Type%20A%3AB%3AC.png" alt="Type A/B/C"></p>
-<ul>
-<li>USB总线和雷电3总线一般都用Type C接口</li>
-<li>不要把雷电3和Type C混为一谈，前者是总线/传输协议, 后者是物理接口</li>
-</ul>
-<h3 id="HDMI"><a class="header-anchor" href="#HDMI"></a>HDMI</h3>
-<p>懂得都懂</p>
+<p>既然各种设备都通过物理接口由</p>
 
     </div>
 

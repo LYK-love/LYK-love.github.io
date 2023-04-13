@@ -28,7 +28,7 @@
 <meta property="og:description" content="Outline:  Terminal Emulators Zsh Ohmyzsh Zsh Theme General Terminal Emulater Config">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-13T14:58:22.000Z">
-<meta property="article:modified_time" content="2023-03-17T03:40:34.643Z">
+<meta property="article:modified_time" content="2023-04-04T08:57:23.749Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="Terminal">
@@ -163,18 +163,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">199</span>
+          <span class="site-state-item-count">202</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -260,7 +260,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-17 03:40:34" itemprop="dateModified" datetime="2023-03-17T03:40:34Z">2023-03-17</time>
+      <time title="Modified: 2023-04-04 08:57:23" itemprop="dateModified" datetime="2023-04-04T08:57:23Z">2023-04-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -366,12 +366,14 @@
 <h2 id="Shell-Switch"><a class="header-anchor" href="#Shell-Switch"></a>Shell Switch</h2>
 <p>检查当前可用的shell:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /etc/shells</span><br></pre></td></tr></table></figure>
-<p>or:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chsh -l</span><br></pre></td></tr></table></figure>
 <p>查看当前使用的shell:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo $SHELL</span><br></pre></td></tr></table></figure>
 <p>set one shell  as default for your user:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chsh -s full-path-to-shell</span><br></pre></td></tr></table></figure>
+<p>在Parallels的Ubuntu虚拟机中, <code>chsh -s /bin/zsh</code>无法切换shell到zsh, 原因未知. 只能手动设置:</p>
+<p>edit <code>~/.bashrc</code>, 在最后一行加上:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bash -c zsh</span><br></pre></td></tr></table></figure>
+<p>重启shell即可.</p>
 <h1 id="Ohmyzsh"><a class="header-anchor" href="#Ohmyzsh"></a>Ohmyzsh</h1>
 <ol>
 <li>
@@ -418,7 +420,8 @@
 </li>
 <li>
 <p>安装<code>syntax-highlighting</code>：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syn tax-highlighting</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md">zsh-syntax-highlighting</a></p>
 </li>
 </ul>
 <h3 id="fasd-autojump"><a class="header-anchor" href="#fasd-autojump"></a>fasd &amp; autojump</h3>

@@ -9006,13 +9006,6 @@ XP, called Vista</li>
 <li>Device Controller</li>
 <li>Device Driver</li>
 <li>Driver</li>
-<li>Devices
-<ul>
-<li>Transport Buses</li>
-<li>Transfer Protocals</li>
-<li>Physical Interfaces</li>
-</ul>
-</li>
 </ul>
 <span id="more"></span>
 <h1 id="Device-Controller"><a class="header-anchor" href="#Device-Controller"></a>Device Controller</h1>
@@ -9046,10 +9039,15 @@ XP, called Vista</li>
 </li>
 </ul>
 <h1 id="Driver"><a class="header-anchor" href="#Driver"></a>Driver</h1>
-<p>在OS kernel层面, 使用device driver( 设备驱动 )来控制各种controller</p>
+<blockquote>
+<p>driver talks to a controller, giving it commands and accepting responses</p>
+</blockquote>
+<p>各种设备都暴露<strong>物理接口</strong>, 通过<strong>总线</strong>连接到计算机, 最终到达计算机的Controller被统一传输. OS在kernel层面通过driver来控制controller.</p>
+<p>虽然通过controller, 可以抽象数据的读取. 但是由于总线的传输需要遵守<strong>数据传输协议</strong>, <u>不同的数据传输协议就对应着不同的driver</u>. OS需要调用相应的driver来解析从controller读出的数据.</p>
+<p><strong>因此,  OS不需要关心物理硬件(总线, 物理接口), 只需要关心driver.</strong></p>
 <ul>
 <li>
-<p>driver talks to a controller, giving it commands and accepting responses</p>
+<p>总线, 物理接口, 数据传输协议的内容参见</p>
 </li>
 <li>
 <p>每个controller厂商需要为每个操作系统提供一个driver</p>
@@ -9069,187 +9067,7 @@ XP, called Vista</li>
 </ul>
 </li>
 </ul>
-<h1 id="Devices"><a class="header-anchor" href="#Devices"></a>Devices</h1>
-<p>计算机物理设备及其接口, 都被对应的device controller处理, OS通过driver来处理controller, 不需要关心真正的物理硬件</p>
-<p>既然各种设备都通过物理接口, 由总线连接到计算机. 我们只需要关心<strong>总线</strong>以及<strong>数据传输协议</strong>就行了. 并且我还简要介绍了连接总线的<strong>物理接口规范</strong>.  注意到, 传输协议在软件层对应着不同的driver</p>
-<h2 id="Transport-Buses"><a class="header-anchor" href="#Transport-Buses"></a>Transport Buses</h2>
-<p>ref: <a href="https://www.cnblogs.com/liuzhengliang/p/5548451.html">讲总线的文章</a></p>
-<p>存储领域的总线ATA/SATA/PCIe/SCSI/SAS/FC， 对应<strong>同名的物理接口</strong>, 比如SATA接口, PCIe接口, SCSI接口....</p>
-<p>此外，还有我们很熟悉的USB和雷电总线</p>
-<p>注意, 有些人用&quot;通道&quot;来指总线</p>
-<h3 id="ATA"><a class="header-anchor" href="#ATA"></a>ATA</h3>
-<ul>
-<li>AT A（AT Attachment）：总的来说，ATA是一个总线技术，它并行传输数据, 总线位宽为 16bits. 因此ATA也称为<strong>PATA</strong>(Parallel ATA, 并行ATA )
-<ul>
-<li>In case you are curious what AT stands for, this was IBM’s second generation &quot;Personal Computer Advanced Technology&quot; built around the then-extremely-potent 6-MHz 80286 processor that the company introduced in 1984.</li>
-</ul>
-</li>
-<li>ATA对应的物理接口就是ATA( or PATA )， 现在都没人用了</li>
-</ul>
-<h3 id="SATA"><a class="header-anchor" href="#SATA"></a>SATA</h3>
-<ul>
-<li><strong>SATA</strong> ( <strong>Serial ATA</strong>, 串行ATA )对PATA进行了改进， 故名思义就是使用了串行, 规避了并行总线在高速下的串扰和同步问题</li>
-<li>在2000 年发明</li>
-<li>SATA 只有 4 根线，分别为：发送数据线，接收数据线，电源线，地线。</li>
-<li>SATA 有两个标准，分别为 SATA 和 SATA II.  SATA 的有效带宽为 150MB/s ，数据速率为 1.5Gbps( 传输的数据经过了8B/10B 变换， 150MB/s*10=1.5Gbps) ， SATA II 的有效带宽为 300MB/s ，数据速率为 3Gbps</li>
-<li>SATA配套的传输协议是AHCI, SATA和AHCI是HDD时代的产物, ATA总线的传输速率上限也就是几百MB, 所以SATA + AHCI在HDD时代是够用的, 虽然目前主流SSD依然支持它们, 但其实已经不够用了</li>
-</ul>
-<h3 id="PCIe"><a class="header-anchor" href="#PCIe"></a>PCIe</h3>
-<ul>
-<li><strong>PCIe( Peripheral Component Interconnect Express )</strong>: 是一个比SATA快好几倍的总线, 2004年发明
-<ul>
-<li>PCIe是PCI的后继, 而PCI总线取代了更古老的ISA (Industry Standard Architecture)总线
-<ul>
-<li>2004年PCIe刚发明时，流行<strong>shared bus architecture</strong>，许多设备用一条线传输数据，需要一个arbiter来调度</li>
-</ul>
-</li>
-<li><strong>PCIe可以连接各种设备</strong>, 包括<strong>显卡</strong>、SSD（需要M.2接口或者PCIe接口）、无线网卡、有线网卡、声卡、视频采集卡、PCIe转接M.2接口、PCIe转接USB接口、PCIe转接Tpye-C接口</li>
-<li>PCI使用<strong>parallel bus architecture</strong>，即将每个数据字分多条线传输。 比如32-bit数据需要32根并行的线</li>
-<li>PCIe使用<strong>serial bus architecture</strong>，把数据包装成一个message， 点对点传输（一次连接称为一个<strong>lane</strong>）。</li>
-<li>PICe也支持并行传输，按lane( 通道 )的个数可分为 x1 x2 x4 x8 x16 x32（最大可支持32个通道）
-<ul>
-<li>如果PCI e x1接口的网卡插x16的插槽， 只占用一条lane</li>
-</ul>
-</li>
-<li>微星的B450主板支持的就是PCI-E 3.0, B550支持PCI-E 4.0</li>
-<li>现在的PCIe 5.0 已经支持132GB/s 了</li>
-<li>此外，PCIe还对应着同名的传输协议( PCIe )</li>
-</ul>
-</li>
-</ul>
-<p>PCIe性能：</p>
-<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/PCIe%20Link%20Performance.png" alt="PCIe Link Performance"></p>
-<p>PCIe 与 PCI 的区别:</p>
-<table>
-<thead>
-<tr>
-<th>category</th>
-<th>speed</th>
-<th></th>
-<th>transport model</th>
-<th></th>
-<th>hardware</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>PCI</td>
-<td>PCI的工作频率分为33MHz和66MHz，最大吞吐率 266MB/s</td>
-<td></td>
-<td>PCI 是并行数据传输，一次传输4字节/8字节，半双工</td>
-<td></td>
-<td>传输PCI信号的是普通电平</td>
-</tr>
-<tr>
-<td>PCIe</td>
-<td>PCIe 1.0 x1 的吞吐率就达到了250MB/s</td>
-<td></td>
-<td>PCIe是串行数据传输，全双工. 而且是<strong>点对点传输</strong>(当然也可以并行)</td>
-<td></td>
-<td>传输PCIe信号的是差分电平</td>
-</tr>
-</tbody>
-</table>
-<h3 id="SCSI"><a class="header-anchor" href="#SCSI"></a>SCSI</h3>
-<ul>
-<li>SCSI( Small Computer System Interfae, 小型计算机系统专用接口 ) : 一种连接主机和外围设备的接口，支持包括硬盘、光驱及扫描仪在内的多种设备。SCSI 总线是一种<strong>并行</strong>总线，其优点是适应面广，性能高；缺点是价格昂贵，安装复杂</li>
-</ul>
-<h3 id="SAS"><a class="header-anchor" href="#SAS"></a>SAS</h3>
-<ul>
-<li>
-<p>SAS( Serial Attached SCSI, 串行连接SCSI) : 串行化的SCSI. 和SATA总线类似, 都采用串行技术以获得更高的传输速度. 一般用于企业级硬盘</p>
-</li>
-<li>
-<p>SAS 的接口技术可以向下兼容SATA 。具体来说，二者的兼容性主要体现在物理层和协议层的兼容:</p>
-<ul>
-<li>在物理层，<strong>SAS 接口和SATA 接口完全兼容</strong>，SATA 硬盘可以直接使用在SAS 的环境中，</li>
-<li>从接口标准上而言，SATA 是SAS 的一个子标准，因此SAS 控制器可以直接操控SATA 硬盘，但是SAS 却不能直接使用在SATA 的环境中，因为SATA 控制器并不能对SAS 硬盘进行控制</li>
-</ul>
-</li>
-</ul>
-<h3 id="FC"><a class="header-anchor" href="#FC"></a>FC</h3>
-<ul>
-<li>FC: 用于光纤</li>
-</ul>
-<h3 id="USB"><a class="header-anchor" href="#USB"></a>USB</h3>
-<ul>
-<li><strong>USB</strong> (Universal Serial Bus, 通用串行总线) : 用于连接计算机的外部设备, 它们的I/O通常很慢</li>
-<li>此外，USB还对应着同名的传输协议( USB )</li>
-</ul>
-<h3 id="Thunder-bolt"><a class="header-anchor" href="#Thunder-bolt"></a>Thunder bolt</h3>
-<ul>
-<li>大名鼎鼎的雷电总线，由Intel研发，用于取代电脑上奇奇怪怪的各种总线( SCSI, SATA, USB, PCIe ... )，如果成功的话，以后电脑里只有一种总线了
-<ul>
-<li>拿<a href="https://support.apple.com/kb/SP854?viewlocale=zh_CN&amp;locale=zh_CN">Macbook 2021</a>来说, 它拥有3个Type-C雷电4接口, 这里的</li>
-</ul>
-</li>
-<li>和USB一样，对应着同名的传输协议( Thunder bolt ). 我们说雷电的时候，既指总线也指协议，因为雷电总线好像只支持雷电协议</li>
-</ul>
-<h2 id="Transfer-Protocals"><a class="header-anchor" href="#Transfer-Protocals"></a>Transfer Protocals</h2>
-<p>有了总线和对应的物理接口，还需要抽象的数据传输协议规范（ 就和计算机网络的协议一样 ）, 在软件层面，针对协议来编写驱动，来实现数据I/O</p>
-<h3 id="AHCI"><a class="header-anchor" href="#AHCI"></a>AHCI</h3>
-<ul>
-<li>AHCI( Serial ATA Advanced Host Controller Interface, 串行ATA高级主控接口/高级主机控制器接 ): 适配SATA和PCIe( 主要是适配SATA )， 是HDD时代的通信标准，速度比较慢</li>
-</ul>
-<h3 id="NVMe"><a class="header-anchor" href="#NVMe"></a>NVMe</h3>
-<ul>
-<li>NVMe( Non-Volatile Memory express, 非易失性内存主机控制器接口规范 )， 适配SATA和PCIe接口. 简而言之NVMe比AHCI快好几倍，是SSD时代的传输协议
-<ul>
-<li>NVMe建立在M.2接口上, 且使用PCIe总线</li>
-<li>NVMe1.X只支持SSD,  从2.X开始也支持HDD了. 不过话说回来，现在谁还用HDD呢...</li>
-</ul>
-</li>
-</ul>
-<h3 id="PCIe-2"><a class="header-anchor" href="#PCIe-2"></a>PCIe</h3>
-<ul>
-<li>这个协议没有自己的名字，因为用于PCIe总线，就用PCIe来命名了...</li>
-</ul>
-<h3 id="USB-2"><a class="header-anchor" href="#USB-2"></a>USB</h3>
-<ul>
-<li>和PCIe协议一样, 没有自己的名字...</li>
-<li>USB协议目前发展到USB4</li>
-</ul>
-<h3 id="Thunder-bolt-2"><a class="header-anchor" href="#Thunder-bolt-2"></a>Thunder bolt</h3>
-<ul>
-<li>和USB协议一样, 没有自己的名字... 一般称为雷电协议, 目前发展到雷电4( <strong>Thunderbolt™4</strong> )</li>
-<li>雷电4相比USB4, 带宽更高, 兼容的传输协议也更多
-<ul>
-<li>雷电4适配了PCIe协议和Displayport协议</li>
-</ul>
-</li>
-</ul>
-<h2 id="Physical-Interfaces"><a class="header-anchor" href="#Physical-Interfaces"></a>Physical Interfaces</h2>
-<p>总线需要连接到主板的物理接口上, 这里的“接口”指的是<u>物理尺寸和形状</u>, 内部的电路逻辑不做讨论</p>
-<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/%E6%8E%A5%E5%8F%A3%2C%20%E6%80%BB%E7%BA%BF%E5%92%8C%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt="接口, 总线和协议的关系"></p>
-<p>接口, 总线和协议的关系</p>
-<h3 id="SATA-Interface"><a class="header-anchor" href="#SATA-Interface"></a>SATA Interface</h3>
-<ul>
-<li>SATA接口只能接SATA总线. 这个接口比较悲催，没有自己的名字, 我们用它适配的总线( SATA )称呼它</li>
-<li>SATA2和SATA3总线对应不同的SATA2接口和SATA3接口</li>
-</ul>
-<h3 id="PCIe-Interface"><a class="header-anchor" href="#PCIe-Interface"></a>PCIe Interface</h3>
-<ul>
-<li>PCIe接口只能接PCIe总线. 这个接口和SATA接口一样, 也没有自己的名字....</li>
-</ul>
-<h3 id="M-2-Interface"><a class="header-anchor" href="#M-2-Interface"></a>M.2 Interface</h3>
-<ul>
-<li>M.2( 以前叫 NGFF( Next Generation Form Factor )，现在统一叫 M.2 了) 接口可以接SATA和 PCIe总线</li>
-<li>M.2接口有两种类型：Socket 2和Socket 3
-<ul>
-<li>Socket2只能接SATA总线, 可以等价于SATA接口</li>
-<li>Socket3兼容Socket2, 并且能接PCIe总线</li>
-</ul>
-</li>
-</ul>
-<h3 id="Type-A-B-C"><a class="header-anchor" href="#Type-A-B-C"></a>Type A/B/C</h3>
-<p>常见的Type A/B/C也是一种物理接口</p>
-<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/Type%20A%3AB%3AC.png" alt="Type A/B/C"></p>
-<ul>
-<li>USB总线和雷电3总线一般都用Type C接口</li>
-<li>不要把雷电3和Type C混为一谈，前者是总线/传输协议, 后者是物理接口</li>
-</ul>
-<h3 id="HDMI"><a class="header-anchor" href="#HDMI"></a>HDMI</h3>
-<p>懂得都懂</p>
+<p>既然各种设备都通过物理接口由</p>
 ]]></content>
       <categories>
         <category>Computer Science</category>
@@ -16438,60 +16256,7 @@ also lets you change behavior at runtime.</li>
 <p>git diff 就是我们本地正在开发的但未提交到暂存区文件和之前已经提交到暂存区里的文件的对比；</p>
 <p>git diff head 就是已经提交到版本库环境中的文件和未提交到版本库环境中文件的所有修改对比；</p>
 <p>git diff --cached 最后一次提交到版本库环境中文件和暂存区中文件的修改对比；</p>
-<h1 id="gitignore"><a class="header-anchor" href="#gitignore"></a>.gitignore</h1>
-<p><a href="https://www.pluralsight.com/guides/how-to-use-gitignore-file">Tutor</a></p>
-<p><a href="https://github.com/github/gitignore">现成的配置</a></p>
-<p>当远程仓库或者缓存区已经存在被忽略文件的情况下，这个时候相应的忽略规则是不起作用的. 如果先commit了, 再写<code>.gitignore</code>文件, 则后者不起作用, 需要:</p>
-<ol>
-<li>
-<p>已经add了:</p>
-<ul>
-<li>
-<p>文件较少时：</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">rm</span> --cached &lt;filename&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>文件较多时：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git rm -r --cached .</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li>
-<p>已经commit了:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git reset &lt;commit_id&gt; //这个命令, 把 commit 历史撤销，对应缓存区内容也撤销，工作区内容不变</span><br><span class="line">   git add .</span><br><span class="line">   git commit -m &#x27;XXXX&#x27;</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>已经push了: 只能手动把远程的也删了</p>
-</li>
-</ol>
-<h2 id="验证"><a class="header-anchor" href="#验证"></a>验证</h2>
-<p>验证<code>.gitignore</code>是否生效,可以尝试:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git add &lt;filename&gt;</span><br></pre></td></tr></table></figure>
-<p>添加被忽略的文件，查看是否能添加成功, 如果<code>.gitignore</code>已经生效, 则不会添加成功</p>
-<p>还可以使用:</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git check-ignore -v &lt;filename&gt;</span><br></pre></td></tr></table></figure>
-<p>定位到对应规则 在 .gitignore 文件中的具体位置</p>
-<h2 id="Example"><a class="header-anchor" href="#Example"></a>Example</h2>
-<p>What Kind of Files Should You Ignore?</p>
-<ul>
-<li>Log files</li>
-<li>Files with API keys/secrets, credentials, or sensitive information</li>
-<li>Useless system files like <code>.DS_Store</code> on macOS</li>
-<li>Generated files like <code>dist</code> folders</li>
-<li>Dependencies which can be downloaded from a package manager</li>
-<li>And there might be other reasons (maybe you make little <code>todo.md</code> files)</li>
-</ul>
-<p>You can get an idea for what sort of files to ignore on <a href="https://www.gitignore.io/">gitignore.io</a>, by selecting your operating system, text editor or IDE, languages, and frameworks.</p>
-<h2 id="Grammar"><a class="header-anchor" href="#Grammar"></a>Grammar</h2>
-<ul>
-<li>空行或是以<code>#</code>开头的行即注释行将被忽略。</li>
-<li>可以在前面添加正斜杠<code>/</code>来避免递归,下面的例子中可以很明白的看出来与下一条的区别。</li>
-<li>可以在后面添加正斜杠<code>/</code>来忽略文件夹，例如<code>build/</code>即忽略build文件夹。</li>
-<li>可以使用<code>!</code>来否定忽略，即比如在前面用了<code>*.apk</code>，然后使用<code>!a.apk</code>，则这个a.apk不会被忽略。</li>
-<li><code>*</code>用来匹配零个或多个字符，如<code>*.[oa]</code>忽略所有以&quot;.o&quot;或&quot;.a&quot;结尾，<code>*~</code>忽略所有以<code>~</code>结尾的文件（这种文件通常被许多编辑器标记为临时文件）；<code>[]</code>用来匹配括号内的任一字符，如<code>[abc]</code>，也可以在括号内加连接符，如<code>[0-9]</code>匹配0至9的数；<code>?</code>用来匹配单个字符。<br>
-看了这么多，还是应该来个栗子：</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 忽略 .a 文件</span></span><br><span class="line">*.a</span><br><span class="line"><span class="comment"># 但否定忽略 lib.a, 尽管已经在前面忽略了 .a 文件</span></span><br><span class="line">!lib.a</span><br><span class="line"><span class="comment"># 仅在当前目录下忽略 TODO 文件， 但不包括子目录下的 subdir/TODO</span></span><br><span class="line">/TODO</span><br><span class="line"><span class="comment"># 忽略 build/ 文件夹下的所有文件</span></span><br><span class="line">build/</span><br><span class="line"><span class="comment"># 忽略 doc/notes.txt, 不包括 doc/server/arch.txt</span></span><br><span class="line">doc/*.txt</span><br><span class="line"><span class="comment"># 忽略所有的 .pdf 文件 在 doc/ directory 下的</span></span><br><span class="line">doc/**/*.pdf</span><br></pre></td></tr></table></figure>]]></content>
+]]></content>
       <categories>
         <category>Toolkit</category>
       </categories>
@@ -28209,14 +27974,21 @@ may not have kernel mode) or interpreted systems (such as Java-based systems tha
 <p>CPU指令集可以分为CISC和RISC两类.</p>
 <p>x86和arm的那些历史就不讲了. 这里理清一些概念.</p>
 <ul>
-<li>x86和x86_64: x86是32位的, x86_64是x86的64位版本</li>
-<li>arm, arm64和aarh64: 顾名思义, arm是32位的, arm64是arm的64位版本. 并且arm64和aarh64合并了, 所以arm64和aarh64是一个东西.
+<li>
+<p>arm和x86: 简单来说, arm属于RISC, 功耗较低. x86属于CISC, 性能较高.</p>
+</li>
+<li>
+<p>x86, x86_64, amd64: x86是32位的. x86_64是x86的64位版本, amd64==x86_64</p>
+</li>
+<li>
+<p>arm, arm64和aarh64: arm是32位的. arm64是arm的64位版本, 并且arm64和aarh64合并了, 所以arm64 == aarh64.</p>
 <ul>
 <li>M1的指令集就是arm64. 低功耗的移动设备和嵌入式设备基本也都是arm架构.</li>
 </ul>
 </li>
-<li>因为桌面级CPU基本都是64位的, 要么是x86_64, 要么是arm64, 所以我们常说的x86, arm其实指代的是它们的64位版本.</li>
-<li>arm和x86: 简单来说, arm属于RISC, 功耗较低. x86属于CISC, 性能较高.</li>
+<li>
+<p>桌面级CPU基本都是64位的, 要么是x86_64, 要么是arm64. 所以我们常说的x86, arm其实指代的是它们的64位版本, 即x86_64和arm64.</p>
+</li>
 </ul>
 <h2 id="Main-Memeory"><a class="header-anchor" href="#Main-Memeory"></a>Main Memeory</h2>
 <ul>
@@ -33444,8 +33216,11 @@ $$</p>
 </ul>
 <h1 id="For-Programing-Languages"><a class="header-anchor" href="#For-Programing-Languages"></a>For Programing Languages</h1>
 <h2 id="conda"><a class="header-anchor" href="#conda"></a>conda</h2>
-<p>推荐<code>miniconda</code>， 直接去NJU MIRROR下载：</p>
+<p>推荐<code>miniconda</code>.</p>
+<p>直接去NJU MIRROR下载, 以对应Python3.9的miniconda为例:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+<p>对于Arm架构:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_23.1.0-1-Linux-aarch64.sh</span><br></pre></td></tr></table></figure>
 <ul>
 <li>清华源</li>
 </ul>
@@ -33461,7 +33236,7 @@ $$</p>
 </li>
 <li>
 <p>编辑该文件：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line">  </span><br><span class="line">   <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br></pre></td></tr></table></figure>
 <p>即可添加 Anaconda Python 免费仓库。</p>
 </li>
 <li>
@@ -33478,7 +33253,8 @@ $$</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda env list</span><br></pre></td></tr></table></figure>
 <p>Create a new environment</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda create --name [project-env] python=3.7</span><br></pre></td></tr></table></figure>
-<p><u>The environments created by Conda is always located in <code>/Users/.../anaconda3/envs/</code>. You may change the default location by using the following command but it is not encouraged.</u> Conda can no longer find your environment by your environment name, you will have to specify the environment’s full path to activate it every time.</p>
+<p><u>The environments created by Anaconda is always located in <code>~/anaconda3/envs/</code>( 对于Miniconda: <code>~/miniconda3/envs/</code>)</p>
+<p><u> You may change the default location by using the following command but it is not encouraged.</u> Conda can no longer find your environment by your environment name, you will have to specify the environment’s full path to activate it every time.</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda create --prefix /path/project-env</span><br></pre></td></tr></table></figure>
 <p>Activate your new environment:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda activate project-env</span><br></pre></td></tr></table></figure>
@@ -42184,12 +41960,14 @@ $$<br>
 <h2 id="Shell-Switch"><a class="header-anchor" href="#Shell-Switch"></a>Shell Switch</h2>
 <p>检查当前可用的shell:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat /etc/shells</span><br></pre></td></tr></table></figure>
-<p>or:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chsh -l</span><br></pre></td></tr></table></figure>
 <p>查看当前使用的shell:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo $SHELL</span><br></pre></td></tr></table></figure>
 <p>set one shell  as default for your user:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chsh -s full-path-to-shell</span><br></pre></td></tr></table></figure>
+<p>在Parallels的Ubuntu虚拟机中, <code>chsh -s /bin/zsh</code>无法切换shell到zsh, 原因未知. 只能手动设置:</p>
+<p>edit <code>~/.bashrc</code>, 在最后一行加上:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">bash -c zsh</span><br></pre></td></tr></table></figure>
+<p>重启shell即可.</p>
 <h1 id="Ohmyzsh"><a class="header-anchor" href="#Ohmyzsh"></a>Ohmyzsh</h1>
 <ol>
 <li>
@@ -42236,7 +42014,8 @@ $$<br>
 </li>
 <li>
 <p>安装<code>syntax-highlighting</code>：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syn tax-highlighting</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;/plugins/zsh-syntax-highlighting</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md">zsh-syntax-highlighting</a></p>
 </li>
 </ul>
 <h3 id="fasd-autojump"><a class="header-anchor" href="#fasd-autojump"></a>fasd &amp; autojump</h3>
@@ -43716,6 +43495,8 @@ $$<br>
 <p>known_hosts: 已知的主机公钥清单</p>
 </li>
 </ul>
+<p>注意, ssh是对应Linux User的. 因此配置了本机当前用户和目标用户的ssh, 并不代表着配本机root用户到目标用户的ssh(因为当前用户的ssh公私药都存在<code>~/.ssh</code>而非/root/.ssh).<br>
+例如: 配置本机当前用户与github的ssh后, 是无法执行<code>sudo git clone XXX</code>的. 因为root用户没有和github配置ssh.</p>
 <p>服务器上配置ssh免密登陆：</p>
 <ul>
 <li>将本地 id_rsa.pub 文件的内容拷贝至远程服务器的 ~/.ssh/authorized_keys
@@ -52295,6 +52076,11 @@ $$</p>
 </ul>
 <h1 id="Use"><a class="header-anchor" href="#Use"></a>Use</h1>
 <p>按照并打开PD Patcher后, 再启动PD, 即可绕过授权检查.</p>
+<h1 id="Problems"><a class="header-anchor" href="#Problems"></a>Problems</h1>
+<h1 id="虚拟机画面模糊"><a class="header-anchor" href="#虚拟机画面模糊"></a>虚拟机画面模糊</h1>
+<p>View -&gt; Retina Resolution -&gt; More Space</p>
+<p>分辨率调高后, 原有的桌面图标会变小. 需要将图标放大:</p>
+<p>Settings -&gt; Display -&gt; Scale 调到200%</p>
 ]]></content>
       <categories>
         <category>Toolkit</category>
@@ -52302,5 +52088,335 @@ $$</p>
       <tags>
         <tag>Linux</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Cammera Manuel</title>
+    <url>/2023/04/13/Cammera-Manuel/</url>
+    <content><![CDATA[<p>For Fuji XA-7</p>
+<p><a href="https://fujifilm-dsc.com/en/manual/x-a7/">FUJIFILM X-A7 Owner’s Manual</a></p>
+<span id="more"></span>
+<h1 id="APP"><a class="header-anchor" href="#APP"></a>APP</h1>
+<p>日本的IT行业水平惨不忍睹, 从Fuji的app可见一斑. 页面十分老旧, 和移动设备的无线连接也很慢.</p>
+<p><a href="https://fujifilm-dsc.com/zhs/manual/x-a7/technical_notes/software/index.html">富士软件官网</a></p>
+<ul>
+<li>
+<p><a href="http://app.fujifilm-dsc.com/en/camera_remote/">FUJIFILM Camera Remote</a>: connecting to Smartphones and Tablets</p>
+</li>
+<li>
+<p><a href="https://post.smzdm.com/p/a07nwd38/">手机端使用教程</a></p>
+</li>
+<li>
+<p><a href="http://app.fujifilm-dsc.com/en/pc_autosave/">FUJIFILM PC AutoSave</a>：upload pictures from the camera over wireless networks.</p>
+</li>
+<li>
+<p>Capture One Express Fujifilm：  Capture One A/S 开发的免费的图像编辑软件，可用于在计算机上查看 RAW 照片并将其转换为其他格式。</p>
+<ul>
+<li>
+<p>可以理解为CaptureOne为富士开发的免费版app</p>
+</li>
+<li>
+<p>其实就是买相机的时候会送一个该软件的License Key，用它就可以免费解锁该软件</p>
+</li>
+</ul>
+</li>
+<li>
+<p>RAW FILE CONVERTER EX： 查看计算机上的 RAW 照片并将它们转换成其他格式</p>
+</li>
+</ul>
+<h1 id="Wireless-Transfer"><a class="header-anchor" href="#Wireless-Transfer"></a><a href="https://fujifilm-dsc.com/en/manual/x-h1/connections/wireless/index.html">Wireless Transfer</a></h1>
+<p>Use <a href="http://app.fujifilm-dsc.com/en/camera_remote/">FUJIFILM Camera Remote</a></p>
+<h2 id="Connecting-to-Smartphones-and-Tablets-Bluetooth®-Pairing"><a class="header-anchor" href="#Connecting-to-Smartphones-and-Tablets-Bluetooth®-Pairing"></a>Connecting to Smartphones and Tablets: Bluetooth® Pairing</h2>
+<p>Use <img data-src="https://fujifilm-dsc.com/en/manual/common_fonts/icn_ff62-d2_20.svg" alt="img"><strong>CONNECTION SETTING</strong> &gt; <strong>Bluetooth SETTINGS</strong> &gt; <strong>PAIRING REGISTRATION</strong> to pair the camera with smartphones or tablets. Pairing offers a simple method for downloading photos from the camera.</p>
+<h2 id="Connecting-to-Smartphones-and-Tablets-Wireless-LAN"><a class="header-anchor" href="#Connecting-to-Smartphones-and-Tablets-Wireless-LAN"></a>Connecting to Smartphones and Tablets: Wireless LAN</h2>
+<p>Use the <strong>WIRELESS COMMUNICATION</strong> options in <img data-src="https://fujifilm-dsc.com/en/manual/common_fonts/icn_ff62-a2_20.svg" alt="img"><strong>SHOOTING SETTING</strong> or the playback menu to connect to a smartphone or tablet via a wireless LAN. Once connected, you can browse the images on the camera, download selected images, control the camera remotely, or copy location data to the camera.</p>
+<h2 id="Copying-Pictures-to-a-Computer-PC-AutoSave"><a class="header-anchor" href="#Copying-Pictures-to-a-Computer-PC-AutoSave"></a>Copying Pictures to a Computer: PC AutoSave</h2>
+<p><a href="http://app.fujifilm-dsc.com/en/pc_autosave/">FUJIFILM PC AutoSave</a></p>
+<p>You can upload pictures from the camera using the <strong>PC AUTO SAVE</strong> option in the playback menu.</p>
+<h1 id="Connections"><a class="header-anchor" href="#Connections"></a>Connections</h1>
+<h2 id="Connecting-to-HDMI-Devices"><a class="header-anchor" href="#Connecting-to-HDMI-Devices"></a><a href="https://fujifilm-dsc.com/en/manual/x-s10/connections/hdmi_output/">Connecting to HDMI Devices</a></h2>
+<ol>
+<li>
+<p>Turn the camera off.</p>
+</li>
+<li>
+<p>Connect the cable as shown below.</p>
+<p>Insert into HDMI connector</p>
+<p><img data-src="https://fujifilm-dsc.com/en/manual/x-s10/images/ill_bd_connect_hdmi_x-s10.png" alt="img"></p>
+<p>Insert into HDMI Micro connector (Type D)</p>
+</li>
+<li>
+<p>Configure the device for HDMI input as described in the documentation supplied with the device.</p>
+</li>
+<li>
+<p>Turn the camera on. The contents of the camera display will be shown on the HDMI device. The camera display turns off in playback mode (<a href="https://fujifilm-dsc.com/en/manual/x-s10/connections/hdmi_output/#playback">Playback</a>).</p>
+</li>
+</ol>
+<h1 id="Capture"><a class="header-anchor" href="#Capture"></a>Capture</h1>
+<p><a href="https://www.captureone.com/en/account">官网</a></p>
+]]></content>
+      <categories>
+        <category>Other Hobbies</category>
+      </categories>
+      <tags>
+        <tag>Camera</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Common HDMI Products</title>
+    <url>/2023/04/13/Common-HDMI-Products/</url>
+    <content><![CDATA[<p>Outline:</p>
+<ul>
+<li>HDMI Types</li>
+</ul>
+<span id="more"></span>
+<h1 id="HDMI-Types"><a class="header-anchor" href="#HDMI-Types"></a>HDMI Types</h1>
+<p><img data-src="https://res.cloudinary.com/rspoc/image/upload/f_auto/q_auto/v1670231542/RS%20CONTENTFUL/Discovery/Other%20image%20assets/hdmi_connector_types.png" alt=" "></p>
+<p>There are currently five standard connector types available for HDMI cables, namely:</p>
+<ul>
+<li><strong>Type A</strong> (standard): 应用于HDMI1.0版本, 总共有19pin, 规格为4.45 mm×13.9 mm, 为最常见的HDMI接头规格. 在HDMI 1.2a之前, 最大能传输165MHz的TMDS，所以最大传输规格只能在于1600×1200 ( TMDS 162.0 MHz ).</li>
+<li><strong>Type B</strong> (dual link - not currently used in any mainstream consumer products):  有29pin。可傳输HDMI A type兩倍的TMDS資料量，相對等於DVI Dual-Link傳輸，用於傳輸高分辨率WQXGA 2560x1600以上.</li>
+<li><strong>Type C</strong> (mini): 有19pin, 最常見, 俗称 Mini HDMI, 可以說是缩小版的HDMI A type。</li>
+<li><strong>Type D</strong> (micro): 俗称Micro HDMI. D Type应用于HDMI 1.4版本, 保持HDMI标准的19pin, 但是尺寸和micro-USB的接口差不多. 比Type C（2.42 mm × 10.42 mm）小很多, 主要應用在一些小型的移动设备上, 例如手机和<strong>相机</strong>.</li>
+<li>Type E (the Automotive Connection System, chiefly developed for in-vehicle use)</li>
+</ul>
+<h2 id="Type-A"><a class="header-anchor" href="#Type-A"></a>Type A</h2>
+<h2 id="Type-B"><a class="header-anchor" href="#Type-B"></a>Type B</h2>
+<h2 id="Type-C"><a class="header-anchor" href="#Type-C"></a>Type C</h2>
+<p><img data-src="https://www.electronics-notes.com/images/hdmi-male-mini-connector-3191.jpg" alt="mini-HDMI connector"></p>
+<h2 id="Type-D"><a class="header-anchor" href="#Type-D"></a>Type D</h2>
+<p><img data-src="https://www.electronics-notes.com/images/hdmi-male-micro-connector-3200.jpg" alt="Micro-HDMI connector"></p>
+<p><a href="https://fujifilm-dsc.com/en/manual/x-s10/connections/hdmi_output/">Fuji XA-7的HDMI接口</a>就是Type D.</p>
+<p><img data-src="https://fujifilm-dsc.com/en/manual/x-s10/images/ill_bd_connect_hdmi_x-s10.png" alt="img"></p>
+]]></content>
+      <categories>
+        <category>Electronic Engineering</category>
+      </categories>
+      <tags>
+        <tag>Hardware</tag>
+        <tag>Camera</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Transport Buses, Tranfer Protocals and Physical Interfaces</title>
+    <url>/2023/04/13/Transport-Buses-Tranfer-Protocals-and-Physical-Interfaces/</url>
+    <content><![CDATA[<p>Outline:</p>
+<ul>
+<li>Transport Buses</li>
+<li>Transfer Protocals</li>
+<li>Physical Interfaces</li>
+</ul>
+<span id="more"></span>
+<p><a href="">前面</a>说过, OS通过调用Driver来处理外部设备. 而外部设备的连接是通过暴露自身<strong>物理接口</strong>, 通过<strong>总线</strong>, 按相应的<strong>数据传输协议</strong>连接到计算机的. 不同的数据传输协议就对应着不同的driver.</p>
+<p>本文介绍常见的总线, 数据传输协议和物理接口.</p>
+<h2 id="Transport-Buses"><a class="header-anchor" href="#Transport-Buses"></a>Transport Buses</h2>
+<p>ref: <a href="https://www.cnblogs.com/liuzhengliang/p/5548451.html">讲总线的文章</a></p>
+<p>总线的标准也是Physical Interface的标准. 例如: SATA总线的版本也对应着SATA接口的版本.</p>
+<ul>
+<li>
+<p>对于存储领域的总线, 如ATA/SATA/PCIe/SCSI/SAS/FC, 它们对应<strong>同名的Physical Interfaces</strong>, 比如SATA接口, PCIe接口, SCSI接口.</p>
+</li>
+<li>
+<p>此外, 还有其他用途的总线, 例如我们很熟悉的USB和Thunder bolt.</p>
+</li>
+</ul>
+<p>注意, 有些人用&quot;通道&quot;来指总线</p>
+<h3 id="ATA"><a class="header-anchor" href="#ATA"></a>ATA</h3>
+<ul>
+<li>AT A（AT Attachment）：总的来说，ATA是一个总线技术，它并行传输数据, 总线位宽为 16bits. 因此ATA也称为<strong>PATA</strong>(Parallel ATA, 并行ATA )
+<ul>
+<li>In case you are curious what AT stands for, this was IBM’s second generation &quot;Personal Computer Advanced Technology&quot; built around the then-extremely-potent 6-MHz 80286 processor that the company introduced in 1984.</li>
+</ul>
+</li>
+<li>ATA对应的物理接口就是ATA( or PATA )， 现在都没人用了</li>
+</ul>
+<h3 id="SATA"><a class="header-anchor" href="#SATA"></a>SATA</h3>
+<ul>
+<li>
+<p><strong>SATA</strong> ( <strong>Serial ATA</strong>, 串行ATA )对PATA进行了改进， 故名思义就是使用了串行, 规避了并行总线在高速下的串扰和同步问题</p>
+<ul>
+<li>在2000 年发明</li>
+</ul>
+</li>
+<li>
+<p>SATA 只有 4 根线, 分别为：发送数据线，接收数据线，电源线.地线.</p>
+</li>
+</ul>
+<h3 id="SATA-Types"><a class="header-anchor" href="#SATA-Types"></a>SATA Types</h3>
+<p>SATA 有三个版本. 由于总线对应着物理接口, 因此SATA版本其实也就是SATA物理接口版本:</p>
+<ul>
+<li>
+<p>SATA: 正式名稱爲<strong>SATA 1.5Gb/s</strong>, 是第一代SATA接口. 有效带宽为 150MB/s, 数据速率为 1.5Gbps( 传输的数据经过了8B/10B 变换,  150MB/s*10=1.5Gbps) .</p>
+</li>
+<li>
+<p>SATA II: 正式名稱爲<strong>SATA 3Gb/s</strong>, 是第二代SATA接口.  有效带宽为 300MB/s , 数据速率为 3Gbps.</p>
+</li>
+<li>
+<p><strong>SATA III</strong>: 正式名稱爲<strong>SATA 6Gb/s</strong>, 是第三代SATA接口, 有效带宽为 600MB/s , 数据速率为 6Gbps.</p>
+</li>
+<li>
+<p>SATA II规格向后提供向后兼容SATA I接口的功能。SATA III规格提供向后兼容SATA I和SATA II接口的功能。但是，由于接口的较低的速度限制，驱动器的最大速度将会降低。</p>
+<p>例子：闪迪至尊极速固态硬盘支持SATA 6Gb/s接口并且当连接到SATA 6Gb/s 接口时，顺序读速度和写速度分别能达到550/520MB/s。但是，当连接到SATA 3 Gb/s 接口时，顺序读速度和顺序写速度则分别能达到285/275MB/s</p>
+</li>
+<li>
+<p>SATA配套的传输协议是AHCI, SATA和AHCI是HDD时代的产物, ATA总线的传输速率上限也就是几百MB, 所以SATA + AHCI在HDD时代是够用的, 虽然目前主流SSD依然支持它们, 但其实已经不够用了</p>
+</li>
+</ul>
+<h3 id="PCIe"><a class="header-anchor" href="#PCIe"></a>PCIe</h3>
+<ul>
+<li><strong>PCIe( Peripheral Component Interconnect Express )</strong>: 是一个比SATA快好几倍的总线, 2004年发明
+<ul>
+<li>PCIe是PCI的后继, 而PCI总线取代了更古老的ISA (Industry Standard Architecture)总线
+<ul>
+<li>2004年PCIe刚发明时，流行<strong>shared bus architecture</strong>，许多设备用一条线传输数据，需要一个arbiter来调度</li>
+</ul>
+</li>
+<li><strong>PCIe可以连接各种设备</strong>, 包括<strong>显卡</strong>、SSD（需要M.2接口或者PCIe接口）、无线网卡、有线网卡、声卡、视频采集卡、PCIe转接M.2接口、PCIe转接USB接口、PCIe转接Tpye-C接口</li>
+<li>PCI使用<strong>parallel bus architecture</strong>，即将每个数据字分多条线传输。 比如32-bit数据需要32根并行的线</li>
+<li>PCIe使用<strong>serial bus architecture</strong>，把数据包装成一个message， 点对点传输（一次连接称为一个<strong>lane</strong>）。</li>
+<li>PICe也支持并行传输，按lane( 通道 )的个数可分为 x1 x2 x4 x8 x16 x32（最大可支持32个通道）
+<ul>
+<li>如果PCI e x1接口的网卡插x16的插槽， 只占用一条lane</li>
+</ul>
+</li>
+<li>微星的B450主板支持的就是PCI-E 3.0, B550支持PCI-E 4.0</li>
+<li>现在的PCIe 5.0 已经支持132GB/s 了</li>
+<li>此外，PCIe还对应着同名的传输协议( PCIe )</li>
+</ul>
+</li>
+</ul>
+<p>PCIe性能：</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/PCIe%20Link%20Performance.png" alt="PCIe Link Performance"></p>
+<p>PCIe 与 PCI 的区别:</p>
+<table>
+<thead>
+<tr>
+<th>category</th>
+<th>speed</th>
+<th></th>
+<th>transport model</th>
+<th></th>
+<th>hardware</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PCI</td>
+<td>PCI的工作频率分为33MHz和66MHz，最大吞吐率 266MB/s</td>
+<td></td>
+<td>PCI 是并行数据传输，一次传输4字节/8字节，半双工</td>
+<td></td>
+<td>传输PCI信号的是普通电平</td>
+</tr>
+<tr>
+<td>PCIe</td>
+<td>PCIe 1.0 x1 的吞吐率就达到了250MB/s</td>
+<td></td>
+<td>PCIe是串行数据传输，全双工. 而且是<strong>点对点传输</strong>(当然也可以并行)</td>
+<td></td>
+<td>传输PCIe信号的是差分电平</td>
+</tr>
+</tbody>
+</table>
+<h3 id="SCSI"><a class="header-anchor" href="#SCSI"></a>SCSI</h3>
+<ul>
+<li>SCSI( Small Computer System Interfae, 小型计算机系统专用接口 ) : 一种连接主机和外围设备的接口，支持包括硬盘、光驱及扫描仪在内的多种设备。SCSI 总线是一种<strong>并行</strong>总线，其优点是适应面广，性能高；缺点是价格昂贵，安装复杂</li>
+</ul>
+<h3 id="SAS"><a class="header-anchor" href="#SAS"></a>SAS</h3>
+<ul>
+<li>
+<p>SAS( Serial Attached SCSI, 串行连接SCSI) : 串行化的SCSI. 和SATA总线类似, 都采用串行技术以获得更高的传输速度. 一般用于企业级硬盘</p>
+</li>
+<li>
+<p>SAS 的接口技术可以向下兼容SATA 。具体来说，二者的兼容性主要体现在物理层和协议层的兼容:</p>
+<ul>
+<li>在物理层，<strong>SAS 接口和SATA 接口完全兼容</strong>，SATA 硬盘可以直接使用在SAS 的环境中，</li>
+<li>从接口标准上而言，SATA 是SAS 的一个子标准，因此SAS 控制器可以直接操控SATA 硬盘，但是SAS 却不能直接使用在SATA 的环境中，因为SATA 控制器并不能对SAS 硬盘进行控制</li>
+</ul>
+</li>
+</ul>
+<h3 id="FC"><a class="header-anchor" href="#FC"></a>FC</h3>
+<ul>
+<li>FC: 用于光纤</li>
+</ul>
+<h3 id="USB"><a class="header-anchor" href="#USB"></a>USB</h3>
+<ul>
+<li><strong>USB</strong> (Universal Serial Bus, 通用串行总线) : 用于连接计算机的外部设备, 它们的I/O通常很慢</li>
+<li>此外, USB还对应着同名的传输协议( USB ).</li>
+<li>USB是总线标准和传输协议标准, 但不是物理接口标准. 因此不存在“USB物理接口”.</li>
+</ul>
+<h3 id="Thunder-bolt"><a class="header-anchor" href="#Thunder-bolt"></a>Thunder bolt</h3>
+<ul>
+<li>Thunder bolt(雷电总线): 由Intel研发, 用于取代电脑上奇奇怪怪的各种总线( SCSI, SATA, USB, PCIe ... ). 如果协议能推广, 以后电脑里只需要一种总线.
+<ul>
+<li><a href="https://support.apple.com/kb/SP854?viewlocale=zh_CN&amp;locale=zh_CN">Macbook 2021</a>拥有3个 Type-C 雷电4 接口.</li>
+</ul>
+</li>
+<li>和USB一样拥有同名的传输协议( Thunder bolt ). 我们说雷电的时候, 既可以指总线也可以指协议, 因为雷电总线好像只支持雷电协议.</li>
+</ul>
+<h2 id="Transfer-Protocals"><a class="header-anchor" href="#Transfer-Protocals"></a>Transfer Protocals</h2>
+<p>有了总线和对应的物理接口, 还需要抽象的数据传输协议( 就和计算机网络的协议一样 ), 在软件层面，针对协议来编写驱动，来实现数据I/O.</p>
+<h3 id="AHCI"><a class="header-anchor" href="#AHCI"></a>AHCI</h3>
+<ul>
+<li>AHCI( Serial ATA Advanced Host Controller Interface, 串行ATA高级主控接口/高级主机控制器接 ): 适配SATA和PCIe( 主要是适配SATA ), 是HDD时代的通信标准，速度比较慢</li>
+</ul>
+<h3 id="NVMe"><a class="header-anchor" href="#NVMe"></a>NVMe</h3>
+<ul>
+<li><strong>NVMe</strong>( Non-Volatile Memory express, 非易失性内存主机控制器接口规范 ):  适配SATA和PCIe接口. 简而言之NVMe比AHCI快好几倍，是SSD时代的传输协议.
+<ul>
+<li>NVMe建立在M.2接口上, 且使用PCIe总线.</li>
+<li>NVMe1.X只支持SSD,  从2.X开始也支持HDD了. 不过现在很少有人用HDD了.</li>
+</ul>
+</li>
+</ul>
+<h3 id="PCIe-2"><a class="header-anchor" href="#PCIe-2"></a>PCIe</h3>
+<ul>
+<li>这个协议没有自己的名字，因为用于PCIe总线，就用PCIe来命名了...</li>
+</ul>
+<h3 id="USB-2"><a class="header-anchor" href="#USB-2"></a>USB</h3>
+<ul>
+<li>和PCIe协议一样, 没有自己的名字...</li>
+<li>USB协议目前发展到USB4</li>
+</ul>
+<h3 id="Thunder-bolt-2"><a class="header-anchor" href="#Thunder-bolt-2"></a>Thunder bolt</h3>
+<ul>
+<li>和USB协议一样, 没有自己的名字... 一般称为雷电协议, 目前发展到雷电4( <strong>Thunderbolt™4</strong> )</li>
+<li>雷电4相比USB4, 带宽更高, 兼容的传输协议也更多
+<ul>
+<li>雷电4适配了PCIe协议和Displayport协议</li>
+</ul>
+</li>
+</ul>
+<h2 id="Physical-Interfaces"><a class="header-anchor" href="#Physical-Interfaces"></a>Physical Interfaces</h2>
+<p>总线需要连接到主板的物理接口上, 这里的“接口”指的是<u>物理尺寸和形状</u>, 内部的电路逻辑不做讨论.</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/%E6%8E%A5%E5%8F%A3%2C%20%E6%80%BB%E7%BA%BF%E5%92%8C%E5%8D%8F%E8%AE%AE%E7%9A%84%E5%85%B3%E7%B3%BB.png" alt="接口, 总线和协议的关系"></p>
+<h3 id="SATA-Interface"><a class="header-anchor" href="#SATA-Interface"></a>SATA Interface</h3>
+<ul>
+<li>SATA接口只能接SATA总线. 这个接口比较悲催，没有自己的名字, 我们用它适配的总线( SATA )称呼它</li>
+<li>SATA2和SATA3总线对应不同的SATA2接口和SATA3接口</li>
+</ul>
+<h3 id="PCIe-Interface"><a class="header-anchor" href="#PCIe-Interface"></a>PCIe Interface</h3>
+<ul>
+<li>PCIe接口只能接PCIe总线. 这个接口和SATA接口一样, 也没有自己的名字....</li>
+</ul>
+<h3 id="M-2-Interface"><a class="header-anchor" href="#M-2-Interface"></a>M.2 Interface</h3>
+<ul>
+<li>M.2( 以前叫 NGFF( Next Generation Form Factor )，现在统一叫 M.2 ) 接口可以接SATA和 PCIe总线</li>
+<li>M.2接口有两种类型：Socket 2和Socket 3.
+<ul>
+<li>Socket2只能接SATA总线, 可以等价于SATA接口.</li>
+<li>Socket3<strong>兼容</strong>Socket2, 并且能接PCIe总线.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Type-A-B-C"><a class="header-anchor" href="#Type-A-B-C"></a>Type A/B/C</h3>
+<p>常见的Type A/B/C也是一种物理接口</p>
+<p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Computer%20IO%20Device/Type%20A%3AB%3AC.png" alt="Type A/B/C"></p>
+<ul>
+<li>USB总线和雷电3总线一般都用Type C接口</li>
+<li>不要把雷电3和Type C混为一谈，前者是总线/传输协议, 后者是物理接口</li>
+</ul>
+<h3 id="HDMI"><a class="header-anchor" href="#HDMI"></a>HDMI</h3>
+<p>懂得都懂</p>
+]]></content>
   </entry>
 </search>

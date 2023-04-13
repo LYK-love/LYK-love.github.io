@@ -28,7 +28,7 @@
 <meta property="og:description" content="Outline:  For Linux For OSX For Languages">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-09-13T14:58:06.000Z">
-<meta property="article:modified_time" content="2023-02-13T11:47:02.233Z">
+<meta property="article:modified_time" content="2023-04-04T08:48:40.068Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">199</span>
+          <span class="site-state-item-count">202</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,7 +259,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-13 11:47:02" itemprop="dateModified" datetime="2023-02-13T11:47:02Z">2023-02-13</time>
+      <time title="Modified: 2023-04-04 08:48:40" itemprop="dateModified" datetime="2023-04-04T08:48:40Z">2023-04-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -352,8 +352,11 @@
 </ul>
 <h1 id="For-Programing-Languages"><a class="header-anchor" href="#For-Programing-Languages"></a>For Programing Languages</h1>
 <h2 id="conda"><a class="header-anchor" href="#conda"></a>conda</h2>
-<p>推荐<code>miniconda</code>， 直接去NJU MIRROR下载：</p>
+<p>推荐<code>miniconda</code>.</p>
+<p>直接去NJU MIRROR下载, 以对应Python3.9的miniconda为例:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh</span><br></pre></td></tr></table></figure>
+<p>对于Arm架构:</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_23.1.0-1-Linux-aarch64.sh</span><br></pre></td></tr></table></figure>
 <ul>
 <li>清华源</li>
 </ul>
@@ -369,7 +372,7 @@
 </li>
 <li>
 <p>编辑该文件：</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line">  </span><br><span class="line">   <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">defaults</span></span><br><span class="line"><span class="attr">show_channel_urls:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">default_channels:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirror.nju.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">custom_channels:</span></span><br><span class="line">  <span class="attr">conda-forge:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">msys2:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">bioconda:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">menpo:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">pytorch:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br><span class="line">  <span class="attr">simpleitk:</span> <span class="string">https://mirror.nju.edu.cn/anaconda/cloud</span></span><br></pre></td></tr></table></figure>
 <p>即可添加 Anaconda Python 免费仓库。</p>
 </li>
 <li>
@@ -386,7 +389,8 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda env list</span><br></pre></td></tr></table></figure>
 <p>Create a new environment</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda create --name [project-env] python=3.7</span><br></pre></td></tr></table></figure>
-<p><u>The environments created by Conda is always located in <code>/Users/.../anaconda3/envs/</code>. You may change the default location by using the following command but it is not encouraged.</u> Conda can no longer find your environment by your environment name, you will have to specify the environment’s full path to activate it every time.</p>
+<p><u>The environments created by Anaconda is always located in <code>~/anaconda3/envs/</code>( 对于Miniconda: <code>~/miniconda3/envs/</code>)</p>
+<p><u> You may change the default location by using the following command but it is not encouraged.</u> Conda can no longer find your environment by your environment name, you will have to specify the environment’s full path to activate it every time.</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda create --prefix /path/project-env</span><br></pre></td></tr></table></figure>
 <p>Activate your new environment:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">conda activate project-env</span><br></pre></td></tr></table></figure>

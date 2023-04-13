@@ -28,7 +28,7 @@
 <meta property="og:description" content="介绍了Unix, Unix Like主机的常用操作 OS可以是各种LINUX发行版和Mac OSX，因此你可以看到各种包管理工具（yay,apt,yum, brew...）, 选自己用的就好">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-02-19T14:04:37.000Z">
-<meta property="article:modified_time" content="2022-09-26T06:39:34.942Z">
+<meta property="article:modified_time" content="2023-04-04T07:33:01.948Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Linux">
 <meta name="twitter:card" content="summary">
@@ -162,18 +162,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">199</span>
+          <span class="site-state-item-count">202</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">46</span>
+        <span class="site-state-item-count">47</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -259,7 +259,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+      <time title="Modified: 2023-04-04 07:33:01" itemprop="dateModified" datetime="2023-04-04T07:33:01Z">2023-04-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -320,6 +320,8 @@
 <p>known_hosts: 已知的主机公钥清单</p>
 </li>
 </ul>
+<p>注意, ssh是对应Linux User的. 因此配置了本机当前用户和目标用户的ssh, 并不代表着配本机root用户到目标用户的ssh(因为当前用户的ssh公私药都存在<code>~/.ssh</code>而非/root/.ssh).<br>
+例如: 配置本机当前用户与github的ssh后, 是无法执行<code>sudo git clone XXX</code>的. 因为root用户没有和github配置ssh.</p>
 <p>服务器上配置ssh免密登陆：</p>
 <ul>
 <li>将本地 id_rsa.pub 文件的内容拷贝至远程服务器的 ~/.ssh/authorized_keys
