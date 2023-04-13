@@ -41,7 +41,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Transport%20Buses%2C%20Tranfer%20Protocals%20and%20Physical%20Interfaces/GPU%20with%20M.2%20connector.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/Transport%20Buses%2C%20Tranfer%20Protocals%20and%20Physical%20Interfaces/Type%20A%3AB%3AC.png">
 <meta property="article:published_time" content="2023-04-13T15:42:47.000Z">
-<meta property="article:modified_time" content="2023-04-13T13:15:07.574Z">
+<meta property="article:modified_time" content="2023-04-13T14:58:09.730Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Hardware">
 <meta name="twitter:card" content="summary">
@@ -176,18 +176,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">202</span>
+          <span class="site-state-item-count">204</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">22</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">47</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -267,7 +267,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-04-13 15:42:47 / Modified: 13:15:07" itemprop="dateCreated datePublished" datetime="2023-04-13T15:42:47Z">2023-04-13</time>
+      <time title="Created: 2023-04-13 15:42:47 / Modified: 14:58:09" itemprop="dateCreated datePublished" datetime="2023-04-13T15:42:47Z">2023-04-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -347,14 +347,14 @@
 </ul>
 </li>
 <li>
-<p>SATA 只有 4 根线, 分别为：发送数据线，接收数据线，电源线, 地线.</p>
+<p>SATA 只有 4 根线, 分别为：发送数据线, 接收数据线, 电源线, 地线.</p>
 </li>
 </ul>
 <h3 id="SATA-Types"><a class="header-anchor" href="#SATA-Types"></a>SATA Types</h3>
 <p>SATA 有三个版本, 对应物理接口也有三个版本:</p>
 <ul>
 <li>
-<p>SATA: 正式名稱爲<strong>SATA 1.5Gb/s</strong>, 是第一代SATA接口. 有效带宽为 150MB/s, 数据速率为 1.5Gbps( 传输的数据经过了8B/10B 变换,  150MB/s*10=1.5Gbps) .</p>
+<p>SATA: 正式名稱爲<strong>SATA 1.5Gb/s</strong>, 是第一代SATA接口. 有效带宽为 150MB/s, 数据速率为 1.5Gbps( 传输的数据经过了8B/10B 变换, 150MB/s*10=1.5Gbps) .</p>
 </li>
 <li>
 <p>SATA II: 正式名稱爲<strong>SATA 3Gb/s</strong>, 是第二代SATA接口.  有效带宽为 300MB/s , 数据速率为 3Gbps.</p>
@@ -363,10 +363,10 @@
 <p><strong>SATA III</strong>: 正式名稱爲<strong>SATA 6Gb/s</strong>, 是第三代SATA接口, 有效带宽为 600MB/s , 数据速率为 6Gbps.</p>
 </li>
 <li>
-<p>SATA配套的传输协议是AHCI. SATA和AHCI是HDD时代的产物, ATA总线的传输速率上限也就是几百MB, 所以SATA + AHCI在HDD时代是够用的, 虽然目前主流SSD依然支持它们, 但已经不够用了</p>
+<p>SATA配套的传输协议是AHCI. SATA和AHCI是HDD时代的产物, ATA总线的传输速率上限也就是几百MB, 所以SATA + AHCI在HDD时代是够用的, 虽然目前主流SSD依然支持它们, 但已经不够用了.</p>
 </li>
 <li>
-<p>SATA II向后兼容SATA I. SATA III向后兼容SATA I和SATA II/ 但是, 由于低版本接口的数据传输率的限制, 使用低版本的接口时数据传输率也会降低.</p>
+<p>SATA II向后兼容SATA I. SATA III向后兼容SATA I和SATA II. 但是, 由于低版本接口的数据传输率的限制, 使用低版本的接口时数据传输率也会降低.</p>
 <ul>
 <li>例子: 闪迪至尊极速固态硬盘支持SATA 6Gb/s接口并且当连接到SATA 6Gb/s 接口时，顺序读速度和写速度分别能达到550/520MB/s。但是，当连接到SATA 3 Gb/s 接口时，顺序读速度和顺序写速度则分别能达到285/275MB/s</li>
 </ul>
@@ -576,6 +576,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/04/14/Arm-Training/" rel="next" title="Arm Training">
+                  Arm Training <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
