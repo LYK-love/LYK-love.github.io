@@ -61,9 +61,7 @@ Linux上无敌, 可惜MacOS不能用
   3. `$HOME/.config/alacritty/alacritty.yml`: 我用这个
   4. `$HOME/.alacritty.yml`
 
-* 字体: 由于我的Zsh主题是p10k, 使用的默认字体是Meslo Nerd Font, 而Alacritty默认使用的不是Meslo Nerd Font, 因此Alacritty中很多图标无法正常显示. 所以需要[安装字体](# p10k Fonts)
-
-* 这一步我之前的[p10k字体配置]里
+* 字体: 由于我的Zsh主题是p10k, 使用的默认字体是Meslo Nerd Font, 而Alacritty默认使用的不是Meslo Nerd Font, 这会导致p10k的很多图标在Alacritty中无法正常显示. 所以需要[安装Meslo Nerd Font字体](#p10k Fonts)
 
 * 配色: 使用下文所述的[Dracula](# Color: Dracula), 配色文件是一个符号链接, 指向dotfile, 纳入了版本管理
 
@@ -111,12 +109,6 @@ chsh -s /bin/zsh
 cat /etc/shells
 ```
 
-or:
-
-```shell
-chsh -l
-```
-
 
 
 
@@ -133,6 +125,18 @@ set one shell  as default for your user:
 ```shell
 chsh -s full-path-to-shell
 ```
+
+
+
+在Parallels的Ubuntu虚拟机中, `chsh -s /bin/zsh`无法切换shell到zsh, 原因未知. 只能手动设置:
+
+edit `~/.bashrc`, 在最后一行加上:
+
+```shell
+bash -c zsh
+```
+
+重启shell即可.
 
 
 
@@ -169,6 +173,8 @@ chsh -s full-path-to-shell
    REMOTE=${REMOTE:-https://github.com/${REPO}.git}
    BRANCH=${BRANCH:-master}
    ```
+
+
 
 
 
@@ -209,10 +215,10 @@ REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
 * 安装`syntax-highlighting`：
 
   ```shell
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syn tax-highlighting
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
   ```
 
-  
+  [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md)
 
 ### fasd & autojump
 
@@ -276,9 +282,30 @@ REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
 
 4. 开启主题配置：`p10k configure`
 
+   * 这会开启一个交互式程序, 根据用户的设定在`~/.p10k.zsh`生成主题的配置文件
+
 5. 后续可以继续用`p10k configure`重新开始配置， 或者手动更改配置文件：`~/.p10k.zsh`
 
-   * 注意, 我使用了符号链接.  `~/.p10k.zsh`实际是指向`/Users/lyk/Projects/MyOfficialProjects/dotfiles/.p10k.zsh`的符号链接. 因此每次`p10k configure`后, 都不能正确地在`~/.p10k.zsh`生成配置文件,**需要手动修**改.
+   * 为了对配置文件进行版本管理, 我对`~/.p10k.zsh`使用了符号链接.  `~/.p10k.zsh`实际是指向`/Users/lyk/Projects/MyOfficialProjects/dotfiles/.p10k.zsh`的符号链接. 
+   * 新版p10k是可以正确识别符号链接的, 因此`p10k configure`会在`/Users/lyk/Projects/MyOfficialProjects/dotfiles/.p10k.zsh`处生成配置文件. 
+   * 但老版本p10k没有这个支持, 每次`p10k configure`后, 生存的配置文件都位于`~/.p10k.zsh`, 覆盖了原来的符号链接, ,**需要手动修**改.
+
+## p10k 
+
+
+
+## Notes
+
+* Linux上默认配置不开启username@hostname 的显示，参加官方文档的“How do I add username and/or hostname to prompt?”. 也可以将这行注释掉：
+
+  ```shell
+  # Don't show context unless running with privileges or in SSH.
+  typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION=
+  ```
+
+
+
+# Font
 
 ## p10k Fonts
 
@@ -286,7 +313,7 @@ REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
 
 > Powerlevel10k doesn't require custom fonts but can take advantage of them if they are available. It works well with [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts), [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [Font Awesome](https://fontawesome.com/), [Powerline](https://github.com/powerline/fonts), and even the default system fonts. The full choice of style options is available only when using [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts).
 >
-> 👇 **Recommended font**: Meslo Nerd Font patched for Powerlevel10k. 👇
+> 👇 **Recommended font**: **Meslo Nerd Font** patched for Powerlevel10k. 👇
 
 If you are using iTerm2 or Termux, `p10k configure` can **install the recommended font for you.** Simply answer `Yes` when asked whether to install *Meslo Nerd Font*.
 
@@ -321,16 +348,17 @@ If you are using iTerm2 or Termux, `p10k configure` can **install the recommende
          family: "MesloLGS NF"
      ```
 
-## Notes
+## IDE Font Support Problem
 
-* Linux上默认配置不开启username@hostname 的显示，参加官方文档的“How do I add username and/or hostname to prompt?”. 也可以将这行注释掉：
+* 采用前面的步骤, 我们的Terminal的字体就变成了Meslo Nerd Font, 具体而言是**MesloLGS NF**, 而很多IDE的默认Terminal字体不是Meslo Nerd Font, 因此p10k的图标在这些IDE的Terminal里还是不能正常显示, 因为没有对应字体支持. 
 
-  ```shell
-  # Don't show context unless running with privileges or in SSH.
-  typeset -g POWERLEVEL9K_CONTEXT_{DEFAULT,SUDO}_{CONTENT,VISUAL_IDENTIFIER}_EXPANSION=
-  ```
+* Jetbrains IDE: 例如IDEA, 默认使用的Terminal字体是Jetbrains Mono, 需要在`Setting` ->` Editor` -> `Font` 里将字体改成MesloLGS NF
 
+* VSCode: `Settings -> ``terminal`, 在`Font Family`中可以看到
 
+  > Controls the font family of the terminal. Defaults to [Editor: Font Family](vscode-file://vscode-app/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)'s value.
+
+  这里的字体默认和 [Editor: Font Family](vscode-file://vscode-app/Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)的相同,但后者一般不用终端的字体. 我们将Terminal的字体单独设置为`MesloLGS NF`
 
 # General Terminal Emulater Config
 

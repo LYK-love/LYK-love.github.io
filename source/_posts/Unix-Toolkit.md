@@ -54,7 +54,8 @@ total 20
 * known_hosts: 已知的主机公钥清单
 
 
-
+注意, ssh是对应Linux User的. 因此配置了本机当前用户和目标用户的ssh, 并不代表着配本机root用户到目标用户的ssh(因为当前用户的ssh公私药都存在`~/.ssh`而非/root/.ssh). 
+例如: 配置本机当前用户与github的ssh后, 是无法执行`sudo git clone XXX`的. 因为root用户没有和github配置ssh.
 
 
 服务器上配置ssh免密登陆：

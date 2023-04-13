@@ -33,7 +33,7 @@ If a language uses a policy that <u>allows the compiler to decide an issue</u> t
 * 对于Type System, 静态类型语言的类型在编译期就决定, 而动态类型语言的类型在运行期才能决定. 
   * 事实上, 由于类型系统最受关注, 我们叙述一门语言特性的时候, 经常省略掉定语“类型系统”, 直接说“XX语言是静态/动态的”.
 
-* 对于变量的内存分配, 如果一个变量是静态变量( `class variable` in Java ):
+* 对于变量的内存分配, 如果一个变量是静态变量( `static` variable  in Java ):
 
   ```java
   public class Foo{
@@ -47,26 +47,33 @@ If a language uses a policy that <u>allows the compiler to decide an issue</u> t
 
 ![Environments and States](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Compilers/Programming%20Language%20Basic/Environments%20and%20States.png)
 
-- environment: 从**name**到**variable**的映射, 来区分同一作用域内同名的不同变量. 例如:
+- name就是代码文本中的变量名; variable就是程序运行时的变量, 它实际上是一块具有值的内存的location, 是一个指针; value是指针value所指向的内存的值;
+
+  * 我们通常将variable称为左值`lvalue`; value称为右值`lvalue`.
+  * 因此, **所有PL的变量都是引用. variable就是一个指向value的指针**
+  * “赋值”就是建立variable->value的映射
+  
+- environment: 从**name**到**variable**的映射.
 
   ```c++
-  int x = 1;
+  int x = 1;//假设variable x对应内存0x1
   
   void f()
   {
-  	int x = 3;
-  	cout << x << endl;
+  	int x = 3;//假设variable x对应内存0x2
+  	cout << x << endl;//使用name x. 根据environment, name x绑定到局部变量0x2
   }
   ```
 
-  `f()`中的**变量名**`x`被environment映射到变量`x = 3`. 而`f`外的**变量名**`x`被environment映射到变量`x = 31`.
+  `f()`的scope内有variable `0x1`, `0x2`, 都绑定到name x. 而在使用name x时, 根据预先设定的environment, name x被绑定到变量`0x2`, 这就是变量覆盖.
 
-  * 当然, **变量`variable`, 或者说左值`lvalue`, 就是一块具有值的内存的location**, 所以“映射到变量”, 其实就是“映射到location”
+  `f()`外的name x被environment映射到变量`x = 31`.
+
   * 绝大多数PL的environment是**动态**的, 否则也无法区分同一作用域内同名的不同变量了.
 
   
 
-- state: 从**location**到**value**的映射. 即lvalue到rvalue的映射
+- state: 从**location**到**value**的映射, 即**赋值**.
 
   * 大部分PL的state是**动态**的, 因为只有程序运行时才能得到value. 但也有**编译期决定的值,** 也就是静态的state, 比如const:
 
@@ -212,19 +219,18 @@ If a language uses a policy that <u>allows the compiler to decide an issue</u> t
   }
   ```
 
-  可以看到, 所有的基本数据类型, 和用户自定义**类型**, 都是**`type`类型的变量**, 类型甚至可以作为参数和返回值传递. 这就把类型和变量的地位等同起来了.
+  可以看到, Zig中所有的基本数据类型, 和用户自定义**类型**, 都是**`type`类型的变量**, 类型甚至可以作为参数和返回值传递. 这就把类型和变量的地位等同起来了.
 
 # Assignment and getValue
 
 变量其实是一个指针,  是一个lvalue.
 
 * 变量的**赋值**, 也就是把一个rvalue copy到变量( 即lvalue )指向的空间, 即将原有的rvalue擦除，而以一个新值来替代.
-
+  * 为了方便, 我后面还会说“将variable A复值为value X”, 意思就是把value X copy到variable A指向的空间
 * 变量的**取值**, 就是把变量( 即lvalue)所指向的空间的rvalue取出来. 
 
   * 注意, 只有lvalue可以取值, rvalue本身就是值. 
-  * 我们所谓的“使用变量”, 其实是**使用变量指向的值**, 也就是lvalue对应的rvalue. 所以“使用变量”要先对变量取值
-  * **对于Java这样的所有变量皆引用的语言, 其“使用变量”实际上是先得到rvalue( 一个指针/引用 ), 然后使用rvalue所指向的值(对象).**
+  * 我们所谓的“使用变量”, 其实是**使用变variable向的value**, 也就是lvalue对应的rvalue. 所以“使用变量”要先对变量取值
 
 * 例子:
 
@@ -235,7 +241,10 @@ If a language uses a policy that <u>allows the compiler to decide an issue</u> t
   ```
 
   1. 把rvalue 3 copy到了变量`x`指向的空间. 以后访问lvalue `x`, 得到的值就是3
-  2. 使用了变量`x`. 也就是对`x`先进行取值, 得到rvalue 3, 作为sum的第一个argument
+
+
+
+
 
 # Declaration, Definition and Initialization
 
@@ -295,9 +304,9 @@ If a language uses a policy that <u>allows the compiler to decide an issue</u> t
 * argument: 实际参数, 函数调用方传入的参数
 
   ```python
-  a = 1
+  a = 1 # argument
   
-  def f(b):
+  def f(b): # parameter
   	return b*2
   print( f(a) )
   ```
@@ -310,43 +319,123 @@ If a language uses a policy that <u>allows the compiler to decide an issue</u> t
 
 ## Call by Value
 
+Call by Value: **建立一个state, 将variable parameter映射到value argument.** 即将形式参数的variable赋值为实际参数的value. 具体而言, 是将parameter的rvalue擦除, 变为argument的**rvalue**的copy
+
+*  如果argument是个variable, 即一个lvalue , 就会对其取值,得到rvalue
+*  如果argument是个expression, 则会对其求值, 得到结果(rvalue)
+
+
+
 ```c++
-int a = 3;
-void f( int b ){
+int a = 3;//name a映射到variable a. 假设variable a = 0X432...,该地址在内存中指向value 3.
+void f( int b )//name b映射到variable b. 假设variable b = 0X872...., 该地址在内存中指向value XXX, 这是个垃圾值.
+  //由于是Call by Value, variable b映射到value 3. 即value XXXX被擦除, 变为了value 3.
+{ 
+  Call by Value, 
  b = b * 2;
 }
 ```
 
-变量名`a`对应变量`a` ( lvalue `a`), 它其实是个形如`0X432...`的地址, 在`0X432...`处存储了值`3`. lvalue `b`也同理, 是个形如`0X872...`
+name `a`, `b`对应variable `a` , `b`, variable是个形如`0Xfafea...`的地址.
 
-按值传递就是取出lvalue `a`  的rvalue, 然后赋值到lvalue `b`. 即取出`0X432...`的值, 然后赋值到`0X872...`
+假设variable `a` , `b`为`0X432...`, `0X872...`, 前者指向value 3, 后者指向的value还没有初始化, 即`0X872...`指向的内存空间还没有初始化.
 
 
 
-* Call by Value: 得到argument的**rvalue**, 然后赋值给parameter. 函数内部操作的是parameter, 其值的改变不会影响原来的argument.
+按值传递就是取出lvalue `a`  的rvalue( value 3), 将其copy到lvalue `b`指向的空间, 即取出`0X432...`的值3, 然后赋值到`0X872...`. 
 
-  *  如果argument是个variable, 即一个lvalue  就会对其取值,得到rvalue
-  * 如果argument是个expression, 则会对其求值, 得到结果(rvalue)
+现在lvalue `b`指向value 3.
+
 
 
 ## Call by Reference
 
+Call by Reference: **建立一个environment, 将name parameter映射到variable argument.** 具体而言, 是将parameter的变量名, 映射到argument的变量( 前面提到了,  变量其实是指向value的指针). 
+
 ```c++
-int a = 3;
-void f( int& b ){
+int a = 3; //name a映射到variable a. 假设variable a = 0X432...
+void f( int& b ){ //Call by Reference, name b映射到variable a = 0X432...
  b = b * 2;
 }
 ```
 
-按引用传递就是直接把`a`的lvalue copy给`b` , 现在`b`的lvalue就是`0X432...` ( `b`原来的的lvalue就没有了 ). 对`b`的操作其实就是对`a`的操作.
+因此变量名 `b`和变量名`a` 映射到同一个变量`a`. 变量名`b`仅仅是变量名`a`的别名.
 
 
 
-* Call by Reference: 直接将argument的lvalue copy给parameter, 不会取argument的rvalue
+# Example: Java
 
-* 在Java中所有变量都是引用( 参见前文, 这话的实际意思是, 变量指向的rvalue是一个指针 ), 所有参数都是**按值传递**. 由于rvalue是一个指针, 按值传递又会赋值rvalue, 最终效果就是把指针赋值给了parameter. 对parameter的更改也就会导致对同一对象的更改.
+以Java为例, Java中:
 
-  
+* **除了基本数据类型外, 所有variable指向的value都是某个对象的引用(也就是地址).**
+* **函数的参数传递是值传递( Call by Value )**: Call by Value就是将variable parameter指向的value赋值给variable argument. 即让实际参数指向形式参数的value. 
+
+
+
+因此:
+
+**对于基本类型的变量, 它们指向的value就是具体数值( e.g. 1, 5, 1.11f, .... ), 因此“按值传递”会把具体数值赋给形式参数.**
+
+**对于引用类型的变量, 它们指向的value是对一个对象的引用(或者说指针), 因此“按值传递”会把该引用赋给形式参数.**
+
+**无论如何, Java中的参数传递都是按值传递.**
+
+
+
+**我们常说Java中的某变量被改变了, 这个说法的详细版本是:** 
+
+* **对于基本类型的变量, 它指向的value被改变了.**
+* **对于引用类型的变量, 它指向的value指向的对象被改变了.**
+
+
+
+对于Java来说, “使用变量”指的是:
+
+* 对于基本类型的变量, 使用其value
+* 对于引用类型的变量, 使用其value指向的对象
+
+总之都是为了叙述上的方便, 领会意思即可.
+
+
+
+## Example
+
+例如, 对于下面的代码:
+
+```java
+int num = 20;
+StringBuilder text = new StringBuilder("iphone");
+
+void foo(int k) {
+    k = 100;
+}
+foo(num); // num 没有被改变
+
+void foo2(StringBuilder sb) {
+    sb = new StringBuilder("iphone4");
+}
+foo2(sv); // str 也没有被改变
+
+
+void foo3(StringBuilder sb) {
+    sb.append("4");
+}
+foo3(text); // text 被改变了，变成了"iphone4"。
+```
+
+1. name `num` 被映射到variable `num`.  由于`num`类型是int, 是基本数据类型, 因此**它指向的value就是20.**
+2. name `text` 被映射到variable `text`. **它指向的value是StringBuilder对象"iphone"( 记为 Object `o`)的引用**.
+
+
+
+由于Java的参数传递机制是call by value,
+
+1. `foo(int k)`的形式参数 variable `k`会被赋值为实际参数`num`的value, 即20. 
+2.  `foo2(StringBuilder sb) `和 `foo3(StringBuilder sb)` 的形式参数variable `sb`会被赋值为实际参数`text`的value, 即Object `o`的引用.
+   1. 在`foo2()`中, variable `sb`的value被赋值为其它对象的引用. `foo2()`没有改变Object `o`.
+   2. 在`foo3()`中, 对`sb`所指向的Object `o`进行了操作. 由于函数外部的variable `text`指向的value同样是`o`的引用, 我们在函数外就发现变量text被“改变”了, 即它指向的value指向的对象被改变了.
+
+
 
 # Static Scope and Block Structure
 

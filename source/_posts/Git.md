@@ -6,8 +6,6 @@ categories: Toolkit
 
 
 
-
-
 全面介绍了Git的原理和使用
 
 
@@ -1629,93 +1627,20 @@ To github.com:michaelliao/learngit.git
 - 命令`git tag -d <tagname>`可以删除一个本地标签；
 - 命令`git push origin :refs/tags/<tagname>`可以删除一个远程标签
 
-# .gitignore
+## git diff
 
-[Tutor](https://www.pluralsight.com/guides/how-to-use-gitignore-file)
+git-diff - Show changes between commits, commit and working tree, etc
 
-[现成的配置](https://github.com/github/gitignore)
+git diff 显示提交与提交之间、提交与工作树之间的文件修改。
 
+1. git diff **显示本地开发工作中已经修改但未提交至暂存区的文件和已经提交至暂存区文件的修改**
+2. **git diff HEAD \**\*\*显示的是已提交到工作树中文件和未提交到工作树中文件的所有修改。\*\**\***查看已缓存的与未缓存的所有改动。
+3. **git diff --cached 上一次最后一次提交到工作树中文件（也就是\**head\**）与暂存区内文件的改动。**查看已缓存的改动。
 
+总结一下，可以想象有三个环境，一个是我们本地正在编辑的开发环境，一个我们提交的版本库环境，还有中间一个暂时存放代码的暂存区。
 
-当远程仓库或者缓存区已经存在被忽略文件的情况下，这个时候相应的忽略规则是不起作用的. 如果先commit了, 再写`.gitignore`文件, 则后者不起作用, 需要:
+git diff 就是我们本地正在开发的但未提交到暂存区文件和之前已经提交到暂存区里的文件的对比；
 
-1. 已经add了:
+git diff head 就是已经提交到版本库环境中的文件和未提交到版本库环境中文件的所有修改对比；
 
-   * 文件较少时：
-
-     ```sh
-     git rm --cached <filename>
-     ```
-
-   * 文件较多时：
-
-     ```
-     git rm -r --cached .
-     ```
-
-1. 已经commit了:
-
-   ```
-git reset <commit_id> //这个命令, 把 commit 历史撤销，对应缓存区内容也撤销，工作区内容不变
-   git add .
-   git commit -m 'XXXX'
-   ```
-
-3. 已经push了: 只能手动把远程的也删了
-
-## 验证
-
-验证`.gitignore`是否生效,可以尝试:
-
-```sh
- git add <filename>
-```
-
-添加被忽略的文件，查看是否能添加成功, 如果`.gitignore`已经生效, 则不会添加成功
-
-
-
-还可以使用:
-
-```sh
- git check-ignore -v <filename>
-```
-
-定位到对应规则 在 .gitignore 文件中的具体位置
-
-## Example
-
-What Kind of Files Should You Ignore?
-
-- Log files
-- Files with API keys/secrets, credentials, or sensitive information
-- Useless system files like `.DS_Store` on macOS
-- Generated files like `dist` folders
-- Dependencies which can be downloaded from a package manager
-- And there might be other reasons (maybe you make little `todo.md` files)
-
-You can get an idea for what sort of files to ignore on [gitignore.io](https://www.gitignore.io/), by selecting your operating system, text editor or IDE, languages, and frameworks.
-
-## Grammar
-
-- 空行或是以`#`开头的行即注释行将被忽略。
-- 可以在前面添加正斜杠`/`来避免递归,下面的例子中可以很明白的看出来与下一条的区别。
-- 可以在后面添加正斜杠`/`来忽略文件夹，例如`build/`即忽略build文件夹。
-- 可以使用`!`来否定忽略，即比如在前面用了`*.apk`，然后使用`!a.apk`，则这个a.apk不会被忽略。
-- `*`用来匹配零个或多个字符，如`*.[oa]`忽略所有以".o"或".a"结尾，`*~`忽略所有以`~`结尾的文件（这种文件通常被许多编辑器标记为临时文件）；`[]`用来匹配括号内的任一字符，如`[abc]`，也可以在括号内加连接符，如`[0-9]`匹配0至9的数；`?`用来匹配单个字符。
-   看了这么多，还是应该来个栗子：
-
-```bash
-# 忽略 .a 文件
-*.a
-# 但否定忽略 lib.a, 尽管已经在前面忽略了 .a 文件
-!lib.a
-# 仅在当前目录下忽略 TODO 文件， 但不包括子目录下的 subdir/TODO
-/TODO
-# 忽略 build/ 文件夹下的所有文件
-build/
-# 忽略 doc/notes.txt, 不包括 doc/server/arch.txt
-doc/*.txt
-# 忽略所有的 .pdf 文件 在 doc/ directory 下的
-doc/**/*.pdf
-```
+git diff --cached 最后一次提交到版本库环境中文件和暂存区中文件的修改对比；

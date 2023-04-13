@@ -466,15 +466,15 @@ head -> next = NULL;
 
 ![free list implementation 2](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20implementation%202.png)
 
-* 这个堆堆起始地址是16KB
+* 这个堆的起始地址是16KB
 * 假设要`free(16500)`（ 即16384( 16KB ) + 前一块的108 ），也就是图上的`sptr`指针, 则令head指向sptr前的头块，得到sptr（开头的）内存块的信息，然后删除头块和sptr内存块
 
 ## Paging
 
 分页将进程的地址空间分割成固定大小的单元，称为page, 并将物理内存也分割成相同的固定大小的单元，称为frame, 每个frame装一个page, 将page和frame编号
 
-* 虚拟页号（ virtual page number, VPN ）， 因为地址空间都属于虚拟内存（虚拟空间），因此称为“虚拟”页号
-* 物理帧号（ physical  ）：因为帧都处于物理内存（物理空间）中，因此称为“物理”帧号
+* 虚拟页号( virtual page number, VPN ): 因为地址空间都属于虚拟内存（虚拟空间），因此称为“虚拟”页号
+* 物理帧号( physical frame number, PFN ): 因为帧都处于物理内存（物理空间）中，因此称为“物理”帧号
 
 
 
@@ -489,7 +489,21 @@ head -> next = NULL;
 
 在分页机制下, **每个进程都有一个页表(page table)**, 页表就是页表项的列表. 每个**页表项**( page table entry, PTE )存储了一个page到 frame 的映射（即虚拟页号到物理页号到映射）
 
-* 页表项的索引就等于VPN， 比如VPN为2， 那就对应着页表中下标为2的PFN
+* **页表项的索引就等于VPN**， 比如VPN为2， 那就对应着页表中下标为2的PFN.
+* 因此, PTE是不包含VPN的, PTE只包含PFN和一些控制位.
+
+
+
+一个Page和一个Frame是大小相等的, 由于整个内存(or 物理地址空间)都被划分成了一个个Frame或者Page, 所以Frame/Page都从0开始.
+
+* 在十进制下:
+  * Frame的起始地址 = PFN * page_size
+  * Page的起始地址 = VPN * page_size
+* 在二进制下:
+  * Frame的起始地址 = `[PFN:offset]`, `offset`为全0 
+  * Page的起始地址 =`[VPN:offset]`, `offset`为全0 
+
+
 
 
 
@@ -563,15 +577,19 @@ AddressOfPTE = Base[SN] + (VPN * sizeof(PTE))
 
 ### 多级页表
 
-多级页表就是把页表本身也分页，每个页就是页表的sublist.对页表页，用页目录(.page directory )来管理，页目录的每一项就是页目录项（.page directory entry， PDE ）, 它存储了**虚拟页号 - 页帧号的**映射，以及对应页表页的有效位。 我们只讨论两级页表，更高级的页表可以以此类推
+多级页表就是把页表本身也分页，每个页就是页表的sublist.对页表页，用页目录( page directory )来管理，页目录的每一项就是页目录项（.page directory entry， PDE ）, 它存储了**虚拟页号 - 页帧号的**映射，以及对应页表页的有效位。 我们只讨论两级页表，更高级的页表可以以此类推
 
 * 注意，这里“虚拟页号 - 页帧号映射“中的页帧号，指的是**页表页的所在的页帧号**。因为页表分页了，每一页自然就是物理内存中的物理帧，PDE就是将虚拟页号转换成页表页的物理帧号，根据虚拟页号来读取页表页。 因此，实际上**PDE是“VPN - 页表页”的映射**
 * “有效位”是面向页表页的，而一个页表页“有效”，指的是该页表页（就是PTE的集合）中至少一个PTE有效。 反之，一个无效的页表页就是所有PTE都无效，该页表页会被分配PDE，但不会再
 * 好处是，假设一个页表有100项，可以每10项一页，分10页， 其中有七页都无效（即70个PTE都为空），按照传统的页表，我依然要分配100项的空间，但是按照多级页表，只需要为三页（30项）分配空间
 
+//TODO
+
 ### 反向页表
 
 传统页表是每个进程一个，而反向页表是整个系统一个。每个PTE带有所属进程的标识符。 要搜索反向页表，需要借助散列表等数据结构
+
+\# TODO
 
 ## Address Translation
 
@@ -643,7 +661,7 @@ Summary of address translation symbols:
 
 ### Integrating Caches and VM
 
-采用虚拟化后, 指令执行就多了一次VA -> PA的映射, 对于分页来说, 也就是也就是查询页表. 为了提高效率, 考虑到内存访问的Locality, 我们采用Cache的思想, 把常用的PTE存入一个Cache, 不需要每次都查页表了.
+采用虚拟化后, 指令执行就多了一次VA -> PA的映射, 对于分页来说, 也就是查询页表. 为了提高效率, 考虑到内存访问的Locality, 我们采用Cache的思想, 把常用的PTE存入一个Cache, 不需要每次都查页表了.
 
 The main idea is that **the address translation occurs <u>before</u> the cache lookup**.
 
@@ -653,7 +671,9 @@ The main idea is that **the address translation occurs <u>before</u> the cache l
 
 ### TLB
 
-TLB( Translation Look_aside Buffer )就是上面思想的一个实现, 它是种特殊的cache, OS把一部分常用的PTE存入TLB. 
+TLB( Translation Lookaside Buffer )就是上面思想的一个实现, 它是种特殊的cache, OS把一部分常用的**PTE**存入TLB. 通过查TLB, 得到
+
+
 
 #### TLB Organization
 
@@ -662,14 +682,24 @@ TLB一般是set associative cache(详见[Cache Memory](https://lyk-love.cn/2022/
 ![TLB Organization](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20Organization.png)
 
 * 注意: **和main memory cache不同, TLB划分的是虚拟地址, 而不是物理地址**
-* TLB高位存储tag, 低位存储set index
+* 在TLB视角下, VPN部分的高位存储tag, 低位存储set index; **VPO部分似乎没有用???**
+* TLB是set associative cache, TLBE(TLB Entry)作为cache line, 里面也不会存储组号. 由于TLBE一般也不会存储标志位, 因此TLBE大小 = Tag大小 + PTE大小
+* TLB 即为快表，快表只是慢表(Page)的小小副本，因此 TLB 命中，必然 Page 也命中，而当 Page 命中，TLB 则未必命中. 
 
 #### Address Translation Using TLB
 
 使用TLB后, Address Translation过程如下:
 
 1. 对每次内存访问，OS先查看TLB，看是否有期望的转换映射.
-2. 有的话（TLB hit）就直接得到了PFN，不需要查页表. 没有的话( TLB miss )就继续**查页表，得到PTE，然后将该PTE写入TLB，再重试查TLB的指令**，这次会命中(hit)，得到PFN. 拼接出PA
+
+2. 有的话（TLB hit）就直接得到了PFN，不需要查页表. 没有的话( TLB miss )就继续**查页表, **
+
+   1. **如果PTE Valid, 则进入步骤3. **
+   2. **如果PTE Invalid, 则从外部存储中得到PTE, 更新页表, 再重试查TLB的指令, 接着TLB会继续miss, 但查页表时会得到PTE Valid, 进入步骤3**.
+   3. **更新TLB, 并得到PFN, 拼接出PA**. 
+
+   * 可以看到, TLB 要么hit, 要么会有连续两次miss被年过半百
+
 3. 用PA来进行后续的内存访问( main memory cache, main memory, disk ...)
 
 ![Address Translation with TLB](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Address%20Translation%20with%20TLB.png)
@@ -760,6 +790,36 @@ RetryInstruction()
 可以把一部分页表放在内核的虚拟内存中，不会随着context switch而刷新，这样就提升了速度，也减少了用户空间的内存压力
 
 * 放在内核虚拟空间的页表不会被切换，这也意味着其寄存器（基址/界限寄存器）不会被刷新
+
+## Questions
+
+> Q: 假设一个分页虚拟存储系统的虚拟地址为 40 位，物理地址为 36 位，页大小为 16KB，按字节编址。 若页表中的有效位、存储保护位、修改位、使用位共占 4 位，磁盘地址不在页表中。则该存储系统 中每个程序的页表大小为多少(单位:MB)?
+>
+> (说明:
+>
+> 1.假设每个程序都能使用全部的虚拟内存; 
+>
+> 2.页表项的长度必须为字节的整数倍
+>
+> )
+
+Answer:
+
+> 按字节编址, 故: 
+>
+> 虚拟主存页面个数:2^(40-14)=2^26 
+>
+> 物理主存页面数:2^(36-14)=2^22 页表项的最小长度:22+4=26 
+>
+> 根据说明 2，取 32 位(4B) 页表大小:2^26*4B=256MB
+
+***
+
+COA2015
+
+![image-20230226013719425](/Users/lyk/Library/Application Support/typora-user-images/image-20230226013719425.png)
+
+
 
 ## page scheduling
 

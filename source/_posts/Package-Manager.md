@@ -47,60 +47,7 @@ pacman -Syu
 - `y` 代表更新本地存储库
 - `u` 代表系统更新
 
-## conda
 
- 推荐`miniconda`， 直接去NJU MIRROR下载：
-
-```shell
-wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh
-```
-
-* 清华源
-
-然后安装：
-
-```shell
-bash /path/to/miniconda
-```
-
-
-
-重启终端，检查安装是否成功：
-
-```shell
-conda -V
-```
-
-### 换源
-
-conda换源建议用nju源  （清华源早就不行了，建议别用）， [具体指导](https://mirrors.nju.edu.cn/help/anaconda)
-
-1. 先执行 `conda config --set show_channel_urls yes` 生成用户目录下的 `.condarc` 文件
-
-2. 编辑该文件：
-
-   ```yaml
-   channels:
-     - defaults
-   show_channel_urls: true
-   default_channels:
-     - https://mirror.nju.edu.cn/anaconda/pkgs/main
-     - https://mirror.nju.edu.cn/anaconda/pkgs/r
-     - https://mirror.nju.edu.cn/anaconda/pkgs/msys2
-   custom_channels:
-     conda-forge: https://mirror.nju.edu.cn/anaconda/cloud
-     msys2: https://mirror.nju.edu.cn/anaconda/cloud
-     bioconda: https://mirror.nju.edu.cn/anaconda/cloud
-     menpo: https://mirror.nju.edu.cn/anaconda/cloud
-     pytorch: https://mirror.nju.edu.cn/anaconda/cloud
-     simpleitk: https://mirror.nju.edu.cn/anaconda/cloud
-   ```
-
-   即可添加 Anaconda Python 免费仓库。
-
-3. 运行 `conda clean -i` 清除索引缓存，保证用的是镜像站提供的索引。
-
-4. 运行 `conda create -n myenv numpy` 测试一下吧
 
 # For OSX
 
@@ -175,7 +122,161 @@ brew安装的软件位置千奇百怪, 但都会在`/opt/homebrew/opt`留下软�
 
   
 
-# For Languages
+# For Programing Languages
+
+## conda
+
+ 推荐`miniconda`.
+
+
+
+直接去NJU MIRROR下载, 以对应Python3.9的miniconda为例:
+
+```shell
+wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh
+```
+
+
+
+
+
+对于Arm架构:
+
+```sh
+wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_23.1.0-1-Linux-aarch64.sh
+```
+
+
+
+* 清华源
+
+
+
+然后安装：
+
+```shell
+bash /path/to/miniconda
+```
+
+
+
+重启终端，检查安装是否成功：
+
+```shell
+conda -V
+```
+
+### 换源
+
+conda换源建议用nju mirror,  [具体指导](https://mirrors.nju.edu.cn/help/anaconda). ( 其实nju源就是从[tuna](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)搬运的, 直接用tuna也可以)
+
+1. 先执行 `conda config --set show_channel_urls yes` 生成用户目录下的 `.condarc` 文件( 即`~/.condarc`)
+
+2. 编辑该文件：
+
+   ```yaml
+   channels:
+     - defaults
+   show_channel_urls: true
+   default_channels:
+     - https://mirror.nju.edu.cn/anaconda/pkgs/main
+     - https://mirror.nju.edu.cn/anaconda/pkgs/r
+     - https://mirror.nju.edu.cn/anaconda/pkgs/msys2
+     - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+     - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+     - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+   
+   
+   custom_channels:
+     conda-forge: https://mirror.nju.edu.cn/anaconda/cloud
+     msys2: https://mirror.nju.edu.cn/anaconda/cloud
+     bioconda: https://mirror.nju.edu.cn/anaconda/cloud
+     menpo: https://mirror.nju.edu.cn/anaconda/cloud
+     pytorch: https://mirror.nju.edu.cn/anaconda/cloud
+     simpleitk: https://mirror.nju.edu.cn/anaconda/cloud
+   ```
+
+   即可添加 Anaconda Python 免费仓库。
+
+3. 运行 `conda clean -i` 清除索引缓存，保证用的是镜像站提供的索引。
+
+4. 运行 `conda create -n myenv numpy` 测试一下吧
+
+### commands
+
+
+
+Display Conda environment information:
+
+```
+conda info
+```
+
+
+
+
+
+list all existing  environments.
+
+```
+conda env list
+```
+
+
+
+Create a new environment
+
+```
+conda create --name [project-env] python=3.7
+```
+
+
+
+<u>The environments created by Anaconda is always located in `~/anaconda3/envs/`( 对于Miniconda: `~/miniconda3/envs/`)
+
+
+
+<u> You may change the default location by using the following command but it is not encouraged.</u> Conda can no longer find your environment by your environment name, you will have to specify the environment’s full path to activate it every time.
+
+```
+conda create --prefix /path/project-env
+```
+
+
+
+Activate your new environment:
+
+```
+conda activate project-env
+```
+
+
+
+ display all packages in this environment:
+
+```
+conda list
+```
+
+
+
+`conda list` also supports revision history.:
+
+```
+conda list --revision
+```
+
+
+
+remove the environment:
+
+```
+conda env remove --name [project-env]
+```
+
+
+
+
 
 ## pip3
 

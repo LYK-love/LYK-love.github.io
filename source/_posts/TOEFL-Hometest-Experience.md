@@ -18,7 +18,7 @@ date: 2023-02-12 16:51:51
 
 
 
-虽然雅思成绩被全世界认可, 但美国学校对雅思成绩会有歧视, 比如雅思7.0只能等于TOEFL90. 或者也有些学校(尽管很少见), 明目张胆地说“更喜欢TOEFL分数”:
+虽然雅思成绩被全世界认可, 但美国学校对雅思成绩会有歧视, 比如雅思7.0只能等于TOEFL90. 也有些学校(尽管很少见)会明目张胆地说“更喜欢TOEFL分数”:
 
 ![TOEFL Preference](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Study%20Abroad/TOEFL/TOEFL%20Preference.png)
 

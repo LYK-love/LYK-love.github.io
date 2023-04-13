@@ -43,6 +43,14 @@ for other platform just replace brew with your correspondding package manager
 
 # File and Dir
 
+For mac:
+
+```
+brew install coreutils
+```
+
+
+
 `File&Dir_Operations_Packages_General.txt`: 没安装broot
 
 ```
