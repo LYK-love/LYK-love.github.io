@@ -60,9 +60,7 @@ You can upload pictures from the camera using the **PC AUTO SAVE** option in the
 
    ![img](https://fujifilm-dsc.com/en/manual/x-s10/images/ill_bd_connect_hdmi_x-s10.png)
 
-   Insert into HDMI Micro connector (Type D)
-
-   * 参见[对各种类型HDMI接口的介绍](Common HDMI Products).
+   Insert into HDMI Micro connector (Type D)[^1]
 
 3. Configure the device for HDMI input as described in the documentation supplied with the device.
 
@@ -72,3 +70,6 @@ You can upload pictures from the camera using the **PC AUTO SAVE** option in the
 
 [官网](https://www.captureone.com/en/account)
 
+
+
+[^1]: 参见[对各种类型HDMI接口的介绍](https://lyk-love.cn/2023/04/13/Common-HDMI-Products/).

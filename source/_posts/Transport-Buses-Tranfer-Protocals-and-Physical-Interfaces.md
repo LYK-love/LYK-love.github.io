@@ -66,7 +66,7 @@ https://www.techtarget.com/searchstorage/definition/Serial-ATA
 
   * 在2000 年发明
 
-* SATA 只有 4 根线, 分别为：发送数据线，接收数据线，电源线, 地线.
+* SATA 只有 4 根线, 分别为：发送数据线, 接收数据线, 电源线, 地线.
 
   
 
@@ -74,25 +74,19 @@ https://www.techtarget.com/searchstorage/definition/Serial-ATA
 
 SATA 有三个版本, 对应物理接口也有三个版本:
 
-* SATA: 正式名稱爲**SATA 1.5Gb/s**, 是第一代SATA接口. 有效带宽为 150MB/s, 数据速率为 1.5Gbps( 传输的数据经过了8B/10B 变换,  150MB/s*10=1.5Gbps) .
+* SATA: 正式名稱爲**SATA 1.5Gb/s**, 是第一代SATA接口. 有效带宽为 150MB/s, 数据速率为 1.5Gbps( 传输的数据经过了8B/10B 变换, 150MB/s*10=1.5Gbps) .
 
 * SATA II: 正式名稱爲**SATA 3Gb/s**, 是第二代SATA接口.  有效带宽为 300MB/s , 数据速率为 3Gbps.
 
 * **SATA III**: 正式名稱爲**SATA 6Gb/s**, 是第三代SATA接口, 有效带宽为 600MB/s , 数据速率为 6Gbps.
 
-  
-
-  
-
-  
-
    
 
   
 
-* SATA配套的传输协议是AHCI. SATA和AHCI是HDD时代的产物, ATA总线的传输速率上限也就是几百MB, 所以SATA + AHCI在HDD时代是够用的, 虽然目前主流SSD依然支持它们, 但已经不够用了
+* SATA配套的传输协议是AHCI. SATA和AHCI是HDD时代的产物, ATA总线的传输速率上限也就是几百MB, 所以SATA + AHCI在HDD时代是够用的, 虽然目前主流SSD依然支持它们, 但已经不够用了.
 
-* SATA II向后兼容SATA I. SATA III向后兼容SATA I和SATA II/ 但是, 由于低版本接口的数据传输率的限制, 使用低版本的接口时数据传输率也会降低.
+* SATA II向后兼容SATA I. SATA III向后兼容SATA I和SATA II. 但是, 由于低版本接口的数据传输率的限制, 使用低版本的接口时数据传输率也会降低.
 
   * 例子: 闪迪至尊极速固态硬盘支持SATA 6Gb/s接口并且当连接到SATA 6Gb/s 接口时，顺序读速度和写速度分别能达到550/520MB/s。但是，当连接到SATA 3 Gb/s 接口时，顺序读速度和顺序写速度则分别能达到285/275MB/s
 
