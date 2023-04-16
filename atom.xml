@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2023-04-15T04:46:10.587Z</updated>
+  <updated>2023-04-16T14:13:18.180Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -15,6 +15,53 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Dead Lift</title>
+    <link href="http://lyk-love.cn/2023/04/17/Dead-Lift/"/>
+    <id>http://lyk-love.cn/2023/04/17/Dead-Lift/</id>
+    <published>2023-04-16T22:10:31.000Z</published>
+    <updated>2023-04-16T14:13:18.180Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Intro&lt;/li&gt;
+&lt;li&gt;Traditional Dead Lift&lt;/li&gt;
+&lt;li&gt;Other Dead Lift Variations&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="Fitness" scheme="http://lyk-love.cn/categories/Fitness/"/>
+    
+    
+    <category term="Bodybuilding" scheme="http://lyk-love.cn/tags/Bodybuilding/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Face Pull</title>
+    <link href="http://lyk-love.cn/2023/04/17/Face-Pull/"/>
+    <id>http://lyk-love.cn/2023/04/17/Face-Pull/</id>
+    <published>2023-04-16T21:58:47.000Z</published>
+    <updated>2023-04-16T13:58:47.729Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Benefits&lt;/li&gt;
+&lt;li&gt;Face Pull&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="Fitness" scheme="http://lyk-love.cn/categories/Fitness/"/>
+    
+    
+    <category term="Bodybuilding" scheme="http://lyk-love.cn/tags/Bodybuilding/"/>
+    
+  </entry>
   
   <entry>
     <title>Arm Muscles</title>
@@ -406,60 +453,6 @@
     
     
     <category term="AI" scheme="http://lyk-love.cn/tags/AI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Transformation of RE, NFA, DFA</title>
-    <link href="http://lyk-love.cn/2022/09/26/Transformation%20of%20RE,%20NFA,%20DFA/"/>
-    <id>http://lyk-love.cn/2022/09/26/Transformation%20of%20RE,%20NFA,%20DFA/</id>
-    <published>2022-09-26T06:39:34.942Z</published>
-    <updated>2022-09-26T06:39:34.942Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;REGEX -&amp;gt; NFA&lt;/li&gt;
-&lt;li&gt;NFA -&amp;gt; DFA&lt;/li&gt;
-&lt;li&gt;Minimizing DFA&lt;/li&gt;
-&lt;li&gt;DFA -&amp;gt; REGEX&lt;/li&gt;
-&lt;li&gt;Prove DFA &amp;lt;=&amp;gt; REGEX&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="Computer Science" scheme="http://lyk-love.cn/categories/Computer-Science/"/>
-    
-    
-    <category term="Compilers" scheme="http://lyk-love.cn/tags/Compilers/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>The Story of Art: Chapter 26,27</title>
-    <link href="http://lyk-love.cn/2022/09/26/The-Story-of-Art-19-20%E4%B8%96%E7%BA%AA/"/>
-    <id>http://lyk-love.cn/2022/09/26/The-Story-of-Art-19-20%E4%B8%96%E7%BA%AA/</id>
-    <published>2022-09-26T06:39:34.941Z</published>
-    <updated>2022-09-26T06:39:34.941Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;19世纪末的艺术，：寻求新标准&lt;/li&gt;
-&lt;li&gt;20世纪上半叶的艺术：实验艺术&lt;/li&gt;
-&lt;li&gt;艺术史的总结
-&lt;ul&gt;
-&lt;li&gt;我终于理解了“从来没有什么艺术，只有一个一个的艺术家”这句话，对它的解释写在了结尾，我真是太聪明了！&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="Art" scheme="http://lyk-love.cn/categories/Art/"/>
-    
-    
-    <category term="Art Theory" scheme="http://lyk-love.cn/tags/Art-Theory/"/>
     
   </entry>
   
