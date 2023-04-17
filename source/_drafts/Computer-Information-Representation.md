@@ -26,13 +26,27 @@ categories: Computer Science
 
 # Integer Representation
 
+//TODO int - binary
+
 ## Integral Data Types
 
 ## Unsigned Encodings
 
+PRINCIPLE: Definition of unsigned encoding:
+For vector  $\vec{x}=\left[x_{w-1}, x_{w-2}, \ldots, x_{0}\right]$  :
+$$
+B 2 U_{w}(\vec{x}) \doteq \sum_{i=0}^{w-1} x_{i} 2^{i}
+$$
+The range of $w$-bit unsigned integer:
+
+* 最小值为$0$
+* 最大值为: $ UMax_w \doteq \sum_{i=1}^{w-1} 2^i = 2^w - 1$
 
 
-由二进制数转换成十进制数的基本做法是，把二进制数首先写成加权系数展开式，然后按十进制加法规则求和。这种做法称为"**按权相加**"法。
+
+
+
+由二进制数转换成十进制数的基本做法是: 把二进制数首先写成加权系数展开式，然后按十进制加法规则求和。这种做法称为"**按权相加**"法。
 
 例如把二进制数 110.11 转换成十进制数。
 
@@ -50,7 +64,109 @@ categories: Computer Science
 
 ![img](https://www.runoob.com/wp-content/uploads/2018/11/210-3.png)
 
+
+
 ## Two’s-Complement Encodings
+
+PRINCIPLE: Definition of two's-complement encoding
+For vector $ \vec{x}=\left[x_{w-1}, x_{w-2}, \ldots, x_{0}\right]$  :
+$$
+B 2 T_{w}(\vec{x}) \doteq-x_{w-1} 2^{w-1}+\sum_{i=0}^{w-2} x_{i} 2^{i}
+$$
+
+### Range
+
+Let us consider the range of values that can be represented as a w-bit two’s-complement number. 
+
+* The least representable value is given by bit vector $[10\dots0]$ (set the bit with negative weight but clear all others), having integer value $TMin_w \doteq −2^{w−1}$. 
+* The greatest value is given by bit vector $[01 . . . 1]$ (clear the bit with negative weight but set all others), having integer value $TMax_w \doteq \sum_{i=1}^{w-2} 2^i = 2^{w−1} − 1$. 
+
+* Examples:
+
+  * Using the 4-bit case as an example, we have:
+    *  $TMin_4 = B2T_4([1000]) = −2^3 = −8$
+    * $TMax_4 = B2T_4([0111]) = 2^2 + 2^1 + 2^0 = 4 + 2 + 1 = 7$
+  * 再例如, 对于32-bit二进制串`0x80000000`, 它代表的是32-bit 二进制补码的下界`-2147483648`
+
+* 可以看到, 二进制补码的值域是asymmetric的:
+  $$
+  |TMin| = |TMax| + 1
+  $$
+  这是由于一半的比特串被分配给了负数, 而另一半比特串被分配给了非负数(包括0), 因此正数的比特串就比负数的少一个.
+
+* The maximum unsigned value is just over twice the maximum two’s-complement value: 
+  $$
+  UMax = 2TMax + 1
+  $$
+  
+
+  
+
+***
+
+可以看到,   $B2T_w$建立了$w$-bit 二进制数与$\{TMin_w, \dots, TMax_w\}$的一一对应.
+
+
+
+principle: Uniqueness of two’s-complement encoding:
+
+Function $B2T(w)$ is a bijection.
+
+
+
+We define function $T2B_w$ (for “two’s complement to binary”) to be the inverse of $B2T_w.$ That is, for a number $x$, such that
+
+$TMin_w < x < TMax_w$ ,  $T2B_w(x)$is the (unique) $w$-bit pattern that encodes $x$.
+
+***
+
+
+
+
+
+
+
+
+
+## Conversions between Signed and Unsigned
+
+![image-20230302195301581](/Users/lyk/Library/Application Support/typora-user-images/image-20230302195301581.png)
+
+
+
+
+
+
+
+![image-20230302195331453](/Users/lyk/Library/Application Support/typora-user-images/image-20230302195331453.png)
+
+
+
+
+
+![image-20230302195359694](/Users/lyk/Library/Application Support/typora-user-images/image-20230302195359694.png)
+
+
+
+![image-20230302195409538](/Users/lyk/Library/Application Support/typora-user-images/image-20230302195409538.png)
+
+
+
+To summarize, we considered the effects of converting in both directions between unsigned and two’s-complement representations. 
+
+* For values x in the range $0 ≤ x ≤ TMax_w$, we have$T2U_w(x) = x$ and $U2T_w(x) = x$. That is, **numbers in this range have identical unsigned and two’s-complement representations.** 
+
+* For values outside of this range, the conversions either add or subtract $2_w$. 
+
+  ![image-20230302195547362](/Users/lyk/Library/Application Support/typora-user-images/image-20230302195547362.png)
+
+  
+
+
+
+## Signed versus Unsigned in C
+
+## Expanding the Bit Representation of a Number
 
 
 
@@ -60,13 +176,45 @@ For converting a two’s-complement number to a larger data type, the rule is to
 
 
 
-## Conversions between Signed and Unsigned
 
-## Signed versus Unsigned in C
 
-## Expanding the Bit Representation of a Number
+
 
 ## Truncating Numbers
+
+When truncating a w-bit number $\vec x = [x_{w−1}, x_{w−2}, . . . , x_0]$ to a k-bit number, we drop the high-order w − k bits, giving a bit vector $\vec x = [x_{k−1}, x_{k−2}, . . . , x_0]$. Truncating a number can alter its value—a form of **overflow**. 
+
+
+
+![image-20230302195803053](/Users/lyk/Library/Application Support/typora-user-images/image-20230302195803053.png)
+
+The intuition behind this principle is simply that all of the bits that were truncated have weights of the form 2i, where i ≥ k, and therefore each of these weights reduces to zero under the modulus operation. This is formalized by the following derivation:
+
+相当于mod掉$2^k$
+
+
+
+![image-20230302195835969](/Users/lyk/Library/Application Support/typora-user-images/image-20230302195835969.png)
+
+
+
+In this derivation, we make use of the property that:
+$$
+\forall i \geq k, \ 2^i \mathrm{mod} 2^k = 0
+$$
+
+
+A similar property holds for truncating a two’s-complement number, except that it then converts the most significant bit into a sign bit:
+
+
+
+![image-20230302200014678](/Users/lyk/Library/Application Support/typora-user-images/image-20230302200014678.png)
+
+
+
+![image-20230302200034867](/Users/lyk/Library/Application Support/typora-user-images/image-20230302200034867.png)
+
+
 
 # Floating-Point Representation
 
@@ -108,7 +256,8 @@ $$
   * 规格化数的Biased Exponent实际取值为$[1, 2^{k} - 1 - 1]$. 因为全零阶码$0000...$和全一阶码$1111....$都有特殊用途. 对于32-bit float, 其8-bit Exponent的Biased Exponent范围是$[1, 254]$, True Exponent范围是$[-126, 127]$
 
 * **Subnormal number**: 用于处理规格化数中的underflow情况, 当数的阶值太小时, 可以不断右移Significand并增加阶值, 直到阶值落在可表示范围内( 这就是**非规格化** )
-  * 阶值太小: 小于biasd representation可表示的阶值范围. 比如, 8-bit exponent只能表示最小阶值-127( $00000000_2$), 如果某浮点数的阶值为-128, 则无法被规格化表示. 可以通过左移Significand并阶值加一, 来使得该数字作为非规格化数表示
+  
+  * 阶值太小: 小于biasd representation可表示的阶值范围. 比如, 8-bit exponent只能表示最小阶值-127( $00000000_2$), 如果某浮点数的阶值为-128, 则无法被规格化表示. 可以通过右移Significand并阶值加一, 来使得该数字作为非规格化数表示
 
 
 
@@ -130,9 +279,19 @@ $$
 
 
 * 1-bit sign. <u>The sign is stored in the first bit</u> of the word.
-* 8-bit Biased exponent: The value **127** ($2^7 - 1$)  is added to the true exponent to be stored in the exponent field.
+
+* 8-bit Biased exponent: 该比特串代表无符号整数, 等于真实的阶值 + 偏置值( **127** ($2^7 - 1$)  )
+
+  * 8-bit无符号整数的值域为$[0, 255]$
+  * 真实阶值的值域因此为$[-127, 128]$. 但是后面我们会看到, 全0的阶码有特殊用途. 它表示该数是个非规格化数, 阶值为$-126$. (即偏置值变成了126, 真实值0 - 偏置值126 = -126 ). 因此真实阶值最小为$-126$, 值域因此为$[-126, 128]$. 
+    * 真实阶值 =-126 有两种情况:
+      1. 该浮点数为非规格化数, 阶码为全0
+      2. 该浮点数为规格化数, 阶值为1, 因此真实阶值为-126 = 1 - 127
+
   * <u>true</u> exponent values are in the range <u>\- 127 to +128</u>. 
+
 * 23-bit Significand: 如果是规格化数, 那么这23-bit实际上表达的是一个24-bit的Significand, 它的第一位永远是1, 因此被省略.
+
 * The base is 2.
 
 
@@ -143,7 +302,7 @@ Following Figure indicates the range of numbers that can be represented in a 32-
 
 * Positive numbers between $2^{-127}$ and $(2 - 2^{-23}) \times 2^{128}$
 
-* 然而, 后面我们会看到, 全0的阶码
+* 然而, 
 
   
 

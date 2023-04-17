@@ -44,12 +44,23 @@ class Slush extends Snow{}
   List<Integer> list2 = Arrays.asList(ia);
   ```
 
-  产生的List用底层数组作为物理实现，任意对List的改变会反映到底层数组(因此用add, delete来增删元素会导致`Unsupported Operation`， 因为数组不能改变大小)
+  由`Arrays.asList()`返回的List用底层数组作为物理实现, 任意对List的改变会反映到底层数组 , 因此不能用add, delete来增删`Arrays.asList()`返回的List的元素, 因为其底层的是数组, 数组的大小不能改变.
 
   * `list1`创建了一个引用`ia`元素的ArrayList, 对`list1`的改变不会改变`ia`
+
   * `list2`直接引用了`Arrays.asList(ia)`，这意味着`list2`将`ia`作为底层实现，对`list2`的任何改变都会改变`ia`
 
-  
+  * 因此, 可以将`Arrays.asList()`返回的List复制一份再进行增删操作:
+
+    ```java
+    String[] array = "aa,bb,cc".split(",");
+    List<String> list = new ArrayList<String>(Arrays.asList(array)); // 复制一份
+    list.add("dd"); // 这里不报错
+    ```
+
+    
+
+* 要想向
 
 * `Collecions.addAll()`:接收一个`Collection`对象，以及一个数组或是一个用逗号分隔的列表，将元素添加到` Collection`中
 
@@ -88,7 +99,14 @@ class Slush extends Snow{}
   List<Snow> snow4 = Arrays.<Snow>asList( new Light(), new Heavy() );
   ```
 
-  
+
+## 迭代
+
+使用迭代器时, 不能对增加或删除容器中的元素.
+
+java 认为在迭代过程中，容器应当保持不变。因此，java 容器中通常保留了一个域称为 modCount，每次你对容器修改，这个值就会加1。当你调用 iterator 方法时，返回的迭代器会记住当前的 modCount，随后迭代过程中会检查这个值，一旦发现这个值发生变化，就说明你对容器做了修改，就会抛异常
+
+
 
 ## 对象打印
 
@@ -111,6 +129,8 @@ Light@42a57993,
 [Light@42a57993, Heavy@75b84c92] //Collection
 {rat=Fuzzy, cat=Rags}
 ```
+
+
 
 ## 转换为Array
 
@@ -611,8 +631,6 @@ List<String> list2 = List.of("apple"); // 1 element
 List<String> list3 = List.of("apple", "pear"); // 2 elements
 List<String> list4 = List.of("apple", "pear", "orange"); // 3 elements
 ```
-
-
 
 # Tips
 

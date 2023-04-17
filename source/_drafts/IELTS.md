@@ -4,6 +4,16 @@ categories: Life
 tags: Study Abroad
 ---
 
+
+
+# Register
+
+[NEEA报名](https://ielts.neea.edu.cn/homepage?QuVcIYRngAyv=1676203642769#)
+
+
+
+
+
 # 笔试
 
 地址: 苏州大学北校区雅思考试中心大楼, 江苏省苏州市姑苏区干将东路178号

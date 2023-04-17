@@ -69,8 +69,14 @@ RUN pip3 install opencv-python-headless -i https://mirrors.aliyun.com/pypi/simpl
 众所周知，各大机器学习Python库对Mac M1的支持并不好，因此这里介绍一下M1的Python机器学习环境配置
 
 * tensorflow 几乎不支持 M1
+
 * pytorch(.包括torchvison )已经支持M1
+
 * torchboard等库仍未支持M1
+
+* **Python < 3.8  [are not available on M1](https://bugs.python.org/msg382939).**
+
+  > There are no plans to backport support to 3.7 and 3.6 which are in the security-fix-only phase of their release cycles.
 
 
 
