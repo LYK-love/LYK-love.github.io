@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2023-04-17T12:19:16.659Z</updated>
+  <updated>2023-04-21T04:16:33.936Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Bodybuilding Basic</title>
+    <link href="http://lyk-love.cn/2023/04/21/Bodybuilding-Basic/"/>
+    <id>http://lyk-love.cn/2023/04/21/Bodybuilding-Basic/</id>
+    <published>2023-04-21T12:16:33.000Z</published>
+    <updated>2023-04-21T04:16:33.936Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;肌肉合成&lt;/li&gt;
+&lt;li&gt;蛋白质&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="Fitness" scheme="http://lyk-love.cn/categories/Fitness/"/>
+    
+    
+    <category term="Bodybuilding" scheme="http://lyk-love.cn/tags/Bodybuilding/"/>
+    
+  </entry>
   
   <entry>
     <title>左派与反企业运动</title>
@@ -349,33 +372,14 @@
   </entry>
   
   <entry>
-    <title>Git</title>
-    <link href="http://lyk-love.cn/2023/02/08/Git/"/>
-    <id>http://lyk-love.cn/2023/02/08/Git/</id>
-    <published>2023-02-08T07:44:07.943Z</published>
-    <updated>2023-04-05T08:32:25.321Z</updated>
+    <title>长津湖</title>
+    <link href="http://lyk-love.cn/2023/02/08/%E9%95%BF%E6%B4%A5%E6%B9%96/"/>
+    <id>http://lyk-love.cn/2023/02/08/%E9%95%BF%E6%B4%A5%E6%B9%96/</id>
+    <published>2023-02-08T07:44:07.960Z</published>
+    <updated>2023-02-08T07:44:07.960Z</updated>
     
     
-    <summary type="html">&lt;p&gt;全面介绍了Git的原理和使用&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Toolkit" scheme="http://lyk-love.cn/categories/Toolkit/"/>
-    
-    
-    <category term="Git" scheme="http://lyk-love.cn/tags/Git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>满江红</title>
-    <link href="http://lyk-love.cn/2023/02/08/%E6%BB%A1%E6%B1%9F%E7%BA%A2/"/>
-    <id>http://lyk-love.cn/2023/02/08/%E6%BB%A1%E6%B1%9F%E7%BA%A2/</id>
-    <published>2023-02-08T01:59:49.000Z</published>
-    <updated>2023-02-08T12:32:03.446Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;我给这部电影打满分.&lt;/p&gt;</summary>
+    <summary type="html">&lt;p&gt;易烊千玺主演, 抗美援朝电影，国庆头号烂片。&lt;/p&gt;</summary>
     
     
     
@@ -387,71 +391,75 @@
   </entry>
   
   <entry>
-    <title>Cache Memory</title>
-    <link href="http://lyk-love.cn/2022/12/01/Cache-Memory/"/>
-    <id>http://lyk-love.cn/2022/12/01/Cache-Memory/</id>
-    <published>2022-11-30T21:22:01.000Z</published>
-    <updated>2023-02-25T17:08:08.552Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Computer Science" scheme="http://lyk-love.cn/categories/Computer-Science/"/>
-    
-    
-    <category term="Computer Architecture" scheme="http://lyk-love.cn/tags/Computer-Architecture/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>WES</title>
-    <link href="http://lyk-love.cn/2022/11/06/WES/"/>
-    <id>http://lyk-love.cn/2022/11/06/WES/</id>
-    <published>2022-11-06T00:25:41.000Z</published>
-    <updated>2022-11-30T04:12:36.303Z</updated>
+    <title>AI Intro</title>
+    <link href="http://lyk-love.cn/2023/02/08/%E5%AF%BC%E8%AE%BA-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    <id>http://lyk-love.cn/2023/02/08/%E5%AF%BC%E8%AE%BA-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</id>
+    <published>2023-02-08T07:44:07.959Z</published>
+    <updated>2023-02-08T07:44:07.959Z</updated>
     
     
     <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Intro&lt;/li&gt;
-&lt;li&gt;WES&lt;/li&gt;
-&lt;li&gt;学信网认证&lt;/li&gt;
-&lt;/ul&gt;</summary>
+&lt;li&gt;What is AI&lt;/li&gt;
+&lt;li&gt;What will we learn&lt;/li&gt;
+&lt;li&gt;Agent&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ref:&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Artificial Intelligence A Modern Approach&lt;/em&gt;&lt;/p&gt;</summary>
     
     
     
-    <category term="Life" scheme="http://lyk-love.cn/categories/Life/"/>
+    <category term="Artificial Intelligence" scheme="http://lyk-love.cn/categories/Artificial-Intelligence/"/>
     
     
-    <category term="Study Abroad" scheme="http://lyk-love.cn/tags/Study-Abroad/"/>
+    <category term="AI" scheme="http://lyk-love.cn/tags/AI/"/>
     
   </entry>
   
   <entry>
-    <title>Computer Memory Error Correction</title>
-    <link href="http://lyk-love.cn/2022/10/11/Computer-Memory-Error-Correction/"/>
-    <id>http://lyk-love.cn/2022/10/11/Computer-Memory-Error-Correction/</id>
-    <published>2022-10-10T20:41:28.000Z</published>
-    <updated>2023-02-25T08:41:34.148Z</updated>
+    <title>矿工笔记</title>
+    <link href="http://lyk-love.cn/2023/02/08/%E7%9F%BF%E5%B7%A5%E7%AC%94%E8%AE%B0/"/>
+    <id>http://lyk-love.cn/2023/02/08/%E7%9F%BF%E5%B7%A5%E7%AC%94%E8%AE%B0/</id>
+    <published>2023-02-08T07:44:07.959Z</published>
+    <updated>2023-02-08T07:44:07.959Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;注：我不挖矿&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Technology" scheme="http://lyk-love.cn/categories/Technology/"/>
+    
+    
+    <category term="Block Chain" scheme="http://lyk-love.cn/tags/Block-Chain/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>The Story of Art: Chapter 26,27</title>
+    <link href="http://lyk-love.cn/2023/02/08/The-Story-of-Art-19-20%E4%B8%96%E7%BA%AA/"/>
+    <id>http://lyk-love.cn/2023/02/08/The-Story-of-Art-19-20%E4%B8%96%E7%BA%AA/</id>
+    <published>2023-02-08T07:44:07.956Z</published>
+    <updated>2023-02-08T07:44:07.956Z</updated>
     
     
     <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Intro&lt;/li&gt;
-&lt;li&gt;Error Correction&lt;/li&gt;
-&lt;li&gt;Odd-Even Check&lt;/li&gt;
-&lt;li&gt;Hamming Code&lt;/li&gt;
-&lt;li&gt;Cyclic Redundancy Check&lt;/li&gt;
+&lt;li&gt;19世纪末的艺术，：寻求新标准&lt;/li&gt;
+&lt;li&gt;20世纪上半叶的艺术：实验艺术&lt;/li&gt;
+&lt;li&gt;艺术史的总结
+&lt;ul&gt;
+&lt;li&gt;我终于理解了“从来没有什么艺术，只有一个一个的艺术家”这句话，对它的解释写在了结尾，我真是太聪明了！&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;</summary>
     
     
     
-    <category term="Computer Science" scheme="http://lyk-love.cn/categories/Computer-Science/"/>
+    <category term="Art" scheme="http://lyk-love.cn/categories/Art/"/>
     
     
-    <category term="Computer Architecture" scheme="http://lyk-love.cn/tags/Computer-Architecture/"/>
+    <category term="Art Theory" scheme="http://lyk-love.cn/tags/Art-Theory/"/>
     
   </entry>
   

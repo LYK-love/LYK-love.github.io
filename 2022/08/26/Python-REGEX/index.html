@@ -28,7 +28,7 @@
 <meta property="og:description" content="Outline:  re模块 切分字符串 分组 贪婪匹配 编译">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-08-26T00:43:35.000Z">
-<meta property="article:modified_time" content="2022-09-26T06:39:34.938Z">
+<meta property="article:modified_time" content="2023-04-19T14:30:37.536Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#re%E6%A8%A1%E5%9D%97"><span class="nav-text">re模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%87%E5%88%86%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">切分字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E7%BB%84"><span class="nav-text">分组</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D"><span class="nav-text">贪婪匹配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-text">编译</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#re%E6%A8%A1%E5%9D%97"><span class="nav-text">re模块</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%87%E5%88%86%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">切分字符串</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Group-in-Regex"><span class="nav-text">Group in Regex</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Access-Each-Group-Result-Separately"><span class="nav-text">Access Each Group Result Separately</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Regex-Capture-Group-Multiple-Times"><span class="nav-text">Regex Capture Group Multiple Times</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Extract-Range-of-Groups-Matches"><span class="nav-text">Extract Range of Groups Matches</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D"><span class="nav-text">贪婪匹配</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91"><span class="nav-text">编译</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -259,7 +259,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-09-26 06:39:34" itemprop="dateModified" datetime="2022-09-26T06:39:34Z">2022-09-26</time>
+      <time title="Modified: 2023-04-19 14:30:37" itemprop="dateModified" datetime="2023-04-19T14:30:37Z">2023-04-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -301,7 +301,7 @@
 <p>Python提供<code>re</code>模块，包含所有正则表达式的功能。由于Python的字符串本身也用<code>\</code>转义，所以要特别注意：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">s = &#x27;ABC\\-001&#x27; # Python的字符串</span><br><span class="line"># 对应的正则表达式字符串变成：</span><br><span class="line"># &#x27;ABC\-001&#x27;</span><br></pre></td></tr></table></figure>
 <p>因此我们强烈建议使用Python的<code>r</code>前缀，就不用考虑转义的问题了：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">s = r&#x27;ABC\-001&#x27; # Python的字符串</span><br><span class="line"># 对应的正则表达式字符串不变：</span><br><span class="line"># &#x27;ABC\-001&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s = <span class="string">r&#x27;ABC\-001&#x27;</span> <span class="comment"># Python的字符串</span></span><br><span class="line"><span class="comment"># 对应的正则表达式字符串不变：</span></span><br><span class="line"><span class="comment"># &#x27;ABC\-001&#x27;</span></span><br></pre></td></tr></table></figure>
 <p>先看看如何判断正则表达式是否匹配：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; import re</span><br><span class="line">&gt;&gt;&gt; re.match(r&#x27;^\d&#123;3&#125;\-\d&#123;3,8&#125;$&#x27;, &#x27;010-12345&#x27;)</span><br><span class="line">&lt;_sre.SRE_Match object; span=(0, 9), match=&#x27;010-12345&#x27;&gt;</span><br><span class="line">&gt;&gt;&gt; re.match(r&#x27;^\d&#123;3&#125;\-\d&#123;3,8&#125;$&#x27;, &#x27;010 12345&#x27;)</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
 <p><code>match()</code>方法判断是否匹配，如果匹配成功，返回一个<code>Match</code>对象，否则返回<code>None</code>。常见的判断方法就是：</p>
@@ -316,23 +316,53 @@
 <p>再加入<code>;</code>试试：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; re.split(r&#x27;[\s\,\;]+&#x27;, &#x27;a,b;; c  d&#x27;)</span><br><span class="line">[&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;]</span><br></pre></td></tr></table></figure>
 <p>如果用户输入了一组标签，下次记得用正则表达式来把不规范的输入转化成正确的数组。</p>
-<h1 id="分组"><a class="header-anchor" href="#分组"></a>分组</h1>
-<p>除了简单地判断是否匹配之外，正则表达式还有提取子串的强大功能。用<code>()</code>表示的就是要提取的分组（Group）。比如：</p>
+<h1 id="Group-in-Regex"><a class="header-anchor" href="#Group-in-Regex"></a>Group in Regex</h1>
+<p><strong>A group is a part of a regex pattern enclosed in parentheses <code>()</code> metacharacter</strong>. We create a group by placing the regex pattern inside the set of parentheses <code>(</code> and <code>)</code> .</p>
+<p>For example:</p>
+<ol>
+<li>
+<p>the regular expression <code>(cat)</code> creates a single group containing the letters ‘c’, ‘a’, and ‘t’.</p>
+</li>
+<li>
 <p><code>^(\d&#123;3&#125;)-(\d&#123;3,8&#125;)$</code>分别定义了两个组，可以直接从匹配的字符串中提取出区号和本地号码：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; m = re.match(r&#x27;^(\d&#123;3&#125;)-(\d&#123;3,8&#125;)$&#x27;, &#x27;010-12345&#x27;)</span><br><span class="line">&gt;&gt;&gt; m</span><br><span class="line">&lt;_sre.SRE_Match object; span=(0, 9), match=&#x27;010-12345&#x27;&gt;</span><br><span class="line">&gt;&gt;&gt; m.group(0)</span><br><span class="line">&#x27;010-12345&#x27;</span><br><span class="line">&gt;&gt;&gt; m.group(1)</span><br><span class="line">&#x27;010&#x27;</span><br><span class="line">&gt;&gt;&gt; m.group(2)</span><br><span class="line">&#x27;12345&#x27;</span><br></pre></td></tr></table></figure>
-<p>如果正则表达式中定义了组，就可以在<code>Match</code>对象上用<code>group()</code>方法提取出子串来。</p>
-<p>注意到<code>group(0)</code>永远是原始字符串，<code>group(1)</code>、<code>group(2)</code>……表示第1、2、……个子串。</p>
+</li>
+</ol>
+<p>如果正则表达式中定义了组，就</p>
+<ul>
+<li></li>
+</ul>
+<h3 id="Access-Each-Group-Result-Separately"><a class="header-anchor" href="#Access-Each-Group-Result-Separately"></a>Access Each Group Result Separately</h3>
+<p>可以在<code>Match</code>对象上用<code>group()</code>方法提取出子串来。<code>group(0)</code>永远是原始字符串. <code>group(1)</code>, <code>group(2)</code>……表示第1, 2, ……个子串。</p>
+<p><strong>Example</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Extract first group</span></span><br><span class="line"><span class="built_in">print</span>(result.group(<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Extract second group</span></span><br><span class="line"><span class="built_in">print</span>(result.group(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Target string</span></span><br><span class="line"><span class="built_in">print</span>(result.group(<span class="number">0</span>))</span><br></pre></td></tr></table></figure>
 <p>提取子串非常有用。来看一个更凶残的例子：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; t = &#x27;19:05:30&#x27;</span><br><span class="line">&gt;&gt;&gt; m = re.match(r&#x27;^(0[0-9]|1[0-9]|2[0-3]|[0-9])\:(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|[0-9])\:(0[0-9]|1[0-9]|2[0-9]|3[0-9]|4[0-9]|5[0-9]|[0-9])$&#x27;, t)</span><br><span class="line">&gt;&gt;&gt; m.groups()</span><br><span class="line">(&#x27;19&#x27;, &#x27;05&#x27;, &#x27;30&#x27;)</span><br></pre></td></tr></table></figure>
 <p>这个正则表达式可以直接识别合法的时间。但是有些时候，用正则表达式也无法做到完全验证，比如识别日期：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;^(0[1-9]|1[0-2]|[0-9])-(0[1-9]|1[0-9]|2[0-9]|3[0-1]|[0-9])$&#x27;</span><br></pre></td></tr></table></figure>
 <p>对于<code>'2-30'</code>，<code>'4-31'</code>这样的非法日期，用正则还是识别不了，或者说写出来非常困难，这时就需要程序配合识别了。</p>
+<h3 id="Regex-Capture-Group-Multiple-Times"><a class="header-anchor" href="#Regex-Capture-Group-Multiple-Times"></a>Regex Capture Group Multiple Times</h3>
+<p>In earlier examples, we used the search method. It will return only the first match for each group. But what if a string contains the multiple occurrences of a regex group and you want to extract all matches.</p>
+<p>In this section, we will learn how to capture all matches to a regex group. To capture all matches to a regex group we need to use the <a target="_blank" rel="noopener" href="https://pynative.com/python-regex-findall-finditer/#h-finditer-method">finditer()</a> method.</p>
+<p>The finditer() method finds all matches and returns an iterator yielding match objects matching the regex pattern. Next, we can iterate each Match object and extract its value.</p>
+<p><strong>Note</strong>: Don’t use the <a target="_blank" rel="noopener" href="https://pynative.com/python-regex-findall-finditer/">findall()</a> method because it returns a list, the group() method cannot be applied. If you try to apply it to the findall method, you will get AttributeError: ‘list’ object has no attribute ‘groups.’</p>
+<p>So always use finditer if you wanted to capture all matches to the group.</p>
+<p><strong>Example</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">target_string = <span class="string">&quot;The price of ice-creams PINEAPPLE 20 MANGO 30 CHOCOLATE 40&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># two groups enclosed in separate ( and ) bracket</span></span><br><span class="line"><span class="comment"># group 1: find all uppercase letter</span></span><br><span class="line"><span class="comment"># group 2: find all numbers</span></span><br><span class="line"><span class="comment"># you can compile a pattern or directly pass to the finditer() method</span></span><br><span class="line">pattern = re.<span class="built_in">compile</span>(<span class="string">r&quot;(\b[A-Z]+\b).(\b\d+\b)&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># find all matches to groups</span></span><br><span class="line"><span class="keyword">for</span> <span class="keyword">match</span> <span class="keyword">in</span> pattern.finditer(target_string):</span><br><span class="line">    <span class="comment"># extract words</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="keyword">match</span>.group(<span class="number">1</span>))</span><br><span class="line">    <span class="comment"># extract numbers</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="keyword">match</span>.group(<span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="Extract-Range-of-Groups-Matches"><a class="header-anchor" href="#Extract-Range-of-Groups-Matches"></a>Extract Range of Groups Matches</h3>
+<p>One more thing that you can do with the <code>group()</code> method is to have the matches returned as a tuple by specifying the associated group numbers in between the <code>group()</code> method’s parentheses. This is useful when we want to extract the range of groups.</p>
+<p>For example, get the first 5 group matches only by executing the <code>group(1, 5</code>).</p>
+<p>Let’s try this as well.</p>
+<p><strong>Example</strong></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"></span><br><span class="line">target_string = <span class="string">&quot;The price of PINEAPPLE ice cream is 20&quot;</span></span><br><span class="line"><span class="comment"># two pattern enclosed in separate ( and ) bracket</span></span><br><span class="line">result = re.search(<span class="string">r&quot;.+(\b[A-Z]+\b).+(\b\d+)&quot;</span>, target_string)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(result.group(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line"><span class="comment"># Output (&#x27;PINEAPPLE&#x27;, &#x27;20&#x27;)</span></span><br></pre></td></tr></table></figure>
 <h1 id="贪婪匹配"><a class="header-anchor" href="#贪婪匹配"></a>贪婪匹配</h1>
 <p>最后需要特别指出的是，Py的正则匹配默认是贪婪匹配，也就是匹配尽可能多的字符。举例如下，匹配出数字后面的<code>0</code>：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; re.match(r&#x27;^(\d+)(0*)$&#x27;, &#x27;102300&#x27;).groups()</span><br><span class="line">(&#x27;102300&#x27;, &#x27;&#x27;)</span><br></pre></td></tr></table></figure>
 <p>由于<code>\d+</code>采用贪婪匹配，直接把后面的<code>0</code>全部匹配了，结果<code>0*</code>只能匹配空字符串了。</p>
 <p>必须让<code>\d+</code>采用非贪婪匹配（也就是尽可能少匹配），才能把后面的<code>0</code>匹配出来，加个<code>?</code>就可以让<code>\d+</code>采用非贪婪匹配：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; re.match(r&#x27;^(\d+?)(0*)$&#x27;, &#x27;102300&#x27;).groups()</span><br><span class="line">(&#x27;1023&#x27;, &#x27;00&#x27;)</span><br></pre></td></tr></table></figure>
+<p>再例如: 在给定string中匹配出ipv4地址, 即类似于<code>192.168.1.53</code>这样的一组子串.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">r&#x27;\d+(.\d+)+&#x27;</span> <span class="comment">#试图匹配192.168.1.53类型的字符串，然而因为其将小括号内视为一个group，因此只会返回.53（只匹配小括号内且只返回最后一个符合的项）</span></span><br><span class="line"><span class="string">r&#x27;\d+(?:.\d+)+&#x27;</span> <span class="comment">#正确写法，?:即声明这不是一个group</span></span><br></pre></td></tr></table></figure>
 <h1 id="编译"><a class="header-anchor" href="#编译"></a>编译</h1>
 <p>当我们在Python中使用正则表达式时，re模块内部会干两件事情：</p>
 <ol>

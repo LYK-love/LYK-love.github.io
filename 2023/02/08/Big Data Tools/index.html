@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
+  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Outline：  集群简介 Hadoop Spark Hadoop + Spark For Manjaro Hadoop + Spark For Mac Clickhouse Flink Kafka( &#x2F;&#x2F;TODO )">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Big Data Tools">
+<meta property="og:url" content="http://lyk-love.cn/2023/02/08/Big%20Data%20Tools/index.html">
+<meta property="og:site_name" content="LYK-love">
+<meta property="og:description" content="Outline：  集群简介 Hadoop Spark Hadoop + Spark For Manjaro Hadoop + Spark For Mac Clickhouse Flink Kafka( &#x2F;&#x2F;TODO )">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-08T07:44:07.936Z">
+<meta property="article:modified_time" content="2023-02-08T07:44:07.936Z">
+<meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Cloud Computation">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://lyk-love.cn/2023/02/08/Big%20Data%20Tools/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2023/02/08/Big%20Data%20Tools/","path":"2023/02/08/Big Data Tools/","title":"Big Data Tools"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Big Data Tools | LYK-love</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?07a572cad308bc3b22d354fca4209fed"></script>
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="LYK-love" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">LYK-love</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-Spark-%E9%9B%86%E7%BE%A4%E6%8A%A5%E5%91%8A"><span class="nav-text">Hadoop + Spark 集群报告</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="nav-text">集群部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E7%BD%91%E7%BB%9C"><span class="nav-text">集群网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E7%94%A8%E6%88%B7"><span class="nav-text">集群用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E7%8E%AF%E5%A2%83"><span class="nav-text">集群环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hadoop%E5%AE%89%E8%A3%85"><span class="nav-text">hadoop安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spark%E5%AE%89%E8%A3%85"><span class="nav-text">spark安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scala"><span class="nav-text">scala</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK"><span class="nav-text">JDK</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E7%BE%A4%E9%A1%B5%E9%9D%A2"><span class="nav-text">集群页面</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop"><span class="nav-text">Hadoop</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%EF%BC%88-on-master%EF%BC%89"><span class="nav-text">配置（ on master）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%EF%BC%88-on-slave-%EF%BC%89"><span class="nav-text">安装（ on slave ）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Hadoop"><span class="nav-text">启动Hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8BHadoop%E6%98%AF%E5%90%A6%E5%90%AF%E5%8A%A8"><span class="nav-text">查看Hadoop是否启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%ADhadoop"><span class="nav-text">关闭hadoop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bugs"><span class="nav-text">Bugs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spark"><span class="nav-text">Spark</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-text">配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8spark"><span class="nav-text">启动spark</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bspark%E6%98%AF%E5%90%A6%E5%90%AF%E5%8A%A8"><span class="nav-text">查看spark是否启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E4%BB%BB%E5%8A%A1"><span class="nav-text">提交任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bugs-2"><span class="nav-text">Bugs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-Spark-For-Manjaro"><span class="nav-text">Hadoop + Spark For Manjaro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hadoop-Spark-For-Mac"><span class="nav-text">Hadoop + Spark For Mac</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Clickhouse"><span class="nav-text">Clickhouse</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83"><span class="nav-text">环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BAclickhouse"><span class="nav-text">搭建clickhouse</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E8%A6%81%E6%B1%82"><span class="nav-text">系统要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DEB%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%AE%89%E8%A3%85"><span class="nav-text">DEB软件包安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker%E5%AE%89%E8%A3%85"><span class="nav-text">docker安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEclickhosue"><span class="nav-text">配置clickhosue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%81%E8%AE%B8%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5"><span class="nav-text">允许远程连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E5%90%8D%E5%92%8C%E5%AF%86%E7%A0%81"><span class="nav-text">配置用户名和密码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E9%99%86"><span class="nav-text">登陆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bugs-3"><span class="nav-text">Bugs</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4clickhouse"><span class="nav-text">删除clickhouse</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Flink"><span class="nav-text">Flink</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BAFLink"><span class="nav-text">搭建FLink</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Flink"><span class="nav-text">启动Flink</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E9%97%ADFlink"><span class="nav-text">关闭Flink</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E4%BA%A4%E4%BB%BB%E5%8A%A1-2"><span class="nav-text">提交任务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka"><span class="nav-text">Kafka</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+      src="/images/white_flower1.jpg">
+  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">211</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2023/02/08/Big%20Data%20Tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Big Data Tools | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Big Data Tools
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-02-08 07:44:07" itemprop="dateCreated datePublished" datetime="2023-02-08T07:44:07Z">2023-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Outline：</p>
+<ul>
+<li>集群简介</li>
+<li>Hadoop</li>
+<li>Spark</li>
+<li>Hadoop + Spark For Manjaro</li>
+<li>Hadoop + Spark For Mac</li>
+<li>Clickhouse</li>
+<li>Flink</li>
+<li>Kafka( //TODO )</li>
+</ul>
+<span id="more"></span>
+<h1 id="Hadoop-Spark-集群报告"><a class="header-anchor" href="#Hadoop-Spark-集群报告"></a>Hadoop + Spark 集群报告</h1>
+<blockquote>
+<p>这是hadoop+spark集群搭建的报告，当然集群太卡了用不了， 所以实际做作业我采用了单机( on Mac M1 )形式<a target="_blank" rel="noopener" href="https://archive.apache.org/dist/hadoop/common/hadoop-2.7.4/hadoop-2.7.4-src.tar.gz">hadoop  2.7.4</a> + <a href=".https://archive.apache.org/dist/spark/spark-2.3.3/spark-2.3.3-bin-without-hadoop.tgz">spark 2.3.3</a> + <a target="_blank" rel="noopener" href="https://scala-lang.org/download/2.11.12.html">scala  2.11.12</a> + <code>jdk8 </code></p>
+<p>这只是hadoop+spark集群搭建的报告， 不包括Clickhouse、Flink的内容； 可以作为hadoop+spark单机搭建的参考</p>
+</blockquote>
+<p>hadoop+spark集群搭建完毕</p>
+<p>hadoop, spark低版本和高版本没有任何区别，只是高版本的spark，hadoop的worker(s)文件， 在低版本中名为slaves</p>
+<p>单机和集群也没有什么区别，只是不需要配置worker的DNS了，由于maser和worker都是本机，就直接让localhost做唯一的worker。</p>
+<ul>
+<li>这意味着hadoop、spark的worker文件不需要做任何更改（里面默认值就是localhost）</li>
+<li>主机只需配置master的DNS</li>
+<li><code>hdfs-site.xml</code>中的dfs.replication数量应该设为1，因为只有本机自己一个worker</li>
+</ul>
+<h2 id="集群部署"><a class="header-anchor" href="#集群部署"></a>集群部署</h2>
+<p>云服务器配置如下：</p>
+<table>
+<thead>
+<tr>
+<th>拥有者</th>
+<th>ip</th>
+<th>role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>lyk</td>
+<td>124.222.135.47</td>
+<td>master</td>
+</tr>
+<tr>
+<td>sgf</td>
+<td>81.69.174.80</td>
+<td>slave01</td>
+</tr>
+<tr>
+<td>lss</td>
+<td>47.93.158.241</td>
+<td>slave02</td>
+</tr>
+<tr>
+<td>xmt</td>
+<td>175.27.136.106</td>
+<td>slave03</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>方便的做法是所有节点均适用<code>root</code>账户，hadoop安装在<code>/usr/local</code>，但是，严谨的做法是使用用户账户，此时为了避免权限问题，hadoop需要安装在<code>~</code></p>
+<ul>
+<li>所有节点均使用用户lyk</li>
+<li>使用<code>/home/lyk/.bashrc</code>（或者<code>.zshrc</code>）来配置环境变量</li>
+</ul>
+<p>由于所有服务器都不在同一局域网，因此都采用公网通信。 实际上十分不推荐公网通信，太慢了</p>
+<h2 id="集群网络"><a class="header-anchor" href="#集群网络"></a>集群网络</h2>
+<ol>
+<li>
+<p>对于master和slave节点，配置其DNS表(.<code>/etc/hosts</code> )， 其中增加:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 localhost //如果本来就有这条就不用加了</span><br><span class="line">&lt;master的内网ip&gt; master //对于master而言，这里直接填127.0.0.1</span><br><span class="line">&lt;slave01的公网ip&gt; slave01</span><br><span class="line">&lt;slave02的公网ip&gt; slave02</span><br><span class="line">&lt;slave03的公网ip&gt; slave03</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>配置master自己到自己的ssh免密登陆</p>
+<ul>
+<li>这里增加<code>master</code>后，之后的命令会调用<code>ssh lyk@master</code>， 因此需要配置好本机到master（也是本机）的免密登陆， 是的，<strong>本机到本机也需要配置免密登陆！！！</strong></li>
+</ul>
+</li>
+<li>
+<p>配置master对所有slave的ssh免密登陆</p>
+<ul>
+<li>不需要配置shave对其他节点的免密登陆</li>
+</ul>
+</li>
+</ol>
+<p>master需要开放相应端口：</p>
+<ul>
+<li>hadoop:
+<ul>
+<li>8099</li>
+<li>50070</li>
+<li>9000</li>
+</ul>
+</li>
+<li>spark:
+<ul>
+<li>7077</li>
+<li>18080</li>
+</ul>
+</li>
+</ul>
+<h2 id="集群用户"><a class="header-anchor" href="#集群用户"></a>集群用户</h2>
+<p>所有节点采用lyk用户</p>
+<h2 id="集群环境"><a class="header-anchor" href="#集群环境"></a>集群环境</h2>
+<p>这里的环境是集群的环境，与我做作业时单机配置的版本不同</p>
+<p>注意，hadoop+spark+scala的版本管理非常混乱，因此要<strong>严格按照文档里的版本来安装</strong>（要么用下面集群这套( hadoop3.2.3... )， 要么用上面单机那套（hadoop2.7.4...））</p>
+<p>除了jdk和scala， 其他用户软件都安装在lyk用户目录下</p>
+<ul>
+<li>JDK：<code>usr/lib/jvm/java-8-openjdk-amd64</code>
+<ul>
+<li><code>sudo apt-get install openjdk-8-jdk</code></li>
+</ul>
+</li>
+<li>scala: <code>/usr/local/scala</code>
+<ul>
+<li><code>scala-2.12.15</code></li>
+</ul>
+</li>
+<li>hadoop: <code>/home/lyk/hadoop</code>
+<ul>
+<li><code>hadoop-3.2.3</code></li>
+</ul>
+</li>
+<li>spark: <code>/home/lyk/spark</code>
+<ul>
+<li><code>spark-3.1.3</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>spark和hadoop均是先在master上安装，并进行一些配置，最后打包发给slave</strong></p>
+<p>spark是scala实现，hadoop是java实现，二者都运行在JVM上， 因此都可以使用JVM进程查看工具<code>jps</code>进行查看</p>
+<h3 id="环境变量"><a class="header-anchor" href="#环境变量"></a>环境变量</h3>
+<p><code>/home/lyk/.bashrc</code>中一共需要配置如下环境变量：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">JAVA_HOME</span></span><br><span class="line">export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=./:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">SCALA_HOME</span></span><br><span class="line">export SCALA_HOME=/usr/local/scala</span><br><span class="line">export PATH=$PATH:$&#123;JAVA_HOME&#125;/bin:$SCALA_HOME/bin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">HADOOP_HOME</span></span><br><span class="line">export HADOOP_HOME=/home/lyk/hadoop</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+<h3 id="hadoop安装"><a class="header-anchor" href="#hadoop安装"></a>hadoop安装</h3>
+<p>下载hadoop安装包，传到服务器上，改名，配置环境变量</p>
+<ol>
+<li>
+<p><a target="_blank" rel="noopener" href="https://hadoop.apache.org/release/3.2.3.html">下载hadoop安装包</a></p>
+</li>
+<li>
+<p>将hadoop-3.2.3.tar.gz拷贝到master服务器上</p>
+</li>
+<li>
+<p>在master上将hadoop压缩包解压并改名</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-3.2.3.tar.gz -C ~</span><br><span class="line">cd ~</span><br><span class="line">mv ./hadoop-3.2.3 ./hadoop #修改文件夹名称为hadoop</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>添加Hadoop的环境变量</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim ~/.bashrc # 实际我用的是～/.zshrc</span><br></pre></td></tr></table></figure>
+<p>将以下内容添加到末尾：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export HADOOP_HOME=/home/lyk/hadoop</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>查看hadoop版本</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">hadoop version</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这一命令对所有节点都有效(包括slave)，可以查看hadoop是否被正确安装</li>
+</ul>
+</li>
+</ol>
+<h3 id="spark安装"><a class="header-anchor" href="#spark安装"></a>spark安装</h3>
+<p>spark会预装scala，位于其jar文件夹内，但我没有使用内置的scala，而是自己下载了一个</p>
+<p>注意到Spark3预装了Scala2.12， 而Spark 3.2+预装了Scala 2.13</p>
+<ul>
+<li>我的集群hadoop版本是3.2.3, 与Sprak3.1.3配套， 因此就选择Sprak3.1.3, 而后者对应Scala版本是<code>2.12</code></li>
+</ul>
+<p>由于已经安装了hadoop，就选择安装不带hadoop的Spark，即<code>spark-3.1.3-bin-without-hadoop.tgz</code></p>
+<ol>
+<li>
+<p><a target="_blank" rel="noopener" href="https://dlcdn.apache.org/spark/spark-3.1.3/spark-3.1.3-bin-without-hadoop.tgz">下载<code>spark-3.1.3-bin-without-hadoop.tgz</code></a></p>
+</li>
+<li>
+<p>将压缩包拷贝到master( 这里我拷贝到了<code>/</code> )</p>
+</li>
+<li>
+<p>解压并改名</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar -zxvf spark-3.1.3-bin-without-hadoop.tgz -C /usr/local/</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /home/lyk</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mv ./spark-3.1.2-bin-without-hadoop/ ./spark</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="scala"><a class="header-anchor" href="#scala"></a>scala</h3>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://scala-lang.org/download/2.12.15.html">下载安装包</a></li>
+<li>解压到对应目录（我放在<code>/usr/local</code>）并改名为scala</li>
+<li>配置环境变量<code>$SCALA_HOME</code>, 这一步在上文“环境变量”已经做好了</li>
+</ol>
+<h3 id="JDK"><a class="header-anchor" href="#JDK"></a>JDK</h3>
+<p>强烈建议通过安装包的方式安装java，因为这样可以指定目录， 因为JAVA环境变量是写在<code>hadoop-env.sh</code>里的，所有节点拷贝一份。 如果指定了java目录，那么所有节点只需把jdk安装在相同目录即可。</p>
+<p>（我采用了直接<code>apt-get install</code>对方式）</p>
+<p>由于我所有节点都是ubuntu20.04， 直接<code>sudo apt-get install openjdk-8-jdk </code>安装到目录<code>/usr/lib/jvm/java-8-openjdk-amd64</code>, 所有节点都这样（安装到相同的目录）， 因此只要所有节点都通过该指令安装jdk，也可以做到环境变量的同步</p>
+<p>下面介绍安装包的方式：</p>
+<ol>
+<li>将<code>jdk-8u301-linux-x64.tar.gz</code>保存在根目录</li>
+<li>运行如下命令</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mkdir /usr/local/java</span><br><span class="line">tar -zxvf /jdk-8u301-linux-x64.tar.gz -C /usr/local/java</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>添加环境变量,</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim ～/.bashrc</span><br></pre></td></tr></table></figure>
+<p>将下面的内容添加至末尾</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=./:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$PATH:$&#123;JAVA_HOME&#125;/bin</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>退出vim，运行如下命令来使得配置生效</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>使用如下命令来确认是否已经安装完成</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+<p>​	应该看到如下输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">java version &quot;1.8.0_301&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_301-b09)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.301-b09, mixed mode)</span><br></pre></td></tr></table></figure>
+<h2 id="集群页面"><a class="header-anchor" href="#集群页面"></a>集群页面</h2>
+<p>正确启动hadoop和spark后，应该能看到二者的webUI页面：</p>
+<ul>
+<li>hadoop：<code>&lt;master-ip&gt;:50070</code></li>
+<li>spark: <code>&lt;master-ip&gt;:18080</code></li>
+</ul>
+<h1 id="Hadoop"><a class="header-anchor" href="#Hadoop"></a>Hadoop</h1>
+<h2 id="配置（-on-master）"><a class="header-anchor" href="#配置（-on-master）"></a>配置（ on master）</h2>
+<p>所有配置文件都位于目录<code>~/hadoop/etc/hadoop/</code>中</p>
+<ol>
+<li>
+<p>修改<code>workers</code>为：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">slave01</span><br><span class="line">slave02</span><br><span class="line">slave03</span><br></pre></td></tr></table></figure>
+<p>workers文件默认内容是<code>localhost</code>,这里把它删除了。 如果用单机版hadoop，则保留localhost,且不需要添加slave</p>
+</li>
+<li>
+<p>修改core-site.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">name</span>&gt;</span>hadoop.tmp.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/home/lyk/hadoop/tmp<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">description</span>&gt;</span>Abase for other temporary directories.<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">name</span>&gt;</span>fs.defaultFS<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://master:9000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>请注意属性<code>hadoop.tmp.dir</code>的值,需要创建该目录（这里就需要创建<code>/home/lyk/hadoop/tmp</code>）</p>
+</li>
+<li>
+<p>修改<code>hdfs-site.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.replication<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>3<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.namenode.name.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	  <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/home/lyk/hadoop/dfs/name<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">	  <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.datanode.data.dir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	  <span class="tag">&lt;<span class="name">value</span>&gt;</span>file:/home/lyk/hadoop/dfs/data<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.blocksize<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>134217728<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.webhdfs.enabled<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>必须将dfs.webhdfs.enabled属性设置为true，否则就不能使用webhdfs的LISTSTATUS、LISTFILESTATUS等需要列出文件、文件夹状态的命令，因为这些信息都是由namenode来保存的<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">name</span>&gt;</span>dfs.http.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">value</span>&gt;</span>master:50070<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  	<span class="tag">&lt;<span class="name">description</span>&gt;</span>hadoop的webUI访问页面<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">  </span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意， replicatoin数量即worker数量，这里有3个worker； 如果是单机，那么只有1个worker（就是本机）</li>
+<li>由于采用lyk用户，所以namenode和datanode目录都设在lyk用户目录下（ <code>/home/lyk/hadoop/dfs</code> ）</li>
+</ul>
+</li>
+<li>
+<p>修改<code>mapred-site.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>mapreduce.framework.name<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">value</span>&gt;</span>yarn<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在hadoop2.X中，该文件内容名为<code>mapred-site.xml.template</code>，需要先改名为<code>mapred-site.xml</code>，再编辑</li>
+</ul>
+</li>
+<li>
+<p>修改<code>yarn-site.xml</code></p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Site specific YARN configuration properties --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.nodemanager.aux-services<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>mapreduce_shuffle<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.hostname<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">value</span>&gt;</span>master<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>yarn.resourcemanager.webapp.address<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>master:8099<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>yarn.resourcemanager.webapp.address</code>是hadoop的master的管理页面</li>
+</ul>
+</li>
+<li>
+<p>在<code>hadoop-env.sh</code>中配置<code>JAVA_HOME</code>, 先找到本机的JAVA_HOME， 这里是<code>/usr/lib/jvm/java-8-openjdk-amd64</code>，在<code>hadoop-env.sh</code>中添加：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64</span><br><span class="line">export HDFS_NAMENODE_USER=lyk</span><br><span class="line">export HDFS_DATANODE_USER=lyk</span><br><span class="line">export HDFS_SECONDARYNAMENODE_USER=lyk</span><br><span class="line">export YARN_RESOURCEMANAGER_USER=lyk</span><br><span class="line">export YARN_NODEMANAGER_USER=lyk</span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意，该文件内本来有一个<code>export JAVA_HOME=$&#123;JAVA_HOME&#125;</code>， 但是该配置不知道为什么无效，所以需要换成显式的JAVA_HOME</li>
+<li>由于用户是lyk，所以这里是lyk</li>
+</ul>
+</li>
+<li>
+<p>将配置好的hadoop打包</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~</span><br><span class="line">rm -rf ./hadoop/tmp</span><br><span class="line">rm -rf ./hadoop/logs/*</span><br><span class="line">tar -zcvf hadoop.master.tar.gz ./hadoop</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>将打包好的hdoop发送给slave</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">scp hadoop.master.tar.gz lyk@slave01:~ </span><br><span class="line">scp hadoop.master.tar.gz lyk@slave02:~ </span><br><span class="line">scp hadoop.master.tar.gz lyk@slave03:~ </span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果传输较慢，建议用<code>CMD &amp;</code>， 将命令放在后台执行
+<ul>
+<li>如果是首次ssh连接的话， 还需要对ssh公钥确认输入<code>yes</code>，所以这个命令就不能直接放入后台执行，需要先确认一次。 之后再使用该命令都不需要确认，也就可以放到后台了</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="安装（-on-slave-）"><a class="header-anchor" href="#安装（-on-slave-）"></a>安装（ on slave ）</h2>
+<ol>
+<li>
+<p>只要把master的hadoop文件夹发给slave就行了，这里我采用压缩包方式发送。注意需要先删除slave上原有的hadoop（如果有的话) :</p>
+<p>运行如下命令, 删除原有的hadoop根目录( 如果有的话 )并将新的压缩包（master发来的）解压</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rm -rf /usr/local/hadoop</span><br><span class="line">tar -zxvf ~/hadoop.master.tar.gz  -C ~</span><br></pre></td></tr></table></figure>
+<p>然后改名为<code>hadoop</code></p>
+</li>
+</ol>
+<h2 id="启动Hadoop"><a class="header-anchor" href="#启动Hadoop"></a>启动Hadoop</h2>
+<ol>
+<li>
+<p><strong>格式化HDFS</strong>:注意在首次使用时使用，若重复格式化，将无法开启datanode</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/hadoop/bin</span><br><span class="line">hdfs namenode -format</span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化之前需要删掉配置文件的tmp目录下的所有内容</li>
+<li>如果不初始化，则启动时无法启动namenode</li>
+<li>最终会输出SHUTTING DOWN....</li>
+</ul>
+</li>
+<li>
+<p>在master上输入以下命令启动Hadoop</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/hadoop</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./sbin/start-all.sh</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="查看Hadoop是否启动"><a class="header-anchor" href="#查看Hadoop是否启动"></a>查看Hadoop是否启动</h2>
+<ol>
+<li>
+<p>检验hadoop是否已经启动</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">jps</span><br></pre></td></tr></table></figure>
+<p>在master上应该有类似如下输出:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">28848 NameNode</span><br><span class="line">29122 ResourceManager</span><br><span class="line">29234 Jps</span><br><span class="line">29016 SecondaryNameNode</span><br><span class="line">28921 DataNode</span><br><span class="line">29199 NodeManager</span><br></pre></td></tr></table></figure>
+<p>主要关注<code>NameNode</code>、<code>ResourceManager</code>、<code>SecondaryNameNode</code>这三条是否存在，如果不存在则应该去<code>~/hadoop/logs/</code>目录下寻找相应地日志查看错误信息</p>
+<p>在slave上输入jps应该有类似如下输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4406 Jps1914 </span><br><span class="line">NodeManager1787 </span><br><span class="line">DataNode</span><br></pre></td></tr></table></figure>
+<p>主要关注<code>NodeManager</code>、<code>DataNode</code>这两条是否存在，如果不存在同样去<code>~/hadoop/logs/</code>目录下寻找相应地日志查看错误信息</p>
+<ul>
+<li>我发现某个slave的datanode没有启动，查看其<code>hadoop-lyk-datanode-VM-4-7-ubuntu.log</code>发现，原来是xml配置文件写错了。。</li>
+</ul>
+</li>
+<li>
+<p>查看hadoop webUI：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;master-ip&gt;:50070</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在<code>hdfs-site.xml</code>中配置</li>
+</ul>
+</li>
+</ol>
+<h2 id="关闭hadoop"><a class="header-anchor" href="#关闭hadoop"></a>关闭hadoop</h2>
+<p>如果关闭Hadoop(<code>~/hadoop/sbin/stop-all.sh</code> ),则所有节点的jps都不会有与hadoop关联的输出</p>
+<h2 id="Bugs"><a class="header-anchor" href="#Bugs"></a>Bugs</h2>
+<ul>
+<li>
+<p>ERROR: Invalid HADOOP_HDFS_HOME</p>
+<p>网上有说需要配置<code>HADOOP_HDFS_HOME</code>这个环境变量，其实根本不需要。 发生这个问题，大概率是你的hadoop安装出错了， 启动hadoop实际上会执行类似<code>/home/lyk/hadoop/share/hadoop/common/hadoop-common-3.2.3.jar</code>的jar包， 进到该目录看看有没有这个jar包就行了</p>
+</li>
+</ul>
+<h1 id="Spark"><a class="header-anchor" href="#Spark"></a>Spark</h1>
+<p>Spark是一个分布式的大数据计算引擎，可以执行你的任务（jar包）</p>
+<h2 id="配置"><a class="header-anchor" href="#配置"></a>配置</h2>
+<ol>
+<li>
+<p>改名配置文件：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/spark/</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cp ./conf/spark-env.sh.template ./conf/spark-env.sh</span><br><span class="line">cp ./conf/workers.template ./conf/workers</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>修改workers文件的内容，将原来的内容替换成：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">master</span><br><span class="line">slave01</span><br><span class="line">slave02</span><br><span class="line">slave03</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>在spark-env.sh的末尾添加如下内容</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export SPARK_DIST_CLASSPATH=$(/home/lyk/hadoop/bin/hadoop classpath)</span><br><span class="line"></span><br><span class="line">export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64</span><br><span class="line">export SCALA_HOME=/usr/local/scala</span><br><span class="line">export HADOOP_HOME=/home/lyk/hadoop</span><br><span class="line">export HADOOP_COMMON_HOME=$HADOOP_HOME</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Spark</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">SPARK_MASTER_PORT是7077</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">SPARK_MASTER_WEBUI_PORT用于在网页上访问spark管理页面，默认的端口是8080, 这是个常用端口， 因此替换成了18080</span></span><br><span class="line">export SPARK_MASTER_HOST=master</span><br><span class="line">export SPARK_MASTER_PORT=7077</span><br><span class="line">export SPARK_MASTER_WEBUI_PORT=18080</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export SPARK_DIST_CLASSPATH=$($(HOME)/hadoop/bin/hadoop classpath)</span><br><span class="line">export HADOOP_CONF_DIR=$(HOME)/hadoop/etc/hadoop#</span><br><span class="line">export SCALA_HOME=/usr/lib/scala/scala-2.13.3 </span><br><span class="line">export HADOOP_HOME=$(HOME)/hadoop</span><br><span class="line">export SPARK_MASTER_IP=&lt;master的公网ip&gt; #指定 Spark 集群 Master 节点的 IP 地址 </span><br><span class="line">export SPARK_MASTER_PORT=7077export SPARK_MASTER_HOST=master</span><br><span class="line">export SPARK_EXECUTOR_MEMORY=4096m #大小看虚拟机内存</span><br><span class="line">export SPARK_LOCAL_IP=localhost</span><br><span class="line">export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64</span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意，由于我并没有安装scala所以不添加SCALA_HOME，而是添加JAVA_HOME。此外，由于出现了类似于如下的worker日志报错，我添加了<code>SPARK_LOCAL_IP</code></li>
+<li>这里填hadoop的目录， 我在<code>hadoop-env.sh</code>中指定了</li>
+</ul>
+<ol start="3">
+<li>使用如下命令将配置好的spark打包发送给slave</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /usr/local/</span><br><span class="line">tar -zcvf /spark.master.tar.gz ./spark</span><br><span class="line">scp /spark.master.tar.gz slave01:/</span><br><span class="line">scp /spark.master.tar.gz slave02:/</span><br><span class="line">scp /spark.master.tar.gz slave03:/</span><br></pre></td></tr></table></figure>
+<p><strong>安装（slave）：</strong></p>
+<ol>
+<li>使用如下命令在slave上安装spark</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># rm -rf /usr/local/spark/# </span><br><span class="line">tar -zxvf /spark.master.tar.gz -C /usr/local</span><br></pre></td></tr></table></figure>
+<h2 id="启动spark"><a class="header-anchor" href="#启动spark"></a>启动spark</h2>
+<p>==在启动之前先修改master的spark-env.sh文件，将其中的<code>SPARK_LOCAL</code>注释掉，不然就只能从服务器内网的localhost来访问spark的webui了（我也不知道为啥。。。）==</p>
+<ol>
+<li>
+<p><strong>先按照之前的步骤启动Hadoop</strong></p>
+</li>
+<li>
+<p>启动spark</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd ~/spark</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">./sbin/start-all.sh</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="查看spark是否启动"><a class="header-anchor" href="#查看spark是否启动"></a>查看spark是否启动</h2>
+<p>执行jps，此时除了hadoop的进程输出外，还能看到spark的进程：</p>
+<ul>
+<li>
+<p>master： 多了<code>Master</code>和<code>Worker</code>(加入指定该master也作为worker的话)</p>
+</li>
+<li>
+<p>worker： 多了<code>Worker</code></p>
+</li>
+</ul>
+<h2 id="提交任务"><a class="header-anchor" href="#提交任务"></a>提交任务</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">spark-submit [path-to-jar]</span><br></pre></td></tr></table></figure>
+<h2 id="Bugs-2"><a class="header-anchor" href="#Bugs-2"></a>Bugs</h2>
+<ul>
+<li>
+<p>jps没有输出</p>
+<p><code>jps</code>是查看java进程的工具，java程序启动以后，会在<code>/tmp</code>目录下生成一个<code>hsperfdata_[username]</code>的文件夹，其中的文件以java进程的pid命名。因此使用jps查看当前进程，其实就是把<code>/tmp/hsperfdata_username</code>中的文件名遍历一遍之后输出。</p>
+<p>情况1:</p>
+<p>如果<code>/tmp/hsperfdata_[username]</code>的文件所有者和文件所属用户组与启动进程的用户不一致的话，在进程启动之后，就没有权限写<code>/tmp/hsperfdata_[username]</code>，所以<code>/tmp/hsperfdata_[username]</code>是一个空文件，理所当然jps也就没有任何显示。</p>
+<p>情况2:</p>
+<p>不知道为啥，重启服务器就好了。。。</p>
+</li>
+<li>
+<p>nodemanager running as process 6410. Stop it first.</p>
+<p>进程已经在运行中了，先执行<code>stop-all.sh</code>下]，再执行<code>start-all.sh</code></p>
+</li>
+<li>
+<p>Permission denied</p>
+<p>文件所有权的问题， 如果以root身份安装Hadoop（比如一开始把hadoop放在<code>/usr/local</code>），然后又想用普通用户来使用hadoop（比如之后把hadoop放在<code>~</code>)，就会发生此问题，只需要更改hadoop的所有权:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chown -R lyk:lyk ~/hadoop</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Hadoop-Spark-For-Manjaro"><a class="header-anchor" href="#Hadoop-Spark-For-Manjaro"></a>Hadoop + Spark For Manjaro</h1>
+<p>这里演示一下Manjaro/arch用户安装hadoop的流程，只开个头。剩余的hadoop配置和spark安装及配置也大同小异。主要是对于manjaro/arch用户来说，安装这类软件会有一些小坑</p>
+<ul>
+<li>
+<p><code>sudo pacman -Syu</code></p>
+</li>
+<li>
+<p>安装jdk：<code>yay -S jdk</code></p>
+</li>
+<li>
+<p>安装openssh：<code>yay -S openssh</code></p>
+<ul>
+<li>manjaro默认不安装openssh</li>
+</ul>
+</li>
+</ul>
+<p><strong>如果你要用hadoop用户，而非lyk用户的话，还得做以下步骤</strong></p>
+<ul>
+<li>
+<p>创建hadooop用户并且更改hadoop用户密码</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">//创建hadoop用户</span><br><span class="line">sudo adduser hadoop</span><br><span class="line"></span><br><span class="line">//更改hadoop用户密码</span><br><span class="line">sudo passwd hadoop</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>manjaro默认不安装<code>adduser</code>命令，要使用<code>useradd</code></strong></li>
+<li>如果<code>yay -S adduser</code>,这个安装的命令默认是在/etc内创建用户，而不是（如centos中自带的<code>adduser</code>）在root目录下，因此路径会不一样，在配置环境变量时需要注意。</li>
+</ul>
+</li>
+<li>
+<p>以上的配置完成之后，使用hadoop用户</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">su - hadoop</span><br></pre></td></tr></table></figure>
+<p>切换成hadoop之后，设置ssh免密登录</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa </span><br><span class="line"></span><br><span class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys </span><br><span class="line"></span><br><span class="line">chmod 640 ~/.ssh/authorized_keys </span><br></pre></td></tr></table></figure>
+<p>然后试试<code>ssh localhost</code>，查看是否能够免密登录</p>
+<blockquote>
+<p>如果遇到22端口被拒绝的情况，很有可能是ssh服务并没有开启。<br>
+切换成exit退出当前用户，使用主用户<br>
+输入<code>sudo service ssh start</code>进行服务的开启。如果显示没有该服务，那么可以确定系统并没有安装openssh, 去安装。</p>
+</blockquote>
+</li>
+<li>
+<p>Archlinux或者manjaro开启ssh服务命令:</p>
+<p><code>systemctl enable sshd.service</code>     开机启动</p>
+<p><code>systemctl start sshd.service</code>      立即启动</p>
+<p><code>systemctl restart sshd.service</code>    立即重启</p>
+</li>
+<li>
+<p>用户hadoop使用<code>su</code>可能会报错：</p>
+<p><code>hadoop is not in the sudoers file.  This incident will be reported.</code>，需要在/etc/sudoers文件里给该用户添加权限 （<a target="_blank" rel="noopener" href="https://www.cnblogs.com/MakeView660/p/12395542.html">ref</a>）</p>
+</li>
+</ul>
+<h1 id="Hadoop-Spark-For-Mac"><a class="header-anchor" href="#Hadoop-Spark-For-Mac"></a>Hadoop + Spark For Mac</h1>
+<p>实际做作业时，我用的就是mac m1单机hadoop+spark，亲测没问题</p>
+<p>mac和linux的区别主要还是文件路径不同，需要修改一些环境变量，其余步骤完全相同</p>
+<ul>
+<li>由于mac的用户目录位于<code>/Users/lyk</code>, 各种配置中的环境变量也需要更改（而不是linux的<code>/home/lyk</code>）</li>
+<li>同理， mac的jdk位置也可能不一样，需要做更改</li>
+<li>因为spark和hadoop都是由高级语言java/scala编写的，因此没有跨平台问题。我的m1能正常安装、运行集群</li>
+</ul>
+<h1 id="Clickhouse"><a class="header-anchor" href="#Clickhouse"></a>Clickhouse</h1>
+<p>Clickhouse是一个单机数据库，对机器学习的支持比较好</p>
+<h2 id="环境"><a class="header-anchor" href="#环境"></a>环境</h2>
+<p>mac（m1）没法装clickhouse，只能用服务器，即在服务器上裸机安装（后来为了服务高可用性，改为在服务器上docker安装 ）</p>
+<h2 id="搭建clickhouse"><a class="header-anchor" href="#搭建clickhouse"></a>搭建clickhouse</h2>
+<p><a target="_blank" rel="noopener" href="https://clickhouse.com/docs/zh/getting-started/install/">官网文档</a></p>
+<h3 id="系统要求"><a class="header-anchor" href="#系统要求"></a>系统要求</h3>
+<p>ClickHouse可以在任何具有x86_64，AArch64或PowerPC64LE CPU架构的Linux，FreeBSD或Mac OS X上运行。</p>
+<p>官方预构建的二进制文件通常针对x86_64进行编译，并利用<code>SSE 4.2</code>指令集，因此，除非另有说明，支持它的CPU使用将成为额外的系统需求。下面是检查当前CPU是否支持SSE 4.2的命令:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ grep -q sse4_2 /proc/cpuinfo &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;SSE 4.2 supported&quot;</span> || <span class="built_in">echo</span> <span class="string">&quot;SSE 4.2 not supported&quot;</span></span><br></pre></td></tr></table></figure>
+<p>要在不支持<code>SSE 4.2</code>或<code>AArch64</code>，<code>PowerPC64LE</code>架构的处理器上运行ClickHouse，您应该通过适当的配置调整从<a target="_blank" rel="noopener" href="https://clickhouse.com/docs/zh/getting-started/install/#from-sources">源代码构建ClickHouse</a></p>
+<ul>
+<li>
+<p>注意，m1无法安装用软件包clickhouse，只能手动编译，clickhouse官网有<a target="_blank" rel="noopener" href="https://clickhouse.com/docs/zh/development/build-osx">教程</a>。 然而m1默认的编译器是apple clang，而clickhouse只推荐clang编译(教程也是用的clang)，因此m1用户还得把默认编译器换成clang， 由于特别麻烦，因此我在服务器上搭建了clickhouse，没有用mac本机</p>
+<ul>
+<li>
+<p>[Apple clang无法编译clickhouse，只能用clang](<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/64497835/clickhouse-installation-for-mac-fails-appleclang-is-not-supported-you-should">Clickhouse installation for mac fails: &quot;AppleClang is not supported, you should install clang from brew.&quot;</a>)</p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://embeddedartistry.com/blog/2017/02/24/installing-llvm-clang-on-osx/">Installing LLVM/Clang on OS X</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="DEB软件包安装"><a class="header-anchor" href="#DEB软件包安装"></a>DEB软件包安装</h3>
+<p>建议使用Debian或Ubuntu的官方预编译<code>deb</code>软件包。运行以下命令来安装包:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt-get install -y apt-transport-https ca-certificates dirmngr</span><br><span class="line">sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 8919F6BD2B48D754</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;deb https://packages.clickhouse.com/deb stable main&quot;</span> | sudo <span class="built_in">tee</span> \</span><br><span class="line">    /etc/apt/sources.list.d/clickhouse.list</span><br><span class="line">sudo apt-get update</span><br><span class="line"></span><br><span class="line">sudo apt-get install -y clickhouse-server clickhouse-client</span><br><span class="line"></span><br><span class="line">sudo service clickhouse-server start</span><br><span class="line">clickhouse-client <span class="comment"># or &quot;clickhouse-client --password&quot; if you&#x27;ve set up a password.</span></span><br></pre></td></tr></table></figure>
+<h3 id="docker安装"><a class="header-anchor" href="#docker安装"></a>docker安装</h3>
+<p>强烈建议安装docker版本的clickhouse，<a target="_blank" rel="noopener" href="https://hub.docker.com/r/clickhouse/clickhouse-server/">文档</a></p>
+<p>pull镜像：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker pull clickhouse/clickhouse-server</span><br></pre></td></tr></table></figure>
+<p>运行server容器，并进行端口映射：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d -p 8123:8123 -p9000:9000 --name some-clickhouse-server --ulimit nofile=262144:262144 clickhouse/clickhouse-server</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>这里将主机端口9000， 8123 映射到容器的9000， 8123， 和裸机版的clickhouse一样</p>
+</li>
+<li>
+<p>这样就可以进行公网通信了</p>
+</li>
+</ul>
+<p>运行client容器，连接到server容器：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -it --rm --link lyk-clickhouse-server:clickhouse-server clickhouse/clickhouse-client --host clickhouse-server</span><br></pre></td></tr></table></figure>
+<p>其余功能，如挂载卷，指定容器使用某个配置文件启动等，都参见文档</p>
+<h2 id="配置clickhosue"><a class="header-anchor" href="#配置clickhosue"></a>配置clickhosue</h2>
+<p>clickhouse系统配置文件:<code>/etc/clickhouse-server/config.xml </code></p>
+<p>clickhouse用户配置文件:<code>/etc/clickhouse-server/users.xml </code></p>
+<p>clickhouse日志文件所在目录: <code>/var/log/clickhouse-server</code></p>
+<ul>
+<li>
+<p>如果<code>clickhouse-server</code> 没有找到任何有用的信息或根本没有任何日志，您可以使用命令查看 system.d :</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo journalctl -u clickhouse-server</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="允许远程连接"><a class="header-anchor" href="#允许远程连接"></a>允许远程连接</h3>
+<p>ClickHouse server默认只监听环回地址, 无法用公网通信：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root@ubuntu:/var/lib/clickhouse/# lsof -i :8123</span><br><span class="line">COMMAND   PID       USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">clickhous 653 clickhouse   41u  IPv6  32544      0t0  TCP ip6-localhost:8123 (LISTEN)</span><br><span class="line">clickhous 653 clickhouse   44u  IPv4  32547      0t0  TCP localhost:8123 (LISTEN)</span><br></pre></td></tr></table></figure>
+<p>需要修改系统配置文件，使其监听公网地址：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/clickhouse-server/config.xml</span><br></pre></td></tr></table></figure>
+<p>把注释掉的<code>&lt;listen_host&gt;::&lt;/listen_host&gt;</code>取消注释，然后重启服务：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service clickhouse-server restart </span><br></pre></td></tr></table></figure>
+<p>现在的端口监听情况：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root@ubuntu:/var/lib/clickhouse/data/# lsof -i :8123</span><br><span class="line">COMMAND    PID       USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">clickhous 9188 clickhouse   32u  IPv6  61573      0t0  TCP *:8123 (LISTEN)</span><br></pre></td></tr></table></figure>
+<h3 id="配置用户名和密码"><a class="header-anchor" href="#配置用户名和密码"></a>配置用户名和密码</h3>
+<p>clickhouse默认的登录账号是default， 没有密码</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38830964/article/details/114012700">教程</a></p>
+<p>可以修改用户配置文件，添加密码：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/clickhouse-server/users.xml</span><br></pre></td></tr></table></figure>
+<p>在对应用户的<password>标签中添加密码：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;password&gt;123&lt;/password&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里是明文密码，还可以配置加密密码，这里不介绍了</li>
+<li>当password标签为空时，代表免密码登录</li>
+</ul>
+<h2 id="登陆"><a class="header-anchor" href="#登陆"></a>登陆</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">clickhouse-client -u default --passord 123</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-u 为指定使用哪个账号进行登录，如不指定, 默认使用default</li>
+</ul>
+<h2 id="Bugs-3"><a class="header-anchor" href="#Bugs-3"></a>Bugs</h2>
+<p>clickhouse有时会自动崩溃，客户端启动时报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">clickhouse-client</span><br><span class="line">ClickHouse client version 21.2.4.6 (official build).</span><br><span class="line">Connecting to localhost:9000 as user default.</span><br><span class="line">Code: 210. DB::NetException: Connection refused (localhost:9000)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>并且，一旦出现一次崩溃，之后的clickhouse都无法通过systemctl启动(<code>sudo service clickhouse-server start</code>)，只能手动启动(<code>sudo clickhouse start</code> )</li>
+<li>在网上找了各种教程，都没能解决。 我的服务器是ubuntu20.04，换了新服务器（相同OS），重装，依然有这个问题。  最后无奈使用docker的clickohouse，崩溃就崩溃，重启容器就好了</li>
+</ul>
+<p>clickhouse的文件的用户/组都为clickhouse，如果发现权限问题，需要chown</p>
+<p>例如，新建了日志文件，需要手动更改其权限:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo chown clickhouse:clickhouse /var/log/clickhouse-server/clickhouse-server.log</span><br></pre></td></tr></table></figure>
+<h2 id="删除clickhouse"><a class="header-anchor" href="#删除clickhouse"></a>删除clickhouse</h2>
+<p>查看系统已安装的包：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">apt list --installed </span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt remove -y clickhouse-common-static</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo apt remove -y clickhouse-server-common</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo rm -rf /var/lib/clickhouse</span><br><span class="line">sudo rm -rf /etc/clickhouse-*</span><br><span class="line">sudo rm -rf /var/log/clickhouse-server</span><br></pre></td></tr></table></figure>
+<h1 id="Flink"><a class="header-anchor" href="#Flink"></a>Flink</h1>
+<p>Flink也是一个计算引擎，可以执行你提交的jar包</p>
+<h2 id="搭建FLink"><a class="header-anchor" href="#搭建FLink"></a>搭建FLink</h2>
+<p>环境：Mac单机搭建， Flink Version: 1.13.5-bin-scala-2.11</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/bbaa8d72cfcf">参考教程</a></p>
+<p>下载jar包：<a target="_blank" rel="noopener" href="https://archive.apache.org/dist/flink/flink-1.13.5/">https://archive.apache.org/dist/flink/flink-1.13.5/</a></p>
+<p>解压：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sudo tar -zxf flink-1.13.5-bin-scala_2.11.tgz  -C /usr/local</span><br></pre></td></tr></table></figure>
+<p>修改文件名字，并设置权限</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /usr/local</span><br><span class="line">sudo mv ./flink-*/ ./flink</span><br><span class="line">sudo chown -R hadoop:hadoop ./flink</span><br></pre></td></tr></table></figure>
+<p>添加环境变量:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim ~/.zshrc</span><br><span class="line"></span><br><span class="line">export FLINK_HOME=/usr/local/flink</span><br><span class="line">export PATH=$FLINK_HOME/bin:$PATH</span><br></pre></td></tr></table></figure>
+<p>更改配置文件( <code>[flink位置]/conf/flink-conf.yaml</code> ):</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># The number of task slots that each TaskManager offers. Each slot runs one parallel pipeline.</span><br><span class="line"></span><br><span class="line">taskmanager.numberOfTaskSlots: 4</span><br><span class="line"></span><br><span class="line"># The parallelism used for programs that did not specify and other parallelism.</span><br><span class="line"></span><br><span class="line">parallelism.default: 1</span><br></pre></td></tr></table></figure>
+<h2 id="启动Flink"><a class="header-anchor" href="#启动Flink"></a>启动Flink</h2>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动Flink,因为FLINK_HOME已经写入了环境变量，因此可以直接执行脚本：</span></span><br><span class="line">start-cluster.sh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>可以通过观察logs目录下的日志来检测系统是否正在运行了</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tail log/flink--jobmanager-.log</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>JobManager同时会在8081端口上启动一个web前端，通过<a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=http%3A%2F%2Flocalhost%3A8081">http://localhost:8081</a>来访问</p>
+</li>
+</ul>
+<h2 id="关闭Flink"><a class="header-anchor" href="#关闭Flink"></a>关闭Flink</h2>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">stop-cluster.sh</span><br></pre></td></tr></table></figure>
+<h2 id="提交任务-2"><a class="header-anchor" href="#提交任务-2"></a>提交任务</h2>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fonxian/p/12334222.html">教程</a></p>
+<p>Flink可以直接在Flink的webUI上提交jar包</p>
+<p>也可以命令行提交：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">run  -c Flink -p 2 [path-to-jar]</span><br></pre></td></tr></table></figure>
+<h1 id="Kafka"><a class="header-anchor" href="#Kafka"></a>Kafka</h1>
+<p>没学，不会，不想学</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Cloud-Computation/" rel="tag"># Cloud Computation</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/02/08/C++%20IO/" rel="prev" title="C++ I/O">
+                  <i class="fa fa-chevron-left"></i> C++ I/O
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/02/08/%20Automated%20Testing/" rel="next" title="Automated Testing">
+                  Automated Testing <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

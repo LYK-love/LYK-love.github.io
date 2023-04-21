@@ -29,7 +29,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://cdn.beekka.com/blogimg/asset/202201/bg2022012707.webp">
 <meta property="article:published_time" content="2022-09-13T14:57:44.000Z">
-<meta property="article:modified_time" content="2023-02-13T14:19:01.316Z">
+<meta property="article:modified_time" content="2023-04-19T14:37:09.424Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="Shell">
@@ -165,7 +165,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">210</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -262,7 +262,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-13 14:19:01" itemprop="dateModified" datetime="2023-02-13T14:19:01Z">2023-02-13</time>
+      <time title="Modified: 2023-04-19 14:37:09" itemprop="dateModified" datetime="2023-04-19T14:37:09Z">2023-04-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -406,6 +406,7 @@
 <p>Use <code>-u</code> with <code>diff</code> for unified output, and pipe the output to <code>diff-so-fancy</code>:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">diff -u file_a file_b | diff-so-fancy</span><br></pre></td></tr></table></figure>
 <h2 id="find-fd"><a class="header-anchor" href="#find-fd"></a>find/fd</h2>
+<p><a href="">My <code>fd</code> document</a></p>
 <p>One of the most common repetitive tasks that every programmer faces is finding files or directories. All UNIX-like systems come packaged with <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/find.1.html"><code>find</code></a>, a great shell tool to find files. <code>find</code> will recursively search for files matching some criteria. Some examples:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all directories named src</span></span><br><span class="line">find . -name src -type d</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all python files that have a folder named <span class="built_in">test</span> <span class="keyword">in</span> their path</span></span><br><span class="line">find . -path &#x27;*/test/*.py&#x27; -type f</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all files modified <span class="keyword">in</span> the last day</span></span><br><span class="line">find . -mtime -1</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Find all zip files with size <span class="keyword">in</span> range 500k to 10M</span></span><br><span class="line">find . -size +500k -size -10M -name &#x27;*.tar.gz&#x27;</span><br></pre></td></tr></table></figure>
 <p>Beyond listing files, find can also perform actions over files that match your query. This property can be incredibly helpful to simplify what could be fairly monotonous tasks.</p>
