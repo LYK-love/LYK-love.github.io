@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2023-04-22T15:04:24.239Z</updated>
+  <updated>2023-04-22T15:44:59.339Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Barbell Row</title>
+    <link href="http://lyk-love.cn/2023/04/23/Barbell-Row/"/>
+    <id>http://lyk-love.cn/2023/04/23/Barbell-Row/</id>
+    <published>2023-04-22T23:44:59.000Z</published>
+    <updated>2023-04-22T15:44:59.339Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Intro&lt;/li&gt;
+&lt;li&gt;Pendlay Barbell Row&lt;/li&gt;
+&lt;li&gt;Barbell Row by Jeff&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="Fitness" scheme="http://lyk-love.cn/categories/Fitness/"/>
+    
+    
+    <category term="Bodybuilding" scheme="http://lyk-love.cn/tags/Bodybuilding/"/>
+    
+  </entry>
   
   <entry>
     <title>Dip</title>
@@ -44,7 +68,7 @@
     <link href="http://lyk-love.cn/2023/04/23/Pull-Up/"/>
     <id>http://lyk-love.cn/2023/04/23/Pull-Up/</id>
     <published>2023-04-22T22:28:46.000Z</published>
-    <updated>2023-04-22T14:47:48.718Z</updated>
+    <updated>2023-04-22T15:09:06.367Z</updated>
     
     
     <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
@@ -248,7 +272,7 @@
     <link href="http://lyk-love.cn/2023/04/14/Arm-Training/"/>
     <id>http://lyk-love.cn/2023/04/14/Arm-Training/</id>
     <published>2023-04-13T22:14:54.000Z</published>
-    <updated>2023-04-22T15:05:00.019Z</updated>
+    <updated>2023-04-22T15:07:49.117Z</updated>
     
     
     <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
@@ -434,32 +458,6 @@
     
     
     <category term="Movie" scheme="http://lyk-love.cn/tags/Movie/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>AI Intro</title>
-    <link href="http://lyk-love.cn/2023/02/08/%E5%AF%BC%E8%AE%BA-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
-    <id>http://lyk-love.cn/2023/02/08/%E5%AF%BC%E8%AE%BA-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/</id>
-    <published>2023-02-08T07:44:07.959Z</published>
-    <updated>2023-02-08T07:44:07.959Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;What is AI&lt;/li&gt;
-&lt;li&gt;What will we learn&lt;/li&gt;
-&lt;li&gt;Agent&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Ref:&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Artificial Intelligence A Modern Approach&lt;/em&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Artificial Intelligence" scheme="http://lyk-love.cn/categories/Artificial-Intelligence/"/>
-    
-    
-    <category term="AI" scheme="http://lyk-love.cn/tags/AI/"/>
     
   </entry>
   
