@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2023-04-21T04:16:33.936Z</updated>
+  <updated>2023-04-22T15:04:24.239Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -15,6 +15,53 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Dip</title>
+    <link href="http://lyk-love.cn/2023/04/23/Dip/"/>
+    <id>http://lyk-love.cn/2023/04/23/Dip/</id>
+    <published>2023-04-22T23:04:24.000Z</published>
+    <updated>2023-04-22T15:04:24.239Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Out line:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Intro&lt;/li&gt;
+&lt;li&gt;Standard Dip&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="Fitness" scheme="http://lyk-love.cn/categories/Fitness/"/>
+    
+    
+    <category term="Bodybuilding" scheme="http://lyk-love.cn/tags/Bodybuilding/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Pull Up</title>
+    <link href="http://lyk-love.cn/2023/04/23/Pull-Up/"/>
+    <id>http://lyk-love.cn/2023/04/23/Pull-Up/</id>
+    <published>2023-04-22T22:28:46.000Z</published>
+    <updated>2023-04-22T14:47:48.718Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Intro&lt;/li&gt;
+&lt;li&gt;Standard Pull Up&lt;/li&gt;
+&lt;li&gt;反手引体&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="Fitness" scheme="http://lyk-love.cn/categories/Fitness/"/>
+    
+    
+    <category term="Bodybuilding" scheme="http://lyk-love.cn/tags/Bodybuilding/"/>
+    
+  </entry>
   
   <entry>
     <title>Bodybuilding Basic</title>
@@ -413,53 +460,6 @@
     
     
     <category term="AI" scheme="http://lyk-love.cn/tags/AI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>矿工笔记</title>
-    <link href="http://lyk-love.cn/2023/02/08/%E7%9F%BF%E5%B7%A5%E7%AC%94%E8%AE%B0/"/>
-    <id>http://lyk-love.cn/2023/02/08/%E7%9F%BF%E5%B7%A5%E7%AC%94%E8%AE%B0/</id>
-    <published>2023-02-08T07:44:07.959Z</published>
-    <updated>2023-02-08T07:44:07.959Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;注：我不挖矿&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Technology" scheme="http://lyk-love.cn/categories/Technology/"/>
-    
-    
-    <category term="Block Chain" scheme="http://lyk-love.cn/tags/Block-Chain/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>The Story of Art: Chapter 26,27</title>
-    <link href="http://lyk-love.cn/2023/02/08/The-Story-of-Art-19-20%E4%B8%96%E7%BA%AA/"/>
-    <id>http://lyk-love.cn/2023/02/08/The-Story-of-Art-19-20%E4%B8%96%E7%BA%AA/</id>
-    <published>2023-02-08T07:44:07.956Z</published>
-    <updated>2023-02-08T07:44:07.956Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;19世纪末的艺术，：寻求新标准&lt;/li&gt;
-&lt;li&gt;20世纪上半叶的艺术：实验艺术&lt;/li&gt;
-&lt;li&gt;艺术史的总结
-&lt;ul&gt;
-&lt;li&gt;我终于理解了“从来没有什么艺术，只有一个一个的艺术家”这句话，对它的解释写在了结尾，我真是太聪明了！&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="Art" scheme="http://lyk-love.cn/categories/Art/"/>
-    
-    
-    <category term="Art Theory" scheme="http://lyk-love.cn/tags/Art-Theory/"/>
     
   </entry>
   
