@@ -156,13 +156,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-count">217</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -216,6 +216,104 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2023/04/24/Shell-Script-Searching-Path/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/white_flower1.jpg">
+      <meta itemprop="name" content="有多远滚多远">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | LYK-love">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/04/24/Shell-Script-Searching-Path/" class="post-title-link" itemprop="url">Shell Script Searching Path</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-04-23 21:48:25 / Modified: 13:48:25" itemprop="dateCreated datePublished" datetime="2023-04-23T21:48:25Z">2023-04-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="指令运行的顺序"><a class="header-anchor" href="#指令运行的顺序"></a>指令运行的顺序</h1>
+<p>Shell will <strong>find and execute</strong> command. The searching sequence of command name is:</p>
+<ol>
+<li>以相对/绝对路径执行指令，例如<code>/bin/ls </code>或<code>./ls </code></li>
+<li>由 <code>alias</code> 找到该指令来执行</li>
+<li>由 bash 内置的( builtin)指令来执行.</li>
+<li>通过 <code>PATH</code> 这个变量的顺序搜寻到的第一个指令来执行.</li>
+</ol>
+<p>在某一步骤找到command name后就会停止查找, 并且尝试执行.</p>
+<p>因此, 如果一个command name不是一个可执行的路径, 也不是一个alias, 又不是一个builtin( 例如<code>alias</code>), 则shell会在搜环境变量<code>$PATH中</code>搜索该command name, 如果找到, 就执行; 找不到, 则报错&quot;command not found&quot;.</p>
+<ul>
+<li>由于<code>PATH</code> 是个环境变量, 因此它在任意的子session中都有效.</li>
+<li>Command not found == not found in <code>PATH</code>. 这只是意味着在<code>PATH</code>中找不到该command name. 可以将该command的路径添加到<code>PATH</code>来让shell能搜索到它.</li>
+<li>可以看到, 如果一个command name是路径, 那么在step1就找到了, 不会尝试后面的步骤. <strong>如果一个command name带有slash( <code>/</code> ), 则会被视作路径名.</strong></li>
+</ul>
+<h1 id="Add-path-to-PATH"><a class="header-anchor" href="#Add-path-to-PATH"></a>Add path to <code>PATH</code></h1>
+<p>将命令的路径加入环境变量<code>PATH</code>的方法:</p>
+<p>声明环境变量<code>PATH</code>, 值为之前的<code>PATH</code>的值(采用<code>$</code>进行赋值),  再append 一个<code>:</code>, 因为环境变量之间通过冒号隔开, 再append要添加的路径, 这里是<code>/home/to/operation_tools</code>.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PATH=$PATH:/home/to/operation_tools</span><br></pre></td></tr></table></figure>
+<h1 id="Bad-Practices"><a class="header-anchor" href="#Bad-Practices"></a>Bad Practices</h1>
+<p>以下是一些错误的对<code>PATH</code>进行设置的例子.</p>
+<h2 id="Current-directory-in-PATH"><a class="header-anchor" href="#Current-directory-in-PATH"></a>Current directory in <code>PATH</code></h2>
+<p><strong>A leading or trailing colon in <code>PATH</code>, or two adjacent colons (<code>::</code>), indicate that the <em>current directory</em> is one of the directorie</strong>s that the shell should try when looking for executable command names. This is a security risk and you must not do it:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ echo &quot;$PATH&quot;</span><br><span class="line">:/bin/:/usr/bin                          # EXTREME SECURITY RISK!</span><br><span class="line"></span><br><span class="line">$ echo &quot;$PATH&quot;</span><br><span class="line">/bin/::/usr/bin                          # MODERATE SECURITY RISK!</span><br><span class="line"></span><br><span class="line">$ echo &quot;$PATH&quot;</span><br><span class="line">/bin/:/usr/bin:                          # SECURITY RISK!</span><br></pre></td></tr></table></figure>
+<p><strong>Do not put the current directory (or any relative path directory) in <code>PATH</code> – it is a security risk.</strong> You might accidentally execute a malicious program in the current directory.</p>
+<blockquote>
+<p>For example: If you put the current directory at the start of your <code>PATH</code>, e.g. <code>PATH=:/bin:/usr/bin</code>, then when you type <code>ls</code> the first program that is tried is <code>./ls</code> (the program named <code>ls</code> in the current directory) which might be a malicious program.</p>
+</blockquote>
+<h2 id="Command-names-with-slashes-avoid-PATH"><a class="header-anchor" href="#Command-names-with-slashes-avoid-PATH"></a>Command names with slashes avoid <code>PATH</code></h2>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2023/04/24/Shell-Script/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -246,7 +344,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-04-23 20:53:12 / Modified: 12:53:12" itemprop="dateCreated datePublished" datetime="2023-04-23T20:53:12Z">2023-04-23</time>
+      <time title="Created: 2023-04-23 20:53:12 / Modified: 13:48:16" itemprop="dateCreated datePublished" datetime="2023-04-23T20:53:12Z">2023-04-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -255,6 +353,14 @@
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/Technology/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
         </span>
     </span>
 
@@ -268,164 +374,21 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
-<h2 id="scripts-vs-shell-functions"><a class="header-anchor" href="#scripts-vs-shell-functions"></a>scripts vs shell functions</h2>
-<p>Some differences between shell functions and scripts that you should keep in mind are:</p>
+          <p>Outline:</p>
 <ul>
-<li>Functions have to be in the same language as the shell, while scripts can be written in any language. This is why including a shebang for scripts is important.</li>
-<li>Functions are loaded once when their definition is read. Scripts are loaded every time they are executed. This makes functions slightly faster to load, but whenever you change them you will have to reload their definition.</li>
-<li>Functions are executed <strong>in the current shell environment</strong>( 可以简单理解为， function的所在路径是当前路径 ) whereas scripts execute in their own process. Thus, functions can modify environment variables, e.g. change your current directory, whereas scripts can’t. Scripts will be passed by value environment variables that have been exported using <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/export.1p.html"><code>export</code></a></li>
-<li>As with any programming language, functions are a powerful construct to achieve modularity, code reuse, and clarity of shell code. Often shell scripts will include their own function definitions.</li>
+<li>Intro</li>
+<li>Shebang</li>
+<li>Execute Shell Script</li>
+<li>I/O redirection</li>
 </ul>
-<h1 id="Shebang"><a class="header-anchor" href="#Shebang"></a>Shebang</h1>
-<p>Note that scripts need not necessarily be written in bash to be called from the terminal. For instance, here’s a simple Python script that outputs its arguments in reversed order:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/usr/local/bin/python</span></span><br><span class="line">import sys</span><br><span class="line">for arg in reversed(sys.argv[1:]):</span><br><span class="line">    print(arg)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>
-<p>shebang: the character sequence consisting of <code>#!</code> at the beginning of a script in   a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unix-like">Unix-like</a> operating system</p>
-<ul>
-<li>
-<p>shell会将shebang中<code>#!</code>之后的内容作为一个程序的路径，打开该程序， 将本script的路径当作参数传入（ 即，将整个script当作input传入shebang所指定的程序 ）</p>
-</li>
-<li>
-<p>For example, if a script is named with the path <em>path/to/script</em>, and it starts with the following line, <code>#!/bin/sh</code>, then the program loader is instructed to run the program <em>/bin/sh</em>, passing <em>path/to/script</em> as the first argument. In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linux">Linux</a>, this behavior is the result of both kernel and user-space code.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shebang_(Unix)#cite_note-9">9]</a></p>
-</li>
-<li>
-<p>The shebang line is usually ignored by the interpreter, because the &quot;#&quot; character is a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Comment_(computer_programming)">comment</a> marker in many scripting languages; some language interpreters that do not use the hash mark to begin comments still may ignore the shebang line in recognition of its purpose.</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="shebang-with-env"><a class="header-anchor" href="#shebang-with-env"></a>shebang with env</h2>
-<p>The shebang expects a full path to the interpreter to use so the following syntax would be incorrect:</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!python</span></span><br></pre></td></tr></table></figure>
-<p>Setting a full path like this might work:</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python</span></span><br></pre></td></tr></table></figure>
-<p>but would be non portable as python might be installed in <code>/bin</code>, <code>/opt/python/bin</code>, or wherever other location.</p>
-<p>Using <code>env</code></p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br></pre></td></tr></table></figure>
-<p>is a method allowing a portable way to specify to the OS a full path equivalent to the one where <code>python</code> is first located in the <code>PATH</code>.</p>
-<h1 id="Execute-Shell-Script"><a class="header-anchor" href="#Execute-Shell-Script"></a>Execute Shell Script</h1>
-<p>执行脚本文件：</p>
-<ol>
-<li>
-<p>直接指定<code>sh</code>来执行该脚本，不需要shebang，也不需要脚本有执行权限（因为该脚本直接作为参数传给了sh).</p>
-<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">sh script_file_path</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>需要写shebang来指定解释器, 并且要指定脚本路径.</p>
-<p><code>./</code>必加, 否则bash就会在环境变量中查找该脚本名，找不到就报错.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod +x script_file ##(chown, chgrp optionally)</span><br><span class="line">./script_file</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>使用<code>.</code>或<code>source</code>在当前shell session中执行该脚本</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source script_file</span><br></pre></td></tr></table></figure>
-<p>or</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">. script_file</span><br></pre></td></tr></table></figure>
-<p>因此, 该方法可以用于刷新当前shell环境:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Shell script是能在命令行直接输入的, 但仅会作用一次</p>
-</li>
-</ol>
-<p>注意: 方法1,2都是新开一个子shell session，在其中执行脚本，而方法3, 4是在当前shell session中执行脚本</p>
-<h1 id="I-O-redirection"><a class="header-anchor" href="#I-O-redirection"></a>I/O redirection</h1>
-<p>一般情况下，每个 Linux 命令运行时都会打开三个文件：</p>
-<ul>
-<li>标准输入文件(stdin)：stdin的文件描述符为0，Unix程序默认从stdin读取数据。</li>
-<li>标准输出文件(stdout)：stdout 的文件描述符为1，Unix程序默认向stdout输出数据。</li>
-<li>标准错误文件(stderr)：stderr的文件描述符为2，Unix程序会向stderr流中写入错误信息</li>
-</ul>
-<ul>
-<li>
-<p>Discard the output</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">command</span> &gt; /dev/null</span></span><br></pre></td></tr></table></figure>
-<p>The file <strong>/dev/null</strong> is a special file that automatically <strong>discards all its input</strong>.</p>
-</li>
-<li>
-<p>Discard both output of a command and its error output,</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">command</span> &gt; /dev/null 2&gt;&amp;1</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>a command normally writes its output to <strong>STDOUT</strong></li>
-<li>use standard redirection to redirect <strong>STDERR</strong> to <strong>STDOUT</strong></li>
-<li>这里<code>2&gt;&amp;1</code>将标准错误（2）合并到标准输出（1）， 而标准输出已经被重定向到了<code>/dev/null</code>, 因此总体效果是，标准错误和输出都被重定向到了<code>/dev/null</code></li>
-</ul>
-</li>
-<li>
-<p>file descriptor:</p>
-<ul>
-<li><strong>0</strong> : STDIN</li>
-<li><strong>1</strong>: STDOUT</li>
-<li><strong>2</strong>: STDERR</li>
-</ul>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"><a target="_blank" rel="noopener" href="http://Sr.No">Sr.No</a>.</th>
-<th style="text-align:center">Command &amp; Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center"><strong>pgm &gt; file</strong><br>Output of pgm is redirected to file<br>会覆盖目标文件中原有的数据</td>
-</tr>
-<tr>
-<td style="text-align:center">2</td>
-<td style="text-align:center"><strong>pgm &lt; file</strong><br>Program pgm reads its input from file</td>
-</tr>
-<tr>
-<td style="text-align:center">3</td>
-<td style="text-align:center"><strong>pgm &gt;&gt; file</strong><br>Output of pgm is appended to file</td>
-</tr>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center"><strong>n &gt; file</strong><br>Output from stream with descriptor <strong>n</strong> redirected to file</td>
-</tr>
-<tr>
-<td style="text-align:center">5</td>
-<td style="text-align:center"><strong>n &gt;&gt; file</strong><br/>Output from stream with descriptor <strong>n</strong> appended to file</td>
-</tr>
-<tr>
-<td style="text-align:center">6</td>
-<td style="text-align:center"><strong>n &gt;&amp; m</strong><br/>Merges output from stream <strong>n</strong> with stream <strong>m</strong></td>
-</tr>
-<tr>
-<td style="text-align:center">7</td>
-<td style="text-align:center"><strong>n &lt;&amp; m</strong><br/>Merges input from stream <strong>n</strong> with stream <strong>m</strong></td>
-</tr>
-<tr>
-<td style="text-align:center">8</td>
-<td style="text-align:center"><strong>&lt;&lt; tag</strong><br/>Standard input comes from here through next tag at the start of line</td>
-</tr>
-<tr>
-<td style="text-align:center">9</td>
-<td style="text-align:center"><strong>|</strong><br/>Takes output from one program, or process, and sends it to another</td>
-</tr>
-</tbody>
-</table>
-<h2 id="Here-Document"><a class="header-anchor" href="#Here-Document"></a>Here Document</h2>
-<p>Here Document 目前没有统一的翻译，这里暂译为”嵌入文档“。Here Document 是 Shell 中的一种特殊的重定向方式，它的基本的形式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">command &lt;&lt; delimiter</span><br><span class="line">document</span><br><span class="line">delimiter</span><br></pre></td></tr></table></figure>
-<p>它的作用是<strong>将两个 delimiter 之间的内容(document) 作为输入传递给 command</strong></p>
-<p>注意：</p>
-<ul>
-<li>结尾的delimiter 一定要顶格写，前面不能有任何字符，后面也不能有任何字符，包括空格和 tab 缩进。</li>
-<li>开始的delimiter前后的空格会被忽略掉。</li>
-</ul>
-<p>下面的例子，通过 wc -l 命令计算 document 的行数：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wc -l &lt;&lt; EOF</span><br><span class="line">    This is a simple lookup program</span><br><span class="line">    for good (and bad) restaurants</span><br><span class="line">    in Cape Town.</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-<p>也可将 Here Document 用在脚本中，例如：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">cat &lt;&lt; EOF</span><br><span class="line">    This is a simple lookup program</span><br><span class="line">    for good (and bad) restaurants</span><br><span class="line">    in Cape Town.</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-<h1 id="Commen-Shell-Scripts"><a class="header-anchor" href="#Commen-Shell-Scripts"></a>Commen Shell Scripts</h1>
-<ul>
-<li><code>:</code>： 空命令</li>
-<li></li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/04/24/Shell-Script/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1139,103 +1102,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2023/04/18/%E5%AE%98%E5%A6%93/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2023/04/17/Squat/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/white_flower1.jpg">
-      <meta itemprop="name" content="有多远滚多远">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LYK-love">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | LYK-love">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/04/17/Squat/" class="post-title-link" itemprop="url">Squat</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-04-17 00:20:26" itemprop="dateCreated datePublished" datetime="2023-04-17T00:20:26Z">2023-04-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-04-16 16:20:26" itemprop="dateModified" datetime="2023-04-16T16:20:26Z">2023-04-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Fitness/" itemprop="url" rel="index"><span itemprop="name">Fitness</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Outline:</p>
-<ul>
-<li>Intro</li>
-<li>Squat</li>
-<li>Notes</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2023/04/17/Squat/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>

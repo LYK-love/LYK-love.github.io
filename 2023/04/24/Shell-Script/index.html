@@ -20,16 +20,17 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Intro scripts vs shell functions Some differences between shell functions and scripts that you should keep in mind are:  Functions have to be in the same language as the shell, while scripts can be wr">
+    <meta name="description" content="Outline:  Intro Shebang Execute Shell Script I&#x2F;O redirection">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell Script">
 <meta property="og:url" content="http://lyk-love.cn/2023/04/24/Shell-Script/index.html">
 <meta property="og:site_name" content="LYK-love">
-<meta property="og:description" content="Intro scripts vs shell functions Some differences between shell functions and scripts that you should keep in mind are:  Functions have to be in the same language as the shell, while scripts can be wr">
+<meta property="og:description" content="Outline:  Intro Shebang Execute Shell Script I&#x2F;O redirection">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-04-23T20:53:12.000Z">
-<meta property="article:modified_time" content="2023-04-23T12:53:12.447Z">
+<meta property="article:modified_time" content="2023-04-23T13:48:16.677Z">
 <meta property="article:author" content="有多远滚多远">
+<meta property="article:tag" content="Linux">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary">
 
@@ -147,7 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#scripts-vs-shell-functions"><span class="nav-text">scripts vs shell functions</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shebang"><span class="nav-text">Shebang</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shebang-with-env"><span class="nav-text">shebang with env</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Execute-Shell-Script"><span class="nav-text">Execute Shell Script</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O-redirection"><span class="nav-text">I&#x2F;O redirection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Here-Document"><span class="nav-text">Here Document</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Commen-Shell-Scripts"><span class="nav-text">Commen Shell Scripts</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#scripts-vs-shell-functions"><span class="nav-text">scripts vs shell functions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shell-Style"><span class="nav-text">Shell Style</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shebang"><span class="nav-text">Shebang</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shebang-with-env"><span class="nav-text">shebang with env</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Execute-Shell-Script"><span class="nav-text">Execute Shell Script</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I-O-redirection"><span class="nav-text">I&#x2F;O redirection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Here-Document"><span class="nav-text">Here Document</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Commen-Shell-Scripts"><span class="nav-text">Commen Shell Scripts</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -162,13 +163,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">216</span>
+          <span class="site-state-item-count">217</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -253,7 +254,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2023-04-23 20:53:12 / Modified: 12:53:12" itemprop="dateCreated datePublished" datetime="2023-04-23T20:53:12Z">2023-04-23</time>
+      <time title="Created: 2023-04-23 20:53:12 / Modified: 13:48:16" itemprop="dateCreated datePublished" datetime="2023-04-23T20:53:12Z">2023-04-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -262,6 +263,14 @@
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
           <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/Technology/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
         </span>
     </span>
 
@@ -282,7 +291,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+        <p>Outline:</p>
+<ul>
+<li>Intro</li>
+<li>Shebang</li>
+<li>Execute Shell Script</li>
+<li>I/O redirection</li>
+</ul>
+<span id="more"></span>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<p><a target="_blank" rel="noopener" href="https://github.com/onceupon/Bash-Oneliner">常见Shell指令</a></p>
 <h2 id="scripts-vs-shell-functions"><a class="header-anchor" href="#scripts-vs-shell-functions"></a>scripts vs shell functions</h2>
 <p>Some differences between shell functions and scripts that you should keep in mind are:</p>
 <ul>
@@ -291,6 +309,8 @@
 <li>Functions are executed <strong>in the current shell environment</strong>( 可以简单理解为， function的所在路径是当前路径 ) whereas scripts execute in their own process. Thus, functions can modify environment variables, e.g. change your current directory, whereas scripts can’t. Scripts will be passed by value environment variables that have been exported using <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/export.1p.html"><code>export</code></a></li>
 <li>As with any programming language, functions are a powerful construct to achieve modularity, code reuse, and clarity of shell code. Often shell scripts will include their own function definitions.</li>
 </ul>
+<h2 id="Shell-Style"><a class="header-anchor" href="#Shell-Style"></a>Shell Style</h2>
+<p><a target="_blank" rel="noopener" href="https://google.github.io/styleguide/shellguide.html">https://google.github.io/styleguide/shellguide.html</a></p>
 <h1 id="Shebang"><a class="header-anchor" href="#Shebang"></a>Shebang</h1>
 <p>Note that scripts need not necessarily be written in bash to be called from the terminal. For instance, here’s a simple Python script that outputs its arguments in reversed order:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/usr/local/bin/python</span></span><br><span class="line">import sys</span><br><span class="line">for arg in reversed(sys.argv[1:]):</span><br><span class="line">    print(arg)</span><br></pre></td></tr></table></figure>
@@ -299,7 +319,7 @@
 <p>shebang: the character sequence consisting of <code>#!</code> at the beginning of a script in   a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unix-like">Unix-like</a> operating system</p>
 <ul>
 <li>
-<p>shell会将shebang中<code>#!</code>之后的内容作为一个程序的路径，打开该程序， 将本script的路径当作参数传入（ 即，将整个script当作input传入shebang所指定的程序 ）</p>
+<p>shell会将shebang中<code>#!</code>之后的内容作为一个程序的路径，打开该程序， 将本script的路径当作参数传入( 即: 将整个script当作input传入shebang所指定的程序 ）</p>
 </li>
 <li>
 <p>For example, if a script is named with the path <em>path/to/script</em>, and it starts with the following line, <code>#!/bin/sh</code>, then the program loader is instructed to run the program <em>/bin/sh</em>, passing <em>path/to/script</em> as the first argument. In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linux">Linux</a>, this behavior is the result of both kernel and user-space code.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shebang_(Unix)#cite_note-9">9]</a></p>
@@ -328,7 +348,7 @@
 </li>
 <li>
 <p>需要写shebang来指定解释器, 并且要指定脚本路径.</p>
-<p><code>./</code>必加, 否则bash就会在环境变量中查找该脚本名，找不到就报错.</p>
+<p>必须加上<code>./</code>使得该command name被识别为一个路径名. 否则shell会继续在alias, builtin和<code>PATH</code>中搜索该command name. [^1]</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod +x script_file ##(chown, chgrp optionally)</span><br><span class="line">./script_file</span><br></pre></td></tr></table></figure>
 </li>
 <li>
@@ -437,8 +457,8 @@
 <h1 id="Commen-Shell-Scripts"><a class="header-anchor" href="#Commen-Shell-Scripts"></a>Commen Shell Scripts</h1>
 <ul>
 <li><code>:</code>： 空命令</li>
-<li></li>
 </ul>
+<p>[^1]:</p>
 
     </div>
 
@@ -448,6 +468,7 @@
 
     <footer class="post-footer">
           <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
               <a href="/tags/shell/" rel="tag"># shell</a>
           </div>
 
@@ -460,6 +481,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/04/24/Shell-Script-Searching-Path/" rel="next" title="Shell Script Searching Path">
+                  Shell Script Searching Path <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
