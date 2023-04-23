@@ -20,28 +20,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Outline:  Variable String Array Quoting Mechanism Control Flow I&#x2F;O redirection Function .....  ref:  shell tutorial">
+    <meta name="description" content="The  basic grammer of shell script. ref:  shell tutorial">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Shell Script">
-<meta property="og:url" content="http://lyk-love.cn/2022/03/18/Shell-Script/index.html">
+<meta property="og:title" content="Shell Script Language">
+<meta property="og:url" content="http://lyk-love.cn/2022/03/18/Shell-Script-Language/index.html">
 <meta property="og:site_name" content="LYK-love">
-<meta property="og:description" content="Outline:  Variable String Array Quoting Mechanism Control Flow I&#x2F;O redirection Function .....  ref:  shell tutorial">
+<meta property="og:description" content="The  basic grammer of shell script. ref:  shell tutorial">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-17T17:06:52.000Z">
-<meta property="article:modified_time" content="2023-02-08T07:44:07.954Z">
+<meta property="article:modified_time" content="2023-04-23T12:50:24.649Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="shell">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://lyk-love.cn/2022/03/18/Shell-Script/">
+<link rel="canonical" href="http://lyk-love.cn/2022/03/18/Shell-Script-Language/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/03/18/Shell-Script/","path":"2022/03/18/Shell-Script/","title":"Shell Script"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://lyk-love.cn/2022/03/18/Shell-Script-Language/","path":"2022/03/18/Shell-Script-Language/","title":"Shell Script Language"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Shell Script | LYK-love</title>
+<title>Shell Script Language | LYK-love</title>
   
 
   <script src="/js/third-party/analytics/baidu-analytics.js"></script>
@@ -147,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-Script"><span class="nav-text">Shell Script</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Variable"><span class="nav-text">Variable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String"><span class="nav-text">String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array"><span class="nav-text">Array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quoting-Mechanism"><span class="nav-text">Quoting Mechanism</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#metacharacters"><span class="nav-text">metacharacters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quoting"><span class="nav-text">quoting</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="nav-text">条件语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if"><span class="nav-text">if</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case"><span class="nav-text">case</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select-in-case-in"><span class="nav-text">select in &amp;&amp; case in</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="nav-text">循环语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for"><span class="nav-text">for</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#while"><span class="nav-text">while</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E7%BB%84%E5%90%88"><span class="nav-text">命令组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E5%8F%A5%E5%9D%97"><span class="nav-text">语句块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-redirection"><span class="nav-text">I&#x2F;O redirection</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Here-Document"><span class="nav-text">Here Document</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#test"><span class="nav-text">test</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E%E6%96%87%E4%BB%B6%E6%9C%89%E5%85%B3%E7%9A%84%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95"><span class="nav-text">与文件有关的条件测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B5%8B%E8%AF%95"><span class="nav-text">字符串测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E6%B5%8B%E8%AF%95"><span class="nav-text">数值测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E6%93%8D%E4%BD%9C"><span class="nav-text">逻辑操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function"><span class="nav-text">Function</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#return-code"><span class="nav-text">return code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Function-Call-from-Prompt"><span class="nav-text">Function Call from Prompt</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#output"><span class="nav-text">output</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#return-code-2"><span class="nav-text">return code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#return-code-as-bool-value"><span class="nav-text">return code as bool value</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD-substitution"><span class="nav-text">CMD substitution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#arithmetic-substitution"><span class="nav-text">arithmetic substitution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#variable-substitution"><span class="nav-text">variable substitution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#process-substitution"><span class="nav-text">process substitution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#operator"><span class="nav-text">operator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Arithmetic-Operators"><span class="nav-text">Arithmetic Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Relational-Operators"><span class="nav-text">Relational Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean-Operators"><span class="nav-text">Boolean Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String-Operators"><span class="nav-text">String Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Test-Operators"><span class="nav-text">File Test Operators</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-globbing"><span class="nav-text">shell globbing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#env-virable"><span class="nav-text">env virable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#parameter-variable"><span class="nav-text">parameter variable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scripts"><span class="nav-text">scripts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#shebang"><span class="nav-text">shebang</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shebang-with-env"><span class="nav-text">shebang with env</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scripts-vs-shell-functions"><span class="nav-text">scripts vs shell functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Potpourri"><span class="nav-text">Potpourri</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#execute-shell-scripts"><span class="nav-text">execute shell scripts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#-2"><span class="nav-text"></span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variable"><span class="nav-text">Variable</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#String"><span class="nav-text">String</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array"><span class="nav-text">Array</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Quoting-Mechanism"><span class="nav-text">Quoting Mechanism</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#metacharacters"><span class="nav-text">metacharacters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#quoting"><span class="nav-text">quoting</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E8%AF%AD%E6%B3%95"><span class="nav-text">常见语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="nav-text">条件语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#if"><span class="nav-text">if</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case"><span class="nav-text">case</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#select-in-case-in"><span class="nav-text">select in &amp;&amp; case in</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="nav-text">循环语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for"><span class="nav-text">for</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#while"><span class="nav-text">while</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E7%BB%84%E5%90%88"><span class="nav-text">命令组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E5%8F%A5%E5%9D%97"><span class="nav-text">语句块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#test"><span class="nav-text">test</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8E%E6%96%87%E4%BB%B6%E6%9C%89%E5%85%B3%E7%9A%84%E6%9D%A1%E4%BB%B6%E6%B5%8B%E8%AF%95"><span class="nav-text">与文件有关的条件测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%B5%8B%E8%AF%95"><span class="nav-text">字符串测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E6%B5%8B%E8%AF%95"><span class="nav-text">数值测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E6%93%8D%E4%BD%9C"><span class="nav-text">逻辑操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Function"><span class="nav-text">Function</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#return"><span class="nav-text">return</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-Call-from-Prompt"><span class="nav-text">Function Call from Prompt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#return-code"><span class="nav-text">return code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#return-code-as-bool-value"><span class="nav-text">return code as bool value</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Substitutions"><span class="nav-text">Substitutions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD-substitution"><span class="nav-text">CMD substitution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Arithmetic-Substitution"><span class="nav-text">Arithmetic Substitution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Variable-Substitution"><span class="nav-text">Variable Substitution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-Substitution"><span class="nav-text">Process Substitution</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#operator"><span class="nav-text">operator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Arithmetic-Operators"><span class="nav-text">Arithmetic Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Relational-Operators"><span class="nav-text">Relational Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boolean-Operators"><span class="nav-text">Boolean Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String-Operators"><span class="nav-text">String Operators</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Test-Operators"><span class="nav-text">File Test Operators</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-Globbing"><span class="nav-text">Shell Globbing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Env-virable"><span class="nav-text">Env virable</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PATH"><span class="nav-text">$PATH</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Parameter-variable"><span class="nav-text">Parameter variable</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -162,7 +162,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">215</span>
+          <span class="site-state-item-count">216</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -223,7 +223,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/18/Shell-Script/">
+    <link itemprop="mainEntityOfPage" href="http://lyk-love.cn/2022/03/18/Shell-Script-Language/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/white_flower1.jpg">
@@ -236,12 +236,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Shell Script | LYK-love">
+      <meta itemprop="name" content="Shell Script Language | LYK-love">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Shell Script
+          Shell Script Language
         </h1>
 
         <div class="post-meta-container">
@@ -259,7 +259,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-08 07:44:07" itemprop="dateModified" datetime="2023-02-08T07:44:07Z">2023-02-08</time>
+      <time title="Modified: 2023-04-23 12:50:24" itemprop="dateModified" datetime="2023-04-23T12:50:24Z">2023-04-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -288,28 +288,22 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Outline:</p>
-<ul>
-<li>Variable</li>
-<li>String</li>
-<li>Array</li>
-<li>Quoting Mechanism</li>
-<li>Control Flow</li>
-<li>I/O redirection</li>
-<li>Function</li>
-<li>.....</li>
-</ul>
+        <p>The  basic grammer of shell script.</p>
 <p>ref:  <a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/unix/unix-shell-functions.htm">shell tutorial</a></p>
  <span id="more"></span>
-<h1 id="Shell-Script"><a class="header-anchor" href="#Shell-Script"></a>Shell Script</h1>
-<p>不同的Shell实现会有不同的方言，不过这很少见。 这里只介绍最标准的Shell Script语法， 能够被最常用的Shell(如Bash)接受</p>
+<h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
+<p>不同的Shell实现会有不同的方言，不过这很少见。 这里只介绍最标准的Shell Script语法，, 能够被最常用的Shell(如Bash)接受</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/onceupon/Bash-Oneliner">常见Shell指令</a></p>
-<h2 id="Variable"><a class="header-anchor" href="#Variable"></a>Variable</h2>
+<h1 id="Variable"><a class="header-anchor" href="#Variable"></a>Variable</h1>
 <ul>
 <li>
 <p>assign variables in bash:  <code>foo=bar</code></p>
 <ul>
-<li>Note that <code>foo = bar</code> will not work since it is interpreted as calling the <code>foo</code> program with arguments <code>=</code> and <code>bar</code>. In general, in shell scripts the space character will perform argument splitting</li>
+<li>Note that <code>foo = bar</code> will not work since it is interpreted as calling the <code>foo</code> program with arguments <code>=</code> and <code>bar</code>. In general, in shell scripts <u>the space character will perform argument splitting.</u>
+<ul>
+<li>因此不要加空格</li>
+</ul>
+</li>
 </ul>
 </li>
 <li>
@@ -397,6 +391,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">DATE=`date`</span><br><span class="line"></span><br><span class="line">echo $DATE</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">等价于后文的CMD substitution</span></span><br><span class="line">echo $(DATE)</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h1 id="常见语法"><a class="header-anchor" href="#常见语法"></a>常见语法</h1>
 <h2 id="条件语句"><a class="header-anchor" href="#条件语句"></a>条件语句</h2>
 <ul>
 <li>As with most programming languages, bash supports control flow techniques including <code>if</code>, <code>case</code>, <code>while</code> and <code>for</code>.</li>
@@ -429,6 +424,7 @@
 <p>该命令的while版本：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">while [ &quot;$item&quot; != &quot;Finish&quot; ]; </span><br><span class="line">do </span><br><span class="line">    read item</span><br><span class="line">    case &quot;$item&quot; in</span><br><span class="line">        &quot;Continue&quot;) </span><br><span class="line">            ;;</span><br><span class="line">        &quot;Finish&quot;)</span><br><span class="line">            ;;</span><br><span class="line">        *) echo &quot;Wrong choice! Please select again!&quot;</span><br><span class="line">            ;;</span><br><span class="line">    esac </span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 <h2 id="循环语句"><a class="header-anchor" href="#循环语句"></a>循环语句</h2>
+<p><code>break</code>: 从for/while/until循环退出</p>
 <h3 id="for"><a class="header-anchor" href="#for"></a>for</h3>
 <p>syntax：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">for var in word1 word2 ... wordN</span><br><span class="line">do</span><br><span class="line">   Statement(s) to be executed for every word.</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
@@ -443,105 +439,14 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">a=0</span><br><span class="line">LIMIT=10</span><br><span class="line">while [ $a -le $LIMIT ] </span><br><span class="line">do</span><br><span class="line">    a=$(($a+1))</span><br><span class="line">        if [ $a -gt 2 ] </span><br><span class="line">        then</span><br><span class="line">            break # Skip entire rest of loop. </span><br><span class="line">        fi</span><br><span class="line">    echo -n &quot;$a&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
 <h2 id="命令组合"><a class="header-anchor" href="#命令组合"></a>命令组合</h2>
 <p>分号串联：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">command1 ; command2 ; ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">command1 ; command2 ; ...</span><br></pre></td></tr></table></figure>
 <p>条件组合:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">statement1 &amp;&amp; statement2 &amp;&amp; statement3 &amp;&amp; ...</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">statement1 || statement2 || statement3 ||</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">statement1 &amp;&amp; statement2 &amp;&amp; statement3 &amp;&amp; ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">statement1 || statement2 || statement3 ||</span><br></pre></td></tr></table></figure>
 <h2 id="语句块"><a class="header-anchor" href="#语句块"></a>语句块</h2>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	statement1 </span><br><span class="line">	statement2 </span><br><span class="line">	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>或</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123; </span><br><span class="line">	statement1; statement2 ; ... ; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="I-O-redirection"><a class="header-anchor" href="#I-O-redirection"></a>I/O redirection</h2>
-<p>一般情况下，每个 Linux 命令运行时都会打开三个文件：</p>
-<ul>
-<li>标准输入文件(stdin)：stdin的文件描述符为0，Unix程序默认从stdin读取数据。</li>
-<li>标准输出文件(stdout)：stdout 的文件描述符为1，Unix程序默认向stdout输出数据。</li>
-<li>标准错误文件(stderr)：stderr的文件描述符为2，Unix程序会向stderr流中写入错误信息</li>
-</ul>
-<ul>
-<li>
-<p>Discard the output</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">command</span> &gt; /dev/null</span></span><br></pre></td></tr></table></figure>
-<p>The file <strong>/dev/null</strong> is a special file that automatically <strong>discards all its input</strong>.</p>
-</li>
-<li>
-<p>Discard both output of a command and its error output,</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">command</span> &gt; /dev/null 2&gt;&amp;1</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>a command normally writes its output to <strong>STDOUT</strong></li>
-<li>use standard redirection to redirect <strong>STDERR</strong> to <strong>STDOUT</strong></li>
-<li>这里<code>2&gt;&amp;1</code>将标准错误（2）合并到标准输出（1）， 而标准输出已经被重定向到了<code>/dev/null</code>, 因此总体效果是，标准错误和输出都被重定向到了<code>/dev/null</code></li>
-</ul>
-</li>
-<li>
-<p>file descriptor:</p>
-<ul>
-<li><strong>0</strong> : STDIN</li>
-<li><strong>1</strong>: STDOUT</li>
-<li><strong>2</strong>: STDERR</li>
-</ul>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"><a target="_blank" rel="noopener" href="http://Sr.No">Sr.No</a>.</th>
-<th style="text-align:center">Command &amp; Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center"><strong>pgm &gt; file</strong><br>Output of pgm is redirected to file<br>会覆盖目标文件中原有的数据</td>
-</tr>
-<tr>
-<td style="text-align:center">2</td>
-<td style="text-align:center"><strong>pgm &lt; file</strong><br>Program pgm reads its input from file</td>
-</tr>
-<tr>
-<td style="text-align:center">3</td>
-<td style="text-align:center"><strong>pgm &gt;&gt; file</strong><br>Output of pgm is appended to file</td>
-</tr>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center"><strong>n &gt; file</strong><br>Output from stream with descriptor <strong>n</strong> redirected to file</td>
-</tr>
-<tr>
-<td style="text-align:center">5</td>
-<td style="text-align:center"><strong>n &gt;&gt; file</strong><br/>Output from stream with descriptor <strong>n</strong> appended to file</td>
-</tr>
-<tr>
-<td style="text-align:center">6</td>
-<td style="text-align:center"><strong>n &gt;&amp; m</strong><br/>Merges output from stream <strong>n</strong> with stream <strong>m</strong></td>
-</tr>
-<tr>
-<td style="text-align:center">7</td>
-<td style="text-align:center"><strong>n &lt;&amp; m</strong><br/>Merges input from stream <strong>n</strong> with stream <strong>m</strong></td>
-</tr>
-<tr>
-<td style="text-align:center">8</td>
-<td style="text-align:center"><strong>&lt;&lt; tag</strong><br/>Standard input comes from here through next tag at the start of line</td>
-</tr>
-<tr>
-<td style="text-align:center">9</td>
-<td style="text-align:center"><strong>|</strong><br/>Takes output from one program, or process, and sends it to another</td>
-</tr>
-</tbody>
-</table>
-<h3 id="Here-Document"><a class="header-anchor" href="#Here-Document"></a>Here Document</h3>
-<p>Here Document 目前没有统一的翻译，这里暂译为”嵌入文档“。Here Document 是 Shell 中的一种特殊的重定向方式，它的基本的形式如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">command &lt;&lt; delimiter</span><br><span class="line">document</span><br><span class="line">delimiter</span><br></pre></td></tr></table></figure>
-<p>它的作用是<strong>将两个 delimiter 之间的内容(document) 作为输入传递给 command</strong></p>
-<p>注意：</p>
-<ul>
-<li>结尾的delimiter 一定要顶格写，前面不能有任何字符，后面也不能有任何字符，包括空格和 tab 缩进。</li>
-<li>开始的delimiter前后的空格会被忽略掉。</li>
-</ul>
-<p>下面的例子，通过 wc -l 命令计算 document 的行数：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wc -l &lt;&lt; EOF</span><br><span class="line">    This is a simple lookup program</span><br><span class="line">    for good (and bad) restaurants</span><br><span class="line">    in Cape Town.</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-<p>也可将 Here Document 用在脚本中，例如：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/bash</span></span><br><span class="line"></span><br><span class="line">cat &lt;&lt; EOF</span><br><span class="line">    This is a simple lookup program</span><br><span class="line">    for good (and bad) restaurants</span><br><span class="line">    in Cape Town.</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
-<h2 id="test"><a class="header-anchor" href="#test"></a>test</h2>
 <p>test expression 或 <code>[ expression ]</code></p>
 <ul>
 <li>
@@ -560,6 +465,7 @@
 </ul>
 </li>
 </ul>
+<h2 id="test"><a class="header-anchor" href="#test"></a>test</h2>
 <p>test expression:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">test 1 -lt 2</span><br><span class="line">echo $?</span><br><span class="line">0</span><br><span class="line">test 1 -gt 2</span><br><span class="line">echo $?</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
 <p><code>[ expression ]</code>:</p>
@@ -746,17 +652,17 @@
 </tr>
 </tbody>
 </table>
-<h2 id="Function"><a class="header-anchor" href="#Function"></a>Function</h2>
+<h1 id="Function"><a class="header-anchor" href="#Function"></a>Function</h1>
 <p>syntax</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">function_name()&#123;</span><br><span class="line">	list of commands</span><br><span class="line">	[ return value ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>example:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">mcd () &#123;</span><br><span class="line">    mkdir -p &quot;$1&quot;</span><br><span class="line">    cd &quot;$1&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="return-code"><a class="header-anchor" href="#return-code"></a>return code</h3>
+<h2 id="return"><a class="header-anchor" href="#return"></a>return</h2>
 <ul>
-<li><code>exit</code>: 不仅会退出函数，还会退出执行该函数的shell</li>
-<li><code>return code</code>:仅仅退出函数。和command的return code同</li>
+<li><code>exit</code>: 不仅会退出函数, 还会退出执行该函数的shell</li>
+<li><code>return code</code>:仅仅退出函数. 和command的return code同</li>
 </ul>
-<h3 id="Function-Call-from-Prompt"><a class="header-anchor" href="#Function-Call-from-Prompt"></a>Function Call from Prompt</h3>
+<h2 id="Function-Call-from-Prompt"><a class="header-anchor" href="#Function-Call-from-Prompt"></a>Function Call from Prompt</h2>
 <ul>
 <li>
 <p>令shell加载函数定义：</p>
@@ -766,7 +672,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">func para1 para2</span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p>将函数定义写在一个文件( say <code>test.sh</code> ), 然后执行它</p>
+<p>将函数定义写在一个文件( say  <code>test.sh</code> ), 然后执行它</p>
 </li>
 </ul>
 </li>
@@ -777,13 +683,13 @@
 <li>该命令也可用来令shell删除变量定义</li>
 <li>反之，<code>set</code>可以用来定义变量</li>
 </ul>
+<p>output</p>
+</li>
+<li>
+<p>Commands will often return output using <code>STDOUT</code>, errors through <code>STDERR</code></p>
 </li>
 </ul>
-<h2 id="output"><a class="header-anchor" href="#output"></a>output</h2>
-<ul>
-<li>Commands will often return output using <code>STDOUT</code>, errors through <code>STDERR</code></li>
-</ul>
-<h2 id="return-code-2"><a class="header-anchor" href="#return-code-2"></a>return code</h2>
+<h2 id="return-code"><a class="header-anchor" href="#return-code"></a>return code</h2>
 <ul>
 <li>Commands have <strong>Return Code</strong> to report errors in a more script-friendly manner.
 <ul>
@@ -792,7 +698,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="return-code-as-bool-value"><a class="header-anchor" href="#return-code-as-bool-value"></a>return code as bool value</h2>
+<h3 id="return-code-as-bool-value"><a class="header-anchor" href="#return-code-as-bool-value"></a>return code as bool value</h3>
 <ul>
 <li>
 <p>Return codes can be used to conditionally execute commands using <code>&amp;&amp;</code> (and operator) and <code>||</code> (or operator) .</p>
@@ -805,6 +711,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">false || echo &quot;Oops, fail&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Oops, fail</span></span><br><span class="line"></span><br><span class="line">true || echo &quot;Will not be printed&quot;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"></span></span><br><span class="line">true &amp;&amp; echo &quot;Things went well&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Things went well</span></span><br><span class="line"></span><br><span class="line">false &amp;&amp; echo &quot;Will not be printed&quot;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"></span></span><br><span class="line"><span class="language-bash"></span></span><br><span class="line">true ; echo &quot;This will always run&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This will always run</span></span><br><span class="line"></span><br><span class="line">false ; echo &quot;This will always run&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This will always run</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
+<h1 id="Substitutions"><a class="header-anchor" href="#Substitutions"></a>Substitutions</h1>
 <h2 id="CMD-substitution"><a class="header-anchor" href="#CMD-substitution"></a>CMD substitution</h2>
 <ul>
 <li>
@@ -817,10 +724,10 @@
 <p>example:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">for file in $(ls)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line">echo &quot;The current directory is $PWD&quot;</span><br><span class="line">echo &quot;The current directory is $(pwd)&quot;</span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
-<h2 id="arithmetic-substitution"><a class="header-anchor" href="#arithmetic-substitution"></a>arithmetic substitution</h2>
+<h2 id="Arithmetic-Substitution"><a class="header-anchor" href="#Arithmetic-Substitution"></a>Arithmetic Substitution</h2>
 <p><code>$((...))</code></p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line">x=0</span><br><span class="line">while [[ $x != 10 ]]; do</span><br><span class="line">echo $x</span><br><span class="line">x=$(($x+1)) </span><br><span class="line">done</span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
-<h2 id="variable-substitution"><a class="header-anchor" href="#variable-substitution"></a>variable substitution</h2>
+<h2 id="Variable-Substitution"><a class="header-anchor" href="#Variable-Substitution"></a>Variable Substitution</h2>
 <p>变量替换可以根据变量的状态（是否为空、是否定义等）来改变它的值</p>
 <p>可以使用的变量替换形式：</p>
 <table>
@@ -856,7 +763,7 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line"></span><br><span class="line">echo $&#123;var:-&quot;Variable is not set&quot;&#125;</span><br><span class="line">echo &quot;1 - Value of var is $&#123;var&#125;&quot;</span><br><span class="line"></span><br><span class="line">echo $&#123;var:=&quot;Variable is not set&quot;&#125;</span><br><span class="line">echo &quot;2 - Value of var is $&#123;var&#125;&quot;</span><br><span class="line"></span><br><span class="line">unset var</span><br><span class="line">echo $&#123;var:+&quot;This is default value&quot;&#125;</span><br><span class="line">echo &quot;3 - Value of var is $var&quot;</span><br><span class="line"></span><br><span class="line">var=&quot;Prefix&quot;</span><br><span class="line">echo $&#123;var:+&quot;This is default value&quot;&#125;</span><br><span class="line">echo &quot;4 - Value of var is $var&quot;</span><br><span class="line"></span><br><span class="line">echo $&#123;var:?&quot;Print this message&quot;&#125;</span><br><span class="line">echo &quot;5 - Value of var is $&#123;var&#125;&quot;</span><br></pre></td></tr></table></figure>
 <p>result:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">Variable is not set</span><br><span class="line">1 - Value of var is</span><br><span class="line">Variable is not set</span><br><span class="line">2 - Value of var is Variable is not set</span><br><span class="line"></span><br><span class="line">3 - Value of var is</span><br><span class="line">This is default value</span><br><span class="line">4 - Value of var is Prefix</span><br><span class="line">Prefix</span><br><span class="line">5 - Value of var is Prefix</span><br></pre></td></tr></table></figure>
-<h2 id="process-substitution"><a class="header-anchor" href="#process-substitution"></a>process substitution</h2>
+<h2 id="Process-Substitution"><a class="header-anchor" href="#Process-Substitution"></a>Process Substitution</h2>
 <ul>
 <li>
 <p><code>&lt;( CMD )</code> ： 执行 <code>CMD</code> 并将其输出重定向到一个临时文件， 用这个临时文件的名字替换 <code>&lt;()</code></p>
@@ -870,7 +777,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="operator"><a class="header-anchor" href="#operator"></a>operator</h2>
+<h3 id="operator"><a class="header-anchor" href="#operator"></a>operator</h3>
 <p>Bourne shell didn't originally have any mechanism to perform simple arithmetic operations but it uses external programs, either <strong>awk</strong> or <strong>expr</strong>.</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/bin/sh</span></span><br><span class="line"></span><br><span class="line">val=`expr 2 + 2`</span><br><span class="line">echo &quot;Total value : $val&quot;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -1144,7 +1051,7 @@
 </tr>
 </tbody>
 </table>
-<h2 id="shell-globbing"><a class="header-anchor" href="#shell-globbing"></a>shell globbing</h2>
+<h1 id="Shell-Globbing"><a class="header-anchor" href="#Shell-Globbing"></a>Shell Globbing</h1>
 <ul>
 <li>
 <p>一些正则操作，用于文件名扩展</p>
@@ -1168,8 +1075,10 @@
 </li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">convert image.&#123;png,jpg&#125;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Will <span class="built_in">expand</span> to</span></span><br><span class="line">convert image.png image.jpg</span><br><span class="line"></span><br><span class="line">cp /path/to/project/&#123;foo,bar,baz&#125;.sh /newpath</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Will <span class="built_in">expand</span> to</span></span><br><span class="line">cp /path/to/project/foo.sh /path/to/project/bar.sh /path/to/project/baz.sh /newpath</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Globbing techniques can also be combined</span></span><br><span class="line">mv *&#123;.py,.sh&#125; folder</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Will move all *.py and *.sh files</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mkdir foo bar</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">This creates files foo/a, foo/b, ... foo/h, bar/a, bar/b, ... bar/h</span></span><br><span class="line">touch &#123;foo,bar&#125;/&#123;a..h&#125;</span><br><span class="line">touch foo/x bar/y</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Show differences between files <span class="keyword">in</span> foo and bar</span></span><br><span class="line">diff &lt;(ls foo) &lt;(ls bar)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Outputs</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">&lt; x</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">---</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">&gt; y</span></span><br></pre></td></tr></table></figure>
-<h2 id="env-virable"><a class="header-anchor" href="#env-virable"></a>env virable</h2>
-<p>使用 export 设置的变量就成为了环境变量，而没有使用 export 设置的则是自定义变量</p>
+<h1 id="Env-virable"><a class="header-anchor" href="#Env-virable"></a>Env virable</h1>
+<p>使用 <code>export</code> 设置的变量就成为了环境变量，而没有使用 <code>export</code> 设置的则是自定义变量.</p>
+<hr>
+<p>常见的环境变量:</p>
 <table>
 <thead>
 <tr>
@@ -1184,7 +1093,7 @@
 </tr>
 <tr>
 <td>$PATH</td>
-<td>以冒号分隔的用来搜索命令的目录的列表</td>
+<td>以冒号分隔的, 由多个路径所组成的, 用来搜索命令的列表</td>
 </tr>
 <tr>
 <td>$PS1</td>
@@ -1196,15 +1105,21 @@
 </tr>
 <tr>
 <td>$IFS</td>
-<td>输入区分隔符。当shell读取输入数据时会把一组字符看成是单词之间的分隔符，通常是空格、制</td>
+<td>输入区分隔符。当shell读取输入数据时会把一组字符看成是单词之间的分隔符，通常是空格、制表符、换行符等</td>
 </tr>
 <tr>
 <td></td>
-<td>表符、换行符等</td>
+<td></td>
 </tr>
 </tbody>
 </table>
-<h2 id="parameter-variable"><a class="header-anchor" href="#parameter-variable"></a>parameter variable</h2>
+<p><strong>环境变量可以在其进程的子进程中继续有效，而自定义变量则无效.</strong></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">我们在当前Shell进程中指定了var1变量</span></span><br><span class="line">[roc@roclinux ~]$ var1=&quot;hello&quot;</span><br><span class="line">[roc@roclinux ~]$ echo $var1</span><br><span class="line">hello</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">我们在当前Shell进程中又指定了var2变量</span></span><br><span class="line">[roc@roclinux ~]$ var2=&quot;world&quot;</span><br><span class="line">[roc@roclinux ~]$ echo $var2</span><br><span class="line">world</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">我们通过<span class="built_in">export</span>发布var1</span></span><br><span class="line">[roc@roclinux ~]$ export var1</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">我们进入到一个bash子进程中</span></span><br><span class="line">[roc@roclinux ~]$ bash</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">var1变量仍然有效, 而var2变量已经无效了</span></span><br><span class="line">[roc@roclinux ~]$ echo $var1 # 输出变量的值</span><br><span class="line">hello</span><br><span class="line">[roc@roclinux ~]$ echo $var2  # 什么也没有输出</span><br></pre></td></tr></table></figure>
+<h2 id="PATH"><a class="header-anchor" href="#PATH"></a>$PATH</h2>
+<p>将命令的路径加入环境变量<code>PATH</code>的方法:</p>
+<p>声明环境变量<code>PATH</code>, 值为之前的<code>PATH</code>的值(采用<code>$</code>进行赋值),  再append 一个<code>:</code>, 因为环境变量之间通过冒号隔开, 再append要添加的路径, 这里是<code>/home/to/operation_tools</code>.</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PATH=$PATH:/home/to/operation_tools</span><br></pre></td></tr></table></figure>
+<h1 id="Parameter-variable"><a class="header-anchor" href="#Parameter-variable"></a>Parameter variable</h1>
 <ul>
 <li><code>$0</code> - Name of the script</li>
 <li><code>$1</code> to <code>$9</code> - Arguments to the script. <code>$1</code> is the first argument and so on.
@@ -1220,92 +1135,6 @@
 <li><code>!!</code> - <strong>Entire last command</strong>, including arguments. A common pattern is to execute a command only for it to fail due to missing permissions; you can quickly re-execute the command with sudo by doing <code>sudo !!</code></li>
 <li><code>$_</code> - Last argument from the last command. If you are in an interactive shell, you can also quickly get this value by typing <code>Esc</code> followed by <code>.</code> or <code>Alt+.</code></li>
 </ul>
-<p><code>$PATH</code> 是由多个路径所组成的，并且用冒号进行了分隔</p>
-<p>环境变量可以在其进程的子进程中继续有效，而自定义变量则无效</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">我们在当前Shell进程中指定了var1变量</span></span><br><span class="line">[roc@roclinux ~]$ var1=&quot;hello&quot;</span><br><span class="line">[roc@roclinux ~]$ echo $var1</span><br><span class="line">hello</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">我们在当前Shell进程中又指定了var2变量</span></span><br><span class="line">[roc@roclinux ~]$ var2=&quot;world&quot;</span><br><span class="line">[roc@roclinux ~]$ echo $var2</span><br><span class="line">world</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">我们通过<span class="built_in">export</span>发布var1</span></span><br><span class="line">[roc@roclinux ~]$ export var1</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">我们进入到一个bash子进程中</span></span><br><span class="line">[roc@roclinux ~]$ bash</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">var1变量仍然有效, 而var2变量已经无效了</span></span><br><span class="line">[roc@roclinux ~]$ echo $var1 # 输出变量的值</span><br><span class="line">hello</span><br><span class="line">[roc@roclinux ~]$ echo $var2  # 什么也没有输出</span><br></pre></td></tr></table></figure>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PATH=$PATH:/home/to/operation_tools</span><br></pre></td></tr></table></figure>
-<ul>
-<li>声明环境变量PATH, 值为之前的<code>PATH</code>的值（采用<code>$</code>进行赋值）， 再append <code>:/home/to/operation_tools</code>， 这里要append冒号，因为环境变量之间通过冒号隔开</li>
-</ul>
-<h2 id="scripts"><a class="header-anchor" href="#scripts"></a>scripts</h2>
-<h3 id="shebang"><a class="header-anchor" href="#shebang"></a>shebang</h3>
-<p>Note that scripts need not necessarily be written in bash to be called from the terminal. For instance, here’s a simple Python script that outputs its arguments in reversed order:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">!/usr/local/bin/python</span></span><br><span class="line">import sys</span><br><span class="line">for arg in reversed(sys.argv[1:]):</span><br><span class="line">    print(arg)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>
-<p>shebang: the character sequence consisting of <code>#!</code> at the beginning of a script in   a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unix-like">Unix-like</a> operating system</p>
-<ul>
-<li>
-<p>shell会将shebang中<code>#!</code>之后的内容作为一个程序的路径，打开该程序， 将本script的路径当作参数传入（ 即，将整个script当作input传入shebang所指定的程序 ）</p>
-</li>
-<li>
-<p>For example, if a script is named with the path <em>path/to/script</em>, and it starts with the following line, <code>#!/bin/sh</code>, then the program loader is instructed to run the program <em>/bin/sh</em>, passing <em>path/to/script</em> as the first argument. In <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Linux">Linux</a>, this behavior is the result of both kernel and user-space code.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shebang_(Unix)#cite_note-9">9]</a></p>
-</li>
-<li>
-<p>The shebang line is usually ignored by the interpreter, because the &quot;#&quot; character is a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Comment_(computer_programming)">comment</a> marker in many scripting languages; some language interpreters that do not use the hash mark to begin comments still may ignore the shebang line in recognition of its purpose.</p>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="shebang-with-env"><a class="header-anchor" href="#shebang-with-env"></a>shebang with env</h3>
-<p>The shebang expects a full path to the interpreter to use so the following syntax would be incorrect:</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!python</span></span><br></pre></td></tr></table></figure>
-<p>Setting a full path like this might work:</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python</span></span><br></pre></td></tr></table></figure>
-<p>but would be non portable as python might be installed in <code>/bin</code>, <code>/opt/python/bin</code>, or wherever other location.</p>
-<p>Using <code>env</code></p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br></pre></td></tr></table></figure>
-<p>is a method allowing a portable way to specify to the OS a full path equivalent to the one where <code>python</code> is first located in the <code>PATH</code>.</p>
-<h3 id="scripts-vs-shell-functions"><a class="header-anchor" href="#scripts-vs-shell-functions"></a>scripts vs shell functions</h3>
-<p>Some differences between shell functions and scripts that you should keep in mind are:</p>
-<ul>
-<li>Functions have to be in the same language as the shell, while scripts can be written in any language. This is why including a shebang for scripts is important.</li>
-<li>Functions are loaded once when their definition is read. Scripts are loaded every time they are executed. This makes functions slightly faster to load, but whenever you change them you will have to reload their definition.</li>
-<li>Functions are executed <strong>in the current shell environment</strong>( 可以简单理解为， function的所在路径是当前路径 ) whereas scripts execute in their own process. Thus, functions can modify environment variables, e.g. change your current directory, whereas scripts can’t. Scripts will be passed by value environment variables that have been exported using <a target="_blank" rel="noopener" href="https://www.man7.org/linux/man-pages/man1/export.1p.html"><code>export</code></a></li>
-<li>As with any programming language, functions are a powerful construct to achieve modularity, code reuse, and clarity of shell code. Often shell scripts will include their own function definitions.</li>
-</ul>
-<h3 id="Potpourri"><a class="header-anchor" href="#Potpourri"></a>Potpourri</h3>
-<ul>
-<li>
-<p><code>:</code>： 空命令</p>
-</li>
-<li>
-<p><code>.</code>或<code>source</code>： 在当前shell session中执行脚本， 因此可以用于刷新当前shell环境:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source ~/.bashrc</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>break: 从for/while/until循环退出</p>
-</li>
-</ul>
-<h3 id=""><a class="header-anchor" href="#"></a></h3>
-<h2 id="execute-shell-scripts"><a class="header-anchor" href="#execute-shell-scripts"></a>execute shell scripts</h2>
-<ul>
-<li>
-<p>Shell script是能在命令行直接输入的，但仅会作用一次</p>
-</li>
-<li>
-<p>执行脚本文件：</p>
-<ul>
-<li>
-<p>方法1: 直接指定<code>sh</code>来执行该脚本，不需要shebang，也不需要脚本有执行权限（因为该脚本直接作为参数传给了sh）</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sh script_file</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>方法2: 要shebang（指定解释器），要指定脚本路径（<code>./</code>必加）， 否则bash就会在环境变量中查找该脚本名，找不到就报错</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">chmod +x script_file ##(chown, chgrp optionally)</span><br><span class="line">./script_file</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>方法3: 在当前shell session中执行该脚本</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source script_file</span><br></pre></td></tr></table></figure>
-<p>or</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">. script_file</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<p>​</p>
-<p>注意，方法1和2都是新开一个子shell session，在其中执行脚本，而方法三是在当前shell session中执行脚本</p>
-<h3 id="-2"><a class="header-anchor" href="#-2"></a></h3>
 
     </div>
 

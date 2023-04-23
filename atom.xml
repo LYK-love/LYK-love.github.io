@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2023-04-22T16:23:21.526Z</updated>
+  <updated>2023-04-23T12:53:12.447Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Shell Script</title>
+    <link href="http://lyk-love.cn/2023/04/24/Shell-Script/"/>
+    <id>http://lyk-love.cn/2023/04/24/Shell-Script/</id>
+    <published>2023-04-23T20:53:12.000Z</published>
+    <updated>2023-04-23T12:53:12.447Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Intro&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#Intro&quot;&gt;&lt;/a&gt;Intro&lt;/h1&gt;
+&lt;h2 id=&quot;scripts-vs-shell-functions&quot;&gt;&lt;a class=&quot;header-anchor&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Language" scheme="http://lyk-love.cn/categories/Language/"/>
+    
+    
+    <category term="shell" scheme="http://lyk-love.cn/tags/shell/"/>
+    
+  </entry>
   
   <entry>
     <title>Push Up</title>
@@ -436,25 +462,6 @@
     
     
     <summary type="html">&lt;p&gt;TOEFL, GRE, IELTS的送分流程.&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Life" scheme="http://lyk-love.cn/categories/Life/"/>
-    
-    
-    <category term="Study Abroad" scheme="http://lyk-love.cn/tags/Study-Abroad/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>TOEFL Hometest Experience</title>
-    <link href="http://lyk-love.cn/2023/02/13/TOEFL-Hometest-Experience/"/>
-    <id>http://lyk-love.cn/2023/02/13/TOEFL-Hometest-Experience/</id>
-    <published>2023-02-12T16:51:51.000Z</published>
-    <updated>2023-02-12T12:36:26.452Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;分享一下TOEFL hometest的经验.&lt;/p&gt;</summary>
     
     
     
