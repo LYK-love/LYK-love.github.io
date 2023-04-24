@@ -36,7 +36,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Accessing%20Main%20Memory%20step%202.png">
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Basic/Accessing%20Main%20Memory%20step%203.png">
 <meta property="article:published_time" content="2021-10-05T20:28:21.000Z">
-<meta property="article:modified_time" content="2023-04-04T11:51:53.030Z">
+<meta property="article:modified_time" content="2023-04-24T08:25:06.729Z">
 <meta property="article:author" content="有多远滚多远">
 <meta property="article:tag" content="OS Basic">
 <meta name="twitter:card" content="summary">
@@ -268,7 +268,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-04-04 11:51:53" itemprop="dateModified" datetime="2023-04-04T11:51:53Z">2023-04-04</time>
+      <time title="Modified: 2023-04-24 08:25:06" itemprop="dateModified" datetime="2023-04-24T08:25:06Z">2023-04-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -612,7 +612,7 @@ may not have kernel mode) or interpreted systems (such as Java-based systems tha
 <p>计算机启动时，<strong>首先加载</strong>硬件驱动程序，硬件驱动程序有BIOS和UEFI， 这里简要介绍BIOS, 详见拙著<em>Linux Hardware Basic</em></p>
 <p>BIOS对应的磁盘分区格式是MBR</p>
 <ul>
-<li><strong>BIOS</strong>（Basic Input Output System）：PC主板上的一个程序
+<li><strong>BIOS</strong>( Basic Input Output System): 写在PC主板上的一个程序.
 <ul>
 <li>The BIOS contains low-level I/O software, including procedures to read the keyboard, write to the screen, and do disk I/O, among other things.</li>
 <li>Nowadays, it is held in a <strong>flash RAM</strong>, which is nonvolatile but which can be updated by the operating system when bugs are found in the BIOS.</li>
@@ -620,13 +620,18 @@ may not have kernel mode) or interpreted systems (such as Java-based systems tha
 </li>
 </ul>
 <ol>
-<li>计算机开机时，BIOS启动，它会检查RAM和键盘等基础外设的连接和响应情况
+<li>计算机开机时，BIOS启动，它会检查RAM和键盘等基础外设的连接和响应情况.
 <ul>
 <li>It starts out by scanning the PCIe and PCI buses to detect all the devices attached to them.</li>
-<li>如果设备和上次启动时不一样，新的设备将被配置</li>
+<li>如果设备和上次启动时不一样，新的设备将被配置.</li>
+<li>各种设备是在BIOS中被检测和连接的, 而不是在OS中.
+<ul>
+<li>一个很好的例子是: 如果我用的是无线的鼠标和键盘, 那么它们在BIOS阶段就可以被连接上, 不需要等到进入OS中. 并且外设在Windows中进行配对后, 后面进入Linux双系统就不需要配对了. 这是因为设备的连接是由Bios而不是OS管理的.</li>
 </ul>
 </li>
-<li>通过CMOS中的启动设备列表，BIOS找到启动设备，后者的第一个扇区将被读进内存并执行，检查该扇区是否是MBR扇区，是的话会加载其中的boot loader</li>
+</ul>
+</li>
+<li>通过CMOS中的启动设备列表, BIOS找到启动设备, 后者的第一个扇区将被读进内存并执行; 接着检查该扇区是否是MBR扇区，是的话会加载其中的boot loader.</li>
 <li>一段boot loader程序被从MBR扇区读入， boot loader是OS提供的，因此能够读取OS的核心文件</li>
 <li>boot loader读取核心文件</li>
 <li>核心文件会加载OS</li>
