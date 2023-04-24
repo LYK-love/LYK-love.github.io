@@ -244,9 +244,32 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-04-23 21:48:25 / Modified: 13:48:25" itemprop="dateCreated datePublished" datetime="2023-04-23T21:48:25Z">2023-04-23</time>
+      <time title="Created: 2023-04-23 21:48:25" itemprop="dateCreated datePublished" datetime="2023-04-23T21:48:25Z">2023-04-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-04-24 11:31:37" itemprop="dateModified" datetime="2023-04-24T11:31:37Z">2023-04-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/Technology/" itemprop="url" rel="index"><span itemprop="name">Technology</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/Technology/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+        </span>
     </span>
 
   
@@ -259,36 +282,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="指令运行的顺序"><a class="header-anchor" href="#指令运行的顺序"></a>指令运行的顺序</h1>
-<p>Shell will <strong>find and execute</strong> command. The searching sequence of command name is:</p>
-<ol>
-<li>以相对/绝对路径执行指令，例如<code>/bin/ls </code>或<code>./ls </code></li>
-<li>由 <code>alias</code> 找到该指令来执行</li>
-<li>由 bash 内置的( builtin)指令来执行.</li>
-<li>通过 <code>PATH</code> 这个变量的顺序搜寻到的第一个指令来执行.</li>
-</ol>
-<p>在某一步骤找到command name后就会停止查找, 并且尝试执行.</p>
-<p>因此, 如果一个command name不是一个可执行的路径, 也不是一个alias, 又不是一个builtin( 例如<code>alias</code>), 则shell会在搜环境变量<code>$PATH中</code>搜索该command name, 如果找到, 就执行; 找不到, 则报错&quot;command not found&quot;.</p>
+          <p>Outline:</p>
 <ul>
-<li>由于<code>PATH</code> 是个环境变量, 因此它在任意的子session中都有效.</li>
-<li>Command not found == not found in <code>PATH</code>. 这只是意味着在<code>PATH</code>中找不到该command name. 可以将该command的路径添加到<code>PATH</code>来让shell能搜索到它.</li>
-<li>可以看到, 如果一个command name是路径, 那么在step1就找到了, 不会尝试后面的步骤. <strong>如果一个command name带有slash( <code>/</code> ), 则会被视作路径名.</strong></li>
+<li>Shell Script Searching Path</li>
+<li>Append path to <code>PATH</code></li>
+<li>Bad Practices</li>
 </ul>
-<h1 id="Add-path-to-PATH"><a class="header-anchor" href="#Add-path-to-PATH"></a>Add path to <code>PATH</code></h1>
-<p>将命令的路径加入环境变量<code>PATH</code>的方法:</p>
-<p>声明环境变量<code>PATH</code>, 值为之前的<code>PATH</code>的值(采用<code>$</code>进行赋值),  再append 一个<code>:</code>, 因为环境变量之间通过冒号隔开, 再append要添加的路径, 这里是<code>/home/to/operation_tools</code>.</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PATH=$PATH:/home/to/operation_tools</span><br></pre></td></tr></table></figure>
-<h1 id="Bad-Practices"><a class="header-anchor" href="#Bad-Practices"></a>Bad Practices</h1>
-<p>以下是一些错误的对<code>PATH</code>进行设置的例子.</p>
-<h2 id="Current-directory-in-PATH"><a class="header-anchor" href="#Current-directory-in-PATH"></a>Current directory in <code>PATH</code></h2>
-<p><strong>A leading or trailing colon in <code>PATH</code>, or two adjacent colons (<code>::</code>), indicate that the <em>current directory</em> is one of the directorie</strong>s that the shell should try when looking for executable command names. This is a security risk and you must not do it:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">$ echo &quot;$PATH&quot;</span><br><span class="line">:/bin/:/usr/bin                          # EXTREME SECURITY RISK!</span><br><span class="line"></span><br><span class="line">$ echo &quot;$PATH&quot;</span><br><span class="line">/bin/::/usr/bin                          # MODERATE SECURITY RISK!</span><br><span class="line"></span><br><span class="line">$ echo &quot;$PATH&quot;</span><br><span class="line">/bin/:/usr/bin:                          # SECURITY RISK!</span><br></pre></td></tr></table></figure>
-<p><strong>Do not put the current directory (or any relative path directory) in <code>PATH</code> – it is a security risk.</strong> You might accidentally execute a malicious program in the current directory.</p>
-<blockquote>
-<p>For example: If you put the current directory at the start of your <code>PATH</code>, e.g. <code>PATH=:/bin:/usr/bin</code>, then when you type <code>ls</code> the first program that is tried is <code>./ls</code> (the program named <code>ls</code> in the current directory) which might be a malicious program.</p>
-</blockquote>
-<h2 id="Command-names-with-slashes-avoid-PATH"><a class="header-anchor" href="#Command-names-with-slashes-avoid-PATH"></a>Command names with slashes avoid <code>PATH</code></h2>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/04/24/Shell-Script-Searching-Path/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

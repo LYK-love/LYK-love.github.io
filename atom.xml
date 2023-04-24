@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2023-04-23T13:48:25.736Z</updated>
+  <updated>2023-04-24T11:31:37.721Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -21,20 +21,28 @@
     <link href="http://lyk-love.cn/2023/04/24/Shell-Script-Searching-Path/"/>
     <id>http://lyk-love.cn/2023/04/24/Shell-Script-Searching-Path/</id>
     <published>2023-04-23T21:48:25.000Z</published>
-    <updated>2023-04-23T13:48:25.736Z</updated>
+    <updated>2023-04-24T11:31:37.721Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;指令运行的顺序&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#指令运行的顺序&quot;&gt;&lt;/a&gt;指令运行的顺序&lt;/h1&gt;
-&lt;p&gt;Shell will &lt;strong&gt;find and execute&lt;/strong&gt; command. The</summary>
-        
-      
+    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Shell Script Searching Path&lt;/li&gt;
+&lt;li&gt;Append path to &lt;code&gt;PATH&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Bad Practices&lt;/li&gt;
+&lt;/ul&gt;</summary>
     
     
     
+    <category term="Language" scheme="http://lyk-love.cn/categories/Language/"/>
+    
+    <category term="Technology" scheme="http://lyk-love.cn/categories/Language/Technology/"/>
+    
+    <category term="Toolkit" scheme="http://lyk-love.cn/categories/Language/Technology/Toolkit/"/>
+    
+    
+    <category term="Linux" scheme="http://lyk-love.cn/tags/Linux/"/>
+    
+    <category term="shell" scheme="http://lyk-love.cn/tags/shell/"/>
     
   </entry>
   
