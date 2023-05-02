@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-
   <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
@@ -13,12 +12,12 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Outline:  Intro UDP TCP 可靠传输 TCP Flow Conteol TCP Congestion Conteol">
 <meta property="og:type" content="article">
@@ -46,7 +45,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/TCP%20flow%20control%20with%20sliding%20window.png">
 <meta property="article:published_time" content="2022-07-05T16:47:03.000Z">
 <meta property="article:modified_time" content="2023-02-08T07:44:07.940Z">
-<meta property="article:author" content="有多远滚多远">
+<meta property="article:author" content="LYK-love">
 <meta property="article:tag" content="Computer Networking">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Transport%20Layer/Transport%20Layer.png">
@@ -69,6 +68,8 @@
 
 
 
+
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -79,8 +80,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
         <span class="toggle-line"></span>
@@ -99,7 +100,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -108,7 +109,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -141,15 +142,9 @@
     </div>
   </div>
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -170,65 +165,53 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LYK-love"
       src="/images/white_flower1.jpg">
-  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <p class="site-author-name" itemprop="name">LYK-love</p>
   <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license site-overview-item animated" itemprop="license">
+  <div class="cc-license animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
   </div>
-
-
 
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -245,7 +228,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/white_flower1.jpg">
-      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="name" content="LYK-love">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -305,8 +288,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-        <p>Outline:</p>
+    <div class="post-body" itemprop="articleBody"><p>Outline:</p>
 <ul>
 <li>Intro</li>
 <li>UDP</li>
@@ -642,7 +624,7 @@
 <p>起初，A和B都为CLOSED状态。在通信开始前，双方都得创建各自的传输控制块（TCB）。B创建完TCB后便进入LISTEN状态，此时准备接收A发来的连接请求。</p>
 <h3 id="第一个报文"><a class="header-anchor" href="#第一个报文"></a>第一个报文</h3>
 <p>client向server发送连接请求报文段。该报文段没有Data部分, Header中:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SYN=1，ACK=0，seq = client_isn</span><br></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SYN</span><span class="operator">=</span><span class="number">1</span>，ACK<span class="operator">=</span><span class="number">0</span>，seq <span class="operator">=</span> client_isn</span><br></pre></td></tr></table></figure>
 <p>该Segment称为<strong>SYN Segment</strong></p>
 <p>请求发送后，client便进入SYN-SENT状态</p>
 <ul>
@@ -652,7 +634,7 @@
 </ul>
 <h3 id="第二个报文"><a class="header-anchor" href="#第二个报文"></a>第二个报文</h3>
 <p>服务端收到连接请求报文段后，如果同意连接，则会发送一个应答：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SYN=1，ACK=1，seq=server_isn，ack=client_isn + 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">SYN</span>=<span class="number">1</span>，ACK=<span class="number">1</span>，seq=server_isn，ack=client_isn + <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>该Segment称为<strong>SYNACK Segment</strong></p>
 <p>该应答发送完成后，server便进入SYN-RCVD（同步收到）状态</p>
 <ul>
@@ -664,7 +646,7 @@
 <h3 id="第三个报文"><a class="header-anchor" href="#第三个报文"></a>第三个报文</h3>
 <p>当客户端收到连接同意的应答后，还要向服务端发送一个确认报文段，表示：server发来的SYNACK已经成功收到。<br>
 该报文段的头部为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ACK=1，seq=client_isn + 1，ack=server_isn+1</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ACK</span>=1，seq=client_isn + 1，<span class="attribute">ack</span>=server_isn+1</span><br></pre></td></tr></table></figure>
 <p>该Sement称为<strong>ACK Segment</strong></p>
 <p>client发完这个segment后便进入ESTABLISHED状态，server收到这个应答后也进入ESTABLISHED状态，此时连接建立完成</p>
 <ul>
@@ -685,7 +667,7 @@
 <p>起初，A和B都为ESTABLISHED状态</p>
 <h3 id="第一个报文-2"><a class="header-anchor" href="#第一个报文-2"></a>第一个报文</h3>
 <p>若A认为数据发送完成，则它需要向B发送连接释放请求。该Segment只有Header，其中：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FIN=1，seq=u</span><br></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FIN</span><span class="operator">=</span><span class="number">1</span>，seq<span class="operator">=</span>u</span><br></pre></td></tr></table></figure>
 <p>此时，A将进入FIN-WAIT-1状态</p>
 <ul>
 <li>FIN=1表示该报文段是一个连接释放请求</li>
@@ -694,7 +676,7 @@
 </ul>
 <h3 id="第二个报文-2"><a class="header-anchor" href="#第二个报文-2"></a>第二个报文</h3>
 <p>B收到连接释放请求后，会通知高层进程：<strong>A向B这个方向的连接已经释放</strong>。此时B进入CLOSE-WAIT状态，并向A发送连接释放的应答，Header包含：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ACK=1，seq=v，ack=u+1</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">ACK</span>=<span class="number">1</span>，seq=v，ack=u+<span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>A收到该应答，进入FIN-WAIT-2状态，等待B发送连接释放请求。</p>
 <ul>
 <li>ACK=1：除TCP连接请求和链接释放请求报文段以外，<strong>TCP通信过程中所有数据报的ACK都为</strong>1，表示应答。</li>
@@ -704,14 +686,14 @@
 <p>第二次挥手完成后，A到B方向的连接已经释放，B不会再接收数据，A也不会再发送数据。但<strong>B到A方向的连接仍然存在，B可以继续向A发送数据</strong>， 此时连接处于**“半关闭”状态**</p>
 <h3 id="第三个报文-2"><a class="header-anchor" href="#第三个报文-2"></a>第三个报文</h3>
 <p>当B向A发完所有数据后，向A发送连接释放请求，Header包含：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FIN=1，ACK=1，seq=w，ack=u+1</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FIN</span>=<span class="number">1</span>，ACK=<span class="number">1</span>，seq=w，ack=u+<span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>B然后进入LAST-ACK状态。</p>
 <ul>
 <li>seq=w： B在半关闭状态可能又发送了一些数据，现在起始序号为w</li>
 </ul>
 <h3 id="第四个报文"><a class="header-anchor" href="#第四个报文"></a>第四个报文</h3>
 <p>A收到释放请求后，向B发送确认应答，Header包含：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FIN=1，ACK=1，seq=w，ack=u+1</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FIN</span>=<span class="number">1</span>，ACK=<span class="number">1</span>，seq=w，ack=u+<span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>此时A进入TIME-WAIT状态，此时连接还没有释放掉，必须经过时间等待计时器( TIME-WAIT timer )设置的时间 2MSL 后，且该时间段内没有B的重发请求的话，A才会进入CLOSED状态，撤销TCB。当B收到确认应答后，也会进入CLOSED状态，撤销TCB。</p>
 <ul>
 <li>最长报文段寿命MSL( Maximum Segment Lifetime ): 这个值是从工程上考虑的，一般是2min。 因此从A进入TIME-WAIT状态后，最少需要4min才能进入CLOSED</li>
@@ -735,7 +717,7 @@
 <ol>
 <li>
 <p>当服务器接收到一个SYN报文段时，其并不知道该报文段来自一个合法用户还是要进行SYN洪泛攻击的攻击者，因此服务器不会为该报文段生成一个半开的连接（即<strong>不会分配资</strong>源） 。 服务器返回的SYNACK中的<code>server_isn</code>由hash生成：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">server_isn = hash(srcIP,srcPort,dstIP,dstPort, magic)</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="code"><pre><span class="line"><span class="attr">server_isn</span> = hash(srcIP,srcPort,dstIP,dstPort, magic)</span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>magic</code>是只有server知道的一个秘密数字</li>
 <li>server不会记住该<code>server_isn</code>及其相关的任何信息</li>
@@ -743,7 +725,7 @@
 </li>
 <li>
 <p>如果client是合法的，则它将返回一个ACK Segment， 其中<code>ack = server_isn+1</code>， server收到该报文后只要根据IP、端口和自己的<code>magic</code>重新计算<code>new_server_isn</code>，并比较:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">if new_server_isn == ack - 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight abnf"><table><tr><td class="code"><pre><span class="line">if new_server_isn <span class="operator">=</span><span class="operator">=</span> ack - <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <p>判定该client是否合法。  如果合法，server会生成一个全开连接</p>
 </li>
 <li>
@@ -1046,7 +1028,7 @@ $$<br>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+  <span class="author" itemprop="copyrightHolder">LYK-love</span>
 </div>
 <div class="busuanzi-count">
     <span class="post-meta-item" id="busuanzi_container_site_uv">
@@ -1073,14 +1055,31 @@ $$<br>
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
+
 
 
 

@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-
   <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
@@ -13,12 +12,12 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Outline:  SELECT ORDER BY ...  Mysql语法简介">
 <meta property="og:type" content="article">
@@ -51,7 +50,7 @@
 <meta property="og:image" content="https://www.mysqltutorial.org/wp-content/uploads/2019/09/MySQL-Foreign-Key-after-drop-foreign-key-constraint.png">
 <meta property="article:published_time" content="2023-02-08T07:44:07.948Z">
 <meta property="article:modified_time" content="2023-02-08T07:44:07.949Z">
-<meta property="article:author" content="有多远滚多远">
+<meta property="article:author" content="LYK-love">
 <meta property="article:tag" content="Database">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.mysqltutorial.org/wp-content/uploads/2021/07/MySQL-Where.svg">
@@ -74,6 +73,8 @@
 
 
 
+
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -84,8 +85,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
         <span class="toggle-line"></span>
@@ -104,7 +105,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -113,7 +114,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -146,15 +147,9 @@
     </div>
   </div>
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -175,65 +170,53 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LYK-love"
       src="/images/white_flower1.jpg">
-  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <p class="site-author-name" itemprop="name">LYK-love</p>
   <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license site-overview-item animated" itemprop="license">
+  <div class="cc-license animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
   </div>
-
-
 
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -250,7 +233,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/white_flower1.jpg">
-      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="name" content="LYK-love">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -303,8 +286,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-        <p>Outline:</p>
+    <div class="post-body" itemprop="articleBody"><p>Outline:</p>
 <ul>
 <li>SELECT</li>
 <li>ORDER BY</li>
@@ -360,7 +342,7 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">    firstName, </span><br><span class="line">    lastName, </span><br><span class="line">    officeCode</span><br><span class="line">FROM</span><br><span class="line">    employees</span><br><span class="line">WHERE</span><br><span class="line">    officeCode IN (1 , 2, 3)</span><br><span class="line">ORDER BY </span><br><span class="line">    officeCode;</span><br></pre></td></tr></table></figure>
 <h3 id="IS-NULL"><a class="header-anchor" href="#IS-NULL"></a>IS NULL</h3>
 <p>To check if a value is <code>NULL</code> or not, you use the <code>IS NULL</code> operator, not the equal operator (<code>=</code>). The <code>IS NULL</code> operator returns <code>TRUE</code> if a value is <code>NULL</code>.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">value IS NULLCode language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">value</span> <span class="keyword">IS</span> NULLCode <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>In the database world, <code>NULL</code> is a marker that indicates that a value is missing or unknown. And NULL is not equivalent to the number 0 or an empty string.</p>
 </blockquote>
@@ -391,7 +373,7 @@
 </ul>
 <h2 id="IS-NULL-2"><a class="header-anchor" href="#IS-NULL-2"></a>IS NULL</h2>
 <p>To test whether a value is <code>NULL</code> or not, you use the  <code>IS NULL</code> operator. Here’s the basic syntax of the <code>IS NULL</code> operator:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">value IS NULLCode language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">value</span> <span class="keyword">IS</span> NULLCode <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>If the value is <code>NULL</code>, the expression returns true. Otherwise, it returns false.</p>
 <p>Note that MySQL does not have a built-in <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-boolean/"><code>BOOLEAN</code></a> type. It uses the <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-int/"><code>TINYINT(1)</code></a> to represent the <code>BOOLEAN</code> values i.e.,  true means 1 and false means 0.</p>
 <p>Because the <code>IS NULL</code> is a comparison operator, you can use it anywhere that an operator can be used e.g., in the <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-select-statement-query-data.aspx"><code>SELECT</code></a> or <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-where/"><code>WHERE</code></a> clause.</p>
@@ -557,14 +539,14 @@
 <li>Specify the column name in the <code>INSERT INTO</code> clause and use the <code>DEFAULT</code> keyword in the <code>VALUES</code> clause.</li>
 </ul>
 <p>The following example demonstrates the second way:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO tasks(title,priority)</span><br><span class="line">VALUES(&#x27;Understanding DEFAULT keyword in INSERT statement&#x27;,DEFAULT);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tasks(title,priority)</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="string">&#x27;Understanding DEFAULT keyword in INSERT statement&#x27;</span>,<span class="keyword">DEFAULT</span>);Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>In this example, we specified the <code>priority</code> column and the  <code>DEFAULT</code> keyword.</p>
 <p>Because the default value for the column <code>priority</code> is 3 as declared in the table definition:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">priority TINYINT NOT NULL DEFAULT 3Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">priority TINYINT <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">3</span>Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>MySQL uses the number 3 to insert into the <code>priority</code> column.</p>
 <h3 id="Inserting-dates"><a class="header-anchor" href="#Inserting-dates"></a>Inserting dates</h3>
 <p>To insert a literal date value into a column, you use the following format:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27;YYYY-MM-DD&#x27;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="string">&#x27;YYYY-MM-DD&#x27;</span>Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>In this format:</p>
 <ul>
 <li><code>YYYY</code> represents a four-digit year e.g., 2018.</li>
@@ -572,18 +554,18 @@
 <li><code>DD</code> represents a two-digit day e.g., 01, 02, 30.</li>
 </ul>
 <p>The following statement inserts a new row to the <code>tasks</code> table with the start and due date values:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO tasks(title, start_date, due_date)</span><br><span class="line">VALUES(&#x27;Insert date into table&#x27;,&#x27;2018-01-09&#x27;,&#x27;2018-09-15&#x27;);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tasks(title, start_date, due_date)</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="string">&#x27;Insert date into table&#x27;</span>,<span class="string">&#x27;2018-01-09&#x27;</span>,<span class="string">&#x27;2018-09-15&#x27;</span>);Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>The following picture shows the contents of the <code>tasks</code> table after the insert:</p>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2018/09/MySQL-INSERT-dates-into-table.png" alt="MySQL INSERT dates into table"></p>
 <p>It is possible to use expressions in the <code>VALUES</code> clause. For example, the following statement adds a new task using the current date for start date and due date columns:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO tasks(title,start_date,due_date)</span><br><span class="line">VALUES(&#x27;Use current date for the task&#x27;,CURRENT_DATE(),CURRENT_DATE())Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tasks(title,start_date,due_date)</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="string">&#x27;Use current date for the task&#x27;</span>,<span class="built_in">CURRENT_DATE</span>(),<span class="built_in">CURRENT_DATE</span>())Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>In this example, we used the <code>CURRENT_DATE()</code> function as the values for the <code>start_date</code> and <code>due_date</code> columns. Note that the <code>CURRENT_DATE()</code> function is a <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-date-functions/">date function</a> that returns the current system date.</p>
 <h2 id="Insert-Into-Select"><a class="header-anchor" href="#Insert-Into-Select"></a>Insert Into Select</h2>
 <p>In the previous tutorial, you learned how to insert one or more rows into a table using the <code>INSERT</code> statement with a list of column values specified in the <code>VALUES</code> clause.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO table_name(c1,c2,...)</span><br><span class="line">VALUES(v1,v2,..);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name(c1,c2,...)</span><br><span class="line"><span class="keyword">VALUES</span>(v1,v2,..);Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>Besides using row values in the <code>VALUES</code> clause, you can use the result of a <code>SELECT</code> statement as the data source for the <code>INSERT</code> statement.</p>
 <p>The following illustrates the syntax of the <code>INSERT INTO SELECT</code> statement:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO table_name(column_list)</span><br><span class="line">SELECT </span><br><span class="line">   select_list </span><br><span class="line">FROM </span><br><span class="line">   another_table</span><br><span class="line">WHERE</span><br><span class="line">   condition;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> table_name(column_list)</span><br><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">   select_list </span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line">   another_table</span><br><span class="line"><span class="keyword">WHERE</span></span><br><span class="line">   <span class="keyword">condition</span>;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>In this syntax, instead of using the <code>VALUES</code> clause, you can use a <code>SELECT</code> statement. The <code>SELECT</code> statement can retrieve data from one or more tables.</p>
 <p>The <code>INSERT INTO SELECT</code> statement is very useful when you want to copy data from other tables to a table or to summary data from multiple tables into a table.</p>
 <h2 id="UPDATE"><a class="header-anchor" href="#UPDATE"></a>UPDATE</h2>
@@ -646,21 +628,21 @@
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">    productCode, </span><br><span class="line">    <span class="built_in">SUM</span>(priceEach <span class="operator">*</span> quantityOrdered) total</span><br><span class="line"><span class="keyword">FROM</span></span><br><span class="line">    orderDetails</span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> productCode</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> total <span class="keyword">DESC</span>;</span><br></pre></td></tr></table></figure>
 <h2 id="MAX"><a class="header-anchor" href="#MAX"></a>MAX()</h2>
 <p>The <code>MAX()</code> function returns the maximum value in a set.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">MAX(expression)Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="built_in">MAX</span>(expression)Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>For example, you can use the <code>MAX()</code> function to get the highest buy price from the <code>products</code> table as shown in the following query:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT </span><br><span class="line">     MAX(buyPrice) highest_price</span><br><span class="line">FROM </span><br><span class="line">     products;</span><br></pre></td></tr></table></figure>
+<figure class="highlight n1ql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> </span><br><span class="line">     <span class="built_in">MAX</span>(buyPrice) highest_price</span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line">     products;</span><br></pre></td></tr></table></figure>
 <h1 id="CONSTRAINTS"><a class="header-anchor" href="#CONSTRAINTS"></a>CONSTRAINTS</h1>
 <h2 id="Primary-Key"><a class="header-anchor" href="#Primary-Key"></a>Primary Key</h2>
 <p>When you define a primary key for a table, MySQL automatically <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-index/mysql-create-index/">creates an index</a> called <code>PRIMARY</code></p>
 <h3 id="1-Define-a-PRIMARY-KEY-constraint-in-CREATE-TABLE"><a class="header-anchor" href="#1-Define-a-PRIMARY-KEY-constraint-in-CREATE-TABLE"></a>1) Define a <code>PRIMARY KEY</code> constraint in <code>CREATE TABLE</code></h3>
 <p>Typically, you define the primary key for a table in the <code>CREATE TABLE</code> statement.</p>
 <p>If the primary key has one column, you can use the <code>PRIMARY KEY</code> constraint as a column constraint:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE table_name(</span><br><span class="line">    primary_key_column datatype PRIMARY KEY,</span><br><span class="line">    ...</span><br><span class="line">);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> table_name(</span><br><span class="line">    primary_key_column datatype <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    ...</span><br><span class="line">);Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>When the primary key has more than one column, you must use the <code>PRIMARY KEY</code> constraint as a table constraint.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE table_name(</span><br><span class="line">    primary_key_column1 datatype,</span><br><span class="line">    primary_key_column2 datatype,</span><br><span class="line">    ...,</span><br><span class="line">    PRIMARY KEY(column_list)</span><br><span class="line">);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> table_name(</span><br><span class="line">    primary_key_column1 datatype,</span><br><span class="line">    primary_key_column2 datatype,</span><br><span class="line">    ...,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY(column_list)</span><br><span class="line">);Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>In this syntax, you separate columns in the <code>column_list</code> by commas (,).</p>
 <p>The <code>PRIMARY KEY</code> table constraint can be used when the primary key has one column:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE table_name ( </span><br><span class="line">    primary_key_column datatype, </span><br><span class="line">    ... ,</span><br><span class="line">    PRIMARY KEY(primary_key_column)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<figure class="highlight sas"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> table_name ( </span><br><span class="line">    primary_key_column datatype, </span><br><span class="line">    ... ,</span><br><span class="line">    <span class="keyword">PRIMARY</span> <span class="keyword">KEY</span>(primary_key_column)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
 <h2 id="Foreign-Key"><a class="header-anchor" href="#Foreign-Key"></a>Foreign Key</h2>
 <p>A foreign key is a column or group of columns in a table that links to a column or group of columns in another table. The foreign key places constraints on data in the related tables, which allows MySQL to maintain referential integrity.</p>
 <p>Once a foreign key constraint is in place, the foreign key columns from the child table must have the corresponding row in the parent key columns of the parent table or values in these foreign key column must be <code>NULL</code> (see the <code>SET NULL</code> action example below).</p>
@@ -673,7 +655,7 @@
 <p>The foreign key on the column <code>reportTo</code> is known as a <em>recursive</em> or <em>self-referencing</em> foreign key.</p>
 <h2 id="MySQL-FOREIGN-KEY-syntax"><a class="header-anchor" href="#MySQL-FOREIGN-KEY-syntax"></a>MySQL <code>FOREIGN KEY</code> syntax</h2>
 <p>Here is the basic syntax of defining a foreign key constraint in the <code>CREATE TABLE</code> or <code>ALTER TABLE</code> statement:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[CONSTRAINT constraint_name]</span><br><span class="line">FOREIGN KEY [foreign_key_name] (column_name, ...)</span><br><span class="line">REFERENCES parent_table(colunm_name,...)</span><br><span class="line">[ON DELETE reference_option]</span><br><span class="line">[ON UPDATE reference_option]Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">[<span class="keyword">CONSTRAINT</span> constraint_name]</span><br><span class="line"><span class="keyword">FOREIGN</span> KEY [foreign_key_name] (column_name, ...)</span><br><span class="line"><span class="keyword">REFERENCES</span> parent_table(colunm_name,...)</span><br><span class="line">[<span class="keyword">ON</span> <span class="keyword">DELETE</span> reference_option]</span><br><span class="line">[<span class="keyword">ON</span> <span class="keyword">UPDATE</span> reference_option]Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>In this syntax:</p>
 <p>First, specify the name of foreign key constraint that you want to create after the <code>CONSTRAINT</code> keyword. If you omit the constraint name, MySQL automatically generates a name for the foreign key constraint.</p>
 <p>Second, specify a list of comma-separated foreign key columns after the <code>FOREIGN KEY</code> keywords. The foreign key name is also optional and is generated automatically if you skip it.</p>
@@ -691,87 +673,87 @@
 <p>If you don’t specify the <code>ON DELETE</code> and <code>ON UPDATE</code> clause, the default action is <code>RESTRICT</code>.</p>
 <h2 id="MySQL-FOREIGN-KEY-examples"><a class="header-anchor" href="#MySQL-FOREIGN-KEY-examples"></a>MySQL <code>FOREIGN KEY</code> examples</h2>
 <p>Let’s <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-create-database/">create a new database</a> called <code>fkdemo</code> for the demonstration.</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE DATABASE fkdemo;</span><br><span class="line"></span><br><span class="line">USE fkdemo;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">DATABASE</span> fkdemo;</span><br><span class="line"></span><br><span class="line">USE fkdemo;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="RESTRICT-NO-ACTION-actions"><a class="header-anchor" href="#RESTRICT-NO-ACTION-actions"></a><code>RESTRICT</code> &amp; <code>NO ACTION</code> actions</h3>
 <p>Inside the <code>fkdemo</code> database, create two tables <code>categories</code> and <code>products</code>:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE categories(</span><br><span class="line">    categoryId INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    categoryName VARCHAR(100) NOT NULL</span><br><span class="line">) ENGINE=INNODB;</span><br><span class="line"></span><br><span class="line">CREATE TABLE products(</span><br><span class="line">    productId INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    productName varchar(100) not null,</span><br><span class="line">    categoryId INT,</span><br><span class="line">    CONSTRAINT fk_category</span><br><span class="line">    FOREIGN KEY (categoryId) </span><br><span class="line">        REFERENCES categories(categoryId)</span><br><span class="line">) ENGINE=INNODB;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> categories(</span><br><span class="line">    categoryId <span class="type">INT</span> AUTO_INCREMENT <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    categoryName <span class="type">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span></span><br><span class="line">) ENGINE<span class="operator">=</span>INNODB;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> products(</span><br><span class="line">    productId <span class="type">INT</span> AUTO_INCREMENT <span class="keyword">PRIMARY</span> KEY,</span><br><span class="line">    productName <span class="type">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    categoryId <span class="type">INT</span>,</span><br><span class="line">    <span class="keyword">CONSTRAINT</span> fk_category</span><br><span class="line">    <span class="keyword">FOREIGN</span> KEY (categoryId) </span><br><span class="line">        <span class="keyword">REFERENCES</span> categories(categoryId)</span><br><span class="line">) ENGINE<span class="operator">=</span>INNODB;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>The <code>categoryId</code> in the <code>products</code> table is the foreign key column that refers to the <code>categoryId</code> column in the <code>categories</code> table.</p>
 <p>Because we don’t specify any <code>ON UPDATE</code> and <code>ON DELETE</code> clauses, the default action is <code>RESTRICT</code> for both update and delete operation.</p>
 <p>The following steps illustrate the <code>RESTRICT</code> action.</p>
 <p>\1) <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-insert-multiple-rows/">Insert two rows</a> into the <code>categories</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO categories(categoryName)</span><br><span class="line">VALUES</span><br><span class="line">    (&#x27;Smartphone&#x27;),</span><br><span class="line">    (&#x27;Smartwatch&#x27;);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> categories(categoryName)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">    (<span class="string">&#x27;Smartphone&#x27;</span>),</span><br><span class="line">    (<span class="string">&#x27;Smartwatch&#x27;</span>);Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>\2) <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-select-statement-query-data.aspx">Select</a> data from the <code>categories</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> categories;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table.png" alt="img"></p>
 <p>\3) <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-insert-statement.aspx">Insert a new row</a> into the <code>products</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO products(productName, categoryId)</span><br><span class="line">VALUES(&#x27;iPhone&#x27;,1);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> products(productName, categoryId)</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="string">&#x27;iPhone&#x27;</span>,<span class="number">1</span>);Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>It works because the <code>categoryId</code> 1 exists in the <code>categories</code> table.</p>
 <p>\4) Attempt to insert a new row into the <code>products</code> table with a <code>categoryId</code> value does not exist in the <code>categories</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO products(productName, categoryId)</span><br><span class="line">VALUES(&#x27;iPad&#x27;,3);Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> products(productName, categoryId)</span><br><span class="line"><span class="keyword">VALUES</span>(<span class="string">&#x27;iPad&#x27;</span>,<span class="number">3</span>);Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>MySQL issued the following error:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails (`fkdemo`.`products`, CONSTRAINT `fk_category` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`) ON DELETE RESTRICT ON UPDATE RESTRICT)Code language: JavaScript (javascript)</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">Error Code: <span class="number">1452.</span> Cannot <span class="keyword">add</span> <span class="keyword">or</span> <span class="keyword">update</span> a child <span class="keyword">row</span>: a <span class="keyword">foreign key</span> <span class="keyword">constraint</span> fails (`fkdemo`.`products`, <span class="keyword">CONSTRAINT</span> `fk_category` <span class="keyword">FOREIGN KEY</span> (`categoryId`) <span class="keyword">REFERENCES</span> `categories` (`categoryId`) <span class="keyword">ON</span> <span class="keyword">DELETE</span> <span class="keyword">RESTRICT</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">RESTRICT</span>)Code <span class="keyword">language</span>: JavaScript (javascript)</span><br></pre></td></tr></table></figure>
 <p>\5) Update the value in the <code>categoryId</code> column in the <code>categories</code> table to <code>100</code>:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">UPDATE categories</span><br><span class="line">SET categoryId = 100</span><br><span class="line">WHERE categoryId = 1;</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> categories</span><br><span class="line"><span class="keyword">SET</span> categoryId <span class="operator">=</span> <span class="number">100</span></span><br><span class="line"><span class="keyword">WHERE</span> categoryId <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>MySQL issued this error:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails (`fkdemo`.`products`, CONSTRAINT `fk_category` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`categoryId`) ON DELETE RESTRICT ON UPDATE RESTRICT)Code language: JavaScript (javascript)</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">Error Code: <span class="number">1451.</span> Cannot <span class="keyword">delete</span> <span class="keyword">or</span> <span class="keyword">update</span> a parent <span class="keyword">row</span>: a <span class="keyword">foreign key</span> <span class="keyword">constraint</span> fails (`fkdemo`.`products`, <span class="keyword">CONSTRAINT</span> `fk_category` <span class="keyword">FOREIGN KEY</span> (`categoryId`) <span class="keyword">REFERENCES</span> `categories` (`categoryId`) <span class="keyword">ON</span> <span class="keyword">DELETE</span> <span class="keyword">RESTRICT</span> <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">RESTRICT</span>)Code <span class="keyword">language</span>: JavaScript (javascript)</span><br></pre></td></tr></table></figure>
 <p>Because of the <code>RESTRICT</code> option, you cannot delete or update <code>categoryId 1</code> since it is referenced by the <code>productId</code> <code>1</code> in the <code>products</code> table.</p>
 <h3 id="CASCADE-action"><a class="header-anchor" href="#CASCADE-action"></a><code>CASCADE</code> action</h3>
 <p>These steps illustrate how <code>ON UPDATE CASCADE</code> and <code>ON DELETE CASCADE</code> actions work.</p>
 <p>\1) <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/mysql-drop-table">Drop</a> the <code>products</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DROP TABLE products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> products;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>\2) Create the <code>products</code> table with the <code>ON UPDATE CASCADE</code> and <code>ON DELETE CASCADE</code> options for the foreign key:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE products(</span><br><span class="line">    productId INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    productName varchar(100) not null,</span><br><span class="line">    categoryId INT NOT NULL,</span><br><span class="line">    CONSTRAINT fk_category</span><br><span class="line">    FOREIGN KEY (categoryId) </span><br><span class="line">    REFERENCES categories(categoryId)</span><br><span class="line">        ON UPDATE CASCADE</span><br><span class="line">        ON DELETE CASCADE</span><br><span class="line">) ENGINE=INNODB;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> products(</span><br><span class="line">    productId <span class="type">INT</span> AUTO_INCREMENT <span class="keyword">PRIMARY KEY</span>,</span><br><span class="line">    productName <span class="type">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    categoryId <span class="type">INT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    <span class="keyword">CONSTRAINT</span> fk_category</span><br><span class="line">    <span class="keyword">FOREIGN KEY</span> (categoryId) </span><br><span class="line">    <span class="keyword">REFERENCES</span> categories(categoryId)</span><br><span class="line">        <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">CASCADE</span></span><br><span class="line">        <span class="keyword">ON</span> <span class="keyword">DELETE</span> <span class="keyword">CASCADE</span></span><br><span class="line">) ENGINE=INNODB;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>\3) Insert four rows into the <code>products</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO products(productName, categoryId)</span><br><span class="line">VALUES</span><br><span class="line">    (&#x27;iPhone&#x27;, 1), </span><br><span class="line">    (&#x27;Galaxy Note&#x27;,1),</span><br><span class="line">    (&#x27;Apple Watch&#x27;,2),</span><br><span class="line">    (&#x27;Samsung Galary Watch&#x27;,2);</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> products(productName, categoryId)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">    (<span class="string">&#x27;iPhone&#x27;</span>, <span class="number">1</span>), </span><br><span class="line">    (<span class="string">&#x27;Galaxy Note&#x27;</span>,<span class="number">1</span>),</span><br><span class="line">    (<span class="string">&#x27;Apple Watch&#x27;</span>,<span class="number">2</span>),</span><br><span class="line">    (<span class="string">&#x27;Samsung Galary Watch&#x27;</span>,<span class="number">2</span>);</span><br><span class="line">Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>\4) Select data from the <code>products</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> products;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table.png" alt="img"></p>
 <p>\5) Update <code>categoryId</code> 1 to 100 in the <code>categories</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">UPDATE categories</span><br><span class="line">SET categoryId = 100</span><br><span class="line">WHERE categoryId = 1;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> categories</span><br><span class="line"><span class="keyword">SET</span> categoryId <span class="operator">=</span> <span class="number">100</span></span><br><span class="line"><span class="keyword">WHERE</span> categoryId <span class="operator">=</span> <span class="number">1</span>;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>\6) Verify the update:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> categories;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-cascade.png" alt="img"></p>
 <p>\7) Get data from the <code>products</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> products;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-update-cascade-.png" alt="img"></p>
 <p>As you can see, two rows with value <code>1</code> in the <code>categoryId</code> column of the <code>products</code> table were automatically updated to <code>100</code> because of the <code>ON UPDATE CASCADE</code> action.</p>
 <p>\8) Delete <code>categoryId</code> 2 from the <code>categories</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DELETE FROM categories</span><br><span class="line">WHERE categoryId = 2;</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> categories</span><br><span class="line"><span class="keyword">WHERE</span> categoryId <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line">Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>\9) Verify the deletion:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> categories;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-delete-cascade.png" alt="img"></p>
 <p>\10) Check the <code>products</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> products;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-delete-cascade.png" alt="img"></p>
 <p>All products with <code>categoryId</code> 2 from the <code>products</code> table were automatically deleted because of the <code>ON DELETE CASCADE</code> action.</p>
 <h3 id="SET-NULL-action"><a class="header-anchor" href="#SET-NULL-action"></a><code>SET NULL</code> action</h3>
 <p>These steps illustrate how the <code>ON UPDATE SET NULL</code> and <code>ON DELETE SET NULL</code> actions work.</p>
 <p>\1) Drop both <code>categories</code> and <code>products</code> tables:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DROP TABLE IF EXISTS categories;</span><br><span class="line">DROP TABLE IF EXISTS products;</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> categories;</span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> IF <span class="keyword">EXISTS</span> products;</span><br><span class="line">Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>\2) Create the <code>categories</code> and <code>products</code> tables:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">CREATE TABLE categories(</span><br><span class="line">    categoryId INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    categoryName VARCHAR(100) NOT NULL</span><br><span class="line">)ENGINE=INNODB;</span><br><span class="line"></span><br><span class="line">CREATE TABLE products(</span><br><span class="line">    productId INT AUTO_INCREMENT PRIMARY KEY,</span><br><span class="line">    productName varchar(100) not null,</span><br><span class="line">    categoryId INT,</span><br><span class="line">    CONSTRAINT fk_category</span><br><span class="line">    FOREIGN KEY (categoryId) </span><br><span class="line">        REFERENCES categories(categoryId)</span><br><span class="line">        ON UPDATE SET NULL</span><br><span class="line">        ON DELETE SET NULL </span><br><span class="line">)ENGINE=INNODB;</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> categories(</span><br><span class="line">    categoryId <span class="type">INT</span> AUTO_INCREMENT <span class="keyword">PRIMARY KEY</span>,</span><br><span class="line">    categoryName <span class="type">VARCHAR</span>(<span class="number">100</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span></span><br><span class="line">)ENGINE=INNODB;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> products(</span><br><span class="line">    productId <span class="type">INT</span> AUTO_INCREMENT <span class="keyword">PRIMARY KEY</span>,</span><br><span class="line">    productName <span class="type">varchar</span>(<span class="number">100</span>) <span class="keyword">not</span> <span class="keyword">null</span>,</span><br><span class="line">    categoryId <span class="type">INT</span>,</span><br><span class="line">    <span class="keyword">CONSTRAINT</span> fk_category</span><br><span class="line">    <span class="keyword">FOREIGN KEY</span> (categoryId) </span><br><span class="line">        <span class="keyword">REFERENCES</span> categories(categoryId)</span><br><span class="line">        <span class="keyword">ON</span> <span class="keyword">UPDATE</span> <span class="keyword">SET</span> <span class="keyword">NULL</span></span><br><span class="line">        <span class="keyword">ON</span> <span class="keyword">DELETE</span> <span class="keyword">SET</span> <span class="keyword">NULL</span> </span><br><span class="line">)ENGINE=INNODB;</span><br><span class="line">Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>The foreign key in the <code>products</code> table changed to <code>ON UPDATE SET NULL</code> and <code>ON DELETE SET NULL</code> options.</p>
 <p>\3) Insert rows into the <code>categories</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO categories(categoryName)</span><br><span class="line">VALUES</span><br><span class="line">    (&#x27;Smartphone&#x27;),</span><br><span class="line">    (&#x27;Smartwatch&#x27;);</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> categories(categoryName)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">    (<span class="string">&#x27;Smartphone&#x27;</span>),</span><br><span class="line">    (<span class="string">&#x27;Smartwatch&#x27;</span>);</span><br><span class="line">Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>\4) Insert rows into the <code>products</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO products(productName, categoryId)</span><br><span class="line">VALUES</span><br><span class="line">    (&#x27;iPhone&#x27;, 1), </span><br><span class="line">    (&#x27;Galaxy Note&#x27;,1),</span><br><span class="line">    (&#x27;Apple Watch&#x27;,2),</span><br><span class="line">    (&#x27;Samsung Galary Watch&#x27;,2);</span><br><span class="line">Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> products(productName, categoryId)</span><br><span class="line"><span class="keyword">VALUES</span></span><br><span class="line">    (<span class="string">&#x27;iPhone&#x27;</span>, <span class="number">1</span>), </span><br><span class="line">    (<span class="string">&#x27;Galaxy Note&#x27;</span>,<span class="number">1</span>),</span><br><span class="line">    (<span class="string">&#x27;Apple Watch&#x27;</span>,<span class="number">2</span>),</span><br><span class="line">    (<span class="string">&#x27;Samsung Galary Watch&#x27;</span>,<span class="number">2</span>);</span><br><span class="line">Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>\5) Update <code>categoryId</code> from 1 to 100 in the <code>categories</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">UPDATE categories</span><br><span class="line">SET categoryId = 100</span><br><span class="line">WHERE categoryId = 1;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">UPDATE</span> categories</span><br><span class="line"><span class="keyword">SET</span> categoryId <span class="operator">=</span> <span class="number">100</span></span><br><span class="line"><span class="keyword">WHERE</span> categoryId <span class="operator">=</span> <span class="number">1</span>;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>\6) Verify the update:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM categories;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> categories;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-categories-table-set-null.png" alt="img"></p>
 <p>\7) Select data from the <code>products</code> table:</p>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-set-null.png" alt="img"></p>
 <p>The rows with the <code>categoryId</code> 1 in the <code>products</code> table were automatically set to <code>NULL</code> due to the <code>ON UPDATE SET NULL</code> action.</p>
 <p>\8) Delete the <code>categoryId</code> 2 from the <code>categories</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">DELETE FROM categories </span><br><span class="line">WHERE categoryId = 2;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> categories </span><br><span class="line"><span class="keyword">WHERE</span> categoryId <span class="operator">=</span> <span class="number">2</span>;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>\9) Check the <code>products</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SELECT * FROM products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> products;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/08/MySQL-Foreign-Key-products-table-on-delete-set-null.png" alt="img"></p>
 <p>The values in the <code>categoryId</code> column of the rows with <code>categoryId</code> 2 in the <code>products</code> table were automatically set to <code>NULL</code> due to the <code>ON DELETE SET NULL</code> action.</p>
 <h2 id="Drop-MySQL-foreign-key-constraints"><a class="header-anchor" href="#Drop-MySQL-foreign-key-constraints"></a>Drop MySQL foreign key constraints</h2>
 <p>To drop a foreign key constraint, you use the <code>ALTER TABLE</code> statement:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ALTER TABLE table_name </span><br><span class="line">DROP FOREIGN KEY constraint_name;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="built_in">table_name</span> </span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">FOREIGN KEY</span> <span class="built_in">constraint_name</span>;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>In this syntax:</p>
 <ul>
 <li>First, specify the name of the table from which you want to drop the foreign key after the <code>ALTER TABLE</code> keywords.</li>
@@ -779,23 +761,23 @@
 </ul>
 <p>Notice that <code>constraint_name</code> is the name of the foreign key constraint specified when you created or added the foreign key constraint to the table.</p>
 <p>To obtain the generated constraint name of a table, you use the <code>SHOW CREATE TABLE</code> statement:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW CREATE TABLE table_name;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="built_in">table_name</span>;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>For example, to see the foreign keys of the <code>products</code> table, you use the following statement:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW CREATE TABLE products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> products;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>The following is the output of the statement:</p>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/09/MySQL-Foreign-Key-drop-foreign-key-constraint.png" alt="img"></p>
 <p>As you can see clearly from the output, the table <code>products</code> table has one foreign key constraint: <code>fk_category</code></p>
 <p>And this statement drops the foreign key constraint of the <code>products</code> table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ALTER TABLE products </span><br><span class="line">DROP FOREIGN KEY fk_category;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> products </span><br><span class="line"><span class="keyword">DROP</span> <span class="keyword">FOREIGN</span> KEY fk_category;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>To ensure that the foreign key constraint has been dropped, you can view the structure of the products table:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SHOW CREATE TABLE products;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SHOW</span> <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> products;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p><img data-src="https://www.mysqltutorial.org/wp-content/uploads/2019/09/MySQL-Foreign-Key-after-drop-foreign-key-constraint.png" alt="MySQL Foreign Key - after drop foreign key constraint"></p>
 <h2 id="Disabling-foreign-key-checks"><a class="header-anchor" href="#Disabling-foreign-key-checks"></a>Disabling foreign key checks</h2>
 <p>Sometimes, it is very useful to disable foreign key checks e.g., when you <a target="_blank" rel="noopener" href="https://www.mysqltutorial.org/import-csv-file-mysql-table/">import data from a CSV file into a table</a>. If you don’t disable foreign key checks, you have to load data into a proper order i.e., you have to load data into parent tables first and then child tables, which can be tedious. However, if you disable the foreign key checks, you can load data into tables in any order.</p>
 <p>To disable foreign key checks, you use the following statement:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SET foreign_key_checks = 0;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SET</span> foreign_key_checks <span class="operator">=</span> <span class="number">0</span>;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>And you can enable it by using the following statement:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">SET foreign_key_checks = 1;Code language: SQL (Structured Query Language) (sql)</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SET</span> foreign_key_checks <span class="operator">=</span> <span class="number">1</span>;Code <span class="keyword">language</span>: <span class="keyword">SQL</span> (Structured Query <span class="keyword">Language</span>) (<span class="keyword">sql</span>)</span><br></pre></td></tr></table></figure>
 <p>In this tutorial, you have learned about the MySQL foreign key and how to create a foreign key constraint with various reference options.</p>
 <h1 id="DATA-TYPES"><a class="header-anchor" href="#DATA-TYPES"></a>DATA TYPES</h1>
 <h1 id="GLOBALIZARION"><a class="header-anchor" href="#GLOBALIZARION"></a>GLOBALIZARION</h1>
@@ -849,7 +831,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+  <span class="author" itemprop="copyrightHolder">LYK-love</span>
 </div>
 <div class="busuanzi-count">
     <span class="post-meta-item" id="busuanzi_container_site_uv">
@@ -876,14 +858,31 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
+
 
 
 

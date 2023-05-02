@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-
   <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
@@ -13,12 +12,12 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Outline：  集群简介 Hadoop Spark Hadoop + Spark For Manjaro Hadoop + Spark For Mac Clickhouse Flink Kafka( &#x2F;&#x2F;TODO )">
 <meta property="og:type" content="article">
@@ -29,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-02-08T07:44:07.936Z">
 <meta property="article:modified_time" content="2023-02-08T07:44:07.936Z">
-<meta property="article:author" content="有多远滚多远">
+<meta property="article:author" content="LYK-love">
 <meta property="article:tag" content="Cloud Computation">
 <meta name="twitter:card" content="summary">
 
@@ -51,6 +50,8 @@
 
 
 
+
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -61,8 +62,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
         <span class="toggle-line"></span>
@@ -81,7 +82,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -90,7 +91,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -123,15 +124,9 @@
     </div>
   </div>
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -152,65 +147,53 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LYK-love"
       src="/images/white_flower1.jpg">
-  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <p class="site-author-name" itemprop="name">LYK-love</p>
   <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license site-overview-item animated" itemprop="license">
+  <div class="cc-license animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
   </div>
-
-
 
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -227,7 +210,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/white_flower1.jpg">
-      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="name" content="LYK-love">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -280,8 +263,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-        <p>Outline：</p>
+    <div class="post-body" itemprop="articleBody"><p>Outline：</p>
 <ul>
 <li>集群简介</li>
 <li>Hadoop</li>
@@ -354,7 +336,7 @@
 <ol>
 <li>
 <p>对于master和slave节点，配置其DNS表(.<code>/etc/hosts</code> )， 其中增加:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">127.0.0.1 localhost //如果本来就有这条就不用加了</span><br><span class="line">&lt;master的内网ip&gt; master //对于master而言，这里直接填127.0.0.1</span><br><span class="line">&lt;slave01的公网ip&gt; slave01</span><br><span class="line">&lt;slave02的公网ip&gt; slave02</span><br><span class="line">&lt;slave03的公网ip&gt; slave03</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">127</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">1</span> localhost //如果本来就有这条就不用加了</span><br><span class="line"><span class="section">&lt;master的内网ip&gt;</span> <span class="attribute">master</span> //对于master而言，这里直接填<span class="number">127.0.0.1</span></span><br><span class="line"><span class="section">&lt;slave01的公网ip&gt;</span> <span class="attribute">slave01</span></span><br><span class="line"><span class="section">&lt;slave02的公网ip&gt;</span> <span class="attribute">slave02</span></span><br><span class="line"><span class="section">&lt;slave03的公网ip&gt;</span> <span class="attribute">slave03</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>配置master自己到自己的ssh免密登陆</p>
@@ -429,7 +411,7 @@
 </li>
 <li>
 <p>在master上将hadoop压缩包解压并改名</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">tar -zxvf hadoop-3.2.3.tar.gz -C ~</span><br><span class="line">cd ~</span><br><span class="line">mv ./hadoop-3.2.3 ./hadoop #修改文件夹名称为hadoop</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">tar</span> -zxvf hadoop-<span class="number">3</span>.<span class="number">2</span>.<span class="number">3</span>.tar.gz -C ~</span><br><span class="line"><span class="attribute">cd</span> ~</span><br><span class="line"><span class="attribute">mv</span> ./hadoop-<span class="number">3</span>.<span class="number">2</span>.<span class="number">3</span> ./hadoop #修改文件夹名称为hadoop</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>添加Hadoop的环境变量</p>
@@ -497,7 +479,7 @@
 </ol>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
 <p>​	应该看到如下输出：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">java version &quot;1.8.0_301&quot;</span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_301-b09)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.301-b09, mixed mode)</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line"><span class="keyword">java </span>version <span class="string">&quot;1.8.0_301&quot;</span></span><br><span class="line"><span class="keyword">Java(TM) </span>SE Runtime Environment (<span class="keyword">build </span><span class="number">1</span>.<span class="number">8</span>.<span class="number">0</span>_301-<span class="keyword">b09)</span></span><br><span class="line"><span class="keyword"></span><span class="keyword">Java </span>HotSpot(TM) <span class="number">64</span>-<span class="keyword">Bit </span>Server VM (<span class="keyword">build </span><span class="number">25</span>.<span class="number">301</span>-<span class="keyword">b09, </span>mixed mode)</span><br></pre></td></tr></table></figure>
 <h2 id="集群页面"><a class="header-anchor" href="#集群页面"></a>集群页面</h2>
 <p>正确启动hadoop和spark后，应该能看到二者的webUI页面：</p>
 <ul>
@@ -510,7 +492,7 @@
 <ol>
 <li>
 <p>修改<code>workers</code>为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">slave01</span><br><span class="line">slave02</span><br><span class="line">slave03</span><br></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="attribute">slave01</span></span><br><span class="line">slave02</span><br><span class="line">slave03</span><br></pre></td></tr></table></figure>
 <p>workers文件默认内容是<code>localhost</code>,这里把它删除了。 如果用单机版hadoop，则保留localhost,且不需要添加slave</p>
 </li>
 <li>
@@ -596,10 +578,10 @@
 <p>检验hadoop是否已经启动</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">jps</span><br></pre></td></tr></table></figure>
 <p>在master上应该有类似如下输出:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">28848 NameNode</span><br><span class="line">29122 ResourceManager</span><br><span class="line">29234 Jps</span><br><span class="line">29016 SecondaryNameNode</span><br><span class="line">28921 DataNode</span><br><span class="line">29199 NodeManager</span><br></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">28848 </span>NameNode</span><br><span class="line"><span class="symbol">29122 </span>ResourceManager</span><br><span class="line"><span class="symbol">29234 </span>Jps</span><br><span class="line"><span class="symbol">29016 </span>SecondaryNameNode</span><br><span class="line"><span class="symbol">28921 </span>DataNode</span><br><span class="line"><span class="symbol">29199 </span>NodeManager</span><br></pre></td></tr></table></figure>
 <p>主要关注<code>NameNode</code>、<code>ResourceManager</code>、<code>SecondaryNameNode</code>这三条是否存在，如果不存在则应该去<code>~/hadoop/logs/</code>目录下寻找相应地日志查看错误信息</p>
 <p>在slave上输入jps应该有类似如下输出</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">4406 Jps1914 </span><br><span class="line">NodeManager1787 </span><br><span class="line">DataNode</span><br></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="code"><pre><span class="line"><span class="number">4406</span> Jps<span class="number">1914</span> </span><br><span class="line"><span class="symbol">NodeManager1787</span> </span><br><span class="line">Data<span class="symbol">Node</span></span><br></pre></td></tr></table></figure>
 <p>主要关注<code>NodeManager</code>、<code>DataNode</code>这两条是否存在，如果不存在同样去<code>~/hadoop/logs/</code>目录下寻找相应地日志查看错误信息</p>
 <ul>
 <li>我发现某个slave的datanode没有启动，查看其<code>hadoop-lyk-datanode-VM-4-7-ubuntu.log</code>发现，原来是xml配置文件写错了。。</li>
@@ -607,7 +589,7 @@
 </li>
 <li>
 <p>查看hadoop webUI：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;master-ip&gt;:50070</span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line">&lt;master-<span class="built_in">ip</span>&gt;:<span class="number">50070</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>在<code>hdfs-site.xml</code>中配置</li>
 </ul>
@@ -633,7 +615,7 @@
 </li>
 <li>
 <p>修改workers文件的内容，将原来的内容替换成：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">master</span><br><span class="line">slave01</span><br><span class="line">slave02</span><br><span class="line">slave03</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">master</span></span><br><span class="line"><span class="title">slave01</span></span><br><span class="line">slave02</span><br><span class="line">slave03</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>在spark-env.sh的末尾添加如下内容</p>
@@ -648,12 +630,12 @@
 <ol start="3">
 <li>使用如下命令将配置好的spark打包发送给slave</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd /usr/local/</span><br><span class="line">tar -zcvf /spark.master.tar.gz ./spark</span><br><span class="line">scp /spark.master.tar.gz slave01:/</span><br><span class="line">scp /spark.master.tar.gz slave02:/</span><br><span class="line">scp /spark.master.tar.gz slave03:/</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line">cd /usr/local/</span><br><span class="line">tar -zcvf /spark<span class="selector-class">.master</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> ./spark</span><br><span class="line">scp /spark<span class="selector-class">.master</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> slave01:/</span><br><span class="line">scp /spark<span class="selector-class">.master</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> slave02:/</span><br><span class="line">scp /spark<span class="selector-class">.master</span><span class="selector-class">.tar</span><span class="selector-class">.gz</span> slave03:/</span><br></pre></td></tr></table></figure>
 <p><strong>安装（slave）：</strong></p>
 <ol>
 <li>使用如下命令在slave上安装spark</li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># rm -rf /usr/local/spark/# </span><br><span class="line">tar -zxvf /spark.master.tar.gz -C /usr/local</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="code"><pre><span class="line"># rm -rf <span class="regexp">/usr/</span>local<span class="regexp">/spark/</span># </span><br><span class="line">tar -zxvf <span class="regexp">/spark.master.tar.gz -C /u</span>sr/local</span><br></pre></td></tr></table></figure>
 <h2 id="启动spark"><a class="header-anchor" href="#启动spark"></a>启动spark</h2>
 <p>==在启动之前先修改master的spark-env.sh文件，将其中的<code>SPARK_LOCAL</code>注释掉，不然就只能从服务器内网的localhost来访问spark的webui了（我也不知道为啥。。。）==</p>
 <ol>
@@ -726,9 +708,9 @@
 </li>
 <li>
 <p>以上的配置完成之后，使用hadoop用户</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">su - hadoop</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">su - hadoop</span></span><br></pre></td></tr></table></figure>
 <p>切换成hadoop之后，设置ssh免密登录</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa </span><br><span class="line"></span><br><span class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys </span><br><span class="line"></span><br><span class="line">chmod 640 ~/.ssh/authorized_keys </span><br></pre></td></tr></table></figure>
+<figure class="highlight arcade"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa </span><br><span class="line"></span><br><span class="line">cat ~<span class="regexp">/.ssh/i</span>d_rsa.pub &gt;&gt; ~<span class="regexp">/.ssh/</span>authorized_keys </span><br><span class="line"></span><br><span class="line">chmod <span class="number">640</span> ~<span class="regexp">/.ssh/</span>authorized_keys </span><br></pre></td></tr></table></figure>
 <p>然后试试<code>ssh localhost</code>，查看是否能够免密登录</p>
 <blockquote>
 <p>如果遇到22端口被拒绝的情况，很有可能是ssh服务并没有开启。<br>
@@ -811,20 +793,20 @@
 </ul>
 <h3 id="允许远程连接"><a class="header-anchor" href="#允许远程连接"></a>允许远程连接</h3>
 <p>ClickHouse server默认只监听环回地址, 无法用公网通信：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root@ubuntu:/var/lib/clickhouse/# lsof -i :8123</span><br><span class="line">COMMAND   PID       USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">clickhous 653 clickhouse   41u  IPv6  32544      0t0  TCP ip6-localhost:8123 (LISTEN)</span><br><span class="line">clickhous 653 clickhouse   44u  IPv4  32547      0t0  TCP localhost:8123 (LISTEN)</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">root</span>@ubuntu:/var/lib/clickhouse/# lsof -i :<span class="number">8123</span></span><br><span class="line"><span class="attribute">COMMAND</span>   PID       USER   FD   TYPE DEVICE SIZE/<span class="literal">OFF</span> NODE NAME</span><br><span class="line"><span class="attribute">clickhous</span> <span class="number">653</span> clickhouse   <span class="number">41</span>u  IPv6  <span class="number">32544</span>      <span class="number">0</span>t0  TCP ip6-localhost:<span class="number">8123</span> (LISTEN)</span><br><span class="line"><span class="attribute">clickhous</span> <span class="number">653</span> clickhouse   <span class="number">44</span>u  IPv4  <span class="number">32547</span>      <span class="number">0</span>t0  TCP localhost:<span class="number">8123</span> (LISTEN)</span><br></pre></td></tr></table></figure>
 <p>需要修改系统配置文件，使其监听公网地址：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/clickhouse-server/config.xml</span><br></pre></td></tr></table></figure>
 <p>把注释掉的<code>&lt;listen_host&gt;::&lt;/listen_host&gt;</code>取消注释，然后重启服务：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">service clickhouse-server restart </span><br></pre></td></tr></table></figure>
 <p>现在的端口监听情况：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">root@ubuntu:/var/lib/clickhouse/data/# lsof -i :8123</span><br><span class="line">COMMAND    PID       USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">clickhous 9188 clickhouse   32u  IPv6  61573      0t0  TCP *:8123 (LISTEN)</span><br></pre></td></tr></table></figure>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><span class="line">root<span class="variable">@ubuntu</span><span class="symbol">:/var/lib/clickhouse/data/</span><span class="comment"># lsof -i :8123</span></span><br><span class="line"><span class="title class_">COMMAND</span>    <span class="title class_">PID</span>       <span class="title class_">USER</span>   <span class="title class_">FD</span>   <span class="title class_">TYPE</span> <span class="title class_">DEVICE</span> <span class="title class_">SIZE</span>/<span class="title class_">OFF</span> <span class="title class_">NODE</span> <span class="title class_">NAME</span></span><br><span class="line">clickhous <span class="number">9188</span> clickhouse   <span class="number">32</span>u  <span class="title class_">IPv6</span>  <span class="number">61573</span>      <span class="number">0</span>t0  <span class="title class_">TCP</span> *<span class="symbol">:</span><span class="number">8123</span> (<span class="title class_">LISTEN</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="配置用户名和密码"><a class="header-anchor" href="#配置用户名和密码"></a>配置用户名和密码</h3>
 <p>clickhouse默认的登录账号是default， 没有密码</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38830964/article/details/114012700">教程</a></p>
 <p>可以修改用户配置文件，添加密码：</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/clickhouse-server/users.xml</span><br></pre></td></tr></table></figure>
 <p>在对应用户的<password>标签中添加密码：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;password&gt;123&lt;/password&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">password</span>&gt;</span>123<span class="tag">&lt;/<span class="name">password</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>这里是明文密码，还可以配置加密密码，这里不介绍了</li>
 <li>当password标签为空时，代表免密码登录</li>
@@ -836,7 +818,7 @@
 </ul>
 <h2 id="Bugs-3"><a class="header-anchor" href="#Bugs-3"></a>Bugs</h2>
 <p>clickhouse有时会自动崩溃，客户端启动时报错：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">clickhouse-client</span><br><span class="line">ClickHouse client version 21.2.4.6 (official build).</span><br><span class="line">Connecting to localhost:9000 as user default.</span><br><span class="line">Code: 210. DB::NetException: Connection refused (localhost:9000)</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">clickhouse-client</span><br><span class="line">ClickHouse client <span class="keyword">version</span> <span class="number">21.2</span><span class="number">.4</span><span class="number">.6</span> (official build).</span><br><span class="line">Connecting <span class="keyword">to</span> localhost:<span class="number">9000</span> <span class="keyword">as</span> <span class="keyword">user</span> <span class="keyword">default</span>.</span><br><span class="line">Code: <span class="number">210.</span> DB::NetException: <span class="keyword">Connection</span> refused (localhost:<span class="number">9000</span>)</span><br></pre></td></tr></table></figure>
 <ul>
 <li>并且，一旦出现一次崩溃，之后的clickhouse都无法通过systemctl启动(<code>sudo service clickhouse-server start</code>)，只能手动启动(<code>sudo clickhouse start</code> )</li>
 <li>在网上找了各种教程，都没能解决。 我的服务器是ubuntu20.04，换了新服务器（相同OS），重装，依然有这个问题。  最后无奈使用docker的clickohouse，崩溃就崩溃，重启容器就好了</li>
@@ -861,9 +843,9 @@
 <p>修改文件名字，并设置权限</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /usr/local</span><br><span class="line">sudo mv ./flink-*/ ./flink</span><br><span class="line">sudo chown -R hadoop:hadoop ./flink</span><br></pre></td></tr></table></figure>
 <p>添加环境变量:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vim ~/.zshrc</span><br><span class="line"></span><br><span class="line">export FLINK_HOME=/usr/local/flink</span><br><span class="line">export PATH=$FLINK_HOME/bin:$PATH</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">vim ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="built_in">export</span> <span class="attribute">FLINK_HOME</span>=/usr/local/flink</span><br><span class="line"><span class="built_in">export</span> <span class="attribute">PATH</span>=<span class="variable">$FLINK_HOME</span>/bin:$PATH</span><br></pre></td></tr></table></figure>
 <p>更改配置文件( <code>[flink位置]/conf/flink-conf.yaml</code> ):</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># The number of task slots that each TaskManager offers. Each slot runs one parallel pipeline.</span><br><span class="line"></span><br><span class="line">taskmanager.numberOfTaskSlots: 4</span><br><span class="line"></span><br><span class="line"># The parallelism used for programs that did not specify and other parallelism.</span><br><span class="line"></span><br><span class="line">parallelism.default: 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment"># The number of task slots that each TaskManager offers. Each slot runs one parallel pipeline.</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">taskmanager</span>.numberOfTaskSlots: <span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The parallelism used for programs that did not specify and other parallelism.</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">parallelism</span>.default: <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <h2 id="启动Flink"><a class="header-anchor" href="#启动Flink"></a>启动Flink</h2>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动Flink,因为FLINK_HOME已经写入了环境变量，因此可以直接执行脚本：</span></span><br><span class="line">start-cluster.sh</span><br></pre></td></tr></table></figure>
 <ul>
@@ -876,7 +858,7 @@
 </li>
 </ul>
 <h2 id="关闭Flink"><a class="header-anchor" href="#关闭Flink"></a>关闭Flink</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">stop-cluster.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight stata"><table><tr><td class="code"><pre><span class="line">stop-<span class="keyword">cluster</span>.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
 <h2 id="提交任务-2"><a class="header-anchor" href="#提交任务-2"></a>提交任务</h2>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fonxian/p/12334222.html">教程</a></p>
 <p>Flink可以直接在Flink的webUI上提交jar包</p>
@@ -932,7 +914,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+  <span class="author" itemprop="copyrightHolder">LYK-love</span>
 </div>
 <div class="busuanzi-count">
     <span class="post-meta-item" id="busuanzi_container_site_uv">
@@ -959,14 +941,31 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
+
 
 
 

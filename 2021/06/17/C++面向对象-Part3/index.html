@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-
   <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
@@ -13,12 +12,12 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Outline:  Template Exception IO处理 右值引用 移动构造 外部模板 Lambda表达式 联合初始化">
 <meta property="og:type" content="article">
@@ -29,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-06-17T15:45:06.000Z">
 <meta property="article:modified_time" content="2023-02-08T07:44:07.937Z">
-<meta property="article:author" content="有多远滚多远">
+<meta property="article:author" content="LYK-love">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
 
@@ -51,6 +50,8 @@
 
 
 
+
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -61,8 +62,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
         <span class="toggle-line"></span>
@@ -81,7 +82,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -90,7 +91,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -123,15 +124,9 @@
     </div>
   </div>
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -152,65 +147,53 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LYK-love"
       src="/images/white_flower1.jpg">
-  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <p class="site-author-name" itemprop="name">LYK-love</p>
   <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license site-overview-item animated" itemprop="license">
+  <div class="cc-license animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
   </div>
-
-
 
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -227,7 +210,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/white_flower1.jpg">
-      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="name" content="LYK-love">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -287,8 +270,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-        <p>Outline:</p>
+    <div class="post-body" itemprop="articleBody"><p>Outline:</p>
 <ul>
 <li>Template</li>
 <li>Exception</li>
@@ -393,7 +375,7 @@
 <li>
 <p>调用时需显式实例化</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">template</span>&lt; <span class="keyword">typename</span> T, <span class="type">int</span> size &gt;</span></span><br><span class="line"><span class="function">  <span class="type">void</span> <span class="title">f</span><span class="params">(T a)</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">       T temp[size];</span><br><span class="line">     ...</span><br><span class="line">       <span class="built_in">f</span>&lt;<span class="type">int</span>,<span class="number">10</span>&gt;(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">* 模板特化</span><br><span class="line"></span><br><span class="line">  * 定义一个具有特定类型(而不是模板类型)的函数</span><br><span class="line"></span><br><span class="line">  * 必须在头部之前使用 `<span class="keyword">template</span>&lt;&gt;`,  以显示这是前面定义的模板函数的特化</span><br><span class="line">  * 编译器首先匹配`普通函数`,再匹配`模板特化`, 再匹配`模板函数` </span><br><span class="line">  </span><br><span class="line">* 类模板中的静态成员属于实例化后的类</span><br><span class="line"></span><br><span class="line">* 模板是一种**源代码复用**的机制</span><br><span class="line"></span><br><span class="line">  * 实例化: 生成具体的函数/类</span><br><span class="line"></span><br><span class="line">  * 函数模板的实例化</span><br><span class="line">    * 隐式实现</span><br><span class="line">    * 根据具体模板函数调用</span><br><span class="line">    </span><br><span class="line">  * 类模板的实例化</span><br><span class="line">    * 创建对象时显式指定</span><br><span class="line">    </span><br><span class="line">  * 是否实例化模板的某个实例由使用点来决定;如果未使用到一个模板的某个实例, 则编译系统不会生成相应实例的代码</span><br><span class="line"></span><br><span class="line">  * 如果在模块A中要使用模块B中定义的某模块的实例, 而在模块B中未使用这个实例, 则模块A无法使用这个实例</span><br><span class="line"></span><br><span class="line">  * **C++中模板的完整定义通常放在头文件中**</span><br><span class="line"></span><br><span class="line">    * 编译方法有两种：包含式和独立编译式。独立编译理论最有，但对模板并不适用，`<span class="keyword">export</span>`可以实现独立编译，但没有主流编译器支持，它也在新标准中被废止</span><br><span class="line"></span><br><span class="line">      包含式：声明文件包含在定义文件中，定义文件包含在应用程序文件中，只编译应用程序文件</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">*  模板元编程</span><br><span class="line"></span><br><span class="line">  ```c++</span><br><span class="line">  template&lt; int N &gt;</span><br><span class="line">  class Fib</span><br><span class="line">  &#123;</span><br><span class="line">      public:</span><br><span class="line">      enum&#123; value + Fib&lt; N - 1&gt;:: value + Fib&lt; N - 2 &gt;:: value &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  template&lt;&gt;</span><br><span class="line">  class Fib&lt;0&gt;</span><br><span class="line">  &#123;</span><br><span class="line">      enum &#123; value = 1 &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  template&lt;&gt;</span><br><span class="line">  class Fib&lt;1&gt;</span><br><span class="line">  &#123;</span><br><span class="line">      enum &#123; value = 1 &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  int main()</span><br><span class="line">  &#123;</span><br><span class="line">      cout &lt;&lt; Fib&lt;8&gt;::value &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+  <figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">*  模板元编程</span><br><span class="line"></span><br><span class="line">  ```c++</span><br><span class="line">  template&lt; <span class="built_in">int</span> N &gt;</span><br><span class="line">  <span class="keyword">class</span> <span class="symbol">Fib</span></span><br><span class="line">  &#123;</span><br><span class="line">      <span class="keyword">public</span>:</span><br><span class="line">      <span class="keyword">enum</span>&#123; value + Fib&lt; N - <span class="number">1</span>&gt;:: value + Fib&lt; N - <span class="number">2</span> &gt;:: value &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  template&lt;&gt;</span><br><span class="line">  <span class="keyword">class</span> <span class="symbol">Fib</span>&lt;<span class="symbol">0</span>&gt;</span><br><span class="line">  &#123;</span><br><span class="line">      <span class="keyword">enum</span> &#123; value = <span class="number">1</span> &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  template&lt;&gt;</span><br><span class="line">  <span class="keyword">class</span> <span class="symbol">Fib</span>&lt;<span class="symbol">1</span>&gt;</span><br><span class="line">  &#123;</span><br><span class="line">      <span class="keyword">enum</span> &#123; value = <span class="number">1</span> &#125;;</span><br><span class="line">  &#125;;</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">int</span> main()</span><br><span class="line">  &#123;</span><br><span class="line">      cout &lt;&lt; Fib&lt;<span class="number">8</span>&gt;::value &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <p>这段程序在<strong>编译器</strong>就能出结果. 元编程就是编写一个程序, 这个程序可以生成更多的程序</p>
 </li>
 </ul>
@@ -562,7 +544,7 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> num = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> &amp;b = num; <span class="comment">//正确int &amp;c = 10; //错误</span></span><br></pre></td></tr></table></figure>
 <p>如上所示，编译器允许我们为<code>num</code>左值建立一个引用，但不可以为 10 这个右值建立引用。因此，C++98/03 标准中的引用又称为<strong>左值引用</strong>。</p>
 <p>注意，虽然 C++98/03 标准不支持为右值建立非常量左值引用，但允许使用<strong>常量左值引用引用右值</strong>(但不能修改)。也就是说，常量左值引用既可以操作左值，也可以操作右值，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">int num = 10;const int &amp;b = num;const int &amp;c = 10;</span><br></pre></td></tr></table></figure>
+<figure class="highlight dart"><table><tr><td class="code"><pre><span class="line"><span class="built_in">int</span> <span class="built_in">num</span> = <span class="number">10</span>;<span class="keyword">const</span> <span class="built_in">int</span> &amp;b = <span class="built_in">num</span>;<span class="keyword">const</span> <span class="built_in">int</span> &amp;c = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
 <p>我们知道，右值往往是没有名称的，因此要使用它只能借助引用的方式。这就产生一个问题，实际开发中我们可能需要对右值进行修改（实现移动语义时就需要），显然左值引用的方式是行不通的。</p>
 <p>为此，C++11 标准新引入了另一种引用方式，称为右值引用，用 &quot;&amp;&amp;&quot; 表示。</p>
 <p>需要注意的，和声明左值引用一样，右值引用也必须<strong>立即进行初始化操作</strong>，且<strong>只能使用右值进行初始化</strong>，比如：</p>
@@ -571,7 +553,7 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> &amp;&amp; a = <span class="number">10</span>;</span><br><span class="line">a = <span class="number">100</span>;</span><br><span class="line">cout &lt;&lt; a &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
 <p>程序输出结果为 100。</p>
 <p>另外值得一提的是，C++ 语法上是支持定义常量右值引用的，例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const int&amp;&amp; a = 10;//编译器不会报错</span><br></pre></td></tr></table></figure>
+<figure class="highlight angelscript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="built_in">int</span>&amp;&amp; a = <span class="number">10</span>;<span class="comment">//编译器不会报错</span></span><br></pre></td></tr></table></figure>
 <p>但这种定义出来的右值引用并无实际用处。一方面，右值引用主要用于移动语义和完美转发，其中前者需要有修改右值的权限；其次，常量右值引用的作用就是引用一个不可修改的右值，这项工作完全可以交给常量左值引用完成。</p>
 <ul>
 <li>In C++ , non-const references can bind to l-values and const references can bind to l-values or r-values, but there is nothing that can bind to a non-const r-value.</li>
@@ -600,9 +582,9 @@
 <li>程序执行结束前，会自行调用 demo 类的析构函数销毁 a。</li>
 </ol>
 <p>注意，目前多数编译器都会对程序中发生的拷贝操作进行优化，因此如果我们使用 VS 2017、codeblocks 等这些编译器运行此程序时，看到的往往是优化后的输出结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">construct!</span><br><span class="line">class destruct!</span><br></pre></td></tr></table></figure>
+<figure class="highlight wren"><table><tr><td class="code"><pre><span class="line"><span class="keyword">construct</span><span class="operator">!</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">destruct</span><span class="operator">!</span></span><br></pre></td></tr></table></figure>
 <p>而同样的程序，如果在 Linux 上使用<code>g++ demo.cpp -fno-elide-constructors</code>命令运行（其中 demo.cpp 是程序文件的名称），就可以看到完整的输出结果：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">construct!        &lt;-- 执行 demo()</span><br><span class="line">copy construct!    &lt;-- 执行 return demo()</span><br><span class="line">class destruct!     &lt;-- 销毁 demo() 产生的匿名对象</span><br><span class="line">copy construct!    &lt;-- 执行 a = get_demo()</span><br><span class="line">class destruct!     &lt;-- 销毁 get_demo() 返回的临时对象</span><br><span class="line">class destruct!     &lt;-- 销毁 a</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">construct!        &lt;<span class="comment">-- 执行 demo()</span></span><br><span class="line"><span class="keyword">copy</span> construct!    &lt;<span class="comment">-- 执行 return demo()</span></span><br><span class="line"><span class="built_in">class</span> destruct!     &lt;<span class="comment">-- 销毁 demo() 产生的匿名对象</span></span><br><span class="line"><span class="keyword">copy</span> construct!    &lt;<span class="comment">-- 执行 a = get_demo()</span></span><br><span class="line"><span class="built_in">class</span> destruct!     &lt;<span class="comment">-- 销毁 get_demo() 返回的临时对象</span></span><br><span class="line"><span class="built_in">class</span> destruct!     &lt;<span class="comment">-- 销毁 a</span></span><br></pre></td></tr></table></figure>
 <p>如上所示，利用拷贝构造函数实现对 a 对象的初始化，底层实际上进行了 2 次拷贝（而且是深拷贝）操作。当然，对于仅申请少量堆空间的临时对象来说，深拷贝的执行效率依旧可以接受，但如果临时对象中的指针成员申请了大量的堆空间，那么 2 次深拷贝操作势必会影响 a 对象初始化的执行效率。</p>
 <blockquote>
 <p>事实上，此问题一直存留在以 C++ 98/03 标准编写的 C++ 程序中。由于临时变量的产生、销毁以及发生的拷贝操作本身就是很隐晦的（编译器对这些过程做了专门的优化），且并不会影响程序的正确性，因此很少进入程序员的视野。</p>
@@ -765,15 +747,15 @@
 <p>除此之外，虽然 lambda 匿名函数没有函数名称，但我们仍可以为其手动设置一个名称，比如：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;    </span><br><span class="line">    <span class="comment">//display 即为 lambda 匿名函数的函数名    </span></span><br><span class="line">    <span class="keyword">auto</span> display = [](<span class="type">int</span> a,<span class="type">int</span> b) -&gt; <span class="type">void</span>&#123;cout &lt;&lt; a &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; b;&#125;;  </span><br><span class="line">    </span><br><span class="line">    <span class="comment">//调用 lambda 函数    </span></span><br><span class="line">    <span class="built_in">display</span>(<span class="number">10</span>,<span class="number">20</span>);    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>程序执行结果为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10 20</span><br></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">10 </span><span class="number">20</span></span><br></pre></td></tr></table></figure>
 <p>可以看到，程序中使用 <code>auto </code>关键字为 lambda 匿名函数设定了一个函数名，由此我们即可在作用域内调用该函数。</p>
 <p>【例 2】值传递和引用传递的区别</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="comment">//全局变量</span></span><br><span class="line"><span class="type">int</span> all_num = <span class="number">0</span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;    </span><br><span class="line">    <span class="comment">//局部变量    </span></span><br><span class="line">    <span class="type">int</span> num_1 = <span class="number">1</span>;    </span><br><span class="line">    <span class="type">int</span> num_2 = <span class="number">2</span>;    </span><br><span class="line">    <span class="type">int</span> num_3 = <span class="number">3</span>;    </span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;lambda1:\n&quot;</span>;    </span><br><span class="line">    <span class="keyword">auto</span> lambda1 = [=]&#123;        </span><br><span class="line">        <span class="comment">//全局变量可以访问甚至修改       </span></span><br><span class="line">        all_num = <span class="number">10</span>;        </span><br><span class="line">        <span class="comment">//函数体内只能使用外部变量，而无法对它们进行修改        </span></span><br><span class="line">        cout &lt;&lt; num_1 &lt;&lt; <span class="string">&quot; &quot;</span>             </span><br><span class="line">            &lt;&lt; num_2 &lt;&lt; <span class="string">&quot; &quot;</span>             </span><br><span class="line">            &lt;&lt; num_3 &lt;&lt; endl;  &#125;; </span><br><span class="line">    <span class="built_in">lambda1</span>();    </span><br><span class="line">    cout &lt;&lt; all_num &lt;&lt;endl;  </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;lambda2:\n&quot;</span>;    </span><br><span class="line">    <span class="keyword">auto</span> lambda2 = [&amp;]&#123;        </span><br><span class="line">        all_num = <span class="number">100</span>;        </span><br><span class="line">        num_1 = <span class="number">10</span>;        </span><br><span class="line">        num_2 = <span class="number">20</span>;        </span><br><span class="line">        num_3 = <span class="number">30</span>;        </span><br><span class="line">        cout &lt;&lt; num_1 &lt;&lt; <span class="string">&quot; &quot;</span>             </span><br><span class="line">            &lt;&lt; num_2 &lt;&lt; <span class="string">&quot; &quot;</span>             </span><br><span class="line">            &lt;&lt; num_3 &lt;&lt; endl;    </span><br><span class="line">    &#125;;    </span><br><span class="line">    </span><br><span class="line">    <span class="built_in">lambda2</span>();    </span><br><span class="line">    cout &lt;&lt; all_num &lt;&lt; endl;    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>程序执行结果为：</p>
 <p>lambda1:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1 2 3</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">1 </span><span class="number">2</span> <span class="number">3</span></span><br><span class="line"><span class="number">10</span></span><br></pre></td></tr></table></figure>
 <p>lambda2:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">10 20 30</span><br><span class="line">100</span><br></pre></td></tr></table></figure>
+<figure class="highlight basic"><table><tr><td class="code"><pre><span class="line"><span class="symbol">10 </span><span class="number">20</span> <span class="number">30</span></span><br><span class="line"><span class="number">100</span></span><br></pre></td></tr></table></figure>
 <p>可以看到，在创建 lambda1 和 lambda2 匿名函数的作用域中，有 <code>num_1</code>、<code>num_2</code> 和 <code>num_3</code> 这 3 个局部变量，另外还有 <code>all_num</code> 全局变量。</p>
 <p>其中，lambda1 匿名函数是以 [=] 值传递的方式导入的局部变量，这意味着默认情况下，此函数内部无法修改这 3 个局部变量的值，但全局变量 <code>all_num</code> 除外。相对地，lambda2 匿名函数以 [&amp;] 引用传递的方式导入这 3 个局部变量，因此在该函数的内部就可以访问这 3 个局部变量，还可以任意修改它们。同样，也可以访问甚至修改全局变量。</p>
 <p>当然，如果我们想在 lambda1 匿名函数的基础上修改外部变量的值，可以借助 mutable 关键字，例如：</p>
@@ -782,7 +764,7 @@
 <p>【例 3】执行抛出异常类型</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;    </span><br><span class="line">    <span class="keyword">auto</span> except = []()<span class="built_in">throw</span>(<span class="type">int</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="number">10</span>;    </span><br><span class="line">    &#125;;    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span> &#123;        </span><br><span class="line">        <span class="built_in">except</span>();    </span><br><span class="line">    &#125;    </span><br><span class="line">    <span class="built_in">catch</span> (<span class="type">int</span>) &#123;        </span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;捕获到了整形异常&quot;</span>;    </span><br><span class="line">    &#125;    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br></pre></td></tr></table></figure>
 <p>程序执行结果为：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">捕获到了整形异常</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">捕获到了整形异常</span><br></pre></td></tr></table></figure>
 <p>可以看到，<code>except </code>匿名数组中指定函数体中可以抛出整形异常，因此当函数体中真正发生整形异常时，可以借助 <code>try-catch </code>块成功捕获并处理。</p>
 <p>在此基础上， 再看一下反例：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;    </span><br><span class="line">    <span class="keyword">auto</span> except1 = []()<span class="keyword">noexcept</span>&#123;        </span><br><span class="line">        <span class="keyword">throw</span> <span class="number">100</span>;    &#125;;    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">auto</span> except2 = []()<span class="built_in">throw</span>(<span class="type">char</span>)&#123;        </span><br><span class="line">        <span class="keyword">throw</span> <span class="number">10</span>;    </span><br><span class="line">    &#125;;    </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">try</span>&#123;        </span><br><span class="line">        <span class="built_in">except1</span>();        </span><br><span class="line">        <span class="built_in">except2</span>();    </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">catch</span>(<span class="type">int</span>)&#123;        </span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;捕获到了整形异常&quot;</span>&lt;&lt; endl;   </span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -842,7 +824,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+  <span class="author" itemprop="copyrightHolder">LYK-love</span>
 </div>
 <div class="busuanzi-count">
     <span class="post-meta-item" id="busuanzi_container_site_uv">
@@ -869,14 +851,31 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
+
 
 
 

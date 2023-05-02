@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-
   <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
@@ -13,12 +12,12 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Outline:  Processes Programs &#x3D;&#x3D; Processes Threads(  只写到这两部分  ) Interprocess Communication Scheduling Classical IPC problems Summary  ref:  Modern Operation Systems OS Lesson --- 蒋炎岩">
 <meta property="og:type" content="article">
@@ -29,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-10-22T17:13:42.000Z">
 <meta property="article:modified_time" content="2023-02-08T07:44:07.950Z">
-<meta property="article:author" content="有多远滚多远">
+<meta property="article:author" content="LYK-love">
 <meta property="article:tag" content="OS Basic">
 <meta name="twitter:card" content="summary">
 
@@ -51,6 +50,8 @@
 
 
 
+
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -61,8 +62,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
         <span class="toggle-line"></span>
@@ -81,7 +82,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -90,7 +91,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -123,15 +124,9 @@
     </div>
   </div>
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -152,65 +147,53 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LYK-love"
       src="/images/white_flower1.jpg">
-  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <p class="site-author-name" itemprop="name">LYK-love</p>
   <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license site-overview-item animated" itemprop="license">
+  <div class="cc-license animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
   </div>
-
-
 
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -227,7 +210,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/white_flower1.jpg">
-      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="name" content="LYK-love">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -287,8 +270,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-        <p>Outline:</p>
+    <div class="post-body" itemprop="articleBody"><p>Outline:</p>
 <ul>
 <li>Processes</li>
 <li>Programs == Processes</li>
@@ -575,9 +557,9 @@
 <p>OS<strong>加载程序，并初始化运行环境</strong>，从<code>_start</code>开始运行</p>
 <p><code>starti</code>: <code>0x00007ffff7fce090 in _start () from /lib64/ld-linux-x86-64.so.2</code>,这个库是OS的</p>
 <p><code>info inferiors</code>:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> Num  Description       Connection           Executable        </span><br><span class="line">* 1    process 7669      1 (native)           /home//a.out </span><br></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line"> Num  Description       Connection           Executable        </span><br><span class="line">* <span class="number">1</span>    process <span class="number">7669</span>      <span class="number">1</span> (native)           /home<span class="comment">//a.out </span></span><br></pre></td></tr></table></figure>
 <p><code>!pmap 7669</code>:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">7669:   /home/a.out</span><br><span class="line">0000555555554000      4K r---- a.out</span><br><span class="line">0000555555555000      4K r-x-- a.out</span><br><span class="line">0000555555556000      4K r---- a.out</span><br><span class="line">0000555555557000      8K rw--- a.out   //加载好了a.out</span><br><span class="line">00007ffff7fc7000     16K r----   [ anon ]</span><br><span class="line">00007ffff7fcb000      8K r-x--   [ anon ]</span><br><span class="line">00007ffff7fcd000      4K r---- ld-2.33.so</span><br><span class="line">00007ffff7fce000    144K r-x-- ld-2.33.so</span><br><span class="line">00007ffff7ff2000     36K r---- ld-2.33.so</span><br><span class="line">00007ffff7ffb000     16K rw--- ld-2.33.so //加载好了ld-2.33.so</span><br><span class="line">00007ffffffde000    132K rw---   [ stack ]</span><br><span class="line">ffffffffff600000      4K --x--   [ anon ]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">7669</span>:   /home/a.out</span><br><span class="line"><span class="attribute">0000555555554000</span>      <span class="number">4</span>K r---- a.out</span><br><span class="line"><span class="attribute">0000555555555000</span>      <span class="number">4</span>K r-x-- a.out</span><br><span class="line"><span class="attribute">0000555555556000</span>      <span class="number">4</span>K r---- a.out</span><br><span class="line"><span class="attribute">0000555555557000</span>      <span class="number">8</span>K rw--- a.out   //加载好了a.out</span><br><span class="line"><span class="attribute">00007ffff7fc7000</span>     <span class="number">16</span>K r----  <span class="meta"> [ anon ]</span></span><br><span class="line"><span class="attribute">00007ffff7fcb000</span>      <span class="number">8</span>K r-x--  <span class="meta"> [ anon ]</span></span><br><span class="line"><span class="attribute">00007ffff7fcd000</span>      <span class="number">4</span>K r---- ld-<span class="number">2</span>.<span class="number">33</span>.so</span><br><span class="line"><span class="attribute">00007ffff7fce000</span>    <span class="number">144</span>K r-x-- ld-<span class="number">2</span>.<span class="number">33</span>.so</span><br><span class="line"><span class="attribute">00007ffff7ff2000</span>     <span class="number">36</span>K r---- ld-<span class="number">2</span>.<span class="number">33</span>.so</span><br><span class="line"><span class="attribute">00007ffff7ffb000</span>     <span class="number">16</span>K rw--- ld-<span class="number">2</span>.<span class="number">33</span>.so //加载好了ld-<span class="number">2</span>.<span class="number">33</span>.so</span><br><span class="line"><span class="attribute">00007ffffffde000</span>    <span class="number">132</span>K rw---  <span class="meta"> [ stack ]</span></span><br><span class="line"><span class="attribute">ffffffffff600000</span>      <span class="number">4</span>K --x--  <span class="meta"> [ anon ]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <p>OS先加载好了a.out，<a target="_blank" rel="noopener" href="http://xn--ld-2-fy8f00dhw5t.33.so">再加载ld-2.33.so</a>，ld-2.33.so是OS提供的最初始的加载器，它会加载libc，再调用libc的初始化，再调用main</p>
 </li>
 <li>
@@ -587,7 +569,7 @@
 <p><code>gcc a.c</code></p>
 <p><code>./a.out</code></p>
 <p>得到：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Hello,World!</span><br><span class="line">Bye,cruel OS World!</span><br></pre></td></tr></table></figure>
+<figure class="highlight autohotkey"><table><tr><td class="code"><pre><span class="line"><span class="built_in">Hello,</span>World!</span><br><span class="line"><span class="built_in">Bye,</span>cruel OS World!</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="strace"><a class="header-anchor" href="#strace"></a>strace</h3>
@@ -598,7 +580,7 @@
 </li>
 <li>
 <p><code>strace</code> 在系统调用执行之前就能显示它</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">write(1, &quot;Hello,World!\n&quot;, 13Hello,World!)          = 13</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">write</span>(<span class="number">1</span>, <span class="string">&quot;Hello,World!\n&quot;</span>, <span class="number">13</span>Hello,World!)          = <span class="number">13</span></span><br></pre></td></tr></table></figure>
 <p>后面的“Hello,World!”是系统调用的结果</p>
 </li>
 </ul>
@@ -606,7 +588,7 @@
 <ul>
 <li>
 <p><code>strace</code>输出到标准错误输出， 可以用<code>strace ./a.out &gt; /dev/null </code>将标准输出丢弃（这样就不会看到系统调用<code>write</code>的结果）可以看到</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">write(1, &quot;Hello,World!\nBye,cruel OS World!&quot;..., 33) = 33</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">write</span>(<span class="number">1</span>, <span class="string">&quot;Hello,World!\nBye,cruel OS World!&quot;</span>..., <span class="number">33</span>) = <span class="number">33</span></span><br></pre></td></tr></table></figure>
 <p>两个<code>write</code>合成了一个</p>
 <ul>
 <li><code>/dev/null</code>下的所有文件都会被丢弃</li>
@@ -614,11 +596,11 @@
 </li>
 </ul>
 <h3 id="gcc"><a class="header-anchor" href="#gcc"></a>gcc</h3>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">.c --&gt; (preprocess) ---&gt; .i ---&gt; (compile) ---&gt; .s ---&gt;(assembly) ---&gt; .o ---&gt; (link) ---&gt; .out</span><br></pre></td></tr></table></figure>
+<figure class="highlight xl"><table><tr><td class="code"><pre><span class="line">.<span class="function"><span class="title">c</span> --&gt;</span> (<span class="function"><span class="title">preprocess</span>) ---&gt;</span> .<span class="function"><span class="title">i</span> ---&gt;</span> (<span class="function"><span class="title">compile</span>) ---&gt;</span> .<span class="function"><span class="title">s</span> ---&gt;</span>(<span class="function"><span class="title">assembly</span>) ---&gt;</span> .<span class="function"><span class="title">o</span> ---&gt;</span> (<span class="function"><span class="title">link</span>) ---&gt;</span> .out</span><br></pre></td></tr></table></figure>
 <ul>
 <li>
 <p><code>strace -f gcc a.c 2&gt;&amp;1 | grep execve  </code>查看<code>execve</code>系统调用</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//太长了</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span>太长了</span><br></pre></td></tr></table></figure>
 <p>gcc：</p>
 <ol>
 <li>
@@ -869,7 +851,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+  <span class="author" itemprop="copyrightHolder">LYK-love</span>
 </div>
 <div class="busuanzi-count">
     <span class="post-meta-item" id="busuanzi_container_site_uv">
@@ -896,14 +878,31 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
+
 
 
 

@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-
   <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
@@ -13,12 +12,12 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Outline:  Basic Idea Commands Swarm Service Swarm Lock">
 <meta property="og:type" content="article">
@@ -30,7 +29,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Swarm/Docker%20Swarm%20Arch.png">
 <meta property="article:published_time" content="2022-03-24T23:44:59.000Z">
 <meta property="article:modified_time" content="2023-02-08T07:44:07.942Z">
-<meta property="article:author" content="有多远滚多远">
+<meta property="article:author" content="LYK-love">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Docker%20Swarm/Docker%20Swarm%20Arch.png">
@@ -53,6 +52,8 @@
 
 
 
+
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -63,8 +64,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
         <span class="toggle-line"></span>
@@ -83,7 +84,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -92,7 +93,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -125,15 +126,9 @@
     </div>
   </div>
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -154,65 +149,53 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LYK-love"
       src="/images/white_flower1.jpg">
-  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <p class="site-author-name" itemprop="name">LYK-love</p>
   <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license site-overview-item animated" itemprop="license">
+  <div class="cc-license animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
   </div>
-
-
 
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -229,7 +212,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/white_flower1.jpg">
-      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="name" content="LYK-love">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -289,8 +272,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-        <p>Outline:</p>
+    <div class="post-body" itemprop="articleBody"><p>Outline:</p>
 <ul>
 <li>Basic Idea</li>
 <li>Commands</li>
@@ -366,14 +348,14 @@
 <h2 id="TLS"><a class="header-anchor" href="#TLS"></a>TLS</h2>
 <p>Docker Swarm采用TLS, 每个node都有自己的客户端证书,  证书的更新周期默认是90天</p>
 <h3 id="查看CA配置"><a class="header-anchor" href="#查看CA配置"></a>查看CA配置:</h3>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker system info</span><br><span class="line"></span><br><span class="line"># 输出为</span><br><span class="line">Swarm: active                                                                                                                                                                                     </span><br><span class="line">  NodeID: 0b51jn6a7l72c7rky9k7w3b1d                                                                                                                                                                </span><br><span class="line">  Is Manager: true                                                                                                                                                                                 </span><br><span class="line">  ClusterID: 47zrkbd66toz8zo0fyqgk5oyv </span><br><span class="line">&lt;SNIP&gt;                                    </span><br><span class="line">  CA Configuration:                                                                                                                                                                                </span><br><span class="line">   Expiry Duration: 4 weeks        # 证书过期时间                                                                                                                                                                </span><br><span class="line">   Force Rotate: 0                              </span><br><span class="line">  Autolock Managers: false                                                                       </span><br><span class="line">  Root Rotation In Progress: false</span><br><span class="line">&lt;SNIP&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="string">docker</span> <span class="string">system</span> <span class="string">info</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出为</span></span><br><span class="line"><span class="attr">Swarm:</span> <span class="string">active</span>                                                                                                                                                                                     </span><br><span class="line">  <span class="attr">NodeID:</span> <span class="string">0b51jn6a7l72c7rky9k7w3b1d</span>                                                                                                                                                                </span><br><span class="line">  <span class="attr">Is Manager:</span> <span class="literal">true</span>                                                                                                                                                                                 </span><br><span class="line">  <span class="attr">ClusterID:</span> <span class="string">47zrkbd66toz8zo0fyqgk5oyv</span> </span><br><span class="line"><span class="string">&lt;SNIP&gt;</span>                                    </span><br><span class="line">  <span class="attr">CA Configuration:</span>                                                                                                                                                                                </span><br><span class="line">   <span class="attr">Expiry Duration:</span> <span class="number">4</span> <span class="string">weeks</span>        <span class="comment"># 证书过期时间                                                                                                                                                                </span></span><br><span class="line">   <span class="attr">Force Rotate:</span> <span class="number">0</span>                              </span><br><span class="line">  <span class="attr">Autolock Managers:</span> <span class="literal">false</span>                                                                       </span><br><span class="line">  <span class="attr">Root Rotation In Progress:</span> <span class="literal">false</span></span><br><span class="line"><span class="string">&lt;SNIP&gt;</span></span><br></pre></td></tr></table></figure>
 <h2 id="指定外部CA"><a class="header-anchor" href="#指定外部CA"></a>指定外部CA</h2>
 <p><code>docker  swarm  init</code>加<code> --external-ca</code>参数来指定外部CA</p>
 <h3 id="更新证书的更新周期"><a class="header-anchor" href="#更新证书的更新周期"></a>更新证书的更新周期</h3>
 <p>可以用<code>docker swarm update</code> 配置证书的更新周期:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 更新到30天</span><br><span class="line">docker swarm update --cert-expiry 720h</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 更新到30天</span></span><br><span class="line"><span class="attribute">docker</span> swarm update --cert-expiry <span class="number">720</span>h</span><br></pre></td></tr></table></figure>
 <h3 id="CA配置"><a class="header-anchor" href="#CA配置"></a>CA配置</h3>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker swarm ca</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">docker swarm ca</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>使用时用<code>--help</code>来查看具体功能</li>
 </ul>
@@ -462,7 +444,7 @@
 </ul>
 <h2 id="删除节点"><a class="header-anchor" href="#删除节点"></a>删除节点</h2>
 <p>有时只能在其他节点上强制删除另一些节点( 比如, 某些节点是云服务器, 已经过期了, 此时没办法登录这些节点让它们主动<code>leave</code>, 只能在其他节点上删除它 ):</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker node rm &lt;noce&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">node</span> <span class="title">rm</span> <span class="tag">&lt;noce&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>仅能删除worker, 如果要删除manager, 需要降级为worker. 或者也可以用<code>-rm</code></li>
 </ul>
@@ -501,7 +483,7 @@
 </li>
 <li>
 <p>注意，只有<strong>拥有该镜像的节点</strong>才会被调度到运行该服务, 可以从<code>docker service ps &lt;service&gt;</code>中看到，某些节点“拒绝了任务调度，因为”：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">No such image: &lt;imaeg&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">No such image: &lt;imaeg&gt;</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>即使该service创建失败, 也依然会占用端口等资源.</p>
@@ -515,7 +497,7 @@
 <p>一个例子是, 我在macbook上build了镜像 <code>lyklove/frontend_volatile_reborn:latest</code>, 然后push到了dockerhub, 结果在linux服务器上使用:</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">docker service create \</span><br><span class="line">--name frontend_volatile_reborn_svc \</span><br><span class="line">--network volatile_reborn -p 81:80 \</span><br><span class="line">--replicas 1 \</span><br><span class="line">lyklove/frontend_volatile_reborn:latest</span><br></pre></td></tr></table></figure>
 <p>报错:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">1/1: no suitable node (unsupported platform on 1 node) </span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>/<span class="number">1</span>: no suitable <span class="keyword">node</span> <span class="title">(unsupported</span> platform on <span class="number">1</span> <span class="keyword">node</span><span class="title">) </span></span><br></pre></td></tr></table></figure>
 <p>显然,这说明了我service基于的镜像是mac的, 不是linux的, 尽管我的在服务器上也有同名的该镜像.</p>
 <ul>
 <li>当然, 你也可以使用<a target="_blank" rel="noopener" href="https://hub.docker.com/_/registry">自建的本地registry</a>, 不过也太麻烦了, 还是每次都push到dockerhub吧.</li>
@@ -535,7 +517,7 @@
 <p>列出Swarm中所有运行中的服务:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker service ls</span><br></pre></td></tr></table></figure>
 <p>查看service在哪个node:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker service ps vo </span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">docker service ps vo</span> </span><br></pre></td></tr></table></figure>
 <p>进一步查看Swarm中某个服务的信息, 比如哪些节点在运行该服务实例:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker service ps &lt;service&gt;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -568,7 +550,7 @@
 <h2 id="配置CA"><a class="header-anchor" href="#配置CA"></a>配置CA</h2>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker  swarm ca</span><br></pre></td></tr></table></figure>
 <h2 id="服务滚动更新"><a class="header-anchor" href="#服务滚动更新"></a>服务滚动更新</h2>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker service update \</span><br><span class="line">--image &lt;new-image&gt; \ </span><br><span class="line">--update-parallelism &lt;num&gt; \ </span><br><span class="line">--update-delay &lt;time&gt; uber-svc \</span><br><span class="line">&lt;service-to-update&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">docker service <span class="keyword">update</span> \</span><br><span class="line">--image <span class="symbol">&lt;new-image&gt;</span> \ </span><br><span class="line">--<span class="keyword">update</span>-parallelism <span class="symbol">&lt;num&gt;</span> \ </span><br><span class="line">--<span class="keyword">update</span>-delay <span class="symbol">&lt;time&gt;</span> uber-svc \</span><br><span class="line"><span class="symbol">&lt;service-to-update&gt;</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li><code>--update-parallelism &lt;num&gt;</code>： 每次更新<code>num</code>个副本</li>
 <li><code>--update-delay &lt;time&gt;</code> # 每次更新有<code>time</code>s 延迟</li>
@@ -601,7 +583,7 @@
 <h2 id="滚动更新"><a class="header-anchor" href="#滚动更新"></a>滚动更新</h2>
 <p>滚动更新需要节点处于overlay网络中. 如果位于bridge网络中, 则其他节点是不会收到更新的</p>
 <p>先创建一个overlay网络,:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker network create -d overlay uber-net</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">docker network <span class="keyword">create</span> <span class="operator">-</span>d <span class="keyword">overlay</span> uber<span class="operator">-</span>net</span><br></pre></td></tr></table></figure>
 <ul>
 <li>由<em>Docker Network</em>得, 一个Swarm节点直到在覆盖网络上启动容器时,才会将自己接入该网络, 因此,此时在其他节点上,看不到该网络</li>
 </ul>
@@ -639,10 +621,10 @@
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">❯ docker swarm update --autolock=true</span><br><span class="line">Swarm updated.</span><br><span class="line">To unlock a swarm manager after it restarts, run the `docker swarm unlock`</span><br><span class="line">command and provide the following key:</span><br><span class="line"></span><br><span class="line">    SWMKEY-1-RAjjfCURYShYusB+KEJRL3RDzz6B9hA1z48tmqaTJWs</span><br><span class="line"></span><br><span class="line">Please remember to store this key in a password manager, since without it you</span><br><span class="line">will not be able to restart the manager.</span><br></pre></td></tr></table></figure>
 <h2 id="验证锁效果"><a class="header-anchor" href="#验证锁效果"></a>验证锁效果</h2>
 <p>开启锁后, 重启一个管理节点:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">service docker restart</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker node ls</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">service docker restart</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line">docker <span class="keyword">node</span> <span class="title">ls</span></span><br></pre></td></tr></table></figure>
 <p>输出为:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">error response from daemon: Swarm is encrypted and needs to be unlocked before it can be used. Please use &quot;docker swarm unlock&quot; to unlock it.</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">error response <span class="keyword">from</span> daemon: Swarm <span class="keyword">is</span> <span class="keyword">encrypted</span> <span class="keyword">and</span> needs <span class="keyword">to</span> be unlocked <span class="keyword">before</span> it can be used. Please use &quot;docker swarm unlock&quot; <span class="keyword">to</span> unlock it.</span><br></pre></td></tr></table></figure>
 <h2 id="解锁"><a class="header-anchor" href="#解锁"></a>解锁</h2>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker swarm unlock</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">然后会要求你输入解锁码</span></span><br></pre></td></tr></table></figure>
 <h1 id="Swarm实战-volatile"><a class="header-anchor" href="#Swarm实战-volatile"></a>Swarm实战: volatile</h1>
@@ -687,7 +669,7 @@
 <ol>
 <li>
 <p>先在阿里云主机上创建第一个master节点：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker  swarm init --advertise-addr **:2377</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">docker  <span class="keyword">swarm </span>init --advertise-<span class="keyword">addr </span>**:<span class="number">2377</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>填该master节点的公网ip</li>
 </ul>
@@ -705,7 +687,7 @@
 </li>
 <li>
 <p>在任意master上创建overlay网络，名为<code>volatile</code>:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker network create -d overlay volatile</span><br></pre></td></tr></table></figure>
+<figure class="highlight oxygene"><table><tr><td class="code"><pre><span class="line">docker network <span class="keyword">create</span> -d overlay <span class="keyword">volatile</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>一定要先创建网络, 否则其他节点无法加入该网络</li>
 </ul>
@@ -773,14 +755,14 @@
 </li>
 <li>
 <p>Create Token:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker  swarm init --advertise-addr 123.56.20.222:2377</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="code"><pre><span class="line">docker  <span class="keyword">swarm </span>init --advertise-<span class="keyword">addr </span><span class="number">123</span>.<span class="number">56</span>.<span class="number">20</span>.<span class="number">222</span>:<span class="number">2377</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>Let other nodes join the swarm with this token</p>
 </li>
 <li>
 <p>Create overlay network on  any master, 名为<code>volatile_reborn</code>:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker network create -d overlay volatile_reborn</span><br></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">docker network <span class="keyword">create</span> <span class="operator">-</span>d <span class="keyword">overlay</span> volatile_reborn</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>Create frontend service on manager:</p>
@@ -792,7 +774,7 @@
 </li>
 <li>
 <p>Create eureka service on manager:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker service create \</span><br><span class="line">--name backend_eureka_volatile_reborn_svc \</span><br><span class="line">--network volatile_reborn -p 8001:8001 \</span><br><span class="line">--replicas 1 lyklove/backend_eureka_volatile_reborn:latest-linux </span><br></pre></td></tr></table></figure>
+<figure class="highlight livecodeserver"><table><tr><td class="code"><pre><span class="line">docker service <span class="built_in">create</span> \</span><br><span class="line"><span class="comment">--name backend_eureka_volatile_reborn_svc \</span></span><br><span class="line"><span class="comment">--network volatile_reborn -p 8001:8001 \</span></span><br><span class="line"><span class="comment">--replicas 1 lyklove/backend_eureka_volatile_reborn:latest-linux </span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>后续滚动更新和集成cicd都和volatile类似</p>
@@ -851,7 +833,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+  <span class="author" itemprop="copyrightHolder">LYK-love</span>
 </div>
 <div class="busuanzi-count">
     <span class="post-meta-item" id="busuanzi_container_site_uv">
@@ -878,14 +860,31 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
+
 
 
 

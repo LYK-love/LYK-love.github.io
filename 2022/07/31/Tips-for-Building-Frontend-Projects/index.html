@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-
   <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
@@ -13,12 +12,12 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Outline:  Intro node npm yarn ...">
 <meta property="og:type" content="article">
@@ -29,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-07-30T17:23:43.000Z">
 <meta property="article:modified_time" content="2023-02-08T07:44:07.956Z">
-<meta property="article:author" content="有多远滚多远">
+<meta property="article:author" content="LYK-love">
 <meta name="twitter:card" content="summary">
 
 
@@ -50,6 +49,8 @@
 
 
 
+
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -60,8 +61,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
         <span class="toggle-line"></span>
@@ -80,7 +81,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -89,7 +90,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -122,15 +123,9 @@
     </div>
   </div>
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -151,65 +146,53 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LYK-love"
       src="/images/white_flower1.jpg">
-  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <p class="site-author-name" itemprop="name">LYK-love</p>
   <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license site-overview-item animated" itemprop="license">
+  <div class="cc-license animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
   </div>
-
-
 
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -226,7 +209,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/white_flower1.jpg">
-      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="name" content="LYK-love">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -266,11 +249,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+          <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+          <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
         </span>
     </span>
 
@@ -290,8 +273,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-        <p>Outline:</p>
+    <div class="post-body" itemprop="articleBody"><p>Outline:</p>
 <ul>
 <li>Intro</li>
 <li>node</li>
@@ -353,7 +335,7 @@
 </li>
 <li>
 <p>对于**<code>npm &lt; 5.0</code>**,  <code>npm install [package]</code>只会下载依赖，不会把依赖信息添加到<code>package.json</code>， 需要手动配置进去。使用<code>--save</code>选项，把依赖信息自动添加到到<code>package.json</code>:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install [package] --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">npm install [<span class="keyword">package</span>] <span class="comment">--save</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>对于<code>yarn</code>，<code>yarn add [package]</code>会将依赖信息写入<code>package.json</code></p>
@@ -425,7 +407,7 @@
 </ul>
 <h2 id="Env"><a class="header-anchor" href="#Env"></a>Env</h2>
 <p>可以通过环境变量来指定下载的依赖类型:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">export NODE_ENV = production</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> NODE_ENV = production</span><br></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903681192804359">https://juejin.cn/post/6844903681192804359</a></p>
 <p><a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/guide/mode-and-env.html#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">https://cli.vuejs.org/zh/guide/mode-and-env.html#环境变量</a></p>
 <h2 id="具体依赖管理文件"><a class="header-anchor" href="#具体依赖管理文件"></a>具体依赖管理文件</h2>
@@ -480,7 +462,7 @@
 <ol>
 <li>
 <p>如果项目使用 yarn 和 typescript，可以查看yarn.lock 里的@types/node@ 的 version:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;@types/node@*&quot;:</span><br><span class="line">  version &quot;14.0.20&quot;</span><br><span class="line">  resolved &quot;https://registry.npmjs.org/@types/node/-/node-14.0.20.tgz#0da05cddbc761e1fa98af88a17244c8c1ff37231&quot;</span><br><span class="line">  integrity sha512-MRn/NP3dee8yL5QhbSA6riuwkS+UOcsPUMOIOG3KMUQpuor/2TopdRBu8QaaB4fGU+gz/bzyDWt0FtUbeJ8H1A==</span><br></pre></td></tr></table></figure>
+<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;@types/node@*&quot;</span>:</span><br><span class="line">  version <span class="string">&quot;14.0.20&quot;</span></span><br><span class="line">  resolved <span class="string">&quot;https://registry.npmjs.org/@types/node/-/node-14.0.20.tgz#0da05cddbc761e1fa98af88a17244c8c1ff37231&quot;</span></span><br><span class="line">  integrity sha512-MRn<span class="regexp">/NP3dee8yL5QhbSA6riuwkS+UOcsPUMOIOG3KMUQpuor/</span><span class="number">2</span>TopdRBu8QaaB4fGU+gz/bzyDWt0FtUbeJ8H1A==</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>packageJson.engines，第三方模块都会有，自己的项目中有可能有</p>
@@ -500,7 +482,7 @@
 <p>查看当前node版本:</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nvm current</span><br></pre></td></tr></table></figure>
 <p>或者:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line"><span class="keyword">node</span> <span class="title">-v</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
@@ -516,17 +498,17 @@
 </li>
 <li>
 <p>安装指定版本号的node</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nvm v15.1.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">nvm</span> v15.<span class="number">1</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
 <p>或者( e.g. 对于node版本15.X ):</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nvm install 15</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>安装最新版本的node：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nvm install node</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line">nvm install <span class="keyword">node</span><span class="title"></span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>全局地切换node的版本:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nvm use v15.1.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">nvm</span> use v15.<span class="number">1</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
 <p>或者( e.g. 对于node版本15.X):</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nvm use 15</span><br></pre></td></tr></table></figure>
 </li>
@@ -564,7 +546,7 @@
 <p>Install any version listed in above output. You can also use aliases names like <strong>node</strong> for latest version, <strong>lts</strong> for latest LTS version, etc.</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">nvm install node     ## Installing Latest version </span><br><span class="line">nvm install 14       ## Installing Node.js 14.X version </span><br></pre></td></tr></table></figure>
 <p>After installing you can verify what is installed with:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">nvm ls</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvm <span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
 <h2 id="node-modules-Management"><a class="header-anchor" href="#node-modules-Management"></a>node_modules Management</h2>
 <p>一般通过包管理工具来对node_modeules进行管理。 不过手动删除这个操作无论是yarn还是npm都特别慢， 可以使用额外的工具<code>rimraf</code>， 它是node的一个包，可以快速删除<code>node_modules</code>，再也不用等半天了</p>
 <ul>
@@ -650,7 +632,7 @@
 <ul>
 <li>
 <p>下载依赖：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm i[nstall] &lt;package&gt; --save-dev</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line">npm <span class="selector-tag">i</span><span class="selector-attr">[nstall]</span> &lt;package&gt; <span class="attr">--save-dev</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>
 <p><code>--save</code>，简写为<code>-s</code>或<code>-S</code>：<strong>将依赖信息保存至 <code>package.json</code></strong>, 默认保存到<code>dependencies</code>属性</p>
@@ -705,12 +687,12 @@
 </li>
 </ul>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm config set &lt;key&gt; &lt;value&gt; [--global]</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm config get &lt;key&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm config delete &lt;key&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm config list</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm config edit</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm get &lt;key&gt;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm set &lt;key&gt; &lt;value&gt; [--global]</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">npm<span class="built_in"> config </span><span class="built_in">get</span> &lt;key&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">npm config <span class="keyword">delete</span> &lt;key&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">npm config list</span><br></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tr><td class="code"><pre><span class="line">npm config edit</span><br></pre></td></tr></table></figure>
+<figure class="highlight maxima"><table><tr><td class="code"><pre><span class="line">npm <span class="built_in">get</span> &lt;<span class="built_in">key</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">npm <span class="keyword">set</span> <span class="symbol">&lt;key&gt;</span> <span class="symbol">&lt;value&gt;</span> [--<span class="keyword">global</span>]</span><br></pre></td></tr></table></figure>
 <p>命令行操作说明：</p>
 <p>在设置配置属性时属性值默认是被存储于用户配置文件中，如果加上--global，则被存储在全局配置文件中。</p>
 <p>如果要查看npm的所有配置属性（包括默认配置），可以使用<code>npm config ls -l</code></p>
@@ -725,7 +707,7 @@
 <p>可以看到, <code>vue-cli-service **</code>都使用了<code>vue-cli-service</code>这个命令, 他对应了一系列依赖:</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">...    </span><br><span class="line">		<span class="attr">&quot;@vue/cli-plugin-babel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;~5.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;@vue/cli-plugin-eslint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;~5.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">		...</span><br></pre></td></tr></table></figure>
 <p>这些依赖默认全部被安装到了devDependencies. 因此, 如果在install时使用了pro模式, 即只下载pro依赖, 则不会下载上述依赖, 也就会在<code>npm run build</code>时报错:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Error: Cannot find module &#x27;@vue/cli-plugin-babel&#x27;</span><br><span class="line">//OR:</span><br><span class="line">vue-cli-service: not found</span><br></pre></td></tr></table></figure>
+<figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Error: </span>Cannot find module &#x27;@vue/cli-plugin-babel&#x27;</span><br><span class="line">//OR:</span><br><span class="line">vue-cli-service: not found</span><br></pre></td></tr></table></figure>
 <ul>
 <li>该问题发生的常见情况是, 在Dockerfile里配置了<code>ENV NODE_ENV production</code>,</li>
 </ul>
@@ -748,9 +730,9 @@
 <ol>
 <li>
 <p>安装n模块:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g n</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g n</span><br></pre></td></tr></table></figure>
 <p>报错则改用另一条命令：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g n --force</span><br></pre></td></tr></table></figure>
+<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">npm install -g n <span class="comment">--force</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>升级node.js到最新稳定版</p>
@@ -772,18 +754,18 @@
 <p><code>corepack</code>是一个对包管理器进行管理的工具，其安装包中包含了<code>yarn</code>. 也就是说，安装了<code>corepack</code>后就不需要手动安装<code>yarn</code>了</p>
 <blockquote>
 <p>也可以用npm安装yarn，但是不推荐这种方法:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g yarn</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">npm <span class="keyword">install</span> -g yarn</span><br></pre></td></tr></table></figure>
 </blockquote>
 <ul>
 <li>
 <p><strong>Node.js &lt;16.10</strong>:</p>
 <p>Node默认包括了<code>npm</code>. 但在Node v16.10之前， Node没有默认包括<code>corepack</code>， 需要手动安装:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm i -g corepack</span><br></pre></td></tr></table></figure>
+<figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">npm</span> i -g corepack</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>Node.js &gt;=16.10:</p>
 <p>v16.10之后，node默认包含了<code>corepack</code>， 但只是作为可选项，没有默认启用。 需要手动启用:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">corepack enable</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">corepack <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>安装完<code>corepack</code>就可以直接使用<code>yarn</code>了！</p>
@@ -791,7 +773,7 @@
 <ul>
 <li>
 <p>把Yarn更新到最新版本</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn set version stable</span><br></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="code"><pre><span class="line">yarn <span class="keyword">set</span> <span class="keyword">version</span> <span class="keyword">stable</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <hr>
@@ -805,14 +787,14 @@
 <ul>
 <li>
 <p>Accessing the list of commands</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn help</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yarn <span class="built_in">help</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <hr>
 <ul>
 <li>
 <p>Starting a new project</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn init</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">yarn <span class="keyword">init</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>同<code>npm init</code>，执行输入信息后，会生成<code>package.json</code>文件</li>
 </ul>
@@ -822,9 +804,9 @@
 <ul>
 <li>
 <p>Installing all the dependencies</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">yarn</span></span><br></pre></td></tr></table></figure>
 <p>OR:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn install</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="code"><pre><span class="line">yarn <span class="keyword">install</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>
 <p>这会安装<code>package.json</code>里所有包，并将所有依赖项信息保存进<code>yarn.lock</code></p>
@@ -845,7 +827,7 @@
 <ul>
 <li>
 <p>Adding a dependency:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn add [package]</span><br></pre></td></tr></table></figure>
+<figure class="highlight processing"><table><tr><td class="code"><pre><span class="line">yarn <span class="built_in">add</span> [<span class="keyword">package</span>]</span><br></pre></td></tr></table></figure>
 <ul>
 <li>
 <p>依赖信息会自动更新到<code>package.json</code>和<code>yarn.lock</code>文件中</p>
@@ -855,11 +837,11 @@
 </li>
 <li>
 <p>安装指定版本, 这里指的是主要版本，如果需要精确到小版本，使用-E参数</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn add [package]@[version]</span><br></pre></td></tr></table></figure>
+<figure class="highlight d"><table><tr><td class="code"><pre><span class="line">yarn add [<span class="keyword">package</span>]@[<span class="keyword">version</span>]</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>安装某个tag（比如beta,next或者latest）:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn add [package]@[tag]</span><br></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">yarn add <span class="comment">[package]</span>@<span class="comment">[tag]</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -871,15 +853,15 @@
 <ul>
 <li>
 <p>Upgrading a dependency</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn up [package]</span><br><span class="line">yarn up [package]@[version]</span><br><span class="line">yarn up [package]@[tag]</span><br></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">yarn up <span class="comment">[package]</span></span><br><span class="line">yarn up <span class="comment">[package]</span>@<span class="comment">[version]</span></span><br><span class="line">yarn up <span class="comment">[package]</span>@<span class="comment">[tag]</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>Removing a dependency</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn remove [package]</span><br></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="code"><pre><span class="line">yarn <span class="built_in">remove</span> [<span class="built_in">package</span>]</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>Upgrading Yarn itself</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn set version latest</span><br><span class="line">yarn set version from sources</span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">yarn <span class="keyword">set</span> <span class="built_in">version</span> latest</span><br><span class="line">yarn <span class="keyword">set</span> <span class="built_in">version</span> <span class="keyword">from</span> sources</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <hr>
@@ -894,34 +876,34 @@
 <ul>
 <li>
 <p>安装:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn global add yrm</span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="code"><pre><span class="line"><span class="symbol">yarn</span> <span class="meta">global</span> <span class="keyword">add</span> yrm</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>查看可用源:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yrm ls</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yrm <span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>选择源:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yrm use [source]</span><br></pre></td></tr></table></figure>
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><span class="line">yrm <span class="keyword">use</span> [source]</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h2 id="Problems-3"><a class="header-anchor" href="#Problems-3"></a>Problems</h2>
 <ul>
 <li>
 <p>mac 运行react 项目时报错: <code>/bin/sh: craco: command not found</code> ， 很明显是<code>craco</code>这个命令没安装。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn add @craco/craco#</span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line">yarn <span class="keyword">add</span><span class="language-bash"> @craco/craco<span class="comment">#</span></span></span><br></pre></td></tr></table></figure>
 <p>OR</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install @craco/craco --save</span><br></pre></td></tr></table></figure>
+<figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">npm</span> install @craco/craco --save</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <h1 id="React"><a class="header-anchor" href="#React"></a>React</h1>
 <p>生成一个全新的 ts + react 的模版:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npx create-react-app my__app__name --template typescript</span><br><span class="line"></span><br><span class="line">OR</span><br><span class="line"></span><br><span class="line">yarn create react-app my__app__name --template typescript</span><br></pre></td></tr></table></figure>
+<figure class="highlight dsconfig"><table><tr><td class="code"><pre><span class="line"><span class="string">npx</span> <span class="built_in">create-react-app</span> <span class="string">my__app__name</span> <span class="built_in">--template</span> <span class="string">typescript</span></span><br><span class="line"></span><br><span class="line"><span class="string">OR</span></span><br><span class="line"></span><br><span class="line"><span class="string">yarn</span> <span class="string">create</span> <span class="string">react-app</span> <span class="string">my__app__name</span> <span class="built_in">--template</span> <span class="string">typescript</span></span><br></pre></td></tr></table></figure>
 <p>Before we get started, &quot;Tailwind CSS requires Node.js 12.13.0 or higher&quot; (tailwindcss). Make sure you have Node.js installed and the correct version by running <code>node --version</code> in your command line.</p>
 <p>使用tailwind CSS: 进入项目目录，</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yarn add tailwindcss -D</span><br></pre></td></tr></table></figure>
 <p>After installation process is done, we need to create Tailwind CSS configuration file. To do so, we need to run the following command:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npx tailwind init</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="code"><pre><span class="line">npx tailwind <span class="keyword">init</span></span><br></pre></td></tr></table></figure>
 <p>This will initialise Tailwind with a new configuration file in the root of your project.</p>
 <h1 id="Vue"><a class="header-anchor" href="#Vue"></a>Vue</h1>
 <ul>
@@ -946,19 +928,19 @@
 </ul>
 <h2 id="vue-cli-安装"><a class="header-anchor" href="#vue-cli-安装"></a>vue-cli 安装</h2>
 <p>安装之前先卸载旧版本</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm uninstall -g @vue/cli</span><br></pre></td></tr></table></figure>
+<figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">npm</span> uninstall -g @vue/cli</span><br></pre></td></tr></table></figure>
 <p>安装3.0及其以后版本</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g @vue/cli@x.x.x</span><br></pre></td></tr></table></figure>
+<figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">npm</span> install -g @vue/cli@x.x.x</span><br></pre></td></tr></table></figure>
 <p>安装3.0以前的旧版本</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install -g vue-cli@2.x</span><br></pre></td></tr></table></figure>
+<figure class="highlight avrasm"><table><tr><td class="code"><pre><span class="line">npm install -g vue-<span class="keyword">cli</span><span class="subst">@2</span>.x</span><br></pre></td></tr></table></figure>
 <p>查看vue-cli 版本</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">vue -V</span><br></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="code"><pre><span class="line"><span class="attribute">vue -V</span></span><br></pre></td></tr></table></figure>
 <h2 id="vue3安装"><a class="header-anchor" href="#vue3安装"></a>vue3安装</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install vue@next</span><br></pre></td></tr></table></figure>
 <p>查看vue版本：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm list vue</span><br></pre></td></tr></table></figure>
+<figure class="highlight coffeescript"><table><tr><td class="code"><pre><span class="line"><span class="built_in">npm</span> list vue</span><br></pre></td></tr></table></figure>
 <h1 id="Tailwind"><a class="header-anchor" href="#Tailwind"></a>Tailwind</h1>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yarn add tailwindcss -D</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">yarn <span class="built_in">add</span> tailwindcss -D</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -1004,7 +986,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+  <span class="author" itemprop="copyrightHolder">LYK-love</span>
 </div>
 <div class="busuanzi-count">
     <span class="post-meta-item" id="busuanzi_container_site_uv">
@@ -1031,14 +1013,31 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
+
 
 
 

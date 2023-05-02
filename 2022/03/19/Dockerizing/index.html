@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width">
 <meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
 
-
   <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
@@ -13,12 +12,12 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
+<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.13.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
     <meta name="description" content="Outline:   单体应用容器化  Dockerfile build image push image    多阶段构建   构建镜像优化   介绍了应用的容器化">
 <meta property="og:type" content="article">
@@ -32,7 +31,7 @@
 <meta property="og:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20push%20information.png">
 <meta property="article:published_time" content="2022-03-19T01:04:45.000Z">
 <meta property="article:modified_time" content="2023-02-08T07:44:07.943Z">
-<meta property="article:author" content="有多远滚多远">
+<meta property="article:author" content="LYK-love">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20image%20squash.png">
@@ -55,6 +54,8 @@
 
 
 
+
+
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -65,8 +66,8 @@
   <div class="headband"></div>
 
   <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar" role="button">
         <span class="toggle-line"></span>
@@ -85,7 +86,7 @@
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -94,7 +95,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -127,15 +128,9 @@
     </div>
   </div>
 
-</div>
+</header>
         
   
-  <div class="toggle sidebar-toggle" role="button">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -156,65 +151,53 @@
         <!--/noindex-->
 
         <div class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="有多远滚多远"
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="LYK-love"
       src="/images/white_flower1.jpg">
-  <p class="site-author-name" itemprop="name">有多远滚多远</p>
+  <p class="site-author-name" itemprop="name">LYK-love</p>
   <div class="site-description" itemprop="description"></div>
 </div>
-<div class="site-state-wrap site-overview-item animated">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">217</span>
+          <span class="site-state-item-count">211</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author site-overview-item animated">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/LYK-love" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;LYK-love" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:191820133@smail.nju.edu.cn" title="E-Mail → mailto:191820133@smail.nju.edu.cn" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license site-overview-item animated" itemprop="license">
+  <div class="cc-license animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
   </div>
-
-
 
         </div>
       </div>
     </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
 
     
-  <div class="back-to-top" role="button" aria-label="Back to top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
+  </aside>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    </div>
 
     <div class="main-inner post posts-expand">
 
@@ -231,7 +214,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/white_flower1.jpg">
-      <meta itemprop="name" content="有多远滚多远">
+      <meta itemprop="name" content="LYK-love">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -291,8 +274,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-        <p>Outline:</p>
+    <div class="post-body" itemprop="articleBody"><p>Outline:</p>
 <ul>
 <li>
 <p>单体应用容器化</p>
@@ -335,7 +317,7 @@
 </li>
 <li>分为四部分：基础镜像信息、维护者信息、镜像操作指令和容器启动时执行指令</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM alpine</span><br><span class="line"></span><br><span class="line">LABEL maintainer=&quot;nigelpoulton@hotmail.com&quot;</span><br><span class="line"></span><br><span class="line"># Install Node and NPM</span><br><span class="line">RUN apk add --update nodejs npm curl</span><br><span class="line"></span><br><span class="line"># Copy app to /src</span><br><span class="line">COPY . /src</span><br><span class="line"></span><br><span class="line">WORKDIR /src</span><br><span class="line"></span><br><span class="line"># Install dependencies</span><br><span class="line">RUN  npm install</span><br><span class="line"></span><br><span class="line">EXPOSE 8080</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [&quot;node&quot;, &quot;./app.js&quot;]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> alpine</span><br><span class="line"></span><br><span class="line"><span class="keyword">LABEL</span><span class="language-bash"> maintainer=<span class="string">&quot;nigelpoulton@hotmail.com&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Install Node and NPM</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk add --update nodejs npm curl</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Copy app to /src</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . /src</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /src</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Install dependencies</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash">  npm install</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;node&quot;</span>, <span class="string">&quot;./app.js&quot;</span>]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 <h3 id="Options"><a class="header-anchor" href="#Options"></a>Options</h3>
 <ul>
 <li>
@@ -432,7 +414,7 @@
 <h3 id="squash-image"><a class="header-anchor" href="#squash-image"></a>squash image</h3>
 <p>正常来说， docker会构建多个镜像层， 并将它们合并为一个镜像</p>
 <p>可以将镜像层手动合并， 这样更方便， 但是会导致被合并的镜像层无法被共享：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker image build --squash </span><br></pre></td></tr></table></figure>
+<figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">docker image build <span class="comment">--squash </span></span><br></pre></td></tr></table></figure>
 <p>例子：</p>
 <p><img data-src="https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Container/Dockerizing/docker%20image%20squash.png" alt="docker image squash"></p>
 <p>可以看到，合并前的镜像层是独立的，可以只发送不同的镜像层， 但合并后，所有镜像层合并为一个镜像层， 所以每次都需要传输完整的镜像</p>
@@ -529,7 +511,7 @@
 </li>
 <li>
 <p>三个<code>FROM</code>指令构建出三个镜像， 用<code>docker image build -t multi:stage</code>进行构建， 它只会命名最后一个镜像， 我们就只需要将最后一个镜像push到生产环境：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">❯ docker image ls</span><br><span class="line">REPOSITORY                  TAG            IMAGE ID       CREATED          SIZE</span><br><span class="line">node                        latest         36fad710e29d   2 weeks ago      991MB</span><br><span class="line">&lt;none&gt;                      &lt;none&gt;         d9c9c532ae40   7 minutes ago    934MB</span><br><span class="line">maven                       latest         d833a10812ed   3 weeks ago      793MB</span><br><span class="line">&lt;none&gt;                      &lt;none&gt;         db32cdd21a1a   31 minutes ago   1.15GB</span><br><span class="line">openjdk                     8-jdk-alpine   a3562aa0b991   2 years ago      105M</span><br><span class="line">multi                       stage          040df44afa9a   7 minutes ago    211MB</span><br></pre></td></tr></table></figure>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><span class="line">❯ docker image ls</span><br><span class="line">REPOSITORY                  <span class="keyword">TAG</span>            <span class="title">IMAGE</span> ID       CREATED          SIZE</span><br><span class="line"><span class="keyword">node</span>                        <span class="title">latest</span>         <span class="number">36</span>fad710e29d   <span class="number">2</span> weeks ago      <span class="number">991M</span>B</span><br><span class="line"><span class="tag">&lt;none&gt;</span>                      <span class="tag">&lt;none&gt;</span>         d9c9c532ae40   <span class="number">7</span> minutes ago    <span class="number">934M</span>B</span><br><span class="line">maven                       latest         d833a10812ed   <span class="number">3</span> weeks ago      <span class="number">793M</span>B</span><br><span class="line"><span class="tag">&lt;none&gt;</span>                      <span class="tag">&lt;none&gt;</span>         db32cdd21a1a   <span class="number">31</span> minutes ago   <span class="number">1.15</span>GB</span><br><span class="line">openjdk                     <span class="number">8</span>-jdk-alpine   a3562aa0b991   <span class="number">2</span> years ago      <span class="number">105M</span></span><br><span class="line">multi                       stage          <span class="number">040</span>df44afa9a   <span class="number">7</span> minutes ago    <span class="number">211M</span>B</span><br></pre></td></tr></table></figure>
 <ul>
 <li>可以看到， 1第一行是第一阶段拉取的镜像， 第二行是第一阶段生成的镜像； 第三，四，五，六行同理；并且第六行镜像被<code>-t multi:stage</code>命了名</li>
 <li>还可以看到，只有最后一个镜像会被命名， 而其余的<code>FROM</code>指令生成的镜像都变成了玄虚镜像， 可以直接删除， 非常方便</li>
@@ -549,7 +531,7 @@
 <li>
 <p>对于会新建镜像层的指令, 比如<code>RUN</code>, <code>ENV</code>.... 因此这些指令最好<strong>写成一行</strong>, 可以用 <code>&amp;&amp;</code>连接多个命令或用<code>\\</code>换行书写.</p>
 <p>例如:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ENV NODE_ENV=production \</span><br><span class="line">    APP_PATH=/node/app</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="code"><pre><span class="line">ENV <span class="attribute">NODE_ENV</span>=production \</span><br><span class="line">    <span class="attribute">APP_PATH</span>=/node/app</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>由于构建镜像时会逐层检查build cache, 因此最好把不经常变动的层提到前面去, 比如<code>ENV</code></p>
@@ -560,7 +542,7 @@
 <h3 id="使用软件的alpine版本"><a class="header-anchor" href="#使用软件的alpine版本"></a>使用软件的alpine版本</h3>
 <p><a href="https://link.juejin.cn/?target=https%3A%2F%2Fhub.docker.com%2F_%2Fnode%3Ftab%3Ddescription%26page%3D1%26ordering%3Dlast_updated">dockerhub</a> 查看 node 版本</p>
 <p>对于node等基础软件,使用其alpine版本:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">FROM node:14.17.4-alpine</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">FROM</span> node:<span class="number">14</span>.<span class="number">17</span>.<span class="number">4</span>-alpine</span><br></pre></td></tr></table></figure>
 <p>可以去</p>
 <h4 id="使用alpine-linux"><a class="header-anchor" href="#使用alpine-linux"></a>使用alpine linux</h4>
 <p>使用alpine linux作为基础镜像层,然后手动装node等基础软件. 该方法效果最显著.</p>
@@ -635,16 +617,16 @@
 <figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk update \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; apk add --no-cache --update nodejs=14.20.0-r0 npm=14.20.0-r0 \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; npm config <span class="built_in">set</span> registry http://r.cnpmjs.org/ --production</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ENV NODE_ENV production</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">FROM</span> base AS build-stage</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> node -v &amp;&amp; npm -v \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; npm install </span></span><br><span class="line">    <span class="comment"># &amp;&amp; npm install -g @vue/cli@5.0.1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm run build</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># production stage</span></span><br><span class="line"><span class="keyword">FROM</span> nginx:<span class="number">1.21</span>.<span class="number">5</span>-alpine as production-stage</span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=build-stage /app/dist/ /usr/share/nginx/html/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=build-stage /app/default.conf /etc/nginx/conf.d/default.conf</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [ <span class="string">&quot;nginx&quot;</span>,<span class="string">&quot;-g&quot;</span>,<span class="string">&quot;daemon off;&quot;</span> ]</span></span><br></pre></td></tr></table></figure>
 <p>总体大小为39.03MB, 感觉反而不如node-alpine呢...... 为啥啊??</p>
 <h3 id="dockerignore"><a class="header-anchor" href="#dockerignore"></a>.dockerignore</h3>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#Dependency directory</span><br><span class="line"># https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git</span><br><span class="line">node_modules</span><br><span class="line">.DS_Store</span><br><span class="line">dist</span><br><span class="line"></span><br><span class="line"># node-waf configuration</span><br><span class="line">.lock-wscript</span><br><span class="line"></span><br><span class="line"># Compiled binary addons (http://nodejs.org/api/addons.html)</span><br><span class="line">build/Release</span><br><span class="line">.dockerignore</span><br><span class="line">Dockerfile</span><br><span class="line">*docker-compose*</span><br><span class="line"></span><br><span class="line"># Logs</span><br><span class="line">logs</span><br><span class="line">*.log</span><br><span class="line"></span><br><span class="line"># Runtime data</span><br><span class="line">.idea</span><br><span class="line">.vscode</span><br><span class="line">*.suo</span><br><span class="line">*.ntvs*</span><br><span class="line">*.njsproj</span><br><span class="line">*.sln</span><br><span class="line">*.sw*</span><br><span class="line">pids</span><br><span class="line">*.pid</span><br><span class="line">*.seed</span><br><span class="line">.git</span><br><span class="line">.hg</span><br><span class="line">.svn</span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Dependency directory</span></span><br><span class="line"><span class="comment"># https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git</span></span><br><span class="line">node_modules</span><br><span class="line"><span class="string">.DS_Store</span></span><br><span class="line">dist</span><br><span class="line"></span><br><span class="line"><span class="comment"># node-waf configuration</span></span><br><span class="line"><span class="string">.lock-wscript</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Compiled binary addons (http://nodejs.org/api/addons.html)</span></span><br><span class="line">build/Release</span><br><span class="line"><span class="string">.dockerignore</span></span><br><span class="line">Dockerfile</span><br><span class="line">*docker-compose*</span><br><span class="line"></span><br><span class="line"><span class="comment"># Logs</span></span><br><span class="line">logs</span><br><span class="line">*<span class="string">.log</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Runtime data</span></span><br><span class="line"><span class="string">.idea</span></span><br><span class="line"><span class="string">.vscode</span></span><br><span class="line">*<span class="string">.suo</span></span><br><span class="line">*<span class="string">.ntvs</span>*</span><br><span class="line">*<span class="string">.njsproj</span></span><br><span class="line">*<span class="string">.sln</span></span><br><span class="line">*<span class="string">.sw</span>*</span><br><span class="line">pids</span><br><span class="line">*<span class="string">.pid</span></span><br><span class="line">*<span class="string">.seed</span></span><br><span class="line"><span class="string">.git</span></span><br><span class="line"><span class="string">.hg</span></span><br><span class="line"><span class="string">.svn</span></span><br></pre></td></tr></table></figure>
 <h3 id="Commands"><a class="header-anchor" href="#Commands"></a>Commands</h3>
 <ol>
 <li>
 <p>build:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker build -t Frontend_VolatileReborn . </span><br></pre></td></tr></table></figure>
+<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">docker build -<span class="built_in">t</span> Frontend_VolatileReborn . </span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>run:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -it -p 8080:80 --rm --name Frontend_VolatileReborn Frontend_VolatileReborn:latest </span><br></pre></td></tr></table></figure>
+<figure class="highlight applescript"><table><tr><td class="code"><pre><span class="line">docker <span class="built_in">run</span> -<span class="keyword">it</span> -p <span class="number">8080</span>:<span class="number">80</span> <span class="comment">--rm --name Frontend_VolatileReborn Frontend_VolatileReborn:latest </span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>visit: localhost:8080</p>
@@ -698,7 +680,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">有多远滚多远</span>
+  <span class="author" itemprop="copyrightHolder">LYK-love</span>
 </div>
 <div class="busuanzi-count">
     <span class="post-meta-item" id="busuanzi_container_site_uv">
@@ -725,14 +707,31 @@
   </footer>
 
   
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.6/medium-zoom.min.js" integrity="sha256-EdPgYcPk/IIrw7FYeuJQexva49pVRZNmt3LculEr7zM=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/medium-zoom/1.0.8/medium-zoom.min.js" integrity="sha256-7PhEpEWEW0XXQ0k6kQrPKwuoIomz8R8IYyuU1Qew4P8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
 <script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
 
-  
-<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.0/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
 <script src="/js/third-party/search/local-search.js"></script>
+
 
 
 
