@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="在之前的文章中, 我介绍了如何使用Hexo来构建静态站点. Hexo有很多主题, 其中我认为最好看最好用的是Hexo Next theme. 本文介绍如何使用和配置Next theme.">
+    <meta name="description" content="在之前的文章中, 我介绍了如何使用Hexo来构建静态站点. Hexo有很多主题, 其中我认为最好看最好用的是Hexo Next theme. 本文介绍如何使用和配置Next theme, 以及如何对Hexo和Next进行多主机同步.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo Next">
 <meta property="og:url" content="http://lyk-love.cn/2022/03/27/Hexo%20Next/index.html">
 <meta property="og:site_name" content="LYK-love">
-<meta property="og:description" content="在之前的文章中, 我介绍了如何使用Hexo来构建静态站点. Hexo有很多主题, 其中我认为最好看最好用的是Hexo Next theme. 本文介绍如何使用和配置Next theme.">
+<meta property="og:description" content="在之前的文章中, 我介绍了如何使用Hexo来构建静态站点. Hexo有很多主题, 其中我认为最好看最好用的是Hexo Next theme. 本文介绍如何使用和配置Next theme, 以及如何对Hexo和Next进行多主机同步.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-27T02:28:03.000Z">
-<meta property="article:modified_time" content="2023-05-04T16:19:42.473Z">
+<meta property="article:modified_time" content="2023-05-04T17:25:51.862Z">
 <meta property="article:author" content="LYK-love">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
@@ -51,26 +51,7 @@
 
 
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width">
-<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.2.0">
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/white_flower1.jpg">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/white_flower1.jpg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/white_flower1.jpg">
-  <link rel="mask-icon" href="/images/white_flower1.jpg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-<link rel="stylesheet" href="https://fonts.lug.ustc.edu.cn/css?family=Fira+Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
-
 <link href="https://fonts.googleapis.com/css?family=Noto+Serif+SC|Roboto&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
-
-<script class="next-config" data-name="main" type="application/json">{"hostname":"lyk-love.cn","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":"flat"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":"enable","trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
-
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -161,7 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Config-File-Features"><span class="nav-text">Config File Features</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Alternate-Theme-Config"><span class="nav-text">Alternate Theme Config</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Next-Doc"><span class="nav-text">Next Doc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Version"><span class="nav-text">Version</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation"><span class="nav-text">Installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-npm"><span class="nav-text">Using npm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-git"><span class="nav-text">Using git</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#After-Installation"><span class="nav-text">After Installation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Upgrade"><span class="nav-text">Upgrade</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Next-Theme-Config"><span class="nav-text">Next Theme Config</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuring-Favicon"><span class="nav-text">Configuring Favicon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Local-Search"><span class="nav-text">Local Search</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Baidu-Analysis"><span class="nav-text">Baidu Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Math-Support"><span class="nav-text">Math Support</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Engines"><span class="nav-text">Engines</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mathjax"><span class="nav-text">Mathjax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KaTex"><span class="nav-text">KaTex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Support-MathJax"><span class="nav-text">Support MathJax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F%E8%87%AA%E5%8A%A8%E7%BC%96%E5%8F%B7%E5%92%8C%E5%BC%95%E7%94%A8"><span class="nav-text">公式自动编号和引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-line-Equations"><span class="nav-text">Multi-line Equations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-Aligned-Equations"><span class="nav-text">Multiple Aligned Equations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exclude-Equations-from-Numbering"><span class="nav-text">Exclude Equations from Numbering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-tag-to-Tag-Equations"><span class="nav-text">Use \tag to Tag Equations</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Fonts-Customization"><span class="nav-text">Fonts Customization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chinese-Font"><span class="nav-text">Chinese Font</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#English-Font"><span class="nav-text">English Font</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Code-Block"><span class="nav-text">Code Block</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Image"><span class="nav-text">Image</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E7%BC%A9%E6%94%BE"><span class="nav-text">图像缩放</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="nav-text">图像懒加载</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BF%E5%AE%A2%E4%BA%BA%E6%95%B0-%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB%E6%AC%A1%E6%95%B0"><span class="nav-text">访客人数&amp;&amp;文章阅读次数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E5%8A%A0%E8%BD%BD%E5%8A%A0%E9%80%9F"><span class="nav-text">网页加载加速</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#back2top-button"><span class="nav-text">back2top button</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Copyright"><span class="nav-text">Copyright</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E4%B8%8D%E6%83%B3%E7%94%A8%E7%9A%84%E7%BE%8E%E5%8C%96"><span class="nav-text">一些不想用的美化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Synchronize-between-mul-hosts"><span class="nav-text">Synchronize between mul-hosts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Steps"><span class="nav-text">Steps</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronize-Hexo"><span class="nav-text">Synchronize Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronize-Theme"><span class="nav-text">Synchronize Theme</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Use-separate-version-control-to-themes"><span class="nav-text">Use separate version control to themes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Update-submodule"><span class="nav-text">Update submodule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-submodule"><span class="nav-text">Add submodule</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Use-multi-branches-in-Github"><span class="nav-text">Use multi-branches in Github</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bugs"><span class="nav-text">Bugs</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Intro"><span class="nav-text">Intro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Config-File-Features"><span class="nav-text">Config File Features</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Alternate-Theme-Config"><span class="nav-text">Alternate Theme Config</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Next-Doc"><span class="nav-text">Next Doc</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Version"><span class="nav-text">Version</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Installation"><span class="nav-text">Installation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-npm"><span class="nav-text">Using npm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-git"><span class="nav-text">Using git</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#After-Installation"><span class="nav-text">After Installation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Upgrade"><span class="nav-text">Upgrade</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Next-Theme-Config"><span class="nav-text">Next Theme Config</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuring-Favicon"><span class="nav-text">Configuring Favicon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Local-Search"><span class="nav-text">Local Search</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Baidu-Analysis"><span class="nav-text">Baidu Analysis</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Math-Support"><span class="nav-text">Math Support</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Engines"><span class="nav-text">Engines</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mathjax"><span class="nav-text">Mathjax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KaTex"><span class="nav-text">KaTex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Support-MathJax"><span class="nav-text">Support MathJax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AC%E5%BC%8F%E8%87%AA%E5%8A%A8%E7%BC%96%E5%8F%B7%E5%92%8C%E5%BC%95%E7%94%A8"><span class="nav-text">公式自动编号和引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-line-Equations"><span class="nav-text">Multi-line Equations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiple-Aligned-Equations"><span class="nav-text">Multiple Aligned Equations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Exclude-Equations-from-Numbering"><span class="nav-text">Exclude Equations from Numbering</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Use-tag-to-Tag-Equations"><span class="nav-text">Use \tag to Tag Equations</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Customization"><span class="nav-text">Customization</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Fonts-Customization"><span class="nav-text">Fonts Customization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Chinese-Font"><span class="nav-text">Chinese Font</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#English-Font"><span class="nav-text">English Font</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Block"><span class="nav-text">Code Block</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Image"><span class="nav-text">Image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E7%BC%A9%E6%94%BE"><span class="nav-text">图像缩放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="nav-text">图像懒加载</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E5%AE%A2%E4%BA%BA%E6%95%B0-%E6%96%87%E7%AB%A0%E9%98%85%E8%AF%BB%E6%AC%A1%E6%95%B0"><span class="nav-text">访客人数&amp;&amp;文章阅读次数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#back2top-button"><span class="nav-text">back2top button</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copyright"><span class="nav-text">Copyright</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Synchronize-between-mul-hosts"><span class="nav-text">Synchronize between mul-hosts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Steps"><span class="nav-text">Steps</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronize-Hexo"><span class="nav-text">Synchronize Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Synchronize-Theme"><span class="nav-text">Synchronize Theme</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Apply-separate-version-control-to-themes"><span class="nav-text">Apply separate version control to themes</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Update-submodule"><span class="nav-text">Update submodule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Add-submodule"><span class="nav-text">Add submodule</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Use-multi-branches-in-Github"><span class="nav-text">Use multi-branches in Github</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E4%B8%8D%E6%83%B3%E7%94%A8%E7%9A%84%E7%BE%8E%E5%8C%96"><span class="nav-text">一些不想用的美化</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -261,7 +242,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-04 16:19:42" itemprop="dateModified" datetime="2023-05-04T16:19:42Z">2023-05-04</time>
+      <time title="Modified: 2023-05-04 17:25:51" itemprop="dateModified" datetime="2023-05-04T17:25:51Z">2023-05-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -289,8 +270,15 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>在<a href="https://lyk-love.cn/2023/05/05/Hexo/">之前的文章</a>中, 我介绍了如何使用Hexo来构建静态站点. Hexo有很多主题, 其中我认为最好看最好用的是Hexo Next theme. 本文介绍如何使用和配置Next theme.</p>
+    <div class="post-body" itemprop="articleBody"><p>在<a href="https://lyk-love.cn/2023/05/05/Hexo/">之前的文章</a>中, 我介绍了如何使用Hexo来构建静态站点. Hexo有很多主题, 其中我认为最好看最好用的是Hexo Next theme. 本文介绍如何使用和配置Next theme, 以及如何对Hexo和Next进行多主机同步.</p>
 <span id="more"></span>
+<p>Refs:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://hexo-next.readthedocs.io/zh_CN/latest">NeXt Tutor</a>, 里面有几乎全部的主题配置教程</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-theme-next">最新版(v8)NeXt Github仓库</a></li>
+<li><a target="_blank" rel="noopener" href="https://theme-next.js.org/">Next Official Blog</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/theme-next/awesome-next">Awesome NexT</a> : 有很多别人的Next博客, 非常值得借鉴</li>
+</ul>
 <h1 id="Intro"><a class="header-anchor" href="#Intro"></a>Intro</h1>
 <p>My Dependency Version:</p>
 <ul>
@@ -304,16 +292,7 @@
 <p>hexo-cli Version: 4.3.0</p>
 </li>
 </ul>
-<hr>
-<p>Refs:</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://hexo-next.readthedocs.io/zh_CN/latest">NeXt Tutor</a>, 里面有几乎全部的主题配置教程</li>
-<li><a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-theme-next">最新版(v8)NeXt Github仓库</a></li>
-<li><a target="_blank" rel="noopener" href="https://theme-next.js.org/">Next Official Blog</a></li>
-<li><a target="_blank" rel="noopener" href="https://github.com/theme-next/awesome-next">Awesome NexT</a> : 有很多别人的Next博客, 非常值得借鉴</li>
-</ul>
-<hr>
-<p>本文中除非特殊说明, 否则编辑的都是主题配置文件( aka <code>NexT _config.yml</code> ), 由于使用了Alternate Theme Config, 因此主题配置文件是<code>&lt;hexo&gt;/_cofig.next.yml</code>.</p>
+<p>在本文中, 除非特殊说明, 否则编辑的都是主题配置文件( aka <code>Next _config.yml</code> ), 由于使用了Alternate Theme Config, 因此主题配置文件位置是<code>&lt;hexo&gt;/_cofig.next.yml</code>.</p>
 <h1 id="Config-File-Features"><a class="header-anchor" href="#Config-File-Features"></a>Config File Features</h1>
 <p>在之前关于<a href="https://lyk-love.cn/2023/05/05/Hexo/">Hexo</a>的文章中, 我说过主题目录(<code>&lt;hexo-dir&gt;/themes/next</code>)和网站目录(<code>&lt;hexo-dir&gt;/</code>)是不同的. 主题的配置文件, 样式文件等, 都在主题目录下, 因此如果想要修改主题的配置, 也需要更改主题目录下的对应文件.</p>
 <p>但是, <a href="#Installation">下文</a>会讲到, 主题要么用npm下载, 要么用git下载, 无论哪种方式都会对主题进行版本管理. 我用的是git, 对主题目录下的文件做的更改会在之后<code>git pull</code>时被上游仓库的代码覆盖. 这使得对主题做自定义的配置很麻烦.</p>
@@ -327,10 +306,9 @@
 <p>当然了, 不是所有主题都像Next一样提供了这些机制. 在这些主题中, 要想对主题做更改, 就得改主题目录下的文件. 此时如果要接受主题官方的更新, 就得把原来的主题目录备份, pull更新后再仔细地修改回去, 这非常麻烦. 对于这种情况, 我的建议是:</p>
 <ul>
 <li>要么别对主题做任何修改.</li>
-<li>要么就不接受官方的更新, 直接把官方主题fork下来作为自己的仓库, 之后就和这个仓库做同步, 也就是<a href="#Use-separate-version-control-to-themes">对主题做单独的版本管理</a>.</li>
+<li>要么就不接受官方的更新, 直接把官方主题fork下来作为自己的仓库, 之后就和这个仓库做同步, 也就是<a href="#Apply-separate-version-control-to-themes">对主题做单独的版本管理</a>.</li>
 </ul>
 <h2 id="Alternate-Theme-Config"><a class="header-anchor" href="#Alternate-Theme-Config"></a>Alternate Theme Config</h2>
-<p>对于<strong>主题配置文件</strong>. Next官方提供<a target="_blank" rel="noopener" href="https://theme-next.js.org/docs/getting-started/configuration">Alternate Theme Config机制</a>来让用户自定义主题配置:</p>
 <ol>
 <li>
 <p>把主题配置文件复制到Hexo项目目录下, 取名为 <code>_config.[name].yml</code>. Replace <code>[name]</code> with the value of <code>theme</code> option in Hexo config file. For NexT theme, the file name is <code>_config.next.yml</code> by default</p>
@@ -343,9 +321,6 @@
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/LYK-love/LYK-love.github.io</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>对于CSS之类的文件, 反我是不会改的, 所以无所谓同步. 对于图片, <a href="#Configuring-Favicon">之前</a>讲了,可以放在项目的<code>/source/images/</code>进行同步( 而不是主题的<code>themes/next/images</code>).</p>
-<p>当然为了保险, 我也另外在项目文件夹内备份了图片文件.</p>
-<p>下文的**@Deprecated 同步步骤**是被废弃的方案, 它使用git modules, 这种方案新建了主题仓库, 然后用git module同步整个主题文件夹, 问题在于这样做就没法进行主题的更新了, 因此废弃.</p>
 <h1 id="Next-Doc"><a class="header-anchor" href="#Next-Doc"></a>Next Doc</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://theme-next.js.org/">Next Official Doc</a></li>
@@ -494,8 +469,8 @@
 <p><a target="_blank" rel="noopener" href="https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/MATH.md">Next数学公式支持官方文档</a></p>
 <p><a target="_blank" rel="noopener" href="https://theme-next.js.org/docs/third-party-services/math-equations.html?highlight=mathjax#mjx-eqn%3Aeq2">Next Mathjax高级特性</a></p>
 <p>目前的Latex渲染引擎有 <a target="_blank" rel="noopener" href="https://www.mathjax.org/">MathJax</a> 和 <a target="_blank" rel="noopener" href="https://khan.github.io/KaTeX/">Katex</a>, <code>MathJax</code>完美支持Latex, <code>Katex</code>速度更快, 但是有些语法不支持. 综合来看还是选择Mathjax.</p>
-<p><code>NexT</code>默认使用的markdown渲染引擎是<a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-renderer-marked">hexo-renderer-marked</a>, 它不支持Mathjax，不支持插件扩展，不支持emoji表情, 因此我们需要卸载它, 并替换为别的引擎.</p>
-<p>注意, 不同的渲染引擎是不能共存的( <a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-filter-mathjax">hexo-filter-mathjax</a>除外, 它是server端的渲染引擎 ), 因此在使用一个渲染引擎之前, 需要卸载掉其他全部的渲染引擎/</p>
+<p>Hexo需要使用markdown渲染引擎将md渲染成html, 而Hexo NexT默认使用的markdown渲染引擎是<a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo-renderer-marked">hexo-renderer-marked</a>, 它不支持Mathjax，不支持插件扩展，不支持emoji表情, 因此我们需要卸载它, 并替换为别的引擎.</p>
+<p>注意, 不同的渲染引擎是不能共存的( <a target="_blank" rel="noopener" href="https://github.com/next-theme/hexo-filter-mathjax">hexo-filter-mathjax</a>除外, 它是server端的渲染引擎 ), 因此在使用一个渲染引擎之前, 需要卸载掉其他全部的渲染引擎,</p>
 <h2 id="Engines"><a class="header-anchor" href="#Engines"></a>Engines</h2>
 <p>Next支持的markdown数学渲染引擎:</p>
 <h3 id="Mathjax"><a class="header-anchor" href="#Mathjax"></a>Mathjax</h3>
@@ -580,7 +555,8 @@
 <p>有时，你可能会希望采用更加奇特的方式来标记和引用你的公式，你可以通过使用 <code>\tag&#123;&#125;</code> 命令来实现，例如：</p>
 <figure class="highlight gams"><table><tr><td class="code"><pre><span class="line"><span class="symbol">$</span><span class="symbol">$</span>x+<span class="number">1</span>\over\<span class="built_in">sqrt</span>&#123;<span class="number">1</span>-x^<span class="number">2</span>&#125; \tag&#123;i&#125;\label&#123;eq_tag&#125;<span class="symbol">$</span><span class="symbol">$</span></span><br></pre></td></tr></table></figure>
 <p>如果你想要了解更多信息，请访问 <a target="_blank" rel="noopener" href="https://docs.mathjax.org/en/latest/input/tex/eqnumbers.html">MathJax 关于公式编号的官方文档</a>。同时，你也可以阅读 <a target="_blank" rel="noopener" href="https://theme-next.org/docs/third-party-services/math-equations">这篇文档</a> 来获取更多细节信息。</p>
-<h1 id="Fonts-Customization"><a class="header-anchor" href="#Fonts-Customization"></a>Fonts Customization</h1>
+<h1 id="Customization"><a class="header-anchor" href="#Customization"></a>Customization</h1>
+<h2 id="Fonts-Customization"><a class="header-anchor" href="#Fonts-Customization"></a>Fonts Customization</h2>
 <p>My fonts:</p>
 <ul>
 <li>Chinese: Noto Serif SC</li>
@@ -605,14 +581,14 @@
 Use this can help you to use fonts installed in system and reduce unnecessary requests.</p>
 </blockquote>
 <blockquote></blockquote>
-<h2 id="Chinese-Font"><a class="header-anchor" href="#Chinese-Font"></a>Chinese Font</h2>
+<h3 id="Chinese-Font"><a class="header-anchor" href="#Chinese-Font"></a>Chinese Font</h3>
 <p>低版本Next的默认字体(<code>font: false</code>)很丑, 不知道是什么字体. 新版本的Next的默认字体是Microsoft YaHei, 也可以自己更改. 我在<code>NexT _config.yml</code>中配置了Fira Code:</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">font:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Uri of fonts host, e.g. https://fonts.googleapis.com (Default).</span></span><br><span class="line">  <span class="comment"># For accessibility in China mainland, I replace it with ustc source</span></span><br><span class="line">  <span class="attr">host:</span> <span class="string">https://fonts.lug.ustc.edu.cn</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Font options:</span></span><br><span class="line">  <span class="comment"># `external: true` will load this font family from `host` above.</span></span><br><span class="line">  <span class="comment"># `family: Times New Roman`. Without any quotes.</span></span><br><span class="line">  <span class="comment"># `size: x.x`. Use `em` as unit. Default: 1 (16px)</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># Global font settings used for all elements inside &lt;body&gt;.</span></span><br><span class="line">  <span class="attr">global:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">family:</span> <span class="string">Fira</span> <span class="string">Code</span></span><br><span class="line">    <span class="attr">size:</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>To solve the unstable of <a target="_blank" rel="noopener" href="https://fonts.google.com/">Google Fonts API</a> in some countries, NexT supports custom URL of fonts library by setting <code>font.host</code>.</p>
 </blockquote>
 <p>为了在中国大陆的访问, 我把 <code>font.host</code>换成了ustc源. 设置<code> external: true</code>来从把 <code>font.host</code>加载font.</p>
-<h2 id="English-Font"><a class="header-anchor" href="#English-Font"></a>English Font</h2>
+<h3 id="English-Font"><a class="header-anchor" href="#English-Font"></a>English Font</h3>
 <p>按<a target="_blank" rel="noopener" href="https://hexo-next.readthedocs.io/zh_CN/latest/next/advanced/%E5%AD%97%E4%BD%93%E8%AE%BE%E7%BD%AE/">Next中文文档</a>的说明, 通过<code>NexT _config.yml</code>仅能替换中文字体/英文字体其中一种. Fira Code是英文字体, 要想再配置中文字体, 需要改更改Next的样式文件.</p>
 <p>由于之前讲过的<a target="_blank" rel="noopener" href="https://hexo.io/docs/data-files">Data Files</a> 和 <a target="_blank" rel="noopener" href="https://theme-next.js.org/docs/advanced-settings/custom-files.html">Custom Files</a> feature, 我不需要更改主题目录下的文件, 而是将它们copy到<code>&lt;hexo&gt;/source/_data</code>作为data files, 然后在<code>NexT _config.yml</code>指定它们作为custom files.</p>
 <ol>
@@ -637,7 +613,7 @@ Use this can help you to use fonts installed in system and reduce unnecessary re
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">custom_file_path:</span></span><br><span class="line">  <span class="attr">head:</span> <span class="string">source/_data/head.njk</span> <span class="comment"># Used to config font.</span></span><br><span class="line">  <span class="comment">#header: source/_data/header.njk</span></span><br><span class="line">  <span class="comment">#sidebar: source/_data/sidebar.njk</span></span><br><span class="line">  <span class="comment">#postMeta: source/_data/post-meta.njk</span></span><br><span class="line">  <span class="comment">#postBodyEnd: source/_data/post-body-end.njk</span></span><br><span class="line">  <span class="comment">#footer: source/_data/footer.njk</span></span><br><span class="line">  <span class="comment">#bodyEnd: source/_data/body-end.njk</span></span><br><span class="line">  <span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br><span class="line">  <span class="comment">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  <span class="comment">#style: source/_data/styles.styl</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h1 id="Code-Block"><a class="header-anchor" href="#Code-Block"></a>Code Block</h1>
+<h2 id="Code-Block"><a class="header-anchor" href="#Code-Block"></a>Code Block</h2>
 <ul>
 <li>
 <p>代码高亮(Code Highlight theme): 这个网站可以预览所有高亮效果：<a target="_blank" rel="noopener" href="https://theme-next.js.org/highlight/">传送门</a></p>
@@ -651,15 +627,15 @@ Use this can help you to use fonts installed in system and reduce unnecessary re
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">codeblock:</span></span><br><span class="line">  <span class="comment"># Code Highlight theme</span></span><br><span class="line">  <span class="comment"># All available themes: https://theme-next.js.org/highlight/</span></span><br><span class="line">  <span class="attr">theme:</span></span><br><span class="line">    <span class="comment"># light: default</span></span><br><span class="line">    <span class="comment"># dark: stackoverflow-dark</span></span><br><span class="line">    <span class="attr">light:</span> <span class="string">a11y-light</span></span><br><span class="line">    <span class="attr">dark:</span> <span class="string">a11y-dark</span></span><br><span class="line">  <span class="attr">prism:</span></span><br><span class="line">    <span class="attr">light:</span> <span class="string">prism</span></span><br><span class="line">    <span class="attr">dark:</span> <span class="string">prism-dark</span></span><br><span class="line">  <span class="comment"># Add copy button on codeblock</span></span><br><span class="line">  <span class="attr">copy_button:</span></span><br><span class="line">    <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment"># Available values: default | flat | mac</span></span><br><span class="line">    <span class="attr">style:</span> <span class="string">flat</span></span><br></pre></td></tr></table></figure>
 <p><code>Hexo _config.yml</code>:</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">highlight:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">auto_detect:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="attr">wrap:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">hljs:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">prismjs:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">preprocess:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">line_number:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">tab_replace:</span> <span class="string">&#x27;&#x27;</span></span><br></pre></td></tr></table></figure>
-<h1 id="Image"><a class="header-anchor" href="#Image"></a>Image</h1>
-<h2 id="图像缩放"><a class="header-anchor" href="#图像缩放"></a>图像缩放</h2>
+<h2 id="Image"><a class="header-anchor" href="#Image"></a>Image</h2>
+<h3 id="图像缩放"><a class="header-anchor" href="#图像缩放"></a>图像缩放</h3>
 <p><code>NexT</code>集成了多种图像显示工具, 包括<code>FancyBox</code>和<code>MediumZoom</code>, 主要功能是图像缩放.</p>
 <p>开启<code>MediumZoom</code>:</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># A JavaScript library for zooming images like Medium.</span></span><br><span class="line"><span class="comment"># Warning: Do not enable both `fancybox` and `mediumzoom`.</span></span><br><span class="line"><span class="comment"># For more information: https://medium-zoom.francoischalifour.com</span></span><br><span class="line"><span class="attr">mediumzoom:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<h2 id="图像懒加载"><a class="header-anchor" href="#图像懒加载"></a>图像懒加载</h2>
+<h3 id="图像懒加载"><a class="header-anchor" href="#图像懒加载"></a>图像懒加载</h3>
 <figure class="highlight ada"><table><tr><td class="code"><pre><span class="line">npm install hexo-lazyload <span class="comment">--save</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">lazyload:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<h1 id="访客人数-文章阅读次数"><a class="header-anchor" href="#访客人数-文章阅读次数"></a>访客人数&amp;&amp;文章阅读次数</h1>
+<h2 id="访客人数-文章阅读次数"><a class="header-anchor" href="#访客人数-文章阅读次数"></a>访客人数&amp;&amp;文章阅读次数</h2>
 <p><code>NexT</code>主题已集成了不蒜子的访客人数和文章阅读统计功能:</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Show Views / Visitors of the website / page with busuanzi.</span></span><br><span class="line"><span class="comment"># Get more information on http://ibruce.info/2015/04/04/busuanzi</span></span><br><span class="line"><span class="attr">busuanzi_count:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">total_visitors:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">total_visitors_icon:</span> <span class="string">user</span> <span class="string">fa</span> <span class="string">fa-user</span></span><br><span class="line">  <span class="attr">total_views:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">total_views_icon:</span> <span class="string">eye</span> <span class="string">fa</span> <span class="string">fa-eye</span></span><br><span class="line">  <span class="attr">post_views:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">post_views_icon:</span> <span class="string">eye</span> <span class="string">fa</span> <span class="string">fa-eye</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -667,44 +643,14 @@ Use this can help you to use fonts installed in system and reduce unnecessary re
 <li>点击全文阅读显示阅读次数</li>
 <li>在底部可以看见访客人数和文章阅读次数</li>
 </ul>
-<h1 id="网页加载加速"><a class="header-anchor" href="#网页加载加速"></a>网页加载加速</h1>
-<p>使用<a target="_blank" rel="noopener" href="https://github.com/theme-next/hexo-filter-optimize">hexo-filter-optimize</a>来提升网页加载速度:</p>
-<ol>
-<li>
-<p>下载插件:</p>
-<figure class="highlight arcade"><table><tr><td class="code"><pre><span class="line">npm install hexo-<span class="built_in">filter</span>-optimize</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>编辑配置文件:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">filter_optimize:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># remove the surrounding comments in each of the bundled files</span></span><br><span class="line">  <span class="attr">remove_comments:</span> <span class="literal">false</span></span><br><span class="line">  <span class="attr">css:</span></span><br><span class="line">    <span class="comment"># minify all css files</span></span><br><span class="line">    <span class="attr">minify:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># bundle loaded css files into one</span></span><br><span class="line">    <span class="attr">bundle:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># use a script block to load css elements dynamically</span></span><br><span class="line">    <span class="attr">delivery:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># make specific css content inline into the html page</span></span><br><span class="line">    <span class="comment">#   - only support the full path</span></span><br><span class="line">    <span class="comment">#   - default is [&#x27;css/main.css&#x27;]</span></span><br><span class="line">    <span class="attr">inlines:</span></span><br><span class="line">    <span class="attr">excludes:</span></span><br><span class="line">  <span class="attr">js:</span></span><br><span class="line">    <span class="comment"># minify all js files</span></span><br><span class="line">    <span class="attr">minify:</span> <span class="literal">true</span></span><br><span class="line">    <span class="comment"># bundle loaded js files into one</span></span><br><span class="line">    <span class="attr">bundle:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">excludes:</span></span><br><span class="line">  <span class="comment"># set the priority of this plugin,</span></span><br><span class="line">  <span class="comment"># lower means it will be executed first, default of Hexo is 10</span></span><br><span class="line">  <span class="attr">priority:</span> <span class="number">12</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h1 id="back2top-button"><a class="header-anchor" href="#back2top-button"></a>back2top button</h1>
-<p>back2top button非常好看, 默认是添加的:</p>
+<h2 id="back2top-button"><a class="header-anchor" href="#back2top-button"></a>back2top button</h2>
+<p>back2top button非常好看, Next默认是添加的:</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">back2top:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment"># Back to top in sidebar. button默认出现在左下角, 如果这里为true,就会出现在sidebar里面(头像, 目录下面),很难察觉</span></span><br><span class="line">  <span class="comment"># 所以我设为false</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># Scroll percent label in b2t button.</span></span><br><span class="line">  <span class="comment"># 让to-top的小箭头随时显示数值, 我觉得这样破坏阅读体验, 所以为false</span></span><br><span class="line">  <span class="attr">scrollpercent:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-<p>这里有个<a target="_blank" rel="noopener" href="https://github.com/jiangtj-lab/hexo-cake-moon-menu">插件</a>, 不过已经不需要了. 自带的就很好看.</p>
-<h1 id="Copyright"><a class="header-anchor" href="#Copyright"></a>Copyright</h1>
-<p>选择<code>sidebar</code>, 会在sidebar出现一个小徽章, 不怎么碍眼. 如果选择<code>post</code>, 版权信息会出现在文章底部, 很难看.</p>
+<p>如果自带的不能满足你, 那么这里有个<a target="_blank" rel="noopener" href="https://github.com/jiangtj-lab/hexo-cake-moon-menu">另外的button</a>.</p>
+<h2 id="Copyright"><a class="header-anchor" href="#Copyright"></a>Copyright</h2>
+<p>选择<code>sidebar: true</code>, 这会在sidebar出现不怎么碍眼的一个小徽章.</p>
+<p>如果选择<code>post: false</code>, 版权信息会出现在文章底部, 很难看.</p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Creative Commons 4.0 International License.</span></span><br><span class="line"><span class="comment"># See: https://creativecommons.org/about/cclicenses/</span></span><br><span class="line"><span class="attr">creative_commons:</span></span><br><span class="line">  <span class="comment"># Available values: by | by-nc | by-nc-nd | by-nc-sa | by-nd | by-sa | cc-zero</span></span><br><span class="line">  <span class="attr">license:</span> <span class="string">by-nc-sa</span></span><br><span class="line">  <span class="comment"># Available values: big | small</span></span><br><span class="line">  <span class="attr">size:</span> <span class="string">small</span></span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">post:</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment"># You can set a language value if you prefer a translated version of CC license, e.g. deed.zh</span></span><br><span class="line">  <span class="comment"># CC licenses are available in 39 languages, you can find the specific and correct abbreviation you need on https://creativecommons.org</span></span><br><span class="line">  <span class="attr">language:</span></span><br></pre></td></tr></table></figure>
-<h1 id="一些不想用的美化"><a class="header-anchor" href="#一些不想用的美化"></a>一些不想用的美化</h1>
-<p>以下美化我都不想用, 只是给出添加方式.</p>
-<ul>
-<li>
-<p>添加版权信息: 版权信息很丑, 所以我没加</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">creative_commons:</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">license:</span> <span class="string">by-nc-sa</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">sidebar:</span> <span class="literal">true</span></span><br><span class="line"> </span><br><span class="line">  <span class="attr">post:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>添加评论系统. 我不想加</p>
-</li>
-<li>
-<p>夜间模式: 这是永久的, 不能手动切换, 所以我也不想加.</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">darkmode:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>Reading progress bar: 五颜六色的,影响观看:</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">reading_progress:</span> <span class="string">Reading</span> <span class="string">progress</span> <span class="string">bar</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
 <h1 id="Synchronize-between-mul-hosts"><a class="header-anchor" href="#Synchronize-between-mul-hosts"></a>Synchronize between mul-hosts</h1>
 <p>如果想要在多台主机上同步Hexo项目, 只需要把自己的Hexo Github Repo clone下来.</p>
 <p>但是, 主题一般是用git clone来下载的, 这会让主题文件夹作为一个git submodule存在于项目目录下. 在<strong>当push本地仓库时, submodule不会被push</strong>.</p>
@@ -739,13 +685,13 @@ Use this can help you to use fonts installed in system and reduce unnecessary re
 <p>由于<a href="#Config-File-Features">Next提供的各种机制</a>, 主题配置文件, 样式文件等已经在Hexo目录中被同步了. 因此这一步只需<strong>安装主题</strong>即可.</p>
 <ul>
 <li>如果你用的是官方的主题, 那就去安装官方的主题, 例如对于Next, 就可以按照<a href="#Installation">之前的教程</a>.</li>
-<li>如果你要<a href="#Use-separate-version-control-to-themes">对主题做单独的版本管理</a> (很不推荐这种做法), 那么主题文件就是个git submodule, 需要<a href="#Update-submodule">Update submodule</a>.</li>
+<li>如果你要<a href="#Apply-separate-version-control-to-themes">对主题做单独的版本管理</a> (很不推荐这种做法), 那么主题文件就是个git submodule, 需要<a href="#Update-submodule">Update submodule</a>.</li>
 </ul>
 <p>如果还有文件没同步, 比如images等文件, 它们只能放在主题目录下, 但是如前所述, 每次从官方同步主题都会覆盖自己的更改, 那么可以把这些文件备份一下放在Hexo目录下, 之后手动copy到主题目录中.</p>
 <ul>
 <li>我的images就放在Hexo目录下, 每次更新主题后手动copy到<code>source/images</code>中.</li>
 </ul>
-<h1 id="Use-separate-version-control-to-themes"><a class="header-anchor" href="#Use-separate-version-control-to-themes"></a>Use separate version control to themes</h1>
+<h1 id="Apply-separate-version-control-to-themes"><a class="header-anchor" href="#Apply-separate-version-control-to-themes"></a>Apply separate version control to themes</h1>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903751908605965"> 在 hexo 中使用 git submodules 管理主题 </a></li>
 </ul>
@@ -794,28 +740,19 @@ Use this can help you to use fonts installed in system and reduce unnecessary re
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span></span><br><span class="line">    <span class="attr">github:</span> <span class="string">git@github.com:LYK-love/LYK-love.github.io.git</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h1 id="Bugs"><a class="header-anchor" href="#Bugs"></a>Bugs</h1>
+<h1 id="一些不想用的美化"><a class="header-anchor" href="#一些不想用的美化"></a>一些不想用的美化</h1>
+<p>以下美化我都不想用, 只是给出添加方式.</p>
 <ul>
 <li>
-<p><code>hexo g</code> 会生成静态文件, 但是，如果你的目录下有失效的软链接， 就不会生成文件。 因此请删除所有的失效软链接</p>
-<ul>
-<li>ref：<a target="_blank" rel="noopener" href="https://chrisbergeron.com/2020/12/24/fixing-hexo-not-generating-files/#:~:text=If%20you%E2%80%99re%20having%20trouble%20with%20Hexo%20not%20generating,l%20-exec%20test%20%21%20-e%20%7B%7D%20%3B%20-print"> Fixing Hexo Not Generating Files </a></li>
-</ul>
+<p>添加评论系统. 我觉得没有这个必要.</p>
 </li>
 <li>
-<p>hexo的markdown源代码避免出现<strong>跨级标题结构</strong>， 这里的<em>跨级</em>指的是不能从一个一级标题直接跟三级标题；二级标题后紧跟的子标题级别必须是三级标题</p>
+<p>夜间模式: 这是永久的, 不能手动切换, 所以我也不想加.</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">darkmode:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 </li>
 <li>
-<p>文章的Front-matter是YAML格式, 因此冒号后面必须有一个英文空格:</p>
-<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">title: XX</span><br><span class="line">categories: XX</span><br><span class="line">tags: XX</span><br></pre></td></tr></table></figure>
-<p>否则报错:</p>
-<blockquote>
-<p>YAMLException: can not read a block mapping entry; a multiline key may not be an implicit key</p>
-</blockquote>
-</li>
-<li>
-<p>极其罕见的Bug: Hexo和Next分别更新, 结果Latex不能显示, hexo g巨慢, 页面闪烁, back2top小箭头图表消失等等等等...</p>
-<p>由于JS项目的复杂性, 依赖版本问题几乎很难解决, 因此<strong>遇到这种Bug就不要仔细研究了, 直接重装Hexo和Next吧.</strong></p>
+<p>Reading progress bar: 五颜六色的, 影响观看:</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">reading_progress:</span> <span class="string">Reading</span> <span class="string">progress</span> <span class="string">bar</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 
