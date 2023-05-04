@@ -19,14 +19,14 @@ minify: false
 # Define custom file paths.
 # Create your custom files in site directory `source/_data` and uncomment needed files below.
 custom_file_path:
-  #head: source/_data/head.njk
+  head: source/_data/head.njk # Used to download font
   #header: source/_data/header.njk
   #sidebar: source/_data/sidebar.njk
   #postMeta: source/_data/post-meta.njk
   #postBodyEnd: source/_data/post-body-end.njk
   #footer: source/_data/footer.njk
   #bodyEnd: source/_data/body-end.njk
-  #variable: source/_data/variables.styl
+#  variable: source/_data/variables.styl
   #mixin: source/_data/mixins.styl
   #style: source/_data/styles.styl
 
@@ -96,7 +96,7 @@ open_graph:
 # External url should start with http:// or https://
 menu:
   home: / || fa fa-home
-  # about: /about/ || fa fa-user
+  about: /about/ || fa fa-user
   tags: /tags/ || fa fa-tags
   categories: /categories/ || fa fa-th
   archives: /archives/ || fa fa-archive
@@ -168,7 +168,7 @@ social:
 
 social_icons:
   enable: true
-  icons_only: false
+  icons_only: true
   transition: false
 
 # Blog rolls
@@ -369,8 +369,8 @@ codeblock:
   theme:
     # light: default
     # dark: stackoverflow-dark
-    light: arduino-light
-    dark: arduino-light
+    light: a11y-light
+    dark: a11y-dark
   prism:
     light: prism
     dark: prism-dark
@@ -430,10 +430,11 @@ github_banner:
 # ---------------------------------------------------------------
 
 font:
-  enable: false
+  enable: true
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  host: fonts.loli.net
+  # For accessibility in China mainland, I replace it with ustc source
+  host: https://fonts.lug.ustc.edu.cn
 
   # Font options:
   # `external: true` will load this font family from `host` above.
@@ -443,13 +444,13 @@ font:
   # Global font settings used for all elements inside <body>.
   global:
     external: true
-    family: Lato
+    family: Fira Code
     size:
 
   # Font settings for site title (.site-title).
   title:
     external: true
-    family:
+    family: 
     size:
 
   # Font settings for headlines (<h1> to <h6>).

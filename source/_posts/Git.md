@@ -23,6 +23,14 @@ Tools:
 
 * [Git Command Explorer](https://gitexplorer.com/)
 
+
+
+[Pro Git](https://git-scm.com/book/en/v2)
+
+[Git Community Book](http://shafiul.github.io/gitbook/1_git_directory_and_working_directory.html)
+
+
+
 # Intro 
 
 * Git是Linus用**C**写的分布式版本管理系统

@@ -16,7 +16,7 @@ Outline:
 
 # Shell Basic
 
-Shell语言的文档详见拙著*Shell Script*， 本文只介绍Shell程序的基本概念
+Shell语言的文档详见拙著[Shell Script Language](https://lyk-love.cn/2022/03/18/Shell-Script-Language/#Env-virable), 本文只介绍Shell程序的基本概念
 
 
 
@@ -167,6 +167,8 @@ session 与终端的关系：
 
 * 如果 session 关联的是 **tty**1-6，tty 则不会被销毁。因为该终端设备是在系统初始化的时候创建的，并不是依赖该会话建立的，所以当 session 退出，tty 仍然存在。只是 init 系统在 session 结束后，会重启 getty 来监听这个 tty
 
+
+
 # User Environment
 
 .bash_profile, .bash_logout, .bashrc files
@@ -200,20 +202,7 @@ echo hello
   * 第一个单词是命令名字,以后的每个单词都是命令的参数
   * If you want to provide an argument that contains spaces or other special characters (e.g., a directory named “My Photos”), you can either quote the argument with `'` or `"` (`"My Photos"`), or escape just the relevant characters with `\` (`My\ Photos`)
 
-## PATH
 
-shell变量分为用户变量和环境变量。 `$PATH`是特殊的环境变量， 当shell执行一条和其所有关键字都不匹配的命令时,它会查询 `$PATH` , 它列出了所有shell在查询命令时应查找的目录( 以 `:`分割 )
-
-```
-missing:~$ echo $PATH
-/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-missing:~$ which echo
-/bin/echo
-missing:~$ /bin/echo $PATH
-/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-```
-
-* We can also bypass `$PATH` entirely by giving the *path* to the file we want to execute.
 
 ## Navigating in the shell
 

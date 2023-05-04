@@ -91,6 +91,8 @@ tags:
 
 * **肩胛骨要尽力下沉**, 远离耳朵
 
+* 下巴内收. 不要通过把头向后顶借力.
+
 * 握法: 手掌从下往上握住杠铃
 
   ![image-20230110231751538](/Users/lyk/Library/Application Support/typora-user-images/image-20230110231751538.png)

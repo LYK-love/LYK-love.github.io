@@ -28,7 +28,7 @@ s = 'ABC\\-001' # Python的字符串
 
 因此我们强烈建议使用Python的`r`前缀，就不用考虑转义的问题了：
 
-```
+```python
 s = r'ABC\-001' # Python的字符串
 # 对应的正则表达式字符串不变：
 # 'ABC\-001'
@@ -86,27 +86,52 @@ else:
 
 如果用户输入了一组标签，下次记得用正则表达式来把不规范的输入转化成正确的数组。
 
-# 分组
+# Group in Regex
 
-除了简单地判断是否匹配之外，正则表达式还有提取子串的强大功能。用`()`表示的就是要提取的分组（Group）。比如：
+**A group is a part of a regex pattern enclosed in parentheses `()` metacharacter**. We create a group by placing the regex pattern inside the set of parentheses `(` and `)` . 
 
-`^(\d{3})-(\d{3,8})$`分别定义了两个组，可以直接从匹配的字符串中提取出区号和本地号码：
+For example:
 
+1. the regular expression `(cat)` creates a single group containing the letters ‘c’, ‘a’, and ‘t’.
+
+2. `^(\d{3})-(\d{3,8})$`分别定义了两个组，可以直接从匹配的字符串中提取出区号和本地号码：
+
+   ```
+   >>> m = re.match(r'^(\d{3})-(\d{3,8})$', '010-12345')
+   >>> m
+   <_sre.SRE_Match object; span=(0, 9), match='010-12345'>
+   >>> m.group(0)
+   '010-12345'
+   >>> m.group(1)
+   '010'
+   >>> m.group(2)
+   '12345'
+   ```
+
+
+
+如果正则表达式中定义了组，就
+
+* 
+
+### Access Each Group Result Separately
+
+可以在`Match`对象上用`group()`方法提取出子串来。`group(0)`永远是原始字符串. `group(1)`, `group(2)`……表示第1, 2, ……个子串。
+
+
+
+**Example**
+
+```python
+# Extract first group
+print(result.group(1))
+
+# Extract second group
+print(result.group(2))
+
+# Target string
+print(result.group(0))
 ```
->>> m = re.match(r'^(\d{3})-(\d{3,8})$', '010-12345')
->>> m
-<_sre.SRE_Match object; span=(0, 9), match='010-12345'>
->>> m.group(0)
-'010-12345'
->>> m.group(1)
-'010'
->>> m.group(2)
-'12345'
-```
-
-如果正则表达式中定义了组，就可以在`Match`对象上用`group()`方法提取出子串来。
-
-注意到`group(0)`永远是原始字符串，`group(1)`、`group(2)`……表示第1、2、……个子串。
 
 提取子串非常有用。来看一个更凶残的例子：
 
@@ -125,6 +150,60 @@ else:
 
 对于`'2-30'`，`'4-31'`这样的非法日期，用正则还是识别不了，或者说写出来非常困难，这时就需要程序配合识别了。
 
+### Regex Capture Group Multiple Times
+
+In earlier examples, we used the search method. It will return only the first match for each group. But what if a string contains the multiple occurrences of a regex group and you want to extract all matches.
+
+In this section, we will learn how to capture all matches to a regex group. To capture all matches to a regex group we need to use the [finditer()](https://pynative.com/python-regex-findall-finditer/#h-finditer-method) method.
+
+The finditer() method finds all matches and returns an iterator yielding match objects matching the regex pattern. Next, we can iterate each Match object and extract its value.
+
+**Note**: Don’t use the [findall()](https://pynative.com/python-regex-findall-finditer/) method because it returns a list, the group() method cannot be applied. If you try to apply it to the findall method, you will get AttributeError: ‘list’ object has no attribute ‘groups.’
+
+So always use finditer if you wanted to capture all matches to the group.
+
+**Example**
+
+```python
+import re
+
+target_string = "The price of ice-creams PINEAPPLE 20 MANGO 30 CHOCOLATE 40"
+
+# two groups enclosed in separate ( and ) bracket
+# group 1: find all uppercase letter
+# group 2: find all numbers
+# you can compile a pattern or directly pass to the finditer() method
+pattern = re.compile(r"(\b[A-Z]+\b).(\b\d+\b)")
+
+# find all matches to groups
+for match in pattern.finditer(target_string):
+    # extract words
+    print(match.group(1))
+    # extract numbers
+    print(match.group(2))
+```
+
+### Extract Range of Groups Matches
+
+One more thing that you can do with the `group()` method is to have the matches returned as a tuple by specifying the associated group numbers in between the `group()` method’s parentheses. This is useful when we want to extract the range of groups.
+
+For example, get the first 5 group matches only by executing the `group(1, 5`).
+
+Let’s try this as well.
+
+**Example**
+
+```python
+import re
+
+target_string = "The price of PINEAPPLE ice cream is 20"
+# two pattern enclosed in separate ( and ) bracket
+result = re.search(r".+(\b[A-Z]+\b).+(\b\d+)", target_string)
+
+print(result.group(1, 2))
+# Output ('PINEAPPLE', '20')
+```
+
 # 贪婪匹配
 
 最后需要特别指出的是，Py的正则匹配默认是贪婪匹配，也就是匹配尽可能多的字符。举例如下，匹配出数字后面的`0`：
@@ -142,6 +221,19 @@ else:
 >>> re.match(r'^(\d+?)(0*)$', '102300').groups()
 ('1023', '00')
 ```
+
+
+
+再例如: 在给定string中匹配出ipv4地址, 即类似于`192.168.1.53`这样的一组子串.
+
+
+
+```python
+r'\d+(.\d+)+' #试图匹配192.168.1.53类型的字符串，然而因为其将小括号内视为一个group，因此只会返回.53（只匹配小括号内且只返回最后一个符合的项）
+r'\d+(?:.\d+)+' #正确写法，?:即声明这不是一个group
+```
+
+
 
 # 编译
 

@@ -290,22 +290,26 @@ I/O设备的介绍详见拙著*Computer I/O Device*
 
 ## Booting the Computer
 
-计算机启动时，**首先加载**硬件驱动程序，硬件驱动程序有BIOS和UEFI， 这里简要介绍BIOS, 详见拙著*Linux Hardware Basic*
+计算机启动时, **首先加载**硬件驱动程序, 硬件驱动程序有BIOS和UEFI. UEFI是进化版的BIOS, 和BIOS做的事情差不多, 这里就只介绍BIOS了. 详细内容参见拙著*[Linux Hardware Basic](https://lyk-love.cn/2022/02/19/Linux-Hardware-Basic/?highlight=linux#BIOS-UEFI)*
 
 
 
-BIOS对应的磁盘分区格式是MBR
+**BIOS**( Basic Input Output System): 写在PC主板上的一个程序.
 
+* The BIOS contains low-level I/O software, including procedures to read the keyboard, write to the screen, and do disk I/O, among other things. 
+* Nowadays, it is held in a **flash RAM**, which is nonvolatile but which can be updated by the operating system when bugs are found in the BIOS.
+* BIOS对应的磁盘分区格式是MBR.
 
+***
 
-* **BIOS**（Basic Input Output System）：PC主板上的一个程序
-  * The BIOS contains low-level I/O software, including procedures to read the keyboard, write to the screen, and do disk I/O, among other things. 
-  * Nowadays, it is held in a **flash RAM**, which is nonvolatile but which can be updated by the operating system when bugs are found in the BIOS.
+计算机启动后执行BIOS, 进入OS的过程:
 
-1. 计算机开机时，BIOS启动，它会检查RAM和键盘等基础外设的连接和响应情况
+1. 计算机开机时，BIOS启动，它会检查RAM和键盘等基础外设的连接和响应情况.
    * It starts out by scanning the PCIe and PCI buses to detect all the devices attached to them. 
-   * 如果设备和上次启动时不一样，新的设备将被配置
-2. 通过CMOS中的启动设备列表，BIOS找到启动设备，后者的第一个扇区将被读进内存并执行，检查该扇区是否是MBR扇区，是的话会加载其中的boot loader
+   * 如果设备和上次启动时不一样，新的设备将被配置.
+   * 各种设备是在BIOS中被检测和连接的, 而不是在OS中. 
+     * 一个很好的例子是: 如果我用的是无线的鼠标和键盘, 那么它们在BIOS阶段就可以被连接上, 不需要等到进入OS中. 并且外设在Windows中进行配对后, 后面进入Linux双系统就不需要配对了. 这是因为设备的连接是由Bios而不是OS管理的.
+2. 通过CMOS中的启动设备列表, BIOS找到启动设备, 后者的第一个扇区将被读进内存并执行; 接着检查该扇区是否是MBR扇区，是的话会加载其中的boot loader.
 3. 一段boot loader程序被从MBR扇区读入， boot loader是OS提供的，因此能够读取OS的核心文件
 4. boot loader读取核心文件
 5. 核心文件会加载OS

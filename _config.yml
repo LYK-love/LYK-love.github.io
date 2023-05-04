@@ -7,7 +7,7 @@ title: LYK-love
 subtitle: ''
 description: ''
 keywords:
-author: 有多远滚多远
+author: LYK-love
 language: en
 timezone: UTC
 
@@ -46,7 +46,7 @@ future: true
 highlight:
   enable: true
   line_number: false
-  auto_detect: false
+  auto_detect: true
   tab_replace: ''
   wrap: true
   hljs: false
@@ -97,7 +97,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: Next
+theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:

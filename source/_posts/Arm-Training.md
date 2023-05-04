@@ -23,6 +23,7 @@ Outline:
 * Biceps: 
   * Barbell Drag Curl
   * DB Drag Curl
+  * [反向引体](https://lyk-love.cn/2023/04/23/Pull-Up/#%E5%8F%8D%E6%89%8B%E5%BC%95%E4%BD%93)
 * Brachialis: 
   * DB Robot Curl
 * Brachioradialis: 

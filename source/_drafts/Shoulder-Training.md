@@ -1,7 +1,14 @@
 ---
- title: Shoulder Training
-tags:
+title: Shoulder Training
+tags: Bodybuilding
+categories: Fitness
 ---
+
+
+
+必须要做某种形式的推肩和侧平举.
+
+
 
 # Muscles
 

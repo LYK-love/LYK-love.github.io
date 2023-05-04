@@ -1,5 +1,5 @@
 ---
-title: Linux Basic
+title: Linux Hardware Basic
 tags: Linux
 categories: Computer Science
 date: 2022-02-18 18:47:11
@@ -225,19 +225,17 @@ MBR扇区(0号扇区)由四部分组成：
 
 ## BIOS
 
+BIOS是写入到主板上的一个程序.主板上还有硬件CMOS， 是记录各项硬件参数且嵌入在主板上的储存器；
 
-
-BIOS是写入到主板上的一个程序。主板上还有硬件CMOS， 是记录各项硬件参数且嵌入在主板上的储存器；
-
-* BIOS是开机时,计算机会执行的第一个程序
-
-
-
-
+* BIOS是计算机开机时会执行的第一个程序
+* BIOS写在主板的flash ram里. flash ram是nonvolatile的.
+* 因为BIOS是写在主板里的, 一般来说不同品牌的主板也就有不同的BIOS. 
+  * 每个品牌的主板进Bios的快捷键都不一样. 以我个人的主板为例, 之前我的MSI(微星) 进BIOS的快捷键是`F12`, 现在我的的主板是七彩虹, 快捷键是`Del`. 
+  * 不同的Bios外观相差很大. 七彩虹的Bios就花里胡哨的.
 
 ## UEFI
 
-UEFI (Unified Extensible Firmware Interface) 是BIOS的进化版，也称为UEFI BIOS
+UEFI (Unified Extensible Firmware Interface) 是BIOS的进化版，也称为UEFI BIOS. 现在常见的主板BIOS都是UEFI BIOS.
 
 * UEFI对应分区格式GPT, 启动后读取EFI分区（EFI system partition， aka **ESP**）
   * EFI是UEFI的1.0版本
@@ -259,7 +257,7 @@ UEFI 可以直接取得 GPT 的分区表,但保险起见，你最好依旧拥有
 
 ### ESP
 
-EFI系统分区（EFI system partition）:GPT硬盘分区模式中的系统启动分区
+EFI系统分区（EFI system partition）: **GPT**硬盘分区模式中的系统启动分区
 
 * FAT16或FAT32格式的物理分区，
 * 其分区标识是EF (十六进制) 而非常规的0E或0C。
@@ -267,8 +265,6 @@ EFI系统分区（EFI system partition）:GPT硬盘分区模式中的系统启�
 * ESP分区是一个独立于操作系统之外的分区，操作系统被引导后就不再依赖它。分区内存放引导管理程序、驱动程序、系统维护工具等。支持 EFI 模式的电脑需要从ESP启动系统，EFI固件可从ESP加载EFI启动程序和应用程序
 
 # boot loader
-
-
 
 boot loader用于加载OS内核， 由于每种OS的文件系统不一致，因此每种OS都有自己的boot loader
 

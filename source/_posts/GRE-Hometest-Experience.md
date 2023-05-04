@@ -22,9 +22,7 @@ date: 2023-02-12 21:36:56
 
 
 
-用到的学习资源在[这里](https://github.com/LYK-love/ELP-Resources/tree/master/GRE)
-
-
+心急的可以直接拉到最下方[Summary](#Summary).
 
 # Background
 
@@ -379,5 +377,4 @@ GRE一共有6个section, **第一个section必定是AW**, 后面五个section中
 
 # Summary
 
-
-
+用到的学习资源在[这里](https://github.com/LYK-love/ELP-Resources/tree/master/GRE).
