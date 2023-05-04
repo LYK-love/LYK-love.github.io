@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2023-05-02T01:19:26.268Z</updated>
+  <updated>2023-05-04T13:42:49.351Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo</title>
+    <link href="http://lyk-love.cn/2023/05/05/Hexo/"/>
+    <id>http://lyk-love.cn/2023/05/05/Hexo/</id>
+    <published>2023-05-04T21:29:03.000Z</published>
+    <updated>2023-05-04T13:42:49.351Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;本文介绍如何构建并配置Hexo站点.&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Toolkit" scheme="http://lyk-love.cn/categories/Toolkit/"/>
+    
+    
+    <category term="Hexo" scheme="http://lyk-love.cn/tags/Hexo/"/>
+    
+  </entry>
   
   <entry>
     <title>Shell Script Searching Path</title>
@@ -458,25 +477,6 @@
     
     
     <category term="Linux" scheme="http://lyk-love.cn/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>GRE Hometest Experience</title>
-    <link href="http://lyk-love.cn/2023/02/13/GRE-Hometest-Experience/"/>
-    <id>http://lyk-love.cn/2023/02/13/GRE-Hometest-Experience/</id>
-    <published>2023-02-12T21:36:56.000Z</published>
-    <updated>2023-04-24T11:32:11.985Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;分享一下GRE hometest的经验.&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Life" scheme="http://lyk-love.cn/categories/Life/"/>
-    
-    
-    <category term="Study Abroad" scheme="http://lyk-love.cn/tags/Study-Abroad/"/>
     
   </entry>
   

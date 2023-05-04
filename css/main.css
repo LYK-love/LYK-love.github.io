@@ -184,7 +184,7 @@ body {
   background: var(--body-bg-color);
   box-sizing: border-box;
   color: var(--text-color);
-  font-family: Fira Code, 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace, sans-serif;
+  font-family: Fira Code, 'Noto Serif SC', Monaco, Consolas, Ubuntu Mono, monospace, sans-serif;
   font-size: 1em;
   line-height: 1.54;
   min-height: 100%;
@@ -197,7 +197,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Fira Code, 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace, sans-serif;
+  font-family: Fira Code, 'Noto Serif SC', Monaco, Consolas, Ubuntu Mono, monospace, sans-serif;
   font-weight: bold;
   line-height: 1.5;
   margin: 30px 0 15px;
@@ -407,7 +407,7 @@ pre figcaption a:hover {
 }
 pre,
 code {
-  font-family: consolas, Menlo, monospace, 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace;
+  font-family: consolas, Menlo, monospace, 'Noto Serif SC', Monaco, Consolas, Ubuntu Mono, monospace;
 }
 code {
   border-radius: 3px;
@@ -982,7 +982,7 @@ pre code {
   color: var(--brand-hover-color);
 }
 .site-title {
-  font-family: Fira Code, 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace, sans-serif;
+  font-family: Fira Code, 'Noto Serif SC', Monaco, Consolas, Ubuntu Mono, monospace, sans-serif;
   font-size: 1.375em;
   font-weight: normal;
   line-height: 1.5;
@@ -1659,7 +1659,7 @@ pre code {
   width: 4px;
 }
 .post-body {
-  font-family: Fira Code, 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace, sans-serif;
+  font-family: Fira Code, 'Noto Serif SC', Monaco, Consolas, Ubuntu Mono, monospace, sans-serif;
   overflow-wrap: break-word;
 }
 @media (min-width: 1200px) {
@@ -1846,7 +1846,7 @@ pre code {
 }
 .posts-expand .post-meta-container {
   color: #999;
-  font-family: Fira Code, 'Fira Code', Monaco, Consolas, Ubuntu Mono, monospace, sans-serif;
+  font-family: Fira Code, 'Noto Serif SC', Monaco, Consolas, Ubuntu Mono, monospace, sans-serif;
   font-size: 0.75em;
   margin-top: 3px;
 }
@@ -2569,7 +2569,7 @@ header.header {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #afee06;
+  background: #fff;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
