@@ -407,7 +407,7 @@ pre figcaption a:hover {
 }
 pre,
 code {
-  font-family: consolas, Menlo, monospace, 'Noto Serif SC', Monaco, Consolas, Ubuntu Mono, monospace;
+  font-family: consolas, Menlo, monospace, 'PingFang SC', Monaco, Consolas, Ubuntu Mono, monospace;
 }
 code {
   border-radius: 3px;
@@ -2563,7 +2563,7 @@ header.header {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #df018e;
+  background: #93af66;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);

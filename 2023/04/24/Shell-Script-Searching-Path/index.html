@@ -27,7 +27,7 @@
 <meta property="og:description" content="Outline:  Shell Script Searching Path Append path to PATH Bad Practices">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-04-23T21:48:25.000Z">
-<meta property="article:modified_time" content="2023-05-02T01:19:26.268Z">
+<meta property="article:modified_time" content="2023-05-04T19:18:39.453Z">
 <meta property="article:author" content="LYK-love">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="shell">
@@ -143,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-Script-Searching-Path"><span class="nav-text">Shell Script Searching Path</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Append-path-to-PATH"><span class="nav-text">Append path to PATH</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bad-Practices"><span class="nav-text">Bad Practices</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Current-directory-in-PATH"><span class="nav-text">Current directory in PATH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Command-names-with-slashes-avoid-PATH"><span class="nav-text">Command names with slashes avoid PATH</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Shell-Script-Searching-Path"><span class="nav-text">Shell Script Searching Path</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Append-path-to-PATH"><span class="nav-text">Append path to PATH</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Bad-Practices"><span class="nav-text">Bad Practices</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Current-directory-in-PATH"><span class="nav-text">Current directory in PATH</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -243,7 +243,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-02 01:19:26" itemprop="dateModified" datetime="2023-05-02T01:19:26Z">2023-05-02</time>
+      <time title="Modified: 2023-05-04 19:18:39" itemprop="dateModified" datetime="2023-05-04T19:18:39Z">2023-05-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -281,7 +281,7 @@
 <h1 id="Shell-Script-Searching-Path"><a class="header-anchor" href="#Shell-Script-Searching-Path"></a>Shell Script Searching Path</h1>
 <p>Shell will <strong>find and execute</strong> command. The searching sequence of command name is:</p>
 <ol>
-<li>以相对/绝对路径执行指令，例如<code>/bin/ls </code>或<code>./ls </code></li>
+<li>将该command name看作一个文件的相对/绝对路径, 并执行该文件, 例如<code>/bin/ls </code>或<code>./ls </code>.</li>
 <li>由 <code>alias</code> 找到该指令来执行</li>
 <li>由 bash 内置的( builtin)指令来执行.</li>
 <li>通过 <code>PATH</code> 这个变量的顺序搜寻到的第一个指令来执行.</li>
@@ -291,7 +291,11 @@
 <ul>
 <li>由于<code>PATH</code> 是个环境变量, 因此它在任意的子session中都有效.</li>
 <li>Command not found == not found in <code>PATH</code>. 这只是意味着在<code>PATH</code>中找不到该command name. 可以将该command的路径添加到<code>PATH</code>来让shell能搜索到它.</li>
-<li>可以看到, 如果一个command name是路径, 那么在step1就找到了, 不会尝试后面的步骤. <strong>如果一个command name带有slash( <code>/</code> ), 则会被视作路径名.</strong></li>
+<li>可以看到, 如果一个command name是路径, 那么在step1就找到了, 不会尝试后面的步骤. <strong>一个command name被视作路径名 iff 该command name带有slash( <code>/</code> )</strong>.
+<ul>
+<li>对于当前目录下的文件<code>file</code>, 它的路径名是<code>./file</code>, 而不是<code>file</code>. 后者不会让Shell将其视作路径.</li>
+</ul>
+</li>
 </ul>
 <h1 id="Append-path-to-PATH"><a class="header-anchor" href="#Append-path-to-PATH"></a>Append path to <code>PATH</code></h1>
 <p>将命令的路径加入环境变量<code>PATH</code>的方法:</p>
@@ -306,7 +310,6 @@
 <blockquote>
 <p>For example: If you put the current directory at the start of your <code>PATH</code>, e.g. <code>PATH=:/bin:/usr/bin</code>, then when you type <code>ls</code> the first program that is tried is <code>./ls</code> (the program named <code>ls</code> in the current directory) which might be a malicious program.</p>
 </blockquote>
-<h2 id="Command-names-with-slashes-avoid-PATH"><a class="header-anchor" href="#Command-names-with-slashes-avoid-PATH"></a>Command names with slashes avoid <code>PATH</code></h2>
 
     </div>
 
