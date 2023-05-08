@@ -30,6 +30,7 @@ Outline:
      2. release `Ctrl+b`
      3. press `command key`
 * 默认的`session_name`和`window_name`都是0开头的
+* Tmux最常见的用途是用来attach && detach shell session. 也就是在退出登陆服务器后使服务器上的程序继续运行. 由于tmux会把session数据保存在运行tmux的本机, 因此要**在服务器而不是用户自己的电脑上开启tmux**. (这对其它的同类型工具, 例如Zellij, 也是一样的.) 
 
 # Config
 

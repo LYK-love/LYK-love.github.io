@@ -31,31 +31,31 @@ Outline:
 
 * $O(g):$​​ functions that grows no faster than $g$​
   * $O(g(n))=\{f(n): 存在常数c>0和n_0>0,满足0\leq f(n) \leq cg(n)对所有n \geq n_0均成立\}$​
-  * $f(n)=O(g(n)) \quad iff \quad \lim\limits_{n \rarr \infty} \frac{f(n)}{g(n)}=c<\infty$
+  * $f(n)=O(g(n)) \quad iff \quad \lim\limits_{n \rightarrow \infty} \frac{f(n)}{g(n)}=c<\infty$
 
 * $o(g)$: 不快于$g$且与$g$有层次上的差距
 
   * $o(g(n))=\{f(n): 对任意常数c>0, 均存在常数n_0>0,满足0\leq f(n) < cg(n)对所有n \geq n_0均成立\}$​​​
-  * $f(n)=o(g(n)) \quad iff \quad \lim\limits_{n \rarr \infty} \frac{f(n)}{g(n)}=0$​
+  * $f(n)=o(g(n)) \quad iff \quad \lim\limits_{n \rightarrow \infty} \frac{f(n)}{g(n)}=0$​
 
   
 
 * $\Omega(g)$: functions that grow at least as fast as $g$​
 
   * $\Omega(g(n))=\{f(n): 存在常数c>0和n_0>0,满足0 \leq cg(n)\leq f(n) 对所有n \geq n_0均成立\}$
-  * $f(n)=\Omega(g(n)) \quad iff \quad \lim\limits_{n \rarr \infty} \frac{f(n)}{g(n)}=c>0(c也可以为\infty)$​
+  * $f(n)=\Omega(g(n)) \quad iff \quad \lim\limits_{n \rightarrow \infty} \frac{f(n)}{g(n)}=c>0(c也可以为\infty)$​
 
 * $\omega$: 不慢于$g$且与$g$有层次上的差距
 
   * $\omega(g(n))=\{f(n): 对任意常数c>0,均存在常数n_0>0,满足0 \leq cg(n) < f(n) 对所有n \geq n_0均成立\}$​
-  * $f(n)=\omega(g(n)) \quad iff \quad \lim\limits_{n \rarr \infty} \frac{f(n)}{g(n)}=\infty$​​
+  * $f(n)=\omega(g(n)) \quad iff \quad \lim\limits_{n \rightarrow \infty} \frac{f(n)}{g(n)}=\infty$​​
 
   
 
 * $\Theta(g):$​​ ... the same rate as $g$​​. (处于同一水平) ( $O$和$\Omega$的交集 )
 
   * $\Theta(g(n))=\{f(n): 存在常数c_1>0,c_2>0和n_0>0,满足0 \leq c_1g(n)\leq f(n) \leq c_2g(n) 对所有n \geq n_0均成立\}$
-  * $f(n)=\Theta(g(n)) \quad iff \quad \lim\limits_{n \rarr \infty} \frac{f(n)}{g(n)}=c>0(0<c<\infty)$​​
+  * $f(n)=\Theta(g(n)) \quad iff \quad \lim\limits_{n \rightarrow \infty} \frac{f(n)}{g(n)}=c>0(0<c<\infty)$​​
 
 
 

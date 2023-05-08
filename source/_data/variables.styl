@@ -1,0 +1,16 @@
+$font-family-chinese      = 'Noto Serif SC', Monaco, Consolas, Ubuntu Mono, monospace;
+
+$font-family-base         = $font-family-chinese, sans-serif;
+$font-family-base         = get_font_family('global'), $font-family-chinese, sans-serif if get_font_family('global');
+
+$font-family-logo         = $font-family-base;
+$font-family-logo         = get_font_family('title'), $font-family-base if get_font_family('title');
+
+$font-family-headings     = $font-family-base;
+$font-family-headings     = get_font_family('headings'), $font-family-base if get_font_family('headings');
+
+$font-family-posts        = $font-family-base;
+$font-family-posts        = get_font_family('posts'), $font-family-base if get_font_family('posts');
+
+$font-family-monospace    = consolas, Menlo, monospace, $font-family-chinese;
+$font-family-monospace    = get_font_family('codes'), consolas, Menlo, monospace, $font-family-chinese if get_font_family('codes');
