@@ -27,7 +27,7 @@
 <meta property="og:description" content="Outline:  Intro node npm yarn ...">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-07-30T17:23:43.000Z">
-<meta property="article:modified_time" content="2023-02-08T07:44:07.956Z">
+<meta property="article:modified_time" content="2023-05-27T15:16:02.346Z">
 <meta property="article:author" content="LYK-love">
 <meta name="twitter:card" content="summary">
 
@@ -241,7 +241,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-02-08 07:44:07" itemprop="dateModified" datetime="2023-02-08T07:44:07Z">2023-02-08</time>
+      <time title="Modified: 2023-05-27 15:16:02" itemprop="dateModified" datetime="2023-05-27T15:16:02Z">2023-05-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -249,11 +249,11 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
+          <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
         </span>
           , 
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Frontend/" itemprop="url" rel="index"><span itemprop="name">Frontend</span></a>
+          <a href="/categories/Toolkit/" itemprop="url" rel="index"><span itemprop="name">Toolkit</span></a>
         </span>
     </span>
 
@@ -341,7 +341,7 @@
 <p>对于<code>yarn</code>，<code>yarn add [package]</code>会将依赖信息写入<code>package.json</code></p>
 </li>
 <li>
-<p>对于**<code>npm &gt; 5.0</code>**，<code>npm install [package]</code>已经可以自动将依赖信息写入<code>package.json</code>了</p>
+<p>对于<code>npm &gt; 5.0</code>，<code>npm install [package]</code>已经可以自动将依赖信息写入<code>package.json</code>了</p>
 </li>
 </ul>
 <h3 id="example"><a class="header-anchor" href="#example"></a>example</h3>
@@ -704,8 +704,8 @@
 <figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="comment"># ENV NODE_ENV production</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> node -v &amp;&amp; npm -v \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; npm config <span class="built_in">set</span> registry http://r.cnpmjs.org/ \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; npm install</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm run build</span></span><br></pre></td></tr></table></figure>
 <p>其中的<code>npm run build</code>会调用package.json中的build字段的命令:</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;serve&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vue-cli-service serve&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vue-cli-service build&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vue-cli-service lint&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
-<p>可以看到, <code>vue-cli-service **</code>都使用了<code>vue-cli-service</code>这个命令, 他对应了一系列依赖:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">...    </span><br><span class="line">		<span class="attr">&quot;@vue/cli-plugin-babel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;~5.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;@vue/cli-plugin-eslint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;~5.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">		...</span><br></pre></td></tr></table></figure>
+<p>可以看到, <code>vue-cli-service</code>都使用了<code>vue-cli-service</code>这个命令, 他对应了一系列依赖:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&lt;snip&gt;  </span><br><span class="line"><span class="attr">&quot;@vue/cli-plugin-babel&quot;</span><span class="punctuation">:</span> <span class="string">&quot;~5.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;@vue/cli-plugin-eslint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;~5.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">&lt;snip&gt;</span><br></pre></td></tr></table></figure>
 <p>这些依赖默认全部被安装到了devDependencies. 因此, 如果在install时使用了pro模式, 即只下载pro依赖, 则不会下载上述依赖, 也就会在<code>npm run build</code>时报错:</p>
 <figure class="highlight subunit"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Error: </span>Cannot find module &#x27;@vue/cli-plugin-babel&#x27;</span><br><span class="line">//OR:</span><br><span class="line">vue-cli-service: not found</span><br></pre></td></tr></table></figure>
 <ul>

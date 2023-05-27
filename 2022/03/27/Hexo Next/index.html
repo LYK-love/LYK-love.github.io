@@ -27,7 +27,7 @@
 <meta property="og:description" content="在之前的文章中, 我介绍了如何使用Hexo来构建静态站点. Hexo有很多主题, 其中我认为最好看最好用的是Hexo Next theme. 本文介绍如何使用和配置Next theme, 以及如何对Hexo和Next进行多主机同步.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-03-27T02:28:03.000Z">
-<meta property="article:modified_time" content="2023-05-04T17:32:24.141Z">
+<meta property="article:modified_time" content="2023-05-08T04:12:50.114Z">
 <meta property="article:author" content="LYK-love">
 <meta property="article:tag" content="Hexo">
 <meta name="twitter:card" content="summary">
@@ -242,7 +242,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-05-04 17:32:24" itemprop="dateModified" datetime="2023-05-04T17:32:24Z">2023-05-04</time>
+      <time title="Modified: 2023-05-08 04:12:50" itemprop="dateModified" datetime="2023-05-08T04:12:50Z">2023-05-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -596,8 +596,9 @@ Use this can help you to use fonts installed in system and reduce unnecessary re
 <p>First, copy <code>&lt;hexo&gt;/themes/next/source/css/_variables/base.styl</code> to <code>&lt;hexo&gt;/source/_data/</code>. Rename <code>&lt;hexo&gt;/source/_data/base.styl</code> to <code>&lt;hexo&gt;/source/_data/variables.styl</code>.</p>
 </li>
 <li>
-<p>Edit <code>&lt;hexo&gt;/source/_data/variables.styl</code>:</p>
-<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Font families.</span></span><br><span class="line"><span class="comment">//$font-family-chinese      = &#x27;PingFang SC&#x27;, &#x27;Microsoft YaHei&#x27;;</span></span><br><span class="line"><span class="comment">//Use `Noto Serif SC`as chinese font</span></span><br><span class="line"><span class="variable">$font</span>-family-chinese      = <span class="string">&#x27;Noto Serif SC&#x27;</span>, Monaco, Consolas, Ubuntu Mono, monospace;</span><br></pre></td></tr></table></figure>
+<p>Edit <code>&lt;hexo&gt;/source/_data/variables.styl</code>, clear it original content, then add:</p>
+<figure class="highlight stylus"><table><tr><td class="code"><pre><span class="line"># use <span class="string">&#x27;Noto Serif SC&#x27;</span></span><br><span class="line"><span class="variable">$font</span>-family-chinese      = <span class="string">&#x27;Noto Serif SC&#x27;</span>, Monaco, Consolas, Ubuntu Mono, monospace;</span><br><span class="line"></span><br><span class="line"><span class="variable">$font</span>-family-base         = <span class="variable">$font</span>-family-chinese, sans-serif;</span><br><span class="line"><span class="variable">$font</span>-family-base         = <span class="built_in">get_font_family</span>(<span class="string">&#x27;global&#x27;</span>), <span class="variable">$font</span>-family-chinese, sans-serif <span class="keyword">if</span> <span class="built_in">get_font_family</span>(<span class="string">&#x27;global&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$font</span>-family-logo         = <span class="variable">$font</span>-family-base;</span><br><span class="line"><span class="variable">$font</span>-family-logo         = <span class="built_in">get_font_family</span>(<span class="string">&#x27;title&#x27;</span>), <span class="variable">$font</span>-family-base <span class="keyword">if</span> <span class="built_in">get_font_family</span>(<span class="string">&#x27;title&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$font</span>-family-headings     = <span class="variable">$font</span>-family-base;</span><br><span class="line"><span class="variable">$font</span>-family-headings     = <span class="built_in">get_font_family</span>(<span class="string">&#x27;headings&#x27;</span>), <span class="variable">$font</span>-family-base <span class="keyword">if</span> <span class="built_in">get_font_family</span>(<span class="string">&#x27;headings&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$font</span>-family-posts        = <span class="variable">$font</span>-family-base;</span><br><span class="line"><span class="variable">$font</span>-family-posts        = <span class="built_in">get_font_family</span>(<span class="string">&#x27;posts&#x27;</span>), <span class="variable">$font</span>-family-base <span class="keyword">if</span> <span class="built_in">get_font_family</span>(<span class="string">&#x27;posts&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$font</span>-family-monospace    = consolas, Menlo, monospace, <span class="variable">$font</span>-family-chinese;</span><br><span class="line"><span class="variable">$font</span>-family-monospace    = <span class="built_in">get_font_family</span>(<span class="string">&#x27;codes&#x27;</span>), consolas, Menlo, monospace, <span class="variable">$font</span>-family-chinese <span class="keyword">if</span> <span class="built_in">get_font_family</span>(<span class="string">&#x27;codes&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>This will overwrite <code>&lt;hexo&gt;/themes/next/source/css/_variables/base.styl</code> 's config with custom file's config.</p>
 </li>
 <li>
 <p>Create file <code>&lt;hexo&gt;/source/_data/head.njk</code> , then input:</p>
@@ -608,12 +609,6 @@ Use this can help you to use fonts installed in system and reduce unnecessary re
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">custom_file_path:</span></span><br><span class="line">  <span class="attr">head:</span> <span class="string">source/_data/head.njk</span> <span class="comment"># Used to config font.</span></span><br><span class="line">  <span class="comment">#header: source/_data/header.njk</span></span><br><span class="line">  <span class="comment">#sidebar: source/_data/sidebar.njk</span></span><br><span class="line">  <span class="comment">#postMeta: source/_data/post-meta.njk</span></span><br><span class="line">  <span class="comment">#postBodyEnd: source/_data/post-body-end.njk</span></span><br><span class="line">  <span class="comment">#footer: source/_data/footer.njk</span></span><br><span class="line">  <span class="comment">#bodyEnd: source/_data/body-end.njk</span></span><br><span class="line">  <span class="attr">variable:</span> <span class="string">source/_data/variables.styl</span></span><br><span class="line">  <span class="comment">#mixin: source/_data/mixins.styl</span></span><br><span class="line">  <span class="comment">#style: source/_data/styles.styl</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<blockquote>
-<p>2023.5.5 update: 目前的custom file只允许添加配置, 但不允许覆盖配置.</p>
-<p>因此上面的方法对于<code>head.njk</code>是可行的, 但对于<code>base.styl</code>就不行. 因为我在<code>variables.styl</code>里定义的<code>$font-family-chinese </code>并不能覆盖<code>base.styl</code>的<code>$font-family-chinese</code>. 我也不能简单地copy <code>base.styl</code>然后修改, 这会导致网站中存在两份<code>base.styl</code>. 因此对于<code>base.styl</code>, 目前只能直接编辑其内容:</p>
-<figure class="highlight awk"><table><tr><td class="code"><pre><span class="line"><span class="regexp">//</span> Font families.</span><br><span class="line"><span class="regexp">//</span><span class="variable">$font</span>-family-chinese      = <span class="string">&#x27;PingFang SC&#x27;</span>, <span class="string">&#x27;Microsoft YaHei&#x27;</span>;</span><br><span class="line"><span class="regexp">//</span>Use `Noto Serif SC`as chinese font</span><br><span class="line"><span class="variable">$font</span>-family-chinese      = <span class="string">&#x27;Noto Serif SC&#x27;</span>, Monaco, Consolas, Ubuntu Mono, monospace;</span><br></pre></td></tr></table></figure>
-<p>而不能用custom file.</p>
-</blockquote>
 <h2 id="Code-Block"><a class="header-anchor" href="#Code-Block"></a>Code Block</h2>
 <ul>
 <li>
