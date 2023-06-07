@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2023-05-04T17:25:50.898Z</updated>
+  <updated>2023-06-07T10:53:14.102Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -15,6 +15,44 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Forearms Training</title>
+    <link href="http://lyk-love.cn/2023/06/08/Forearms-Training/"/>
+    <id>http://lyk-love.cn/2023/06/08/Forearms-Training/</id>
+    <published>2023-06-07T18:49:28.000Z</published>
+    <updated>2023-06-07T10:53:14.102Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Indroduces some forearms training. This article is part of my &lt;a href=&quot;https://lyk-love.cn/2023/04/14/Arms-Training&quot;&gt;arms training plan&lt;/a&gt;.&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Fitness" scheme="http://lyk-love.cn/categories/Fitness/"/>
+    
+    
+    <category term="Bodybuilding" scheme="http://lyk-love.cn/tags/Bodybuilding/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Biceps Training</title>
+    <link href="http://lyk-love.cn/2023/06/08/Biceps-Training/"/>
+    <id>http://lyk-love.cn/2023/06/08/Biceps-Training/</id>
+    <published>2023-06-07T18:36:29.000Z</published>
+    <updated>2023-06-07T10:53:30.219Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;Indroduces some biceps training. This article is part of my &lt;a href=&quot;https://lyk-love.cn/2023/04/14/Arms-Training&quot;&gt;arms training plan&lt;/a&gt;.&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Fitness" scheme="http://lyk-love.cn/categories/Fitness/"/>
+    
+    
+    <category term="Bodybuilding" scheme="http://lyk-love.cn/tags/Bodybuilding/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo</title>
@@ -93,7 +131,7 @@
     <link href="http://lyk-love.cn/2023/04/23/Push-Up/"/>
     <id>http://lyk-love.cn/2023/04/23/Push-Up/</id>
     <published>2023-04-23T00:19:26.000Z</published>
-    <updated>2023-04-22T16:23:21.526Z</updated>
+    <updated>2023-06-02T08:06:25.099Z</updated>
     
     
     <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
@@ -187,7 +225,7 @@
     <link href="http://lyk-love.cn/2023/04/21/Bodybuilding-Basic/"/>
     <id>http://lyk-love.cn/2023/04/21/Bodybuilding-Basic/</id>
     <published>2023-04-21T12:16:33.000Z</published>
-    <updated>2023-06-01T10:29:18.605Z</updated>
+    <updated>2023-06-06T08:03:07.147Z</updated>
     
     
     <summary type="html">&lt;p&gt;Basic knowledge &amp;amp; concepts of bodybuilding, including nutritions and diets.&lt;/p&gt;</summary>
@@ -336,7 +374,7 @@
     <link href="http://lyk-love.cn/2023/04/14/Arm-Muscles/"/>
     <id>http://lyk-love.cn/2023/04/14/Arm-Muscles/</id>
     <published>2023-04-13T22:17:34.000Z</published>
-    <updated>2023-04-15T04:46:10.587Z</updated>
+    <updated>2023-06-06T15:26:29.970Z</updated>
     
     
     <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
@@ -359,11 +397,11 @@
   </entry>
   
   <entry>
-    <title>Arm Training</title>
-    <link href="http://lyk-love.cn/2023/04/14/Arm-Training/"/>
-    <id>http://lyk-love.cn/2023/04/14/Arm-Training/</id>
+    <title>Arms Training</title>
+    <link href="http://lyk-love.cn/2023/04/14/Arms-Training/"/>
+    <id>http://lyk-love.cn/2023/04/14/Arms-Training/</id>
     <published>2023-04-13T22:14:54.000Z</published>
-    <updated>2023-04-22T15:07:49.117Z</updated>
+    <updated>2023-06-06T10:11:29.385Z</updated>
     
     
     <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
@@ -429,50 +467,6 @@
     <category term="Hardware" scheme="http://lyk-love.cn/tags/Hardware/"/>
     
     <category term="Camera" scheme="http://lyk-love.cn/tags/Camera/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Cammera Manuel</title>
-    <link href="http://lyk-love.cn/2023/04/13/Cammera-Manuel/"/>
-    <id>http://lyk-love.cn/2023/04/13/Cammera-Manuel/</id>
-    <published>2023-04-13T14:51:42.000Z</published>
-    <updated>2023-04-13T13:20:38.829Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;For Fuji XA-7&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://fujifilm-dsc.com/en/manual/x-a7/&quot;&gt;FUJIFILM X-A7 Owner’s Manual&lt;/a&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Other Hobbies" scheme="http://lyk-love.cn/categories/Other-Hobbies/"/>
-    
-    
-    <category term="Camera" scheme="http://lyk-love.cn/tags/Camera/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Parallel Desktop</title>
-    <link href="http://lyk-love.cn/2023/04/03/Parallel-Desktop/"/>
-    <id>http://lyk-love.cn/2023/04/03/Parallel-Desktop/</id>
-    <published>2023-04-02T20:36:12.000Z</published>
-    <updated>2023-04-04T06:57:44.088Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;Outline:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Intro&lt;/li&gt;
-&lt;li&gt;Download&lt;/li&gt;
-&lt;li&gt;Use&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="Toolkit" scheme="http://lyk-love.cn/categories/Toolkit/"/>
-    
-    
-    <category term="Linux" scheme="http://lyk-love.cn/tags/Linux/"/>
     
   </entry>
   
