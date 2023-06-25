@@ -6,7 +6,7 @@
   <link href="http://lyk-love.cn/atom.xml" rel="self"/>
   
   <link href="http://lyk-love.cn/"/>
-  <updated>2023-06-08T07:04:33.510Z</updated>
+  <updated>2023-06-25T16:53:38.391Z</updated>
   <id>http://lyk-love.cn/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Test Netilify</title>
+    <link href="http://lyk-love.cn/2023/06/26/Test-Netilify/"/>
+    <id>http://lyk-love.cn/2023/06/26/Test-Netilify/</id>
+    <published>2023-06-26T00:53:38.000Z</published>
+    <updated>2023-06-25T16:53:38.391Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Test&quot;&gt;&lt;a class=&quot;header-anchor&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Forearm Muscles</title>
@@ -428,25 +449,6 @@
     <category term="Bodybuilding" scheme="http://lyk-love.cn/tags/Bodybuilding/"/>
     
     <category term="Anatomy" scheme="http://lyk-love.cn/tags/Anatomy/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Arms Training</title>
-    <link href="http://lyk-love.cn/2023/04/14/Arms-Training/"/>
-    <id>http://lyk-love.cn/2023/04/14/Arms-Training/</id>
-    <published>2023-04-13T22:14:54.000Z</published>
-    <updated>2023-06-07T17:06:31.257Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;My arms training plan.&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Fitness" scheme="http://lyk-love.cn/categories/Fitness/"/>
-    
-    
-    <category term="Bodybuilding" scheme="http://lyk-love.cn/tags/Bodybuilding/"/>
     
   </entry>
   
