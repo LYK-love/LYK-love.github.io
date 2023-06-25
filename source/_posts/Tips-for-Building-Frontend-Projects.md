@@ -75,7 +75,7 @@ Outline:
   ```
 
 * 对于`yarn`，`yarn add [package]`会将依赖信息写入`package.json`
-* 对于**`npm > 5.0`**，`npm install [package]`已经可以自动将依赖信息写入`package.json`了
+* 对于`npm > 5.0`，`npm install [package]`已经可以自动将依赖信息写入`package.json`了
 
 ### example
 
@@ -599,13 +599,13 @@ RUN npm run build
   },
 ```
 
-可以看到, `vue-cli-service **`都使用了`vue-cli-service`这个命令, 他对应了一系列依赖:
+可以看到, `vue-cli-service`都使用了`vue-cli-service`这个命令, 他对应了一系列依赖:
 
 ```json
-...    
+		<snip>  
 		"@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
-		...
+		<snip>
 ```
 
 这些依赖默认全部被安装到了devDependencies. 因此, 如果在install时使用了pro模式, 即只下载pro依赖, 则不会下载上述依赖, 也就会在`npm run build`时报错:

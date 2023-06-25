@@ -316,16 +316,16 @@ There are many ways to copy files over ssh:
   
   把本机文件传到远程：
   ````shell
-  scp path/to/local_file remote_host:path/to/remote_file
+   cat <local_file> | ssh  [-p <port>] <username>@<remote_host> "tee <remote_directory>/<filename>"
   ````
   
   传远程文件到本机：
   ```shell
-  scp remote_host:path/to/remote_file path/to/local_file
+  scp <username>@<remote_host>:<remote_file> <local_directory>
   ```
   
-  * `-r`:传文件夹
-  * scp没穿输完也会生成目标文件，因此断开scp传输后，你依然能在目标主机上看到目标文件，但是切记，这个文件是不完整的
+  * `-r`: 传文件夹
+  * scp没穿输完也会生成目标文件，因此断开scp传输后，你依然能在目标主机上看到目标文件，但是这个文件是不完整的.
 
 ​		
 

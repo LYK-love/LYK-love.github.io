@@ -4,13 +4,11 @@ tags: Bodybuilding
 categories: Fitness
 ---
 
+The traing plan of shoulder/deltoid.
 
+<!--more-->
 
-必须要做某种形式的推肩和侧平举.
-
-
-
-# Muscles
+# My Training Plan
 
 [Jeff 100肩膀训练计划](https://www.bilibili.com/video/BV1vB4y1j7DU/?share_source=copy_web&vd_source=9bb7bae2f9b5b41ed3bf1d8b955097d4)
 
@@ -18,113 +16,31 @@ categories: Fitness
 
 
 
-练肩膀其实就是练三角肌, 它分为前中后束三个部分.
+必须要做某种形式的推肩和侧平举.
 
-## Front Dell
+* Front Dell: 
+  * [Overhead Barbell Press]()
+* Middle Dell: 
+  * [Side Delts]()
+* Rear Dell:
+  * [Face Pull]()
+  * Bent-Over Reverse Dumbbell Fly
 
-![image-20221206122110672](/Users/lyk/Library/Application Support/typora-user-images/image-20221206122110672.png)
+# Front Dell
 
-## Middle Dell
+## Front Dumbbell Raise
 
-增加正面肩膀的宽度
+[之前说过](), 前平举的效益相比推举差得多, 因此没有必要练前平举.
 
-![image-20221206122225424](/Users/lyk/Library/Application Support/typora-user-images/image-20221206122225424.png)
 
-## Rear Dell
 
-![image-20221206122249054](/Users/lyk/Library/Application Support/typora-user-images/image-20221206122249054.png) 
+所谓的前平举就是把哑铃举到和肩膀平行.
 
+# Middle Dell
 
 
-# Tips
 
-各种前平举, 侧平举, 为了提高难度, 都应该做半程的
-
-# Actions
-
-## Middle Dell
-
-中束是最重要的部位, 因此也练得最多.
-
-### 侧平举
-
-
-
-身体略微前倾, 确保中立可以垂直地施加到中束 :
-
-![image-20230111000933638](/Users/lyk/Library/Application Support/typora-user-images/image-20230111000933638.png)
-
-
-
-大拇指高于小拇指, 来确保肩膀外旋:
-
-![image-20230111000857902](/Users/lyk/Library/Application Support/typora-user-images/image-20230111000857902.png)
-
-
-
-做到大臂平行于地面: 
-
-![image-20230111001659668](/Users/lyk/Library/Application Support/typora-user-images/image-20230111001659668.png)
-
-
-
-回位时不完全放下.
-
-### 哑铃弯举借力推
-
-肩膀放松下沉。 弯举到肩部后马上利用惯性推起哑铃。 
-
-![image-20221017132720317](/Users/lyk/Library/Application Support/typora-user-images/image-20221017132720317.png) 
-
-到顶部不要停留 ，并有控制地回位
-
-![image-20221017132749309](/Users/lyk/Library/Application Support/typora-user-images/image-20221017132749309.png)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Front Dell
-
-### Overhead Press
-
-同时练前束和中束.
-
-
-
-从肩膀举到头顶, 过程中手臂稍微外旋.
-
-![image-20221206122604278](/Users/lyk/Library/Application Support/typora-user-images/image-20221206122604278.png)
-
-
-
-![image-20221206122535655](/Users/lyk/Library/Application Support/typora-user-images/image-20221206122535655.png)
-
-
-
-我常用的过头举是Arnold Press, 和普通过头举相比, 它要求在起始位置, 双手掌心朝向自己:
-
-![image-20230111001226686](/Users/lyk/Library/Application Support/typora-user-images/image-20230111001226686.png)
-
-
-
-### Front Raises
-
-![image-20221206124106058](/Users/lyk/Library/Application Support/typora-user-images/image-20221206124106058.png)
-
-
-
-## Rear Dell
+# Rear Dell
 
 练后束时(包括哑铃提裤和哑铃后束划船))要注意:
 
@@ -133,7 +49,29 @@ categories: Fitness
 
 
 
-### DB Hip Huggers
+## Side Delts
+
+![image-20230602165223702](/Users/lyk/Library/Application Support/typora-user-images/image-20230602165223702.png)
+
+
+
+
+
+这个动作的缺点是: 后束的肌肉张力在最顶端达到最大值, 后面就会不断减小:
+
+![image-20230602165342865](/Users/lyk/Library/Application Support/typora-user-images/image-20230602165342865.png)
+
+
+
+因此可以只做3/4行程, 不下放到最底部.
+
+
+
+想象把哑铃画弧线举起来, 而不是拉起来, 这样可以降低斜方肌的参与.
+
+![image-20230602165419182](/Users/lyk/Library/Application Support/typora-user-images/image-20230602165419182.png)
+
+## DB Hip Huggers
 
 同时练中束和后束.
 
@@ -155,7 +93,9 @@ categories: Fitness
 
 ![image-20221206123429935](/Users/lyk/Library/Application Support/typora-user-images/image-20221206123429935.png)
 
-### Rear Delt Rows
+## Rear Delt Rows
+
+
 
 哑铃后束划船. 这个动作我做不好, 毫无感觉
 
@@ -178,3 +118,7 @@ categories: Fitness
 站姿:
 
 ![image-20221206125247181](/Users/lyk/Library/Application Support/typora-user-images/image-20221206125247181.png)
+
+# Tips
+
+对于各种前平举, 侧平举, 可以做半程来提高难度. 这个技巧只适用于对动作完全熟悉后的训练者.

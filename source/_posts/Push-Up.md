@@ -25,7 +25,7 @@ Outline:
 
 [Jeff 俯卧撑](https://www.bilibili.com/video/BV1tr4y187xG/?share_source=copy_web&vd_source=9bb7bae2f9b5b41ed3bf1d8b955097d4)
 
-
+[Jeff 俯卧撑注意事项](https://www.bilibili.com/video/BV1T4411h7ov)
 
 保证颈椎的中立位. 和俯卧撑一样,  下巴内收. 不要通过把头向后顶借力.
 
@@ -95,6 +95,8 @@ Outline:
 
 ![Standard Push Up bottom position](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Bodybuilding/Push%20Up/Standard%20Push%20Up%20bottom%20position.png)
 
+为了达到完整行程, 最底端胸部要几乎碰到地面.
+
 
 
  ## 最顶端
@@ -105,7 +107,7 @@ Outline:
 
 
 
-为了做到完整行程, 需要在最顶端把手臂伸直.  当然了, 为了避免伤到手臂, 需要把上升和下沉的过程都做得慢一些.
+为了做到完整行程, 需要**在最顶端把手臂伸直**.  当然了, 为了避免伤到手臂, 需要把上升和下沉的过程都做得慢一些.
 
 
 

@@ -18,11 +18,21 @@ Outline:
 
 <!--more-->
 
+
+
+# Intro
+
+为了做到100%的跨平台和可移植性, 我争取使用跨平台的工具, 并且使用dotfile来管理这些工具的配置文件.
+
 # Terminal Emulators
 
-MacOS常用的终端模拟器是iTerms2, 而Linux KDE使用Konsole. 这两个**都不能跨平台**, 并且iTerms2相比Konsole很垃圾.  
+MacOS常用的终端模拟器是iTerm2, 而Linux KDE使用Konsole. 这两个**都不能跨平台**.
 
-因此, 可以把终端换成跨平台的Alacritty
+Alacritty是一个跨平台的终端, 但是有一些小小的问题.
+
+为了能正常使用, 目前我还是用iTerm2.
+
+
 
 ## Konsole
 
@@ -32,8 +42,41 @@ Linux上无敌, 可惜MacOS不能用
 
 和MacOS无缝集成, 开箱即用. 但是它也不能跨平台, 所以**没必要对它进行过度的配置**. 
 
+
+
+到 Settings -> Appearance -> General 中，将 **Theme** 设置为 Minimal， 将 **Status bar location** 设置为 Bottom。
+
+
+
+
+
+https://icloudnative.io/posts/customize-iterm2-1/
+
+
+
+在安装完 iTerm2 的 `shell integration` 后会在终端界面中最左侧多出一个**蓝色三角形**的标记。如图：
+
+![img](https://hugo-picture.oss-cn-beijing.aliyuncs.com/images/20200310155736.png)
+
+有蓝色三角形的标记说明当前 shell 支持 shell integration。如需关闭标记，可以在 `iTerm2 > Preferences > Profiles > (your profile) > Terminal 最下面 > Shell Integration` 关闭 `Show mark indicators` 。
+
+
+
+
+
+Open iTerm2, go to Preferences > Profiles > Text > Select the "Fira code" font, mark "Use ligatures". Do the same to "Non-ASCII Font".
+
+
+
+In iTerm2 Preferences > Advanced > Drawing (or just search for 'ligature'), change the *Improves drawing performance at the expense of disallowing alphanumeric characters to belong to ligatures* setting to *No*. This allows the "www" and "0xFF" ligatures to display correctly with Fira Code.
+
+https://stackoverflow.com/questions/59128426/firacode-ligatures-not-working-in-iterm-2
+
+
+
 ## Alacritty
 
+* [Official Website](https://alacritty.org/index.html)
 * [Github Repo](https://github.com/alacritty/alacritty)
   * [Installation](https://github.com/alacritty/alacritty#installation)
   * [Configuration](https://github.com/alacritty/alacritty#configuration)
@@ -51,6 +94,23 @@ Linux上无敌, 可惜MacOS不能用
 ### Config
 
 [Github Configuration Official Doc](https://github.com/alacritty/alacritty#configuration)
+
+https://clubmate.fi/alacritty
+
+
+
+| Cmd+0      | ResetFontSize    |
+| ---------- | ---------------- |
+| Cmd+Equals | IncreaseFontSize |
+| Cmd+Plus   | IncreaseFontSize |
+| Cmd+Minus  | DecreaseFontSize |
+
+
+
+| Cmd+Q | Quit             |
+| ----- | ---------------- |
+| Cmd+W | Quit             |
+| Cmd+N | SpawnNewInstance |
 
 * 配置文件位置: 
 
@@ -82,6 +142,83 @@ Linux上无敌, 可惜MacOS不能用
   `\x02\x63`就是`<Ctrl+b> + c`的十六进制表示, 可以用[`xxd -ps`](# xxd )验证
 
 * I have also been playing with [Zellij](https://zellij.dev/), a full terminal workspace manager that combines the best of tmux with native tabs and scrollback. 
+
+## WezTerm
+
+https://wezfurlong.org/wezterm/install/macos.html
+
+比Alacritty大, 比Alacritty慢, 并且对OSX支持很差. 在换屏幕时有bug.
+
+
+
+https://github.com/Ji4n1ng/OpenInTerminal
+
+
+
+Check Finder Extension permission
+
+Open the OpenInTerminal app. Go to `System Preferences` -> `Extensions` -> `Finder Extensions`, check the permission button as below.
+
+
+
+
+
+## Config
+
+https://draculatheme.com/wezterm
+
+```
+ln -s /Users/lyk/Projects/MyOfficialProjects/dotfiles/wezterm-dracula_theme/dracula.toml $HOME/.config/wezterm/colors/dracula.toml
+```
+
+
+
+
+
+使用键盘快捷键：按下 `Alt` 键和 `Enter` 键，这将切换 WezTerm 窗口到全屏模式。按下相同的快捷键可以切换回普通模式。
+
+
+
+
+
+```lua
+-- Pull in the wezterm API
+local wezterm = require("wezterm")
+
+-- This table will hold the configuration.
+local config = {}
+
+-- In newer versions of wezterm, use the config_builder which will
+-- help provide clearer error messages
+if wezterm.config_builder then
+	config = wezterm.config_builder()
+end
+
+-- This is where you actually apply your config choices
+
+-- For example, changing the color scheme:
+config.color_scheme = "Dracula (Official)"
+
+config.tab_bar_at_bottom = true
+
+config.use_fancy_tab_bar = false
+config.window_decorations = "RESIZE"
+
+-- Font
+config.font = wezterm.font("Fira Code")
+config.font_size = 14.0
+
+-- and finally, return the configuration to wezterm
+return config
+```
+
+
+
+
+
+
+
+使用键盘快捷键：按下 `Alt` 键和 `Enter` 键，这将切换 WezTerm 窗口到全屏模式。按下相同的快捷键可以切换回普通模式。
 
 # Zsh
 
@@ -140,56 +277,113 @@ bash -c zsh
 
 
 
-# Ohmyzsh
+# Oh-my-zsh
 
-1. clone mirror:
+## Install
 
-   github安装oh-my-zsh（很慢）
+https://github.com/ohmyzsh/ohmyzsh#basic-installation
 
-   ```shell
-   sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-   ```
 
-   
 
-   gitee安装oh-my-zsh: (国内用这个 )
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+
+
+可能遇到报错: Failed to connect to raw.githubusercontent.com port 443 after 7 ms: Couldn't connect to server.
+
+这是因为域名被墙了导致的. 可以设置代理再重新下载:
+
+```
+export https_proxy=http://127.0.0.1:7890
+```
+
+(`7890`换成你用的VPN对https代理所用的实际端口)
+
+
+
+对于国内用户, 可以:
+
+1. 从gitee下载oh-my-zsh的安装脚本:
 
    ```shell
    wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh
    ```
 
-   
-
 2. 执行`install.sh`
 
-3. 如果发现install很慢，可以修改为gitee：
-   `vim install.sh`
-   找到以下部分：
+3. `install.sh`会clone github的Oh-my-zsh仓库. 如果访问不了github, 可以修改脚本, 把仓库地址换成gitee的:
 
-   ```shell
-   # Default settings
-   ZSH=${ZSH:-~/.oh-my-zsh}
-   REPO=${REPO:-ohmyzsh/ohmyzsh}
-   REMOTE=${REMOTE:-https://github.com/${REPO}.git}
-   BRANCH=${BRANCH:-master}
-   ```
+   1. `vim install.sh`
+
+   2. 找到以下部分：
+
+      ```shell
+      # Default settings
+      ZSH=${ZSH:-~/.oh-my-zsh}
+      REPO=${REPO:-ohmyzsh/ohmyzsh}
+      REMOTE=${REMOTE:-https://github.com/${REPO}.git}
+      BRANCH=${BRANCH:-master}
+      ```
+
+   3. 将中间两行改为：
+
+         ```shell
+      REPO=${REPO:-mirrors/oh-my-zsh}
+      REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
+         ```
+
+
+## Details
+
+Oh-my-zsh会创建`~/.zshrc`这个shell文件, 并将其作为配置文件. 
+
+默认的`/.zshrc`文件中有如下内容:
+
+```shell
+# ...
+export ZSH="$HOME/.oh-my-zsh"
+
+# ...
+
+plugins=(git zsh-syntax-highlighting  zsh-autosuggestions fasd)
+
+source $ZSH/oh-my-zsh.sh
+# ...
+```
+
+zsh会执行`~/.zshrc`这个shell文件.  
+
+可以看到, 默认会设置Oh-my-zsh的目录为`~/.oh-my-zsh`, 记为环境变量`$ZSH`
+
+```
+ZSH="$HOME/.oh-my-zsh
+```
 
 
 
+在`~/.zshrc`中还会执行`$ZSH/oh-my-zsh.sh`文件.
 
+`$ZSH/oh-my-zsh.sh`定义了一些环境变量:
 
-   将中间两行改为：
+* `ZSH_CUSTOM`: 默认为`$ZSH/custom`, 即`~/.oh-my-zsh/custom`
 
-   ```shell
-REPO=${REPO:-mirrors/oh-my-zsh}
-REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
-   ```
+  ```
+  # Set ZSH_CUSTOM to the path where your custom config files  Haltarys, 2023-06-21 - fix(docker): use `command docker` (#11766)                                      1 # and plugins exists, or else we will use the default custom/
+  if [[ -z "$ZSH_CUSTOM" ]]; then                                                                                                                                     	ZSH_CUSTOM="$ZSH/custom"
+  fi
+  ```
+
+  
 
 ## Plugins Installation
 
+Use Oh-My-Zsh to manage plugins.
+
 * 如果使用brew, yay等包管理工具安装插件, 会把插件安装在`$ZSH/plugins`,这些插件被称为""standard plugins"
 
-* 如果使用git clone安装插件, 则这些插件被称为"custom plugins", 需要被clone到`$ZSH_CUSTOM/plugins` (默认位置是 `~/.oh-my-zsh/custom/plugins`)
+* 如果使用git clone安装插件, 则文件需要被clone到到`$ZSH_CUSTOM/plugins`, 这些插件被称为"custom plugins", .
 
 * 所有插件在安装完毕后,都需要在`~/.zshrc`的`plugins`中配置:
 
@@ -199,26 +393,55 @@ REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
 
 * 修改完配置文件后记得`source ~/.zshrc`, 然后重新启动shell
 
-## Plugins
+### zsh-autosuggestions
 
-### autosuggestion && highlighting
+[How to install](https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md#oh-my-zsh)
 
-* 安装` autosuggestion`：( github非常慢，改用gitee ) (这里直接用环境变量+重定向，不需要在指定目录下clone了)
+这里直接用环境变量+重定向，不需要在指定目录下clone了
 
-  ```shell
-  git clone https://gitee.com/phpxxo/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-  ```
+1. Clone this repository into `$ZSH_CUSTOM/plugins` (by default `~/.oh-my-zsh/custom/plugins`)
+
+   ```
+   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+   ```
+
+   
+
+2. Add the plugin to the list of plugins for Oh My Zsh to load (inside `~/.zshrc`):
+
+   ```
+   plugins=( 
+       # other plugins...
+       zsh-autosuggestions
+   )
+   ```
+
+   
+
+3. Start a new terminal session.
+
+### zsh-syntax-highlighting
+
+[How to install](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#oh-my-zsh)
 
 
+* 1. Clone this repository in oh-my-zsh's plugins directory:
 
+     ```
+     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+     ```
 
-* 安装`syntax-highlighting`：
-
-  ```shell
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-  ```
-
-  [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md)
+     
+  
+  2. Activate the plugin in `~/.zshrc`:
+  
+     ```
+     plugins=( [plugins...] zsh-syntax-highlighting)
+     ```
+  
+     
+  
+  3. Restart zsh (such as by opening a new instance of your terminal emulator).
 
 ### fasd & autojump
 
@@ -264,9 +487,87 @@ REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
   yay -S autojump
   ```
 
-# Zsh Theme
+## Uninstall
 
-目前用[powlevel10k](https://github.com/romkatv/powerlevel10k/blob/master/README.md)， 主页上给了中国大陆的下载方式, oh-my-zsh下：
+https://github.com/ohmyzsh/ohmyzsh#uninstalling-oh-my-zsh
+
+If you want to uninstall `oh-my-zsh`, just run `uninstall_oh_my_zsh` from the command-line. It will remove itself and revert your previous `bash` or `zsh` configuration.
+
+
+
+# Zsh Themes
+
+## Dracula
+
+ [Dracula](https://draculatheme.com/): 该网站收集了Dracula主题配色方案, 可以应用于各种终端模拟器和Shell.
+
+* [Dracula for Zsh](https://draculatheme.com/zsh)
+
+Install using Git: 
+
+1. Clone.
+
+   ```
+   git clone https://github.com/dracula/zsh.git
+   ```
+
+2. Move an rename it to some place. For me, I move it under my dotfiles folder(`$DOT_FILE_HOME`) as `zsh-dracula_theme`
+
+   ```
+   mv zsh $DOT_FILE_HOME/zsh-dracula_theme
+   ```
+
+3. Create env vatiable for it in `~/.zshrc`:
+
+   ```
+   export DRACULA_THEME="$DOT_FILE_HOME/zsh-dracula_theme"
+   ```
+
+4. And creating a symbolic link to [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/)'s theme folder:
+
+   ```
+   ln -s $DRACULA_THEME/dracula.zsh-theme $OH_MY_ZSH/themes/dracula.zsh-theme
+   ```
+
+   Note, you must set `$OH_MY_ZSH`  as [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh/)'s theme folder first.
+
+   By default, the theme folder is already defined in `~/.zshrc`:
+
+   ```
+   export ZSH="$HOME/.oh-my-zsh"
+   ```
+
+    `$OH_MY_ZSH`   is just the same as it. So append in `~/.zshrc`:
+
+   ```
+   export OH_MY_ZSH=$ZSH
+   ```
+
+5. Go to your `~/.zshrc` file and set `ZSH_THEME="dracula"`.
+
+
+
+### Customization
+
+https://github.com/dracula/zsh
+
+
+
+官网上给了一些自定义的配置方式, 我只选择增加username显示.
+
+
+
+In `~/.zshrc`:
+
+```
+export DRACULA_DISPLAY_CONTEXT=1
+```
+
+## powlevel10k
+
+[Github Repo](https://github.com/romkatv/powerlevel10k/blob/master/README.md)
+
+主页上给了中国大陆的下载方式. 如果使用oh-my-zsh, 下载方式为：
 
 1. Clone the repository:
 
@@ -286,17 +587,17 @@ REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
 
 5. 后续可以继续用`p10k configure`重新开始配置， 或者手动更改配置文件：`~/.p10k.zsh`
 
-   * 为了对配置文件进行版本管理, 我对`~/.p10k.zsh`使用了符号链接.  `~/.p10k.zsh`实际是指向`/Users/lyk/Projects/MyOfficialProjects/dotfiles/.p10k.zsh`的符号链接. 
-   * 新版p10k是可以正确识别符号链接的, 因此`p10k configure`会在`/Users/lyk/Projects/MyOfficialProjects/dotfiles/.p10k.zsh`处生成配置文件. 
-   * 但老版本p10k没有这个支持, 每次`p10k configure`后, 生存的配置文件都位于`~/.p10k.zsh`, 覆盖了原来的符号链接, ,**需要手动修**改.
-
-## p10k 
+   * 为了对配置文件进行版本管理, 我对`~/.p10k.zsh`使用了符号链接.  `~/.p10k.zsh`实际是指向`~/Projects/MyOfficialProjects/dotfiles/.p10k.zsh`的符号链接. 
+   * 新版的p10k是可以正确识别符号链接的, 当`~/.p10k.zsh`是一个指向`$DOT_FILE_HOME/.p10k.zsh`的符号连接时, `p10k configure`会在`$DOT_FILE_HOME`处生成(or 重新生成)配置文件. 
+   * 而老版本p10k没有无法正确识别, 每次`p10k configure`后, 生成的配置文件都位于`~/.p10k.zsh`, 覆盖了原来的符号链接, ,**需要手动修**改.
 
 
 
-## Notes
+### Notes
 
-* Linux上默认配置不开启username@hostname 的显示，参加官方文档的“How do I add username and/or hostname to prompt?”. 也可以将这行注释掉：
+* p10k虽然效果很华丽, 配置也方便, 但是它支持的字体中不包括Fira Code, 因此我选择了Dracula作为主题.
+
+* p10k在Linux的默认配置不开启username@hostname 的显示，参加官方文档的“How do I add username and/or hostname to prompt?”. 也可以将这行注释掉：
 
   ```shell
   # Don't show context unless running with privileges or in SSH.
@@ -306,6 +607,12 @@ REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
 
 
 # Font
+
+## Fira Code
+
+https://github.com/tonsky/FiraCode
+
+
 
 ## p10k Fonts
 

@@ -38,7 +38,13 @@ Ubuntu:
 apt-cache search openjdk
 ```
 
-安装
+安装:
+
+```
+sudo apt-get install upgrade
+```
+
+
 
 ```shell
 sudo apt-get install openjdk-8-jdk

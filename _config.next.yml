@@ -433,8 +433,9 @@ font:
   enable: true
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
+  # 之前用https://fonts.lug.ustc.edu.cn 挂了....
   # For accessibility in China mainland, I replace it with ustc source
-  host: https://fonts.lug.ustc.edu.cn
+  host: https://fonts.googleapis.com
 
   # Font options:
   # `external: true` will load this font family from `host` above.

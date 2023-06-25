@@ -604,14 +604,29 @@ font:
 
 1. First, copy `<hexo>/themes/next/source/css/_variables/base.styl` to `<hexo>/source/_data/`. Rename `<hexo>/source/_data/base.styl` to `<hexo>/source/_data/variables.styl`. 
 
-2. Edit `<hexo>/source/_data/variables.styl`:
+2. Edit `<hexo>/source/_data/variables.styl`, clear it original content, then add:
 
    ```stylus
-   // Font families.
-   //$font-family-chinese      = 'PingFang SC', 'Microsoft YaHei';
-   //Use `Noto Serif SC`as chinese font
+   # use 'Noto Serif SC'
    $font-family-chinese      = 'Noto Serif SC', Monaco, Consolas, Ubuntu Mono, monospace;
+   
+   $font-family-base         = $font-family-chinese, sans-serif;
+   $font-family-base         = get_font_family('global'), $font-family-chinese, sans-serif if get_font_family('global');
+   
+   $font-family-logo         = $font-family-base;
+   $font-family-logo         = get_font_family('title'), $font-family-base if get_font_family('title');
+   
+   $font-family-headings     = $font-family-base;
+   $font-family-headings     = get_font_family('headings'), $font-family-base if get_font_family('headings');
+   
+   $font-family-posts        = $font-family-base;
+   $font-family-posts        = get_font_family('posts'), $font-family-base if get_font_family('posts');
+   
+   $font-family-monospace    = consolas, Menlo, monospace, $font-family-chinese;
+   $font-family-monospace    = get_font_family('codes'), consolas, Menlo, monospace, $font-family-chinese if get_font_family('codes');
    ```
+
+   This will overwrite `<hexo>/themes/next/source/css/_variables/base.styl` 's config with custom file's config.
 
 3. Create file `<hexo>/source/_data/head.njk` , then input:
 
@@ -638,19 +653,6 @@ font:
    ```
 
 
-
-> 2023.5.5 update: 目前的custom file只允许添加配置, 但不允许覆盖配置.
->
-> 因此上面的方法对于`head.njk`是可行的, 但对于`base.styl`就不行. 因为我在`variables.styl`里定义的`$font-family-chinese `并不能覆盖`base.styl`的`$font-family-chinese`. 我也不能简单地copy `base.styl`然后修改, 这会导致网站中存在两份`base.styl`. 因此对于`base.styl`, 目前只能直接编辑其内容:
->
-> ```
-> // Font families.
-> //$font-family-chinese      = 'PingFang SC', 'Microsoft YaHei';
-> //Use `Noto Serif SC`as chinese font
-> $font-family-chinese      = 'Noto Serif SC', Monaco, Consolas, Ubuntu Mono, monospace;
-> ```
->
-> 而不能用custom file.
 
 ## Code Block
 

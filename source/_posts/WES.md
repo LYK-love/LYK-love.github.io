@@ -80,9 +80,29 @@ World Education Services (简称WES) 是广受美国高校认可的第三方学�
 
 # 学信网认证
 
-300 rmb
+在这一章会介绍如何在学信网上申请各种认证. 
 
-* 进入申请系统: 进入[学信网](https://www.chsi.com.cn/) -> 出国教育背景信息服务 -> 点击进入网上申请系统
+对于WES而言, 需要学生做:
+
+1. “学历验证”
+2. ”成绩验证“. 
+3. "学籍验证"
+
+对于在读的学生则不需要“学历验证”, 因为在读生还没有学历.
+
+
+
+“学历验证”和”成绩验证“都需要一个月左右完成. 并且中文版比英文版提前几天完成. 由于在给WES和国外大学发送报告时都必须发送英文版本, 所以必须得等英文版报告处理完后才可以进行[报告发送](#学信网发送报告).
+
+
+
+## 成绩验证报告
+
+Cost: 300 rmb
+
+Time: about 1 month
+
+* 进入申请系统: 进入[学信网](https://www.chsi.com.cn/) -> 出国教育背景信息服务 -> 点击进入网上申请系统.
 
   * 如果材料提交并付款完成, 在网申页面可以看到申请进度:
 
@@ -90,9 +110,11 @@ World Education Services (简称WES) 是广受美国高校认可的第三方学�
 
   
 
-* 申请认证: 在读学生只需要选择“中英文成绩认证”( 各150元, 共**300**元 ), 不需要做“学历认证”( 因为在读生还没有学历 )
+* 申请认证: 选择“中英文成绩认证”( 各150元, 共**300**元 ). 
 
-## 认证过程
+
+
+接下来进行一系列填表, 注意事项如下:
 
 * 应得总学分: 填已经获得的学分
 
@@ -104,60 +126,78 @@ World Education Services (简称WES) 是广受美国高校认可的第三方学�
   * 填且只填成绩单上有成绩的课( 因为课程成绩是必填项 )
     * 对于重修课,重修前和重修后的两门课都要填, 成绩也照样写
     * 对于退选课, 因为成绩单上只有课程名, 没有课程成绩, 因此不要填
-  * 南大成绩单上的星号是选修的意思, 因此星号不需要输入
+  * 南大成绩单上的星号是选修的意思, 因此课程名中的星号不需要输入
   * **课程顺序要和成绩单上的一样**
   * 最后记得核对一下网站从excel中识别出的课程( 课程名, 课程数 )和自己成绩单上的课程
 
+### 成绩验证报告的办理结果
+
+完成之前所说的的[学信网认证](#学信网认证)后, 会收到学信网的短信通知, 然后就可以在学信网上查看认证进度:
+
+如前所述, 这里只办理了成绩验证报告, 没有办理学历验证报告.
+
+![Xuexinwang Sending WES1](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES1.png)
+
+* 注意, 之前说过中文报告会比英文报告早两天出, 但是学信网会在中文报告办理完后就显示“结果已出”, 让人误以为中英文报告都出了.
+
+  ![Xuexinwang Sending WES2](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES2.png)
+
+必须再等两天, 直到英文报告也办理完成.
+
+## 学籍验证报告
+
+Cost: 30 rmb
+
+Time: 1h
+
+
+
+由于我们没毕业, 没有学历和学位, 因此只需要做“**学籍在线验证报告**”, 先前往[学信档案网](https://my.chsi.com.cn/archive/index.action):
+
+1. “在线验证报告” -> "教育部学籍在线验证报告"
+
+   ![Xuexinwang Sending WES3](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES3.png)
+
+2. 再在“[出国报告发送](https://my.chsi.com.cn/archive/gjhz/foreign/index.action)”的“英文翻译”中选择“学籍在线验证报告”翻译服务, 支付30元服务费进行学籍报告的翻译. 学籍报告的翻译只需要**一个小时.**
+
+   * 以前这个功能位于“国际合作申请”模块, 但是现在该模块已经改名为“出国报告发送".
+   * 可在[出国报告发送](https://my.chsi.com.cn/archive/gjhz/foreign/index.action) ->首页 查看结果:
+
+   ![Xuexinwang Sending WES4](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES4.png)
+
+
+
 # 学信网发送报告
 
-1. 学信网认证完后会发短信通知, 然后就可以在学信网查看认证进度:
+学信网发送报告的[流程](https://www.chsi.com.cn/en/help/howtoapply_c.jsp):
 
-   ![Xuexinwang Sending WES1](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES1.png)
+![Xuexinwang Sending Process](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES%20Process.png)上面这张图的意思是: 只有同时完成了左边(“申请学籍、学历、学位在线验证报告”)和右边(“成绩验证报告”)的步骤, 才能发送报告. 之前我们已经得到了左边和右边的报告, 满足了上述要求, 接下来就要进行“发送报告”了.
 
-   * 注意, 之前办理的是中英文认证, 现在只提示中文认证办完了, 因此还得等两天, 等英文认证结果. 但学信网在这一点上很蠢, 他会显示“结果已出”, 让人误以为中英文报告全出了...
 
-     ![Xuexinwang Sending WES2](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES2.png)
 
-2. 发送报告流程: https://www.chsi.com.cn/en/help/howtoapply_wes.jsp:
 
-   ![Xuexinwang Sending Process](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES%20Process.png)
 
-   上面这张图很有迷惑性, 事实上它的意思是: “申请学籍、学历、学位在线验证报告(的翻译)”和“申请成绩验证报告”都完成后才能向WES“发送报告”.  右边要求(“成绩验证报告”)我们已经办完了, 只需完成左边要求.
-
-3. 由于我们没毕业, 没有学历和学位, 因此只需要做“学籍在线验证报告”,先前往[学信档案网](https://my.chsi.com.cn/archive/index.action).
-
-   1.  做“在线验证报告” -> "教育部学籍在线验证报告"
-
-      ![Xuexinwang Sending WES3](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES3.png)
-
-   2. 再在“出国报告发送”的“英文翻译”中选择“学籍在线验证报告”翻译服务, 支付30元服务费, 等一个小时出学籍翻译.
-
-      * 以前这个功能位于“国际合作申请”模块, 但是现在该模块已经改名为“出国报告发送"
-      * 可在[出国报告发送](https://my.chsi.com.cn/archive/gjhz/foreign/index.action)查看结果:
-
-      ![Xuexinwang Sending WES4](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES4.png)
-
-4. 接下来点击“发送报告”. 或者点击步骤一图中学信网给的的“发送报告”:
+1. 点击上图中的“发送报告”, 就会跳转到如下的页面. 也可以点击 [出国报告发送](https://my.chsi.com.cn/archive/gjhz/foreign/index.action) -> 首页 -> 发送报告 来进入这个页面:
 
    ![Xuexinwang Sending WES5](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES5.png)
 
-   注意我们是要发送给WES而不是具体的国外学校.
+   我们要发送给WES, 而不是具体的国外学校.
 
-5. 选择“下一步”, 进行选择报告. 注意,这里只能选择翻译件, 也就是**学籍报告**(对于未毕业本科生来说)和**成绩验证报告**的翻译件.
+2. 选择“下一步”, 进行选择报告. 注意,这里只能选择翻译件, 也就是**学籍验证报告**(对于未毕业本科生来说)和**成绩单验证报告**的翻译件.
 
    ![Xuexinwang Sending WES6](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES6.png)
 
-   * 之前提到了, 英文成绩验证报告要在中文的四五天左右才出, 因此这一步得等英文报告做完后才能进行. 否则就会出现无法绑定成绩报告等情况:
+   * 之前提到了, 英文的成绩单验证报告要在中文版本办理完后的四五天左右才出, 因此这一步得等英文报告做完后才能进行. 否则就会出现“无法绑定“成绩单验证报告的情况:
 
    ![Xuexinwang Sending WES7](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES7.png)
 
    * 这里即使我们点击“绑定”并进行对应操作, 绑定的也是中文报告, 是没用的, 返回该页面后照样显示“尚未绑定”. 因为它要求的是绑定“翻译件”. 我们只能等英文报告了.
 
-6. 最后选择发送报告. 之后可以查看进度:
+3. 最后选择发送报告. 之后可以查看进度:
 
    ![Xuexinwang Sending WES8](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES8.png)
 
-7. WES收到学信网的材料后, 进度会变成"in process":
+4. WES收到学信网的材料后, 进度会变成"in process":
 
    ![Xuexinwang Sending WES9](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Xuexinwang%20Sending%20WES9.png)
 
@@ -165,4 +205,21 @@ World Education Services (简称WES) 是广受美国高校认可的第三方学�
 
    ![Evaluation Update Email](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Study%20Abroad/Evaluation%20Update%20Email.png)
 
-8. 一般在10个工作日左右完成认证，并将认证报告寄给申请人
+5. WES一般在10个工作日左右完成认证，并会将纸质的认证报告寄给申请人.
+
+# 附: 学信网向邮箱发送报告
+
+学信网的报告都在右上角有一个邮箱按钮:
+
+![Xuexinwang Sending through Email](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Study-Abroad/WES/Xuexinwang%20Sending%20through%20Email.png)
+
+
+
+可以通过该按钮来直接把该报告发送给某个邮箱. 
+
+发送报告给WES的过程还是以之前的为准, 邮箱发送仅适用于一些特殊情况. 例如研究生学校要求学生出具电子成绩单, 并且该成绩单不能通过学生个人的邮箱, 而是由学校的官方部门或者别的什么部门发送. 此时如果该学生在学信网上进行了完整的成绩单的验证, 就可以通过这种方式直接把电子成绩单(中文版和英文版)寄送给学校.
+
+> 其实推荐的方法是找学校的教务处或者其他部门来发送, 用学信网发送只是一种可能可行的方法.
+
+
+

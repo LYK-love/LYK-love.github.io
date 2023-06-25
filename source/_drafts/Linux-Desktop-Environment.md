@@ -6,6 +6,28 @@ tags:
 categories: Computer Science
 ---
 
+https://web.stanford.edu/group/farmshare/cgi-bin/wiki/index.php/X_Window_System
+
+
+
+
+
+https://www.linuxfordevices.com/tutorials/linux/desktop-environment-vs-window-manager
+
+
+
+https://medium.com/@mikegrindle/an-introduction-to-standalone-linux-window-managers-f1d0dbf9664e
+
+
+
+https://blog.desdelinux.net/en/display-manager-gestores-inicio-sesion-linux/
+
+
+
+https://www.linuxfromscratch.org/museum/blfs-museum/5.1/BLFS-5.1/x/wm.html#:~:text=A%20window%20manager%20is%20a,of%20integrated%20utilities%20and%20applications.
+
+
+
 
 
 Desktop Environment包括:

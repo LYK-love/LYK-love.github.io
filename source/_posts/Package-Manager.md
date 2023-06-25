@@ -230,11 +230,9 @@ Create a new environment
 conda create --name [project-env] python=3.7
 ```
 
-
-
 <u>The environments created by Anaconda is always located in `~/anaconda3/envs/`( 对于Miniconda: `~/miniconda3/envs/`)
 
-
+* 注意， 不要写成`python==3.7`. conda和pip不同. conda安装依赖只需要一个等号.
 
 <u> You may change the default location by using the following command but it is not encouraged.</u> Conda can no longer find your environment by your environment name, you will have to specify the environment’s full path to activate it every time.
 

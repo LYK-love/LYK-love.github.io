@@ -77,11 +77,14 @@ Outline:
 
 ![Standard Pull Up tighten core](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Bodybuilding/Pull%20Up/Standard%20Pull%20Up%20tighten%20core.png)
 
-## 手指向内挤压
+# 握杠
 
-[ Jeff 引体向上错误检查清单](https://www.bilibili.com/video/BV1aJ411u7Dg/?share_source=copy_web&vd_source=9bb7bae2f9b5b41ed3bf1d8b955097d4)
+* 手指向内挤压: 握住杆时, 手向内挤压. 特别是要用无名指和小指, 因为这两根手指是握力中的短板, 通过这个方式可以着重训练这两根手指, 发展握力.
+  * [ Jeff 引体向上错误检查清单](https://www.bilibili.com/video/BV1aJ411u7Dg/?share_source=copy_web&vd_source=9bb7bae2f9b5b41ed3bf1d8b955097d4)
+* 把杠子握的更深一点, 也就是握杠的位置离掌根更近.
+  * [Jeff 背部训练6个最大的经验教训](https://www.bilibili.com/video/BV1Kt411Y7wm/)
 
-握住杆时, 手向内挤压. 特别是要用无名指和小指, 因为这两根手指是握力中的短板.
+
 
 
 

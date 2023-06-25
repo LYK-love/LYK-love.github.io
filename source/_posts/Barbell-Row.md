@@ -69,7 +69,9 @@ Outline:
 
 背部**全程保持稳定**, 不要通过摆荡来借力. 尤其不要通过站起来来借力.
 
+Mastertips:
 
+* [想象把胸往杠铃上撞](https://www.bilibili.com/video/BV1Kt411Y7wm). 这个向外撞胸的想象在划船, 引体, 高位下拉中都有用.
 
 手肘不能朝外. 错误示范:
 
@@ -82,6 +84,12 @@ Outline:
 
 
 上拉杠铃的时候, 把杠铃往两边, 想象把杠铃掰成两半. 这样更能刺激背阔肌.
+
+![image-20230523220329843](/Users/lyk/Library/Application Support/typora-user-images/image-20230523220329843.png)
+
+
+
+
 
 
 

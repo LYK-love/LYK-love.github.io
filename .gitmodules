@@ -1,3 +1,4 @@
 [submodule "themes/next"]
 	path = themes/next
-	url = git@github.com:LYK-love/hexo.git
+  #url = git@github.com:LYK-love/hexo.git
+  url = https://github.com/LYK-love/LYK-love.github.io.git

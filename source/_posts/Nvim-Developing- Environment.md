@@ -5,6 +5,7 @@ tags:
 - Editor
 categories: Toolkit
 date: 2022-08-17 22:52:46
+
 ---
 
 
@@ -56,13 +57,29 @@ Nvim和VSCode是两个主流的编辑器/IDE.
   1. 使用 sudo -E nvim ... 打开文件 （最快速的方法，不过每次都需要加上 -E, 有点麻烦）
   2. 修改 sudo 的配置文件: /etc/sudoers(如果用nvim打开是空文件的话，可以试一下用vim 或者 visudo打开，后面就不细说了，超纲了)
 
-
+ 
 
 # Nvim Config
 
 使用[ayamir的Nvim配置](https://github.com/ayamir/nvimdots/),  它集成了大量插件, 包括Nvim + LSP + Dap.
 
 其配置文件位于`~/.config/nvim/lua`
+
+
+
+插件实际的安装路径在
+
+```text
+~/.local/share/nvim/site/lazy
+```
+
+
+
+所有你可以简单修改的设置都放在`lua/core/settings.lua`里
+
+
+
+https://github.com/TheZoraiz/ascii-image-converter#cli-usage
 
 
 
@@ -183,6 +200,38 @@ https://github.com/williamboman/nvim-lsp-installer#available-lsps
 # Dap
 
 [Official Repositoty](https://github.com/mfussenegger/nvim-dap)
+
+
+
+ *dap*.adapters 用来配置如何启动调试器， *dap*.configurations 用来配置如何将当前项目*加载*到调试器上
+
+https://zignar.net/2023/02/17/debugging-neovim-with-neovim-and-nvim-dap/
+
+```
+if command -v curl >/dev/null 2>&1; then
+    bash -c "$(curl -fsSL https://github.com/ayamir/nvimdots/blob/main/scripts/install.sh)"
+else
+    bash -c "$(wget -O- https://github.com/ayamir/nvimdots/blob/main/scripts/install.sh)"
+fi
+```
+
+
+
+```
+To use the bundled libc++ please add the following LDFLAGS:
+  LDFLAGS="-L/opt/homebrew/opt/llvm/lib/c++ -Wl,-rpath,/opt/homebrew/opt/llvm/lib/c++"
+
+llvm is keg-only, which means it was not symlinked into /opt/homebrew,
+because macOS already provides this software and installing another version in
+parallel can cause all kinds of trouble.
+
+If you need to have llvm first in your PATH, run:
+  echo 'export PATH="/opt/homebrew/opt/llvm/bin:$PATH"' >> ~/.zshrc
+
+For compilers to find llvm you may need to set:
+  export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+```
 
 
 
@@ -311,6 +360,10 @@ ayamir默认配置好了许多Dap, 大部分情况下我们只需安装对应的
 
 
 
+
+
+[github release](https://github.com/vadimcn/codelldb/releases/download/v1.9.0/codelldb-aarch64-darwin.vsix) just extract the file as zip and find the executable binary in there: /extension/adapter/*
+
 ### C/C++/Rust (via lldb-vscode)
 
 ayamir用的就是`lldb-vscode`, 只需要自己自己下载`lldb-vscode`, 确保其能够在命令行调用, 再在ayamir的配置代码里把`lldb-vscode`的路径改为自己的路径即可:
@@ -330,13 +383,24 @@ ayamir用的就是`lldb-vscode`, 只需要自己自己下载`lldb-vscode`, 确�
 4. 修改代码中的路径:
 
    ```lua
-   # ~/.config/nvim/lua/modules/editor
+   # ~/.config/nvim/lua/modules/editor/config.lua
    	dap.adapters.lldb = {
    		type = "executable",
    		
    		command = "/usr/local/bin/lldb-vscode", # 改到自己的路径
    		name = "lldb",
    	}
+   
+   
+    »···dap.adapters.lldb = {
+       1 »···»···type = "executable",
+   │   2 »···»···-- 我使用OSX, brew自己安装的LLVM路径在/opt/homebrew/opt/llvm,·
+   │   3 »···»···-- 做了个/usr/local/bin/lldb-vscode的软链接指向它
+   │   4 »···»···-- 注意一般OS的软件都放在/usr/bin,但Mac不允许在/usr/bin随意操作
+   │   5 »···»···-- 所以我放在/usr/local/bin
+   │   6 »···»···command = "/usr/local/bin/lldb-vscode",
+       7 »···»···name = "lldb",
+       8 »···}
    ```
 
 ### Go
@@ -361,3 +425,95 @@ ayamir用的就是`lldb-vscode`, 只需要自己自己下载`lldb-vscode`, 确�
 # Keybinds
 
 https://github.com/ayamir/nvimdots/wiki/Keybindings
+
+## Modify keymap
+
+https://github.com/ayamir/nvimdots/wiki/Usage#modify-keymap
+
+- For vanilla nvim's keymap
+
+  modify `lua/core/mapping.lua`
+
+- For specific plugin's keymap
+
+  modify `lua/keymap/init.lua`
+
+- Command breakdown
+
+  ```
+      ┌─ sep     ┌── map_type
+   ["n|gb"] = map_cr("BufferLinePick"):with_noremap():with_silent(),
+     │  └── map_key          │              └── special     │
+     └──── map_mode          └── map_content                └── special (can be chained)
+  ```
+
+### 
+
+
+
+
+
+
+# Lazy.nvim
+
+https://github.com/folke/lazy.nvim
+
+
+
+
+
+ let b = 3;
+    let sum = a + b;
+    let product = a * b;
+    let difference = a - b;
+    let quotient = a / b;
+    let remainder = a % b;
+
+
+
+ln -s /Users/lyk/Projects/MyOfficialProjects/dotfiles/wezterm-dracula_theme/dracula.toml $HOME/.config/wezterm/colors/dracula.toml
+
+
+
+
+
+```
+
+```
+
+# Font
+
+
+
+[Nerd Fonts](https://www.nerdfonts.com/font-downloads)
+
+
+
+
+
+**[JetBrainsMono](https://github.com/JetBrains/JetBrainsMono)**
+
+
+
+![image-20230625212217416](/Users/lyk/Library/Application Support/typora-user-images/image-20230625212217416.png)
+
+
+
+
+
+
+
+![image-20230625222854356](/Users/lyk/Library/Application Support/typora-user-images/image-20230625222854356.png)
+
+
+
+[Fira Code](https://github.com/tonsky/FiraCode/releases/tag/6.2)
+
+
+
+
+
+Fira COde Nerd Font Mono
+
+![image-20230625223428192](/Users/lyk/Library/Application Support/typora-user-images/image-20230625223428192.png)
+
