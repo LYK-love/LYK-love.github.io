@@ -95,8 +95,9 @@ Hexo的配置文件(aka `Hexo _config.yml`)位于`<hexo-dir>/_config.yml`, 主�
 
 4. 安装主题, 见下文
 
-
 ## Deploy to GitPage
+
+[hexo-deployer-git](https://github.com/hexojs/hexo-deployer-git)
 
 GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-account.github.io` 这样的特殊项目名称与 GitPage 进行关联，然后，你只需要像平时一样 commit 你的博文到 GitHub 上就 OK 了，GitPage 会自动将你的更新部署出去.
 
@@ -124,7 +125,15 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
 4. GitPage可以关联到项目的任意分支, 我们要到仓库的Settings -> Code and automation -> Pages里, 把Pages关联到master分支. 这样我们部署到master的网页文件就可以同步到Pages上.
 
-5. 执行`hexo d`即可部署到 GitHub 仓库。
+5. 执行`hexo d`即可部署到 GitHub 仓库.
+
+   > [hexo-deployer-git](https://github.com/hexojs/hexo-deployer-git)的workflow如下:
+   >
+   > `hexo-deployer-git` works by generating the site in `.deploy_git` and *force pushing* to the repo(es) in config. If `.deploy_git` does not exist, a repo will initialized (`git init`). Otherwise the curent repo (with its commit history) will be used.
+   >
+   > 也就是说它会在本地的 `.deploy_git` 文件夹中构建网站, 然后把这个文件夹根据配置来force push到github. 我的配置是push到仓库的master分支, 因此`hexo d`会在本地构建网站, 然后把构建产物push到github仓库的master分支.
+   >
+   > 由于已经在Gitpage设置中将Page关联为master分支, 因此我对master分支的提交内容就会被同步到gitpage服务器上.
 
 6. 新增或修改主题配置后部署时请执行 `hexo clean && hexo d` 
 
@@ -132,7 +141,13 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
 注：`hexo-deployer-git`使用ssh而非 http，所以请先确保您已经在 GitHub 添加了公钥.
 
+## Deploy to Netlify
 
+之前提到的`hexo-deployer-git`插件将构建产物push到github仓库的给定分支, 然后由于gitpage关联了该分支, github会将该分支的内容同步到gitpage服务器. 
+
+但是, 如果使用nettily就不需要这么做
+
+1. 把
 
 ## Domain Name Config
 

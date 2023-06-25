@@ -15,13 +15,13 @@ My arms  training plan includes 4 parts: biceps, brachialis, brachioradialis, tr
 
 
 
-* [Biceps](https://lyk-love.cn/2023/06/08/Biceps-Training): 
+* [Biceps](https://lyk-love.cn/2023/06/07/Biceps-Training): 
   * [Barbell Curl](https://lyk-love.cn/2023/06/08/Biceps-Training/#Barbell-Curl)
   * [DB Drag Curl](https://lyk-love.cn/2023/06/08/Biceps-Training/#DB-Drag-Curl)
   * [反向引体](https://lyk-love.cn/2023/04/23/Pull-Up/#%E5%8F%8D%E6%89%8B%E5%BC%95%E4%BD%93)
 * Brachialis: 
   * [DB Robot Curl](#DB-Robot-Curl)
-* [Brachioradialis](https://lyk-love.cn/2023/06/08/Forearms-Training): 
+* [Brachioradialis](https://lyk-love.cn/2023/06/07/Forearms-Training): 
   * [DB Offset Reverse Curl](https://lyk-love.cn/2023/06/08/Forearms-Training/#Reverse-Grip-Curl)
   * [Reverse-Grip-Curl](https://lyk-love.cn/2023/06/08/Forearms-Training/#Reverse-Grip-Curl)
 * [Triceps](): 
@@ -87,5 +87,4 @@ My arms  training plan includes 4 parts: biceps, brachialis, brachioradialis, tr
 # Triceps
 
 [My triceps training plan](https://lyk-love.cn/2023/06/08/Biceps-Training/)
-
 

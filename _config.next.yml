@@ -848,8 +848,9 @@ mermaid:
 
 # Use Animate.css to animate everything.
 # For more information: https://animate.style
+# 千万不要打开, 否则页面每次跳转都会有个渐变效果, 慢得要死.
 motion:
-  enable: true
+  enable: false
   async: false
   transition:
     # All available transition variants: https://theme-next.js.org/animate/
