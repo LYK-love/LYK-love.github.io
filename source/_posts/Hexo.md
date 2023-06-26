@@ -48,15 +48,15 @@ Hexo的配置文件(aka `Hexo _config.yml`)位于`<hexo-dir>/_config.yml`, 主�
 | `hexo init [folder]`    | 初始化网站                                                   |
 | `hexo new [layout]`     | 新建文章, 默认是“post”, 我通过`default_layout: draft`设置为新建到“draft” |
 | `hexo publish [layout]` | 发布草稿                                                     |
-| `hexo g[enerate]`       | 生成静态文件.                                                |
-| `hexo s[erver]`         | 启动本地服务器. 服务器会监听文件变化并自动更新               |
+| `hexo g[enerate]`       | 构建网站, 生成的文件放在`<hexo>/public`目录下.               |
+| `hexo s[erver]`         | 启动本地服务器, 服务器会监听文件变化并自动更新               |
 | `hexo d[eploy]`         | 在安装了deploy git 插件后, 可以生成本地文件并远程部署到GitPage. 再也不用`hexo d -g`了 |
 | `hexo clean`            | 清理数据库和静态文件                                         |
 | `hexo list`             | 列出站点信息                                                 |
 | `hexo version`          | 版本信息                                                     |
 | **`hexo d -g`**         | 生成并部署                                                   |
 
-# Build Site with Hexo
+# Create Site with Hexo
 
 1. 安装 Hexo:
 
@@ -95,6 +95,83 @@ Hexo的配置文件(aka `Hexo _config.yml`)位于`<hexo-dir>/_config.yml`, 主�
 
 4. 安装主题, 见下文
 
+ # Build Site
+
+请看如下两个命令:
+
+1. 构建网站, 将构建结果存放在`<hexo>/public`目录下:
+
+   > `hexo g`会构建网站, 并将结果放在`<hexo>/public`目录. `<hexo>/gitignore`文件中有`public`这一项, 这意味着`<hexo>/public`的内容不会被push到Github的`hexo`分支, 构建产物只放在本地.
+
+   ```
+   hexo g[enerate]
+   ```
+
+2. 构建网站, 将构建结果存放在`<hexo>/.deploy_git`目录下,  然后把这个文件夹根据配置来force push到github. 如果要将网站push到Github, 则需要使用该命令.
+
+   >  [hexo-deployer-git](https://github.com/hexojs/hexo-deployer-git)的workflow如下:
+   >
+   > `hexo-deployer-git` works by generating the site in `.deploy_git` and *force pushing* to the repo(es) in config. If `.deploy_git` does not exist, a repo will initialized (`git init`). Otherwise the curent repo (with its commit history) will be used.
+   >
+   > 注：`hexo-deployer-git`使用ssh而非 http，所以请先确保已经在 GitHub 添加了公钥.
+
+   ```
+   hexo d[eploy]
+   ```
+
+
+
+`hexo g`和`hexo d`都是hexo内置的命令, 但使用`hexo d`还需要做如下两步:
+
+1. 下载插件. 我选择使用Github的Gitpage部署, 因此安装`hexo-deployer-git` 插件. (如果用heroku, 就得安装 [hexo-deployer-heroku](https://github.com/hexojs/hexo-deployer-heroku))
+
+2. 修改配置文件`<hexo>/_config.yml`:
+
+   ```yaml
+   deploy:
+   	# 使用hexo-deployer-git
+     type: git
+     repo:
+       github: git@github.com:LYK-love/LYK-love.github.io.git
+     branch: master
+   ```
+
+   根据这个配置, 构建产物会被push到github仓库的master分支.
+
+
+
+可以看到这两个命令都会构建网站, 区别就是`hexo g`会把构建产物存在本地的`public` ; `hexo d`会存在本地的`.deploy.git`, 并且之后会把`.deploy.git`下的内容push到Github的master分支. ( 因此Github的master分支的内容和本地的`public`或者`.deploy.git`的内容应该是一样的, 只要是对同一个版本的文档的构建.)
+
+
+
+# Deploy Site
+
+接下来介绍三种部署方法. 
+
+第一种是部署到本地, 用于查看网站样式. 
+
+后面两种分别是部署到Gitpage和Netlify. 前者方便一点, 但是网站速度会比较慢.
+
+Gitpage的部署需要用`hexo d`, 之前说过这个插件会把部署产物放在Github仓库上. 因此Github不需要运行任何构建指令, 只需要把构建好的push上来的文件放到Gitpage服务器即可.
+
+Netlify的部署不使用这个方式. Netlify会根据Github仓库进行构建, 由于仓库里没有构建产物, Netlify需要运行用户给定的构建指令来在本地(是Netlify的本地, 不是用户本机)进行构建, 然后把给定位置的目录下的内容放到Netlify服务器.
+
+根据我的配置, Netlify会在它的本地运行`hexo clean & hexo g`, 并指定`public`目录作为发布目录, 将该目录下的文件放到服务器. 之前介绍过`hexo g`会把构建产物放在`<public>`目录, 因此发布目录的内容其实就是`hexo g`的内容.
+
+
+
+这里只是介绍部署服务的配置结束后用户如何进行部署(即用户在本地要做什么操作才能部署网站), 至于如何配置部署服务(Netlify, Github)则放在单独的文章讲授, 不作为本章内容.
+
+## Deploy Locally
+
+[Github repo: hexo-server](https://github.com/hexojs/hexo-server)
+
+[Command: `hexo s`](https://hexo.io/docs/commands#server)
+
+Starts a local server. By default, this is at `http://localhost:4000/`.
+
+这个网站的内容其实是本地的`<hexo>/public`下的内容, 因此必须先`hexo g`, 再`hexo s`.
+
 ## Deploy to GitPage
 
 [hexo-deployer-git](https://github.com/hexojs/hexo-deployer-git)
@@ -105,13 +182,13 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
 
 
-1. 安装 deploy git 插件实现一键自动部署:
+1. 安装 deploy git 插件:
 
    ```sh
    npm install hexo-deployer-git --save
    ```
 
-2. 在 GitHub 创建一个名为`<username>.github.io.git`的仓库。
+2. 在 GitHub 创建一个名为`<username>.github.io.git`的仓库. 
 
 3. 在主题配置文件`_config.yml`中修改仓库地址, 注意, 为了后文说的多主机同步. 我的仓库有两个分支. `master`用于存放生成的网页文件, `hexo`存放源文件. 部署当然是push网页文件, 也就是`master`分支:
 
@@ -125,36 +202,70 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
 4. GitPage可以关联到项目的任意分支, 我们要到仓库的Settings -> Code and automation -> Pages里, 把Pages关联到master分支. 这样我们部署到master的网页文件就可以同步到Pages上.
 
-5. 执行`hexo d`即可部署到 GitHub 仓库.
+5. 执行`hexo d`即可部署到 GitHub 仓库. 
 
-   > [hexo-deployer-git](https://github.com/hexojs/hexo-deployer-git)的workflow如下:
+   > 之前介绍过, `hexo d`会构建网站, 把产物存放在本地的 `.deploy_git` 文件夹中, 并将文件夹的内容根据配置来force push到Github. 我的配置是**push到仓库的master分支**.
    >
-   > `hexo-deployer-git` works by generating the site in `.deploy_git` and *force pushing* to the repo(es) in config. If `.deploy_git` does not exist, a repo will initialized (`git init`). Otherwise the curent repo (with its commit history) will be used.
-   >
-   > 也就是说它会在本地的 `.deploy_git` 文件夹中构建网站, 然后把这个文件夹根据配置来force push到github. 我的配置是push到仓库的master分支, 因此`hexo d`会在本地构建网站, 然后把构建产物push到github仓库的master分支.
-   >
-   > 由于已经在Gitpage设置中将Page关联为master分支, 因此我对master分支的提交内容就会被同步到gitpage服务器上.
-
+   > 由于已经在Gitpage的设置中将Page关联为master分支, 因此我**对master分支的提交内容就会被同步到gitpage服务器上**, 实现对Gitpage的部署.
+   
 6. 新增或修改主题配置后部署时请执行 `hexo clean && hexo d` 
 
 
-
-注：`hexo-deployer-git`使用ssh而非 http，所以请先确保您已经在 GitHub 添加了公钥.
 
 ## Deploy to Netlify
 
 之前提到的`hexo-deployer-git`插件将构建产物push到github仓库的给定分支, 然后由于gitpage关联了该分支, github会将该分支的内容同步到gitpage服务器. 
 
-但是, 如果使用nettily, 就需要关闭gitpage( 否则`lyk-love.cn`这个域名要指向哪个域名呢)
+如果使用Nettily进行部署, 那么构建是在Netlify云端执行的, 用户本地不需要运行任何构建指令. 
 
-1. 把
+用户需要先在Netlify上进行配置, 见下文.
+
+接着, 用户每次部署都只需要:
+
+1. 确保自己在`hexo`分支下. 这个条件是默认满足的, 因为我们本地编辑和push只使用`hexo`分支,  `master`分支是`hexo-deployer-git`插件使用的.
+2. 使用`git add .  & git commit -m"XXX" & git push origin hexo`将本地仓库push到远程到hexo分支.
+
+
+
+### Config Netlify
+
+用户对Netlify的配置如下. 可以看到Netlify会监听对“[github.com/LYK-love/LYK-love.github.io](https://github.com/LYK-love/LYK-love.github.io)”的`hexo`分支的push, 如果有, 则会调用`hexo clean & hexo g`命令, 并且将`public`文件夹下的内容作为网站的内容.
+
+
+
+![image-20230627004616078](/Users/lyk/Library/Application Support/typora-user-images/image-20230627004616078.png)
+
+
+
+![image-20230627004716792](/Users/lyk/Library/Application Support/typora-user-images/image-20230627004716792.png)
+
+
 
 ## Domain Name Config
 
-1. 首先你需要去域名注册商（阿里云腾讯云等）买一个域名
-2. 在根站点下`source`目录中添加`CNAME`文件，文件内容为您购买的域名`xxx.com`，不要添加`www`、`mail`等子域例如`www.xxx.com`或`mail.xxx.com`
-3. 前往域名控制台解析此域名到`github.io`. 根据 gitpage 的自定义域名要求, 建议解析到`github.io`的数字 ip 地址, 对于我的网站而言就是`151.101.129.147`.
-4. 在控制台设置域名解析，添加 A 类型记录的, 指向 `151.101.129.147` 即可
+云服务提供商会给部署的网站提供域名. 例如Gitpage的域名就是`XX.github.io`, Netlify的域名就是`XX.netlify.app`. 
+
+可以自己购买一个新的域名, 然后把买的域名绑定到给定域名上. 
+
+
+
+1. 首先你需要去域名注册商（阿里云腾讯云等）买一个域名, 我就购买了`lyk-love.cn`
+
+2. 在根站点下`source`目录中添加`CNAME`文件，文件内容为你购买的域名的后二级(例如`xxx.com`), 不要添加`www`、`mail`等子域.(例如`www.xxx.com`或`mail.xxx.com`)
+
+3. 前往域名注册商的域名控制台, 解析你购买的域名到云服务商提供的域名或者ip. 
+
+   > 比如, 我在用Netlify时就把`lyk-love.cn`映射到了`lyk-love.netlify.app`.
+   >
+   > 而Gitpage 的自定义域名要求中, 建议把自定义域名解析到`github.io`的数字 ip 地址, 对于我的网站而言就是`151.101.129.147`.
+   >
+   > 因此我在用Gitpage时把`lyk-love.cn`映射到了`151.101.129.147`;.
+
+4. 在控制台设置域名解析.
+
+   * 对于domain name -> domain name, 需要添加CNAME类型的记录. 例如我用Netlify时就添加了`lyk-love.cn` ->`lyk-love.netlify.app`.
+   * 对于domain name ->IP, 需要添加 A 类型的记录, 例如我用Gitpage时就添加了`lyk-love.cn` ->  `151.101.129.147` .
+
 5. 命令行执行`hexo d`发布站点到 GitHub 库，这时在 Git 库应该就能看到 CNAME 文件，至此自定义域名设置完毕，现在使用`xxx.com`即可访问站点
 
 # Hexo Doc
