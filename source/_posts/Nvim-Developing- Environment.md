@@ -517,3 +517,9 @@ Fira COde Nerd Font Mono
 
 ![image-20230625223428192](/Users/lyk/Library/Application Support/typora-user-images/image-20230625223428192.png)
 
+# NvChad
+
+NVcheatsheet
+
+1. `<leader>ch` to access that
+2. 

@@ -5,7 +5,7 @@ tags: Music
 
 Ref:
 
-[西方音乐通论][http://elite.nju.edu.cn/jiaowu/student/elective/courseList.do?method=getCourseInfoM&courseNumber=37100180&classid=101708]
+[西方音乐通论](http://elite.nju.edu.cn/jiaowu/student/elective/courseList.do?method=getCourseInfoM&courseNumber=37100180&classid=101708)
 
 
 

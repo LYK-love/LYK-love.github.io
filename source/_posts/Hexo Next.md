@@ -157,32 +157,28 @@ INFO  Hexo is running at http://localhost:4000/ . Press Ctrl+C to stop.
 
 [进阶配置](https://convivae.top/posts/hexo-bo-ke-cai-keng/)
 
-* 关闭页面动画效果:
+* **Important: 关闭页面动画效果**:
 
   ```yaml
   # Use Animate.css to animate everything.
   # For more information: https://animate.style
-  # 千万不要打开, 否则页面每次跳转都会有个渐变效果, 慢得要死.
+  # 千万不要打开, 否则页面每次跳转都会有个渐变效果, 慢得要死. 关闭后网站速度会大幅提升.
   motion:
     enable: false
     async: false
-```
+  ```
   
-实测这样做会让网站速度大幅提升, 彻底达到可用水平.
-
-
-
-* Schemes: 目前觉得Mist比较好看
+  实测这样做会让网站速度大幅提升, 彻底达到可用水平.
+  
+* Scheme: 目前觉得Mist比较好看.
 
   ```yaml
   # Schemes
-  # scheme: Muse
-  scheme: Mist
-  # scheme: Pisces
-  # scheme: Gemini
+    # scheme: Muse
+    scheme: Mist
+    # scheme: Pisces
+    # scheme: Gemini
   ```
-
-  
 
 * 设置语言: 我使用默认的英语. 如果要使用汉语, 可以编辑主题配置文件:
 

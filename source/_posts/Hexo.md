@@ -145,7 +145,7 @@ GitPage 允许你将你的博客创建为一个 GitHub Project，通过 `your-ac
 
 之前提到的`hexo-deployer-git`插件将构建产物push到github仓库的给定分支, 然后由于gitpage关联了该分支, github会将该分支的内容同步到gitpage服务器. 
 
-但是, 如果使用nettily就不需要这么做
+但是, 如果使用nettily, 就需要关闭gitpage( 否则`lyk-love.cn`这个域名要指向哪个域名呢)
 
 1. 把
 
