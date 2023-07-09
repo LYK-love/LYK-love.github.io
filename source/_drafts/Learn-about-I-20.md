@@ -30,13 +30,13 @@ SISS使用iGlobal系统来帮助学生申请I-20, iGlobal会将学生填写的�
 
 SEVIS是实际签发I-20的政府部门, 当SISS收到SEVIS处理好的I-20后, 就会发送给学生. 
 
-当学生收到I-20后, 还需要支付I-901 Fee作为I-20的手续费, 或者说SEVIS的维护费用. 支付I-901 Fee之后, I-20才能生效. 并被用于申请签证( get a visa at a **US Embassy** or Consular Office )以及在入境口进入美国.
+**当学生收到I-20后, 还需要支付I-901 Fee作为I-20的手续费, 或者说SEVIS的维护费用. 支付I-901 Fee之后, I-20才能生效.** I-20被用于申请签证( get a visa at a **US Embassy** or Consular Office )以及在入境口进入美国.
 
 > After you get your l-20 and pay the I-901 fee, you use your I-20 to  and then enter the US at a Customs and Border Protection **Port of Entry**.
 
 因此, 要想进入美国, 需要做到这两步:
 
-1. Have an I-20 and have already paid the I-901 fee
+1. Have an **I-20** and have already paid the **I-901 fee**
 2. Have a valid visa
 
 ## 相关机构
@@ -58,8 +58,11 @@ SEVIS是实际签发I-20的政府部门, 当SISS收到SEVIS处理好的I-20后, 
 
 ## I-20
 
+![I-20](/Users/lyk/Library/Application Support/typora-user-images/image-20230707195301921.png)
+
 * I-20表格共有3页, 通常是印刷在2张纸上, 第一张纸是正反面的. 
 * 现在很多大学已经通过电子邮件的方式发送i-20, 电子版和纸质版是相同的.
+* **I-20左上角是[SEVIS](#SEVIS) ID. 由九位字母或数字构成, 以N开头.**
 
 - I-20表格有两种：Initial I-20和Transfer I-20.
 - **Initial I-20**是发放给第一次申请I-20的学生. 如果曾经在美国上过学，但是已经回国并且前一份I-20已经失效，则还是需要申请Initial I-20.
@@ -76,13 +79,7 @@ Once you get your I-20 from SISS you can enter the US:
 
 **SEVIS**是学生及交流访问者信息系统（Student and Exchange Visitor Information System）的缩写。它是美国国土安全局（Department of Homeland Security）用来记录学生及交流访问者项目SEVP（Student and Exchange Visitor Program ）相关信息的数据库，留学生的就读信息以及签证状态也都会记录在内。
 
-
-
 每位来美国的留学生都持有一张学校签发的I-20表格, 并同时被分配一个SEVIS号码(SEVIS ID), 这是你在美国合法居留读书的证明.
-
-SEVIS ID是位于I-20的左上角的九位字母或数字, 以N开头.
-
-
 
 **当F1学生持I-20到校注册报到后，SEVIS号码就被激活，自此被国土安全局注册在案**。SEVIS系统的目的就是以便美国国土安全局追踪留学生在美国停留期间的信息。你的所有学业记录、身份记录、出入境记录、包括转学记录都在此SEVIS档案下。**因此SEVIS与I-20与F1学生身份三者是统一的。三者同时生效、也同步失效。**
 
@@ -100,7 +97,7 @@ SEVIS ID是位于I-20的左上角的九位字母或数字, 以N开头.
 
 ![image-20230610151531380](/Users/lyk/Library/Application Support/typora-user-images/image-20230610151531380.png)
 
-
+(从图中看到, SISS声称办理I-20的时间是4weeks, 但个人经历是一共花了38天.)
 
 
 
@@ -189,6 +186,41 @@ Davis的推荐金额是63000\$, 如果要携带其他人(dependent)来美国, �
 2. 申请签证(也就是签证面谈).
 
 因此只需要存到I-20办理结束, 或者签证面谈结束的时间. 不过为了方便, 我打算用同一份存款证明来申请I-20和签证, 所以一口气存了三个月, 那时签证面谈已经结束了. 
+
+## Waiting for I-20
+
+在submit I-20 request之后, 只需要等学校部门处理即可. Davis的SISS声称他们只需四周(average time)即可处理I-20. 然而我在5.29 submit之后一直等到7.6才收到I020, 一共等了38天. 中间多次向SISS发邮件催促, 得到的均为公式化的回答, 可以说是毫无反馈.
+
+由于预约面签的时间临近, 心里愈发焦急. SISS为每个学生都分配了[advisor]( https://siss.ucdavis.edu/appointments). 多次email SISS无果后我决定和advisor约zoom meeting来询问我的I-20处理过程. 幸运的是当天就在iGlobal内看到了I-20处理完毕的通知.
+
+因此, 我对于I-20的经验是:
+
+* 早点submit request. 根据我的观察, I-20提交越早, 处理得也就越快. 认识的几个朋友在四月份就提交了I-20, 三天内就issue了. 而我和另外几个朋友在5月底提交I-20, 都花了30多天才issue.
+* 如果担心I-20的进度, 多给学校部门发邮件. 如果始终得到公式化的回复, 则给advisor发邮件或者打电话/约会议, 总之一定要得到对方的反馈.
+
+# After I-20: Pay the SEVIS I-901 fee
+
+在学校处理完I-20后, 会向学生发送I-20的电子版或者纸质版. Davis发送的是电子版. 该信件还说明了办理完I-20之后所要做的事:
+
+1. Download your electronically signed I-20. 很简单, 不讲了
+2. Pay the SEVIS I-901 fee.
+3. Arrange a visa appointment at your local U.S. embassy or consulate. 如何预约签证(填写DS160, 预约面签)可以参见这篇文章.
+
+
+
+本章讲述如何支付I-901 SEVIS Fee. **只有支付该费用I-20才正式生效. 并且在签证面谈时也需要携带I-901 SEVIS Fee的支付收据.**
+
+> **I-901 SEVIS Fee**
+>
+> Every student (unless you are transferring your SEVIS record from your old school) must pay the I-901 SEVIS fee. Visit [www.fmjfee.com](http://www.fmjfee.com/) for instructions. Keep your receipt in a safe place and bring it to your visa appointment. UC Davis' F-1 School Code is SFR214F00614000.
+
+![image-20230707205518543](/Users/lyk/Library/Application Support/typora-user-images/image-20230707205518543.png)
+
+只需进入--> [www.fmjfee.com](http://www.fmjfee.com/) , 然后点击右上角的“PAY I-901 FEE”, 一步步填写并缴费(350\$)即可. 填写需要的信息包括了SEVIS ID, SCHOOL CODE等, 这些都在I-20内有写.
+
+
+
+
 
 # Update I-20
 

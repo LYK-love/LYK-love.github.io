@@ -7,9 +7,25 @@ Your visa is merely an entry document. It can expire without consequence if you 
 
 # U.S. Visa
 
-ref: https://travel.state.gov/content/travel/en/us-visas.html
+从学校录取通知书到前往美国, 需要三个步骤:
+
+ref: https://siss.ucdavis.edu/pre-arrival-checklist
+
+1. 申请得到I-20.
+2. 支付SEVIS I-901费用.
+3. 预约并参加签证面谈, 得到签证.
+
+前两步已经在[这篇文章]()讲过了, 本文讲述第三步. 
+
+由于在填写DS160和进行签证预约时都需要SEVIS ID(该信息位于I-20中), 因此理论上只有完成步骤(1), (2)才能开启步骤(3). 但在[之前]()也介绍了在I-20没办理完之前就填写DS160并预约签证面谈的方法, 我也采用了这个方法. 
+
+> 简而言之, 可以先编一个I-20信息用于填表, 等拿到真的I-20后再更新信息即可. 由于在签证面谈48h之前能够修改DS160信息, 因此只需确保I-20能够在面签48h之前办好.
+
+
 
 ## What is a U.S. Visa?
+
+ref: https://travel.state.gov/content/travel/en/us-visas.html
 
 A citizen of a foreign country who seeks to enter the United States generally must first obtain a U.S. visa, which is placed in the traveler’s passport, a travel document issued by the traveler’s country of citizenship.
 
@@ -17,13 +33,15 @@ Certain international travelers may be eligible to travel to the United States w
 
 (Note: U.S. citizens don’t need a U.S. visa for travel, but when planning travel abroad may need a visa issued by the embassy of the country they wish to visit. In this situation, when planning travel abroad, learn about visa requirements by country, see [country information](https://travel.state.gov/content/travel/en/international-travel/International-Travel-Country-Information-Pages.html) in the International Travel Section section of this website.)
 
+
+
 ## Student Visa
 
 ref: https://travel.state.gov/content/travel/en/us-visas/study/student-visa.html
 
 学生一般申请F1签证. 
 
-F1签证是赴美进行学术学习的留学生的非移民签证。通常有效期是五年，也有只有一年的情况，比如被行政审核之后。持有F-1签证可以在美国校内合法打工，直到学业结束。如果不打算申请OPT 实习身份留在美国实习工作，毕业后60天内必须回国。
+F1签证是赴美进行学术学习的留学生的非移民签证。通常有效期是五年，也有只有一年的情况，比如被行政审核之后。持有F-1签证可以在美国校内合法打工，直到学业结束。如果不打算申请OPT 实习身份留在美国实习工作，毕业后60天内必须回国.
 
 # How to apply?
 
@@ -31,7 +49,7 @@ ref: [一个台湾同学申请visa的经历](https://itsssll.com/index.php/2022/
 
 签证申请总共分为三步:
 
-1. Complete the Online Visa Application: 填写签证申请表格DS160.
+1. Complete the DS-160 - Online Nonimmigrant visa Applications. 填写签证申请表格DS160.
 2. Schedule an Interview: 预约签证面试, 也就是面签. (14-79岁的人必须面签才能获得签证. <14 or >79 的人可以免除面签)
 3. Attend Your Visa Interview: 携带材料前往签证面试.
 
@@ -43,7 +61,7 @@ ref: [一个台湾同学申请visa的经历](https://itsssll.com/index.php/2022/
 
 - **Online Nonimmigrant Visa Application, [Form DS-160](https://ceac.state.gov/genniv/)** – [Learn more](https://travel.state.gov/content/travel/en/us-visas/visa-information-resources/forms/ds-160-online-nonimmigrant-visa-application.html) about completing the [DS-160](https://ceac.state.gov/genniv/). You must: 1) complete the online visa application, and 2) print the application form confirmation page to bring to your interview.
 
-填写DS-160的教程在[这里](https://zhuanlan.zhihu.com/p/391787288).
+填写DS-160的教程在[这里](https://zhuanlan.zhihu.com/p/36470726).
 
 ## Requirements
 
@@ -64,6 +82,8 @@ Start an Application之后, 右上角会出现Application ID, 以字母AA开头.
 在填写DS-160时, 有些地方会要求输入SEVIS ID以及学校地址等信息, 这些都需要按照I-20上给出的信息来填.
 
 
+
+* 手机号要加前缀(国内的前缀是`86`), 但不能加符号. 因此应该写`86XXXX`, 而不是`+86XXXX`.
 
 ## Photo Requirement
 
