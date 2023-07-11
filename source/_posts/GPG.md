@@ -11,7 +11,7 @@ useful encryption tool
 
 # Intro
 
- **Pretty Good Privacy (PGP)** is a nice example of an e-mail encryption scheme written by Phil Zimmermann in 1991 [PGP 2020]. Depending on the version, the PGP soft- ware uses MD5 or SHA for calculating the message digest; CAST, triple-DES, or IDEA for symmetric key encryption; and RSA for the public key encryption.
+**Pretty Good Privacy (PGP)** is a nice example of an e-mail encryption scheme written by Phil Zimmermann in 1991 [PGP 2020]. Depending on the version, the PGP soft- ware uses MD5 or SHA for calculating the message digest; CAST, triple-DES, or IDEA for symmetric key encryption; and RSA for the public key encryption.
 
 不过PGP是商用软件, 因此自由软件基金会( FSF )开发了PGP的替代品GnuPG, 也就是GPG. 这两个软件事实上差不多, 我们接下来介绍GPG.
 
@@ -25,16 +25,70 @@ GPG( or PGP )的实现原理参见拙著[Security in Internet](https://lyk-love.
 
 # generate GPG key
 
-* `gpg --full-generate-key`
-* 按照提示输入信息，密钥类型使用默认的`RSA and RSA`即可。密钥长度推荐使用4096,
-* 然后输入你的个人信息，这样密钥就会绑定到你的邮箱，要使用和 Git 提交相同的邮箱地址。
-* 最后输入**私钥的密码**，用来提取这个密钥。这样一个 GPG 密钥就生成好了
+Ref: [阮一峰的GPG教程](https://www.ruanyifeng.com/blog/2013/07/gpg.html)
+
+
+
+````sh
+gpg --full-generate-key
+````
+
+1. 按照提示输入信息，密钥类型使用默认的`RSA and RSA`即可。密钥长度推荐使用4096.
+
+2. 然后输入你的个人信息，GPG会根据你输入的信息来生成一个User ID. 个人信息包括: 用户名, 邮箱.
+
+   > GnuPG needs to construct a user ID to identify your key.
+
+以"阮一峰"为例, 他填写的Real Name是Ruan YiFeng, Email address是yifeng.ruan@gmail.com，所以他的USER ID就是"Ruan YiFeng <yifeng.ruan@gmail.com>".
+
+3. 接着, 系统会让你设定一个私钥的密码. 这是为了防止误操作, 或者系统被侵入时有人擅自动用私钥.
+
+   > Please enter the passphrase to protect your new key: ...
+
+4. 然后, 系统就开始生成密钥了, 这时会要求你做一些随机的举动, 以生成一个随机数.
+
+   > We need to generate a lot of random bytes. It is a good idea to perform
+   > some other action (type on the keyboard, move the mouse, utilize the
+   > disks) during the prime generation; this gives the random number
+   > generator a better chance to gain enough entropy.
+
+
+
+密钥生成完毕后, 会有如下输出:
+
+```
+public and secret key created and signed.
+
+pub   rsa3072 2023-07-09 [SC]
+      B1C0305758DA8FFA44969E22F06D2DE2F071A57E
+uid                      Ruan YiFeng <yifeng.ruan@gmail.com>
+sub   rsa3072 2023-07-09 [E]
+```
+
+注意上面的字符串`B1C030...`, 它是USER ID `Ruan YiFeng <yifeng.ruan@gmail.com>`的hash. **在之后需要填写USER ID的场合, 可以填写其hash作为替代. **并且USER ID中单独的Real Name和Email部分也都能够替代USER ID.
+
+
+
+也就是说, 下面四段文本都表示同一个User:
+
+```
+Ruan YiFeng
+yifeng.ruan@gmail.com
+Ruan YiFeng <yifeng.ruan@gmail.com>
+B1C0305758DA8FFA44969E22F06D2DE2F071A57E
+```
 
 
 
 # generate revocation certificate
 
-* `gpg --gen-revoke [用户ID]`:生成一张"撤销证书"，以备以后密钥作废时，可以请求外部的公钥服务器撤销你的公钥
+在生存密钥后, 最好再生成一张revocation certificate(撤销证书), 以备以后密钥作废时, 可以请求外部的公钥服务器撤销你的公钥.
+
+```sh
+gpg --gen-revoke [USER ID]
+```
+
+如之前所说, 这里的USER ID可以填写USER ID的hash.
 
 # key management
 
@@ -42,52 +96,94 @@ GPG( or PGP )的实现原理参见拙著[Security in Internet](https://lyk-love.
 
 ### public key
 
-* `--list-keys`: 列出系统中已有的公钥
+列出系统中已有的公钥:
 
-  显示如下：
+```sh
+gpg --list-keys
+```
 
-  ```
-  /home/lyk/.gnupg/pubring.kbx
-  ----------------------------
-  pub   rsa4096 2022-02-10 [SC]
-        DFD9A8D9CF0BD747BE1BDBD839AD95E8DF842459
-  uid           [ultimate] LYK-love (gpg for lyk) <your_email>
-  sub   rsa4096 2022-02-10 [E]
-  ```
 
-  第一行： **公钥**文件名（`pubring.kbx`）
 
-  第二行： 公钥特征（4096位，Hash字符串和生成时间）
+显示如下：
 
-  第三行： 密钥保质期，用户id， comment, email
+```
+/home/lyk/.gnupg/pubring.kbx
+----------------------------
+pub   rsa4096 2022-02-10 [SC]
+      DFD9A8D9CF0BD747BE1BDBD839AD95E8DF842459
+uid           [ultimate] LYK-love (gpg for lyk) <your_email>
+sub   rsa4096 2022-02-10 [E]
+```
 
-  第四行： 私钥特征
+* 第一行： 公钥文件地址()`/home/lyk/.gnupg/pubring.kbx`)
+
+* 第二行: 公钥特征.
+
+  * `rsa4096`: 使用rsa算法, 密钥长度为4096.
+  * `2022-02-10 [SC]`: 密钥生成时间.
+  * `DFD9A8D9CF0BD747BE1BDBD839AD95E8DF842459`: USER ID的hash.
+
+* 第三行:
+
+  * 密钥保质期. ` [ultimate]`即永不过期.
+
+  * USER ID: `LYK-love (gpg for lyk) <your_email>`. 说明:
+
+    * Real name: `LYK-love`
+    * Email: `your_email`
+    * comment: `(gpg for lyk)`
+
+    这个USER ID也可以用其hash来替代.
+
+* 第四行: 私钥特征
 
 ### private key
 
-* `--list-secret-keys --keyid-format LONG <your_email>`： 列出私钥
+`--list-secret-keys --keyid-format LONG <your_email>`： 列出私钥
 
-  ```shell
-  # 这里以别人的为例
-  sec   rsa4096/39AD95E8DF842459 2022-02-10 [SC]
-        DFD9A8D9CF0BD747BE1BDBD839AD95E8DF842459
-  uid                 [ultimate] LYK-love (gpg for lyk) <your_email>
-  ssb   rsa4096/051FBEBE8BDED88B 2022-02-10 [E]
-  ```
+```shell
+sec   rsa4096/39AD95E8DF842459 2022-02-10 [SC]
+      DFD9A8D9CF0BD747BE1BDBD839AD95E8DF842459
+uid                 [ultimate] LYK-love (gpg for lyk) <your_email>
+ssb   rsa4096/051FBEBE8BDED88B 2022-02-10 [E]
+```
 
-  `39AD95E8DF842459`就是用户ID的hash, 等价于用户ID（`LYK-love`  or `<your_email>`）
+各个字段的解释和公钥的相同.
 
 ## export keys
 
-* `gpg --armor --output public-key.txt  --export pub [用户ID]`： 导出该用户ID的公钥
+导出指定USER ID的公钥:
 
-  * 公钥文件（`pubring.kbx`）以二进制形式储存，`-armor`可以将其转换为ASCII码显示
+````sh
+gpg --armor --output public-key.txt  --export [USER ID]
+````
 
-  * `--output outputfile_name`:  指定输出位置
+* `--output outputfile_name`:  指定输出位置
+* 由于公钥文件（`pubring.kbx`）以二进制形式储存, 使用 `-armor`可以将其转换为ASCII码显示.
 
-  * `export-secret-keys`：导出私钥：
 
-    `gpg --armor --output private-key.txt --export-secret-keys`
+
+
+
+类似地, `export-secret-keys`参数可以导出私钥.
+
+
+
+导出指定User的私钥:
+
+```sh
+gpg --export-secret-keys  --output private-key.txt --armor <USER ID>
+```
+
+
+
+导出全部User的私钥:
+
+```sh
+gpg --armor --output private-key.txt --export-secret-keys
+```
+
+在导出私钥时, 需要为每一个私钥都输入passphrase.
 
 
 
@@ -128,34 +224,54 @@ GPG( or PGP )的实现原理参见拙著[Security in Internet](https://lyk-love.
 
 
 
-# encrypt && decrypt
+# Encrypt && Decrypt
 
-## encrypt
+[Encrypting and decrypting documents](https://www.gnupg.org/gph/en/manual/x110.html)
+
+## Encrypt
 
 假定有一个文本文件demo.txt，对它加密:
 
-*  `gpg --recipient [用户ID] --output demo.en.txt --encrypt demo.txt`
-  * `--encrypt`: 指定加密源文件
-  * `--recipient`：指定**接收者**的公钥
-  * `--output`： 指定加密后的文件名
+```
+gpg --recipient [USER ID] --output demo.en.txt --encrypt demo.txt
+```
 
-## decrypt
+* `--encrypt`: 要加密的源文件
+
+* `-r`/`--recipient`：
+
+  指定接受者的USER ID. 可以写完整的USER ID, 也可以写它的hash表示, 也可以只写Email. (--> [ref](https://www.gnupg.org/gph/en/manual/r1208.html))
+
+  文件将会使用这个公钥进行加密, 也就是**只有拥有这个私钥的人才能解密信息**. 可以指定多个, 则多个接受者都能解密信息.
+
+  > The [--recipient](https://www.gnupg.org/gph/en/manual/r1208.html) option is used once for each recipient and takes an extra argument specifying the public key to which the document should be encrypted. **The encrypted document can only be decrypted by someone with a private key that complements one of the recipients' public keys**. **In particular, you cannot decrypt a document encrypted by you** unless you included your own public key in the recipient list.
+
+* `-o`/`--output`：指定加密后的信息输出到哪个文件。可选，如果不指定将会输出到标准输出。
+
+* `-a`/`--armor`：将加密后的信息转为可打印的 ASCII 字符。可选，如果不指定将会输出二进制信息。
+
+
+
+## Decrypt
 
 对方收到加密文件以后，就用自己的私钥解密。
 
-* `gpg --decrypt demo.en.txt --output demo.de.txt`
-  * `--decrypt`： 指定需要解密的文件
-  * `--output`“： 指定解密后生成的文件
+```sh
+gpg --decrypt demo.en.txt --output demo.de.txt
+```
+
+* `--decrypt`： 指定需要解密的文件
+* `--output`： 指定解密后生成的文件
 
 
 
-* GPG允许省略decrypt的参数:
+GPG允许省略decrypt的参数:
 
-  ```shell
-  gpg demo.en.txt
-  ```
+```shell
+gpg demo.en.txt
+```
 
-  运行上面的命令以后，解密后的文件内容直接显示在STDOUT
+运行上面的命令以后，解密后的文件内容直接显示在STDOUT
 
 # signiture
 

@@ -198,6 +198,12 @@ Davis的推荐金额是63000\$, 如果要携带其他人(dependent)来美国, �
 * 早点submit request. 根据我的观察, I-20提交越早, 处理得也就越快. 认识的几个朋友在四月份就提交了I-20, 三天内就issue了. 而我和另外几个朋友在5月底提交I-20, 都花了30多天才issue.
 * 如果担心I-20的进度, 多给学校部门发邮件. 如果始终得到公式化的回复, 则给advisor发邮件或者打电话/约会议, 总之一定要得到对方的反馈.
 
+# Signature
+
+![image-20230710194842606](/Users/lyk/Library/Application Support/typora-user-images/image-20230710194842606.png)
+
+在拿到I-20表格后, 还需要打印出来, 并且由学生本人签字, 位置如上, 在STUDENT ATTESTATION的第一行. 如果学生本人未满18周岁, 还需要由家长在STUDENT ATTESTATION的第二行签字.
+
 # After I-20: Pay the SEVIS I-901 fee
 
 在学校处理完I-20后, 会向学生发送I-20的电子版或者纸质版. Davis发送的是电子版. 该信件还说明了办理完I-20之后所要做的事:
