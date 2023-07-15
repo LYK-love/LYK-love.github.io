@@ -1,5 +1,5 @@
 ---
-title: GPG
+-title: GPG
 categories: Toolkit
 date: 2022-02-10 14:57:00
 ---
@@ -23,7 +23,7 @@ GPG( or PGP )的实现原理参见拙著[Security in Internet](https://lyk-love.
 
 * 输入`gpg --help`可以查看你是否已经安装
 
-# generate GPG key
+# Generate GPG key
 
 Ref: [阮一峰的GPG教程](https://www.ruanyifeng.com/blog/2013/07/gpg.html)
 
@@ -47,52 +47,68 @@ gpg --full-generate-key
 
 4. 然后, 系统就开始生成密钥了, 这时会要求你做一些随机的举动, 以生成一个随机数.
 
-   > We need to generate a lot of random bytes. It is a good idea to perform
-   > some other action (type on the keyboard, move the mouse, utilize the
-   > disks) during the prime generation; this gives the random number
-   > generator a better chance to gain enough entropy.
+   > We need to generate a lot of random bytes. It is a good idea to perform some other action (type on the keyboard, move the mouse, utilize the disks) during the prime generation; this gives the random number generator a better chance to gain enough entropy.
 
 
 
 密钥生成完毕后, 会有如下输出:
 
 ```
-public and secret key created and signed.
-
-pub   rsa3072 2023-07-09 [SC]
-      B1C0305758DA8FFA44969E22F06D2DE2F071A57E
-uid                      Ruan YiFeng <yifeng.ruan@gmail.com>
-sub   rsa3072 2023-07-09 [E]
+/Users/lyk/.gnupg/pubring.kbx
+-----------------------------
+pub   rsa3072 2023-07-15 [SC]
+      7D6950635D1A34200C44E47302753F5D92BA2D0F
+uid           [ultimate] Yukuan Lu <lyk1037400635@gmail.com>
+sub   rsa3072 2023-07-15 [E]
 ```
 
-注意上面的字符串`B1C030...`, 它是USER ID `Ruan YiFeng <yifeng.ruan@gmail.com>`的hash. **在之后需要填写USER ID的场合, 可以填写其hash作为替代. **并且USER ID中单独的Real Name和Email部分也都能够替代USER ID.
+注意上面的字符串`7D69506...`, 它是USER ID `Yukuan Lu <lyk1037400635@gmail.com>`的hash. **在之后需要填写USER ID的场合, 可以填写其hash作为替代. 并且USER ID中单独的Real Name和Email部分也都能够替代USER ID.**
 
 
 
 也就是说, 下面四段文本都表示同一个User:
 
+```txt
+Yukuan Lu
+lyk1037400635@gmail.com
+Yukuan Lu <lyk1037400635@gmail.com>
+7D6950635D1A34200C44E47302753F5D92BA2D0F
 ```
-Ruan YiFeng
-yifeng.ruan@gmail.com
-Ruan YiFeng <yifeng.ruan@gmail.com>
-B1C0305758DA8FFA44969E22F06D2DE2F071A57E
-```
 
 
 
-# generate revocation certificate
+# Generate revocation certificate
 
-在生存密钥后, 最好再生成一张revocation certificate(撤销证书), 以备以后密钥作废时, 可以请求外部的公钥服务器撤销你的公钥.
+在生成密钥后, 最好再生成一张revocation certificate(撤销证书), 以备以后密钥作废时, 可以请求外部的公钥服务器撤销你的公钥.
 
 ```sh
-gpg --gen-revoke [USER ID]
+gpg --output <file> --gen-revoke [USER ID]
 ```
 
-如之前所说, 这里的USER ID可以填写USER ID的hash.
+如之前所说, 这里的USER ID可以填写下列之一:
 
-# key management
+1. USER ID的hash
+2. 完整的USER ID
+3. USER ID中的Real Name部分
+4. USER ID中的Email部分
 
-## list  keys
+
+
+以填写Real Name( "Yukuan Lu")为例:
+
+```
+gpg --gen-revoke "Yukuan Lu"
+
+sec  rsa3072/02753F5D92BA2D0F 2023-07-15 Yukuan Lu <lyk1037400635@gmail.com>
+
+Create a revocation certificate for this key? (y/N) y
+```
+
+
+
+# Key management
+
+## List  keys
 
 ### public key
 
@@ -150,12 +166,12 @@ ssb   rsa4096/051FBEBE8BDED88B 2022-02-10 [E]
 
 各个字段的解释和公钥的相同.
 
-## export keys
+## Export keys
 
 导出指定USER ID的公钥:
 
 ````sh
-gpg --armor --output public-key.txt  --export [USER ID]
+gpg --armor --output public-key.txt  --export <USER ID>
 ````
 
 * `--output outputfile_name`:  指定输出位置
@@ -163,19 +179,21 @@ gpg --armor --output public-key.txt  --export [USER ID]
 
 
 
+***
+
 
 
 类似地, `export-secret-keys`参数可以导出私钥.
 
 
 
-导出指定User的私钥:
+导出指定USER ID的私钥:
 
 ```sh
-gpg --export-secret-keys  --output private-key.txt --armor <USER ID>
+gpg --armor --output private-key.txt --export-secret-keys <USER ID>
 ```
 
-
+***
 
 导出全部User的私钥:
 
@@ -185,11 +203,47 @@ gpg --armor --output private-key.txt --export-secret-keys
 
 在导出私钥时, 需要为每一个私钥都输入passphrase.
 
+## Delete keys
+
+删除生成的密钥对时, 需要先删除私钥, 再删除公钥. 否则会输出`gpg: there is a secret key for public key [USER ID]!`指导用户先删除私钥.
 
 
-## upload public key
 
-公钥服务器是网络上专门储存用户公钥的服务器
+删除私钥:
+
+```perl
+gpg --delete-secret-keys DFD8CE52
+```
+
+
+
+删除公钥:
+
+```perl
+gpg --delete-keys 0CADF4B5
+```
+
+
+
+## Import Keys
+
+导入公钥:
+
+```shell
+gpg --import [公钥文件]
+```
+
+
+
+导入私钥:
+
+```sh
+gpg --allow-secret-key-import --import [私钥文件]
+```
+
+需要输入该私钥的passphere.
+
+## Upload public key
 
 
 
@@ -202,15 +256,9 @@ gpg --armor --output private-key.txt --export-secret-keys
 
 
 
-## import public key
 
-* 除了生成自己的密钥，还需要将他人的公钥或者你的其他密钥输入系统
 
-  ```shell
-  gpg --import [密钥文件]
-  ```
-
-  
+## Search Public Key
 
 * 为了获得他人的公钥，可以让对方直接发给你，或者到公钥服务器上寻找
 
@@ -230,10 +278,10 @@ gpg --armor --output private-key.txt --export-secret-keys
 
 ## Encrypt
 
-假定有一个文本文件demo.txt，对它加密:
+假定有一个压缩文件XX.zip, 对它加密:
 
 ```
-gpg --recipient [USER ID] --output demo.en.txt --encrypt demo.txt
+gpg --recipient [USER ID] --output XX.zip.gpg --encryptXX.zip
 ```
 
 * `--encrypt`: 要加密的源文件
@@ -254,10 +302,10 @@ gpg --recipient [USER ID] --output demo.en.txt --encrypt demo.txt
 
 ## Decrypt
 
-对方收到加密文件以后，就用自己的私钥解密。
+对方收到加密文件以后, 就用自己的私钥解密.
 
 ```sh
-gpg --decrypt demo.en.txt --output demo.de.txt
+gpg  --output XX.zip --decrypt XX.zip.gpg
 ```
 
 * `--decrypt`： 指定需要解密的文件
@@ -273,7 +321,20 @@ gpg demo.en.txt
 
 运行上面的命令以后，解密后的文件内容直接显示在STDOUT
 
-# signiture
+
+
+如果本机找不到对应的私钥, 则会输出:
+
+```
+gpg: encrypted with rsa3072 key, ID 7DCA6EA0D0E8372D, created 2023-07-09
+      "[user ID]"
+gpg: public key decryption failed: No secret key
+gpg: decryption failed: No secret ke
+```
+
+
+
+# Signiture
 
 ## file signiture
 
@@ -301,7 +362,7 @@ gpg demo.en.txt
 
 
 
-# signiture + encryption
+# Signiture + Encryption
 
 如果想同时签名和加密，可以使用下面的命令：
 
