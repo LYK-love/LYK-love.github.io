@@ -2,6 +2,7 @@
 title: Love, Death and Robots
 tags: Movie
 categories: Art
+date: 2021-08-12 12:00:00
 ---
 
 Sorted by episode
