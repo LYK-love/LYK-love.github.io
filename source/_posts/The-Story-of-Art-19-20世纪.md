@@ -2,6 +2,7 @@
 title: 'The Story of Art: Chapter 26,27'
 tags: Art Theory
 categories: Art
+date: 2021-11-20 12:00:00
 ---
 
 

@@ -3,6 +3,7 @@ title: Transformation of RE, NFA, DFA
 tags: Compilers
 categories: Computer Science
 mathjax: true
+date: 2023-02-8 15:44:25
 ---
 
 Outline:
