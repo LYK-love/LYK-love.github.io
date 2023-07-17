@@ -3,6 +3,7 @@ title: L8 logn search
 tags: Algorithm design and analysis
 categories: Algorithm
 mathjax: true
+date: 2022-02-12 12:00:00
 ---
 
 

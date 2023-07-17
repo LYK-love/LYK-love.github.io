@@ -3,6 +3,7 @@ title: Application Layer
 tags: Computer Networking
 categories: Computer Science
 mathjax: true
+date: 2021-09-20 12:00:00
 ---
 
 Outline:

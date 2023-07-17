@@ -2,6 +2,7 @@
 title: Python Basic
 categories: Language
 tags: Python
+date: 2022-08-20 12:00:00
 ---
 
 Outline:

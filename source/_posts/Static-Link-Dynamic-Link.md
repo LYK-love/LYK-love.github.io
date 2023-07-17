@@ -2,7 +2,7 @@
 title: Static Link && Dynamic Link
 tags: Linux
 categories: Technology
-date: 2022-05-05 01:18:34 [Static-Link-Dynamic-Link.md](Static-Link-Dynamic-Link.md) 
+date: 2022-05-05 01:18:34
 ---
 
 
@@ -104,7 +104,7 @@ clean:
 
 * 加载完成后，静态链接的程序就从ELF entry开始执行：
 
-  ```shell
+  ```txt
    readelf -h a.out                             
   ELF Header:
     Magic:   7f 45 4c 46 02 01 01 03 00 00 00 00 00 00 00 00 
@@ -129,7 +129,7 @@ clean:
   
   ```
 
-  ```
+  ```txt
   gdb a.out  
   ...
   (gdb) starti
@@ -142,7 +142,7 @@ clean:
 
 * 查看该进程的地址空间：
 
-  ```
+  ```txt
   (gdb) info inferiors
     Num  Description       Connection           Executable        
   * 1    process 15776     1 (native)           /home/lyk/Documents/Hexo/LYK-love.github.io/source/_drafts/Test/a.out 

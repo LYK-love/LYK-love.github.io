@@ -2,6 +2,8 @@
 title: AI Intro 
 tags: AI
 categories: Artificial Intelligence
+mathjax: true
+date: 2023-02-08 01:27:25
 ---
 
 Outline:

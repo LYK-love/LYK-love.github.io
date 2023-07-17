@@ -1,6 +1,7 @@
 ---
 title: Design Pattern
 categories: Software Engineering
+date: 2022-03-15 12:00:00
 ---
 
 

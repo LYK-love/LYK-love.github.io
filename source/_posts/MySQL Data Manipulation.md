@@ -2,6 +2,7 @@
 title: MySQL Data Manipulation
 tags: Database
 categories: Technology
+date: 2022-04-09 12:00:00
 ---
 
 Outline:

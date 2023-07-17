@@ -3,6 +3,7 @@ title: Automated Testing
 tags:  Software Testing
 categories: Software Engineering
 mathjax: true
+date: 2021-10-21 12:00:00
 ---
 
 * Outline：
@@ -89,7 +90,8 @@ mathjax: true
      
   2. 用例与测试用例集之间的距离计算：分别使用最小距离、平均距离和最大距离度量方式计算待选择用例$t_c$与已选择用例集S的距离：
      $$
-     D(tc,S)=\left\{  
+     D(tc,S)=
+     \left\{  
      \begin{aligned} 
      \max \left\{ \min\limits_{0\leq i \leq |S|} \left\{ Jaccard(t_c, t_i)\right\} \right\} \\
      
@@ -100,7 +102,7 @@ mathjax: true
      \end{aligned} 
      \right.
      $$
-  
+     
      * $t_c$是待选用例。这里是计算tc跟已选测试用例集每个ti的距离。假设已选k个用例，则有k个距离，min就是取k个距离中最小的距离作为tc到已选集（包含k个测试用例）的距离。
 
 #### 基于搜索的TCP
