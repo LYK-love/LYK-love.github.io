@@ -82,7 +82,7 @@ Yukuan Lu <lyk1037400635@gmail.com>
 在生成密钥后, 最好再生成一张revocation certificate(撤销证书), 以备以后密钥作废时, 可以请求外部的公钥服务器撤销你的公钥.
 
 ```sh
-gpg --output <file> --gen-revoke [USER ID]
+gpg --output <file> --gen-revoke <USER ID>
 ```
 
 如之前所说, 这里的USER ID可以填写下列之一:
@@ -122,46 +122,50 @@ gpg --list-keys
 
 显示如下：
 
+```txt
+/Users/lyk/.gnupg/pubring.kbx
+-----------------------------
+pub   rsa3072 2023-07-15 [SC]
+      7D6950635D1A34200C44E47302753F5D92BA2D0F
+uid           [ultimate] Yukuan Lu <lyk1037400635@gmail.com>
+sub   rsa3072 2023-07-15 [E]
 ```
-/home/lyk/.gnupg/pubring.kbx
-----------------------------
-pub   rsa4096 2022-02-10 [SC]
-      DFD9A8D9CF0BD747BE1BDBD839AD95E8DF842459
-uid           [ultimate] LYK-love (gpg for lyk) <your_email>
-sub   rsa4096 2022-02-10 [E]
-```
 
-* 第一行： 公钥文件地址()`/home/lyk/.gnupg/pubring.kbx`)
+* 第一行:公钥文件地址(`/home/lyk/.gnupg/pubring.kbx`)
 
-* 第二行: 公钥特征.
+* 第二行:公钥特征.
 
-  * `rsa4096`: 使用rsa算法, 密钥长度为4096.
-  * `2022-02-10 [SC]`: 密钥生成时间.
-  * `DFD9A8D9CF0BD747BE1BDBD839AD95E8DF842459`: USER ID的hash.
+  * `rsa3072`: 使用rsa算法, 密钥长度为4096.
+  * `2023-07-15`: 密钥生成时间.
+  * `7D6950635D1A34200C44E47302753F5D92BA2D0F`: USER ID的hash.
 
 * 第三行:
 
   * 密钥保质期. ` [ultimate]`即永不过期.
 
-  * USER ID: `LYK-love (gpg for lyk) <your_email>`. 说明:
+  * USER ID: `Yukuan Lu <lyk1037400635@gmail.com>`.
 
-    * Real name: `LYK-love`
-    * Email: `your_email`
-    * comment: `(gpg for lyk)`
-
-    这个USER ID也可以用其hash来替代.
+    * Real name: `Yukuan Lu`
+    * Email: `lyk1037400635@gmail.com`
+    * comment:  无
 
 * 第四行: 私钥特征
 
 ### private key
 
-`--list-secret-keys --keyid-format LONG <your_email>`： 列出私钥
+列出私钥
 
-```shell
-sec   rsa4096/39AD95E8DF842459 2022-02-10 [SC]
-      DFD9A8D9CF0BD747BE1BDBD839AD95E8DF842459
-uid                 [ultimate] LYK-love (gpg for lyk) <your_email>
-ssb   rsa4096/051FBEBE8BDED88B 2022-02-10 [E]
+```sh
+gpg --list-secret-keys --keyid-format LONG <USER ID>
+```
+
+
+
+```txt
+sec   rsa3072/02753F5D92BA2D0F 2023-07-15 [SC]
+      7D6950635D1A34200C44E47302753F5D92BA2D0F
+uid                 [ultimate] Yukuan Lu <lyk1037400635@gmail.com>
+ssb   rsa3072/BECE71EA85ACCF78 2023-07-15 [E]
 ```
 
 各个字段的解释和公钥的相同.
@@ -205,7 +209,7 @@ gpg --armor --output private-key.txt --export-secret-keys
 
 ## Delete keys
 
-删除生成的密钥对时, 需要先删除私钥, 再删除公钥. 否则会输出`gpg: there is a secret key for public key [USER ID]!`指导用户先删除私钥.
+删除生成的密钥对时, 需要先删除私钥, 再删除公钥. 否则会输出`gpg: there is a secret key for public key <USER ID>!`指导用户先删除私钥.
 
 
 
@@ -281,7 +285,7 @@ gpg --allow-secret-key-import --import [私钥文件]
 假定有一个压缩文件XX.zip, 对它加密:
 
 ```
-gpg --recipient [USER ID] --output XX.zip.gpg --encryptXX.zip
+gpg --recipient <USER ID> --output XX.zip.gpg --encryptXX.zip
 ```
 
 * `--encrypt`: 要加密的源文件
@@ -327,7 +331,7 @@ gpg demo.en.txt
 
 ```
 gpg: encrypted with rsa3072 key, ID 7DCA6EA0D0E8372D, created 2023-07-09
-      "[user ID]"
+      "<USER ID>"
 gpg: public key decryption failed: No secret key
 gpg: decryption failed: No secret ke
 ```

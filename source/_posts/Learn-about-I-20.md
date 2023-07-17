@@ -1,8 +1,15 @@
 ---
 title: Learn about I-20
-tags: Study Abroad
-categories: Life
+tags:
+  - Study Abroad
+  - International
+categories: Affairs
+date: 2023-07-18 01:12:22
 ---
+
+Everything about I-20 form, which is essentional for U.S. visa application.
+
+<!--more-->
 
 # Intro
 
@@ -22,13 +29,13 @@ SISS使用iGlobal系统来帮助学生申请I-20, iGlobal会将学生填写的�
 
 > Information you provide in iGlobal is entered into your **SEVIS** record.
 
-![image-20230524132612863](/Users/lyk/Library/Application Support/typora-user-images/image-20230524132612863.png)
+![iGlobal](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/iGlobal.png)
 
 
 
 
 
-SEVIS是实际签发I-20的政府部门, 当SISS收到SEVIS处理好的I-20后, 就会发送给学生. 
+SEVIS是实际签发I-20的政府部门. SISS收到SEVIS处理好的I-20后就会将其发送给学生. 
 
 **当学生收到I-20后, 还需要支付I-901 Fee作为I-20的手续费, 或者说SEVIS的维护费用. 支付I-901 Fee之后, I-20才能生效.** I-20被用于申请签证( get a visa at a **US Embassy** or Consular Office )以及在入境口进入美国.
 
@@ -43,7 +50,7 @@ SEVIS是实际签发I-20的政府部门, 当SISS收到SEVIS处理好的I-20后, 
 
 几个相关机构:
 
-![image-20230524132645125](/Users/lyk/Library/Application Support/typora-user-images/image-20230524132645125.png)
+![Related Institutions](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/Related%20Institutions.png)
 
 
 
@@ -58,15 +65,15 @@ SEVIS是实际签发I-20的政府部门, 当SISS收到SEVIS处理好的I-20后, 
 
 ## I-20
 
-![I-20](/Users/lyk/Library/Application Support/typora-user-images/image-20230707195301921.png)
+![I-20 example](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/I-20%20example.png)
 
 * I-20表格共有3页, 通常是印刷在2张纸上, 第一张纸是正反面的. 
 * 现在很多大学已经通过电子邮件的方式发送i-20, 电子版和纸质版是相同的.
 * **I-20左上角是[SEVIS](#SEVIS) ID. 由九位字母或数字构成, 以N开头.**
 
-- I-20表格有两种：Initial I-20和Transfer I-20.
-- **Initial I-20**是发放给第一次申请I-20的学生. 如果曾经在美国上过学，但是已经回国并且前一份I-20已经失效，则还是需要申请Initial I-20.
-- **Transfer I-20**是发放给正在美国学校入读并打算将自己的SEVIS从目前学校转过来的学生
+- I-20表格有两种：Initial I-20和Transfer I-20. 这里申请的是InitialI-20.
+  * **Initial I-20**是发放给第一次申请I-20的学生. 如果曾经在美国上过学但是已经回国并且前一份I-20已经失效，则依然需要申请Initial I-20.
+  * **Transfer I-20**是发放给正在美国学校入读并打算将自己的SEVIS从目前学校转过来的学生
 
 
 
@@ -91,11 +98,11 @@ Once you get your I-20 from SISS you can enter the US:
 2. 个人资助证明表格(PERSONAL SPONSOR FUNDING FORM)
 3. 一些个人信息, 比如家庭住址之类的.
 
-
+## Application Process
 
 在收到美国学校的录取通知后, 过两天还会收到一封I-20申请邮件. 信中会告诉你申请I-20的步骤. UCDavis负责国际学生事务的部门是SISS, 使用[iGlobal](https://iglobal.ucdavis.edu/istart/controllers/start/StartEngine.cfm)系统来帮助学生申请I-20.
 
-![image-20230610151531380](/Users/lyk/Library/Application Support/typora-user-images/image-20230610151531380.png)
+![iGlobal Overview](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/iGlobal%20Overview.png)
 
 (从图中看到, SISS声称办理I-20的时间是4weeks, 但个人经历是一共花了38天.)
 
@@ -103,15 +110,15 @@ Once you get your I-20 from SISS you can enter the US:
 
 进入iGlobal就可以找到申请I-20的说明, 其实就是给你一些表单, 填写完并提交即可:
 
-![image-20230610152120253](/Users/lyk/Library/Application Support/typora-user-images/image-20230610152120253.png)
+![iGlobal Homepage](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/iGlobal%20Homepage.png)
 
 
 
 接下来只需等待学校部门处理完你的申请:
 
-![image-20230610152248171](/Users/lyk/Library/Application Support/typora-user-images/image-20230610152248171.png)
+![iGlobal I-20 process](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/iGlobal%20I-20%20process.png)
 
-(图中是“Pending Office Approval”, 即处理中)
+(图中的I-20状态为“Pending Office Approval”, 即处理中)
 
 当处理完成后, SISS就会发送I-20到你的电子邮箱.
 
@@ -132,7 +139,7 @@ Once you get your I-20 from SISS you can enter the US:
 
 存款证明是纸质的, 只需要拍照并上传即可. Davis对存款证明照片的要求如下:
 
-![image-20230610155757432](/Users/lyk/Library/Application Support/typora-user-images/image-20230610155757432.png)
+![Financial Document Requirement](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/Financial%20Document%20Requirement.png)
 
 银行开的存款证明都满足了这些要求.
 
@@ -144,7 +151,7 @@ Once you get your I-20 from SISS you can enter the US:
 
 这个Personal Sponsor Funding Form也是由学校提供的, 以Davis提供的[表格](https://siss.ucdavis.edu/sites/g/files/dgvnsk631/files/inline-files/PersonalSponsorFundingForm_1.pdf)为例:
 
-![image-20230610153300170](/Users/lyk/Library/Application Support/typora-user-images/image-20230610153300170.png)
+![Personal Sponsor Funding Form](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/Personal%20Sponsor%20Funding%20Form.png)
 
 
 
@@ -152,13 +159,13 @@ Once you get your I-20 from SISS you can enter the US:
 
 不同学校的不同项目所需的花费都不一样. 学校会给你一个大致的存款金额, 在银行账户中存入这个金额即可. 
 
-![image-20230610153648854](/Users/lyk/Library/Application Support/typora-user-images/image-20230610153648854.png)
+![Financial Document Requirement-Money](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/Financial%20Document%20Requirement-Money.png)
 
 Davis的推荐金额是63000\$, 如果要携带其他人(dependent)来美国, 则按照每个人6000\$来增加金额.
 
 我是一个人去美国, 因此只需要存63000\$.
 
-至于能否存得低于这个数值我也不知道, 建议向学校部门咨询.
+至于存款能否低于这个数值我也不知道, 建议向学校部门咨询.
 
 ## 如何办理存款证明
 
@@ -200,7 +207,7 @@ Davis的推荐金额是63000\$, 如果要携带其他人(dependent)来美国, �
 
 # Signature
 
-![image-20230710194842606](/Users/lyk/Library/Application Support/typora-user-images/image-20230710194842606.png)
+![I-20 Signature](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/I-20%20Signature.png)
 
 在拿到I-20表格后, 还需要打印出来, 并且由学生本人签字, 位置如上, 在STUDENT ATTESTATION的第一行. 如果学生本人未满18周岁, 还需要由家长在STUDENT ATTESTATION的第二行签字.
 
@@ -209,7 +216,7 @@ Davis的推荐金额是63000\$, 如果要携带其他人(dependent)来美国, �
 在学校处理完I-20后, 会向学生发送I-20的电子版或者纸质版. Davis发送的是电子版. 该信件还说明了办理完I-20之后所要做的事:
 
 1. Download your electronically signed I-20. 很简单, 不讲了
-2. Pay the SEVIS I-901 fee.
+2. Pay the SEVIS I-901 fee. (350\$ for F1 visa)
 3. Arrange a visa appointment at your local U.S. embassy or consulate. 如何预约签证(填写DS160, 预约面签)可以参见这篇文章.
 
 
@@ -220,11 +227,43 @@ Davis的推荐金额是63000\$, 如果要携带其他人(dependent)来美国, �
 >
 > Every student (unless you are transferring your SEVIS record from your old school) must pay the I-901 SEVIS fee. Visit [www.fmjfee.com](http://www.fmjfee.com/) for instructions. Keep your receipt in a safe place and bring it to your visa appointment. UC Davis' F-1 School Code is SFR214F00614000.
 
-![image-20230707205518543](/Users/lyk/Library/Application Support/typora-user-images/image-20230707205518543.png)
+![I-901 Homepage](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/I-901%20Homepage.png)
 
 只需进入--> [www.fmjfee.com](http://www.fmjfee.com/) , 然后点击右上角的“PAY I-901 FEE”, 一步步填写并缴费(350\$)即可. 填写需要的信息包括了SEVIS ID, SCHOOL CODE等, 这些都在I-20内有写.
 
 
+
+付款后会发一封Email:
+
+![I-901 Email](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/I-901%20Email.png)
+
+## I901 Confirmation Page
+
+付款后就得到了SEVIS I-901的支付收据:
+
+![I-901 Confirmation Page](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/I-901%20Confirmation%20Page.png)
+
+自己打印, 签证时需要携带.
+
+> When you go to the Consulate for your visa, you should <u>bring your payment confirmation</u> to prove you have paid the SEVIS fee
+
+## Check I-901 Status
+
+要检查I-901的办理状态, 可以点击[www.fmjfee.com](http://www.fmjfee.com/) 右上角的CHECK I-901 STATUS:
+
+![I-901 Status Check](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/I-901%20Status%20Check.png)
+
+
+
+输入SEVIS ID姓名和出生日期即可查看:
+
+![I-901 Status Check1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/I-901%20Status%20Check1.png)
+
+
+
+I-901状态如下, 在该页面还可以打印收据.
+
+![I-901 Status Check Result](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-I-20/I-901%20Status%20Check%20Result.png)
 
 
 
