@@ -671,7 +671,9 @@ font:
 
   我使用highlight作为高亮引擎, theme使用`a11y-light`
 
-* 我没有设置代码块行号
+* 我没有设置代码块行号.
+
+* 代码块超过一定高度则折叠.
 
 
 
@@ -694,6 +696,10 @@ codeblock:
     enable: false
     # Available values: default | flat | mac
     style: flat
+  # Fold code block
+  fold:
+    enable: true
+    height: 300
 ```
 
 

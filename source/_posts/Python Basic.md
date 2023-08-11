@@ -20,156 +20,25 @@ Outline:
 
 ref: [廖雪峰的教程](https://www.liaoxuefeng.com/wiki/1016959663602400)
 
-# Data Types
-
-Python3 中有六个标准的数据类型：
-
-- Number（数字）
-- String（字符串）, Python中没有字符类型
-- List（列表）
-- Tuple（元组）
-- Set（集合）
-- Dictionary（字典）
-
-
-
-Python3 的六个标准数据类型中：
-
-- 不可变数据类型：Number, String, Tuple
-- 可变数据类型：List, Dictionary, Set
-
-## string 
-
-Python的字符串类型是`str`，是**不可变**的. 在内存中以Unicode表示，一个字符对应若干个字节.
-
-如果要在网络上传输，或者保存到磁盘上，就需要把`str`变为以字节为单位的`bytes`
-
-Python对`bytes`类型的数据用带`b`前缀的单引号或双引号表示：
-
-```
-x = b'ABC'
-```
-
-要注意区分`'ABC'`和`b'ABC'`，前者是`str`，后者虽然内容显示得和前者一样，但`bytes`的每个字符都只占用一个字节。
-
-### 编码
-
-* char -> ascii int: `ord()`
-
-* ascii int -> char: `char()`
-
-* str -> ascii:
-
-  ```python
-  text = input("enter a string to convert into ascii values:")
-  ascii_values = []
-  for character in text:
-      ascii_values.append(ord(character))
-  ```
-
-  Or: 列表生成式
-
-  ```python
-  def to_ascii(text):
-      ascii_values = [ord(character) for character in text] 
-      return ascii_values
-  ```
-
-  
-
-
-
-对于单个字符的编码，Python提供了`ord()`函数获取字符的ascii整数表示，`chr()`函数把ascii编码转换为对应的字符：
-
-```
->>> ord('A')
-65
->>> ord('中')
-20013
->>> chr(66)
-'B'
->>> chr(25991)
-'文'
-```
-
-### 字符串格式化
-
-使用字符串的`format()`方法，它会用传入的参数依次替换字符串内的占位符`{0}`、`{1}`……，不过这种方式写起来比%要麻烦得多：
-
-```
->>> 'Hello, {0}, 成绩提升了 {1:.1f}%'.format('小明', 17.125)
-'Hello, 小明, 成绩提升了 17.1%'
-```
-
-## Number
-
-Python3 Number类型的子类型有: int, float, bool, complex( 复数 )
-
-### int
-
-Python不存在整数溢出, 如果数字过大就会自动转换成大整数类型计算. 非常方便
-
-
-
-十六进制: `hex()`: 这个函数会把int转成它的十六进制表示, 类型是str
-
-### float
-
-### bool
-
-### complex
-
-
-
-
-
-## List
-
-* 反转列表:
-
-  ```
-  list.reverse()
-  ```
-
-  该方法没有返回值, 但是会对列表的元素进行反向排序
-
-* str -> list:
-
-  ```
-  list("hahaha")
-  ```
-
-* list -> str:
-
-  ```
-  ''.join(list, ' ')
-  ```
-
-## Tuple
-
-## Set
-
-## Dictionary
-
-
-
 ## Operators
 
-* Py内置了`**`运算符来求幂次
+### Mean
 
-  * `pow(a,n)`: 求a的n次幂, 如果a和n都是int,则返回int
+Py内置了`**`运算符来求幂次
 
-  * `math.pow(a,n)`: 求a的n次幂, 但是会把参数转成浮点数进行运算, 浮点运算是会出错的. 对于比较大的数字, 肯定会出错, 所以不要用`math.pow()`
+* `pow(a,n)`: 求a的n次幂, 如果a和n都是int,则返回int
 
-    ```
-    >>> import math
-    >>> 17 ** 127 % 120
-    113
-    >>> math.pow(17,127) % 120 //出错了
-    96.0
-    >>> pow(17,127) % 120
-    113
-    ```
+* `math.pow(a,n)`: 求a的n次幂, 但是会把参数转成浮点数进行运算, 浮点运算是会出错的. 对于比较大的数字, 肯定会出错, 所以不要用`math.pow()`
+
+  ```
+  >>> import math
+  >>> 17 ** 127 % 120
+  113
+  >>> math.pow(17,127) % 120 //出错了
+  96.0
+  >>> pow(17,127) % 120
+  113
+  ```
 
 ### Slice
 
@@ -312,17 +181,65 @@ Tips:
 
 反转list:` l = [****]    l = l[::-1] `
 
-## Encoding
 
 
+## Control Flow
 
-## input
+Python中, **空字符串**, 空容器, 数字0都被判断为False.
 
 ```
-DPI = int(input("DPI = ") or 400 )
+age = 3
+if age >= 18:
+    print('your age is', age)
+    print('adult')
+else:
+    print('your age is', age)
+    print('teenager')
 ```
 
-* `input()`返回的是`str`, 对于数字要手动转成`int`
+
+
+
+
+`if`还可以简写：
+
+```
+if x:
+    print('True')
+```
+
+
+
+for:
+
+```
+sum = 0
+for x in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
+    sum = sum + x
+print(sum)
+```
+
+
+
+## Deconstructor
+
+Python的列表和元组支持解构赋值.
+
+```python
+def parse():
+    return 12,'me'
+x,y = parse() # 把parse()看作一个元组,默认按下标顺序赋值
+print(x,y)
+
+输出为: 12 me
+    
+#---也可以这样:------------#
+x,y = parse[0],parse[1]
+print(x,y)
+
+输出为: 12 me
+    
+```
 
 ## Comments
 
@@ -345,90 +262,243 @@ DPI = int(input("DPI = ") or 400 )
 
 注意多行注释如果作为字符串出现，就应当看作字符串，而不是注释
 
-## 条件判断
+## Help Doc
 
-Python中, **空字符串**, 空容器, 数字0都被判断为False
-
-
-
-```
-age = 3
-if age >= 18:
-    print('your age is', age)
-    print('adult')
-else:
-    print('your age is', age)
-    print('teenager')
-```
-
-
-
-`if`还可以简写：
-
-```
-if x:
-    print('True')
-```
-
-
-
-## 循环
-
-for:
-
-```
-sum = 0
-for x in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
-    sum = sum + x
-print(sum)
-```
-
-### range()
-
-`range()`生成一个整数序列, 再通过`list()`函数可以转换为list. 比如`range(5)`生成的序列是从0开始小于5的整数：
-
-```
->>> list(range(5))
-[0, 1, 2, 3, 4]
-```
-
-`range(101)`就可以生成0-100的整数序列
-
-
-
-range( ) 可以倒序生成序列:
+在 Python 中可以通过 `help()`内置函数或者`__doc__`属性查看某个函数的说明文档：
 
 ```python
-# 从100加到1. 每次间隔-1. 也就是说100, 然后100-1 = 99, 然后99-1 = 98, 相当于递减
-for i in range(100,0,-1):
-    print(i)
+# 查看 print() 内置函数的说明文档
+print('--- 用 help()内置函数查看说明文档 ---')
+help(print)
+print('--- 用 __doc__ 属性查看说明文档 ---')
+print(print.__doc__)
 ```
+
+
+
+函数的说明文档就是一段**多行注释**，位于函数内部、所有代码的最前面：
+
+```python
+# 定义一个比较数字大小的函数
+def num_max(num1, num2):
+    """
+    比较两个数字的大小
+    :param num1:形参1，数字1
+    :param num2:形参2，数字2
+    :return:大的数字，max_num = num1 if num1 > num2 else num2
+    """
+    max_num = num1 if num1 > num2 else num2
+    return max_num
+```
+
+
+
+# Data Types
+
+Python3 中有六个标准的数据类型：
+
+- Number（数字）
+- String（字符串）, Python中没有字符类型
+- List（列表）
+- Tuple（元组）
+- Set（集合）
+- Dictionary（字典）
+
+
+
+Python3 的六个标准数据类型中：
+
+- 不可变数据类型：Number, String, Tuple
+- 可变数据类型：List, Dictionary, Set
+
+## Type Check
+
+To determine a Python variable's type, Use the [`type()`](https://docs.python.org/library/functions.html#type) builtin function:
+
+```py
+>>> i = 123
+>>> type(i)
+<type 'int'>
+>>> type(i) is int
+True
+>>> i = 123.456
+>>> type(i)
+<type 'float'>
+>>> type(i) is float
+True
+```
+
+
+
+### isinstance() 
+
+To check if a variable is of a given type, use [`isinstance`](https://docs.python.org/library/functions.html#isinstance):
+
+```py
+>>> i = 123
+>>> isinstance(i, int)
+True
+>>> isinstance(i, (float, str, set, dict))
+False
+>>> isinstance (a,(str,int,list))    # 是元组中的一个返回 True
+True
+```
+
+
+
+- type() 不会认为子类是一种父类类型，不考虑继承关系。
+- isinstance() 会认为子类是一种父类类型，考虑继承关系。
+
+```python
+isinstance(object, classinfo)
+```
+
+- object -- 实例对象。
+- classinfo -- 可以是直接或间接类名、基本类型或者由它们组成的元组。
+
+## string 
+
+Python的字符串类型是`str`，是**不可变**的. 在内存中以Unicode表示，一个字符对应若干个字节.
+
+如果要在网络上传输，或者保存到磁盘上，就需要把`str`变为以字节为单位的`bytes`
+
+Python对`bytes`类型的数据用带`b`前缀的单引号或双引号表示：
+
+```
+x = b'ABC'
+```
+
+要注意区分`'ABC'`和`b'ABC'`，前者是`str`，后者虽然内容显示得和前者一样，但`bytes`的每个字符都只占用一个字节。
+
+
+
+### Encoding
+
+* char -> ascii int: `ord()`
+
+  ```
+  >>> ord('A')
+  65
+  >>> ord('中')
+  20013
+  ```
+
+* ascii int -> char: `char()`
+
+  ```
+  >>> chr(66)
+  'B'
+  >>> chr(25991)
+  '文'
+  ```
+
+* str -> ascii:
+
+  ```python
+  text = input("enter a string to convert into ascii values:")
+  ascii_values = []
+  for character in text:
+      ascii_values.append(ord(character))
+  ```
+
+  Or: 列表生成式
+
+  ```python
+  def to_ascii(text):
+      ascii_values = [ord(character) for character in text] 
+      return ascii_values
+  ```
+
+  
+
+
+
+### String format
+
+使用字符串的`format()`方法，它会用传入的参数依次替换字符串内的占位符`{0}`、`{1}`, ...
+
+```
+>>> 'Hello, {0}, 成绩提升了 {1:.1f}%'.format('小明', 17.125)
+'Hello, 小明, 成绩提升了 17.1%'
+```
+
+
+
+## Number
+
+Python3 Number类型的子类型有: int, float, bool, complex( 复数 )
+
+* int: Python不存在整数溢出, 如果数字过大就会自动转换成大整数类型计算. 非常方便
+
+  十六进制: `hex()`: 这个函数会把int转成它的十六进制表示, 类型是str
+
+* float
+* bool
+* complex
+
+
+
+## List
+
+* 反转列表:
+
+  ```
+  list.reverse()
+  ```
+
+  该方法没有返回值, 但是会对列表的元素进行反向排序
+
+* str -> list:
+
+  ```
+  list("hahaha")
+  ```
+
+* list -> str:
+
+  ```
+  ''.join(list, ' ')
+  ```
+
+## Tuple
+
+## Set
+
+## Dictionary
 
 
 
 # Function
 
-## 定义函数
-
-在Python中，定义一个函数要使用`def`语句，依次写出函数名、括号、括号中的参数和冒号`:`，然后，在缩进块中编写函数体，函数的返回值用`return`语句返回。
-
-我们以自定义一个求绝对值的`my_abs`函数为例
+## Define Fuction 
 
 ```
 def my_abs(x):
-
-​	if x>= 0:
-
-​		return x
-
-​	else:
-
-​		return -x
+	if x>= 0:
+		return x
+	else:
+		return -x
 ```
 
-如果没有`return`语句，函数执行完毕后也会返回结果，只是结果为`None`。( Note that a return statement without a value is equivalent to `return None` )`return None`可以简写为`return`。
+Note that a return statement without a value is equivalent to `return None` , `return None`可以简写为`return`.
 
-### 空函数
+```python
+def fn():
+	# ....
+	return
+	
+# Equals to:
+def fn():
+	# .... 
+	# No return statement
+	
+# Equals to:
+def fn():
+	# ....
+	return None
+```
+
+## pass
 
 如果想定义一个什么事也不做的空函数，可以用`pass`语句：
 
@@ -448,7 +518,9 @@ if age >= 18:
 
 缺少了`pass`，代码运行就会有语法错误。
 
-### 参数检查
+## Parameter
+
+###  Parameter Check
 
 `parameter`形参, `argument`实参
 
@@ -525,11 +597,13 @@ You can specify more than one global variable using the same global statement e.
 
 `global x, y, z .`
 
-## Default Argument Values
+### Default Argument Values
 
-Only those parameters which are at the end of the parameter list can be given default argument values i.e. you cannot have a parameter with a default argument value preceding a parameter without a default argument value in the function's parameter list. This is because the values are assigned to the parameters by position. For example, def func(a, b=5) is valid, but def func(a=5, b) is not valid.
+<u>Only those parameters which are at the end of the parameter list can be given default argument values.</u>
 
-## Keyword Arguments   
+For example, def func(a, b=5) is valid, but def func(a=5, b) is not valid.
+
+### Keyword Arguments   
 
 If you have some functions with many parameters and you want to specify only some of them, then you can give values for such parameters by *naming* them - this is called `keyword arguments` - we use the name (keyword) **instead of the position** (which we have been using all along) to specify the arguments to the function.
 There are two advantages - one, using the function is easier since we do not need to worry about the order of the arguments. Two, we can give values to only those parameters to which we want to, provided that the other parameters have *default argument values*.
@@ -552,7 +626,7 @@ a is 100 and b is 5 and c is 50
 
 In the second usage func(25, c=24) , the variable a gets the value of 25 due to the**position** of the argument. Then, the parameter c gets the value of 24 due to **naming** i.e. `keyword arguments`. The variable b gets the default value of 5 .
 
-## VarArgs parameters
+### VarArgs parameters
 
 Sometimes you might want to define a function that can take any number of parameters, i.e. variable number of arguments, this can be achieved by using the stars. 可以传入任意数量的参数
 
@@ -583,72 +657,61 @@ None
 When we declare a starred parameter such as `*`param , then all the positional arguments from that point till the end are collected as a `tuple` called 'param'.
 Similarly, when we declare a double-starred parameter such as `**`param , then all the keyword arguments from that point till the end are collected as a `dictionary` called 'param'.
 
-## 解构赋值
+# Basic Functions
 
-Python的列表和元组支持解构赋值.
+## input()
 
-```python
-def parse():
-    return 12,'me'
-x,y = parse() # 把parse()看作一个元组,默认按下标顺序赋值
-print(x,y)
-
-输出为: 12 me
-    
-#---也可以这样:------------#
-x,y = parse[0],parse[1]
-print(x,y)
-
-输出为: 12 me
-    
+```
+DPI = int(input("DPI = ") or 400 )
 ```
 
-## 说明文档
+* `input()`返回的是`str`, 对于数字要手动转成`int`
 
-在 Python 中可以通过 `help()`内置函数或者`__doc__`属性查看某个函数的说明文档：
+## range()
+
+`range()`生成一个整数序列, 再通过`list()`函数可以转换为list. 比如`range(5)`生成的序列是从0开始小于5的整数：
+
+```
+>>> list(range(5))
+[0, 1, 2, 3, 4]
+```
+
+`range(101)`就可以生成0-100的整数序列
+
+
+
+range( ) 可以倒序生成序列:
 
 ```python
-# 查看 print() 内置函数的说明文档
-print('--- 用 help()内置函数查看说明文档 ---')
-help(print)
-print('--- 用 __doc__ 属性查看说明文档 ---')
-print(print.__doc__)
+# 从100加到1. 每次间隔-1. 也就是说100, 然后100-1 = 99, 然后99-1 = 98, 相当于递减
+for i in range(100,0,-1):
+    print(i)
 ```
 
 
 
-函数的说明文档就是一段**多行注释**，位于函数内部、所有代码的最前面：
+## enumerate()
 
-```python
-# 定义一个比较数字大小的函数
-def num_max(num1, num2):
-    """
-    比较两个数字的大小
-    :param num1:形参1，数字1
-    :param num2:形参2，数字2
-    :return:大的数字，max_num = num1 if num1 > num2 else num2
-    """
-    max_num = num1 if num1 > num2 else num2
-    return max_num
+Python内置的`enumerate`函数可以把一个**list**变成索引-元素对，这样就可以在`for`循环中同时迭代索引和元素本身：
+
 ```
+>>> for i, value in enumerate(['A', 'B', 'C']):
+...     print(i, value)
+...
+0 A
+1 B
+2 C
+```
+
+
 
 # Advanced Features
 
-## 迭代
+## Iteration
 
-------
+在Python中，迭代是通过`for ... in`来完成的.
 
-如果给定一个list或tuple，我们可以通过`for`循环来遍历这个list或tuple，这种遍历我们称为迭代（Iteration）。
-
-在Python中，迭代是通过`for ... in`来完成的，而很多语言比如C语言，迭代list是通过下标完成的，比如Java代码：
-
-```
-for (i=0; i<list.length; i++) {
-    n = list[i];
-}
-```
-
-可以看出，Python的`for`循环抽象程度要高于C的`for`循环，因为Python的`for`循环不仅可以用在list或tuple上，还可以作用在其他可迭代对象上。
+Python的`for`循环不仅可以用在list或tuple上，还可以作用在其他可迭代对象上。
 
 list这种数据类型虽然有下标，但很多其他数据类型是没有下标的，但是，只要是可迭代对象，无论有无下标，都可以迭代，比如dict就可以迭代：
 
@@ -679,41 +742,74 @@ C
 
 所以，当我们使用`for`循环时，只要作用于一个可迭代对象，`for`循环就可以正常运行，而我们不太关心该对象究竟是list还是其他数据类型。
 
-那么，如何判断一个对象是可迭代对象呢？方法是通过collections模块的Iterable类型判断：
+### Iterable
+
+我们已经知道，可以直接作用于`for`循环的数据类型有以下几种：
+
+一类是集合数据类型，如`list`、`tuple`、`dict`、`set`、`str`等；
+
+一类是`generator`，包括生成器和带`yield`的generator function。
+
+这些可以直接作用于`for`循环的对象统称为可迭代对象：`Iterable`。
+
+可以使用`isinstance()`判断一个对象是否是`Iterable`对象：
 
 ```
->>> from collections import Iterable
->>> isinstance('abc', Iterable) # str是否可迭代
+>>> from collections.abc import Iterable
+>>> isinstance([], Iterable)
 True
->>> isinstance([1,2,3], Iterable) # list是否可迭代
+>>> isinstance({}, Iterable)
 True
->>> isinstance(123, Iterable) # 整数是否可迭代
+>>> isinstance('abc', Iterable)
+True
+>>> isinstance((x for x in range(10)), Iterable)
+True
+>>> isinstance(100, Iterable)
 False
 ```
 
-最后一个小问题，如果要对list实现类似Java那样的下标循环怎么办？Python内置的`enumerate`函数可以把一个**list**变成索引-元素对，这样就可以在`for`循环中同时迭代索引和元素本身：
+而生成器不但可以作用于`for`循环，还可以被`next()`函数不断调用并返回下一个值，直到最后抛出`StopIteration`错误表示无法继续返回下一个值了。
+
+可以被`next()`函数调用并不断返回下一个值的对象称为迭代器：`Iterator`。
+
+### Iterator
+
+可以使用`isinstance()`判断一个对象是否是`Iterator`对象：
 
 ```
->>> for i, value in enumerate(['A', 'B', 'C']):
-...     print(i, value)
-...
-0 A
-1 B
-2 C
+>>> from collections.abc import Iterator
+>>> isinstance((x for x in range(10)), Iterator)
+True
+>>> isinstance([], Iterator)
+False
+>>> isinstance({}, Iterator)
+False
+>>> isinstance('abc', Iterator)
+False
 ```
 
-上面的`for`循环里，同时引用了两个变量，在Python里是很常见的，比如下面的代码：
+生成器都是`Iterator`对象，但`list`、`dict`、`str`虽然是`Iterable`，却不是`Iterator`。
+
+把`list`、`dict`、`str`等`Iterable`变成`Iterator`可以使用`iter()`函数：
 
 ```
->>> for x, y in [(1, 1), (2, 4), (3, 9)]:
-...     print(x, y)
-...
-1 1
-2 4
-3 9
+>>> isinstance(iter([]), Iterator)
+True
+>>> isinstance(iter('abc'), Iterator)
+True
 ```
 
-## 列表生成式
+
+
+你可能会问，为什么`list`、`dict`、`str`等数据类型不是`Iterator`？
+
+这是因为Python的`Iterator`对象表示的是一个数据流，Iterator对象可以被`next()`函数调用并不断返回下一个数据，直到没有数据时抛出`StopIteration`错误。可以把这个数据流看做是一个有序序列，但我们却不能提前知道序列的长度，只能不断通过`next()`函数实现按需计算下一个数据，所以`Iterator`的计算是惰性的，只有在需要返回下一个数据时它才会计算。
+
+`Iterator`甚至可以表示一个无限大的数据流，例如全体自然数。而使用list是永远不可能存储全体自然数的。
+
+### 
+
+## List Comprehensions
 
 ------
 
@@ -842,33 +938,9 @@ SyntaxError: invalid syntax
 
 可见，在一个列表生成式中，`for`前面的`if ... else`是表达式，而`for`后面的`if`是过滤条件，不能带`else`。
 
-### 练习
 
-如果list中既包含字符串，又包含整数，由于非字符串类型没有`lower()`方法，所以列表生成式会报错：
 
-```python
->>> L = ['Hello', 'World', 18, 'Apple', None]
->>> [s.lower() for s in L]
-Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
-  File "<stdin>", line 1, in <listcomp>
-AttributeError: 'int' object has no attribute 'lower'
-```
-
-使用内建的`isinstance`函数可以判断一个变量是不是字符串：
-
-```python
->>> x = 'abc'
->>> y = 123
->>> isinstance(x, str)
-True
->>> isinstance(y, str)
-False
-```
-
-## 生成器
-
-------
+## Generator
 
 通过列表生成式，我们可以直接创建一个列表。但是，受到内存限制，列表容量肯定是有限的。而且，创建一个包含100万个元素的列表，不仅占用很大的存储空间，如果我们仅仅需要访问前面几个元素，那后面绝大多数元素占用的空间都白白浪费了。
 
@@ -1083,67 +1155,6 @@ Generator return value: done
 ```
 
 ## 迭代器
-
-***
-
-我们已经知道，可以直接作用于`for`循环的数据类型有以下几种：
-
-一类是集合数据类型，如`list`、`tuple`、`dict`、`set`、`str`等；
-
-一类是`generator`，包括生成器和带`yield`的generator function。
-
-这些可以直接作用于`for`循环的对象统称为可迭代对象：`Iterable`。
-
-可以使用`isinstance()`判断一个对象是否是`Iterable`对象：
-
-```
->>> from collections.abc import Iterable
->>> isinstance([], Iterable)
-True
->>> isinstance({}, Iterable)
-True
->>> isinstance('abc', Iterable)
-True
->>> isinstance((x for x in range(10)), Iterable)
-True
->>> isinstance(100, Iterable)
-False
-```
-
-而生成器不但可以作用于`for`循环，还可以被`next()`函数不断调用并返回下一个值，直到最后抛出`StopIteration`错误表示无法继续返回下一个值了。
-
-可以被`next()`函数调用并不断返回下一个值的对象称为迭代器：`Iterator`。
-
-可以使用`isinstance()`判断一个对象是否是`Iterator`对象：
-
-```
->>> from collections.abc import Iterator
->>> isinstance((x for x in range(10)), Iterator)
-True
->>> isinstance([], Iterator)
-False
->>> isinstance({}, Iterator)
-False
->>> isinstance('abc', Iterator)
-False
-```
-
-生成器都是`Iterator`对象，但`list`、`dict`、`str`虽然是`Iterable`，却不是`Iterator`。
-
-把`list`、`dict`、`str`等`Iterable`变成`Iterator`可以使用`iter()`函数：
-
-```
->>> isinstance(iter([]), Iterator)
-True
->>> isinstance(iter('abc'), Iterator)
-True
-```
-
-你可能会问，为什么`list`、`dict`、`str`等数据类型不是`Iterator`？
-
-这是因为Python的`Iterator`对象表示的是一个数据流，Iterator对象可以被`next()`函数调用并不断返回下一个数据，直到没有数据时抛出`StopIteration`错误。可以把这个数据流看做是一个有序序列，但我们却不能提前知道序列的长度，只能不断通过`next()`函数实现按需计算下一个数据，所以`Iterator`的计算是惰性的，只有在需要返回下一个数据时它才会计算。
-
-`Iterator`甚至可以表示一个无限大的数据流，例如全体自然数。而使用list是永远不可能存储全体自然数的。
 
 ### 小结
 

@@ -64,6 +64,12 @@ ref: [一个台湾同学申请visa的经历](https://itsssll.com/index.php/2022/
 
 
 
+保管好签证，护照、I20（建议做一个电子版/复印备份）缺一个都来不了!
+
+关于订票：**特别提醒**，新生只能在I-20生效之前30天内入境，如果提前入境会遭到遣返
+
+
+
 # Complete the Online Visa Application(DS-160)
 
 [Form DS-160](https://ceac.state.gov/genniv/)
@@ -279,7 +285,64 @@ Application page记录了你在填写DS160时输入的内容, 虽然用不到, �
 
 4. 父母的收入证明(真有人会看么...)
 
+***
+
+STEM专业学生有概率被Check, 可以向学校部门(SISS for UCDavis)申请一个Visa Support Letter (跟自己的advisor申请，如图)
+
+![Image](https://mmbiz.qpic.cn/mmbiz_jpg/u8zDs7AnCmYQK4c2dX9c7Or7y1CektbTbuaIbZcmMK4g8kr1dRkWeDvEwzDGB1oia8OEfWGWDVynmI45vclib7KA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1)
+
+至于其有效性就未知了.
+
+
+
+
+
 # Others
+
+## Check
+
+* [签证状态查询CEAC](https://ceac.state.gov/CEACStatTracker/Status.aspx?)
+* [Check信息汇总(Checkee)](https://wwwcheckeeinfo/)
+
+
+
+如果遇到了check，不要慌张，按照签证官的要求上传资料。
+
+
+
+如何得知签证被check？
+
+一般来说，签证官在面签时会当场告知签证结果（通过或拒绝）。
+
+**过签：**提交的材料中只会**拿走护照**。除DS-160确认页和SEVIS费用收据不作为参考外，所有其他材料将被退回，签证官给你的单子上会明确写着三天后签证即准备好的信息。
+
+ 
+
+**拒签：**您提交的所有材料将**被退回**，您的护照不会被拿走。签证官会给你一个**拒签理由说明**。
+
+ 
+
+**check：**如果签证官没有当场表示通过(可能会收走护照和其他材料)，而是给一张221（g）的通知单（通知的具体形式将根据领事馆的印刷版本而有所不同），则表示申请人被check了。此外，您还可以通过大使馆官方网站查询签证状态。如果在五个工作日内未更新为issued，那就说明申请人被check了。
+
+
+
+目前的check时间(issue)平均在7周.
+
+
+
+如果check时间过长（超过4-8周），发邮件仍无回应的情况下，可以在UC Davis的iGlobal上 → Student service → ‘Report a Visa or Entry Issue’ 跟学校说明 （如果在入境的时候遇到问题也是这个窗口）
+
+![Image](https://mmbiz.qpic.cn/mmbiz_png/u8zDs7AnCmYQK4c2dX9c7Or7y1CektbTib1qk6Bia61GS58mXf2c3ySUqIQHnuvZ4bKut8GsJTOapBowZLQ0yGbA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+
+
+
+PhD学生建议**着重准备**以下资料:
+
+* 个人CV 
+* 导师CV
+* PhD学习计划 Study Plan
+* 资金来源 Funding Letter (以TA/RA的形式)
+* 系里和lab的基本资料（在系里的官网或者询问本系Academic Advisor）
 
 ## 在I-20办好之前预约面签
 
