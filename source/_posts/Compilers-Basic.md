@@ -21,6 +21,12 @@ date: 2022-09-11 01:18:57
 
 # Language Processors
 
+All roads lead to the CPU:
+
+![All roads lead to the CPU](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Compilers/Compilers%20Basic/All%20roads%20lead%20to%20the%20CPU.png)
+
+
+
 ## Compiler
 
 ![Compiler](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Compilers/Compilers%20Basic/Compiler.png)

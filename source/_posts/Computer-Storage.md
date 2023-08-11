@@ -30,6 +30,10 @@ Outline:
 
 
 
+![image-20230812005129873](/Users/lyk/Library/Application Support/typora-user-images/image-20230812005129873.png)
+
+
+
 # The Memory Hierarchy
 
 计算机的存储架构是分层的：
