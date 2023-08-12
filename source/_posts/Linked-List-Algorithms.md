@@ -1,11 +1,14 @@
 ---
-title: Linkedlist Algorithms
+title: Linked List Algorithms
 tags: Algorithm design and analysis
 categories: Algorithm
 mathjax: true
 date: 2023-08-13 03:25:15
 ---
 
+Commen Linked List Algorithms on Leetcode.
+
+<!--more-->
 
 # Reverse the Linkedlist
 
