@@ -14,7 +14,7 @@ Commen Linked List Algorithms on Leetcode.
 
 [206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)
 
-[[92. Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/)](https://leetcode.com/problems/reverse-linked-list-ii/)
+[92. Reverse Linked List II](https://leetcode.com/problems/reverse-linked-list-ii/)
 
 ![Reverse the Linkedlist](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Algorithm/Linkedlist%20Algorithms/Reverse%20the%20Linkedlist.png)
 
