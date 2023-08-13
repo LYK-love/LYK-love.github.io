@@ -11,26 +11,6 @@ Common binary tree algorithms from leetcode.
 
 <!--more-->
 
-# Terminology
-
-ref: [Binary Trees by Nick Parlante](http://cslibrary.stanford.edu/110/BinaryTrees.html#:~:text=A%20binary%20tree%20is%20made,%22subtrees%22%20on%20either%20side.)
-
-* The **tree** is a subset of Directed Acylic Graph(DAG, 有向无环图). 因為有向無環圖中從一個點到另一個點有可能存在兩種路線, 因此有向無環圖未必能轉化成樹, 但任何有向樹均為有向無環圖.
-
-* **Root:** The root of a tree has no parent.
-* **Parent:** A node with a child or children.
-* **Child:** A node extended from another node (parent node).
-* **Leaf:** A node without a child.
-* Define **depth()** of node `A` in a tree rooted at  `X` to be length of path from `X` to `A`.
-* Define **height()** of node `A` to be max depth of any node in the subtree rooted at `X`
-
-
-
-## Kinds of Tree
-
-* a **binary tree** is either empty (represented by a null pointer), or is made of a single node, where the left and right pointers (recursive definition ahead) each point to a **binary tree**.
-* A **"binary search tree" (BST)** or "ordered binary tree" is a type of binary tree where the nodes are arranged in order: for each node, all elements in its left subtree are less-or-equal to the node (<=), and all the elements in its right subtree are greater than the node (>).
-
 # Operations
 
 API for Binary Tree Node.
