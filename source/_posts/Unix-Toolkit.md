@@ -293,16 +293,23 @@ apt-get update
 
 ## clipboard
 
-`pbcopy` on OSX can Copy data from stdin to the clipboard.
+`pbcopy` and `pbpaste`on OSX can Copy&Paste data from stdin to the clipboard.
 
-```sh
-nvim a
-# write thoughtful response
-cat a | pbcopy
-# cmd tab
-# paste to slack
-rm a
+Open a terminal and run:
+
+```bash
+cat ~/Desktop/ded.html | pbcopy
 ```
+
+The file is now in your clipboard.
+
+To put it somewhere else (i.e. paste it) run:
+
+```bash
+pbpaste > ~/Documents/ded.html
+```
+
+Now you should have a copy of ded.html sitting in ~/Documents.
 
 ## xxd
 

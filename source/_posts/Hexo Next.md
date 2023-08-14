@@ -149,10 +149,6 @@ INFO  Hexo is running at http://localhost:4000/ . Press Ctrl+C to stop.
 
 保险起见, 可以备份old主题文件夹的文件, 把旧主题文件夹rename为`next-old`. 当然, 我不会更改主题目录下的任何文件, 因此不备份也没关系.
 
-## 
-
-
-
 # Next Theme Config
 
 [进阶配置](https://convivae.top/posts/hexo-bo-ke-cai-keng/)
@@ -373,6 +369,41 @@ mkdir images
 
 4. 如果代码安装正确，一般20分钟后，可以查看网站分析数据.
 
+# Macros
+
+```
+{% label primary@<text> %}
+```
+
+可以把`<text>`变成紫色.
+
+
+
+```
+{% note default <text> %}
+...
+
+{% endnote %}
+```
+
+
+
+```
+{% note warning %}
+
+{% endnote %}
+```
+
+
+
+```
+{% note info %}
+The following examples are rendered by `mathjax` engine.
+{% endnote %}
+```
+
+
+
 # Math Support
 
 [Next数学公式支持官方文档](https://github.com/theme-next/hexo-theme-next/blob/master/docs/zh-CN/MATH.md)
@@ -383,7 +414,7 @@ mkdir images
 
 Hexo需要使用markdown渲染引擎将md渲染成html, 而Hexo NexT默认使用的markdown渲染引擎是[hexo-renderer-marked](https://github.com/hexojs/hexo-renderer-marked), 它不支持Mathjax，不支持插件扩展，不支持emoji表情, 因此我们需要卸载它, 并替换为别的引擎.
 
-注意, 不同的渲染引擎是不能共存的( [hexo-filter-mathjax](https://github.com/next-theme/hexo-filter-mathjax)除外, 它是server端的渲染引擎 ), 因此在使用一个渲染引擎之前, 需要卸载掉其他全部的渲染引擎,
+注意, 不同的渲染引擎是不能共存的( [hexo-filter-mathjax](https://github.com/next-theme/hexo-filter-mathjax)除外, 它是server端的渲染引擎 ), 因此在使用一个渲染引擎之前, 需要卸载掉其他全部的渲染引擎.
 
 ## Engines
 
@@ -395,16 +426,35 @@ If you use MathJax to render Math Equations, you can choose one of the Markdown 
 
 - [hexo-renderer-pandoc](https://github.com/wzpan/hexo-renderer-pandoc)
   * pandoc功能非常强大, 支持Mathjax语法, 不仅可以渲染markdown, 还支持textile, reStructedText和许多其他格式, 但仍然不支持emoji表情.
-  * 但是使用pandoc会使得内建的汇总文件`db.json`变得更常大. 无论是到Github的同步还是博客内建的搜索功能都会变得很慢. 同时pandoc的渲染速度也很慢, 降低博客文章的构建速度. 可以说, 用了pandoc后, 整个网站都慢得离谱.
+  
+  * 使用pandoc不会降低网站的运行速度, 但是会极大地降低文章构建时的file load速度:
+  
+    ```
+    > hexo g
+    INFO  Files loaded in 27 s
+    ...
+    INFO  489 files generated in 2.93 s
+    ```
+  
+    可以看到, generate时间为3s, 尚可接受, 但file load时间是惊人的30s.
+  
+  * 无论是到Github的同步还是博客内建的搜索功能都会变得很慢. 同时pandoc的渲染速度也很慢, 降低博客文章的构建速度. 可以说, 用了pandoc后, 整个网站都慢得离谱.
+  
   * 此外, 它和Next的集成有问题, 无法正确把生成的HTML文件的标题加入Anchor.
+  
+  * 
+  
 - [hexo-renderer-kramed](https://github.com/sun11/hexo-renderer-kramed): 基于hexo-renderer-marked二次开发的渲染器，完善了对Mathjax的支持, 仍然不支持插件的扩展，不支持emoji表情.
   * 亲测它比`hexo-renderer-pandoc`**快一点**. 但是有bug, 需要自己配置. 由于它太老了,就不推荐了. 
+  
 - [hexo-renderer-markdown-it](https://github.com/hexojs/hexo-renderer-markdown-it)：支持`MathJax`, 并可以通过插件支持`KeTex`. 
   * 支持Markdown以及CommonMark语法.
   * 支持插件配置, 支持标题带安全的id信息
   * 支持脚注（上标, 下标, 下划线）
   * **我最后选择`hexo-renderer-markdown-it`**
--  [hexo-renderer-markdown-it-plus](https://github.com/CHENXCHEN/hexo-renderer-markdown-it-plus): 支持Katex插件并默认启用.
+  
+- [hexo-renderer-markdown-it-plus](https://github.com/CHENXCHEN/hexo-renderer-markdown-it-plus): 支持Katex插件并默认启用.
+
 - [hexo-filter-mathjax](https://github.com/next-theme/hexo-filter-mathjax): Server side [MathJax](http://www.mathjax.org/) Renderer Plugin for [Hexo](http://hexo.io/). 要使用它,需要卸载掉除了`hexo-renderer-marked` ( 用于渲染markdown )之外的LaTex引擎. 它的缺点是有些语法不支持, 而且无法渲染目录里的LaTex.
 
 ### KaTex

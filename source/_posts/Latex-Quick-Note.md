@@ -1,14 +1,11 @@
 ---
-title: Typora && Latex
+title: Latex Quick Note
 categories: Toolkit
 mathjax: true
 date: 2021-07-23 15:39:08
 ---
 
-
-* Author: 有多远滚多远
-
-  
+Latex grammer.
 
 <!--more-->
 
@@ -20,6 +17,10 @@ date: 2021-07-23 15:39:08
 * 或者输入`$$`
 
 # Latex syntax
+
+[Ref](https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols)
+
+
 
 ## 上下标
 
@@ -257,14 +258,10 @@ $$
 | --------------------- | -------------------- | -------------------------- | -------------------------- |
 | `\forall`$ \forall$​​   | `\exists`  $\exists$​ | `\therefore`  $\therefore$​ | `\implies`  $\implies$     |
 || `\nexists` $\nexists$​ | `\exist \exist$​      | `\because`  $\therefore$​   | `\impliedby`  $\impliedby$​​ ||
-| `\land` $\land$       | `\lor` $\lor$        | `\to`  $\to$               | `\gets`  $\gets$           |
+| `\wedge` $\wedge$ | `\vee` $\vee$  | `\to`  $\to$               | `\gets`  $\gets$           |
 | `\iff`  $\iff$        | `\ni`  $\ni$         | `\not\ni`  $\not\ni$       | `\neg`  $\neg$             |
 
 
 
 
-
-## 希腊字母
-
-![img](https://pic3.zhimg.com/80/v2-49cc7a8cc50fcfd344b14168743a80ca_720w.jpg)
 

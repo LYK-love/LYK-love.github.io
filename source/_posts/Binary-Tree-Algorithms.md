@@ -167,6 +167,10 @@ E.g.:
 
 对左右子树再按照上述步骤递归即可.
 
+# Get Depth
+
+[111. Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
+
 
 
 

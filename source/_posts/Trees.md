@@ -14,7 +14,9 @@ Ref: *Discrete Mathematical Structures*, Sixth Edition, Bernard Kolman, Robert C
 
 # Definition
 
-Let $A$ be a set, and let $T$ be a **relation** on $A$. We say that $T$ is a **tree** if thereis a vertex $v_0$ in $A$ with the property that there **exists a <u>unique</u> path in $T$ from $v_0$ to every other vertex in $A$, but no path from $v_0$ to $v_0$.**
+Let $A$ be a set, and let $T$ be a **relation** on $A$. We say that $T$ is a **tree** if there is a vertex $v_0$ in $A$ with the property that there **exists a <u>unique</u> path in $T$ from $v_0$ to every other vertex in $A$, but no path from $v_0$ to $v_0$.**
+
+**(Tree是一种relation!)**
 
 We show below that the vertex $v_0$ , described in the definition of a tree, is unique. It is often called the **root** of the tree $T$ , and T is then referred to as a **rooted tree**. We write $(T, v_0)$ to denote a rooted tree $T$ with root $v0$.
 
@@ -95,3 +97,4 @@ A **binary tree** is either empty (represented by a null pointer), or is made of
 ## Binary Search Tree
 
 A **"binary search tree" (BST)** or "ordered binary tree" is a type of binary tree where the nodes are arranged in order: <u>for each node, all elements in its left subtree are less-or-equal to the node (<=), and all the elements in its right subtree are greater than the node (>).</u>
+
