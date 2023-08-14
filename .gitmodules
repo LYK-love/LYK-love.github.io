@@ -1,4 +1,7 @@
 [submodule "themes/next"]
 	path = themes/next
   #url = git@github.com:LYK-love/hexo.git
-  url = https://github.com/next-theme/hexo-theme-next 
+  url = https://github.com/next-theme/hexo-theme-next
+[submodule "themes/hexo-theme-next"]
+	path = themes/hexo-theme-next
+  url = https://github.com/LYK-love/hexo-theme-next
