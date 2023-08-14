@@ -20,6 +20,32 @@ Latex grammer.
 
 [Ref](https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols)
 
+时候公式太长，用=号对齐很难看(有的公式**左边很长，右边很短**)，此时难免需要进行"**公式左对齐**"。所需要的环境还是"**align**"(或者是align*，不带公式编号)。
+
+语法如下：
+
+
+
+```latex
+\begin{align*}\label{2}
+  & X(0) = x(0)W_{N}^{0\cdot0} + x(1)W_{N}^{0\cdot1} + \cdots + x(N-1)W_{N}^{0\cdot(N-1)}\\
+  & X(1) = x(0)W_{N}^{1\cdot0} + x(1)W_{N}^{1\cdot1} + \cdots + x(N-1)W_{N}^{1\cdot(N-1)} \\
+  & \cdots \\
+  & X(N-1) = x(0)W_{N}^{(N-1)\cdot0} + x(1)W_{N}^{(N-1)\cdot1} + \cdots + x(N-1)W_{N}^{(N-1)\cdot(N-1)} \\
+\end{align*}
+```
+
+说明1：&符号就是"**对齐的位置**"，放置在最左边就是多行公式左对齐；
+ 说明2：\符号是每一行公式结束后的换行。
+
+补充说明：公式中的\cdot是"**· 乘法**"的符号，\cdots是公式中常用的"**省略号...**"。
+
+
+
+
+
+# Latex Symbols
+
 
 
 ## 上下标

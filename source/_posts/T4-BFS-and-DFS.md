@@ -1,5 +1,5 @@
 ---
-title: T4 BFS/DFS
+title: T4 BFS and DFS
 tags: Algorithm design and analysis
 categories: Algorithm
 mathjax: true
@@ -88,16 +88,17 @@ Outline:
 
     由于出队操作对结论没有影响( 出队不会更改 $v.dis$), 只需要关注入队操作. 假设在处理节点$u$时, 发现白色邻居$v$. 根据归纳假设, 有$u.dis \geq \delta(s,u)$. 对于$v$, 有:
     $$
+    \begin{equation}
+    \begin{aligned}
     v.dis = u.dis + 1( BFS的实现 ) \\
     
     \quad \quad  \geq \delta(s,u)+1 ( 归纳假设 ) \\
     
     \geq \delta(s,v) ( 引理5.1 )
-    $$
-
+    \end{aligned}
+    \end{equation}
     $$
     
-    $$
 
     由于$v.dis$的值一经赋值后不再变化. 所以我们通过归纳法证明了对每个节点$v$, 有 $v.dis \geq \delta(s,v)$​
 
@@ -125,15 +126,21 @@ Outline:
 
      在$u$ 出队之前,$v_{r+1}$未入队时, $u$是队头, $v_r$​是队尾. 同样根据归纳假设, 有
 
-     $v_r.dis \leq u.dis+1=v_{r+1}.dis$
-
+    $$
+    v_r.dis \leq u.dis+1=v_{r+1}.dis
+    $$
     对于队列中其他元素而言, 不等关系未受影响.
-
     
-
-    综上, 基于归纳法我们证明了BFS过程中的任意时刻,
-
-    $v_i.dis \leq v_{i+1}.dis$ ( $1 \leq i \leq r+1 $ ) , $ v_r.dis \leq v_1.dis+1 $​
+    
+    
+    综上, 基于归纳法我们证明了, BFS过程中的任意时刻:
+    $$
+    \begin{align}
+    v_i.dis &\leq v_{i+1}.dis, \ 1 \leq i \leq r+1 \nonumber \\
+    v_r.dis &\leq v_1.dis+1 \nonumber
+    \end{align}
+    $$
+    
 
 
 
