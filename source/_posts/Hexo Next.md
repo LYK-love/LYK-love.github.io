@@ -425,7 +425,115 @@ The following examples are rendered by `mathjax` engine.
 
 它给文章的各级标题配置了anchor.
 
-但是正如注释所说, 它只支持`hexo-renderer-markdown-it`,  `hexo-renderer-marked` 这两个renderer, 后者是next的默认renderer. 由于我们要使用pandoc作为renderer, 所以只能放弃anchor功能.
+但是正如注释所说, 它只支持`hexo-renderer-markdown-it`,  `hexo-renderer-marked` 这两个renderer, 后者是next的默认renderer. 
+
+由于我们要使用pandoc作为renderer, 所以只能放弃anchor功能.
+
+
+
+不过, 通过模仿其他Next网站的写法, 我给`hexo-renderer-marked` 也加入了anchor支持.
+
+`hexo-renderer-markdown-it`支持anchor的逻辑是:
+
+1. 对每个heading, 在它内部的第一个child之前加入超链接. 
+
+   * SCSS会将属于`.header-anchor`或`.headerlink `类的元素渲染为anchor, 所以超链接必须是`.header-anchor`或`.headerlink `类.
+
+     ```scss
+       h1, h2, h3, h4, h5, h6 {
+         // Supported plugins: hexo-renderer-markdown-it hexo-renderer-marked
+         .header-anchor, .headerlink {
+           border-bottom-style: none;
+           color: inherit;
+           float: right;
+           font-size: $font-size-small;
+           margin-left: 10px;
+           opacity: 0;
+     
+           &::before {
+             font-family-icons('\f0c1');
+           }
+         }
+      }
+     ```
+
+   * anchor的显示是通过font-family-icon图片完成的. 使用CSS来添加该图片. 
+
+     ```css
+     &::before {
+             font-family-icons('\f0c1');
+           }
+     ```
+
+   
+
+2. 给每个heading增加id. 我个人喜欢把文本中的空格替换为`-`, 大小写不变, 因此就将这个标题内容作上述变换, 作为id.
+
+   ```javascript
+   id_text = heading.textContent;
+   id_text = id_text.replace(/\s/g, "-"); //把原文的空格替换成-. 暂时没有解决重名的问题.
+   ```
+
+3. 再对超链接的`anchor`的`href`attribute设置值为`#` + (2)中heading的文本内容. 超链接的tittle, 即鼠标悬停上方后显示的提示信息, 不需要做上述转换, 直接用heading原文即可.
+
+   ```javascript
+   link.title = heading.textContent;//这是鼠标悬停到超链接时的提示信息, 不需要替换空格
+   heading.id = id_text;//heading的空格替换成-.
+   ```
+
+   
+
+   
+
+```javascript
+document.addEventListener("page:loaded", function() {
+  // 获取所有标题元素
+  var headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+
+  // 遍历标题元素列表并为每个元素添加类名 "headerlink"
+  for (var i = 0; i < headings.length; i++) {
+    heading = headings[i];
+
+    id_text = heading.textContent;
+    id_text = id_text.replace(/\s/g, "-"); //把原文的空格替换成-. 暂时没有解决重名的问题.
+
+    // 创建超链接元素
+    var link = document.createElement("a");
+    link.classList.add("headerlink");//在CSS中, 具有headerlink类的元素会生成anchor.
+    link.href = "#" + id_text;//超链接指向的目的heading地址, 空格替换成-.
+    link.title = heading.textContent;//这是鼠标悬停到超链接时的提示信息, 不需要替换空格
+    link.setAttribute("aria-hidden", "true");
+
+    // 将超链接添加到标题元素的里面
+    heading.insertAdjacentElement("afterbegin", link);
+
+    heading.id = id_text;//heading的空格替换成-.
+  }
+}
+```
+
+例如: 
+
+原本heading内容为“Schedule an Interview”:
+
+```html
+<h1>Schedule-an-Interview</h1>
+```
+
+
+
+修改后, 其增加了id属性, 内部增加了超链接, 超链接的href指向其id:
+
+````html
+<h1>
+<a class="headerlink" href="Schedule-an-Interview" title="Schedule an Interview"></a>
+Schedule-an-Interview
+</h1>
+````
+
+
+
+CSS会选中属于`headerlink`类的超链接, 为其添加anchor的动画效果.
 
 # Math Support
 
