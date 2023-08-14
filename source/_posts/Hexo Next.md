@@ -932,6 +932,33 @@ npm install hexo-lazyload --save
 lazyload: true
 ```
 
+## Performance
+
+[Pjax](https://github.com/MoOx/pjax) is a standalone JavaScript module that uses AJAX (XmlHttpRequest) and `pushState()` to deliver a fast browsing experience.
+
+```yaml
+NexT config file
+# Easily enable fast Ajax navigation on your website.
+# For more information: https://github.com/next-theme/pjax
+pjax: true
+```
+
+## Pangu Autospace
+
+[pangu.js](https://github.com/vinta/pangu.js) will automatically **insert a blank space between all the Chinese characters and the hexagonal English numeric symbols** on the page.
+
+实测非常好用!
+
+You can enable it by setting value `pangu` to `true` in NexT config file.
+
+```yaml
+NexT config file
+# Pangu Support
+pangu: true
+```
+
+### Quickli
+
 ## 访客人数&&文章阅读次数
 
 `NexT`主题已集成了不蒜子的访客人数和文章阅读统计功能:

@@ -370,5 +370,3 @@ $$
 # Operations on Relations
 
 # Transitive Closure and Warshall's Algorithm
-
-尝试[挑战](#product-sets)
