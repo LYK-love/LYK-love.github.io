@@ -320,10 +320,13 @@ npm install -g hexo-cli
   npm uninstall hexo
   ```
 
-
 # Markdown Engine
 
+**该方法目前已废弃, 因为现在的renderer换成了pandoc, 不再使用`hexo-renderer-markdown-it`**.
+
 `hexo-renderer-markdown-it`的[默认配置](https://github.com/hexojs/hexo-renderer-markdown-it)是无法正确给标题添加anchor的, 需要做一些修改, 并将配置添加到Hexo中.
+
+
 
 
 

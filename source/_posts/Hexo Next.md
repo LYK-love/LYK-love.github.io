@@ -402,7 +402,30 @@ The following examples are rendered by `mathjax` engine.
 {% endnote %}
 ```
 
+# Anchor
 
+在 `<hexo>/themes/next/source/css/_common/components/post/post-body.styl`有如下代码:
+
+```css
+  h1, h2, h3, h4, h5, h6 {
+    // Supported plugins: hexo-renderer-markdown-it hexo-renderer-marked
+    .header-anchor, .headerlink {
+      border-bottom-style: none;
+      color: inherit;
+      float: right;
+      font-size: $font-size-small;
+      margin-left: 10px;
+      opacity: 0;
+
+      &::before {
+        font-family-icons('\f0c1');
+      }
+    }
+```
+
+它给文章的各级标题配置了anchor.
+
+但是正如注释所说, 它只支持`hexo-renderer-markdown-it`,  `hexo-renderer-marked` 这两个renderer, 后者是next的默认renderer. 由于我们要使用pandoc作为renderer, 所以只能放弃anchor功能.
 
 # Math Support
 
@@ -440,18 +463,24 @@ If you use MathJax to render Math Equations, you can choose one of the Markdown 
   
   * 无论是到Github的同步还是博客内建的搜索功能都会变得很慢. 同时pandoc的渲染速度也很慢, 降低博客文章的构建速度. 可以说, 用了pandoc后, 整个网站都慢得离谱.
   
-  * 此外, 它和Next的集成有问题, 无法正确把生成的HTML文件的标题加入Anchor.
+  * Hexo Next目前并不支持在pandoc下给各级heading生成anchor.
   
-  * 
+  * **最后选择它.**
   
 - [hexo-renderer-kramed](https://github.com/sun11/hexo-renderer-kramed): 基于hexo-renderer-marked二次开发的渲染器，完善了对Mathjax的支持, 仍然不支持插件的扩展，不支持emoji表情.
   * 亲测它比`hexo-renderer-pandoc`**快一点**. 但是有bug, 需要自己配置. 由于它太老了,就不推荐了. 
   
-- [hexo-renderer-markdown-it](https://github.com/hexojs/hexo-renderer-markdown-it)：支持`MathJax`, 并可以通过插件支持`KeTex`. 
+- [hexo-renderer-markdown-it](https://github.com/hexojs/hexo-renderer-markdown-it)：支持`MathJax`, 并可以通过插件支持`KeTex`. 支持anchor.
+  
   * 支持Markdown以及CommonMark语法.
+  
   * 支持插件配置, 支持标题带安全的id信息
-  * 支持脚注（上标, 下标, 下划线）
-  * **我最后选择`hexo-renderer-markdown-it`**
+  
+  * 支持脚注（上标, 下标, 下划线）.
+  
+  * 非常可惜的是, 它对latex支持不完善, 比如无法显示花括号, 无法显示多行公式...
+  
+    
   
 - [hexo-renderer-markdown-it-plus](https://github.com/CHENXCHEN/hexo-renderer-markdown-it-plus): 支持Katex插件并默认启用.
 
@@ -474,14 +503,14 @@ If you use KaTeX to render Math Equations, you can choose one of the Markdown re
    npm un hexo-renderer-marked
    ```
 
-   ```sh
-   # npm i hexo-renderer-pandoc --save 有问题, 废弃
-   npm i hexo-renderer-markdown-it --save
+2. 选择一个renderer安装:
+
+   ```shell
+   npm i hexo-renderer-pandoc --save
+   # npm i hexo-renderer-markdown-it --save #对Latex语法支持不完备
    ```
 
-2. 如果选择`hexo-renderer-pandoc` , 还需要额外安装[pandoc](https://github.com/jgm/pandoc/blob/master/INSTALL.md)
-
-   for Mac:
+   如果选择`hexo-renderer-pandoc` , 还需要额外安装[pandoc](https://github.com/jgm/pandoc/blob/master/INSTALL.md). On Mac:
 
    ```shell
    brew install pandoc
@@ -494,16 +523,13 @@ If you use KaTeX to render Math Equations, you can choose one of the Markdown re
      # Default (false) will load mathjax / katex script on demand.
      # That is it only render those page which has `mathjax: true` in front-matter.
      # If you set it to true, it will load mathjax / katex script EVERY PAGE.
-     every_page: false
+     every_page: false # 按照注释说明, 设置为false后只会渲染了指定`mathjax: true`的文章
    
      mathjax:
        enable: true
        # Available values: none | ams | all
        tags: ams # ams: 开启公式自动编号
    ```
-
-   * `per_page`: 设置为false, 这样只会渲染添加了`mathjax: true`的文章
-     * 在低版本的NeXt,这句话上面的注释是反的, 即“false”只会渲染指定文章. 
 
 4. 在需要渲染Latex的文章的Front-matter里打开mathjax开关，如下：
 
@@ -515,6 +541,8 @@ If you use KaTeX to render Math Equations, you can choose one of the Markdown re
    mathjax: true
    --
    ```
+
+   
 
 ## 公式自动编号和引用
 
