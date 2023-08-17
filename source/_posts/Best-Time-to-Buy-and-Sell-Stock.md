@@ -38,8 +38,8 @@ Find the maximum profit you can achieve. You may complete **at most two transact
 
 * dp数组`memo[j][j][k]`: 在i_{th}天能达到的最大利润. 
   * j={0,1}:当天是否持有股票.题目规定每天只能同时持有最大1支股票. 
-  * k={0,1,2}: 最大交易次数. 题目规定为3
-  * 题目规定了最大交易次数为2. 因此`0 <= k <= 2`
+  * k={0,1,K}: 最大交易次数K.
+  * 题目规定了最大交易次数为2. 因此`0 <= k <= K = 2`
 * 返回值: `memo[prices.length-1, 0, 2]`. 注意, 如果利润要最大, 最后一天结束时手里就不能有股票, 因此最后一天的`j = 0`
 
 
@@ -129,7 +129,7 @@ dp[i][j][k] = dp[i-1][j][k-1]
 
 ***
 
-
+## Have Stock Today
 
 ```python
 dp[i][0][k] = max(dp[i-1][0][k], dp[i-1][1][k] + prices[i])
@@ -142,7 +142,7 @@ dp[i][0][k] = max(dp[i-1][0][k], dp[i-1][1][k] + prices[i])
 
 2、我昨天持有股票，且截至昨天最大交易次数限制为 `k`；但是今天我 `sell` 了，所以我今天没有持有股票了，最大交易次数限制依然为 `k`。
 
-
+## Don't Have Stock Today
 
 ```python
 dp[i][1][k] = max(dp[i-1][1][k], dp[i-1][0][k-1] - prices[i])
@@ -155,7 +155,7 @@ dp[i][1][k] = max(dp[i-1][1][k], dp[i-1][0][k-1] - prices[i])
 
 2、我昨天本没有持有，且截至昨天最大交易次数限制为 `k - 1`；但今天我选择 `buy`，所以今天我就持有股票了，最大交易次数限制为 `k`。
 
-
+## Note: Change of k
 
 注意k的变化:
 
@@ -165,37 +165,29 @@ dp[i][1][k] = max(dp[i-1][1][k], dp[i-1][0][k-1] - prices[i])
 
 而如果已知`day=3`必定buy(`dp[i-1][0][k-1] - prices[i]`),那么`[0,1,2]`的最大交易次数就变成`k-1`次, 因为`day=3`会进行一次buy, 占用一个交易次数.
 
+## Note: K=0
 
+此外, 考虑`[0,...,day]`的最大交易次数为0的情况, 这说明在`[0,...,day]`不会进行任何一次buy, 因此:
 
-此外, 考虑`[0,...,day]`的最大交易次数为0的情况, 这说明在`[0,...,day]`不会进行任何一次buy, 因此在第day天不可能sell
+* 在第`day`天不会sell(因为之前没有buy过):
 
-此时第`day`天是不可能sell的, 因
+  ```python
+  if(k == 0):
+  	dp[i][0][k] = dp[i-1][0][k]//不需要考虑在今天sell. 此时的 dp[i-1][1][k] == 0
+  else:
+  	dp[i][0][k] = max(dp[i-1][0][k], dp[i-1][1][k] + prices[i])
+  ```
 
-这说明在`[0,...,day-1]`不会进行任何一次buy, 因此
+* 第`day`天也不会buy:
 
+  ```python
+  if(k == 0):
+  	dp[i][0][k] = max(dp[i-1][1][k], dp[i-1][0][k-1] - prices[i])
+  else:
+  	dp[i][0][k] = dp[i-1][1][k] //此时的 dp[i-1][1][k-1] == 0
+  ```
 
-
-在第`day`天也就不会sell(因为之前没有buy过):
-
-```python
-if(k == 0):
-	dp[i][0][k] = dp[i-1][0][k]//不需要考虑在今天sell
-else:
-	dp[i][0][k] = max(dp[i-1][0][k], dp[i-1][1][k] + prices[i])
-```
-
-
-
-第`day`天也不会buy:
-
-```
-if(k == 0):
-	dp[i][0][k] = max(dp[i-1][1][k], dp[i-1][0][k-1] - prices[i])
-else:
-	dp[i][0][k] = dp[i-1][1][k]
-```
-
-
+  
 
 # Code
 
