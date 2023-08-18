@@ -173,7 +173,7 @@ dp[i][1][k] = max(dp[i-1][1][k], dp[i-1][0][k-1] - prices[i])
 
   ```python
   if(k == 0):
-  	dp[i][0][k] = dp[i-1][0][k]//不需要考虑在今天sell. 此时的 dp[i-1][1][k] == 0
+  	dp[i][0][k] = dp[i-1][0][k]//不需要考虑在今天sell. 此时的 dp[i-1][1][k] == null
   else:
   	dp[i][0][k] = max(dp[i-1][0][k], dp[i-1][1][k] + prices[i])
   ```
