@@ -1,7 +1,9 @@
 ---
 title: L2 Asymptotics
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 mathjax: true
 date: 2021-07-13 08:54:12
 ---
@@ -11,6 +13,10 @@ Outline:
 * **How to Compare Two Algorithms**
 * **Brute  Force  by Iteration**
 * **Brute  Force  by Recursion**
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 
 <!--more-->
 

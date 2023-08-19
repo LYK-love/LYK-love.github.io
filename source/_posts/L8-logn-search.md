@@ -1,7 +1,9 @@
 ---
 title: L8 logn search
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 mathjax: true
 date: 2022-02-12 12:00:00
 ---
@@ -12,6 +14,10 @@ date: 2022-02-12 12:00:00
 Outline：
 
 * Red-Black Tree
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 
 <!--more-->
 

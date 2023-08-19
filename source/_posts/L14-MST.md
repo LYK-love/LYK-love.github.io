@@ -1,7 +1,9 @@
 ---
 title: L14 MST
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 mathjax: true
 date: 2021-08-10 16:16:04
 ---
@@ -11,6 +13,10 @@ Outline:
 
 * Optimization Problem
 * Greedy Strategy
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 
 <!--more-->
 

@@ -1,7 +1,9 @@
 ---
-title: T4 BFS and DFS
-tags: Algorithm design and analysis
-categories: Algorithm
+title: L22 BFS and DFS
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 mathjax: true
 date: 2021-08-23 09:51:20
 ---
@@ -22,9 +24,12 @@ Outline:
 
   * s → all
 
-  
-  
-  <!--more -->
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
+
+<!--more -->
 
 # BFS
 

@@ -1,7 +1,9 @@
 ---
 title: L6 MergeSort
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 date: 2021-07-22 15:52:17
 ---
 
@@ -14,6 +16,10 @@ Oultline
 * Lower Bounds for <i>comparison-based sorting</i> ( `nlogn` )
   * Worst-case ( `Omega(nlogn)` )
   * Average-case (`nlogn - 1.443n` )
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 
 <!--more-->
 

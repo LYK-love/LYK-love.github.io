@@ -1,8 +1,10 @@
 ---
 title: L7 Selection
-tags: Algorithm design and analysis
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 mathjax: true
-categories: Algorithm
 date: 2021-07-23 17:19:01
 ---
 
@@ -14,6 +16,10 @@ Outline
   * Expected linear time
   * Worst-case linear time
 * A Lower bound for Finding the Median
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 
 <!--more-->
 

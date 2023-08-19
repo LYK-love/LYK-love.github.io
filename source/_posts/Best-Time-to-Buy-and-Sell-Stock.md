@@ -1,7 +1,10 @@
 ---
 title: Best Time to Buy and Sell Stock
-tags: LeetCode
-categories: Algorithm
+tags: 
+- Algorithm
+- LeetCode
+categories: 
+- Computer Science
 date: 2023-08-18 01:40:03
 ---
 

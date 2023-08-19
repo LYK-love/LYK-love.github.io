@@ -1,6 +1,9 @@
 ---
-title: Sort
-categories: Algorithm
+title: Sort Algorithms
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 date: 2021-06-27 11:33:08
 ---
 

@@ -1,7 +1,9 @@
 ---
-title: T3 Balancing
-tags: Algorithm design and analysis
-categories: Algorithm
+title: L21 Balancing
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 mathjax: true
 date: 2021-08-21 11:47:37
 ---
@@ -13,6 +15,12 @@ Outline:
 * **找离medium最近的k个元素**
 * **Weighted  medium**
 * **找unique**
+
+
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 
 <!--more-->
 

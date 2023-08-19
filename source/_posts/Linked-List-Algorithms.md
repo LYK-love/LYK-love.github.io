@@ -1,7 +1,10 @@
 ---
 title: Linked List Algorithms
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+- LeetCode
+categories: 
+- Computer Science
 mathjax: true
 date: 2023-08-13 03:25:15
 ---

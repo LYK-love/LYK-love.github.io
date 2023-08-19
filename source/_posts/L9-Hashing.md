@@ -1,7 +1,9 @@
 ---
 title: L9 Hashing
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 mathjax: true
 date: 2021-08-02 08:47:15
 ---
@@ -19,6 +21,10 @@ Outline:
   * Open address hashing
 * Amortized Analysis
   * Array doubling
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 
 <!--more-->
 

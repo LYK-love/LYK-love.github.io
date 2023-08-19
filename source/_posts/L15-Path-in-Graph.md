@@ -1,7 +1,9 @@
 ---
 title: L15 Path in Graph
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 mathjax: true
 date: 2021-08-11 14:42:00
 ---
@@ -22,9 +24,12 @@ Outline:
     * BF1, BF2, BF3 => Warshall algorithm
     * Floyd algorithm for shortest paths
 
-  <!--more-->
 
-  
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
+
+<!--more-->
 
 #  Single-source shortest paths
 

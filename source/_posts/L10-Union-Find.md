@@ -1,7 +1,9 @@
 ---
 title: L10 Union Find
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 mathjax: true
 date: 2021-07-31 15:47:58
 ---
@@ -10,7 +12,7 @@ Union Find algorithm.
 
 Ref:
 
-* *算法设计与分析* by 黄宇
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 * [并查集（Union-Find）算法 by labuladong](https://labuladong.github.io/algo/di-yi-zhan-da78c/shou-ba-sh-03a72/bing-cha-j-323f3/)
 
 <!--more-->

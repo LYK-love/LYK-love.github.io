@@ -1,7 +1,9 @@
 ---
 title: Trees
-tags: Discrete Mathematics
-categories: Algorithm
+tags: 
+- Discrete Mathematics
+categories: 
+- Computer Science
 mathjax: true
 date: 2023-08-14 00:05:36
 ---

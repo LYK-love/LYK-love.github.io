@@ -1,7 +1,9 @@
 ---
 title: L3 Recursion
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 date: 2021-07-15 09:52:50
 ---
 
@@ -14,6 +16,10 @@ Outline
 * **Solving recurrence equations**
   * **Some elementary techniques**
   * **Master theorem**
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 
 <!--more-->
 

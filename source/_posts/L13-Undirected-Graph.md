@@ -1,7 +1,9 @@
 ---
 title: L13 Undirected Graph
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 mathjax: true
 date: 2021-08-23 12:01:35
 ---
@@ -20,6 +22,10 @@ Outline:
     * **寻找割点**
 
     * **寻找桥**
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 
 <!--more-->
 

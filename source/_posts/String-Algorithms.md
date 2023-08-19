@@ -1,8 +1,10 @@
 ---
 title: String Algorithms
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 date: 2022-04-10 17:49:04
-tags:
 ---
 
 

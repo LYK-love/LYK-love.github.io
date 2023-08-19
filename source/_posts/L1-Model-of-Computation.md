@@ -1,7 +1,9 @@
 ---
 title: L1 Model of Computation
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 date: 2021-07-13 07:19:53
 ---
 
@@ -11,6 +13,12 @@ date: 2021-07-13 07:19:53
 <i>That's made up of 1s and 0s</i>
 
 <i>That takes a special talent</i>
+
+
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 
 <!--more-->
 

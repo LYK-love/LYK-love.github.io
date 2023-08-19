@@ -1,7 +1,9 @@
 ---
 title: L4 QuickSort
-tags: Algorithm design and analysis
-categories: Algorithm
+tags: 
+- Algorithm
+categories: 
+- Computer Science
 mathjax: true
 date: 2021-07-21 10:40:58
 ---
@@ -16,6 +18,10 @@ Outline:
 
 * **`QuickSort`**
 * **Analysis of `QuickSort`**
+
+Ref:
+
+* *算法设计与分析(Algorithm design and analysis)* by 黄宇
 
 <!--more-->
 
@@ -46,7 +52,6 @@ Outline:
     x_n,x_{n-1},\dots,x_3,x_2,x_1
     $$
     
-
   * For any    $i, j\quad(1 \leq j \leq i \leq n)$​ , the inversion $( x_i, x_j )$ is in exactly one sequence in a transpose pair
   * The number of inversions (xi, xj) on <i>n</i> distinct integers is <i>n(n-1)/2</i>
   * So, the average number of inversions in all possible inputs is <i>n(n-1)/4</i>, since exactly <i>n(n-1)/2</i> inversions appear in each transpose pair.
