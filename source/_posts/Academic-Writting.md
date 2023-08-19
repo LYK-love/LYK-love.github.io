@@ -12,7 +12,13 @@ Academic Writting skills.
 
 # Citation&Reference
 
+[citation-styles](https://www.scribbr.com/citing-sources/citation-styles/)
+
+
+
 I use [apa style citation(7th)](https://apastyle.apa.org/style-grammar-guidelines/references/examples/edited-book-chapter-references).
+
+## APA
 
 I wrote a python script to generate it aumatically. [Code](https://github.com/LYK-love/APA-Toolkit)
 
@@ -26,7 +32,7 @@ I wrote a python script to generate it aumatically. [Code](https://github.com/LY
 >
 > -- [APA Citation Guide](https://www.citationmachine.net/apa)
 
-## Example
+### Example
 
 Aron, L., Botella, M., & Lubart, T. (2019). Culinary arts: Talent and their development. In R. F. Subotnik, P. Olszewski-Kubilius, & F. C. Worrell (Eds.), The psychology of high performance: Developing human potential into domain-specific talent (pp. 345–359). American Psychological Association. https://doi.org/10.1037/0000120-016
 
@@ -39,6 +45,12 @@ Thestrup, K. (2010). To transform, to communicate, to play—The experimenting c
  
 
 Parenthetical citations: (Aron et al., 2019; Dillard, 2020; Thestrup, 2010)Narrative citations: Aron et al. (2019), Dillard (2020), and Thestrup (2010)
+
+## IEEE
+
+https://www.scribbr.com/category/ieee/
+
+
 
 # Definitions
 
