@@ -25,7 +25,9 @@ Outline:
 
 RSA是最著名的公钥密码体制, 由三位美国科学家Rivest，Shamir和Adleman于1976年提出, 并在1978年正式发表. 它基于数论的大数分解问题.
 
-我的[RSA Python实现](https://github.com/LYK-love/Lazy-Scripts/tree/master/SimpleRSA)
+我的[RSA Python实现](https://github.com/LYK-love/Lazy-Scripts/tree/master/SimpleRSA).
+
+
 
 # PrerequisiFtes
 
@@ -400,7 +402,13 @@ $$
 - 因为 $e$ 是公开的，所以想知道 $d$ 需要知道 $\phi(n) $
 - 而 计算 $\phi(n) $ 需要对正整数 $n$ 进行质数分解
 
-所以， **$d$ 的安全性依赖于对  $n$ 进行质数分解的难度**. 大整数的质数分解目前没有很快的算法.  但是,随着量子计算的发展, RSA也不一定安全[MIT TR 2019].
+所以， **$d$ 的安全性依赖于对  $n$ 进行质数分解的难度**. 目前没有很快的大整数的质数分解算法.
+
+尽管如此, 2015年就有[报道](https://arstechnica.com/information-technology/2015/10/breaking-512-bit-rsa-with-amazon-ec2-is-a-cinch-so-why-all-the-weak-keys/)称, 破解512-bit RSA的成本为时间3h, 金钱 \$75. 更何况未来的量子计算机会具有更强大的算力[MIT TR 2019]. 可以预见到对RSA的破解将会越来越容易, 
+
+* [Paper: *Factoring as a Service*](https://eprint.iacr.org/2015/1000.pdf). 
+
+
 
 
 
