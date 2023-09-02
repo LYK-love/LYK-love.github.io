@@ -226,3 +226,54 @@ public ListNode detectCycle(ListNode head) {
     }
 ```
 
+# Intersection of Two Linked Lists
+
+[160. Intersection of Two Linked Lists](https://leetcode.com/problems/intersection-of-two-linked-lists/)
+
+Given the heads of two singly linked-lists `headA` and `headB`, return *the node at which the two lists intersect*. If the two linked lists have no intersection at all, return `null`.
+
+For example, the following two linked lists begin to intersect at node `c1`:
+
+![img](https://assets.leetcode.com/uploads/2021/03/05/160_statement.png)
+
+The test cases are generated such that there are no cycles anywhere in the entire linked structure.
+
+**Note** that the linked lists must **retain their original structure** after the function returns.
+
+和判断链表是否有环一样, 我们用两个指针p1, p2分别遍历链表A, B. 
+
+记链表A, B在公共节点前的长度为x, y, 公共节点的长度为z. 则A的长度为x+z, B的长度为y+z. 
+
+注意到: (x+z)+y = (y+z)+x
+
+因此, 我们让p1在遍历完链表A(x+z)后再遍历链表B, p2在遍历完链表B(y+z)后再遍历链表A, 当p1, p2分别在B, A上走y, x步时, 两节点就会相遇, 该相遇的节点就是相交节点, 见下图: 
+
+![Intersection of Two Linked Lists](https://labuladong.github.io/pictures/%E9%93%BE%E8%A1%A8%E6%8A%80%E5%B7%A7/6.jpeg)
+
+
+
+
+
+如果两条链表不相交, 此时z=0, 而p1, p2会在null处相遇, 返回null.
+
+```java
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode p1 = headA, p2 = headB;
+
+        //比较对象的内存地址
+        while(p1 != p2)
+        {
+            //这段代码十分trivial. 当p1, p2没有走到last(即最后一个节点), 则p1, p2在每次迭代中前进一步.
+            //而如果p1, p2走到了last, 则不会在当次迭代中前进, 而是变成null, 在下一次迭代时再前进(从last前进到另一条链表的head).
+            //这意味着, 如果两条链表不相交(即z=0), 那么在x+y次迭代后, p1=null; 此时p2也经历了y+x次迭代, 因此p2=null. 在下次循环开始前就有p1=p2, 因此循环会退出, 函数返回null.
+            if(p1 == null) p1 = headB;
+            else    p1 = p1.next;
+
+            if (p2 == null) p2 = headA;
+            else    p2 = p2.next;
+        }
+
+        return p1;
+    }
+```
+

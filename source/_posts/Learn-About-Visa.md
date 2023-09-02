@@ -291,50 +291,53 @@ STEM专业学生有概率被Check, 可以向学校部门(SISS for UCDavis)申请
 
 ![Image](https://mmbiz.qpic.cn/mmbiz_jpg/u8zDs7AnCmYQK4c2dX9c7Or7y1CektbTbuaIbZcmMK4g8kr1dRkWeDvEwzDGB1oia8OEfWGWDVynmI45vclib7KA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1)
 
-至于其有效性就未知了.
+至于其有效性就未知了. 反正VO在看了这封信后依然给了我[check](#administrative-processing).
 
+## During the Interview
 
+在面签预约单规定时间的前1h到达指定场所, 然后排队20min. 接着被带入一个门, 只允许带制定材料(也就是面签所需材料)进入, 其余物品无法带入, 可以事先找存包服务存好.
 
+进门后会继续排队1h, 按着流程走即可. 面谈时间只有2-3min, 我只被问到了两个问题: 
 
+1. 目标学校, 专业.
+2. 父母的职业.
 
-# Others
+面前当时就能知道结果.
 
-## Check
-
-* [签证状态查询CEAC](https://ceac.state.gov/CEACStatTracker/Status.aspx?)
-* [Check信息汇总(Checkee)](https://wwwcheckeeinfo/)
-
-
-
-如果遇到了check，不要慌张，按照签证官的要求上传资料。
-
-
-
-如何得知签证被check？
+# Administrative Processing 
 
 一般来说，签证官在面签时会当场告知签证结果（通过或拒绝）。
 
-**过签：**提交的材料中只会**拿走护照**。除DS-160确认页和SEVIS费用收据不作为参考外，所有其他材料将被退回，签证官给你的单子上会明确写着三天后签证即准备好的信息。
-
- 
-
-**拒签：**您提交的所有材料将**被退回**，您的护照不会被拿走。签证官会给你一个**拒签理由说明**。
-
- 
-
-**check：**如果签证官没有当场表示通过(可能会收走护照和其他材料)，而是给一张221（g）的通知单（通知的具体形式将根据领事馆的印刷版本而有所不同），则表示申请人被check了。此外，您还可以通过大使馆官方网站查询签证状态。如果在五个工作日内未更新为issued，那就说明申请人被check了。
+* **过签：**提交的材料中只会**拿走护照**。除DS-160确认页和SEVIS费用收据不作为参考外，所有其他材料将被退回，签证官给你的单子上会明确写着三天后签证即准备好的信息。
+* **拒签：**您提交的所有材料将**被退回**，您的护照不会被拿走。签证官会给你一个**拒签理由说明**。
+* **Administrative Processing(俗称为checkcheck)：**如果签证官没有当场表示通过(可能会收走护照和其他材料), 则表示申请人被check了。此外，您还可以通过大使馆官方网站查询签证状态。如果在五个工作日内未更新为issued，那就说明申请人被check了。
 
 
 
-目前的check时间(issue)平均在7周.
+自2021年起, 理工科学生(尤其是计算机)的签证经常遭遇check, 不仅是学生签证, 就连学者签证被check也是很正常的. 
+
+被check之后没有别的办法, 只能默默等待. 等到领事馆给你发送一封"Request Passport 请递交护照至CITIC Bank中信银行"的邮件, 接着把护照寄给中信银行(快递时间1-2天, 取决于路程), 然后等待领事馆处理(需要2-3天), 最后银行会把护照以及签证寄给你(快递时间1-2天, 取决于路程).
+
+* 可以到[CEAC](https://ceac.state.gov/CEACStatTracker/Status.aspx?)查询自己的签证状态.
+
+  * 只要check不结束,CEAC上的状态都是"refused".
+  * **根据我的经验, 这个网站的信息不及时. 我在8.24就收到了签证处理完毕, 要求寄护照的邮件; 但ceac上直到9.2依然显示我的签证状态为refused. 所以大家一定要多看邮箱, 以邮件为准.**
+
+* 可以到[Checkee](https://wwwcheckeeinfo/)查看类似被check人的经历.
+
+  
 
 
 
-如果check时间过长（超过4-8周），发邮件仍无回应的情况下，可以在UC Davis的iGlobal上 → Student service → ‘Report a Visa or Entry Issue’ 跟学校说明 （如果在入境的时候遇到问题也是这个窗口）
+VO会口头通知你check这件事, 也会发你一张类似下面的单子(单子的颜色是随机的, 因此不要以为蓝色, 紫色, 绿色等单子的含义有什么区别):
 
-![Image](https://mmbiz.qpic.cn/mmbiz_png/u8zDs7AnCmYQK4c2dX9c7Or7y1CektbTib1qk6Bia61GS58mXf2c3ySUqIQHnuvZ4bKut8GsJTOapBowZLQ0yGbA/640?wx_fmt=png&wxfrom=5&wx_lazy=1&wx_co=1)
+![pink sheet](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-Visa/pink%20sheet.jpeg)
 
 
+
+有时VO还会发你一张黄色的221（g）的通知单(yellow 221g sheet), 这说明你需要再补充材料发给领事馆:
+
+![yellow 201g sheet](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-Visa/yellow%20201g%20sheet.jpeg)
 
 PhD学生建议**着重准备**以下资料:
 
@@ -343,6 +346,42 @@ PhD学生建议**着重准备**以下资料:
 * PhD学习计划 Study Plan
 * 资金来源 Funding Letter (以TA/RA的形式)
 * 系里和lab的基本资料（在系里的官网或者询问本系Academic Advisor）
+
+## Waiting
+
+对于没有收到黄色单子的情况, 只需等待领事馆发邮件告知签证处理进度; 而如果收到了这张单子, 就得按上面的指示发送材料然后等待领事馆邮件.
+
+可以在该[网站](https://china.usembassy-china.org.cn/zh/visas-zh/shanghai-contact-us-zh/)联系(上海)领事馆, 但是网站上写了, 关于check的问题都不会回复.
+
+因此, 被check期间除非被要求补充材料, 否则**什么都不用也不能做**. UCDavis的SISS也告诉我check的处理完全是领事馆的操作, 学校方面无法干预:
+
+> Dear XXX,
+>
+> We are sorry to hear about the delay in your visa processing. **Visa decisions and procedures are at the discretion of the consulate and we unfortunately cannot intervene in the process.** You may need to delay your flight. You can arrive up to one week after the start of classes, which begin on 09/27/2023. If you decide to defer your admission, you must do so in MyAdmissions and pay for the deferral at least one week prior to the start of the quarter. If you do not make this deadline, you may need to be readmitted. 
+
+邮件里也说了, 如果实在倒霉, 临近开学了还没有通过check, 那么可以给学校说明情况, 看能否延迟开学.
+
+
+
+以UCDavis为例, 可以在UC Davis的iGlobal上 → Student service → ‘Report a Visa or Entry Issue’ 跟学校说明 （如果在入境的时候遇到问题也是这个窗口）
+
+## Receive Email
+
+我在2023-07-28进行了面谈, 于2023-08-24收到email:
+
+![Request Passport Email](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-Visa/Request%20Passport%20Email.png)
+
+内容是把护照和黄色221g通知单(如果有的话)寄到中信银行. 我没有收到221g单子, 只收到了粉色的通知单, 因此只需寄护照.
+
+## Send Passport
+
+寄到[中信银行文件递交地点](https://www.ustraveldocs.com/cn_zh/cn-loc-documentdropoff.asp)即可. 中信银行有许多网点可以选择. 
+
+我寄到了**上海-中信银行泰富广场 支行**(上海市南京西路1168号中信泰富广场GF)
+
+## Get Passport
+
+# Others
 
 ## 在I-20办好之前预约面签
 
@@ -356,7 +395,7 @@ PhD学生建议**着重准备**以下资料:
 
 具体的过程如下:
 
-1. 首先 ,在填写DS-160时, 编一个SEVIS ID. 至于其它的需要按照I-20来填写的学校信息也随便填一填. 提交该DS-160, 得到它的Application ID.
+1. 首先, 在填写DS-160时, 编一个SEVIS ID. 至于其它的需要按照I-20来填写的学校信息也随便填一填. 提交该DS-160, 得到它的Application ID.
 
 2. 然后用编的SEVIS ID和步骤1得到的Application ID在CGI上进行面签预约.
 
