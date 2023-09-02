@@ -3,8 +3,8 @@ title: Properties of Relations
 tags:
   - Discrete Mathematics
 categories:
-  - Mathematics
-  - Computer Science
+  - [Mathematics]
+  - [Computer Science]
 mathjax: true
 date: 2023-08-20 01:01:06
 ---
@@ -218,5 +218,4 @@ Let $R$ be a relation on a set $A$. Then
 1. Reflexivity of $R$ means that $a \in R(a)$ for all $a$ in $A$.
 2. Symmetry of $R$ means that $a \in R(b)$ if and only if $b \in R(a)$.
 3. Transitivity of $R$ means that if $b \in R(a)$ and $c \in R(b)$, then $c \in R(a)$.
-
 

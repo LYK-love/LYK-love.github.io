@@ -3,8 +3,8 @@ title: Operations on Relations
 tags:
   - Discrete Mathematics
 categories:
-  - Mathematics
-  - Computer Science
+  - [Mathematics]
+  - [Computer Science]
 mathjax: true
 date: 2023-08-20 03:19:47
 ---

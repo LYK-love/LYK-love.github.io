@@ -3,8 +3,8 @@ title: Relations and Digraphs
 tags: 
 - Discrete Mathematics
 categories:
-- Mathematics
-- Computer Science
+  - [Mathematics]
+  - [Computer Science]
 mathjax: true
 date: 2023-08-15 00:47:53
 ---
