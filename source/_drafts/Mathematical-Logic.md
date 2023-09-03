@@ -1,12 +1,22 @@
 ---
 title: Mathematical Logic
-tags: Mathematical Logic
-categories: Mathematic
+tags:
+  - Mathematical logic
+categories:
+  - [Mathematics]
 ---
 
 
 
+the from of Deductive Reducing is Proof.
 
+
+
+Conjecture
+
+
+
+The existence of even one <u>counterexample</u> establishes that the conjecture is incorrect
 
 
 

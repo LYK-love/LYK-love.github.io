@@ -302,7 +302,7 @@ STEM专业学生有概率被Check, 可以向学校部门(SISS for UCDavis)申请
 1. 目标学校, 专业.
 2. 父母的职业.
 
-面前当时就能知道结果.
+面试当时就能知道结果.
 
 # Administrative Processing 
 
