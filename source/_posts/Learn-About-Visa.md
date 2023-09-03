@@ -289,7 +289,7 @@ Application page记录了你在填写DS160时输入的内容, 虽然用不到, �
 
 STEM专业学生有概率被Check, 可以向学校部门(SISS for UCDavis)申请一个Visa Support Letter (跟自己的advisor申请，如图)
 
-![Image](https://mmbiz.qpic.cn/mmbiz_jpg/u8zDs7AnCmYQK4c2dX9c7Or7y1CektbTbuaIbZcmMK4g8kr1dRkWeDvEwzDGB1oia8OEfWGWDVynmI45vclib7KA/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1)
+![Visa Support Letter](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-Visa/Visa%20Support%20Letter.png)
 
 至于其有效性就未知了. 反正VO在看了这封信后依然给了我[check](#administrative-processing).
 
