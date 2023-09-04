@@ -129,7 +129,7 @@ R \cup R^{-1}=\{(a, b),(b, a),(b, c),(c, b),(a, c),(c, a),(c, d),(d, c)\} .
 $$
 The symmetric closure of a relation $R$ is very easy to visualize geometrically. All edges in the digraph of $R$ become "two-way streets" in $R \cup R^{-1}$. Thus the graph of the symmetric closure of $R$ is simply the digraph of $R$ with all edges made bidirectional. We show in Figure 39(a) the digraph of the relation $R$ of Example 9. Figure 39(b) shows the graph of the symmetric closure $R \cup R^{-1}$.
 
-![Figure 39](/Users/lyk/Library/Application Support/typora-user-images/image-20230820002835822.png)
+![Example of symmetric closure](/Users/lyk/Pictures/HexoPics/Discrete Mathematics/Operations on Relations/Example of symmetric closure.png)
 
 # Composition
 
@@ -156,7 +156,15 @@ The relation $S \circ R$ might be thought of as " $S$ following $R$ " since it r
 
 **Example:**
 
-Let $A=\{1,2,3,4\}, R=\{(1,2),(1,1),(1,3),(2,4),(3,2)\}$, and $S=\{(1,4)$, $(1,3),(2,3),(3,1),(4,1)\}$. 
+Let:
+
+$A=\{1,2,3,4\}$, 
+
+$R=\{(1,2),(1,1),(1,3),(2,4),(3,2)\}$, 
+
+$S=\{(1,4)$, $(1,3),(2,3),(3,1),(4,1)\}$. 
+
+
 
 Since $(1,2) \in R$ and $(2,3) \in S$, we must have $(1,3) \in$ $S \circ R$. 
 

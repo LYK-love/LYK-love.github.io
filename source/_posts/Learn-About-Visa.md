@@ -375,9 +375,23 @@ PhD学生建议**着重准备**以下资料:
 
 ## Send Passport
 
-寄到[中信银行文件递交地点](https://www.ustraveldocs.com/cn_zh/cn-loc-documentdropoff.asp)即可. 中信银行有许多网点可以选择. 
+寄到[中信银行文件递交地点](https://www.ustraveldocs.com/cn_zh/cn-niv-passporttrack.asp)即可. 中信银行有许多网点可以选择. 
 
-我寄到了**上海-中信银行泰富广场 支行**(上海市南京西路1168号中信泰富广场GF)
+例如, 可以寄到 **上海-中信银行泰富广场 支行**(上海市南京西路1168号中信泰富广场GF)
+
+电话：52925001
+
+收件人: xx支行
+
+
+
+![Send Passport](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-Visa/Send%20Passport.png)
+
+寄给图中的五个网点可以免收77元的服务费. 之后可以选择在网点领取护照或者EMS寄送到家, 后者需要支付106元费用.
+
+
+
+这个[网页](https://www.ustraveldocs.com/cn_zh/cn-niv-passporttrack.asp)还能查询护照状态.
 
 ## Get Passport
 

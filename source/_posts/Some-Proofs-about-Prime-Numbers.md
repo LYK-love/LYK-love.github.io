@@ -43,7 +43,11 @@ Conjecture 1是错误的, 很容易证明.
 
 Let n=11, 11 is prime, but $2^{11}-1=2047=23 \cdot 89$, so $2^{11}-1$ is composite. Thus, 11 is a <u>counterexample</u> to Conjecture 1.
 
-更多的反例: Both 23 and 29 are prime, but $2^{23}-1=8,388,607=47 \cdot 178,481$ and $2^{29}-1=536,870,911=$ $2,089 \cdot 256,999$. 
+More counterexamples: Both 23 and 29 are prime, but:
+
+$2^{23}-1=8,388,607=47 \times 178,481$
+
+$2^{29}-1=536,870,911=$ $2,089 \times 256,999$
 
 # Conjecture 2
 
@@ -83,7 +87,7 @@ We now use the fact that every integer larger than 1 is either prime or  be writ
 
 
 
-Suppose first that $m$ is prime. Note that $m$ is larger than all of the numbers in the list $p_1, p_2, \ldots, p_n$, so we've found a prime number not in this list. But this contradicts our assumption that this was a list of all prime numbers. 由于$p, p_2, \cdots, p_n$ 已经是全部质数组成的列表, 所以m比全部质数还要大, 这和"m是质数"这个假设不符, 因此m不是质数. 那么m只可能是若干个质数的积.
+Suppose first that $m$ is prime. Note that $m$ is larger than all of the numbers in the list $p_1, p_2, \ldots, p_n$, so we've found a prime number not in this list. But this contradicts our assumption that this was a list of all prime numbers. 由于$p, p_2, \cdots, p_n$ 已经是由全部质数组成的列表, 所以m比全部质数还要大. 这和假设"m是质数"不符, 因此m不是质数. 那么m只可能是若干个质数的积.
 
 Now suppose $m$ is a product of primes. Let $q$ be one of the primes in this product. Then $m$ is divisible by $q$. But we've already seen that $m$ is not divisible by any of the numbers in the list $p_1, p_2, \ldots, p_n$, so once again we have a contradiction with the assumption that this list included all prime numbers. 同样的, m不能被$p, p_2, \cdots, p_n$ 中的任何一个质数整除, 而$p, p_2, \cdots, p_n$ 已经是全体质数了, 因此m不可能是若干个质数的积.
 
@@ -105,15 +109,15 @@ A positive integer $n$ is said to be **perfect** if $n$ is equal to the sum of a
 
 Euclid proved that if $2^n-1$ is prime, then $2^{n-1}\left(2^n-1\right)$ is perfect. Thus, every Mersenne prime gives rise to a perfect number. 每一个Mersenne prime都可以对应一个perfect number. 
 
-Furthermore, about 2000 years after Euclid's proof, the Swiss mathematician Leonhard Euler (17071783), proved that **every even perfect number arises in this way**. (For example, note that $6=2^1\left(2^2-1\right.$ ) and $28=2^2\left(2^3-1\right)$.) 每个偶的完美数都是$ 2^n - 1$的形式.
+Furthermore, about 2000 years after Euclid's proof, the Swiss mathematician Leonhard Euler (17071783), proved that **every even perfect number arises in this way**. (For example, note that $6=2^1\left(2^2-1\right.$ ) and $28=2^2\left(2^3-1\right)$.) 每个even perfect nomber都是$ 2^n - 1$的形式.
 
-Because it is not known if there are infinitely many Mersenne primes, it is also not known if there are infinitely many even perfect numbers. It is also not known if there are any odd perfect numbers. 由于Mersenne prime的数量未知, perfect number的数量也未知. 并且现在也不知道是否存在奇的完美数.
+Because it is not known if there are infinitely many Mersenne primes, it is also not known if there are infinitely many even perfect numbers. It is also not known if there are any odd perfect numbers. 由于Mersenne prime的数量未知, 所以perfect number的数量也未知. 并且odd perfect number的存在也是未知的.
 
 # Theorem 2
 
 我们还有一个直觉的发现: 随着数字的增大, 质数似乎越来越稀疏. For example, there are 25 primes between 1 and 100, 16 primes between 1001 and 1100, and only six primes between 1,000,001 and 1,000,100.
 
-这个假设我还不知道怎么证明, 但可以证明的是, 存在一段任意长的连续数列, 其中没有任何质数(也就是说, 质数之间的间隔可能很长):
+这个假设我还不知道怎么证明, 但可以证明的是: 存在一段任意长的连续数列, 其中没有任何质数(也就是说, 质数之间的间隔可能很长):
 
 **Theorem 2. For every positive integer $n$, there is a sequence of $n$ consequetive positive integers containing no primes.**
 
@@ -150,7 +154,7 @@ Theorem 2 shows that there are sometimes long stretches between one prime and th
 
 #  Twin Primes
 
-[Theorem 2](#theorem-2)证明了质数之间可能存在很长的间隔, 但是同样存在一些间隔比较小的质数, 例如: 质数2 and 3只间隔1; 质数5 and 7, 29 and 31, and 7949 and 7951只间隔2.
+[Theorem 2](#theorem-2)证明了质数之间可能存在很长的间隔, 但同样存在一些间隔比较小的质数. 例如: 质数 2 and 3只间隔1; 质数 5 and 7, 29 and 31, 7949 and 7951 只间隔2.
 
 A **twin prime** is a [prime number](https://en.wikipedia.org/wiki/Prime_number) that is either 2 less or 2 more than another prime number.
 
