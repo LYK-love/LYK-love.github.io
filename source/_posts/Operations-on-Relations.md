@@ -129,7 +129,7 @@ R \cup R^{-1}=\{(a, b),(b, a),(b, c),(c, b),(a, c),(c, a),(c, d),(d, c)\} .
 $$
 The symmetric closure of a relation $R$ is very easy to visualize geometrically. All edges in the digraph of $R$ become "two-way streets" in $R \cup R^{-1}$. Thus the graph of the symmetric closure of $R$ is simply the digraph of $R$ with all edges made bidirectional. We show in Figure 39(a) the digraph of the relation $R$ of Example 9. Figure 39(b) shows the graph of the symmetric closure $R \cup R^{-1}$.
 
-![Example of symmetric closure](/Users/lyk/Pictures/HexoPics/Discrete Mathematics/Operations on Relations/Example of symmetric closure.png)
+![Example of symmetric closure](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Discrete%20Mathematics/Operations%20on%20Relations/Example%20of%20symmetric%20closure.png)
 
 # Composition
 

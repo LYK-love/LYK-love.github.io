@@ -60,7 +60,7 @@ $$
 \begin{aligned}
 x y & =\left(2^b-1\right) \cdot\left(1+2^b+2^{2 b}+\cdots+2^{(a-1) b}\right) \nonumber \\
 & =2^b \cdot\left(1+2^b+2^{2 b}+\cdots+2^{(a-1) b}\right)-\left(1+2^b+2^{2 b}+\cdots+2^{(a-1) b}\right) \nonumber \\
-& =\left(2^b+2^{2 b}+2^{3 b}+\cdots+2^{a b}\right)-\left(1+2^b+2^{2 b}+\cdots+2^{(a-1) b}\right) \nonumber \\
+& =\left(2^b+2^{2 b}+2^{3 b}+\cdots+2^{(a-1) b}+2^{a b}\right)-\left(1+2^b+2^{2 b}+\cdots+2^{(a-1) b}\right) \nonumber \\
 & =2^{a b}-1 \nonumber \\
 & =2^n-1 . \nonumber
 \end{aligned}
