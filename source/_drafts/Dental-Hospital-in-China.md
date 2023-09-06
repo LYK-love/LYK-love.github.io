@@ -1,6 +1,7 @@
 ---
 title: Dental Hospital in China
-tags:
+tags: Medecine
+categories: Life
 ---
 
 
@@ -26,3 +27,6 @@ tags:
 24h内不能刷牙.
 
 越早拔掉越好, 会影响其它牙的生长.
+
+# 
+
