@@ -103,6 +103,8 @@ If $R$ does not possess a particular property, we may wish to <u>add pairs to $R
 
 Naturally, we want to add as few new pairs as possible, so what we need to find is **the smallest relation $R_1$ on $A$ that contains $R$ and possesses the property we desire.** Sometimes $R_1$ does not exist. **If a relation such as $R_1$ does exist, we call it the closure of $R$ with respect to the property in question.** 我们要得到的是$R$的最小超集$R_1$, 它具有我们希望的property. 如果$R_1$存在, 那么就称$R_1$为$R$的关于给定property的闭包(closure).
 
+Transtive Closure放在单独的章节讲. 本章介绍Reflexive Closure and Symmetric Closure.
+
 ## Reflexive Closure
 
 Suppose that $R$ is a relation on a set $A$, and $R$ is not reflexive. This can only occur because some pairs of the diagonal relation $\Delta$ are not in $R$. 

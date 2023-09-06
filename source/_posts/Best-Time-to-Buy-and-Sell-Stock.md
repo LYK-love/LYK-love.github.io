@@ -23,7 +23,11 @@ Find the maximum profit you can achieve. You may complete at most `k` transactio
 
 # Intro
 
-我们直接看最抽象的[188. Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/), 上文就是其题目.
+我们直接看最抽象的[188. Best Time to Buy and Sell Stock IV](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/), 其它股票问题都是它的具体形式.
+
+188的题面就是上文.
+
+
 
 **Example 1:**
 
@@ -53,7 +57,7 @@ Explanation: Buy on day 2 (price = 2) and sell on day 3 (price = 6), profit = 6-
   * k = {0,1,2, ...., K}: 最大交易次数, 共有K+1种情况. 题目给定的最大交易次数为K.
 * 返回值: 如果利润要最大, 最后一天结束时手里就不能有股票, 因此最后一天的`j = 0`. 因此返回值为`dp[prices.length-1, 0, K]`.
 * DP函数`void buildDP(Integer[][][] memo, int i, int k, int[] prices)`: 对`dp[i][0][k], dp[i][1][k]`进行赋值. 
-  * 你也可以把函数定义为`void buildDP(Integer[][][] dp, int i, int j, int k, int[] prices)`, 每次调用都对`dp[i][j][k]`进行赋值. 这样只会使解法更复杂, 因为j只有0和1两种情况.
+  * 你也可以把函数定义为`void buildDP(Integer[][][] dp, int i, int j, int k, int[] prices)`, 每次调用都对`dp[i][j][k]`进行赋值. 这样只会使解法更复杂, 因为j只有0和1两种情况, 直接放在一起处理更方便.
 
 ```java
     public int maxProfit(int K, int[] prices) {
@@ -152,7 +156,7 @@ dp[i][j][k] = dp[i-1][j][k-1]
 
    `dp[i][0][0]` 会一直递归到`dp[0][0][0] = 0`.
 
-* 如果j=1, 说明第i天当天持有了股票, 由于这段时间内不可能发生buy, 所以这种情况不可能发生.
+* 如果j=1, 说明第i天当天持有了股票, 这和"这段时间内不能buy"是矛盾的. 
 
   ```java
   dp[i][1][k] = null

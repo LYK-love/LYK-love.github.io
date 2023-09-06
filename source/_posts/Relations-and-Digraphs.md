@@ -269,7 +269,7 @@ If R is a relation on a set A and a ∈ A, then
 
 Suppose that $R$ is a relation on a set $A$. 
 
-A **path of length $n$** in $R$ from $a$ to $b$ is a finite sequence $π : a, x_1, x_2, . . . , xn−1, b$, beginning with $a$ and ending with $b$, such that
+A **path of length $n$** in $R$ from $a$ to $b$ is a finite sequence $π : a, x_1, x_2, . . . , x_{n−1}, b$, beginning with $a$ and ending with $b$, such that
 $$
 a \ R \ x_1, \ x_1 \ R \ x_2, \ \dots, \ x_{n−1} \ R \ b.
 $$

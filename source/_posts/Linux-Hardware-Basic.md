@@ -39,23 +39,28 @@ Outline:
 
 # Hardware File Name
 
-Linux中一切皆文件，磁盘文件名形如` /dev/sd[a-z] `，虚拟机可能会使用 `/dev/vd[a-z]` 
+Linux中一切皆文件, 磁盘文件名形如` /dev/sd[a-z] `, 虚拟机可能会使用 `/dev/vd[a-z]`.
 
 # Partition
 
-分区就是对分区表进行配置，通常分区是以Cylinder为单位的『连续』磁盘空间。 现代也可以用sector为单位
+在MacOS的Disk Utility可以选择格式化硬盘(这里是一根USB sticker), 可以看到有[三种分区表格式](https://support.apple.com/en-hk/guide/disk-utility/dsku1c614201/mac):
 
-分区表有两种格式： MBR, GPT
+1. GUID Partition Map, 就是GPT.
+
+2. MBR
+3. Apple Partition Map, 这是Apple自己的格式.
+
+![Schemes in OSX Disk Utility](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Linux/Linux%20Hardware%20Basic/Schemes%20in%20OSX%20Disk%20Utility.png)
 
 
 
+分区就是对分区表进行配置, 通常分区是以Cylinder为单位的『连续』磁盘空间。 现代也可以用sector为单位
 
+分区表有两种主要格式: MBR, GPT.
 
 ## MBR
 
 MBR磁盘分区是一种使用最为广泛的分区结构，它也被称为DOS分区结构，但它并不仅仅应用于Windows系统平台，也应用于Linux，基于X86的UNIX等系统平台。它位于磁盘的0号扇区（一扇区等于512字节），是一个重要的扇区（简称MBR扇区）
-
-
 
 主要分区与延伸分区最多可以有四个(硬盘的限制)
 延伸分区最多只能有一个(操作系统的限制)
@@ -65,7 +70,7 @@ MBR磁盘分区是一种使用最为广泛的分区结构，它也被称为DOS�
 
 ### 0号扇区结构
 
-在MBR分区表中，一个分区最大的容量为2T，且每个分区的起始柱面必须在这个硬盘的前2T内。你有一个3T的硬盘，根据要求你至少要把它划分为2个分区，且最后一个分区的起始扇区要位于硬盘的前2T空间内。如果硬盘太大则必须改用GPT
+在MBR分区表中，一个分区最大的容量为2T，且每个分区的起始柱面必须在这个硬盘的前2T内。你有一个3T的硬盘，根据要求你至少要把它划分为2个分区，且最后一个分区的起始扇区要位于硬盘的前2T空间内。如果硬盘太大则必须改用GPT.
 
 
 
@@ -159,31 +164,45 @@ MBR扇区(0号扇区)由四部分组成：
 
 ## GPT
 
-全局唯一标识分区表（GUID Partition Table）
+[->GUID Partition Table (GPT)](http://ntfs.com/guid-part-table.htm#:~:text=The%20GPT%2C%20or%20the%20GUID,of%20the%20ancient%20IBM%20PC.)
 
-可以有很多主分区，也就不需要扩展分区和逻辑分区了
+The GPT, or the GUID Partition Table(全局唯一标识分区表), is the standard format of partitioning tables on a physical hard disk. It was introduced as part of the EFI, or Extensible Firmware Interface, standard, created by Intel to replace the outlived BIOS, one of the last relics of the ancient IBM PC.
 
 
+
+GPT可以有很多主分区, 因此也就不需要扩展分区和逻辑分区了.
+
+**The GPT uses a modern system of Logical Block Addressing (LBA) rather than the outdated CHS (Cylinder-Head-Sector) method, used in MBR.** 
+
+Passed down from its predecessor, block LBA 0 contains MBR, with the Primary GPT Header in LBA 1. Following the GPT Header is the partition table itself. 
+
+In the 64-bit version of Microsoft Windows NT, the GPT reserves the first 32 sectors, so that the first used sector on every hard drive is LBA 34.
+
+That aside, the GPT provides data duplication; the header and partition table are stored both at the start and the end of the disk.
 
 最大硬盘容量9.4ZB
 
- 缺点是浪费更多的磁盘空间
+缺点是浪费更多的磁盘空间
 
 
 
 ## GPT分区表结构
 
-简言之，前512字节保留，用于MBR。后512字节用于GPT Header，然后是分区表， 分区表在磁盘尾部又会备份一遍
+简言之，前512字节保留, 用于MBR. 后512字节用于GPT Header, 然后是分区表, 分区表在磁盘尾部又会备份一遍
 
+![GPT Structure](http://ntfs.com/images/screenshots/gpt.gif)
 
-
-![GPT Arch](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/Linux/GPT%20Arch)
+**Note: The green block represents the Primary GPT, the blue block represents the secondary GPT**
 
 
 
 * LBA0: MBR相容区块
 
-  前512字节（0号扇区）有个保护MBR（用于防止不识别GPT的硬盘工具错误识别并破坏硬盘中的数据），这个MBR中只有一个类型为0xEE的分区，以此来表示这块硬盘使用GPT分区表。不能识别GPT硬盘的操作系统通常会识别出一个未知类型的分区，并且拒绝对硬盘进行操作；能够识别GPT分区表的操作系统会检查保护MBR中的分区表，如果分区类型不是0xEE或者MBR分区表中有多个项，也会拒绝对硬盘进行操作
+  前512字节（0号扇区）有个保护MBR（用于防止不识别GPT的硬盘工具错误识别并破坏硬盘中的数据），这个MBR中只有一个类型为0xEE的分区，以此来表示这块硬盘使用GPT分区表.
+
+  > the MBR is present at the beginning of the disk, in block LBA0, for protective and compatibility purposes.
+
+  不能识别GPT硬盘的操作系统通常会识别出一个未知类型的分区，并且拒绝对硬盘进行操作；能够识别GPT分区表的操作系统会检查保护MBR中的分区表，如果分区类型不是0xEE或者MBR分区表中有多个项，也会拒绝对硬盘进行操作.
 
 
 
@@ -195,7 +214,7 @@ MBR扇区(0号扇区)由四部分组成：
 
 * LBA2～33： 实际记录分区信息处
 
-  分区表位于GPT磁盘的2-33号磁盘，一共占用32个扇区，能够容纳128个分区表项。每个分区表项大小为128字节。因为每个分区表项管理一共分区，所以Windows系统允许GPT磁盘创建128个分区
+  分区表位于GPT磁盘的2-33号磁盘，一共占用32个扇区，能够容纳128个分区表项。每个分区表项大小为128字节。因为每个分区表项管理一共分区, 所以Windows系统允许GPT磁盘创建**128**个分区
 
 
 
@@ -215,56 +234,60 @@ MBR扇区(0号扇区)由四部分组成：
 
 # BIOS & UEFI
 
-计算机启动时，首先加载硬件驱动程序， 硬件驱动程序有：
+计算机启动时, 首先加载硬件驱动程序, 硬件驱动程序有：
 
-* BIOS：对应分区格式MBR， 读取MBR分区
+* BIOS：对应分区格式MBR, 读取MBR分区.
   *  BIOS模式又称为`Legacy`
-* UEFI： 对应分区格式GPT， 读取EFI分区
+* UEFI: 对应分区格式GPT, 读取EFI分区. 
 
 
+
+The BIOS or UEFI is responsible for the following tasks:
+
+- Power-on self-test (POST)
+- Performing an inventory of all available hardware and initialising it
+- Loading and executing the first stage of the operating system boot sequence.
 
 ## BIOS
 
-BIOS是写入到主板上的一个程序.主板上还有硬件CMOS， 是记录各项硬件参数且嵌入在主板上的储存器；
+BIOS是写入到主板上的一个程序. 主板上还有硬件CMOS, 是记录各项硬件参数且嵌入在主板上的储存器；
 
-* BIOS是计算机开机时会执行的第一个程序
+* BIOS是计算机开机时会执行的第一个程序.
 * BIOS写在主板的flash ram里. flash ram是nonvolatile的.
 * 因为BIOS是写在主板里的, 一般来说不同品牌的主板也就有不同的BIOS. 
   * 每个品牌的主板进Bios的快捷键都不一样. 以我个人的主板为例, 之前我的MSI(微星) 进BIOS的快捷键是`F12`, 现在我的的主板是七彩虹, 快捷键是`Del`. 
   * 不同的Bios外观相差很大. 七彩虹的Bios就花里胡哨的.
+* BIOS的缺点:
+  * BIOS不知道GPT,还需要GPT提供兼容模式才能够读写这个磁盘装置
+  * BIOS could only run in 16 bit mode, restricting it to a mere 1[MB](https://wiki.restarters.net/Glossary:MB) of memory. (All modern operating systems run in 32 or 64 bit mode.)
 
 ## UEFI
 
-UEFI (Unified Extensible Firmware Interface) 是BIOS的进化版，也称为UEFI BIOS. 现在常见的主板BIOS都是UEFI BIOS.
+UEFI (Unified Extensible Firmware Interface) 是BIOS的进化版, 也称为UEFI BIOS. 现在常见的主板BIOS都是UEFI BIOS. **我们说的BIOS也一般指的是UEFI BIOS.**
 
-* UEFI对应分区格式GPT, 启动后读取EFI分区（EFI system partition， aka **ESP**）
-  * EFI是UEFI的1.0版本
+* UEFI对应分区格式GPT. 启动后读取ESP.
+  * EFI是一个标准, (从2011年开始)用于取代老旧的BIOS. UEFI是EFI的进化版.
 
-* UEFI用C编程，BIOS用汇编编程。 因此UEFI非常强大
+* **ESP** (EFI System Partition, EFI系统分区): 每一个使用UEFI的GPT disk必须有一个特殊的分区, 名为ESP. ESP是GPT disk的系统启动分区.
+  
+  > [->ref](https://wiki.restarters.net/UEFI_and_GPT)
+  >
+  > In order to work with UEFI, one of the partitions on a GPT disk must be a special system partition known as the ESP (EFI System Partition). UEFI can recognise this, understand a [FAT](https://wiki.restarters.net/Glossary:FAT) file system on it, and find the files on it required for booting the computer.
+  
+  * The minimum size of this partition is 100 MB, and must be formatted using the FAT32 file format.
+  * 其分区标识是EF (十六进制) 而非常规的0E或0C。
+  * 该分区在Windows操作系统下一般是不可见的.
+  * ESP分区是一个独立于操作系统之外的分区，操作系统被引导后就不再依赖它. 分区内存放引导管理程序、驱动程序、系统维护工具等。支持 EFI 模式的电脑需要从ESP启动系统，EFI固件可从ESP加载EFI启动程序和应用程序
+  
+* UEFI用C编程, BIOS用汇编编程. 因此UEFI更加强大.
 
 
 
-BIOS缺点：
-
-* BIOS不知道GPT,还需要GPT 提供兼容模式才能够读写这个磁盘装置
-* BIOS仅为 16 位的程序，功能太简单
+UEFI 可以直接取得 GPT 的分区表,但保险起见，你最好依旧拥有BIOS boot的分区槽支持. 同时, 为了与 windows 兼容, 并且提供其他第三方厂商所使用的 UEFI 应用程序储存的空间,你必须要格式化一个 vfat 的文件系统, 大约提供 512MB 到 1G 左右的容量,以让其他 UEFI 执行较为方便
 
 
 
-UEFI 可以直接取得 GPT 的分区表,但保险起见，你最好依旧拥有BIOS boot的分区槽支持, 同时,为了与 windows 兼容,并且提供其他第三方厂商所使用的 UEFI 应用程序储存的空间,你必须要格式化一个 vfat 的文件系统, 大约提供 512MB 到 1G 左右的容量,以让其他 UEFI 执行较为方便
-
-
-
-### ESP
-
-EFI系统分区（EFI system partition）: **GPT**硬盘分区模式中的系统启动分区
-
-* FAT16或FAT32格式的物理分区，
-* 其分区标识是EF (十六进制) 而非常规的0E或0C。
-* 该分区在Windows操作系统下一般是不可见的。
-* ESP分区是一个独立于操作系统之外的分区，操作系统被引导后就不再依赖它。分区内存放引导管理程序、驱动程序、系统维护工具等。支持 EFI 模式的电脑需要从ESP启动系统，EFI固件可从ESP加载EFI启动程序和应用程序
-
-# boot loader
+# Boot Loader
 
 boot loader用于加载OS内核， 由于每种OS的文件系统不一致，因此每种OS都有自己的boot loader
 
@@ -276,9 +299,9 @@ boot loader位于MBR中，最大只有446字节
 
 每个文件系统都会保留一块启动扇区（boot sector）来安装该OS的boot loader， **即OS都会默认安装一份boot loader到自己的文件系统中**（位于根目录所在的文件系统的boot sector）
 
-LInux安装时，可以选择将boot loader安装到MBR，如果安装了，则MBR和boot sector都会保留一份boot loader
+LInux安装时，可以选择将boot loader安装到MBR，如果安装了，则MBR和boot sector都会保留一份boot loader.
 
-Windows安装时默认会将boot loader也安装到MBR
+Windows安装时默认会将boot loader也安装到MBR.
 
 ## 功能
 
@@ -300,15 +323,9 @@ boot loader主要功能：
 
 ## 多重系统
 
-
-
-
-
-**windows的loader不具有转交功能**，因此不能使用windows的loader启动linux的loader，也就是说，装多系统的时候，需要先装windows，再装linux
+**windows的loader不具有转交功能**，因此不能使用windows的loader启动linux的loader，也就是说，装多系统的时候，需要先装windows，再装linux.
 
 * 前文已提到，windows的boot loader会自动覆盖MBR扇区，那么如果后安装windows，启动扇区就被覆盖为windows的loader，而它无法转交给其他loader，即无法支持多系统
-
-
 
 
 
