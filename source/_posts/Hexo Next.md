@@ -30,7 +30,7 @@ My Dependency Version:
 
 
 
-在本文中, 除非特殊说明, 否则编辑的都是主题配置文件( aka `Next _config.yml` ), 由于使用了Alternate Theme Config, 因此主题配置文件位置是`<hexo>/_cofig.next.yml`.
+在本文中, 除非特殊说明, 否则编辑的都是主题配置文件( aka `NexT _config.yml` ), 由于使用了Alternate Theme Config, 因此主题配置文件位置是`<hexo>/_cofig.next.yml`.
 
 # Config File Features
 
@@ -904,12 +904,40 @@ highlight:
   tab_replace: ''
   wrap: true
   hljs: false
+  exclude_languages:
+    - mermaid
 prismjs:
   enable: false
   preprocess: true
   line_number: true
   tab_replace: ''
 ```
+
+## Mermaid
+
+NexT config file
+
+```yaml
+# Mermaid tag
+mermaid:
+  enable: true
+  # Available themes: default | dark | forest | neutral
+  theme:
+    light: default
+    dark: dark
+```
+
+
+
+Hexo config file
+
+```yaml
+highlight:
+  exclude_languages:
+   - mermaid
+```
+
+
 
 ## Image
 

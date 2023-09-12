@@ -1,6 +1,6 @@
 ---
 title: Lossless and Lossy Comprehension
-categories: Potpourri
+categories: Computer Science
 date: 2022-08-14 21:21:32
 tags:
 ---

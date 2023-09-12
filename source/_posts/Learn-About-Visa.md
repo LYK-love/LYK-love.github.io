@@ -7,7 +7,6 @@ categories: Affairs
 date: 2023-07-18 01:27:25
 ---
 
-
 Everything about U.S. F1 visa, such as its application, interview and its function.
 
 <!--more-->
@@ -339,13 +338,9 @@ VO会口头通知你check这件事, 也会发你一张类似下面的单子(单�
 
 ![yellow 201g sheet](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-Visa/yellow%20201g%20sheet.jpeg)
 
-PhD学生建议**着重准备**以下资料:
 
-* 个人CV 
-* 导师CV
-* PhD学习计划 Study Plan
-* 资金来源 Funding Letter (以TA/RA的形式)
-* 系里和lab的基本资料（在系里的官网或者询问本系Academic Advisor）
+
+
 
 ## Waiting
 
@@ -393,7 +388,33 @@ PhD学生建议**着重准备**以下资料:
 
 这个[网页](https://www.ustraveldocs.com/cn_zh/cn-niv-passporttrack.asp)还能查询护照状态.
 
+
+
+我在2023-09-04寄出护照, 第二天护照就到达了领事馆:
+
+![Passport Status](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-Visa/Passport%20Status.png)
+
+查询到的护照状态是: "仍然于领事馆中".
+
+注意: 我联系了CGI客服, 对方说"护照送到领事馆不会有email通知; 护照抵达所选取件地址时 申请人会收到邮件通知."
+
 ## Get Passport
+
+![Visa Status in CEAC](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Affairs/Learn-about-Visa/Visa%20Status%20in%20CEAC.png)
+
+寄出护照后, 在2023-09-11于CEAC查询到签证状态是"ISSUED", 就是已经通过了.  但护照状态依然是"仍然于领事馆中". 和客服交流后得知issued之后领事馆需要时间"印签", 这个时间无法估计.
+
+
+
+在第二天就收到了EMS的电话, 收到了护照. 据此推测这个"印签"时间并不长, 可能就几个小时.
+
+# My Timeline
+
+1. 2023-07-28: Attended the VISA interview in Consulate Shanghai.
+2. 2023-07-28 -> 2023-08-24: Administrative Processing. However, I missed the email so until 09-02 I didn't know that.
+3. 2023-09-04: Sent my passport to Consulate Shanghai.
+4. 2023-09-11: My visa status was "ISSUED" in CEAC.
+5. 2023-09-12: Got my passport from EMS, with visa in it.
 
 # Others
 

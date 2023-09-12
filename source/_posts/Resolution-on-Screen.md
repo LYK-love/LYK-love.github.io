@@ -1,6 +1,6 @@
 ---
 title: Resolution on Screen
-categories: Potpourri
+categories: Computer Science
 mathjax: true
 date: 2022-08-13 20:35:23
 tags:

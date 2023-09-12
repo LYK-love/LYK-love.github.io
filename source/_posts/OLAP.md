@@ -1,7 +1,7 @@
 ---
 title: OLAP
 tags: Database
-categories: Potpourri
+categories: Computer Science
 date: 2022-08-12 22:25:50
 ---
 

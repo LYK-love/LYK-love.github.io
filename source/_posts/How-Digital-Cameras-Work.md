@@ -1,6 +1,6 @@
 ---
 title: How Digital Cameras Work
-categories: Potpourri
+categories: Computer Science
 mathjax: true
 date: 2022-08-21 18:48:46
 tags:
