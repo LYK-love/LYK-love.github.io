@@ -58,14 +58,16 @@ boolean isPrime(int n) {
 
 Complexity: 1^2 + 2^2 + 3^2 + ... + (n-1)^ = $O(n^2)$
 
-
+#  Sieve of Eratosthenes
 
 Idea: 与其把{2, ..., n-1}的素数一个个找出, 不如{2, ..., n-1}的非素数全部去除, 剩下的都是素数.
 
 例如: 
 
-* 2 是一个素数，那么 2 × 2 = 4, 3 × 2 = 6, 4 × 2 = 8... 都不可能是素数了
-* 3 也是素数，那么 3 × 2 = 6, 3 × 3 = 9, 3 × 4 = 12... 也都不可能是素数了。
+* 2 是一个素数，那么 2 × 2 = 4, 3 × 2 = 6, 4 × 2 = 8... 都不可能是素数了.
+* 3 也是素数，那么 3 × 2 = 6, 3 × 3 = 9, 3 × 4 = 12... 也都不可能是素数了.
+
+这算法叫做 Sieve of Eratosthenes[^2].
 
 ## Proof
 
@@ -263,3 +265,4 @@ public int countPrimes(int n) {
 
 
 [^1]: https://en.wikipedia.org/wiki/Prime_number
+[^2]: https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
