@@ -5,7 +5,6 @@ tags:
 - LeetCode
 categories: 
 - Computer Science
-mathjax: true
 date: 2023-08-13 03:25:15
 ---
 
@@ -23,15 +22,26 @@ Common Linked List Algorithms on Leetcode.
 
 
 
-输入一个单链表头结点, 将该链表反转, 返回新的头结点:
+Problem: 输入一个单链表头结点, 将该链表反转, 返回新的头结点.
+
+Solution: 使用递归的方法, 先反转以`head.next`为`head`的子链表, 然后将原来的`head`拼接到子链表的末尾.
 
 ```java
+    /**
+     * Given the head of a singly linked list, reverse the list, and return the head of the reversed list.
+     * @param head
+     * @return the head nod eof the reversed list.
+     */
     private static ListNode reverse_linked_list(ListNode head)
     {
+        /**
+         * head == null: 输入的linked list本身就为空.
+         * head.next == null: head is the last node of the list.
+         */
         if( head == null || head.next == null )
             return head;
 
-        ListNode last = reverse_linked_list(head.next);
+        ListNode last = reverse_linked_list(head.next);//reverse the sub-list, whose head will be returned.
         head.next.next = head;
         head.next = null;
         return last;
@@ -78,9 +88,6 @@ Common Linked List Algorithms on Leetcode.
    ```java
    return last;
    ```
-
-   
-
 
 
 # Determine If Has A Cycle

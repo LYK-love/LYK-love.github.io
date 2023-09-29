@@ -1,5 +1,5 @@
 ---
-title: Double String DP Problems
+title: Double-Pointer DP Problems
 tags:
   - Algorithm
   - LeetCode
@@ -7,6 +7,8 @@ categories:
   - Computer Science
 date: 2023-09-26 21:23:59
 ---
+
+Dynamic programming(DP) problems that typically use two pointers. E.g., `Integer[][] memo`.
 
 * Edit Distance
 * Longest Common Subsequence
@@ -115,7 +117,17 @@ else:
   memo[m][n] = dp(m-1,n-1, memo, s1,s2) + 1; //replace
   ```
 
+## Proof
 
+DP可以解出Edit Distance的答案, 但如何证明DP得到的答案是最短的Edit Distance?
+
+Proof:
+
+1. 假设Edit Distance有一个最优解x, 那么x一定可以用DP表示. 因为x的每一步都可以对应到DP中的一个动作.
+2. DP必定能得到一个Edit Distance的解y.
+3. 所以 x == y.
+
+这个证明很粗糙, 之后查文献改进.
 
 ## Code
 
