@@ -36,18 +36,18 @@ $\mathbb{P}$: 全体质数集合.
 
 # Bruce Force
 
-Brute force: 写一个判断是否是素数的方法, 然后调用n次
+Brute force: 写一个判断素数的方法, 然后调用n次
 
 ```java
 int countPrimes(int n) {
     int count = 0;
-    for (int i = 2; i < n; i++)
+    for (int i = 2; i < n; i++)//调用n次函数
         if (isPrime(i)) count++;
     return count;
 }
 
 // 判断整数 n 是否是素数
-boolean isPrime(int n) {
+boolean isPrime(int n) { //对于数字n, 该函数复杂度为O(n)
     for (int i = 2; i < n; i++)
         if (n % i == 0)
             // 有其他整除因子
@@ -75,7 +75,7 @@ Idea: 与其把{2, ..., n-1}的素数一个个找出, 不如{2, ..., n-1}的非�
 $$
 s_1 = \{kp | p \in \mathbb{P}, k \in N \}
 $$
-令 $s_2$ 为: 小于n的全体合数的集合.
+Define $s_2$ to be the set of all composite numbers.
 
 
 

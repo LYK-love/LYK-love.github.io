@@ -294,7 +294,7 @@ Note that a path of length $n$ involves $n + 1$ elements of $A$, although they a
 
 
 
-* $R^∞$: We may also define a relation $R^∞$ on $A$, by letting $x R^∞ y$ mean that **there is some path** in $R$ from $x$ to $y$. $R^∞$ 也被称为**connectivity(连通性)**. 即存在一条x -> y的长度未知的路径.
+* $R^∞$: The **connectivity(连通性)** relation $R^∞$ of a relation $R$ on a set $A$  mean that if by letting $x R^∞ y$, **there is some path** in $R$ from $x$ to $y$. $R^∞$ 也被称为**connectivity(连通性)**. 即存在一条x -> y的长度未知的路径.
   * The set $R^∞(x)$ consists of all vertices that can be reached from $x$ by some path in $R$.
 
 

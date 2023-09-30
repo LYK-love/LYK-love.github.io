@@ -8,65 +8,94 @@ mathjax: true
 date: 2021-08-03 16:00:06
 ---
 
+DAG(Directed Acyclic Graph), DAG's topological ordering and SCC(Strongly Connected Component).
 
-Outline ：
-
-* **Directed Acyclic Graph**
-  * **Topological order**
-  * **Critical path analysis**
-* **Strongly Connected Component（SCC）**
-  * **Strongly connected component and condensation**
-  * **The algorithm**
-  * **Leader of string connected component**
-
-Ref:
-
-* *算法设计与分析(Algorithm design and analysis)* by 黄宇
+Ref: *算法设计与分析(Algorithm design and analysis)* by 黄宇.
 
 <!--more-->
 
 # Directed Acyclic Graph
 
-## Topological order for G=(V,E)
+ossutil cp "/Users/lyk/Pictures/HexoPics/Algorithm/Algorithm Analysis" "oss://lyk-love/Algorithm/Algorithm Analysis" --include * -r
 
-* **Topological number**
+[-> ref](https://www.cs.rit.edu/~rlaz/algorithms20082/slides/DAGs.pdf)
 
-  * An assignment of distinct integer $1,2,..., n$ to the vertices of $V$
-  * For every $vw \in E$​, the topological number of *v* is less than that of *w*.
+![DAG and Topological Ordering](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Algorithm/Algorithm%20Analysis/DAG%20and%20Topological%20Ordering.png)
 
-* **Reverse topological order**
+An DAG is a directed graph that contains no directed cycles. 
 
-  * Defined similarly
 
-    ("greater than")
 
-* 引理： 如果$G=（V，E ）$为有向无环图，则G中必然存在拓扑排序
+## Topological Ordering for G=(V,E)
 
-### 拓扑排序算法
+A **topological order** of a directed graph $G = (V, E)$ is **an assignment of distinct integer $1,2, \cdots ,n$ of its nodes** as $v_1, v_2, \cdots , v_n$ so that for every edge $(v_i , v_j) \in E$ we have $i < j$. 
+
+## Lemma1
+
+Lemma1:  $G= (V, E )$ is a DAG <==> G has a topological order
+
+Proof:
+
+==> :  (by induction on n) 
+
+1. Base case: true if n = 1.
+2. Given DAG on n > 1 nodes, find a node v with no incoming edges. 
+3. G - { v } is a DAG, since deleting v cannot create cycles. 
+4. By inductive hypothesis, G - { v } has a topological ordering. 
+5. Place v first in topological ordering; then append nodes of G - { v } in topological order. This is valid since v has no incoming edges. 
+
+***
+
+
+
+<== : (by contradiction)
+
+1. Suppose that G has a topological order v1, …, vn and that G also has a directed cycle C. Let's see what happens. 
+2. Let vi be the lowest-indexed node in C, and let vj be the node just before vi ; thus (vj, vi ) is an edge. 
+3. By our choice of i, we have i < j. 
+4. On the other hand, since (vj, vi ) is an edge and v1, …, vn is a topological order, we must have j < i, a contradiction.
+
+![DAG Lemma1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Algorithm/Algorithm%20Analysis/DAG%20Lemma1.png)
+
+## Lemma2
+
+Lemma2: If G is a DAG, then G has a node with no incoming edges. 
+
+Proof: (by contradiction) 
+
+1. Suppose that G is a DAG and every node has at least one incoming edge. Let's see what happens. 
+2. Pick any node v, and begin following edges backward from v. Since v has at least one incoming edge (u, v) we can walk backward to u. 
+3. Then, since u has at least one incoming edge (x, u), we can walk backward to x.
+4. Repeat until we visit a node, say w, twice.
+5. Let C denote the sequence of nodes encountered between successive visits to w. C is a cycle. 
+
+![DAG Lemma2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Algorithm/Algorithm%20Analysis/DAG%20Lemma2.png)
+
+## Compute Topologic Ordering
 
 *   在某个集合$A$ 上的关系$R$如果是自反的、反对称的和传递的，那么$R$是一个**偏序**
 * 偏序集的有向图中没有长度大于一的环
-* 拓扑序要求**全序且无环**
-* 如果有向图$G=(V,E)$有环，则 $G$不存在拓扑排序
-* 如果有向图$G=(V,E)$无环，则 $G$必定存在拓扑排序
+*   拓扑序要求**全序且无环**.
+    * 如果有向图$G=(V,E)$有环, 则 $G$不存在拓扑排序.
+    * **成环等价于遍历过程中遇到了灰色节点**.
 
 
 
-* “尽头”与DFS
+* "尽头"与DFS
 
   * DFS就是沿某条路径一直往下走，直到某个“**尽头**”节点。
 
-  * 假设 $i \rarr j$ 表示任务$i$的执行依赖任务 $j$ 的完成，则尽头节点不依赖其他任何节点，因而对它的拓扑序号的分配从依赖关系的角度看是自由的。该分配方式不会影响其他节点的执行。 比如，对于逆拓扑序而言，只要分配当前尚未分配的最小序号。
+  * 假设 $i \rarr j$ 表示任务$i$的执行依赖任务 $j$ 的完成，则尽头节点不依赖其他任何节点，因而对它的拓扑序号的分配从依赖关系的角度看是自由的。该分配方式不会影响其他节点的执行. 比如，对于逆拓扑序而言，只要分配当前尚未分配的最小序号。
 
 * 逻辑尽头
 
-  * 当一个节点的所有后续节点均已处理完毕时， 该节点就成为逻辑上的**尽头**节点。
+  * 当一个节点的所有后续节点均已处理完毕时, 该节点就成为逻辑上的**尽头**节点。
     * 逆拓扑排序时, 逻辑尽头节点的逆拓扑序号只需要分配当前未分配序号中最小的
   * 分配拓扑序号的过程就成为不断找到逻辑结点的过程,这与DFS适合
-  	* 在DFS-WRAPPER中,开始遍历之前定义一个全局变量`globalNum`, 并初始化为 `n+1`
+  	* 在DFS-WRAPPER中,开始遍历之前定义一个全局变量`globalNum`, 并初始化为 `n+1`.
   	* 在DFS框架的"遍历后处理"处,嵌入对拓扑排序的处理:
-  		* `globalNum := `globalNum` -1;
-  		* `v.topoNum` := `globalNum`;
+  		* `globalNum` := `globalNum -1`.
+  		* `v.topoNum` := `globalNum`.
   
 
   ```c++
@@ -93,7 +122,7 @@ Ref:
   v.color = BLACK;
   ```
 
-* 判断能否形成拓扑序，除了判断全序之外，就是判断有没有环。 而判断**成环等价于遍历过程中遇到了灰色节点**
+* Complexity: O(m+n). m = number of edges, n = number of vertices.
 
 ## Critical path analysis
 
@@ -149,21 +178,97 @@ v.color := BLACK;
 * Complexity
   * $\Theta(n+m)$
 
+# Connectivity of DAG
+
+## Strongly Connected
+
+- **强连通(strongly connected)**： A DAG is strongly connected if **every pair of nodes is mutually connected**([->"connectivity" relation in graph](https://lyk-love.cn/2023/08/15/relations-and-digraphs/#paths-in-relations-and-digraphs)).
+  * TL;DR: x和y是连通的 == 存在一条x -> y的长度未知的路径. (但长度不能为0)
+
+
+
+* Lemma. Let s be any node. G is strongly connected iff every node is reachable from s, and s is reachable from every node. 
+
+* Pf:
+
+  ==> : Follows from definition.
+
+  <== :
+
+  1. Path from u to v: concatenate u-s path with s-v path. 
+  2. Path from v to u: concatenate v-s path with s-u path.
+
+  ![DAG Strong Connectivity](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Algorithm/Algorithm%20Analysis/DAG%20Strong%20Connectivity.png)
+
+## Simply Connected
+
+- **单连通(simply connected)**:A DAG is simply connected if 对图 G 中任意两个顶点 u 和 v, 存在从 u 到 v 的路径或从 v 到 u 的路径.
+
+## Weakly Connected
+
+- **弱连通(weakly connected)**:  A DAG is weakly connected if 忽略图 G 中每条有向边的方向, 得到的无向图（即有向图的基图）连通.
+
+# Detect Cycle in DAG
+
+根据之前介绍的[图的三种染色](https://lyk-love.cn/2021/08/03/L11-Graph-Traversal/#graph-coloring), 判断DAG是否有环就等价于判断在该图的遍历过程中是否遇到了灰色节点.
+
+* 遇到灰色节点意味着在遍历该图时遇到了当前遍历树的祖先节点, 也就是成环.
+
+```java
+public class Graph<T> {
+
+    private List<Vertex<T>> vertices;
+
+    public Graph() {
+        this.vertices = new ArrayList<>();
+    }
+
+    //Some apis...
+    
+    public boolean hasCycle() {
+
+        for(Vertex<T> vertex: vertices) vertex.setColor(Color.WHITE);//every vertex isn't visited.
+
+        for(Vertex<T> sourceVertex: vertices) {
+            if(hasCycle(sourceVertex))
+                return true;
+        }
+        return false;
+    }
+
+    private boolean hasCycle(Vertex<T> sourceVertex)
+    {
+        if(sourceVertex.getColor() == Color.GREY)//This vertex is being visited, we encounter a cycle!
+            return true;
+        if(sourceVertex.getColor() == Color.BLACK)//This vertex has been visited. So we don't need to traver it again.
+            return false;
+
+        sourceVertex.setColor(Color.GREY);//This vertex is being visited
+
+        for (Vertex<T> neighbor : sourceVertex.getAdjacencyList()) {
+            if( hasCycle(neighbor) )
+                return true;
+        }
+
+        sourceVertex.setColor(Color.BLACK);//The visiting of this vertex is over. Color it black.
+        return false;
+    }
+    
+```
+
+
+
 # Strongly Connected Component（SCC）
 
-## Strongly connected component and condensation
+## Condensation Graph
 
-* Strongly connected: 一个有向图中的节点是强连通的, 如果它们互相可达
+* Condensation Graph: 把G中的每个强连通片收缩成一个点, **强连通片之间**的边收缩成一条有向边,则得到G的收缩图$G\downarrow$
 
-* condensation Graph: 把G中的每个强连通片收缩成一个点, **强连通片之间**的边收缩成一条有向边,则得到G的收缩图$G\darr$
+  * 两个强连通片之间只能是**单向**可达(或者不可达).
 
-  * 两个强连通片之间只能是**单向**可达(或者不可达)
+  * DAG的Condensation Graph还是**DAG**.
 
-  * condensation Graph是**DAG**
-
-## The algorithm
-
-## Leader of strong connected component
+## Traverse of SCC
 
 ```
 SCC(G)
