@@ -1,6 +1,7 @@
 ---
 title: Guitar
-tags:
+tags: Guitar
+categories: Music
 ---
 
 * 分解和弦： 就是将和弦中的音依次弹出来，一般要从和弦的根音开始
@@ -124,3 +125,40 @@ enharmonic equivalent: 同音异调. 例如A sharp和B flat.
 
 * "m" stands for "minor". So "Am" == "A minor".
 * Where minor isn't written, we assum major. So "A" == "A major".
+
+# C Chords
+
+Cmaj7:
+
+![C major 7](http://1.bp.blogspot.com/_HlVclqPI4fs/TAcJmrHR04I/AAAAAAAAAOU/5jMgO1Kp3nQ/s320/ChordCmaj7.bmp)
+
+
+
+
+
+C7:
+
+![C7](http://4.bp.blogspot.com/_HlVclqPI4fs/TAcMILK-zGI/AAAAAAAAAOs/J85ymlU2_8k/s320/ChordC7.bmp)
+
+
+
+C sus4:
+
+![C sus4](https://fachordscdn-16d90.kxcdn.com/static/chords/images/c/sus4/c-sus4-pos-1.png)
+
+
+
+C/G:
+
+![C/G chord diagram](https://www.guitar-chord.org/images/open/C-G.png)
+
+
+
+# How
+
+
+
+
+
+
+

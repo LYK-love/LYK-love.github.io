@@ -2,7 +2,8 @@
 title: TOEFL Hometest Experience
 tags: Study Abroad
 categories: 
-- [Affairs, Life]
+- [Affairs]
+- [Life]
 date: 2023-02-12 16:51:51
 ---
 

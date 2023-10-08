@@ -227,7 +227,7 @@ public class Graph<T> {
     
     public boolean hasCycle() {
 
-        for(Vertex<T> vertex: vertices) vertex.setColor(Color.WHITE);//every vertex isn't visited.
+        for(Vertex<T> vertex: vertices) vertex.setColor(Color.WHITE);//Every vertex hasn't been visited.
 
         for(Vertex<T> sourceVertex: vertices) {
             if(hasCycle(sourceVertex))

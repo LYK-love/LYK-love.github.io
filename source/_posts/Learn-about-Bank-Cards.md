@@ -145,14 +145,19 @@ Note: 同账户的一类储蓄卡向二类卡转账不占用转账额度. 但向
 
 1. 购买外汇. 在自己的手机银行app中搜索外汇, **用debit card购买**即可. 我就使用ICBC(中国工商银行), 在ICBC 手机app中搜索结售汇即可购买美元(注意, 一定要购买"汇", 否则之后无法跨境转账.).
 2. **办理一张美国银行卡.** 学生刚来美国办理不了credit card, 只能办理debit card. 推荐在BofA办理checking account的debit card, 当场就能得到电子卡, 并且可以使用Zelle转账.
-3. [跨境汇款](https://www.xiaohongshu.com/explore/64df35a9000000000103ea7f)(Note: 跨境汇款的双方银行都会收一笔手续费). 以从ICBC转账到BofA为例,需要在ICBC手机app中使用"跨境汇款", 输入:
-   1. 目标银行的SWIFT code(银行国际代码)或者BIC(银行识别码): 这是每个银行机构的唯一标识, 是用于识别银行的编号，类似美国汇款路由编号, 在网上也可查到.
+3. [跨境汇款](https://www.xiaohongshu.com/explore/64df35a9000000000103ea7f)(Note: 跨境汇款的双方银行都会收一笔手续费. 跨境汇款属于wire transger(电汇)). 以从ICBC转账到BofA为例,需要在ICBC手机app中使用"跨境汇款", 输入:
+   1. 目标银行的SWIFT code(银行国际代码)或者BIC(银行识别码): 这是每个银行机构的唯一标识, 是用于识别银行的编号，类似美国汇款路由编号, 在网上也可查到. 以[Bank of America](https://www.bankofamerica.com/deposits/wire-transfers-faqs/#:~:text=should%20I%20provide%3F-,Bank%20of%20America's%20SWIFT%20code%20BOFAUS3N%20should%20be%20used%20for,being%20received%20please%20use%20BOFAUS3N.&text=What%20is%20an%20IBAN%20number%3F)为例:
+      1. for incoming wires in U.S. dollars: SWIFT code **BOFAUS3N** should be used  
+      2. for incoming wires in foreign currency: BOFAUS6S
+      3. If you do not know or are unsure of the type of currency being received please use BOFAUS3N.
    2. 收款人的account number, 注意不是银行卡号! 在BofA app中即可查到.
    3. 金额, 收款人地址...
 
 你可能想到, 将双币信用卡的美元跨境汇款到美国的debit card就可以避免信用卡手续费. 但是之前提到过, 信用卡是钞户, 而跨境汇款只支持汇, 所以这样做需要支付**钞转汇的手续费**, 高达1.x%. 
 
 Summary: **全都用储蓄卡购汇+跨境汇款.** 双币信用卡中也没必要存太多钱, 因为转出去要付手续费.
+
+* 跨境汇款需要1-2天到账.
 
 ### ICBC
 

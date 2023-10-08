@@ -2,7 +2,8 @@
 title: WES
 tags: Study Abroad
 categories: 
-- [Affairs, Life]
+- [Affairs]
+- [Life]
 date: 2022-11-06 00:25:41
 ---
 

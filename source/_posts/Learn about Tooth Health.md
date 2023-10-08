@@ -2,7 +2,8 @@
 title: Learn about Tooth Health
 tags: Medical
 categories: 
-- [Affairs, Life]
+- [Affairs]
+- [Life]
 date: 2023-09-13 18:02:51
 ---
 

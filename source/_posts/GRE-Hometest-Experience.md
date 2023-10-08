@@ -2,7 +2,8 @@
 title: GRE Hometest Experience
 tags: Study Abroad
 categories: 
-- [Affairs, Life]
+- [Affairs]
+- [Life]
 date: 2023-02-12 21:36:56
 ---
 

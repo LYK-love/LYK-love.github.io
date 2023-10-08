@@ -2,7 +2,8 @@
 title: Sending Scores
 tags: Study Abroad
 categories: 
-- [Affairs, Life]
+- [Affairs]
+- [Life]
 date: 2023-02-12 20:31:46
 ---
 
