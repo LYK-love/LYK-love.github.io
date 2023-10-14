@@ -1,6 +1,8 @@
 ---
 title: Probability
-tags:
+tags: Probability Theory
+categories: Mathematics
+mathjax: true
 ---
 
 
@@ -46,3 +48,37 @@ Notice that the second row has one fewer members than the first, since the combi
 Altogether, there are 14 + 13 = 27 possibilities. Of these, how many give me two boys? Well, just count them. There are 7 in the first row, 6 in the second row, for a total of 13 in all. So 13 of the 27 possibilities give me two boys, giving that answer of 13/27. (As in the original problem, you have to assume all the combinations are equally likely. In the case of birth days, this is actually not the case, since more babies are born on Fridays, and fewer on weekends, due to the desire of hospital doctors to have weekends as free as possible of duties.)
 
 https://www.maa.org/external_archive/devlin/devlin_04_10.html
+
+# 
+
+
+
+
+
+h[0] x[1] = 2
+
+![image-20231010175429287](/Users/lyk/Library/Application Support/typora-user-images/image-20231010175429287.png)
+
+
+
+y[n] = h[0]x[n] + h[1]x[n-1] + h[2]x[n-2]
+
+
+
+y[0] = h[0]x[0]  = 1, k=0
+
+y[1] = h[0]x[1] + h[1]x[0] = 3, k=0,1
+
+y[2] = h[0]x[2] + h[1]x[1] + h[2]x[0] = 3, k=0,1,2
+
+y[3] = h[0]x[3] + h[1]x[2] + h[2]x[1] + h[3]x[0] = 1, k=0,1,2,3
+
+y[4] = h[0]x[4] + h[1]x[3] + h[2]x[2] + h[3]x[1] + h[4]x[0] = 0, k=0,1,2,3,4
+
+
+
+So: y = {1,3,3,1,0}
+
+
+
+![image-20231010212729939](/Users/lyk/Library/Application Support/typora-user-images/image-20231010212729939.png)
