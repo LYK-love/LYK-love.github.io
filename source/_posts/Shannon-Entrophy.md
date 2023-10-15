@@ -101,7 +101,7 @@ H\left(X, Y\right) & =\mathbb{E}\left[\log \frac{1}{p\left(X\right) p\left(Y\rig
 \end{aligned}
 $$
 
-But if $X$ and $Y$ are not independent, we can use [chain rule](https://lyk-love.cn/2023/10/14/Shannon-Entrophy/#chain-rule-for-entropy2-variables) to compute $H(X,Y)$.
+But if $X$ and $Y$ are not independent, we can use [chain rule](https://lyk-love.cn/2023/10/15/Shannon-Entrophy/#chain-rule-for-entropy2-variables) to compute $H(X,Y)$.
 
 # Conditional Entropy
 
@@ -154,7 +154,7 @@ This is a measure of, on average, how much extra information you get by observin
 
 # Chain Rule for Entropy(2 Variables)
 
-Note: 本文仅探讨2-3个随机变量的变量的entropy的Chain Rule, 更general的chain rule的探讨请参见[*Chain Rules for Entropy, Relative Entropy and Mutual Information*](https://lyk-love.cn/2023/10/14/Chain-Rules-for-Entropy-Relative-Entropy-and-Mutual-Information/).
+Note: 本文仅探讨2-3个随机变量的变量的entropy的Chain Rule, 更general的chain rule的探讨请参见[*Chain Rules for Entropy, Relative Entropy and Mutual Information*](https://lyk-love.cn/2023/10/15/Chain-Rules-for-Entropy-Relative-Entropy-and-Mutual-Information/).
 
 
 $$
@@ -273,7 +273,7 @@ We will soon show that relative entropy is always nonnegative and is zero if and
 3. $D(p \| q) \geq 0$ for all distributions $p, q$ with equality holding iff $p=q$. 
 4. $D(p(y \mid x) \| q(y \mid x)) \geq 0$ with equality if and only if $p(y \mid x)=q(y \mid x)$ for all $y$ and $x$ such that $p(x)>0$.
 
-Property (3) is [proved using Jensen’s inequality](https://lyk-love.cn/2023/10/14/Jensen%E2%80%99s-Inequality/#theorem-information-inequality).
+Property (3) is [proved using Jensen’s inequality](https://lyk-love.cn/2023/10/15/Jensen%E2%80%99s-Inequality/#theorem-information-inequality).
 
 Property (4) is proved using property (3).
 

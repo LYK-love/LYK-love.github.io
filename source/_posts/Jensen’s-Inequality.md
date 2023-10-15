@@ -233,7 +233,7 @@ with equality if and only if the $X_i$ are independent.
    H\left(X_1, X_2, \ldots, X_n\right) =\sum_{i=1}^n H\left(X_i \mid X_{i-1}, \ldots, X_1\right)
    $$
 
-2. Then by [theorem of Conditioning reduces entropy](https://lyk-love.cn/2023/10/14/Jensen%E2%80%99s-Inequality/#theorem-conditioning-reduces-entropy),
+2. Then by [theorem of Conditioning reduces entropy](https://lyk-love.cn/2023/10/15/Jensen%E2%80%99s-Inequality/#theorem-conditioning-reduces-entropy),
    $$
    \forall \ {i \in1, \cdots,n}, \ H\left(X_i \mid X_{i-1}, \ldots, X_1\right) \le H(X_i)
    $$
@@ -246,11 +246,11 @@ with equality if and only if the $X_i$ are independent.
    & \leq \sum_{i=1}^n H\left(X_i\right)
    \end{aligned}
    $$
-   According to  [theorem of Conditioning reduces entropy](https://lyk-love.cn/2023/10/14/Jensen%E2%80%99s-Inequality/#theorem-conditioning-reduces-entropy), we have equality if and only if $X_i$ is independent of $X_{i-1}, \ldots, X_1$ for all $i$ (i.e., if and only if the $X_i$ 's are independent).
+   According to  [theorem of Conditioning reduces entropy](https://lyk-love.cn/2023/10/15/Jensen%E2%80%99s-Inequality/#theorem-conditioning-reduces-entropy), we have equality if and only if $X_i$ is independent of $X_{i-1}, \ldots, X_1$ for all $i$ (i.e., if and only if the $X_i$ 's are independent).
 
    Q.E.D.
 
 
 
-[^1]: https://lyk-love.cn/2023/10/14/Shannon-Entrophy/#properties-2
+[^1]: https://lyk-love.cn/2023/10/15/Shannon-Entrophy/#properties-2
 
