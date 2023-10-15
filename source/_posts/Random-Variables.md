@@ -1,6 +1,8 @@
 ---
 title: Random Variables
-tags: Probability Theory
+tags: 
+- Probability Theory
+- Statistics
 categories: Mathematics
 mathjax: true
 date: 2023-10-14 01:15:03
@@ -38,10 +40,6 @@ $$
 **This function is in fact a measure, and $\left(\mathbb{R}, \mathcal B, \mu_X\right)$ is a probability space.** 
 
 The measure $\mu_X$ is called **the distribution of the random variable**. 
-
-
-
-
 
 ## Nature of Random Variable
 
@@ -99,6 +97,24 @@ defined on the probability space $(\mathbb{R}, B, \mu)$. Then $X$ is a random va
 
 
 Note: 这里的样本空间是$\mathbb R$而不是$\Omega$, 说明这里的每个"outcome"是随机变量, 也就是说题目在对随机变量进行讨论. 
+
+# Symbolic Convention
+
+Note: 考虑到不同概率论教材具有不同的符号约定, 我们接下来会互换地使用如下符号:
+$$
+\mu_X(B), p_X(x_1,x_2,\cdots), \text{P}(B), \text{P}(X), \text{Pr}(B), \text{Pr}(X),\cdots
+$$
+
+
+
+
+$p(x)$ is the short hand for $p(X = x), p_X(x), \mu_X(x)$ . Note: $x$就是一个event, 是$B$的别名, $B \in \mathcal B$.
+
+$p(x|y)$ is the short hand for $p(X = x|Y = y)$
+
+
+
+
 
 # Discrete and Continuous Random Variables
 

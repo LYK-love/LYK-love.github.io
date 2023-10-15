@@ -1,6 +1,8 @@
 ---
 title: Joint, Marginal, and Conditional Probability
-tags: Probability Theory
+tags: 
+- Probability Theory
+- Statistics
 categories: Mathematics
 mathjax: true
 date: 2023-10-14 01:22:01
@@ -21,8 +23,6 @@ Ref:
 Let $A, B$ be two arbitrary statements about [random variables](https://statproofbook.github.io/D/rvar), joint probability $p(A, B)$ is **a measure of the likelihood of the two events occurring together**.
 
 
-
-Note: $A, B$ 是statement, 之前讲过每个statement都代表一个event. 而由于这两个statement的主语是"随机变量"(记为$X$)而不是随机试验的outcome, 所以event $A,B$的取值范围也从样本空间$\Omega$变成了$X$的取值范围$\mathcal X$. 下同.
 
 # Marginal Probility
 

@@ -1,6 +1,8 @@
 ---
 title: Independence
-tags: Probability Theory
+tags: 
+- Probability Theory
+- Statistics
 categories: Mathematics
 mathjax: true
 date: 2023-10-14 01:22:10
