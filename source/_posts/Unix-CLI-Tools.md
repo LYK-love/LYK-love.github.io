@@ -619,3 +619,9 @@ yay -S tldr
 [Convco](https://convco.github.io/)
 
 A Conventional commit cli build with [Rust](https://www.rust-lang.org/).
+
+# Potpourri
+
+[Neofetch](https://github.com/dylanaraps/neofetch)
+
+It's better than screenfetch, which has bug on OSX.

@@ -95,7 +95,7 @@ Hexo的配置文件(aka `Hexo _config.yml`)位于`<hexo-dir>/_config.yml`, 主�
 
 4. 安装主题, 见下文
 
- # Build Site
+# Build Site
 
 请看如下两个命令:
 

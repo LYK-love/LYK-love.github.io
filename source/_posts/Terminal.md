@@ -1,5 +1,5 @@
 ---
-title: Terminal
+ptitle: Terminal
 tags:
   - Linux
   - Terminal
@@ -24,6 +24,14 @@ Outline:
 
 为了做到100%的跨平台和可移植性, 我争取使用跨平台的工具, 并且使用dotfile来管理这些工具的配置文件.
 
+# Current
+
+* iTerm2: 
+  * FiraCode Nerd Font:Regular:13.0
+  * gruv's profile
+* Zsh: p10k
+* nvchad: chocolate theme.
+
 # Terminal Emulators
 
 MacOS常用的终端模拟器是iTerm2, 而Linux KDE使用Konsole. 这两个**都不能跨平台**.
@@ -36,43 +44,37 @@ Alacritty是一个跨平台的终端, 但是有一些小小的问题.
 
 ## Konsole
 
-Linux上无敌, 可惜MacOS不能用
+Linux上无敌, 可惜MacOS不能用.
 
 ## iTerms2
 
-和MacOS无缝集成, 开箱即用. 但是它也不能跨平台, 所以**没必要对它进行过度的配置**. 
+和MacOS无缝集成, 开箱即用. 但是它也不能跨平台, 所以**没必要对它进行过度的配置**. 这里列出一些我使用的配置.
 
 
 
-到 Settings -> Appearance -> General 中，将 **Theme** 设置为 Minimal， 将 **Status bar location** 设置为 Bottom。
+* 到 Settings -> Appearance -> General 中, 将 **Theme** 设置为 Minimal, 将 **Status bar location** 设置为 Bottom.
 
+* 在安装完 iTerm2 的 `shell integration` 后会在终端界面中最左侧多出一个**蓝色三角形**的标记。如图：
 
+  ![img](https://hugo-picture.oss-cn-beijing.aliyuncs.com/images/20200310155736.png)
 
+  有蓝色三角形的标记说明当前 shell 支持 shell integration。如需关闭标记，可以在 `iTerm2 > Preferences > Profiles > (your profile) > Terminal 最下面 > Shell Integration` 关闭 `Show mark indicators` 。
 
+  Source: [iTerm2 配置-自定义配置和优化教程（上）](https://icloudnative.io/posts/customize-iterm2-1/)
 
-https://icloudnative.io/posts/customize-iterm2-1/
+* Use ligature:
 
+  1. Install one font that supports ligature. Here I use "FiraCode Nerd Font" as example.
 
+  2. Open iTerm2, go to Preferences > Profiles > Text > Select the "FiraCode Nerd Font" font, mark "Use ligatures". Do the same to "Non-ASCII Font".
 
-在安装完 iTerm2 的 `shell integration` 后会在终端界面中最左侧多出一个**蓝色三角形**的标记。如图：
+  3. In iTerm2 Preferences > Advanced > Drawing (or just search for 'ligature'), change the *Improves drawing performance at the expense of disallowing alphanumeric characters to belong to ligatures* setting to *No*. This allows the "www" and "0xFF" ligatures to display correctly with Fira Code.
 
-![img](https://hugo-picture.oss-cn-beijing.aliyuncs.com/images/20200310155736.png)
+     Source: [firacode ligatures not working in iterm 2](https://stackoverflow.com/questions/59128426/firacode-ligatures-not-working-in-iterm-2).
 
-有蓝色三角形的标记说明当前 shell 支持 shell integration。如需关闭标记，可以在 `iTerm2 > Preferences > Profiles > (your profile) > Terminal 最下面 > Shell Integration` 关闭 `Show mark indicators` 。
+  4. If you use zsh-syntax-highlighting, please disable it to avoid conflits.
 
-
-
-
-
-Open iTerm2, go to Preferences > Profiles > Text > Select the "Fira code" font, mark "Use ligatures". Do the same to "Non-ASCII Font".
-
-
-
-In iTerm2 Preferences > Advanced > Drawing (or just search for 'ligature'), change the *Improves drawing performance at the expense of disallowing alphanumeric characters to belong to ligatures* setting to *No*. This allows the "www" and "0xFF" ligatures to display correctly with Fira Code.
-
-https://stackoverflow.com/questions/59128426/firacode-ligatures-not-working-in-iterm-2
-
-
+  
 
 ## Alacritty
 
@@ -147,7 +149,7 @@ https://clubmate.fi/alacritty
 
 https://wezfurlong.org/wezterm/install/macos.html
 
-比Alacritty大, 比Alacritty慢, 并且对OSX支持很差. 在换屏幕时有bug.
+比Alacritty大, 比Alacritty慢, 并且对OSX支持很差, 在切屏有bug.
 
 
 
@@ -332,7 +334,14 @@ export https_proxy=http://127.0.0.1:7890
          ```shell
       REPO=${REPO:-mirrors/oh-my-zsh}
       REMOTE=${REMOTE:-https://gitee.com/${REPO}.git}
-         ```
+      ```
+
+## Uninstall
+
+https://github.com/ohmyzsh/ohmyzsh#uninstalling-oh-my-zsh
+
+If you want to uninstall `oh-my-zsh`, just run `uninstall_oh_my_zsh` from the command-line. It will remove itself and revert your previous `bash` or `zsh` configuration.
+
 
 
 ## Details
@@ -443,6 +452,8 @@ Use Oh-My-Zsh to manage plugins.
   
   3. Restart zsh (such as by opening a new instance of your terminal emulator).
 
+Note: There're [conflicts](https://gitlab.com/gnachman/iterm2/-/issues/8727) between zsh-syntax-highlighting and ligature. So if you want to use one of them, you must give up the other.
+
 ### fasd & autojump
 
 * 安装`fasd`: 它将文件和目录**按最近最常用**算法排序, 并提供各种操作
@@ -487,15 +498,11 @@ Use Oh-My-Zsh to manage plugins.
   yay -S autojump
   ```
 
-## Uninstall
-
-https://github.com/ohmyzsh/ohmyzsh#uninstalling-oh-my-zsh
-
-If you want to uninstall `oh-my-zsh`, just run `uninstall_oh_my_zsh` from the command-line. It will remove itself and revert your previous `bash` or `zsh` configuration.
-
 
 
 # Zsh Themes
+
+Currently I have 2 themes. You can choose either.
 
 ## Dracula
 
@@ -565,14 +572,14 @@ export DRACULA_DISPLAY_CONTEXT=1
 
 ## powlevel10k
 
-[Github Repo](https://github.com/romkatv/powerlevel10k/blob/master/README.md)
+[Github Repo](https://github.com/romkatv/powerlevel10k/blob/master/README.md). 上面也给了中国大陆的下载方式. 
 
-主页上给了中国大陆的下载方式. 如果使用oh-my-zsh, 下载方式为：
+
 
 1. Clone the repository:
 
    ```shell
-   git clone --depth=1 https://gitee.com/romkatv/powerlevel10k.git ${ZSHz
+   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
    ```
 
    
@@ -583,19 +590,23 @@ export DRACULA_DISPLAY_CONTEXT=1
 
 4. 开启主题配置：`p10k configure`
 
-   * 这会开启一个交互式程序, 根据用户的设定在`~/.p10k.zsh`生成主题的配置文件
+   * 这会开启一个交互式程序, 根据用户的设定在`~/.p10k.zsh`生成主题的配置文件.
 
-5. 后续可以继续用`p10k configure`重新开始配置， 或者手动更改配置文件：`~/.p10k.zsh`
+5. 将配置文件`~/.p10k.zsh`设置成symlink(符号链接), 以便对其进行管理.
 
-   * 为了对配置文件进行版本管理, 我对`~/.p10k.zsh`使用了符号链接.  `~/.p10k.zsh`实际是指向`~/Projects/MyOfficialProjects/dotfiles/.p10k.zsh`的符号链接. 
-   * 新版的p10k是可以正确识别符号链接的, 当`~/.p10k.zsh`是一个指向`$DOT_FILE_HOME/.p10k.zsh`的符号连接时, `p10k configure`会在`$DOT_FILE_HOME`处生成(or 重新生成)配置文件. 
-   * 而老版本p10k没有无法正确识别, 每次`p10k configure`后, 生成的配置文件都位于`~/.p10k.zsh`, 覆盖了原来的符号链接, ,**需要手动修**改.
+   ```sh
+   cp ~/.p10k.zsh /Users/lyk/Projects/MyOfficialProjects/dotfiles/zsh/.p10k.zsh
+   rm ~/.p10k.zsh
+   ln -s /Users/lyk/Projects/MyOfficialProjects/dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
+   ```
 
+   在这之后, `~/.p10k.zsh`实际是指向`/Users/lyk/Projects/MyOfficialProjects/dotfiles/zsh/.p10k.zsh`的符号链接. 
 
+6. 后续可以继续用`p10k configure`重新开始配置, 这个命令的效果就是修改`~/.p10k.zsh`. 你也可以直接手动更改`~/.p10k.zsh`.
+
+   * 当`~/.p10k.zsh`是一个指向`$DOT_FILE_HOME/.p10k.zsh`的symlink时, `p10k configure`依然会正确地作出修改(即修改symlink指向的文件).
 
 ### Notes
-
-* p10k虽然效果很华丽, 配置也方便, 但是它支持的字体中不包括Fira Code, 因此我选择了Dracula作为主题.
 
 * p10k在Linux的默认配置不开启username@hostname 的显示，参加官方文档的“How do I add username and/or hostname to prompt?”. 也可以将这行注释掉：
 
@@ -608,9 +619,11 @@ export DRACULA_DISPLAY_CONTEXT=1
 
 # Font
 
-## Fira Code
+个人比较喜欢Fira Code. 但它不被p10k支持. 然而, p10k支持Nerd Font, 字体A的Nerd Font版本就是一个字体A的扩展版本. 因此我使用了"FiraCode Nerd Font"作为字体.
 
-https://github.com/tonsky/FiraCode
+## FiraCode Nerd Font
+
+https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/FiraCode
 
 
 
@@ -632,6 +645,7 @@ If you are using iTerm2 or Termux, `p10k configure` can **install the recommende
    - [MesloLGS NF Bold.ttf](https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold.ttf)
    - [MesloLGS NF Italic.ttf](https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Italic.ttf)
    - [MesloLGS NF Bold Italic.ttf](https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS NF Bold Italic.ttf)
+   - Or you can install other fonts. Such as FiraCode Nerd Font".
 
 2. Double-click on each file and click "Install". This will make `MesloLGS NF` font available to all applications on your system.
 
@@ -669,7 +683,7 @@ If you are using iTerm2 or Termux, `p10k configure` can **install the recommende
 
 # General Terminal Emulater Config
 
-## Color: Dracula
+## Dracula
 
  [Dracula](https://draculatheme.com/): 该网站收集了很多终端模拟器的Dracula主题配色方案
 
@@ -701,6 +715,12 @@ If you are using iTerm2 or Termux, `p10k configure` can **install the recommende
      import:
        - ~/.config/alacritty/dracula.yml
      ```
+
+
+
+## Gruv
+
+This theme is copied from [reddit](https://www.reddit.com/r/unixporn/comments/o6j9hj/yabaimacos_eat_breath_sleep_gruvbox/). It only applies to mac. And for terminal emulaters specifically, it applies to iTerm2.
 
 
 

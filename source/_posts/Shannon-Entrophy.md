@@ -107,7 +107,7 @@ But if $X$ and $Y$ are not independent, we can use [chain rule](https://lyk-love
 
 **Definition:** If $(X, Y ) ∼ p(x, y)$, the **conditional entropy** $H(X|Y)$ is defined as
 $$
-H\left(Y | X\right)=\mathbb{E}\left[\log \frac{1}{p\left(Y | X\right)}\right]/
+H\left(Y | X\right)=\mathbb{E}\left[\log \frac{1}{p\left(Y | X\right)}\right] .
 $$
 And we can prove
 $$
@@ -119,6 +119,8 @@ So that
 $$
 H\left(Y | X\right)=\mathbb{E}\left[\log \frac{1}{p\left(Y | X\right)}\right] = \sum_{x \in \mathcal X}p(x) H(Y|X=x) .
 $$
+
+* Property: $H(Y|X) \le H(Y)$, see [->proof](https://lyk-love.cn/2023/10/15/jensen%E2%80%99s-inequality/#theorem-conditioning-reduces-entropy).
 
 ## Proof
 
@@ -147,8 +149,6 @@ H(Y \mid X) & =\sum_{x, y} p(x, y) \log \frac{1}{p(y \mid x)} \\
 \end{equation}
 $$
 This is a measure of, on average, how much extra information you get by observing a second variable $Y$, given that you have already observed the first variable $X$.
-
-
 
 
 
@@ -279,6 +279,32 @@ Property (4) is proved using property (3).
 
 
 
+## Relative Entropy is Not Symmetric
+
+In the following problem and solution, we give an **counterexample** of relative entropy's symmericity.
+
+
+
+Relative entropy is not symmetric. Let the random variable $X$ have three possible outcomes $\{a, b, c\}$. Consider two distributions $p(x)$ and $q(x)$ on this random variable
+
+| Symbol | $p(x)$ | $q(x)$ |
+| ------ | ------ | ------ |
+| a      | 1/2    | 1/3    |
+| b      | 1/4    | 1/3    |
+| c      | 1/4    | 1/3    |
+
+Calculate $H(p), H(q), D(p \| q)$ and $D(q \| p)$. Verify that in this case $D(p \| q) \neq D(q \| p)$.
+Solution:
+$$
+\begin{aligned}
+H(p) & =\frac{1}{2} \log 2+\frac{1}{4} \log 4+\frac{1}{4} \log 4=1.5 \mathrm{bits} \\
+H(q) & =3 \times \frac{1}{3} \log 3=1.58496 \mathrm{bits} \\
+D(p \| q) & =\frac{1}{2} \log \frac{3}{2}+\frac{1}{4} \log \frac{3}{4}+\frac{1}{4} \log \frac{3}{4}=\log 3-1.5=0.08496 \mathrm{bits} \\
+D(q \| p) & =\frac{1}{3} \log \frac{2}{3}+\frac{1}{3} \log \frac{4}{3}+\frac{1}{3} \log \frac{4}{3}=-\log 3+\frac{5}{3}=0.0817 \mathrm{bits}
+\end{aligned}
+$$
+It is clear that $D(p \| q) \neq D(q \| p)$.
+
 ## Conditional Eelative Entropy
 
 We define a conditional version of the relative entropy.
@@ -352,6 +378,8 @@ I(X;Y) & \triangleq H(X)+H(Y)-H(X, Y) \\
 & = \mathbb E[\log \frac{p(X,Y)}{p(X)p(Y)}].
 \end{aligned}
 $$
+
+
 ## Relationship between entropy and mutual information
 
 The meaure of entropy, relative entropy and mutual information can be visualized in the figure below:

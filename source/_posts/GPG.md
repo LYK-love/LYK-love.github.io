@@ -1,6 +1,7 @@
 ---
--title: GPG
+title: GPG
 categories: Toolkit
+tags: GPG
 date: 2022-02-10 14:57:00
 ---
 
@@ -107,6 +108,8 @@ Create a revocation certificate for this key? (y/N) y
 
 
 # Key management
+
+By default, the GnuPG keyrings are stored in the (hidden) folder `~/.gnupg`.
 
 ## List  keys
 
@@ -284,8 +287,8 @@ gpg --allow-secret-key-import --import [私钥文件]
 
 假定有一个压缩文件XX.zip, 对它加密:
 
-```
-gpg --recipient <USER ID> --output XX.zip.gpg --encryptXX.zip
+```sh
+gpg --recipient <USER ID> --output XX.zip.gpg --encrypt XX.zip
 ```
 
 * `--encrypt`: 要加密的源文件
