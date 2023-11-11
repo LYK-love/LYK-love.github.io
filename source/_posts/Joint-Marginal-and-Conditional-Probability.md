@@ -30,7 +30,7 @@ Let $A, B$ be two arbitrary statements about [random variables](https://statproo
 
 **Definition:** Let $A, B$ be two arbitrary statements about [random variables](https://statproofbook.github.io/D/rvar) $X, Y$, 
 
-$P(A)$ is the conditional probability of $A$ given $B$.
+$P(A)$ is the marginal probability of $A$ given $B$.
 $$
 p(A) = \sum _{j} p(a_i,b_j) = \sum _{j} p(X=x_i,Y=y_j)
 $$

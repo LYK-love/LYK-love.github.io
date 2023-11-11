@@ -126,29 +126,17 @@ brew安装的软件位置千奇百怪, 但都会在`/opt/homebrew/opt`留下软�
 
 ## conda
 
- 推荐`miniconda`.
+推荐`miniconda`.
+
+[->Install](https://docs.conda.io/projects/miniconda/en/latest/index.html#quick-command-line-install).
 
 
 
-直接去NJU MIRROR下载, 以对应Python3.9的miniconda为例:
+If you're in China, you need to download conda from a mirror. Take the example from NJU Mirror:
 
 ```shell
-wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_4.9.2-Linux-x86_64.sh
-```
-
-
-
-
-
-对于Arm架构:
-
-```sh
 wget https://mirror.nju.edu.cn/anaconda/miniconda/Miniconda3-py39_23.1.0-1-Linux-aarch64.sh
 ```
-
-
-
-* 清华源
 
 
 
@@ -160,15 +148,16 @@ bash /path/to/miniconda
 
 
 
-重启终端，检查安装是否成功：
+After installing, initialize your newly-installed Miniconda. The following commands initialize for bash and zsh shells:
 
-```shell
-conda -V
+```
+~/miniconda3/bin/conda init bash
+~/miniconda3/bin/conda init zsh        
 ```
 
 ### 换源
 
-conda换源建议用nju mirror,  [具体指导](https://mirrors.nju.edu.cn/help/anaconda). ( 其实nju源就是从[tuna](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)搬运的, 直接用tuna也可以)
+If you're in China, you need to switch your conda source to a mirror.  Take the example from NJU Mirror, [具体指导](https://mirrors.nju.edu.cn/help/anaconda).(其实nju源就是从[tuna](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)搬运的, 直接用tuna也可以)
 
 1. 先执行 `conda config --set show_channel_urls yes` 生成用户目录下的 `.condarc` 文件( 即`~/.condarc`)
 
@@ -203,8 +192,6 @@ conda换源建议用nju mirror,  [具体指导](https://mirrors.nju.edu.cn/help/
 4. 运行 `conda create -n myenv numpy` 测试一下吧
 
 ### commands
-
-
 
 Display Conda environment information:
 

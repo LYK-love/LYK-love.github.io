@@ -7,8 +7,6 @@ date: 2023-11-02 21:30:32
 ---
 
 
-
-
 Operations on iTerm2.
 
 <!--more-->

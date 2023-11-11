@@ -41,12 +41,17 @@ The formula for information entropy was introduced by Claude E. Shannon in his 1
 
 * $H(X)$的下标取决于使用的$\log$函数的底. 因此$H(X), H_2(X), H_b(X)$是相同的($b$代表二进制的比特). 如果 $\log$函数 使用其它底, 设为$a$, 那么必须清楚地在文中说明: $H_a(X) = \sum_x p(x) \log _a \frac{1}{p(x)}$.
 
+* Given a probability distribution $p$ and a random variable $X$, $X \sim p$, then $H(X)$ can also be expressed as $H(p)$. 
+
+  Therefore, the entropy of all random variables $X,Y,Z,…$ that follow the distribution $p$ is $H(p)$. This is **unambiguous** because random variables that follow the same probability distribution have the same entropy.
+
 * $\mathbb{E}(X)$是随机变量$X$的期望, $\mathbb{E}(X) = \sum_{x \in \mathcal X} X.p(x)$. 这里的随机变量是随机变量$X$的函数$g(X) = \log_2 \frac{1}{p(X)}$, 所以有:
   $$
   \mathbb{E}(g(X)) = \sum_{x \in \mathcal X} g(x)p(x) = \sum_{x \in \mathcal X} p(x) \log _2 \frac{1}{p(x)} .
   $$
 
   * 有时我们会省略$x \in \mathcal X$为$x$, 即: $H_b(X)=\sum_{x} p(x) \log _2 \frac{1}{p(x)} .$
+  * $\mathbb{E}_{X \sim p}(X)$: denotes that  $X \sim p$.
 
 ## Properties
 
@@ -259,7 +264,7 @@ The *relative entropy* is a measure of the distance between two distribu- tions.
 $$
 \begin{aligned}
 D(p \| q) & =\sum_{x \in \mathcal{X}} p(x) \log \frac{p(x)}{q(x)} \\
-& = \mathbb E (\log \frac{p(X)}{q(X)}) .
+& = \mathbb E _{X \sim p}(\log \frac{p(X)}{q(X)}) .
 \end{aligned}
 $$
 In the above definition, we use the convention that $0 \log \frac{0}{0}=0$ and the convention (based on continuity arguments) that $0 \log \frac{0}{q}=0$ and $p \log \frac{p}{0}=$ $\infty$. Thus, if there is any symbol $x \in \mathcal{X}$ such that $p(x)>0$ and $q(x)=0$, then $D(p \| q)=\infty$.
@@ -268,7 +273,7 @@ We will soon show that relative entropy is always nonnegative and is zero if and
 
 ## Properties
 
-1. In general, relative entropy is asymmetric $(D(p \| q) \neq D(q \| p))$, and does not satisfy the triangle inequality. Therefore, it is not a metric.
+1. In general, relative entropy is asymmetric $(D(p \| q) \neq D(q \| p))$, and does not satisfy the triangle inequality. Therefore, it is **not** a metric.
 2. $D(p \| p)=0$.
 3. $D(p \| q) \geq 0$ for all distributions $p, q$ with equality holding iff $p=q$. 
 4. $D(p(y \mid x) \| q(y \mid x)) \geq 0$ with equality if and only if $p(y \mid x)=q(y \mid x)$ for all $y$ and $x$ such that $p(x)>0$.
@@ -417,8 +422,8 @@ with equality if and only if $X$ and $Y$ are independent.
 **Proof:** 
 
 1. We know that $I(X ; Y)=D(p(x, y) \| p(x) p(y))$.
-2. See property 3 of [Relative Entropy](#Relative Entropy), $D(p \| q) \geq 0$ for all distributions $p, q$ with equality holding iff $p=q$.
-3. So $\quad I(X ; Y)=D(p(x, y) \| p(x) p(y)) \geq 0$, with equality if and only if $p(x, y)=p(x) p(y)$ (i.e., $X$ and $Y$ are independent).
+2. See [property 3 of Relative Entropy](https://lyk-love.cn/2023/10/15/shannon-entrophy/#properties-1), $D(p \| q) \geq 0$ for all distributions $p, q$ with equality holding iff $p=q$.
+3. So $I(X ; Y)=D(p(x, y) \| p(x) p(y)) \geq 0$, with equality if and only if $p(x, y)=p(x) p(y)$ (i.e., $X$ and $Y$ are independent).
 
 ***
 

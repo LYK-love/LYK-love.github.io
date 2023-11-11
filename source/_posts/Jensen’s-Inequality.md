@@ -9,10 +9,10 @@ date: 2023-10-15 03:57:29
 ---
 
 
-Ref:
+Source:
 
 1. *Elements of Information Theory*
-2. [EE 376A: Information Theory](https://web.stanford.edu/class/ee376a/) from Stanford University
+2. [EE 376A: Information Theory](https://web.stanford.edu/class/ee376a/) - Stanford University
 
 <!--more-->
 
@@ -129,21 +129,27 @@ $$
 D(p \| q) \geq 0
 $$
 with equality if and only if $p(x)=q(x)$ for all $x$.
-Proof: Let $A=\{x: p(x)>0\}$ be the support set of $p(x)$. Then
+Proof: Let $A=\{x | p(x)>0\}$ be the support set[^2] of $p(x)$. Then
 $$
 \begin{align}
 -D(p \| q) & =-\sum_{x \in A} p(x) \log \frac{p(x)}{q(x)} \nonumber \\
 & =\sum_{x \in A} p(x) \log \frac{q(x)}{p(x)} \nonumber \\
-& \leq \log \sum_{x \in A} p(x) \frac{q(x)}{p(x)} \label{eq3.1}\\
+& = \mathbb E_{x \in A}(\log \frac{q(x)}{p(x)}) \nonumber \\
+& \leq \log \mathbb E_{x \in A}(\frac{q(x)}{p(x)}) \label{eq3.1}\\
+& = \log \sum_{x \in A} p(x) \frac{q(x)}{p(x)} \nonumber\\
 & =\log \sum_{x \in A} q(x) \nonumber \\
 & \leq \log \sum_{x \in \mathcal{X}} q(x) \label{eq3.2} \\
 & =\log 1 \nonumber \\
 & =0 \nonumber
 \end{align}
 $$
-where $\eqref{eq3.1}$ follows from Jensen's inequality. Since $\log t$ is a strictly concave function of $t$, we have equality in $\eqref{eq3.1}$ if and only if $q(x) / p(x)$ is constant everywhere [i.e., $q(x)=c p(x)$ for all $x$ ]. Thus, $\sum_{x \in A} q(x)=$ $c \sum_{x \in A} p(x)=c$. 
+where $\eqref{eq3.1}$ follows from Jensen's inequality, because $\log t$ is a strictly concave function of $t$.
+
+Also, since $\log t$ is a strictly concave function of $t$, we have equality in $\eqref{eq3.1}$ if and only if $\frac {q(x)}{p(x)}$ is constant everywhere [i.e., $q(x)=c p(x)$ for all $x$ ]. Thus, $\sum_{x \in A} q(x)=$ $c \sum_{x \in A} p(x)=c$. 
 
 We have equality in $\eqref{eq3.2}$ only if $\sum_{x \in A} q(x)=\sum_{x \in \mathcal{X}}$ $q(x)=1$, which implies that $c=1$. Hence, we have $D(p \| q)=0$ if and only if $p(x)=q(x)$ for all $x$.
+
+Note: 证明中必须要用到support set $A=\{x | p(x)>0\}$, 这是因为证明时出现了$\frac {q(x)}{p(x)}$, 我们必须满足$p(x) > 0$.
 
 
 # Theorem: $H(X) \leq \log |\mathcal{X}|$
@@ -254,3 +260,4 @@ with equality if and only if the $X_i$ are independent.
 
 [^1]: https://lyk-love.cn/2023/10/15/Shannon-Entrophy/#properties-2
 
+[^2]: The support set of a probability distribution is the set of all possible values of the random variable for which the probability of that value is greater than zero. 
