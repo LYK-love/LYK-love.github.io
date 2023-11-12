@@ -35,7 +35,7 @@ The formula for information entropy was introduced by Claude E. Shannon in his 1
 
 ## Symbol Convention
 
-* **在信息论中我们规定, 除非特殊说明, 否则$\log$就代表$\log_2$**.
+* $\log$ is assumed to be $\log_2$ unless otherwise indicated.
 
 * (在 $\log$函数 底为2时)Entropy的单位是bit.
 
@@ -88,6 +88,20 @@ What about for a coin that almost always lands tails $(X=0)$, with $p=0.999$ ?
 With this heavily-biased coin, we get $H(X)=0.999 \log \frac{1}{0.999}+0.001 \log \frac{1}{0.001} \approx 0.011$.
 
 From this example, we can see that we gain more information from more surprising events (i.e., $\log \frac{1}{p(x)} \uparrow$ as $p(x) \downarrow$ ), but they also happen less often. If we plot the entropy of a **Bernoulli distribution**, we get the curve in figure 2.1 which reaches a maximum of 1 when $p=0.5$.
+
+# Example: Uniform Distribution
+
+For a discrete random variable $X$ with a uniform distribution over $n$ outcomes, each with probability $P(X=x_i)=\frac{1}{n}$, the entropy $H(X)$ is calculated as follows:
+$$
+\begin{aligned}
+H(X) 
+&=−\sum_{i=1}^{n}P(X=x_i) \log P(X=x_i) \\
+&= n \cdot  \frac{1}{n} \cdot \log \frac{1}{\frac{1}{n}} \\
+&= 1 \cdot \log n \\
+&= \log n
+\end{aligned}
+$$
+
 
 # Joint Entropy
 

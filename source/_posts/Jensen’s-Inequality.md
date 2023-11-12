@@ -196,7 +196,17 @@ Intuitively, the theorem says that knowing another random variable $Y$ can only 
 
 Note that this is true <u>only on the average</u>. Specifically, $H(X \mid Y=y)$ may be greater than or less than or equal to $H(X)$, but on the average $H(X \mid Y)=\sum_y p(y) H(X \mid Y=y) \leq$ $H(X)$. For example, in a court case, specific new evidence might increase uncertainty, but on the average evidence decreases uncertainty.
 
+## For multiple condions
 
+This theorem can be extended to multiple condions. Given random variables $X_1, X_2, \cdots, X_n$,
+$$
+H(X_1|X_2,X_3,\cdots,X_n) \le H(X_1|X_3,\cdots,X_n) .
+$$
+**Proof:**
+
+1. We know that $0 \leq I(X_1|X_3,\cdots,X_n; X_2)$.
+2. Note that the conditional entropy of $X|Y$ given observation $Z$ is $H(X | Y, Z)$. so $I(X_1|X_3,\cdots,X_n; X_2)=H(X_1|X_3,\cdots,X_n)-H(X_1|X_2, X_3,\cdots,X_n)$.
+3. We have $H(X_1|X_3,\cdots,X_n) \leq H(X_1|X_2, X_3,\cdots,X_n)$.
 
 ## Example 
 

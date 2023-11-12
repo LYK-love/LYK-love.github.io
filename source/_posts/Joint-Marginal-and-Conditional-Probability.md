@@ -54,6 +54,20 @@ p(A|B) = \frac{p(A,B)}{p(B)}
 $$
 where $p(B)$ is the [marginal probability](https://statproofbook.github.io/D/prob-marg) of $B$.
 
+## Conditional Probability with Multiple Conditions
+
+Also you can define conditional probability **with multiple conditions**.
+
+Say I have two events,$A$ and $B$, and some observations $C$,  the conditional probability of $A$ given $B$ and $C$ is defined to be:
+$$
+P(A|B,C) = \frac{p(A,(B,C))}{p((B,C))}
+$$
+Since the intersection operation($\cap$) is communicative, we have $p(A,(B,C)) = p(A,B,C)$. So
+$$
+P(A|B,C) = \frac{p(A,B,C)}{p(B,C)}
+$$
+
+
 # Proof: Probability under statistical independence
 
 **Theorem:** Let $A$ and $B$ be two statements about [random variables](https://statproofbook.github.io/D/rvar). Then, if $A$ and $B$ are [independent](https://statproofbook.github.io/D/ind), [marginal](https://statproofbook.github.io/D/prob-marg) and [conditional](https://statproofbook.github.io/D/prob-cond) probabilities are equal:

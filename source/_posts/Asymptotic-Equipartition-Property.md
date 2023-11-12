@@ -21,7 +21,7 @@ In information theory, the analog of [the law of large numbers(LLN)]() is the as
 
 <u>It is a direct consequence of the weak law of large numbers.</u> 
 
-The law of large numbers states that for independent, identically distributed (i.i.d.) random variables, $\frac{1}{n} \sum_{i=1}^n X_i$ is close to its expected value $E(X)$ for large values of $n$. 
+The law of large numbers states that **for iid random variables**, $\frac{1}{n} \sum_{i=1}^n X_i$ is close to its expected value $E(X)$ for large values of $n$. 
 
 The AEP states that $\frac{1}{n} \log \frac{1}{p\left(X_1, X_2, \ldots, X_n\right)}$ is **close to the entropy** $H$, where $X_1, X_2, \ldots, X_n$ are i.i.d. random variables and $p\left(X_1, X_2, \ldots, X_n\right)$ is the probability of observing the sequence $X_1, X_2, \ldots, X_n$. Thus, the probability $p\left(X_1, X_2, \ldots, X_n\right)$ assigned to an observed sequence will be close to $2^{-n H}$
 $$
@@ -36,14 +36,16 @@ Most of our attention will be on the typical sequences. Any property that is pro
 
 # Notation
 
-1. Memoryless source: $X_1, X_2, \ldots$ iid $\sim X$. Note that "memoryless" is used here because samples are drawn iid and have no dependence on past realizations.
+1. Memoryless source: $X_1, X_2, \ldots$ **iid** $\sim X$. Note that "memoryless" is used here because samples are drawn iid and **have no dependence** on past realizations.
 
    * Note that $X$ denotes an arbitory r.d. among $X_i$. Because all i.i.d. r.d. have the same probability distribution. 
-     * And in this sense, they have the same entropy as well. Thus we may use notation $H(X)$ to denot the entropy of arbitory $H(X_i)$.
+     * And in this sense, they have the same entropy as well. **Thus we may use notation $H(X)$ to denot the entropy of arbitory $H(X_i)$.**
 
 2. Alphabet: $\mathcal{X}=\{1,2, \ldots, r\}$ specifies the possible values that each symbol $X_i$ can take on. The size of $\mathcal{X}$ is denoted $|\mathcal{X}|$.
 
-3. Source sequence: $X^n=\left(X_1, \ldots, X_n\right)$ denotes the **$n$-tuple** that specifies **a sequence of $n$ source symbols.** Further note that $\mathcal{X}^n$ indicates the set of all possible source sequences of length $n$.
+3. Source sequence: $X^n=\left(X_1, \ldots, X_n\right)$ denotes the **$n$-tuple** that specifies **a sequence of $n$ source symbols.** In other words, $X^n$ is a [**stochastic process**](). Further note that $\mathcal{X}^n$ indicates the set of all possible source sequences of length $n$.
+
+   * Since the source symbols are memoryless here. $X^n$ is an **iid** stochastic process. It's also denoted as $\left\{X_i\right\}$ in some literatures.
 
 4. Probability: The probability assigned to a source sequence $X^n$ is given by $P\left(X^n\right)=\prod_{i=1}^n P_{\mathcal{X}}\left(X_i\right)$. Since we implicitly evaluate the probabilities over the alphabet $\mathcal{X}$, we may also omit $\mathcal{X}$ amd write
    $$
