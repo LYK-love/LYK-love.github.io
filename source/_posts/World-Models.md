@@ -19,6 +19,8 @@ Ref:
 4. [*Learning General World Models in a Handful of Reward-Free Deployments*](https://arxiv.org/abs/2210.12719).
 5. [*Learning General World Models in a Handful of Reward-Free Deployments*](https://arxiv.org/abs/2210.12719).
 
+<!--more-->
+
 # Intro
 
 所谓的world model, 就是一个人为构造的关于真实世界(real world, or actual environment)的模型.

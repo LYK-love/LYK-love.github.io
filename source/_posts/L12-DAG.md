@@ -16,8 +16,6 @@ Ref: *算法设计与分析(Algorithm design and analysis)* by 黄宇.
 
 # Directed Acyclic Graph
 
-ossutil cp "/Users/lyk/Pictures/HexoPics/Algorithm/Algorithm Analysis" "oss://lyk-love/Algorithm/Algorithm Analysis" --include * -r
-
 [-> ref](https://www.cs.rit.edu/~rlaz/algorithms20082/slides/DAGs.pdf)
 
 ![DAG and Topological Ordering](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Algorithm/Algorithm%20Analysis/DAG%20and%20Topological%20Ordering.png)
