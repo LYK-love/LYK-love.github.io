@@ -1,7 +1,7 @@
 ---
 title: Project Management Basic
-tags: Software Engineering Methodology 
-categories: Software Engineering
+tags: Software Engineering
+categories: Computer Science
 date: 2021-06-27 23:26:27
 ---
 

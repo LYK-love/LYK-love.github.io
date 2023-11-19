@@ -1,8 +1,8 @@
 ---
 title: Design Principle
-categories: Software Engineering
+tags: Software Engineering
+categories: Computer Science
 date: 2022-06-12 01:07:46
-tags:
 ---
 
 

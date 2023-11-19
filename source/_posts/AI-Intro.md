@@ -1,7 +1,7 @@
 ---
 title: AI Intro 
 tags: AI
-categories: Artificial Intelligence
+categories: Machine Learning
 mathjax: true
 date: 2023-02-08 01:27:25
 ---

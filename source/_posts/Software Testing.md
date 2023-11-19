@@ -1,7 +1,7 @@
 ---
 title:  Software Testing
 tags: Software Testing
-categories: Software Engineering
+categories: Computer Science
 date: 2021-06-17 15:14:10
 ---
 

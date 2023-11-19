@@ -1,7 +1,7 @@
 ---
 title: HTML Basic
-tags: HTML
-categories: Frontend
+tags: Frontend
+categories: Technology
 date: 2022-08-22 19:02:39
 ---
 
@@ -372,5 +372,4 @@ To create a class; write a period (.) character, followed by a class name. Then,
 </body>
 </html>
 ```
-
 

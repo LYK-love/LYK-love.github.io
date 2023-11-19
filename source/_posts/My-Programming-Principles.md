@@ -1,8 +1,8 @@
 ---
 title: My Programming Principles
-categories: Software Engineering
+tags: Software Engineering
+categories: Computer Science
 date: 2022-08-14 15:47:42
-tags:
 ---
 
 

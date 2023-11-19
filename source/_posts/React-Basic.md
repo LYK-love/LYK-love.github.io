@@ -1,7 +1,7 @@
 ---
 title: React Basic
-tags: React
-categories: Frontend
+tags: Frontend
+categories: Technology
 date: 2022-08-22 18:50:01
 ---
 

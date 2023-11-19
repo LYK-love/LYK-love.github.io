@@ -1,7 +1,7 @@
 ---
 title: Automated Testing
 tags:  Software Testing
-categories: Software Engineering
+categories: Computer Science
 mathjax: true
 date: 2021-10-21 12:00:00
 ---

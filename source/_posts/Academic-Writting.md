@@ -1,7 +1,7 @@
 ---
 title: Academic Writting
 tags: Adacemic
-categories: Potpourri
+categories: Toolkit
 date: 2023-08-20 03:18:45
 ---
 

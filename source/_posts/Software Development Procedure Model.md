@@ -1,7 +1,7 @@
 ---
 title: Software Development Procedure Model
-tags: Software Engineering Methodology 
-categories: Software Engineering
+tags: Software Engineering
+categories: Computer Science
 date: 2021-06-28 15:45:40
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: Coupling && Cohension
-tags: Software Engineering Methodology
-categories: Software Engineering
+tags: Software Engineering
+categories: Computer Science
 date: 2021-06-27 11:09:16
 ---
 
