@@ -76,7 +76,7 @@ Note that **this is exactly [AEP]()**.
 We can also define a related quantity for entropy rate:
 $$
 \begin{equation} \label{eq2}
-H^{\prime}(\mathcal{X})=\lim _{n \rightarrow \infty} H\left(X_n \mid X_{n-1}, X_{n-2}, \ldots, X_1\right)
+H^{\prime}(\mathcal{X})=\lim _{n \rightarrow \infty} H\left(X_n \mid X_{n-1}, \ldots, X_1\right)
 \end{equation}
 $$
 <u>when the limit exists.</u>
@@ -96,7 +96,13 @@ H(\mathcal{X})=H^{\prime}(\mathcal{X})
 \end{equation}
 $$
 
-We first prove that $\lim H\left(X_n \mid X_{n-1}, \ldots, X_1\right)$ exists.
+***
+
+We first prove that
+$$
+\lim H\left(X_n \mid X_{n-1}, \ldots, X_1\right)
+$$
+exists.
 
 ## Theorem: Limit Exists
 
@@ -107,8 +113,9 @@ We first prove that $\lim H\left(X_n \mid X_{n-1}, \ldots, X_1\right)$ exists.
 First,
 $$
 \begin{align}
-H\left(X_{n+1} \mid X_1, X_2, \ldots, X_n\right) & \leq H\left(X_{n+1} \mid X_n, \ldots, X_2\right) \label{eq3.1}\\
-& =H\left(X_n \mid X_{n-1}, \ldots, X_1\right) \label{eq3.2},
+& \quad H\left(X_{n+1} \mid X_1, X_2, \ldots, X_n\right) \nonumber \\
+& \quad \leq H\left(X_{n+1} \mid X_n, \ldots, X_2\right) \label{eq3.1}\\
+& \quad =H\left(X_n \mid X_{n-1}, \ldots, X_1\right) \label{eq3.2},
 \end{align}
 $$
 
@@ -147,18 +154,20 @@ Proof of $\eqref{eq1}$:
 
 By the [chain rule](https://lyk-love.cn/2023/10/15/chain-rules-for-entropy-relative-entropy-and-mutual-information/), we know ${H\left(X_1, X_2, \ldots, X_n\right)}=\sum_{i=1}^n H\left(X_i \mid X_{i-1}, \ldots, X_1\right)$. Then
 $$
-\begin{equation} \label{eq3.3.0}
-\frac{H\left(X_1, X_2, \ldots, X_n\right)}{n}=\frac{1}{n} \sum_{i=1}^n H\left(X_i \mid X_{i-1}, \ldots, X_1\right)
-\end{equation}
+\begin{align} 
+& \quad \frac{H\left(X_1, X_2, \ldots, X_n\right)}{n} \nonumber \\ 
+& \quad = \frac{1}{n} \sum_{i=1}^n H\left(X_i \mid X_{i-1}, \ldots, X_1\right) \label{eq3.3.0}
+\end{align}
 $$
-that is, the entropy rate is the time average of the conditional entropies. But we know that the conditional entropies tend to a limit $H^{\prime}$. 
+That is, the entropy rate is the time average of the conditional entropies. But we know that the conditional entropies tend to a limit $H^{\prime}$. 
 
 Hence, by [Theorem: Cesáro mean](), their running average has a limit, which is equal to the limit $H^{\prime}$ of the terms. 
 
 Thus, by [Theorem: Limit Exists](),
 $$
 \begin{align}
-H(\mathcal{X}) & =\lim \frac{H\left(X_1, X_2, \ldots, X_n\right)}{n}=\lim H\left(X_n \mid X_{n-1}, \ldots, X_1\right) \label{eq3.3.1}\\
+H(\mathcal{X}) & =\lim \frac{H\left(X_1, X_2, \ldots, X_n\right)}{n} \nonumber \\
+& = \lim H\left(X_n \mid X_{n-1}, \ldots, X_1\right) \label{eq3.3.1}\\
 & =H^{\prime}(\mathcal{X}) \label{eq3.3.2}
 \end{align}
 $$
@@ -333,9 +342,10 @@ The next lemma shows that the interval between the upper and the lower bounds de
 ## Lemma1
 
 $$
-\begin{equation} \label{eq7.2}
-H\left(Y_n \mid Y_{n-1}, \ldots, Y_1\right)-H\left(Y_n \mid Y_{n-1}, \ldots, Y_1, X_1\right) \rightarrow 0 .
-\end{equation}
+\begin{align} \label{eq7.2}
+& H\left(Y_n \mid Y_{n-1}, \ldots, Y_1\right)-H\left(Y_n \mid Y_{n-1}, \ldots, Y_1, X_1\right) \nonumber \\
+& \rightarrow 0 \nonumber .
+\end{align}
 $$
 
 
@@ -383,9 +393,11 @@ Combining $\eqref{eq7.1}$  and $\eqref{eq7.2}$, we have the following theorem.
 
 **Theorem:** If $X_1, X_2, \ldots, X_n$ form a stationary Markov chain, and $Y_i=\phi\left(X_i\right)$, then
 $$
-\begin{equation} \label{eq7.3}
-H\left(Y_n \mid Y_{n-1}, \ldots, Y_1, X_1\right) \leq H(\mathcal{Y}) \leq H\left(Y_n \mid Y_{n-1}, \ldots, Y_1\right)
-\end{equation}
+\begin{align} \label{eq7.3}
+& \quad H\left(Y_n \mid Y_{n-1}, \ldots, Y_1, X_1\right) \nonumber \\
+& \quad \leq H(\mathcal{Y}) \nonumber \\
+& \quad \leq H\left(Y_n \mid Y_{n-1}, \ldots, Y_1\right) \nonumber 
+\end{align}
 $$
 and
 $$

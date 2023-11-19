@@ -219,7 +219,36 @@ Q&A:
 * 合成睾酮和生长激素的另一个必需的要素是充足的**睡眠**. 鱼类中含有的Omega3能够促进睡眠, 因此可以提升睾酮和生长激素. Omega3无法由人体合成, 因此只能从食物中获取.
 * 肌酸(Creatine): 能够增加细胞对ATP的存储上限, 提升训练效果. 并且肌酸会导致肌肉储水, 使得身体肌肉量“上升”, 体重提高. 由于是肌肉储水而不是皮下储水, 因此肌酸带来的肌肉量“上升”效果不会让人看起来变胖. 人体可以分泌肌酸, 但分泌的量无法满足需求, 因此需要从食物中获取肌酸. 肌酸只能从动物中获取, 且含量最高的肉类是牛肉. 但尽管是牛肉, 其肌酸含量也并不能满足人体需求. 服用肌酸补剂是推荐的方式.
 
+# Energy Systems
+
+- Adenosine tri-phosphate (ATP) is the only energy source for all bodily functions and activities (movements)
+- When ATP is used for energy production it must be replenished
+- The body can replenish (recreate) ATP aerobically or anaerobically
+- Where is one Aerobic Energy System which requires  oxygen to replenish ATP and two Anaerobic Energy Systems that can  recreate ATP to produce energy without the need of oxygen
+
+These are the 3 Energy Systems
+
+- ATP-PC System(磷酸原系统) or Alactic System – **ATP** and creatine  phosphate (CP) are present in very small amounts in the muscle cells.  The system can supply energy very quickly because oxygen is not needed  for the process. **No lactic acid is produced** in the process (Alactic)
+  * 10s以内的高强度运动使用的就是ATP-PC, 使用ATP. 不会产生乳酸.
+  * 训练前吃饭对于ATP-PC的影响并不大, 因为此时ATP还没有大量合成.
+- Anaerobic Glycolysis(糖酵解系统) or Lactic Acid System uses  carbohydrates (glucose) stored in the muscles as Glycogen. Because no  oxygen is required to re-synthesise ATP, energy is produced quickly.  Also because no oxygen is used in the process lactic acid is produced as an end product.
+  * 高容量, 多组数的训练(也就是健美训练)主要使用Anaerobic Glycolysis, 使用肌糖原(Glycogen in the muscles). 会产生乳酸.
+  * 训练前吃饭能有效提升糖原水平, 提高Anaerobic Glycolysis的能力.
+- Aerobic System(有氧氧化系统) – This system uses carbohydrates  (glucose/glycogen) and fats to replenish ATP. Because oxygen is required for the process, energy production takes a little longer but can  continue for a much longer duration. Because of the presence of oxygen,  no lactic acid is produced.
+
 # Diet
+
+* 摄入**碳水化合物**会迅速升高血糖, 从而导致大量胰岛素的分泌. 胰岛素会清除血液中除了色氨酸之外的所有氨基酸. 因此色氨酸就可以独占运输蛋白, 大量地进入大脑. 色氨酸在大脑中会转变成血清素导致人们**犯困**.
+
+  > When you eat **carbohydrates**, your body releases [insulin](https://www.medicinenet.com/insulin/drug-class.htm), which removes all amino acids except tryptophan from your blood. This  gives the tryptophan that's stored in your body **free access** to the  transport proteins and your brain.
+
+* 不过, 直接摄入含有高蛋白的食物(色氨酸是蛋白质的组成成分之一)并不会导致犯困, 或者说并不会导致色氨酸进入大脑. 这是因为血脑屏障(blood-brain barrier (BBB))的存在会隔绝氨基酸通过自由运输(free transport)进入大脑, 只能通过运输蛋白(transport protein)来通过血脑屏障. 然而, 由于色氨酸只占据所有氨基酸的一小部分, 而所有氨基酸都会用到运输蛋白, 所以进入大脑的色氨酸并不多.
+
+  > Tryptophan must use special transport proteins to get to your brain because of your blood-brain barrier (BBB). Your body is particular about what it lets into your brain and spinal cord, which make up your central nervous system. Your BBB is a line of cells that prevent viruses, fungi, bacteria, and parasites that might be in your blood from getting into your central nervous system. Since tryptophan can't freely circulate into your brain, it has to hitch a ride on a transport protein to cross the blood-brain barrier.
+  >
+  > Other amino acids also use these transport proteins, so after you eat turkey, there are a lot of them competing to get to your brain. Because there isn't as much tryptophan as other amino acids, its chance of getting to your brain is pretty small. So after you eat a turkey, you may have more tryptophan in your body, but not much of it is getting to your brain, where it can help you produce melatonin.
+
+
 
 * 鸡蛋: 一个50g的鸡蛋大概含有6g蛋白质, 其中55%在蛋清, 45%在蛋黄. 
 

@@ -39,6 +39,61 @@ Note: 为了确保自己安装的image没有损坏, 你可以对image进行check
 
 你也可以自己计算image的checksum, 方法在你选择的发行版会给出.
 
+# CLI
+
+最简单的方法是用`dd`命令将镜像文件直接写入USB, 不需要安装额外软件. 
+
+以OSX为例:
+
+1. 找出USB 挂载的路径: `diskutil list`:
+
+   ```
+   ~ ❯ diskutil list                                                                                                                              
+   /dev/disk0 (internal, physical):
+      #:                       TYPE NAME                    SIZE       IDENTIFIER
+      0:      GUID_partition_scheme                        *500.3 GB   disk0
+      1:             Apple_APFS_ISC Container disk1         524.3 MB   disk0s1
+      2:                 Apple_APFS Container disk3         494.4 GB   disk0s2
+      3:        Apple_APFS_Recovery Container disk2         5.4 GB     disk0s3
+   
+   /dev/disk3 (synthesized):
+      #:                       TYPE NAME                    SIZE       IDENTIFIER
+      0:      APFS Container Scheme -                      +494.4 GB   disk3
+                                    Physical Store disk0s2
+      1:                APFS Volume Macintosh HD            12.9 GB    disk3s1
+      2:              APFS Snapshot com.apple.os.update-... 12.9 GB    disk3s1s1
+      3:                APFS Volume Preboot                 9.6 GB     disk3s2
+      4:                APFS Volume Recovery                1.6 GB     disk3s3
+      5:                APFS Volume Data                    360.1 GB   disk3s5
+      6:                APFS Volume VM                      20.5 KB    disk3s6
+   
+   /dev/disk4 (external, physical):
+      #:                       TYPE NAME                    SIZE       IDENTIFIER
+      0:      GUID_partition_scheme                        *30.8 GB    disk4
+      1:       Microsoft Basic Data                         5.0 GB     disk4s1
+      2:                        EFI ESP                     5.2 MB     disk4s2
+      3:       Microsoft Basic Data                         307.2 KB   disk4s3
+   ```
+
+2. 将USB unmount（将N替换为挂载路径）：`diskutil unmountDisk /dev/<device_name>`
+
+   ```
+   ~ ❯ diskutil unmountDisk /dev/disk4
+   Unmount of all volumes on disk4 was successful
+   ```
+
+3. 将镜像写入U盘: `sudo dd if="path/to/iso_file" of="/dev/<device_name>" bs=1M status=progress`
+
+   ```sh
+   sudo dd if="/Users/lyk/Tools/OS Images/ubuntu-22.04.3-desktop-amd64.iso" of="/dev/disk4" bs=1 status=progress
+   ```
+
+4. After writing, eject the disk:
+
+   ```sh
+   diskutil eject /dev/disk2
+   ```
+
 # Ventory
 
 [Start to use Ventoy](https://www.ventoy.net/en/doc_start.html)

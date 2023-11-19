@@ -71,15 +71,46 @@ $$
 
 
 
-Furthermore, note the following equivalent way of defining $\epsilon$-typicality:
+Furthermore, note the following equivalent ways of defining $\epsilon$-typicality:
+
+a)  $\eqref{eq2}$
+
+***
+
+b)
 $$
 \begin{align}
-\left|-\frac{1}{n} \log P\left(X^n\right)-H(X)\right| \leq \epsilon
-& \Longleftrightarrow H(X)-\epsilon \leq-\frac{1}{n} \log P\left(X^n\right) \leq H(X)+\epsilon \label{eq2.1} \\
-& \Longleftrightarrow-n(H(X)+\epsilon) \leq \log \left(P\left(X^n\right)\right) \leq-n(H(X)-\epsilon) \label{eq2.2} \\
-& \Longleftrightarrow 2^{-n(H(X)+\epsilon)} \leq P\left(X^n\right) \leq 2^{-n(H(X)-\epsilon)} \label{eq2.3}.
+& \quad H(X)-\epsilon \nonumber \\
+\leq & \quad -\frac{1}{n} \log P\left(X^n\right) \label{eq2.1} \\
+\leq & \quad H(X)+\epsilon \nonumber
 \end{align}
 $$
+
+***
+
+c)
+$$
+\begin{align}
+& \quad -n(H(X)+\epsilon \nonumber \\
+\leq & \quad \log \left(P\left(X^n\right)\right) \label{eq2.2} \\
+\leq & \quad -n(H(X)-\epsilon) \nonumber
+\end{align}
+$$
+
+***
+
+d)
+$$
+\begin{align}
+& \quad 2^{-n(H(X)+\epsilon)} \nonumber \\
+\leq & \quad P\left(X^n\right) \label{eq2.3} \\
+\leq & \quad 2^{-n(H(X)-\epsilon)} \nonumber
+\end{align}
+$$
+
+***
+
+We have $\eqref{eq2}$ <==> $\eqref{eq2.1}$ <==> $\eqref{eq2.2}$ <==> $\eqref{eq2.3}$.
 
 From $\eqref{eq2.3}$ we can say that every $\epsilon$-typical set has probability roughly $2^{-n H(X)}$.
 
@@ -163,9 +194,11 @@ Note: the notation $p(X_1, X_2, \cdots, X_n)$ in the above figure is denoted as 
 
 **Theorem:** $\forall \epsilon>0$ and $n$ sufficiently large, 
 $$
-\begin{equation} \label{eq3}
-(1-\epsilon) \cdot 2^{n(H(X)-\epsilon)} \leq\left|A_\epsilon^{(n)}\right| \leq 2^{n(H(u)+\epsilon)} .
-\end{equation}
+\begin{align}
+& \quad (1-\epsilon) \cdot 2^{n(H(X)-\epsilon)} \nonumber \\
+\leq & \quad \left|A_\epsilon^{(n)}\right| \label{eq3} \\
+\leq & \quad2^{n(H(u)+\epsilon)} \nonumber .
+\end{align}
 $$
 
 
@@ -177,7 +210,7 @@ $$
 \begin{align}
 1 & \geq P\left(X^n \in A_\epsilon^{(n)}\right) \label{eq3.1} \\
 & \geq \sum_{X^n \in A_\epsilon^{(n)}} 2^{-n(H(X)+\epsilon)} \label{eq3.2} \\
-& =2^{-n(H(X)+\epsilon)} \cdot\left|A_\epsilon^{(n)}\right| \label{eq3.3} .
+& =2^{-n(H(X)+\epsilon)} \cdot\left|A_\epsilon^{(n)}\right| \label{eq3.3} \nonumber.
 \end{align}
 $$
 
@@ -222,9 +255,12 @@ The space of all possible source sequences $\mathcal{X}^n$ has exponential size 
 
 In fact, $A_\epsilon^{(n)}$ is an **exponentially smaller** than $\mathcal{X}^n$, as indicated by the ratio of their sizes, except when $\mathrm{X}$ is uniformly distributed.
 $$
-\begin{equation} \label{eq4}
-\frac{\left|A_\epsilon^{(n)}\right|}{\left|\mathcal{X}^n\right|} \approx \frac{2^{n H(X)}}{r^n}=\frac{2^{n H(X)}}{2^{n \log r}}=2^{-n(\log r-H(X))} .
-\end{equation}
+\begin{align}
+\frac{\left|A_\epsilon^{(n)}\right|}{\left|\mathcal{X}^n\right|} \nonumber
+& \approx \frac{2^{n H(X)}}{r^n} \nonumber\\
+& = \frac{2^{n H(X)}}{2^{n \log r}} \nonumber\\
+& =2^{-n(\log r-H(X))} \nonumber.
+\end{align}
 $$
 
 
@@ -244,7 +280,7 @@ $$
 
 $$
 \begin{align}
-P\left(X^n \in B_{\delta}^{(n)}\right) 
+& \quad P\left(X^n \in B_{\delta}^{(n)}\right) \nonumber \\
 & =P\left(X^n \in B_{\delta}^{(n)} \cap A_\epsilon^{(n)}\right)+P\left(X^n \in B_{\delta}^{(n)} \cap \complement A_\epsilon^{(n)}\right) \label{eq5.1} \\
 
 & \leq P\left(X^n \in B_{\delta}^{(n)} \cap A_\epsilon^{(n)}\right)+P\left(X^n \notin A_\epsilon^{(n)}\right) \label{eq5.2} \\
@@ -262,6 +298,8 @@ P\left(X^n \in B_{\delta}^{(n)}\right)
 & =\underbrace{2^{-n(\delta-\epsilon)}}_{\rightarrow 0 \text { as } n \rightarrow \infty}+\underbrace{P\left(X^n \notin A_\epsilon^{(n)}\right)}_{\rightarrow 0 \text { as } n \rightarrow \infty} \label{eq5.8}
 \end{align}
 $$
+
+
 
 Explaination:
 
