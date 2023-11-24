@@ -15,10 +15,10 @@ Source:
 
 # Sinusoidal Response of FIR Systems
 
-Given an input that is a **complex exponential signal**[^1] 
+Given an input that is a **complex exponential signal**
 $$
 \begin{equation} \label{eq_complex exponential signal}
-x[n]=A e^{j \varphi} e^{j \hat\omega n} \quad-\infty<n<\infty
+x[n]=A e^{j \varphi} e^{j \hat\omega n} \quad-\infty<n<\infty .
 \end{equation}
 $$
 
@@ -29,7 +29,7 @@ $$
 Consider an FIR system
 $$
 \begin{equation} \label{FIR}
-y[n]=\sum_{k=0}^M b_k x[n-k]
+y[n]=\sum_{k=0}^M b_k x[n-k] ,
 \end{equation}
 $$
 the corresponding output is
@@ -37,9 +37,11 @@ $$
 \begin{align}
 y[n] & =\sum_{k=0}^M b_k A e^{j \varphi} e^{j \hat{\omega}(n-k)} \nonumber \\
 & =\left(\sum_{k=0}^M b_k e^{-j \hat{\omega} k}\right) A e^{j \varphi} e^{j \hat{\omega} n} \nonumber \\
-& =\mathcal{H}(\hat{\omega}) A e^{j \varphi} e^{j \hat{\omega} n} \quad-\infty<n<\infty \label{1.1}
+& =\mathcal{H}(\hat{\omega}) A e^{j \varphi} e^{j \hat{\omega} n} \label{1.1}
 \end{align}
 $$
+with $-\infty<n<\infty$,
+
 where
 $$
 \begin{equation} \label{eq_frequency response}
@@ -59,9 +61,10 @@ To emphasize the ubiquity of $e^{j \hat{\omega}}$, in $\eqref{eq_frequency respo
   $$
   or as
   $$
-  \begin{equation} \label{eq_Polar form}
-  H\left(e^{j \hat{\omega}}\right)= \Re\left\{H\left(e^{j \hat{\omega}}\right)\right\}+j \Im\left\{H\left(e^{j \hat{\omega}}\right)\right\}
-  \end{equation}
+  \begin{align} 
+  & H\left(e^{j \hat{\omega}}\right) \nonumber \\
+  = \quad &\Re\left\{H\left(e^{j \hat{\omega}}\right)\right\}+j \Im\left\{H\left(e^{j \hat{\omega}}\right)\right\} \label{eq_Polar form} .
+  \end{align}
   $$
   
 * Ideas:
@@ -72,24 +75,27 @@ To emphasize the ubiquity of $e^{j \hat{\omega}}$, in $\eqref{eq_frequency respo
 * Using the polar form $\eqref{eq_Polar form}$ in $\eqref{eq1.1 }$ gives the result
   $$
   \begin{align}
-  y[n] & =\left(\left|H\left(e^{j \hat{\omega}}\right)\right| e^{j \angle H\left(e^{j \hat{\omega}}\right)}\right) A e^{j \varphi} e^{j \hat{\omega} n} \nonumber \\
-  & =\left(\left|H\left(e^{j \hat{\omega}}\right)\right| \cdot A\right) e^{j\left(\angle H\left(e^{j \hat{\omega}}\right)+\varphi\right)} e^{j \hat{\omega} n} \label{eq1.1.1}
+  & y[n] \nonumber \\
+  = \quad & \left(\left|H\left(e^{j \hat{\omega}}\right)\right| e^{j \angle H\left(e^{j \hat{\omega}}\right)}\right) A e^{j \varphi} e^{j \hat{\omega} n} \nonumber \\
+  = \quad  & \left(\left|H\left(e^{j \hat{\omega}}\right)\right| \cdot A\right) e^{j\left(\angle H\left(e^{j \hat{\omega}}\right)+\varphi\right)} e^{j \hat{\omega} n} \label{eq1.1.1}
   \end{align}
   $$
-
+  
   * The magnitude of $H\left(e^{j \hat{\omega}}\right)$ multiplies the signal amplitude $(A)$ which changes the size of the signal. Thus, $\left|H\left(e^{j \hat{\omega}}\right)\right|$ is usually referred to as the gain of the system.[^2] 
-
+  
   * The angle $\angle H\left(e^{j \hat{\omega}}\right)$ simply adds to the phase $(\varphi)$ of the input, thereby producing additional phase shift in the complex exponential signal.
-
+  
 * For an FIR filter:
 
   frequency response $H\left(e^{j \hat{\omega}}\right)$ <==> impulse response $h[k]$ <==> the sequence of filter coefficients $b_k$ . 
 
   That is,
   $$
-  \begin{equation} \label{eq1.1.2}
-  H\left(e^{j \hat{\omega}}\right)=\sum_{k=0}^M b_k e^{-j \hat{\omega} k}=\sum_{k=0}^M h[k] e^{-j \hat{\omega} k}
-  \end{equation}
+  \begin{align}
+  & H\left(e^{j \hat{\omega}}\right) \nonumber \\
+  = \quad & \sum_{k=0}^M b_k e^{-j \hat{\omega} k} \nonumber \\
+  = \quad & \sum_{k=0}^M h[k] e^{-j \hat{\omega} k} \label{eq1.1.2}
+  \end{align}
   $$
 
 * Time Domain <--> Frequency Domain
@@ -144,7 +150,7 @@ $$
 
 Thus, for this system and the given input $x[n]$, the output is equal to the input multiplied by 3 , and the phase shift of $-\pi / 3$ corresponds to a delay of one sample.
 
-# Example: $h[n] \longleftrightarrow H\left(e^{j \hat{\omega}}\right)$
+## Example: $h[n] \longleftrightarrow H\left(e^{j \hat{\omega}}\right)$
 
 Consider the FIR filter defined by the impulse response
 $$
@@ -214,19 +220,20 @@ $$
 \begin{align}
 y[n]= & H\left(e^{j 0}\right) A_0 e^{j 0 n}+H\left(e^{j \hat{\omega}_1}\right) \frac{A_1}{2} e^{j \varphi_1} e^{j \hat{\omega}_1 n}+H^*\left(e^{j \hat{\omega}_1}\right) \frac{A_1}{2} e^{-j \varphi_1} e^{-j \hat{\omega}_1 n} \nonumber \\
 
-= & H\left(e^{j 0}\right) A_0+\left|H\left(e^{j \hat{\omega}_1}\right)\right| e^{j \angle H\left(e^{j \hat{\omega}_1}\right)} \frac{A_1}{2} e^{j \varphi_1} e^{j \hat{\omega}_1 n} \label{eq2.1.1} \\
+= & H\left(e^{j 0}\right) A_0+\left|H\left(e^{j \hat{\omega}_1}\right)\right| e^{j \angle H\left(e^{j \hat{\omega}_1}\right)} \frac{A_1}{2} e^{j \varphi_1} e^{j \hat{\omega}_1 n} \label{eq2.1.2} \\
 & +\left|H\left(e^{j \hat{\omega}_1}\right)\right| e^{-j \angle H\left(e^{j \hat{\omega}_1}\right)} \frac{A_1}{2} e^{-j \varphi_1} e^{-j \hat{\omega}_1 n} \nonumber \\
 
 = & H\left(e^{j 0}\right) A_0+\left|H\left(e^{j \hat{\omega}_1}\right)\right| \frac{A_1}{2} e^{j\left(\hat{\omega}_1 n+\varphi_1+\angle H\left(e^{j \hat{\omega}_1}\right)\right)} \nonumber \\
 & +\left|H\left(e^{j \hat{\omega}_1}\right)\right| \frac{A_1}{2} e^{-j\left(\hat{\omega}_1 n+\varphi_1+\angle H\left(e^{j \hat{\omega}_1}\right)\right)} \\
 
-= & H\left(e^{j 0}\right) A_0+\left|H\left(e^{j \hat{\omega}_1}\right)\right| A_1 \cos \left(\hat{\omega}_1 n+\varphi_1+\angle H\left(e^{j \hat{\omega}_1}\right)\right) \label{eq2.1.2}
+= & H\left(e^{j 0}\right) A_0+\left|H\left(e^{j \hat{\omega}_1}\right)\right| A_1 \cos \left(\hat{\omega}_1 n+\varphi_1+\angle H\left(e^{j \hat{\omega}_1}\right)\right) \label{eq2.1.3}
 \end{align}
 $$
 
+
 Note that here
 
-* $\eqref{2.1.1}$ is because we assume $H\left(e^{j \hat{\omega}_1}\right)$ has **[conjugate symmetry]()**, which is always true when the filter coefficients are real.
+* $\eqref{eq2.1.2}$ is because we assume $H\left(e^{j \hat{\omega}_1}\right)$ has **[conjugate symmetry]()**, which is always true when the filter coefficients are real.
 
   * Since $r = \sqrt{x^2 + y^2} = \sqrt{x^2 + (-y)^2}$ for conjugations $z = x + jy$ and $z^* = x - jy$, we have
     $$
@@ -234,7 +241,7 @@ Note that here
     $$
     
 
-* $\eqref{eq2.1.2}$ is due to the [inverse Eula formulas](https://lyk-love.cn/2023/11/21/sinusoidal-signals/#inverse-euler-formulas).
+* $\eqref{eq2.1.3}$ is due to the [inverse Eula formulas](https://lyk-love.cn/2023/11/21/sinusoidal-signals/#inverse-euler-formulas).
 
 ## Example: Cosine Input
 
@@ -297,7 +304,7 @@ $$
 x[n]=4+3 \cos \left(\frac{\pi}{3} n-\frac{\pi}{2}\right)+3 \cos \left(\frac{7 \pi}{8} n\right)
 $$
 
-and the system in [the last Example](). Find the output.
+and the system in [the previous Example](). Find the output.
 
 ***
 
@@ -365,7 +372,7 @@ This part of the output is generally called the steady-state part. While we have
 
 ## Example: Steady-State Output
 
-![image-20231122210925118](/Users/lyk/Library/Application Support/typora-user-images/image-20231122210925118.png)
+![Figure 6-1](/Users/lyk/Pictures/HexoPics/Electrical Engineering/Digital Signal Processing/Frequency Response of FIR Filters/Figure 6-1.png)
 
 A simple example illustrates the above discussion. Consider the system of Exercise 6.1, whose filter coefficients are the sequence $\left\{b_k\right\}=\{1,-2,4,-2,1\}$. The frequency response of this system is
 $$
@@ -402,8 +409,6 @@ This function has interesting properties that often can be used to simplify anal
 ## Periodicity of $H\left(e^{j \hat{\omega}}\right)$
 
 $H\left(e^{j \hat{\omega}}\right)$ is a periodic function with period $2 \pi$. 
-
-***
 
 **Proof:**
 $$
@@ -486,7 +491,7 @@ $$
 
 * $\angle H\left(e^{j \hat{\omega}}\right)=-n_0 \hat{\omega}$. The phase plot is a straight line with a slope equal to $-n_0$:
 
-  ![image-20231122205900097](/Users/lyk/Library/Application Support/typora-user-images/image-20231122205900097.png)
+  ![plot of phase response](/Users/lyk/Pictures/HexoPics/Electrical Engineering/Digital Signal Processing/Frequency Response of FIR Filters/plot of phase response.png)
 
 As a result, we can associate the slope of a linear phase versus frequency with time delay as a general rule in all filters. 
 
@@ -516,7 +521,7 @@ $$
 
 The magnitude and phase in $-3 \pi<\hat{\omega}<3 \pi$ are plotted in this Fig:
 
-![image-20231122210158817](/Users/lyk/Library/Application Support/typora-user-images/image-20231122210158817.png)
+![First-Difference System](/Users/lyk/Pictures/HexoPics/Electrical Engineering/Digital Signal Processing/Frequency Response of FIR Filters/First-Difference System.png)
 
 
 
@@ -592,7 +597,7 @@ A Simple Lowpass Filter
 
 ## A Simple Lowpass Filter
 
-![image-20231122211414301](/Users/lyk/Library/Application Support/typora-user-images/image-20231122211414301.png)
+![Figure 6-4](/Users/lyk/Pictures/HexoPics/Electrical Engineering/Digital Signal Processing/Frequency Response of FIR Filters/Figure 6-4.png)
 
 In Examples 6-1, 6-3, and 6-4, the system had frequency response
 $$
@@ -611,7 +616,7 @@ These functions are plotted in Fig. 6-4 for $-\pi<\hat{\omega} \leq \pi$. The ph
 
 ## Example: Lowpass Filter
 
-![image-20231122211504499](/Users/lyk/Library/Application Support/typora-user-images/image-20231122211504499.png)
+![Figure 6-5](/Users/lyk/Pictures/HexoPics/Electrical Engineering/Digital Signal Processing/Frequency Response of FIR Filters/Figure 6-5.png)
 
 If we repeat Example 6-4, we can show how the plot of $H\left(e^{j \hat{\omega}}\right)$ in Fig. 6-4 makes it easy to find  the filter's output for sinusoidal inputs. In Example 6-4, the input was
 $$
@@ -642,7 +647,7 @@ The output of the simple lowpass filter is the time waveform shown in Fig. 6-5(b
 
 
 
-[^1]: 
+
 
 [^2]: The gain can be less than or greater than 1 , even though the word suggests greater than.
 

@@ -91,15 +91,17 @@ $\eqref{eq_difference-equation-example}$ is the difference equation of this caus
 
 We define a **$M^{\text{th}}$-order weighted running average/FIR filter of $M+1$ samples.** 
 $$
-\begin{equation} \label{eq_FIR}
-y[n]=\sum_{k=0}^M b_k x[n-k]=b_0 x[n]+b_1 x[n-1]+\cdots+b_M x[n-M]
-\end{equation}
+\begin{align} 
+y[n]
+& = \sum_{k=0}^M b_k x[n-k] \label{eq_FIR} \\
+& = b_0 x[n]+b_1 x[n-1]+\cdots+b_M x[n-M] \nonumber .
+\end{align}
 $$
 
 
-* FIR system: **F**inite **I**nput **R**esponse system. Because the impulse response sequence $h[n]$ is finite([Illustrated later]()).
+* FIR system: **F**inite **I**nput **R**esponse system. Because the impulse response sequence $h[n]$ is finite([Illustrated later](https://lyk-love.cn/2023/11/23/fir-filters/#unit-impulse-response-sequence)).
   * $x[n], y[n]$ can be infinite since $n$ can be infinte: $- \infty < n < \infty$. But for FIR, the $h[n]$ must be finite.
-* The 3-point noncausal running average $\eqref{eq_difference equation example}$ is the case where $M=2$ and $b_k=1 / 3$ in $\eqref{eq_FIR}$.
+* The 3-point noncausal running average $\eqref{eq_difference equation-example}$ is the case where $M=2$ and $b_k=1 / 3$ in $\eqref{eq_FIR}$.
 * the coefficients $b_k$ are fixed numbers.
 * According to $\eqref{eq_FIR}$, an FIR filter is causal.
   * Note that a noncausal system can be represented by altering $\eqref{eq_FIR}$ to include negative values of the summation index $k$.
@@ -110,9 +112,11 @@ $$
 
 A second defnition:
 $$
-\begin{equation} \label{eq_FIR2}
-y[n]=\sum_{\ell=n-M}^n b_{n-\ell} x[\ell]=b_M x[n-M]+b_{M-1} x[n-M+1]+\cdots+b_0 x[n]
-\end{equation}
+\begin{align} 
+y[n]
+& = \sum_{\ell=n-M}^n b_{n-\ell} x[\ell] \label{eq_FIR2} \\
+& = b_M x[n-M]+b_{M-1} x[n-M+1]+\cdots+b_0 x[n] \nonumber.
+\end{align}
 $$
 
 ## Example
@@ -248,9 +252,11 @@ Here we replace $b_k$ in $\eqref{eq_FIR}$ with $h[k]$.
 
 Later, in [Section 5-7](), we will prove that convolution is the fundamental input-output algorithm for a large class of very useful filters that includes FIR filters as a special case. We will show that a general form of convolution that also applies to infinite-length signals is
 $$
-\begin{equation} \label{eq_convolution sum inf}
-y[n]=h[n] * x[n]=\sum_{k=-\infty}^{\infty} h[k] x[n-k]
-\end{equation}
+\begin{align}
+y[n]
+& = h[n] * x[n] \nonumber \\
+& = \sum_{k=-\infty}^{\infty} h[k] x[n-k] \label{eq_convolution sum inf} .
+\end{align}
 $$
 
 This convolution sum $\eqref{eq_convolution sum inf}$ has infinite limits to accomodate impulse responses of infinite length, but reduces to $\eqref{eq_convolution-sum}$ when $h[n]=0$ for $n<0$ and $n>M$.
