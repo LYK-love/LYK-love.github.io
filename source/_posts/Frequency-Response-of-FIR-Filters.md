@@ -372,7 +372,7 @@ This part of the output is generally called the steady-state part. While we have
 
 ## Example: Steady-State Output
 
-![Figure 6-1](/Users/lyk/Pictures/HexoPics/Electrical Engineering/Digital Signal Processing/Frequency Response of FIR Filters/Figure 6-1.png)
+![Figure 6-1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Electrical%20Engineering/Digital%20Signal%20Processing/Frequency%20Response%20of%20FIR%20Filters/Figure%206-1.png)
 
 A simple example illustrates the above discussion. Consider the system of Exercise 6.1, whose filter coefficients are the sequence $\left\{b_k\right\}=\{1,-2,4,-2,1\}$. The frequency response of this system is
 $$
@@ -491,7 +491,7 @@ $$
 
 * $\angle H\left(e^{j \hat{\omega}}\right)=-n_0 \hat{\omega}$. The phase plot is a straight line with a slope equal to $-n_0$:
 
-  ![plot of phase response](/Users/lyk/Pictures/HexoPics/Electrical Engineering/Digital Signal Processing/Frequency Response of FIR Filters/plot of phase response.png)
+  ![plot of phase response](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Electrical%20Engineering/Digital%20Signal%20Processing/Frequency%20Response%20of%20FIR%20Filters/plot%20of%20phase%20response.png)
 
 As a result, we can associate the slope of a linear phase versus frequency with time delay as a general rule in all filters. 
 
@@ -521,7 +521,7 @@ $$
 
 The magnitude and phase in $-3 \pi<\hat{\omega}<3 \pi$ are plotted in this Fig:
 
-![First-Difference System](/Users/lyk/Pictures/HexoPics/Electrical Engineering/Digital Signal Processing/Frequency Response of FIR Filters/First-Difference System.png)
+![First-Difference System](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Electrical%20Engineering/Digital%20Signal%20Processing/Frequency%20Response%20of%20FIR%20Filters/First-Difference%20System.png)
 
 
 
@@ -597,7 +597,7 @@ A Simple Lowpass Filter
 
 ## A Simple Lowpass Filter
 
-![Figure 6-4](/Users/lyk/Pictures/HexoPics/Electrical Engineering/Digital Signal Processing/Frequency Response of FIR Filters/Figure 6-4.png)
+![Figure 6-4](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Electrical%20Engineering/Digital%20Signal%20Processing/Frequency%20Response%20of%20FIR%20Filters/Figure%206-4.png)
 
 In Examples 6-1, 6-3, and 6-4, the system had frequency response
 $$
@@ -616,7 +616,7 @@ These functions are plotted in Fig. 6-4 for $-\pi<\hat{\omega} \leq \pi$. The ph
 
 ## Example: Lowpass Filter
 
-![Figure 6-5](/Users/lyk/Pictures/HexoPics/Electrical Engineering/Digital Signal Processing/Frequency Response of FIR Filters/Figure 6-5.png)
+![Figure 6-5](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Electrical%20Engineering/Digital%20Signal%20Processing/Frequency%20Response%20of%20FIR%20Filters/Figure%206-5.png)
 
 If we repeat Example 6-4, we can show how the plot of $H\left(e^{j \hat{\omega}}\right)$ in Fig. 6-4 makes it easy to find  the filter's output for sinusoidal inputs. In Example 6-4, the input was
 $$
