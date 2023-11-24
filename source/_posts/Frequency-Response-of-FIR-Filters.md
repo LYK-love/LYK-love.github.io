@@ -37,14 +37,14 @@ $$
 \begin{align}
 y[n] & =\sum_{k=0}^M b_k A e^{j \varphi} e^{j \hat{\omega}(n-k)} \nonumber \\
 & =\left(\sum_{k=0}^M b_k e^{-j \hat{\omega} k}\right) A e^{j \varphi} e^{j \hat{\omega} n} \nonumber \\
-& =\mathcal{H}(\hat{\omega}) A e^{j \varphi} e^{j \hat{\omega} n} \label{1.1}
+& =\mathcal{H}(\hat{\omega}) A e^{j \varphi} e^{j \hat{\omega} n} \label{eq_output}
 \end{align}
 $$
 with $-\infty<n<\infty$,
 
 where
 $$
-\begin{equation} \label{eq_frequency response}
+\begin{equation} \label{eq_frequency-response}
 \mathcal{H}(\hat{\omega})=\sum_{k=0}^M b_k e^{-j \hat{\omega} k}
 \end{equation}
 $$
@@ -55,24 +55,23 @@ To emphasize the ubiquity of $e^{j \hat{\omega}}$, in $\eqref{eq_frequency respo
 
 * $H\left(e^{j \hat{\omega}}\right)$ is complexvalued. So it can be expressed either as 
   $$
-  \begin{equation} \label{eq_Cartesian form}
-  H\left(e^{j \hat{\omega}}\right)=\left|H\left(e^{j \hat{\omega}}\right)\right| e^{j \angle H\left(e^{j \hat{\omega}}\right)}
+  \begin{equation} \label{eq_Cartesian-form}
+  \left|H\left(e^{j \hat{\omega}}\right)\right| e^{j \angle H\left(e^{j \hat{\omega}}\right)}
   \end{equation}
   $$
   or as
   $$
   \begin{align} 
-  & H\left(e^{j \hat{\omega}}\right) \nonumber \\
-  = \quad &\Re\left\{H\left(e^{j \hat{\omega}}\right)\right\}+j \Im\left\{H\left(e^{j \hat{\omega}}\right)\right\} \label{eq_Polar form} .
+  \Re\left\{H\left(e^{j \hat{\omega}}\right)\right\}+j \Im\left\{H\left(e^{j \hat{\omega}}\right)\right\} \label{eq_Polar-form} .
   \end{align}
   $$
   
 * Ideas:
 
-  1. $\eqref{eq1.1 }$ shows that **when the input is a discrete-time complex exponential signal**, the output of an LTI FIR filter is **also a discretetime complex exponential signal** with **the same frequency $\hat{\omega}$**, but with different magnitude and phase.
+  1. $\eqref{eq_output}$ shows that **when the input is a discrete-time complex exponential signal**, the output of an LTI FIR filter is **also a discretetime complex exponential signal** with **the same frequency $\hat{\omega}$**, but with different magnitude and phase.
   2. The mathematical statement $y[n]=H\left(e^{j \hat{\omega}}\right) x[n]$ is true iff for input signals of precisely the form $\eqref{eq_complex exponential signal}$. **Otherwise this statement is meaningles.**
 
-* Using the polar form $\eqref{eq_Polar form}$ in $\eqref{eq1.1 }$ gives the result
+* Using the polar form $\eqref{eq_Polar-form}$ in $\eqref{eq_output}$ gives the result
   $$
   \begin{align}
   & y[n] \nonumber \\
@@ -113,7 +112,7 @@ To emphasize the ubiquity of $e^{j \hat{\omega}}$, in $\eqref{eq_frequency respo
 
 ## Example: Formula for the Frequency Response
 
-Consider an LTI system for which the difference equation coefficients are $\left\{b_k\right\}=\{1,2,1\}$. Substituting into $\eqref{eq_frequency response}$ gives
+Consider an LTI system for which the difference equation coefficients are $\left\{b_k\right\}=\{1,2,1\}$. Substituting into $\eqref{eq_frequency-response}$ gives
 $$
 H\left(e^{j \hat{\omega}}\right)=1+2 e^{-j \hat{\omega}}+e^{-j \hat{\omega} 2}
 $$
@@ -129,7 +128,7 @@ $$
 
 $\eqref{eq1.2.1}$ is due to the [inverse Eula formulas](https://lyk-love.cn/2023/11/21/sinusoidal-signals/#inverse-euler-formulas).
 
-Since $(2+2 \cos \hat{\omega}) \geq 0$ for frequencies $-\pi<\hat{\omega} \leq \pi$, recall $\eqref{eq_Cartesian}$, the magnitude is $\left|H\left(e^{j \hat{\omega}}\right)\right|=$ $(2+2 \cos \hat{\omega})$ and the phase is $\angle H\left(e^{j \hat{\omega}}\right)=-\hat{\omega}$.
+Since $(2+2 \cos \hat{\omega}) \geq 0$ for frequencies $-\pi<\hat{\omega} \leq \pi$, recall $\eqref{eq_Cartesian form}$, the magnitude is $\left|H\left(e^{j \hat{\omega}}\right)\right|=$ $(2+2 \cos \hat{\omega})$ and the phase is $\angle H\left(e^{j \hat{\omega}}\right)=-\hat{\omega}$.
 
 ## Example: Complex Exponential Input
 
@@ -215,33 +214,36 @@ $$
 
 
 
-Then we use $\eqref{eq_Cartesian form}$ to express $H\left(e^{j \hat{\omega}_1}\right)$.  $y[n]$ can finally be expressed as
-$$
-\begin{align}
-y[n]= & H\left(e^{j 0}\right) A_0 e^{j 0 n}+H\left(e^{j \hat{\omega}_1}\right) \frac{A_1}{2} e^{j \varphi_1} e^{j \hat{\omega}_1 n}+H^*\left(e^{j \hat{\omega}_1}\right) \frac{A_1}{2} e^{-j \varphi_1} e^{-j \hat{\omega}_1 n} \nonumber \\
+Then we use $\eqref{eq_Cartesian form}$ to express $H\left(e^{j \hat{\omega}_1}\right)$,
 
-= & H\left(e^{j 0}\right) A_0+\left|H\left(e^{j \hat{\omega}_1}\right)\right| e^{j \angle H\left(e^{j \hat{\omega}_1}\right)} \frac{A_1}{2} e^{j \varphi_1} e^{j \hat{\omega}_1 n} \label{eq2.1.2} \\
-& +\left|H\left(e^{j \hat{\omega}_1}\right)\right| e^{-j \angle H\left(e^{j \hat{\omega}_1}\right)} \frac{A_1}{2} e^{-j \varphi_1} e^{-j \hat{\omega}_1 n} \nonumber \\
+1. $y[n]$ can finally be expressed as
+   $$
+   \begin{aligned}
+   y[n]= & H\left(e^{j 0}\right) A_0 e^{j 0 n}+H\left(e^{j \hat{\omega}_1}\right) \frac{A_1}{2} e^{j \varphi_1} e^{j \hat{\omega}_1 n}+H^*\left(e^{j \hat{\omega}_1}\right) \frac{A_1}{2} e^{-j \varphi_1} e^{-j \hat{\omega}_1 n} \\
+   \end{aligned}
+   $$
 
-= & H\left(e^{j 0}\right) A_0+\left|H\left(e^{j \hat{\omega}_1}\right)\right| \frac{A_1}{2} e^{j\left(\hat{\omega}_1 n+\varphi_1+\angle H\left(e^{j \hat{\omega}_1}\right)\right)} \nonumber \\
-& +\left|H\left(e^{j \hat{\omega}_1}\right)\right| \frac{A_1}{2} e^{-j\left(\hat{\omega}_1 n+\varphi_1+\angle H\left(e^{j \hat{\omega}_1}\right)\right)} \\
+2. Here  we assume $H\left(e^{j \hat{\omega}_1}\right)$ has **[conjugate symmetry]()**, which is always true when the filter coefficients are real. So we have
 
-= & H\left(e^{j 0}\right) A_0+\left|H\left(e^{j \hat{\omega}_1}\right)\right| A_1 \cos \left(\hat{\omega}_1 n+\varphi_1+\angle H\left(e^{j \hat{\omega}_1}\right)\right) \label{eq2.1.3}
-\end{align}
-$$
+   $$
+   \begin{aligned}
+   = & H\left(e^{j 0}\right) A_0+\left|H\left(e^{j \hat{\omega}_1}\right)\right| e^{j \angle H\left(e^{j \hat{\omega}_1}\right)} \frac{A_1}{2} e^{j \varphi_1} e^{j \hat{\omega}_1 n}\\
+   & +\left|H\left(e^{j \hat{\omega}_1}\right)\right| e^{-j \angle H\left(e^{j \hat{\omega}_1}\right)} \frac{A_1}{2} e^{-j \varphi_1} e^{-j \hat{\omega}_1 n} \\
+   
+   = & H\left(e^{j 0}\right) A_0+\left|H\left(e^{j \hat{\omega}_1}\right)\right| \frac{A_1}{2} e^{j\left(\hat{\omega}_1 n+\varphi_1+\angle H\left(e^{j \hat{\omega}_1}\right)\right)} \\
+   & +\left|H\left(e^{j \hat{\omega}_1}\right)\right| \frac{A_1}{2} e^{-j\left(\hat{\omega}_1 n+\varphi_1+\angle H\left(e^{j \hat{\omega}_1}\right)\right)} \\
+   \end{aligned}
+   $$
+
+3. After that, due to the [inverse Eula formulas](https://lyk-love.cn/2023/11/21/sinusoidal-signals/#inverse-euler-formulas), we have
+   $$
+   \begin{equation} \label{eq2.1.3}
+   = H\left(e^{j 0}\right) A_0+\left|H\left(e^{j \hat{\omega}_1}\right)\right| A_1 \cos \left(\hat{\omega}_1 n+\varphi_1+\angle H\left(e^{j \hat{\omega}_1}\right)\right)
+   \end{equation}
+   $$
+   
 
 
-Note that here
-
-* $\eqref{eq2.1.2}$ is because we assume $H\left(e^{j \hat{\omega}_1}\right)$ has **[conjugate symmetry]()**, which is always true when the filter coefficients are real.
-
-  * Since $r = \sqrt{x^2 + y^2} = \sqrt{x^2 + (-y)^2}$ for conjugations $z = x + jy$ and $z^* = x - jy$, we have
-    $$
-    |H\left(e^{j \hat{\omega}_1}\right)| = |H^*\left(e^{j \hat{\omega}}\right) = |H\left(e^{-j \hat{\omega}}\right)|
-    $$
-    
-
-* $\eqref{eq2.1.3}$ is due to the [inverse Eula formulas](https://lyk-love.cn/2023/11/21/sinusoidal-signals/#inverse-euler-formulas).
 
 ## Example: Cosine Input
 
@@ -249,9 +251,9 @@ Consider the complex input
 $$
 x[n]=3 \cos \left(\frac{\pi}{3} n-\frac{\pi}{2}\right)
 $$
-and the system in [the previous Example]().
+and the system in [the previous Example](https://lyk-love.cn/2023/11/22/frequency-response-of-fir-filters/#example-hn-longleftrightarrow-hleftej-hatomegaright).
 
-To get the output, we first know from [the previous example]() that
+To get the output, we first know from [the previous example](https://lyk-love.cn/2023/11/22/frequency-response-of-fir-filters/#example-hn-longleftrightarrow-hleftej-hatomegaright) that
 $$
 H\left(e^{j \hat{\omega}}\right)=(2+2 \cos \hat{\omega}) e^{-j \hat{\omega}}
 $$
@@ -266,7 +268,7 @@ $$
 
 Therefore, the magnitude is $\left|H\left(e^{j \pi / 3}\right)\right|=3$ and the phase is $\angle H\left(e^{j \pi / 3}\right)=-\pi / 3$.
 
-From $\eqref{eq2.1.2}$, when **[conjugate symmetry]()** holds, the output is
+From $\eqref{eq2.1.3}$, when **[conjugate symmetry](https://lyk-love.cn/2023/11/22/frequency-response-of-fir-filters/#conjugate-symmetry)** holds, the output is
 $$
 \begin{aligned}
 y[n] & =(3)(3) \cos \left(\frac{\pi}{3} n-\frac{\pi}{3}-\frac{\pi}{2}\right) \\
@@ -304,7 +306,7 @@ $$
 x[n]=4+3 \cos \left(\frac{\pi}{3} n-\frac{\pi}{2}\right)+3 \cos \left(\frac{7 \pi}{8} n\right)
 $$
 
-and the system in [the previous Example](). Find the output.
+and the system in [the previous Example](https://lyk-love.cn/2023/11/22/frequency-response-of-fir-filters/#example-hn-longleftrightarrow-hleftej-hatomegaright). Find the output.
 
 ***
 
@@ -454,6 +456,13 @@ $$
 \angle H\left(e^{-j \hat{\omega}}\right) & =-\angle H\left(e^{j \hat{\omega}}\right)
 \end{aligned}
 $$
+
+* Proof: Since $r = \sqrt{x^2 + y^2} = \sqrt{x^2 + (-y)^2}$ for conjugations $z = x + jy$ and $z^* = x - jy$, we have
+  $$
+  |H\left(e^{j \hat{\omega}_1}\right)| = |H^*\left(e^{j \hat{\omega}}\right) = |H\left(e^{-j \hat{\omega}}\right)|
+  $$
+
+
 
 Similarly, the real part is an even function of $\hat{\omega}$ and the imaginary part is an odd function, so
 $$

@@ -68,7 +68,7 @@ For instance, for a input sequence $x[n]$ with [support set]() $\{x[0], x[1], x[
 ![Figure 5-2 b](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Electrical%20Engineering/Digital%20Signal%20Processing/FIR%20Filters/Figure%205-2%20b.png)
 $$
 \begin{equation} \label{eq_difference-equation-example}
-y[n]=\frac{1}{3}(x[n]+x[n+1]+x[n+2])
+y[n]=\frac{x[n]+x[n+1]+x[n+2]}{3}
 \end{equation}
 $$
 
@@ -92,12 +92,10 @@ $\eqref{eq_difference-equation-example}$ is the difference equation of this caus
 We define a **$M^{\text{th}}$-order weighted running average/FIR filter of $M+1$ samples.** 
 $$
 \begin{align} 
-y[n]
-& = \sum_{k=0}^M b_k x[n-k] \label{eq_FIR} \\
-& = b_0 x[n]+b_1 x[n-1]+\cdots+b_M x[n-M] \nonumber .
+y[n] = \sum_{k=0}^M b_k x[n-k] \label{eq_FIR} ,
 \end{align}
 $$
-
+which can be extended to $b_0 x[n]+b_1 x[n-1]+\cdots+b_M x[n-M]$.
 
 * FIR system: **F**inite **I**nput **R**esponse system. Because the impulse response sequence $h[n]$ is finite([Illustrated later](https://lyk-love.cn/2023/11/23/fir-filters/#unit-impulse-response-sequence)).
   * $x[n], y[n]$ can be infinite since $n$ can be infinte: $- \infty < n < \infty$. But for FIR, the $h[n]$ must be finite.
@@ -114,10 +112,11 @@ A second defnition:
 $$
 \begin{align} 
 y[n]
-& = \sum_{\ell=n-M}^n b_{n-\ell} x[\ell] \label{eq_FIR2} \\
-& = b_M x[n-M]+b_{M-1} x[n-M+1]+\cdots+b_0 x[n] \nonumber.
+& = \sum_{\ell=n-M}^n b_{n-\ell} x[\ell] \label{eq_FIR2} ,
 \end{align}
 $$
+
+which can be extended to $b_M x[n-M]+b_{M-1} x[n-M+1]+\cdots+b_0 x[n]$.
 
 ## Example
 
