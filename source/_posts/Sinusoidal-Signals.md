@@ -25,11 +25,7 @@ x(t)=A \cos \left(\omega_0 t+\varphi\right)
 $$
 (Note that $\sin$ <==> $\cos$)
 
-In DSP(Digital Signal Processing), this signal is called: cosine/sin signal or cosine/sine **wave** or sinusoidal signal or **sinusoid**.
-
-* The parameters $A, \omega_0$, and $\varphi$ are fixed numbers for a particular cosine signal. 
-
-* $\boldsymbol{A}$: amplitude
+* $\boldsymbol{A}$: **amplitude**
 
 * $\omega_0$: **radian frequency**
 
@@ -37,12 +33,13 @@ In DSP(Digital Signal Processing), this signal is called: cosine/sin signal or c
 
   * Similarly, $f_0 = \frac{ω_0}{2π}$ is called the **cyclic frequency**, and $f_0$ must have units of $s^{−1}$, or hertz(abbreviated Hz).
 
-  * $\varphi$: phase 
-  
-  
-  
+* $\varphi$: **phase** 
 
 Note: Angles can be specified in degrees($^{\circ}$) or radians($\text{rad}$).
+
+
+
+In DSP(Digital Signal Processing), this signal is called: cosine/sin signal or cosine/sine **wave** or sinusoidal signal or **sinusoid**.
 
 ***
 
@@ -102,6 +99,8 @@ where $T_s$ is called the **sample spacing** or **sampling period**. When plotti
 >
 > Before introducing the complex exponential signal, we will first review some basic concepts concerning complex numbers.5
 
+## Representation
+
 A complex number $z$ may be represented by the notation $z=(x, y)$, 
 
 * $x=\Re\{z\}$: thereal part
@@ -127,7 +126,7 @@ We can also represent $z$ as:
    $$
 
 
-$\eqref{eq_Euler's formula}$ is known as Euler's formula.
+$\eqref{eq_Euler's formula}$ is known as **Euler's formula**.
 
 
 
