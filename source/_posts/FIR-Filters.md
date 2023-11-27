@@ -185,7 +185,7 @@ is true if $k$ ranges over all the nonzero values of the sequence $x[n]$.
 
 * Notation of unit impulse response: ${h}[n]$.
 
-* In other words, it is always true that when the input to the FIR filter $\eqref{eq_FIR}$ is a unit impulse sequence, $x[n]=\delta[n]$, the output is the (unit) impulse response $h[n]$. Substituting $x[n]=\delta[n]$ in   $\eqref{eq_FIR}$ gives the output $y[n]=h[n]$:
+* When the input to the FIR filter $\eqref{eq_FIR}$ is a unit impulse sequence, $x[n]=\delta[n]$, the output is the (unit) impulse response $h[n]$. Substituting $x[n]=\delta[n]$ in   $\eqref{eq_FIR}$ gives the output $y[n]=h[n]$:
   $$
   h[n]=\sum_{k=0}^M b_k \delta[n-k]= \begin{cases}b_n & n=0,1,2, \ldots, M \\ 0 & \text { otherwise }\end{cases}
   $$
@@ -198,7 +198,7 @@ is true if $k$ ranges over all the nonzero values of the sequence $x[n]$.
 * In other words, **the impulse response ${h}[n]$ of the FIR filter is identical to the sequence of difference equation coefficients.** So **the FIR filter is completely defined by the impulse response**.
   * In [following chapter](), we'll show that this characterization is also true for the much broader class of linear time-invariant (LTI) systems.
 
-* Since $h[n]=0$ for $n<0$ and for $n>M$, the length of the impulse response sequence $h[n]$ is **finite**. This is why the system $\eqref{eq_FIR}$ is called a FIR system. 
+* Since $h[n]=0$ for $n<0$ and for $n>M$, the "length"[^3] of the impulse response sequence $h[n]$ is **finite**. This is why the system $\eqref{eq_FIR}$ is called a FIR system. 
 
 ### The Unit-Delay System
 One important system is the operator that performs a delay or shift by an amount $n_0$
@@ -262,7 +262,7 @@ This convolution sum $\eqref{eq_convolution sum inf}$ has infinite limits to acc
 
 ## The Length of a Convolution
 
-If $x[n]$ is nonzero only in the interval $0 \leq n \leq L_x-1$, then for a causal FIR filter having an impulse response of length $L_h=M+1$ samples (because the impulse response is the sequence: h[0], h[1], ..., h[M]), the corresponding output $y[n]$, which is the convolution of $h[n]$ with $x[n]$, can be nonzero only when $n \geq 0$ and $n-M \leq L_x-1$, or equivalently, the support set of $y[n]$ is the interval $0 \leq n \leq L_x+M-1$. Thus the length of $y[n]$ is
+If $x[n]$ is nonzero only in the interval $0 \leq n \leq L_x-1$, then for a causal FIR filter having an impulse response of length[^3] $L_h=M+1$ samples (because the impulse response is the sequence: h[0], h[1], ..., h[M]), the corresponding output $y[n]$, which is the convolution of $h[n]$ with $x[n]$, can be nonzero only when $n \geq 0$ and $n-M \leq L_x-1$, or equivalently, the support set of $y[n]$ is the interval $0 \leq n \leq L_x+M-1$. Thus the length of $y[n]$ is
 $$
 \begin{equation} \label{eq_convolution length}
 L_y=L_x+L_h-1
@@ -270,7 +270,7 @@ L_y=L_x+L_h-1
 $$
 
 
-通俗地说, $y[n]$长度 = $x[n]$长度 + $h[n]$长度 - 1.  这里所谓"长度"指的是非零值的长度, 因为n可以是无限的, $x[n], y[n]$也可以是无限的.
+通俗地说, $y[n]$长度 = $x[n]$长度 + $h[n]$长度 - 1. 
 
 以下面[example]()为例, $x[n]$的长度是11($L_x = 11$), 最后一个非0值位于下标10($L_x-1$), 但由于$M=3$, 因此以$x[10]$为起始点的$M$个值 $x[10], x[11], x[12]$的running average 还是非零:
 $$
@@ -329,3 +329,4 @@ convolution is:
 
 [^1]: Strictly speaking, a filter is a system that is designed to remove some component or modify some characteristic of a signal, but often the two terms are used interchangeably.
 [^2]: Remember that a sequence is a discrete-time signal.
+[^3]: 这里所谓"length"指的是support set的长度. n可以是无限的, 因此$x[n], y[n], h[n]$也可以是无限的. 但是它们的suport set未必无限. 特别是$h[n]$的长度已经被$\eqref{eq_convolution-sum}$固定为$M+1$.

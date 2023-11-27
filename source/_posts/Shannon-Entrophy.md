@@ -73,21 +73,31 @@ Then $\log _b p=\log _b a \log _a p$.
 
 So $H_2(X) = \sum_x p(x) \log _2 \frac{1}{p(x)} = \log_2 a . \sum_x p(x) \log _a \frac{1}{p(x)} = ( \log_2 a)H_a(X)$.
 
-## Example: Coin flip
+## Example: For Bernoulli Distribution
 
 ![Figure 2.1: H(p) vs p](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Information%20Theory/Shannon%20Entropy/Figure%202.1-%20H%28p%29%20vs%20p.png)
 
-Let's work through the simple example of flipping a coin that can take on two values, heads or tails. In this scenario, $X \in 0,1$ and $\operatorname{Pr}[X=0]=p$, so we can compute the entropy of the distribution (dropping the base 2 ) as
+Here we discuss the entropy of random variable $X$ if $X \sim \text{Bern}(p)$ (**Bernoulli distribution**).
+
+In this scenario, $X \in \{0,1\}$ and $\operatorname{Pr}[X=0]=p$, so we can compute the entropy of the distribution (dropping the base 2 ) as
 $$
 H(X)=\mathbb{E}\left[\log \frac{1}{p(X)}\right]=p \log \frac{1}{p}+(1-p) \log \frac{1}{1-p} .
 $$
-In the case of a fair coin, $p=0.5$, we find that $H(X)=0.5(1)+0.5(1)=1$. 
+we get the curve in figure 2.1 which reaches a maximum of 1 when $p=0.5$.
+
+我们可以以抛硬币为例, 对于一个正常的硬币, 其每面的概率都是0.5, 令$X$为硬币朝上那面的值, $X \in X \in \{0,1\}$, $p = 0.5$.
+
+此时有 $H(X)=0.5(1)+0.5(1)=1$. 
+
+
+
+
 
 What about for a coin that almost always lands tails $(X=0)$, with $p=0.999$ ? 
 
 With this heavily-biased coin, we get $H(X)=0.999 \log \frac{1}{0.999}+0.001 \log \frac{1}{0.001} \approx 0.011$.
 
-From this example, we can see that we gain more information from more surprising events (i.e., $\log \frac{1}{p(x)} \uparrow$ as $p(x) \downarrow$ ), but they also happen less often. If we plot the entropy of a **Bernoulli distribution**, we get the curve in figure 2.1 which reaches a maximum of 1 when $p=0.5$.
+From this example, we can see that we gain more information from more surprising events (i.e., $\log \frac{1}{p(x)} \uparrow$ as $p(x) \downarrow$ ), but they also happen less often. 
 
 # Example: Uniform Distribution
 
