@@ -1052,6 +1052,78 @@ creative_commons:
   language:
 ```
 
+## SEO
+
+[Source](https://suda-liu.github.io/2020/04/07/%E4%B8%80%E6%AC%A1%E6%88%90%E5%8A%9F%E7%9A%84%E4%BD%93%E9%AA%8C-Hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%B0%B7%E6%AD%8C%E6%94%B6%E5%BD%95/) 
+
+博客搭建成功后，只能通过输入网址来访问，但是却不能被谷歌搜索到。原因是谷歌并没有收录我们的网站，所以还需向谷歌提交站点地图(sitemap)，让谷歌能够找到我们的博客。
+
+1. 生成sitemap文件:
+
+   1. 执行命令，安装站点地图生成插件。
+
+   ```
+   npm install hexo-generator-sitemap --save
+   ```
+
+   1. 在博客根目录下的配置文件`_config.yml`中添加下列内容。
+
+   ```
+   # 自动生成sitemap
+   sitemap:
+   	path: sitemap.xml
+   ```
+
+   1. 执行`hexo g`，会在`博客根目录/public`中生成`sitemap.xml`文件。
+
+2. HTML文件验证
+
+    这里我只记录了HTML文件的验证方式。可以根据自己网站情况自行选择验证方式。
+
+   1. 登录谷歌账号，打开[网站管理员中心](https://www.google.com/webmasters/verification/home?hl=en)，点击`ADD A PROPERTY`。
+   2. 选择验证方法。这里我使用的是DNS验证方法。也可选择替代方法。
+   3. 下载HTML验证文件，存放在`博客根目录/themes/next/source`。
+   4. 执行`hexo cl`,`hexo g`,`hexo d`。
+   5. 返回Google网站站长进行验证，即可完成验证。
+
+3. 提交sitemap: 点击[添加站点地图](https://www.google.com/webmasters/tools/sitemap-list)，选择要添加的网站，填入`sitemap.xml`，点击【提交】。
+
+4. 查看被收录的文章: 在Google中搜索
+
+   ```
+   site:写你要搜索的域名 # site:xxx.github.io
+   ```
+
+   如果能搜索到就说明被收录，可以看到自己的网站啦！
+
+   以后可以通过[Google 网站管理员](https://www.google.com/webmasters/)查看网站的一些数据。
+
+5. Other SEO methods:
+
+   1. Set the value of `index_with_subtitle` in NexT config file to `true` to add `subtitle` information to index page.
+
+      ```
+      NexT config file
+      
+      index_with_subtitle: true
+      ```
+
+      You can set `subtitle` in Hexo config file.
+
+   2. Exturl: Just one setting must be turned on under the `SEO Settings` section in theme config file:
+
+      ```yaml
+      # NexT config file
+      exturl: true
+      exturl_icon: true
+      ```
+
+      Then run the following command in site root dir to ensure that `exturl` can be enabled or disabled correctly:
+
+      ```
+      hexo clean
+      ```
+
 
 
 # Synchronize between mul-hosts
