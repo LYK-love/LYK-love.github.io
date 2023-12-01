@@ -19,11 +19,27 @@ date: 2023-10-15 00:13:25
 
 给定一个随机试验, 它由概率空间 $(\Omega, \mathcal{F}, \mathbb{P})$ 所定义[^1]. 但一般来说, 我们会使用随机变量将概率空间转化为 $\left(\mathbb{R}, \mathcal B, \mu_X\right)$ 以方便数学处理[^2].
 
+## Alphabet
+
 假设我们使用随机变量$X, Y$ 将$\Omega$中的一个个outcome映射到$\mathbb R$, 我们通常会互换地使用如下符号:
 
 * 随机变量均采用字母表最后几个大写字母(例如$X, Y, Z$)命名, 不会用 $A, B, a, b, x, y, \cdots$ 来命名.
 
-* 概率度量函数的符号$\mathbb P$也可以被写作$p, \text{Pr}, Pr, \text{P}, P$.
+## Random Variable
+
+* rv: **r**andom **v**ariable. 随机变量均采用字母表最后几个大写字母(例如$X, Y, Z$)命名, 不会用 $A, B, a, b, x, y, \cdots$ 来命名.
+
+* A **stochastic process** $X^n$ or $\{X_i\}^n$ is an indexed sequence of $n$ random variables $X_i$:
+  $$
+  X^n = (X_1, X_2, \cdots, X^n{})
+  $$
+
+  * In general, **there can be an arbitrary dependence** among the random variables.
+  * $\operatorname{Pr}\left\{\left(X_1, X_2, \ldots, X_n\right)=\left(x_1, x_2, \ldots, x_n\right)\right\}=p\left(x_1, x_2, \ldots, x_n\right).$
+
+## PMF
+
+* $\mathbb P$: the probability measurement funcition, also denoted as $p, \text{Pr}, Pr, \text{P}, P$.
 
   * 类似的, 各种大写字母符号和其`\mathbb`版本也是互换的, 比如随机变量$X$的数学期望$E(X) \triangleq \mathbb E(X)$.
 
@@ -36,7 +52,12 @@ date: 2023-10-15 00:13:25
 
 * 有时参数的圆括号会被写成方括号: $p(X=x) \triangleq p[X=x]$/
 
-* 我们有时又会看到$p(X)$这样的写法. 我们知道, $p()$的参数只能是一个事件, 此时只有两种可能:
+## PDF
+
+* $p(X)$ or $p_X$: 随机变量$X$的概率分布函数. 因此, 
+  $$
+  X \sim p(X) \triangleq X \sim p_X
+  $$ {\}
 
   1. 作者把$X$定义为一个事件, 这是个bad practice, 也很少见到. 事件一般都命名为$A,B,E$之类的.
 
@@ -48,7 +69,10 @@ date: 2023-10-15 00:13:25
      $$
      这里的 $p(X)$ 只是一个过渡的写法, 意思就类似于“$X$的所有取值$x \in \mathcal X$”, 是为了后面的$\sum_x p(x) \log _2 \frac{1}{p(x)}$服务的. **不要死磕 $p(X)$ 的意义.**
 
+## Abbrevation
 
+* `w.p.`: **with probability**.
+* 
 
 [^1]: https://lyk-love.cn/2023/10/14/probability-spaces/#probability-space
 [^2]: https://lyk-love.cn/2023/10/14/random-variables/#nature-of-random-variable

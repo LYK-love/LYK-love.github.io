@@ -10,8 +10,9 @@ date: 2023-11-26 18:38:46
 
 Ref:
 
-1. *Elements of Information Theory*
-2. [EE 376A: Information Theory](https://web.stanford.edu/class/ee376a/) from Stanford University
+1. [EE 376A: Information Theory. Winter 2018. Lecture 6.](https://web.stanford.edu/class/ee376a/files/2017-18/lecture_6.pdf) - Stanford University
+2. [EE 376A: Information Theory. Winter 2017. Lecture 4.](https://tselab.stanford.edu/mirror/ee376a_winter1617/Lecture_6.pdf) - Stanford University
+3. *Elements of Information Theory*
 
 <!--more-->
 
@@ -324,17 +325,19 @@ $$
 
 # Huffman Coding
 
-Huffman Code is the best prefix code for a general source code distribution.
+We've discussed a lot about optimal codes previously. But **how can we construct an optimal code**?
 
+Here we introduce Huffman Code, which is the **optimal**([proved later]()) prefix code for a general source code distribution.
 
-
-How to generate:
+How to generate (binary) Huffman Code:
 
 1. Find 2 symbols with the smallest probability and then merge them to create a new “node” and treat it as a new symbol.
 2. Then merge the next 2 symbols with the smallest probability to create a new “node”. 3. Repeat steps 1 and 2 until there is only 1 symbol left.
 3. At the end of this process, we obtain a binary tree. The paths traversed from the root to the leaves are the prefix codes. 
 
 Recall that this is a prefix code since we only assign the source symbols to the leaf nodes. Also note that the Huffman code is not necessarily unique since it depends on the order of the merge operations
+
+Note: here
 
 > Aside: (Source arity nomenclature) binary (2 symbols), ternary (3 symbols), quaternary (4 symbols), quinary (5 symbols), senary (6 symbols), septenary (7 symbols), octal (8 symbols), nonary (9 symbols), dec- imal (10 symbols) ...
 

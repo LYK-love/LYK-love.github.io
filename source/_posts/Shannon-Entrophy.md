@@ -12,7 +12,7 @@ date: 2023-10-15 02:23:22
 Ref:
 
 1. *Elements of Information Theory*
-2. [EE 376A: Information Theory](https://web.stanford.edu/class/ee376a/) from Stanford University
+2. [EE 376A: Information Theory](https://web.stanford.edu/class/ee376a/) - Stanford University
 3. [Probability_Theory by Kyle Siegrist](https://stats.libretexts.org/Bookshelves/Probability_Theory/Probability_Mathematical_Statistics_and_Stochastic_Processes_(Siegrist)/02%3A_Probability_Spaces)
 4. [The Book of Statistical Proofs](https://statproofbook.github.io/D/ent)
 
@@ -179,7 +179,24 @@ H(Y \mid X) & =\sum_{x, y} p(x, y) \log \frac{1}{p(y \mid x)} \\
 $$
 This is a measure of, on average, how much extra information you get by observing a second variable $Y$, given that you have already observed the first variable $X$.
 
+## Properties
 
+Suppose that $X$ is a random variable whose entropy $H(X)$ is $k$ bits. Suppose that $Y(X)$ is
+a **deterministic** function that takes on a different value for each value of $X$.
+
+1. $H(Y ) = k \quad \text{bits}$ also.
+2. The conditional entropy of Y given X: $H(Y|X) = 0$ because of determinism.
+3. The conditional entropy of X given Y : $H(X|Y) = 0$ also.
+4. The joint entropy $H(X, Y) = H(X) + H(Y|X) = k \quad \text{bits}$.
+
+
+
+Suppose now that the deterministic function $Y(X)$ is not invertible; in other words,
+different values of $X$ may correspond to the same value of $Y(X)$. In that case, 
+
+1. The new distribution of $Y$ has lost entropy and so $H(Y) < k \quad \text{bits}$.
+2. Now knowledge of Y no longer determines $X$, and so the conditional entropy $H(X|Y)$
+   is no longer zero: $H(X|Y) > 0$.
 
 # Chain Rule for Entropy(2 Variables)
 
