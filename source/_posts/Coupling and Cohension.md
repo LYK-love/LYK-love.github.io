@@ -1,5 +1,5 @@
 ---
-title: Coupling && Cohension
+title: Coupling and Cohension
 tags: Software Engineering
 categories: Computer Science
 date: 2021-06-27 11:09:16

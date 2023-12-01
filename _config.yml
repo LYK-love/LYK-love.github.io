@@ -185,7 +185,8 @@ markdown:
   #   prepend_root: false
   #   post_asset: false
 
-
+sitemap:
+	path: sitemap.xml
 # moon_menu:
 #   back2top:
 #     enable: true
