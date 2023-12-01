@@ -485,7 +485,7 @@ font:
 index_with_subtitle: true
 
 # Automatically add external URL with Base64 encrypt & decrypt.
-exturl: true
+exturl: false
 # If true, an icon will be attached to each external URL
 exturl_icon: true
 
