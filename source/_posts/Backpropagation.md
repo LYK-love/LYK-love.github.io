@@ -19,7 +19,7 @@ Source:
 
 # Problem Formulation
 
-Given dataset $(x,y)$ with $n$ data points $(x_1, y_{1}), \cdots, (x_n, y_n) $, we can say that the relationship between $x$ and $y$ is function $f$:
+Given dataset $(x,y)$ with $n$ data points $(x_1, y_{1}), \dots, (x_n, y_n)$, we can say that the relationship between $x$ and $y$ is function $f$:
 $$
 y = f_\text{observed}(x)
 $$
@@ -43,7 +43,7 @@ $$
 $$
 Note: the loss function is chosen in advance. It's a measurement function of how "optimal" or "close to the truth" our $\hat y$ is.
 
-# Example Neura Network
+# Example Neural Network
 
 Given below Neuro Network(NN), it has:
 
@@ -76,7 +76,7 @@ Thus the problem becomes that:
 
 # Forward Propagation
 
-First, we **initialize the parameters randomly**. In practice, the biases are set to $0$ and the weights follow a norm distribution, i.e., $w \sim \text{Norm}(0,1)$.
+First, we **initialize the parameters randomly**. In practice, the biases are usually set to $0$ and the weights follow a norm distribution, i.e., $w \sim \text{Norm}(0,1)$.
 
 Then we input data points to this NN.
 
@@ -153,20 +153,20 @@ $$
 \frac {\partial y_{\text{green}}} {\partial w_4} 
 \end{aligned}
 $$
-Fun fact: **All the deriatives on this layer using the same deriative** ${\partial \text{Loss}} {\partial y_{\text{green}}}$ !
+Fun fact: **All the deriatives on this layer use the same deriative** $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ !
 
-So, we just need to compute:
+So, we just need to solve the quation:
 
 1. $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ one time,
 2. $\frac {\partial y_{\text{green}}} {\partial b_3} $, $\frac {\partial y_{\text{green}}} {\partial w_3}$, $\frac {\partial y_{\text{green}}} {\partial w_4}$ each for one time.
 
-To get one gradient, we only need to perform **4 deriations**!
+To get one gradient, we only need to perform **4 derivations**!
 
-Then we use these gradients to perform *Gradient Descent*. Due to the forward propagation, the parameters values are already computed, we can **evaluate the value** of the gradient.
+Then we use the gradient to perform *Gradient Descent*. Due to the forward propagation, the parameters values are already computed, thus we can **evaluate the value** of the gradient.
 
-Then we calculate the step sizes, update parameters, and repeat. 
+After that we calculate the step sizes, update parameters, and repeat. 
 
-When the *Gradient Descent* finishes, the parameters $b_3, w_3, w_4$  are optimized.
+When the *Gradient Descent* finishes, the parameters $b_3, w_3, w_4$ are optimized.
 
 ## Optimize the middle layer
 
@@ -204,7 +204,7 @@ $$
 $$
 
 
-Fun Fact: derivative $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ **has been computed beore**! And derivatives $\frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}}$, $\frac {\partial y_{\text{green}}} {\partial y_{\text{orange}}}$ are more or less **shared** here!
+Fun Fact: derivative $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ **has been computed before**! And derivatives $\frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}}$, $\frac {\partial y_{\text{green}}} {\partial y_{\text{orange}}}$ are more or less **shared** here!
 
 So, we just need to compute:
 
@@ -226,9 +226,9 @@ Note: During BP, the equation of $\frac {\partial y_{\text{blue}}} {\partial b_1
 
 Given:
 
-1. Loss function $\text{Loss}(y, \hat y) = \sum_i^{n} (y - \hat y)^2$
-2. Activation function $\text{Act}(x) = \log (1 + e^x)$
-3. Learning rate $\alpha = 0.001$
+1. Loss function (called: softplus) $\text{Loss}(y, \hat y) = \sum_i^{n} (y - \hat y)^2$.
+2. Activation function (called: sum of squared residuals) $\text{Act}(x) = \log (1 + e^x)$.
+3. Learning rate $\alpha = 0.001$, which is used in Gradient Descent
 
 ```python
 def softplus(x, beta=1.0):
@@ -249,9 +249,7 @@ def loss_func(y_true, y_pred):
     return sum_of_squared_residuals(y_true, y_pred)
 ```
 
-
-
-and observed $n$-data points($n=3$):
+with observed $n$-data points($n=3$):
 
 ```python
 x = [0.1, 0.53, 0.82]
@@ -261,7 +259,19 @@ xy_pairs = list(zip(x, y))
 
 
 
-We randomly initialize parameters:
+with parameters:
+
+```
+w_1, w_2, w_3, w_4, b_1, b_2, b_3 
+```
+
+How to perform BP to optimize the last layer parameters $b_3, w_3,w_4$?
+
+## Forward Paragapagion
+
+Solution:
+
+First we randomly initialize parameters:
 
 ```python
     np.random.seed(42)
@@ -278,13 +288,9 @@ We randomly initialize parameters:
 
 
 
-How to perform BP to optimize the last layer parameters $b_3, w_3,w_4$?
+Second, we perfrom forward parapagation. 
 
-## Forward Paragapagion
-
-Solution:
-
-First, we perfrom the forward parapagation. Becasue:
+Becasue:
 
 * $y_{\text{green}} = w_3 y_{\text{blue}} + w_4 y_{\text{orange}} + b_3$. 
 * $y_{\text{blue}} =\text{Act}(w_1 x + b_1)$
@@ -426,5 +432,5 @@ $$
 $$
 **We don't need to solve** the equation $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$  **again**!
 
-However, it can only happen in backword propagation. If we use forward propagation to perform derivation, at layer $i-1$ we don't know $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ so we have to solve it, and at layer $i$ we need to solve it again!
+However, this convience only happens in backword propagation. If we use forward propagation to perform derivation, at layer $i-1$ we don't know $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ , so we have to solve it, and at layer $i$ we need to solve it again!
 
