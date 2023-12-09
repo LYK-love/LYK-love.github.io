@@ -158,7 +158,7 @@ Fun fact: **All the deriatives on this layer use the same deriative** $\frac {\p
 So, we just need to solve the quation:
 
 1. $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ one time,
-2. $\frac {\partial y_{\text{green}}} {\partial b_3} $, $\frac {\partial y_{\text{green}}} {\partial w_3}$, $\frac {\partial y_{\text{green}}} {\partial w_4}$ each for one time.
+2. $\frac {\partial y_{\text{green}}} {\partial b_3}$, $\frac {\partial y_{\text{green}}} {\partial w_3}$, $\frac {\partial y_{\text{green}}} {\partial w_4}$ each for one time.
 
 To get one gradient, we only need to perform **4 derivations**!
 
@@ -259,7 +259,7 @@ xy_pairs = list(zip(x, y))
 
 
 
-with parameters:
+and uninitialized parameters:
 
 ```
 w_1, w_2, w_3, w_4, b_1, b_2, b_3 
