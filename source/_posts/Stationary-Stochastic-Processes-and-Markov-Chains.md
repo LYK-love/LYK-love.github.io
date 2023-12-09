@@ -59,6 +59,8 @@ $$
 $$
 for all $x_1, x_2, \ldots, x_n, x_{n+1} \in \mathcal{X}$.
 
+We can denote them as $X_1 \rightarrow X_2 \rightarrow \cdots \rightarrow X_n$.
+
 ## PMF of a Markov Chain
 
 The joint probability mass function of the random variables can be written as
@@ -66,7 +68,7 @@ $$
 p\left(x_1, x_2, \ldots, x_n\right)=p\left(x_1\right) p\left(x_2 \mid x_1\right) p\left(x_3 \mid x_2\right) \cdots p\left(x_n \mid x_{n-1}\right) \label{eq1}.
 $$
 
-Proof:
+### Proof
 
 let's prove this expression with mathematical induction:
 
@@ -103,8 +105,6 @@ let's prove this expression with mathematical induction:
 
 
 
-
-
 ## Time Invariant
 
 **Definition:** The Markov chain is said to be **time invariant** if the conditional probability $p\left(x_{n+1} \mid x_n\right)$ does not depend on $n$; that is, for $n=$ $1,2, \ldots$,
@@ -123,6 +123,115 @@ A time invariant Markov chain is **characterized by its initial state and a prob
 
 
 If it is possible to go with positive probability from any state of the Markov chain to any other state in a finite number of steps, the Markov chain is said to be **irreducible**. If the largest common factor of the lengths of different paths from a state to itself is 1 , the Markov chain is said to **aperiodic**.
+
+## Properties
+
+If random variables $X, Y, Z$ form a Markov chain (denoted by $X \rightarrow Y \rightarrow Z$ ), [their PMF]() satisfies:
+$$
+\begin{equation} \label{eq_markov_3}
+p(x, y, z)=p(x) p(y \mid x) p(z \mid y) .
+\end{equation}
+$$
+
+- $X \rightarrow Y \rightarrow Z$ implies that $Z \rightarrow Y \rightarrow X$. Thus, the condition is sometimes written $X \leftrightarrow Y \leftrightarrow Z$.
+- If $Z=f(Y)$, then $X \rightarrow Y \rightarrow Z$.
+
+## Conditionally Independence
+
+$X \rightarrow Y \rightarrow Z$ <==> $X$ and $Z$ are [conditionally independent](https://lyk-love.cn/2023/10/14/independence/?highlight=indepen#conditional-independence) given $Y$: $p(x,z|y) = p(x|y)p(z|y)$. Proof:
+
+### Proof
+
+==>
+
+Given $X \rightarrow Y \rightarrow Z$, we have $p(x,z|y) = p(x|y)p(z|y)$.
+
+Proof: 
+$$
+\begin{align}
+p(x, z \mid y) 
+& = \frac{p(x, y, z)}{p(y)} \label{eq_3.4.1} \\
+& = \frac{p(x) p(y \mid x) p(z \mid y)}{p(y)} \label{eq_3.4.2} \\
+& = \frac{p(x, y) p(z \mid y)}{p(y)} \label{eq_3.4.3} \\
+& = p(x \mid y) p(z \mid y) \label{eq_3.4.4} .
+\end{align}
+$$
+$\eqref{eq_3.4.1}$: the definition of [conditional probability](https://lyk-love.cn/2023/10/14/joint-marginal-and-conditional-probability/#conditional-probability).
+
+$\eqref{eq_3.4.2}$: from $\eqref{eq_markov_3}$. 
+
+$\eqref{eq_3.4.3}$: the definition of conditional probability: $p(x)p(y|x) = p(x,y)$.
+
+$\eqref{eq_3.4.4}$: the definition of conditional probability: $\frac {p(x,y)}{p(y)} = p(x \mid y)$.
+
+***
+
+<==
+
+Given $p(x,z|y) = p(x|y)p(z|y)$, we have $X \rightarrow Y \rightarrow Z$, which means $\eqref{eq_markov_3}$.
+
+Proof: we just need to inverse the above proof:
+$$
+p(x|y)p(z|y) =\frac{p(x, y) p(z \mid y)}{p(y)} = \frac{p(x) p(y \mid x) p(z \mid y)}{p(y)}
+$$
+And we know that:
+$$
+p(x, z \mid y) = \frac{p(x, y, z)}{p(y)} .
+$$
+Since
+$$
+p(x,z|y) = p(x|y)p(z|y)
+$$
+Then:
+$$
+\frac{p(x) p(y \mid x) p(z \mid y)}{p(y)} = \frac{p(x, y, z)}{p(y)} ,
+$$
+which means  $\eqref{eq_markov_3}$.
+
+
+
+
+
+# Data Processing Inequality
+
+**Theorem(Data-processing inequality):** If $X \rightarrow Y \rightarrow Z$, then $I(X ; Y) \geq I(X ; Z)$.
+
+**Proof:** 
+
+By the chain rule, we can expand mutual information in two different ways:
+$$
+\begin{align} 
+I(X ; Y, Z) & =I(X ; Z)+I(X ; Y \mid Z) \label{eq_2.119} \\
+& =I(X ; Y)+I(X ; Z \mid Y) \label{eq_2.120} .
+\end{align}
+$$
+
+
+Since $X$ and $Z$ are conditionally independent given $Y$, we have $I(X ; Z \mid Y)=0$. 
+
+Since $I(X ; Y \mid Z) \geq 0$, we have
+$$
+I(X ; Y) \geq I(X ; Z) .
+$$
+
+We have equality if and only if $I(X ; Y \mid Z)=0$ (i.e., $X \rightarrow Z \rightarrow Y$ forms a Markov chain). Similarly, one can prove that $I(Y ; Z) \geq I(X ; Z)$.
+
+## Corollary
+
+Corollary: In particular, if $Z=g(Y)$, we have $I(X ; Y) \geq I(X ; g(Y))$.
+Proof: $\quad X \rightarrow Y \rightarrow g(Y)$ forms a Markov chain.
+Thus functions of the data $Y$ cannot increase the information about $X$. Corollary If $X \rightarrow Y \rightarrow Z$, then $I(X ; Y \mid Z) \leq I(X ; Y)$.
+
+### Proof
+
+Proof: We note in $\eqref{eq_2.119}$ and $\eqref{eq_2.120}$ that $I(X ; Z \mid Y)=0$, by Markovity, and $I(X ; Z) \geq 0$. Thus,
+$$
+I(X ; Y \mid Z) \leq I(X ; Y) .
+$$
+
+Thus, the dependence of $X$ and $Y$ is decreased (or remains unchanged) by the observation of a "downstream" random variable $Z$. Note that it is also possible that $I(X ; Y \mid Z)>I(X ; Y)$ when $X, Y$, and $Z$ do not form a Markov chain. For example, let $X$ and $Y$ be independent fair binary random variables, and let $Z=X+Y$. Then $I(X ; Y)=0$, but $I(X ; Y \mid Z)=$ $H(X \mid Z)-H(X \mid Y, Z)=H(X \mid Z)=P(Z=1) H(X \mid Z=1)=\frac{1}{2}$ bit.
+
+
 
 # Stationary Distribution
 
@@ -182,4 +291,3 @@ H\left(X_n\right)=H\left(\frac{\beta}{\alpha+\beta}, \frac{\alpha}{\alpha+\beta}
 $$
 
 However, this is not the rate at which entropy grows for $H\left(X_1, X_2, \ldots\right.$, $\left.X_n\right)$. The dependence among the $X_i$ 's will take a steady toll.
-

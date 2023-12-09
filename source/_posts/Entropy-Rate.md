@@ -24,7 +24,7 @@ The asymptotic equipartition property in [AEP](https://lyk-love.cn/2023/11/10/as
 
 
 
-But what if the random variables are **dependent**? In particular, what if the random variables form a stationary process? We will show, just as in the i.i.d. case, that the entropy $H\left(X_1, X_2, \ldots, X_n\right)$ grows (asymptotically) linearly with $n$ at a rate $H(\mathcal{X})$, which we will call the entropy rate of the process. The interpretation of $H(\mathcal{X})$ as the best achievable data compression will await the analysis in Chapter 5.
+But what if the random variables are **dependent**? In particular, what if the random variables form a stationary process? We will show, just as in the i.i.d. case, that the entropy $H\left(X_1, X_2, \ldots, X_n\right)$ grows (asymptotically) linearly with $n$ at a rate $H(\mathcal{X})$, which we will call the **entropy rate** of the process. The interpretation of $H(\mathcal{X})$ as the best achievable data compression will await the analysis in Chapter 5.
 
 # Notation
 

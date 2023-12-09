@@ -53,7 +53,7 @@ Outline
 
 
 
-## Objective Functions
+## Objective Functions(Loss Functions)
 
 > In order to develop a formal mathematical system of learning machines, we need to have formal measures of how good (or bad) our models are. 
 
@@ -94,7 +94,7 @@ Popular optimization algorithms for deep learning are based on an approach calle
 
 ## Data
 
-> 
+
 
 令$D = \{ x_1,x_2,..,x_m \}$表示包含m个示例的数据集, 每个example(or *data point*, *data instance*, *sample*)由$d$个属性描述, 则每个example被表示为$d$维样本空间中的一个向量$x_i=\{ x_{i1}, x_{i2}, \dots, x_{id} \}$, $x_i \in \chi$, 其中$x_{ij}$是样本$x_i$在第j个属性的取值
 
@@ -119,13 +119,24 @@ Popular optimization algorithms for deep learning are based on an approach calle
   
 
 * **属性空间**(attribute value),**样本空间**(sample  space),**输入空间**: 属性张成的空间，记为$\chi$
+
 * **标记空间**, **输出空间**: label张成的空间，记为 $\gamma $ 
+
 * 如果把属性作为坐标轴, 每个示例都对应特征空间的一个点, 称为**特征向量**(feature  vector), 属性个数就是样本维度
+
 * 
   * 如果把标记看作对象本身的一部分，那么示例也可以看作样本
-  * 
+  
 * 训练集: 一组训练样例
+
 * 测试集: 一组测试样例
+
+
+
+# Key Terminologies
+
+* **Training** means creating or **learning** the model.  That is, you show the model labeled examples and enable the model to gradually learn the relationships between features and label.
+* **Inference** means applying the trained model to unlabeled examples. That is, you use the trained model to make useful predictions (`y'`). For example, during inference, you can predict `medianHouseValue` for new unlabeled examples.
 
 # Kinds of Machine Learning Problems(By Target Value)
 
@@ -133,12 +144,9 @@ Popular optimization algorithms for deep learning are based on an approach calle
 
 ## Classification
 
-分类(Classification):标记为离散值.
+Classification(分类): A model predicts discrete values, i.e., the labels are discrete values.
 
 * 二分类:例如“Can I eat that mashroom?”. 答案是yes or no.
-
-  ![../_images/death-cap.jpg](http://d2l.ai/_images/death-cap.jpg)
-
 
 
 * 多分类:例如"Is that a dog, cat or donky?". 答案是三者之一.
@@ -147,17 +155,17 @@ Popular optimization algorithms for deep learning are based on an approach calle
 
 * 多标签分类(Tagging, aka *multi-label classification*): label具有多个类型要预测的类型, 类型间不是互斥的(exclusive),.例如一张图片中可能同时出现狗, 猫, 鸡和驴.
 
-  ![../_images/stackedanimals.png](http://d2l.ai/_images/stackedanimals.png)
-
-
 
 ## Regression
 
-回归(Regression):label为连续值
+Regression(回归): A model predicts continuous values, i.e., the labels are continuous values.
 
 ## Clustering
 
-聚类(Clustering):标记为空值,对示例进行自动分组( 即: 要分的组也不知道)
+聚类(Clustering): A model predicts continuous values, i.e., the labels are continuous values.
+
+标记为空值,对示例进行自动分组( 即: 要分的组也不知道)
+
 * 例如,本地瓜,外地瓜
 
 

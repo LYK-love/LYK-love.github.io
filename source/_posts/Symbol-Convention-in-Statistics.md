@@ -50,7 +50,17 @@ date: 2023-10-15 00:13:25
   * $p(x)$ is the short hand for $\mathbb P(x), p(X = x), p_X(x), \mu_X(x), \mu_X(B)$.
   * $p(x|y)$ is the short hand for $p(X = x|Y = y)$.
 
-* 有时参数的圆括号会被写成方括号: $p(X=x) \triangleq p[X=x]$/
+* 有时参数的圆括号会被写成方括号: $p(X=x) \triangleq p[X=x]$.
+
+## Entropy
+
+* Given a probability distribution $p$ and a random variable $X$, $X \sim p$, then $H(X)$ can also be expressed as $H(p)$. 
+
+  Therefore, the entropy of all random variables $X,Y,Z,…$ that follow the distribution $p$ is $H(p)$. This is **unambiguous** because **random variables that follow the same probability distribution have the same entropy**.
+
+* Also, given r.v. $X_1, X_2, \ldots$ **iid** $\sim X$, where we use $X$ to denote one PMF of arbitary $X_i$, then we can use $H(X)$ to denote the entropy of arbitrary $X_i$.
+
+* $\mathbb{E}_{X \sim p}(X)$: denotes that  $X \sim p$.
 
 ## PDF
 

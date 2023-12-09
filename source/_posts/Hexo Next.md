@@ -1110,22 +1110,6 @@ creative_commons:
 
       You can set `subtitle` in Hexo config file.
 
-   2. Exturl: Just one setting must be turned on under the `SEO Settings` section in theme config file:
-
-      ```yaml
-      # NexT config file
-      exturl: true
-      exturl_icon: true
-      ```
-
-      Then run the following command in site root dir to ensure that `exturl` can be enabled or disabled correctly:
-
-      ```
-      hexo clean
-      ```
-
-
-
 # Synchronize between mul-hosts
 
 如果想要在多台主机上同步Hexo项目, 只需要把自己的Hexo Github Repo clone下来. 

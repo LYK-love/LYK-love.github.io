@@ -44,7 +44,6 @@ Essentially, a channel is a conditional distribution like $p(Y |X)$. We will foc
   P_{Y^{n} \mid X^{n}}\left(y^{n} \mid x^{n}\right) \triangleq \prod_{i=1}^{n} P_{Y \mid X}\left(y_{i} \mid x_{i}\right) .
   $$
   
-
 * When we refer to the DMC, we mean the **discrete memoryless channel without feedback** unless we state explicitly otherwise.
 
 ![DMC](/Users/lyk/Library/Application Support/typora-user-images/image-20231130132543151.png)
@@ -83,7 +82,7 @@ A **channel** is defined as
 $$
 (\mathcal X^n, \mathcal Y^n, p(y^n|x^n)) .
 $$
- 
+
 
 $p(y_n|x_n)$ represents the probability of the channel out- putting yn when xn is received as an input.
 
@@ -99,7 +98,7 @@ $$
 
 ## Rate
 
-A scheme with rate $R$ can transmit $R$  bits per channel use.
+A scheme with rate $R$ can **transmit $R$  bits per channel use.**
 $$
 \text { rate } \triangleq \frac{\log M}{n} = \frac{m}{n} \frac{\text { bits }}{\text { channel use }}
 $$
@@ -148,9 +147,9 @@ The information capacity of a (DMC) channel is
 
 
 $$
-C^{(I)} \triangleq \max _{X^n \sim P_{X}} I(X^n ; Y^n)
+C^{(I)} \triangleq \max _{X \sim P_{X}} I(X ; Y)
 $$
-where the maximum is over all distributions on X.
+where the maximum is over all distributions on $X$.
 
 
 
@@ -170,9 +169,14 @@ We now calculate the information capacity for some simple channel models.
 
 ## Noiseless binary channel
 
-Consider the following transition model for the channel, where the arrows are annotated with values of $p(y|x)$:
+Identity (noiseless) channels: An identity channel has equal size input and output alphabets $(|\mathcal{X}|=|\mathcal{Y}|)$ and channel transition probability satisfying
+$$
+P_{Y \mid X}(y \mid x)= \begin{cases}1 & \text { if } y=x \\ 0 & \text { if } y \neq x\end{cases}
+$$
 
-![image-20231130141355968](/Users/lyk/Library/Application Support/typora-user-images/image-20231130141355968.png)
+This is a noiseless or perfect channel as the channel input is received error-free at the channel output.
+
+
 
 To calculate the information capacity, note that for any distribution over the inputs p(x) we have
 $$
@@ -223,46 +227,65 @@ where the maximum is achieved when $X \sim \text{Bern}(\frac 1 2)$.
 
 ## Noisy typewriter
 
-In this model, each of the 26 characters of the alphabet are either transmitted exactly with probability 0.5, or replaced by the next character in the alphabet with probability 0.5:
+Consider a 26-key typewriter. If pushing a key results in printing the associated letter, what is the capacity C in bits?
+
+Solution: If the typewriter prints out whatever key is struck, then the output, $Y$, is the same as the input, $X$, and
+$$
+C=\max I(X ; Y)=\max H(X)=\log 26,
+$$
+attained by a uniform distribution over the input.
+
+***
+
+(b) Now suppose that pushing a key results in printing that letter or the next (with equal probability). Thus A → A or B, . . ., Z → Z or A. what is the capacity?
 
 ![image-20231130145257885](/Users/lyk/Library/Application Support/typora-user-images/image-20231130145257885.png)
 
-If all characters were transmitted exactly, we would expect a single transmission to carry log2 26 bits, which clearly can’t be achieved for this channel. 
-
-But if we only <u>transmit every other letter</u> (一个隔一个传, 例如只传A, C, E...), then if we receive A or B we will know that A was transmitted, if we receive C or D we will know that C was transmitted, etc. Hence we can use the channel in such a way that it is essentially equivalent to the noisy channel with non-overlapping output distributions, and we might expect to transmit log2 13 bits/channel use.
-
-
-
-To calculate the information capacity, first note that for any input distribution $p(x)$, the marginal entropy of $Y$ is at most $H(Y) \leq \log _2 26$, which can be achieved with equality if $p(x)$ is uniform. **//WHY???**
-
-
-
-Also, the conditional entropy of $Y$ given $X$ is
+In this case, the output is either equal to the input (with probability $1 / 2$ ) or equal to the next letter (with probability 1/2). Hence $H(Y \mid X)=\log 2$ independent of the distribution of $X$, and hence
 $$
-\begin{aligned}
-H(Y \mid X) & =\sum_x p(x) H(Y \mid X=x) \\
-& =\sum_x p(x) H(\text { Bernoulli }(1 / 2)) \\
-& =\sum_x p(x) \\
-& =1
-\end{aligned}
+C=\max I(X ; Y)=\max H(Y)-\log 2=\log 26-\log 2=\log 13,
 $$
-
-So
-$$
-\begin{aligned}
-\max _{p(x)} I(X, Y) & =\max _{p(x)} H(Y)-H(Y \mid X) \\
-& =\max _{p(x)} H(Y)-1 \\
-& =\log _2 26-1 \\
-& =\log _2 13
-\end{aligned}
-$$
-
-
-
+attained for a uniform distribution over the output, which in turn is attained by a uniform distribution on the input. //WHY??
 
 ## Binary symmetric channel (BSC)
 
-![image-20231130141629646](/Users/lyk/Library/Application Support/typora-user-images/image-20231130141629646.png)
+![image-20231206231609331](/Users/lyk/Library/Application Support/typora-user-images/image-20231206231609331.png)
+
+Binary symmetric channels: A binary symmetric channel (BSC) is a channel with binary input and output alphabets such that each input has a (conditional) probability given by $\varepsilon$ for being received inverted at the output, where $\varepsilon \in[0,1]$ is called the channel's crossover probability or bit error rate. The channel's transition distribution matrix is given by
+$$
+\begin{aligned}
+\mathbb{Q} & =\left[p_{x, y}\right]=\left[\begin{array}{ll}
+p_{0,0} & p_{0,1} \\
+p_{1,0} & p_{1,1}
+\end{array}\right] \\
+& =\left[\begin{array}{ll}
+P_{Y \mid X}(0 \mid 0) & P_{Y \mid X}(1 \mid 0) \\
+P_{Y \mid X}(0 \mid 1) & P_{Y \mid X}(1 \mid 1)
+\end{array}\right]=\left[\begin{array}{cc}
+1-\varepsilon & \varepsilon \\
+\varepsilon & 1-\varepsilon
+\end{array}\right]
+\end{aligned}
+$$
+and can be graphically represented via a transition diagram as shown in Fig. 4.2.
+
+* If we set $\varepsilon=0$, then the BSC reduces to the binary identity (noiseless) channel. The channel is called "symmetric" since $P_{Y \mid X}(1 \mid 0)=P_{Y \mid X}(0 \mid 1)$; i.e., it has the same probability for flipping an input bit into a 0 or a 1 . A detailed discussion of DMCs with various symmetry properties will be discussed later in this chapter.
+
+Despite its simplicity, the $\mathrm{BSC}$ is rich enough to capture most of the complexity of coding problems over more general channels. For example, it can exactly model the behavior of practical channels with additive memoryless Gaussian noise used in conjunction of binary symmetric modulation and hard-decision demodulation (e.g., see [407, p. 240]). 
+
+
+
+It is also worth pointing out that the **BSC can be explicitly represented via a binary modulo- 2 additive noise channel** whose output at time $i$ is the modulo-2 sum of its input and noise variables:
+$$
+\begin{equation} \label{eq_BSC}
+Y_i=X_i \oplus Z_i \text { for } i=1,2, \ldots,
+\end{equation}
+$$
+where $\oplus$ denotes addition modulo-$2$, $Y_i$, $X_i$, and $Z_i$ are the channel output, input, and noise, respectively, at time $i$, the alphabets $\mathcal{X}=\mathcal{Y}=\mathcal{Z}=\{0,1\}$ are all binary. 
+
+It is assumed in $\eqref{eq_BSC}$ that $X_i$ and $Z_j$ are **independent** of each other for any $i, j=1,2, \ldots$, and that the noise process is a Bernoulli $(\varepsilon)$ process-i.e., a binary i.i.d. process with $\operatorname{Pr}[Z=1]=\varepsilon$.
+
+
 
 We have
 $$
@@ -365,7 +388,7 @@ where $Z$ has some distribution on the integers $\{0, 1, 2, . . . , r − 1\}$, 
 
 
 
-For such a channel, we have that $H(Y \mid X=x)=c$ is constant for all $x \in \mathcal{X}$ and so $H(Y \mid X)=c$ as well, and so for any $x \in \mathcal{X}$
+For such a channel, we have that $H(Y \mid X=x)=c$ is **constant** for all $x \in \mathcal{X}$ and so $H(Y \mid X)=c$ as well(See [Appendix: Proof1]()), and so for any $x \in \mathcal{X}$
 $$
 \begin{aligned}
 I(X, Y) & =H(Y)-H(Y \mid X) \\
@@ -374,40 +397,9 @@ I(X, Y) & =H(Y)-H(Y \mid X) \\
 \end{aligned}
 $$
 
-The inequality is achieved exactly when the distribution of $Y$ is uniform. For a symmetric channel, $Y$ is uniform whenever $X$ is uniform, since then
-$$
-\begin{aligned}
-p(y) & =\sum_x p(y \mid x) p(x) \\
-& =\frac{1}{|\mathcal{X}|} \sum_x p(y \mid x)
-\end{aligned}
-$$
-which, by assumption, is constant for all $y$ since the columns of $P$ are permutations of each other.
+**The inequality is achieved exactly when the distribution of $Y$ is uniform**(See [Theorem: $H(X) \leq \log |\mathcal{X}|$](https://lyk-love.cn/2023/10/15/jensen%E2%80%99s-inequality/?highlight=jens#theorem-hx-leq-log-mathcalx), with equality achieved iff $X$ has a uniform distribution over $\mathcal{X}$.). 
 
-## Proof
-
-Proof: "For such a channel, we have that $H(Y \mid X=x)=c$ is constant for all $x \in \mathcal{X}$ and so $H(Y \mid X)=c$ as well, and so for any $x \in \mathcal{X}$".
-
-
-
-Now consider a channel with a $3 \times 3$ transition matrix:
-$$
-\begin{bmatrix}
-  a & b & 1-ab \\
-  b & 1-ab & a \\
-  1-ab & a & b \\
-\end{bmatrix}
-$$
-
-
-We find out that $H(Y|X=x_1) = H(Y|X=x_2) = H(Y|X=x_3)$. Denote it as $c$. Thus $c$ is constant.
-
-Then
-$$
-H(Y|X) = \sum_{x \in \mathcal X} p(x) H(Y|X=x) = \sum_{x \in \mathcal X} p(x) \cdot c = c .
-$$
-
-
-Q.E.D.
+We observe that **uniform input distribution can achieves the uniform output distribution**. (See [Appendix: Proof2]())
 
 ## Weakly Symmetric Channels
 
@@ -505,3 +497,49 @@ Direct Part: if $R < \max_{p(x)} I(X; Y )$, then $R$ is achievable, i.e., ∃ sc
 # Channel Coding Theorem: Converse Part
 
 Converse part: if $R > \max_{p(x)} I (X ; Y )$, then R is not achievable.
+
+# Appendix
+
+## Proof1
+
+Proof: "For such a channel, we have that $H(Y \mid X=x)=c$ is constant for all $x \in \mathcal{X}$ and so $H(Y \mid X)=c$ as well, and so for any $x \in \mathcal{X}$".
+
+
+
+Now consider a channel with a $3 \times 3$ transition matrix:
+$$
+\begin{bmatrix}
+  a & b & 1-ab \\
+  b & 1-ab & a \\
+  1-ab & a & b \\
+\end{bmatrix}
+$$
+
+
+We find out that $H(Y|X=x_1) = H(Y|X=x_2) = H(Y|X=x_3)$. Denote it as $c$. Thus $c$ is constant.
+
+Then
+$$
+H(Y|X) = \sum_{x \in \mathcal X} p(x) H(Y|X=x) = \sum_{x \in \mathcal X} p(x) \cdot c = c .
+$$
+
+
+Q.E.D.
+
+## Proof2
+
+**Proof:** "uniform input distribution can achieves the uniform output distribution"
+
+If $X$ follow an uniform distribution, then $p(x) = \frac{1}{|\mathcal X|}$. We obtain
+$$
+\begin{aligned}
+p(y) & =\sum_x p(y \mid x) p(x) \\
+& =\frac{1}{|\mathcal{X}|} \sum_x p(y \mid x)
+\end{aligned}
+$$
+Because the columns of $P$ are permutations of each other, and $\sum_x p(y \mid x)$ is just the sum of the colum when $Y=y$, then $\sum_x p(y \mid x)$ is constant for all $y$.  Since $p(y)$ is constant, $Y$ follows an uniform distribution.
+
+Q.E.D.
+
+## Proof3
+

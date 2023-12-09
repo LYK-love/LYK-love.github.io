@@ -12,9 +12,7 @@ date: 2023-10-15 02:23:22
 Ref:
 
 1. *Elements of Information Theory*
-2. [EE 376A: Information Theory](https://web.stanford.edu/class/ee376a/) - Stanford University
-3. [Probability_Theory by Kyle Siegrist](https://stats.libretexts.org/Bookshelves/Probability_Theory/Probability_Mathematical_Statistics_and_Stochastic_Processes_(Siegrist)/02%3A_Probability_Spaces)
-4. [The Book of Statistical Proofs](https://statproofbook.github.io/D/ent)
+2. *An Introduction to Single-User Information Theory*
 
 <!--more-->
 
@@ -22,36 +20,22 @@ Ref:
 
 Entropy is a fundamental concept in information theory. It's **a measure of the average uncertainty in the random variable**. It is **the number of bits on average required to describe the random variable**.
 
+## Shannon Entropy
 
-
-For a discrete random variable $X$ with alphabet $\mathcal X$ and probability mass function $p(x) \triangleq \operatorname{Pr}[X=x]$, we define entropy as
+Definition: The entropy of a discrete random variable $X$ with pmf $P_X(\cdot)$ is denoted by $H(X)$ or $H\left(P_X\right)$ and defined by
 $$
-H_b(X)=\mathbb{E}\left[\log _2 \frac{1}{p(X)}\right]=\sum_{x \in \mathcal X} p(x) \log _2 \frac{1}{p(x)} .
+H_b(X):=-\sum_{x \in \mathcal{X}} P_X(x) \cdot \log _2 P_X(x) \quad \text { (bits) }
 $$
 The formula for information entropy was introduced by Claude E. Shannon in his 1948 paper "[A Mathematical Theory of Communication](https://dl.acm.org/doi/pdf/10.1145/584091.584093?casa_token=wqoh-zFX88sAAAAA:1_6aYy6mdwnp-V-k9SdBhQYm_1k254fdb3UQtftXA_odjAacK01ilqwAZ2P9WJgACwvd7OS_Khf4)".
 
 * **Label-invariance**: Entropy is label-invariant, meaning that it depends only on the probability distribution and not on the actual values that the random variable $X$.
 * Notably, $H (X)$ is itself a random variable, because $X$ is a random variable.
+* Symbol convention:
+  1. $\log$ is assumed to be $\log_2$ unless otherwise indicated.
+  2. (在 $\log$函数 底为2时)Entropy的单位是bit.
+  3. $H(X)$的下标取决于使用的$\log$函数的底. 因此$H(X), H_2(X), H_b(X)$是相同的($b$代表二进制的比特). 如果 $\log$函数 使用其它底, 设为$a$, 那么必须清楚地在文中说明: $H_a(X) = \sum_x p(x) \log _a \frac{1}{p(x)}$.
 
-## Symbol Convention
 
-* $\log$ is assumed to be $\log_2$ unless otherwise indicated.
-
-* (在 $\log$函数 底为2时)Entropy的单位是bit.
-
-* $H(X)$的下标取决于使用的$\log$函数的底. 因此$H(X), H_2(X), H_b(X)$是相同的($b$代表二进制的比特). 如果 $\log$函数 使用其它底, 设为$a$, 那么必须清楚地在文中说明: $H_a(X) = \sum_x p(x) \log _a \frac{1}{p(x)}$.
-
-* Given a probability distribution $p$ and a random variable $X$, $X \sim p$, then $H(X)$ can also be expressed as $H(p)$. 
-
-  Therefore, the entropy of all random variables $X,Y,Z,…$ that follow the distribution $p$ is $H(p)$. This is **unambiguous** because random variables that follow the same probability distribution have the same entropy.
-
-* $\mathbb{E}(X)$是随机变量$X$的期望, $\mathbb{E}(X) = \sum_{x \in \mathcal X} X.p(x)$. 这里的随机变量是随机变量$X$的函数$g(X) = \log_2 \frac{1}{p(X)}$, 所以有:
-  $$
-  \mathbb{E}(g(X)) = \sum_{x \in \mathcal X} g(x)p(x) = \sum_{x \in \mathcal X} p(x) \log _2 \frac{1}{p(x)} .
-  $$
-
-  * 有时我们会省略$x \in \mathcal X$为$x$, 即: $H_b(X)=\sum_{x} p(x) \log _2 \frac{1}{p(x)} .$
-  * $\mathbb{E}_{X \sim p}(X)$: denotes that  $X \sim p$.
 
 ## Properties
 
@@ -117,86 +101,40 @@ $$
 
 There is nothing really new in this definition because $(X,Y)$ can be considered to be a single vector-valued random variable.
 
-**Definition:** If $(X, Y ) ∼ p(x, y)$, the **joint entropy** $H (X, Y )$ is defined as
-$$
-H\left(X, Y\right)=\mathbb{E}\left[\log \frac{1}{p\left(X, Y\right)}\right] = \sum_{x \in \mathcal X}\sum_{y \in \mathcal Y} p(x,y) \log _2 \frac{1}{p(x,y)} .
-$$
-If $X$ and $Y$ are independent, we can show that
+**Definition:** The joint entropy $H(X, Y)$ of random variables $(X, Y)$ is defined by
 $$
 \begin{aligned}
-H\left(X, Y\right) & =\mathbb{E}\left[\log \frac{1}{p\left(X\right) p\left(Y\right)}\right] \\
-& =\mathbb{E}\left[\log \frac{1}{p\left(X\right)}\right]+\mathbb{E}\left[\log \frac{1}{p\left(Y\right)}\right] \\
-& =H\left(X\right)+H\left(Y\right) .
+H(X, Y) & :=-\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X, Y}(x, y) \cdot \log _2 P_{X, Y}(x, y) \\
+& = \mathbb E\left[\log _2 \frac {1} {P_{X, Y}(X, Y)} \right] .
 \end{aligned}
 $$
 
-But if $X$ and $Y$ are not independent, we can use [chain rule](https://lyk-love.cn/2023/10/15/Shannon-Entrophy/#chain-rule-for-entropy2-variables) to compute $H(X,Y)$.
+The conditional entropy can be similarly defined as follows.
+
+
 
 # Conditional Entropy
 
-**Definition:** If $(X, Y ) ∼ p(x, y)$, the **conditional entropy** $H(X|Y)$ is defined as
+Definition 2.9 (Conditional entropy) Given two jointly distributed random variables $X$ and $Y$, the conditional entropy $H(Y \mid X)$ of $Y$ given $X$ is defined by
 $$
-H\left(Y | X\right)=\mathbb{E}\left[\log \frac{1}{p\left(Y | X\right)}\right] .
+H(Y \mid X):=\sum_{x \in \mathcal{X}} P_X(x)\left(-\sum_{y \in \mathcal{Y}} P_{Y \mid X}(y \mid x) \cdot \log _2 P_{Y \mid X}(y \mid x)\right),
 $$
-And we can prove
+where $P_{Y \mid X}(\cdot \mid \cdot)$ is the conditional pmf of $Y$ given $X$.
+Equation (2.1.5) can be written into three different but equivalent forms:
 $$
-\mathbb{E}\left[\log \frac{1}{p\left(Y | X\right)}\right] = \sum_{x \in \mathcal X}p(x) H(Y|X=x) .
-$$
-
-
-So that
-$$
-H\left(Y | X\right)=\mathbb{E}\left[\log \frac{1}{p\left(Y | X\right)}\right] = \sum_{x \in \mathcal X}p(x) H(Y|X=x) .
-$$
-
-* Property: $H(Y|X) \le H(Y)$, see [->proof](https://lyk-love.cn/2023/10/15/jensen%E2%80%99s-inequality/#theorem-conditioning-reduces-entropy).
-
-## Proof
-
-Let's start by looking at $H(Y \mid X)$.
-$$
-\begin{equation} \label{eq3.1}
 \begin{aligned}
-H(Y \mid X) & =\mathbb{E}\left[\log \frac{1}{p(y \mid x)}\right] \\
-& =\sum_{x, y} p(x, y) \log \frac{1}{p(y \mid x)}
+H(Y \mid X) & =-\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X, Y}(x, y) \cdot \log _2 P_{Y \mid X}(y \mid x) \\
+& =\mathbb E\left[\log _2 \frac {1} {P_{Y \mid X}(Y \mid X)} \right] \\
+& =\sum_{x \in \mathcal{X}} P_X(x) \cdot H(Y \mid X=x)
 \end{aligned}
-\end{equation}
 $$
-$\sum_{x, y} p(x, y)$也可写作$\sum_{x \in \mathcal X} \sum_{y \in \mathcal Y} p(x, y)$.
+where $H(Y \mid X=x):=-\sum_{y \in \mathcal{Y}} P_{Y \mid X}(y \mid x) \log _2 P_{Y \mid X}(y \mid x)$.
 
+* $\sum_{x, y} p(x, y)$也可写作$\sum_{x \in \mathcal X} \sum_{y \in \mathcal Y} p(x, y)$.
 
+* The probability distributions for the expectation and in the function itself are not the same! If you are unhappy with that, just remember that for any arbitrary function, $\mathbb{E}[f(X, Y)]=\sum_{x, y} p(x, y) f(x, y)$, and in this case, that arbitrary function is $\log \frac{1}{p(y \mid x)}$.
 
-Note that the probability distributions for the expectation and in the function itself are not the same! If you are unhappy with that, just remember that for any arbitrary function, $\mathbb{E}[f(X, Y)]=\sum_{x, y} p(x, y) f(x, y)$, and in this case, that arbitrary function is $\log \frac{1}{p(y \mid x)}$.
-Okay, so let's go back to $\eqref{eq3.1}$
-$$
-\begin{equation}\label{eq3.2}
-\begin{aligned}
-H(Y \mid X) & =\sum_{x, y} p(x, y) \log \frac{1}{p(y \mid x)} \\
-& =\sum_x p(x) \sum_y p(y \mid x) \log \frac{1}{p(y \mid x)} \\
-& =\sum_x p(x) H(Y \mid X=x)
-\end{aligned}
-\end{equation}
-$$
-This is a measure of, on average, how much extra information you get by observing a second variable $Y$, given that you have already observed the first variable $X$.
-
-## Properties
-
-Suppose that $X$ is a random variable whose entropy $H(X)$ is $k$ bits. Suppose that $Y(X)$ is
-a **deterministic** function that takes on a different value for each value of $X$.
-
-1. $H(Y ) = k \quad \text{bits}$ also.
-2. The conditional entropy of Y given X: $H(Y|X) = 0$ because of determinism.
-3. The conditional entropy of X given Y : $H(X|Y) = 0$ also.
-4. The joint entropy $H(X, Y) = H(X) + H(Y|X) = k \quad \text{bits}$.
-
-
-
-Suppose now that the deterministic function $Y(X)$ is not invertible; in other words,
-different values of $X$ may correspond to the same value of $Y(X)$. In that case, 
-
-1. The new distribution of $Y$ has lost entropy and so $H(Y) < k \quad \text{bits}$.
-2. Now knowledge of Y no longer determines $X$, and so the conditional entropy $H(X|Y)$
-   is no longer zero: $H(X|Y) > 0$.
+The relationship between joint entropy and conditional entropy is exhibited by the fact that the entropy of a pair of random variables is the entropy of one plus the conditional entropy of the other.
 
 # Chain Rule for Entropy(2 Variables)
 
@@ -259,39 +197,74 @@ $$
 $$
 Q.E.D.
 
-# Chain Rule for Entropy(3 Variables)
+# Properties of Joint Entropy and Conditional Entropy
 
-Equation $\eqref{eq4}$ is the chain rule for entropy for <u>two</u> random variables, but it can easily be extended to more variables. For example, for three random variables $X$, $Y$ , and $Z$,
-$$
-\begin{align}
-H(X, Y, Z) & =H(X)+H(Y, Z \mid X) \label{eq4.1}  \\
-& =H(X)+H(Y \mid X)+H(Z \mid X, Y) \label{eq4.2} 
-\end{align}
-$$
-Note: $H(Y,Z \mid X)$指的是以$X$为条件, $H(Z \mid X, Y)$指的是以$X,Y$为条件.
+## $H(Y|X) \le H(Y)$
 
+$H(Y|X) \le H(Y)$( see [->proof](https://lyk-love.cn/2023/10/15/jensen%E2%80%99s-inequality/#theorem-conditioning-reduces-entropy) ) with equality holding iff $X$ and $Y$ are **independent**.
 
+## Entropy is additive for independent r.v.
 
-The first setp, which is $\eqref{eq4.1}$, comes from directly applying the chain rule for two variables.
-
-To understand the second setp, which is $\eqref{eq4.2}$, we must know the conclusion from $\eqref{eq3.2}$:
+*Entropy is additive for independent random variables; i.e.,*
 $$
 \begin{aligned}
-H(Y \mid X) & =\mathbb{E}\left[\log \frac{1}{p(y \mid x)}\right] \\
-& =\sum_{x, y} p(x, y) \log \frac{1}{p(y \mid x)}
+H\left(X, Y\right) 
+& =\mathbb{E}\left[\log \frac{1}{p\left(X,Y\right)}\right] \\
+& =\mathbb{E}\left[\log \frac{1}{p\left(X\right) p\left(Y\right)}\right] \\
+& =\mathbb{E}\left[\log \frac{1}{p\left(X\right)}\right]+\mathbb{E}\left[\log \frac{1}{p\left(Y\right)}\right] \\
+& =H\left(X\right)+H\left(Y\right) .
 \end{aligned}
 $$
 
+* The 2nd line holds since $X,Y$ are independent.
 
-Substitute it into $\eqref{eq4.1}$:
+If $X$ and $Y$ are not independent, we can use [chain rule](https://lyk-love.cn/2023/10/15/Shannon-Entrophy/#chain-rule-for-entropy2-variables) to compute $H(X,Y)$.
+
+## Conditional entropy is lower additive
+
+Conditional entropy is lower additive; i.e.,
+$$
+H\left(X_1, X_2 \mid Y_1, Y_2\right) \leq H\left(X_1 \mid Y_1\right)+H\left(X_2 \mid Y_2\right) .
+$$
+Equality holds iff
+$$
+P_{X_1, X_2 \mid Y_1, Y_2}\left(x_1, x_2 \mid y_1, y_2\right)=P_{X_1 \mid Y_1}\left(x_1 \mid y_1\right) P_{X_2 \mid Y_2}\left(x_2 \mid y_2\right)
+$$
+for all $x_1, x_2, y_1$ and $y_2$.
+
+Proof: Using the [chain rule](https://lyk-love.cn/2023/10/15/Shannon-Entrophy/#chain-rule-for-entropy2-variables) for conditional entropy and the fact that conditioning reduces entropy, we can write
 $$
 \begin{aligned}
-H(Y, Z \mid X) & =\sum_x p(x) H(Y, Z \mid X=x) \\
-& =\sum_x p(x) H(Y \mid X=x)+\sum_x p(x) H(Z \mid Y, X=x) \\
-& =H(Y \mid X)+H(Z \mid Y, X)
+H\left(X_1, X_2 \mid Y_1, Y_2\right) & =H\left(X_1 \mid Y_1, Y_2\right)+H\left(X_2 \mid X_1, Y_1, Y_2\right) \\
+& \leq H\left(X_1 \mid Y_1, Y_2\right)+H\left(X_2 \mid Y_1, Y_2\right) \\
+& \leq H\left(X_1 \mid Y_1\right)+H\left(X_2 \mid Y_2\right)
 \end{aligned}
 $$
-Q.E.D.
+
+For the 2nd line, equality holds iff $X_1$ and $X_2$ are conditionally independent given $\left(Y_1, Y_2\right)$ : $P_{X_1, X_2 \mid Y_1, Y_2}\left(x_1, x_2 \mid y_1, y_2\right)=P_{X_1 \mid Y_1, Y_2}\left(x_1 \mid y_1, y_2\right) P_{X_2 \mid Y_1, Y_2}\left(x_2 \mid y_1, y_2\right)$. 
+
+For the 3rd line, equality holds iff $X_1$ is conditionally independent of $Y_2$ given $Y_1$ (i.e., $P_{X_1 \mid Y_1, Y_2}\left(x_1 \mid y_1, y_2\right)=$ $P_{X_1 \mid Y_1}\left(x_1 \mid y_1\right)$ ), and $X_2$ is conditionally independent of $Y_1$ given $Y_2$ (i.e., $P_{X_2 \mid Y_1, Y_2}\left(x_2 \mid y_1\right.$, $\left.\left.y_2\right)=P_{X_2 \mid Y_2}\left(x_2 \mid y_2\right)\right)$. 
+
+Hence, the desired equality condition of the lemma is obtained.
+
+## Others
+
+Suppose that $X$ is a random variable whose entropy $H(X)$ is $k$ bits. Suppose that $Y(X)$ is
+a **deterministic** function that takes on a different value for each value of $X$.
+
+1. $H(Y ) = k \quad \text{bits}$ also.
+2. The conditional entropy of Y given X: $H(Y|X) = 0$ because of determinism.
+3. The conditional entropy of X given Y : $H(X|Y) = 0$ also.
+4. The joint entropy $H(X, Y) = H(X) + H(Y|X) = k \quad \text{bits}$.
+
+
+
+Suppose now that the deterministic function $Y(X)$ is not invertible; in other words,
+different values of $X$ may correspond to the same value of $Y(X)$. In that case, 
+
+1. The new distribution of $Y$ has lost entropy and so $H(Y) < k \quad \text{bits}$.
+2. Now knowledge of Y no longer determines $X$, and so the conditional entropy $H(X|Y)$
+   is no longer zero: $H(X|Y) > 0$.
 
 
 
@@ -312,7 +285,7 @@ In the above definition, we use the convention that $0 \log \frac{0}{0}=0$ and t
 
 We will soon show that relative entropy is always nonnegative and is zero if and only if $p=q$. However, it is not a true distance between distributions since **it is not symmetric** and does not satisfy the triangle inequality. Nonetheless, it is often useful to think of relative entropy as a "distance" between distributions.
 
-## Properties
+## Properties of Relative Entropy
 
 1. In general, relative entropy is asymmetric $(D(p \| q) \neq D(q \| p))$, and does not satisfy the triangle inequality. Therefore, it is **not** a metric.
 2. $D(p \| p)=0$.
@@ -377,20 +350,49 @@ $$
 I(X ; Y) \triangleq H(X)-H(X \mid Y)
 $$
 
-## Mutual Information and Relative Entropy
-
-Mutual information between two random variables $X, Y$ can be expressed in terms relative entropy between their joint distribution $p_{X, Y}$ and the product of their marginal distributions $p_X \cdot p_Y$
+It can be expressed in terms *relative entropy* between their joint distribution $p_{X, Y}$ and the product of their marginal distributions $p_X \cdot p_Y$
 $$
 \begin{aligned}
 I(X ; Y) & =\sum_{x, y} p(x, y) \log \frac{p_{X, Y}(x, y)}{p_X(x) \cdot p_Y(y)} \\
 & =D\left(p_{X, Y} \| p_X \cdot p_Y\right) .
 \end{aligned}
 $$
-We will prove Property 3 using Jensen's inequality and thereby prove Theorem 1.
 
 
 
-## Property: Symmetric
+
+## Properties of Mutual Information
+
+### Basics
+
+![Relationship between entropy and mutual information](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Information%20Theory/Shannon%20Entropy/Relationship%20between%20entropy%20and%20mutual%20information.png)
+
+1. $I(X ; Y)=\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} P_{X, Y}(x, y) \log _2 \frac{P_{X, Y}(x, y)}{P_X(x) P_Y(y)}$.
+
+2. $I(X ; Y)=I(Y ; X)=H(Y)-H(Y \mid X)$.
+3. $I(X ; Y)=H(X)+H(Y)-H(X, Y)$.
+
+4. $I(X ; Y) \leq H(X)$ with equality holding iff $X$ is a function of $Y$ (i.e., $X=f(Y)$ for some function $f(\cdot))$.
+5. $I(X ; Y) \geq 0$ with equality holding iff $X$ and $Y$ are independent.
+6. $I(X ; Y) \leq \min \left\{\log _2|\mathcal{X}|, \log _2|\mathcal{Y}|\right\}$.
+
+
+
+Proof:
+
+Properties 1, 2, 3, and 4 follow immediately from the definition. 
+
+Property 5 is a direct consequence of $D(p \| q) \geq 0$, since $I(X:Y) = D\left(p_{X, Y} \| p_X \cdot p_Y\right)$ .
+
+Property 6 holds iff $I(X ; Y) \leq \log _2|\mathcal{X}|$ and $I(X ; Y) \leq \log _2|\mathcal{Y}|$. 
+
+To show the first inequality, we write $I(X ; Y)=H(X)-$ $H(X \mid Y)$, use the fact that $H(X \mid Y)$ is nonnegative and apply [Theorem: $H(X) \le |\mathcal X|$](https://lyk-love.cn/2023/10/15/jensen%E2%80%99s-inequality/#theorem-hx-leq-log-mathcalx). A similar proof can be used to show that $I(X ; Y) \leq \log _2|\mathcal{Y}|$.
+
+The relationships between $H(X), H(Y), H(X, Y), H(X \mid Y), H(Y \mid X)$, and $I(X ; Y)$ can be illustrated by the Venn diagram in the above figure.
+
+
+
+### $I(X:Y) = I(Y:X)$
 
 Expanding $H(X)-H(X \mid Y)$, we have:
 $$
@@ -411,30 +413,6 @@ $$
 
 
 So **mutual information is symmetric**.
-
-## Definition
-
-It is for this reason that we call this quantity mutual information-because $I(X ; Y)$ does not "prefer" $X$ or $Y$. Formally, mutual information is defined as:
-**Definition: Mutual Information**
-$$
-\begin{aligned}
-I(X;Y) & \triangleq H(X)+H(Y)-H(X, Y) \\
-& =H(X)-H(X \mid Y) \\
-& =H(Y)-H(Y \mid X) \\
-& = \mathbb E[\log \frac{p(X,Y)}{p(X)p(Y)}].
-\end{aligned}
-$$
-
-
-## Relationship between entropy and mutual information
-
-The meaure of entropy, relative entropy and mutual information can be visualized in the figure below:
-
-
-
-![Relationship between entropy and mutual information](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Information%20Theory/Shannon%20Entropy/Relationship%20between%20entropy%20and%20mutual%20information.png)
-
-## Properties
 
 ### $I(X ; X)=H(X)$
 
@@ -478,11 +456,162 @@ with equality if and only if $X$ and $Y$ are conditionally independent given $Z$
 
 ## Conditional Mutual Information
 
-Definition: The conditional mutual information of random variables $X$ and $Y$ given $Z$ is defined by
+The conditional mutual information, denoted by $I(X ; Y \mid Z)$, is defined as the common uncertainty between $X$ and $Y$ under the knowledge of $Z$ :
+$$
+I(X ; Y \mid Z):=H(X \mid Z)-H(X \mid Y, Z)
+$$
+
+Lemma: Defining the joint mutual information between $X$ and the pair $(Y, Z)$ as in (2.2.1) by
+$$
+I(X ; Y, Z):=H(X)-H(X \mid Y, Z),
+$$
+we have
+$$
+I(X ; Y, Z)=I(X ; Y)+I(X ; Z \mid Y)=I(X ; Z)+I(X ; Y \mid Z) .
+$$
+$X$ 和 $(Y,Z)$的互信息 = $X$ 和 $Y$ 的互信息 + 在$Y$ 已知的情况下 $X$ 和 $Z$ 的互信息.
+
+Proof: Without loss of generality, we only prove the first equality:
 $$
 \begin{aligned}
-I(X ; Y \mid Z) & =H(X \mid Z)-H(X \mid Y, Z) \\
-& =E_{p(x, y, z)} \log \frac{p(X, Y \mid Z)}{p(X \mid Z) p(Y \mid Z)} .
+I(X ; Y, Z) & =H(X)-H(X \mid Y, Z) \\
+& =H(X)-H(X \mid Y)+H(X \mid Y)-H(X \mid Y, Z) \\
+& =I(X ; Y)+I(X ; Z \mid Y) .
 \end{aligned}
 $$
 
+The above lemma can be read as follows: the information that $(Y, Z)$ has about $X$ is equal to the information that $Y$ has about $X$ plus the information that $Z$ has about $X$ when $Y$ is already known.
+
+# Properties of Entropy and Mutual Information for Multiple Random Variables
+
+## Chain rule for joint entropy
+
+**Theorem**: Let $X_1, X_2, \ldots, X_n$ be drawn according to $P_{X^n}\left(x^n\right):=P_{X_1, \ldots, X_n}\left(x_1, \ldots, x_n\right)$, where we use the common superscript notation to denote an $n$-tuple: $X^n:=\left(X_1, \ldots, X_n\right)$ and $x^n:=\left(x_1, \ldots, x_n\right)$.
+
+Then
+$$
+H\left(X_1, X_2, \ldots, X_n\right)=\sum_{i=1}^n H\left(X_i \mid X_{i-1}, \ldots, X_1\right),
+$$
+where $H\left(X_i \mid X_{i-1}, \ldots, X_1\right):=H\left(X_1\right)$ for $i=1$. (The above chain rule can also be written as:
+$$
+H\left(X^n\right)=\sum_{i=1}^n H\left(X_i \mid X^{i-1}\right)
+$$
+where $X^i:=\left(X_1, \ldots, X_i\right)$.)
+
+> For example, for three random variables $X$, $Y$ , and $Z$,
+> $$
+> \begin{aligned}
+> H(X, Y, Z) & =H(X)+H(Y, Z \mid X)   \\
+> & =H(X)+H(Y \mid X)+H(Z \mid X, Y) 
+> \end{aligned}
+> $$
+
+***
+
+Proof:
+
+From [chain rule for 2 r.v.](https://lyk-love.cn/2023/10/15/Shannon-Entrophy/#chain-rule-for-entropy2-variables) ,
+$$
+H\left(X_1, X_2, \ldots, X_n\right)=H\left(X_1, X_2, \ldots, X_{n-1}\right)+H\left(X_n \mid X_{n-1}, \ldots, X_1\right)
+$$
+
+Once again, applying [chain rule for 2 r.v.](https://lyk-love.cn/2023/10/15/Shannon-Entrophy/#chain-rule-for-entropy2-variables) to the first term of the right-hand side of this equation, we have
+$$
+H\left(X_1, X_2, \ldots, X_{n-1}\right)=H\left(X_1, X_2, \ldots, X_{n-2}\right)+H\left(X_{n-1} \mid X_{n-2}, \ldots, X_1\right)
+$$
+
+The desired result can then be obtained by repeatedly applying [chain rule for 2 r.v.](https://lyk-love.cn/2023/10/15/Shannon-Entrophy/#chain-rule-for-entropy2-variables) .
+
+## Chain rule for conditional entropy
+
+Theorem:
+$$
+H\left(X_1, X_2, \ldots, X_n \mid Y\right)=\sum_{i=1}^n H\left(X_i \mid X_{i-1}, \ldots, X_1, Y\right) .
+$$
+
+***
+
+Proof:
+
+The theorem can be proved similarly to Theorem 2.17.
+If $X^n=\left(X_1, \ldots, X_n\right)$ and $Y^m=\left(Y_1, \ldots, Y_m\right)$ are jointly distributed random vectors (of not necessarily equal lengths), then their joint mutual information is given by
+$$
+I\left(X_1, \ldots, X_n ; Y_1, \ldots, Y_m\right):=H\left(X_1, \ldots, X_n\right)-H\left(X_1, \ldots, X_n \mid Y_1, \ldots, Y_m\right) .
+$$
+
+## Chain rule for mutual information
+
+Theorem:
+$$
+I\left(X_1, X_2, \ldots, X_n ; Y\right)=\sum_{i=1}^n I\left(X_i ; Y \mid X_{i-1}, \ldots, X_1\right),
+$$
+where $I\left(X_i ; Y \mid X_{i-1}, \ldots, X_1\right):=I\left(X_1 ; Y\right)$ for $i=1$.
+
+***
+
+Proof:
+
+This can be proved by first expressing mutual information in terms of entropy and conditional entropy, and then applying the chain rules for entropy and conditional entropy.
+
+## Independence bound on entropy
+
+Theorem:
+$$
+H\left(X_1, X_2, \ldots, X_n\right) \leq \sum_{i=1}^n H\left(X_i\right) .
+$$
+
+Equality holds iff all the $X_i$ 's are independent of each other.[^8]
+
+***
+
+Proof:
+
+By applying the chain rule for entropy,
+$$
+\begin{aligned}
+H\left(X_1, X_2, \ldots, X_n\right) & =\sum_{i=1}^n H\left(X_i \mid X_{i-1}, \ldots, X_1\right) \\
+& \leq \sum_{i=1}^n H\left(X_i\right) .
+\end{aligned}
+$$
+
+Equality holds iff each conditional entropy is equal to its associated entropy, that iff $X_i$ is independent of $\left(X_{i-1}, \ldots, X_1\right)$ for all $i$.
+
+## Bound on mutual information
+
+Theorem: If $\left\{\left(X_i, Y_i\right)\right\}_{i=1}^n$ is a process satisfying the conditional independence assumption $P_{Y^n \mid X^n}=\prod_{i=1}^n P_{Y_i \mid X_i}$, then
+$$
+I\left(X_1, \ldots, X_n ; Y_1, \ldots, Y_n\right) \leq \sum_{i=1}^n I\left(X_i ; Y_i\right),
+$$
+with equality holding iff $\left\{X_i\right\}_{i=1}^n$ are independent.
+
+***
+
+Proof:
+
+From the independence bound on entropy, we have
+$$
+H\left(Y_1, \ldots, Y_n\right) \leq \sum_{i=1}^n H\left(Y_i\right) .
+$$
+
+By the conditional independence assumption, we have
+$$
+\begin{aligned}
+H\left(Y_1, \ldots, Y_n \mid X_1, \ldots, X_n\right) & =E\left[-\log _2 P_{Y^n \mid X^n}\left(Y^n \mid X^n\right)\right] \\
+& =E\left[-\sum_{i=1}^n \log _2 P_{Y_i \mid X_i}\left(Y_i \mid X_i\right)\right] \\
+& =\sum_{i=1}^n H\left(Y_i \mid X_i\right) .
+\end{aligned}
+$$
+
+Hence,
+$$
+\begin{aligned}
+I\left(X^n ; Y^n\right) & =H\left(Y^n\right)-H\left(Y^n \mid X^n\right) \\
+& \leq \sum_{i=1}^n H\left(Y_i\right)-\sum_{i=1}^n H\left(Y_i \mid X_i\right) \\
+& =\sum_{i=1}^n I\left(X_i ; Y_i\right),
+\end{aligned}
+$$
+with equality holding iff $\left\{Y_i\right\}_{i=1}^n$ are independent, which holds iff $\left\{X_i\right\}_{i=1}^n$ are independent.
+
+
+
+[^8]: This condition is equivalent to requiring that $X_i$ be independent of $\left(X_{i-1}, \ldots, X_1\right)$ for all $i$. The equivalence can be directly proved using the chain rule for joint probabilities, i.e., $P_{X^n}\left(x^n\right)=$ $\prod_{i=1}^n P_{X_i \mid X_1^{i-1}}\left(x_i \mid x_1^{i-1}\right) ;$ it is left as an exercise.

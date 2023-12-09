@@ -11,7 +11,7 @@ Source:
 
 1. [EE 376A: Information Theory. Winter 2018. Lecture 4.](https://web.stanford.edu/class/ee376a/files/2017-18/lecture_4.pdf) - Stanford University
 2. [EE 376A: Information Theory. Winter 2017. Lecture 4.](https://tselab.stanford.edu/mirror/ee376a_winter1617/Lecture_4.pdf) - Stanford University
-3. Elements of Information Theory
+3. *Elements of Information Theory*
 
 <!--more-->
 
@@ -25,8 +25,10 @@ The law of large numbers states that **for iid random variables**, $\frac{1}{n} 
 
 The AEP states that $\frac{1}{n} \log \frac{1}{p\left(X_1, X_2, \ldots, X_n\right)}$ is **close to the entropy** $H$, where $X_1, X_2, \ldots, X_n$ are i.i.d. random variables and $p\left(X_1, X_2, \ldots, X_n\right)$ is the probability of observing the sequence $X_1, X_2, \ldots, X_n$. Thus, the probability $p\left(X_1, X_2, \ldots, X_n\right)$ assigned to an observed sequence will be close to $2^{-n H}$
 $$
+\begin{aligned}
 \frac{1}{n} \log \frac{1}{p\left(X_1, X_2, \ldots, X_n\right)} \rightarrow H \\
 p\left(X_1, X_2, \ldots, X_n\right) \rightarrow 2^{-nH}
+\end{aligned}
 $$
 
 
@@ -36,11 +38,10 @@ Most of our attention will be on the typical sequences. Any property that is pro
 
 # Notation
 
-1. Memoryless source: $X_1, X_2, \ldots$ **iid** $\sim X$. Note that "memoryless" is used here because samples are drawn iid and **have no dependence** on past realizations.
+1. Memoryless source: $X_1, X_2, \ldots$ **iid** $\sim X$, where $X$ denotes one PMF of arbitory $X_i$. Note that "memoryless" is used here because samples are drawn iid and **have no dependence** on past realizations.
 
-   * Note that $X$ denotes an arbitory r.d. among $X_i$. Because all i.i.d. r.d. have the same probability distribution. 
-     * And in this sense, they have the same entropy as well. **Thus we may use notation $H(X)$ to denot the entropy of arbitory $H(X_i)$.**
-
+   * Note: All i.i.d. r.v. have **the same probability distribution and the same entropy**.
+   
 2. Alphabet: $\mathcal{X}=\{1,2, \ldots, r\}$ specifies the possible values that each symbol $X_i$ can take on. The size of $\mathcal{X}$ is denoted $|\mathcal{X}|$.
 
 3. Source sequence: $X^n=\left(X_1, \ldots, X_n\right)$ denotes the **$n$-tuple** that specifies **a sequence of $n$ source symbols.** In other words, $X^n$ is a [**stochastic process**](). Further note that $\mathcal{X}^n$ indicates the set of all possible source sequences of length $n$.
