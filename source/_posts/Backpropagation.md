@@ -86,7 +86,7 @@ Since parameters are fixed, the predicted values $\hat y$ and all inner-node val
 
 Next, we **optimize these parameters using [Gradient Descent]()** in a backward order, this is called **Back propagation**.
 
-Note: the effect of BP(Back Propagation) equals the **brute force Gradient Descent**. But BP reduces the complexity complexity.
+Note: the effect of BP(Back Propagation) equals the **brute force Gradient Descent**. But BP reduces the computationity complexity.
 
 ## Recall: Gradient Descent
 
@@ -131,7 +131,7 @@ Note: Step2 has already been done in fordward propagation. So in BP we don't nee
 
 We first optimize the parameters $b_3, w_3, w_4$ on the last layer.
 
-Note that since input values $\{x_1,\cdots,x_n\}$ and $\{y_{\text{blue}},\cdots,y_n\}$ are fixed, the predicted values $\{\hat y_{\text{blue}},\cdots, \hat y_n\}$ are fixed as well.
+Note that since input values $\{x_1,\cdots,x_n\}$ and $\{y_{1},\cdots,y_n\}$ are fixed, the predicted values $\{\hat y_{1},\cdots, \hat y_n\}$ are fixed as well.
 
 And we need to change parameters $b_3, w_3, w_4$ here.
 
@@ -258,7 +258,6 @@ xy_pairs = list(zip(x, y))
 ```
 
 
-
 and uninitialized parameters:
 
 ```
@@ -381,8 +380,6 @@ print(f"new loss func value b_3: {new_loss_func_value}")
 new loss func value b_3: 2.884057087700263
 ```
 
-
-
 Then repeat the process.
 
 # Conclusion
@@ -412,7 +409,7 @@ $$
 \frac {\partial y_{\text{green}}} {\partial w_4} 
 \end{aligned}
 $$
-Use BP, due to chain rule, we only need to perform 4 times derivations.
+Using BP, due to chain rule, we only need to perform 4 times derivations.
 
 Moreover, note that the equation $\frac {\partial \text{Loss}} {\partial y_{\text{green}}} $ **has been solved in this layer.** (Of cource we need to evaluate its value every time, but it's a numerical operation and it's quick. The derivation operation is expensive)
 
@@ -433,4 +430,8 @@ $$
 **We don't need to solve** the equation $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$  **again**!
 
 However, this convience only happens in backword propagation. If we use forward propagation to perform derivation, at layer $i-1$ we don't know $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ , so we have to solve it, and at layer $i$ we need to solve it again!
+
+# Future
+
+https://arxiv.org/abs/2212.13345
 

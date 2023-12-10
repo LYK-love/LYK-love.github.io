@@ -29,11 +29,9 @@ Transformer的最大贡献就是给ML的诸多领域提供了一个统一的基�
 
 虽然标题为"Attention Is All You Need", 但Transformer的成功不仅仅是因为其注意力机制, 具体因为什么我也不知道.
 
+Transformer is trained **auto-regressive**ly, which simply means it's trained to predict the next input so if it's being fed.
+
 # Abstract
-
-
-
-
 
 Transformer论文发布于2017年, 当时只将其用于文本翻译.  当时主流的sequence transduction model是结合了encoder and decoder的CNN/RNN, 并将attention mechanism和encoder & decoder 结合起来.
 
