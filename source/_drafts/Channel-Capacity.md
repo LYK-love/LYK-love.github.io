@@ -309,7 +309,7 @@ $$
 $$
 where the last inequality follows because $Y$ is a <u>binary random variable</u>. (For a binary rv, it's largest entropy is 1).
 
-Equality is achieved($H(Y) = 1$) when $Y \sim \text{Bern}(\frac 1 2)$. But how to set $p(x)$ to achieve this?
+Equality ($H(Y) = 1$) is achieved when $Y \sim \text{Bern}(\frac 1 2)$. But how to set $p(x)$ to achieve this?
 
 ### How to achieve equality
 
@@ -343,7 +343,7 @@ $$
 I(X, Y)=H(X)-H(X \mid Y) .
 $$
 
-Note that if we observe $Y=0$ or $Y=1$, then $X$ is known exactly, so $H(X \mid Y \neq e)=0$. Furthermore $H(X \mid Y=e)=H(X)$ **//WHY???** , so
+Note that if we observe $Y=0$ or $Y=1$, then $X$ is known exactly, so $H(X \mid Y \neq e)=0$. Furthermore $H(X \mid Y=e)=H(X)$, so
 $$
 \begin{aligned}
 H(X \mid Y) 
@@ -397,9 +397,11 @@ I(X, Y) & =H(Y)-H(Y \mid X) \\
 \end{aligned}
 $$
 
-**The inequality is achieved exactly when the distribution of $Y$ is uniform**(See [Theorem: $H(X) \leq \log |\mathcal{X}|$](https://lyk-love.cn/2023/10/15/jensen%E2%80%99s-inequality/?highlight=jens#theorem-hx-leq-log-mathcalx), with equality achieved iff $X$ has a uniform distribution over $\mathcal{X}$.). 
+**The inequality is achieved exactly when the distribution of $Y$ is uniform**(See [Theorem: $H(X) \leq \log |\mathcal{X}|$](https://lyk-love.cn/2023/10/15/jensen%E2%80%99s-inequality/?highlight=jens#theorem-hx-leq-log-mathcalx),
 
-We observe that **uniform input distribution can achieves the uniform output distribution**. (See [Appendix: Proof2]())
+we observe that **uniform input distribution can achieves the uniform output distribution**. (See [Appendix: Proof2]())
+
+但是X的别的分布也可能可以满足这点吧?
 
 ## Weakly Symmetric Channels
 

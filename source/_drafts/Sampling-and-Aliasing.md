@@ -42,11 +42,11 @@ The process of converting from digital back to analog is called reconstruction .
   $$
   x[n] = x(nT_s)
   $$
-  where $T_s$ is the **sampling period**, and
+  where $T_s$ is the **sampling period**, and $f_s$ is the **sampling frequency**:
   $$
-  f = \frac 1 T_s \text{samples per second}
+  f_s = \frac {1} {T_s} \text{samples per second} .
   $$
-  is the **sampling frequency**.
+  
 
   The individual values of $x[n]$ are called **samples** of the continuous-time signal.
 
@@ -73,9 +73,9 @@ $$
   * Digital frequency in radians is measured $-\pi < \omega_d < \pi$ or $0 < \omega_d < 2\pi$.
     * One can define a normalized digital frequency, $\omega_d = 2 \pi f_d$, or $f_d = \frac {\omega_d} {2 \pi}$ and the corresponding range is $-\frac 1 2 < f_d < \frac 1 2$ or $0 < f_d < 1$.
   * **Continuous frequency**, $\omega$(sometimes dentoed as $w_c$), has units of **radians/second**.
-* To convert from radians to "linear" units, $\omega_c = 2 \pi f_c$, or $f_c = \frac {\omega_c} {2 \pi}$.
+    * To convert from radians to "linear" units, $\omega_c = 2 \pi f_c$, or $f_c = \frac {\omega_c} {2 \pi}$.
   * **Regular frequency**, e.g. $f_s$, has units of **Hertz** or **1/(second)**.
-
+  
 * To convert between “digital frequency” and continuous frequency, we need to know the sample rate or sampling period.
   $$
   w_d = w_c T_s = \frac {w_c}{f_s}
@@ -352,7 +352,7 @@ And due to $\eqref{eq_interpolation}$:
 $$
 (\sum_{n=-\infty}^{\infty} x_k[n] p\left(t-n T_s\right)) = x_k(t) .
 $$
- 
+
 
 Now since each individual sinusoid is assumed to satisfy the conditions of the sampling theorem, it follows that the D-to-C converter reconstructs each component perfectly, and therefore we conclude that
 $$
