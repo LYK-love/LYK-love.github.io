@@ -20,6 +20,26 @@ Ref:
 
 Entropy is a fundamental concept in information theory. It's **a measure of the average uncertainty in the random variable**. It is **the number of bits on average required to describe the random variable**.
 
+![Relationship between entropy and mutual information](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Information%20Theory/Shannon%20Entropy/Relationship%20between%20entropy%20and%20mutual%20information.png)
+
+Note: 
+
+* joint entropy $H(X,Y)$ 可想象成把两个区域并联, 即 $H(X)$的部分 加上 $H(Y)$中挖掉$H(X)$的部分.
+  $$
+  H(X,Y) = H(X) + H(X|Y) .
+  $$
+  
+* conditional entropy $H(Y|X)$ 可想象成把$H(Y)$的区域**挖掉** 和$H(X)$相关 的部分, 也就是所谓的[Theorem: Conditioning reduces entropy](https://lyk-love.cn/2023/10/15/jensen%E2%80%99s-inequality/#theorem-conditioning-reduces-entropy)).
+  $$
+  H(Y|X) = H(Y) - I(X;Y) .
+  $$
+
+* mutual information $I(X:Y)$ 可想象成$H(X)$ 和 $H(Y)$ 的交集:
+  $$
+  I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X) .
+  $$
+  
+
 ## Shannon Entropy
 
 Definition: The entropy of a discrete random variable $X$ with pmf $P_X(\cdot)$ is denoted by $H(X)$ or $H\left(P_X\right)$ and defined by
@@ -28,7 +48,8 @@ H_b(X):=-\sum_{x \in \mathcal{X}} P_X(x) \cdot \log _2 P_X(x) \quad \text { (bit
 $$
 The formula for information entropy was introduced by Claude E. Shannon in his 1948 paper "[A Mathematical Theory of Communication](https://dl.acm.org/doi/pdf/10.1145/584091.584093?casa_token=wqoh-zFX88sAAAAA:1_6aYy6mdwnp-V-k9SdBhQYm_1k254fdb3UQtftXA_odjAacK01ilqwAZ2P9WJgACwvd7OS_Khf4)".
 
-* **Label-invariance**: Entropy is label-invariant, meaning that it depends only on the probability distribution and not on the actual values that the random variable $X$.
+* **Label-invariance**: Entropy is label-invariant, meaning that **it depends only on the probability distribution** and not on the actual values that the random variable $X$.
+  * E.g.,$H(5X) = H(X)$ because $5X$ and $X$ share the same probability distribution.
 * Notably, $H (X)$ is itself a random variable, because $X$ is a random variable.
 * Symbol convention:
   1. $\log$ is assumed to be $\log_2$ unless otherwise indicated.
@@ -115,15 +136,16 @@ The conditional entropy can be similarly defined as follows.
 
 # Conditional Entropy
 
-Definition 2.9 (Conditional entropy) Given two jointly distributed random variables $X$ and $Y$, the conditional entropy $H(Y \mid X)$ of $Y$ given $X$ is defined by
+**Definition**: Given two jointly distributed random variables $X$ and $Y$, the conditional entropy $H(Y \mid X)$ of $Y$ given $X$ is defined by
 $$
 H(Y \mid X):=\sum_{x \in \mathcal{X}} P_X(x)\left(-\sum_{y \in \mathcal{Y}} P_{Y \mid X}(y \mid x) \cdot \log _2 P_{Y \mid X}(y \mid x)\right),
 $$
 where $P_{Y \mid X}(\cdot \mid \cdot)$ is the conditional pmf of $Y$ given $X$.
-Equation (2.1.5) can be written into three different but equivalent forms:
+This equation can be written into three different but equivalent forms:
 $$
 \begin{aligned}
-H(Y \mid X) & =-\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X, Y}(x, y) \cdot \log _2 P_{Y \mid X}(y \mid x) \\
+H(Y \mid X) 
+& =-\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X, Y}(x, y) \cdot \log _2 P_{Y \mid X}(y \mid x) \\
 & =\mathbb E\left[\log _2 \frac {1} {P_{Y \mid X}(Y \mid X)} \right] \\
 & =\sum_{x \in \mathcal{X}} P_X(x) \cdot H(Y \mid X=x)
 \end{aligned}
@@ -131,6 +153,12 @@ $$
 where $H(Y \mid X=x):=-\sum_{y \in \mathcal{Y}} P_{Y \mid X}(y \mid x) \log _2 P_{Y \mid X}(y \mid x)$.
 
 * $\sum_{x, y} p(x, y)$也可写作$\sum_{x \in \mathcal X} \sum_{y \in \mathcal Y} p(x, y)$.
+
+* The first line equals $-\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_Y(y) \cdot P_{Y|X}(y|x) \cdot \log _2 P_{Y \mid X}(y \mid x)$, and $\sum_{x,y} \triangleq \sum_x \sum_y$. We can extract the $\sum_x$ outside, resulting in
+  $$
+  -\sum_{x \in \mathcal{X}} P_X(x) \sum_{y \in \mathcal Y} P(y|x) \cdot \log _2 P_{Y \mid X}(y \mid x) 
+  = \sum_{x \in \mathcal{X}} P_X(x) \cdot H(Y \mid X=x) .
+  $$
 
 * The probability distributions for the expectation and in the function itself are not the same! If you are unhappy with that, just remember that for any arbitrary function, $\mathbb{E}[f(X, Y)]=\sum_{x, y} p(x, y) f(x, y)$, and in this case, that arbitrary function is $\log \frac{1}{p(y \mid x)}$.
 
@@ -196,6 +224,38 @@ $$
 -\sum_{x \in \mathcal{X}} p(x) \log p(x)-\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} p(x, y) \log p(y \mid x) =H(X)+H(Y \mid X)
 $$
 Q.E.D.
+
+# Theorem: Function reduces entropy
+
+Let $X$ be a discrete random variable. That **the entropy of a function** of $X$ is less than or equal to **the entropy of** $X$ by justifying the following steps:
+$$
+\begin{aligned}
+H(X, g(X)) & \stackrel{(a)}{=} H(X)+H(g(X) \mid X) \\
+& \stackrel{(b)}{=} H(X) ; \\
+H(X, g(X)) & \stackrel{(c)}{=} H(g(X))+H(X \mid g(X)) \\
+& \stackrel{(d)}{\geq} H(g(X)) .
+\end{aligned}
+$$
+
+Thus $H(g(X)) \leq H(X)$.
+Explanation:
+
+1. $H(X, g(X))=H(X)+H(g(X) \mid X)$ by the chain rule for entropies.
+
+2. $H(g(X) \mid X)=0$ is because: Since for any particular value of $X, g(X)$ is fixed, then $p(g(X)=g(x)|X=x) = 1$. By definition of conditional entropy:
+   $$
+   H(X,g(X)) = 
+   -\sum_{(x, g(x)) } p(x, g(x)) \cdot \log _2 p[g(x) \mid x] = -\sum_{(x, g(x)) } p(x, g(x)) \cdot 0 = 0
+   $$
+   Meanwhile, if $H(Y|X) = 0$, we can also say $Y$ is a function(or injection) of $X$.
+
+3. $H(X, g(X))=H(g(X))+H(X \mid g(X))$ again by the chain rule.
+
+4. $H(X \mid g(X)) \geq 0$, with equality iff $X$ is a function of $g(X)$, i.e., $g(\cdot)$ is one-to-one. Hence $H(X, g(X)) \geq$ $H(g(X))$.
+
+Combining (1)-(4), we obtain $H(X) \geq H(g(X))$.
+
+
 
 # Properties of Joint Entropy and Conditional Entropy
 
@@ -365,8 +425,6 @@ $$
 
 ### Basics
 
-![Relationship between entropy and mutual information](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Information%20Theory/Shannon%20Entropy/Relationship%20between%20entropy%20and%20mutual%20information.png)
-
 1. $I(X ; Y)=\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} P_{X, Y}(x, y) \log _2 \frac{P_{X, Y}(x, y)}{P_X(x) P_Y(y)}$.
 
 2. $I(X ; Y)=I(Y ; X)=H(Y)-H(Y \mid X)$.
@@ -452,16 +510,24 @@ I(X ; Y \mid Z) \geq 0,
 $$
 with equality if and only if $X$ and $Y$ are conditionally independent given $Z$.
 
-
-
 ## Conditional Mutual Information
+
+![img](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/VennInfo3Var.svg/256px-VennInfo3Var.svg.png)
+
+> Venn diagram of information theoretic measures for three variables $x, y$, and $z$, represented by the lower left, lower right, and upper circles, respectively. 
+>
+> The conditional mutual informations $I(x ; z \mid y), I(y ; z \mid x)$ and $I(x ; y \mid z)$ are represented by the yellow, cyan, and magenta regions, respectively.
 
 The conditional mutual information, denoted by $I(X ; Y \mid Z)$, is defined as the common uncertainty between $X$ and $Y$ under the knowledge of $Z$ :
 $$
 I(X ; Y \mid Z):=H(X \mid Z)-H(X \mid Y, Z)
 $$
 
-Lemma: Defining the joint mutual information between $X$ and the pair $(Y, Z)$ as in (2.2.1) by
+可以这么想像: $I(X;Y)$ 就是 $H(X)$ 和 $H(Y)$ 的交集, 再挖掉其中 $H(Z)$ 的部分就是$I(X;Y|Z)$. 对应于图中粉色部分.
+
+## Joint Mutual Information
+
+Lemma: Defining the joint mutual information between $X$ and the pair $(Y, Z)$  by
 $$
 I(X ; Y, Z):=H(X)-H(X \mid Y, Z),
 $$
@@ -469,7 +535,9 @@ we have
 $$
 I(X ; Y, Z)=I(X ; Y)+I(X ; Z \mid Y)=I(X ; Z)+I(X ; Y \mid Z) .
 $$
-$X$ 和 $(Y,Z)$的互信息 = $X$ 和 $Y$ 的互信息 + 在$Y$ 已知的情况下 $X$ 和 $Z$ 的互信息.
+$X$ 和 $(Y,Z)$的互信息 = $X$ 和 $Y$ 的互信息 + 在$Y$ 已知的情况下 $X$ 和 $Z$ 的互信息. 
+
+可以这么想像: 把$H(Y), H(Z)$ 连成一块得到$H(Y,Z)$, $I(X;Y,Z)$ 就是 $H(X)$ 和 $H(Y,Z)$ 的交集. 对应于图中黄, 灰, 粉三块区域的并集.
 
 Proof: Without loss of generality, we only prove the first equality:
 $$
@@ -533,7 +601,7 @@ $$
 
 Proof:
 
-The theorem can be proved similarly to Theorem 2.17.
+The theorem can be proved similarly to [Chain Rule for Entropy(2 Variables)](https://lyk-love.cn/2023/10/15/shannon-entrophy/?highlight=shann#chain-rule-for-entropy2-variables).
 If $X^n=\left(X_1, \ldots, X_n\right)$ and $Y^m=\left(Y_1, \ldots, Y_m\right)$ are jointly distributed random vectors (of not necessarily equal lengths), then their joint mutual information is given by
 $$
 I\left(X_1, \ldots, X_n ; Y_1, \ldots, Y_m\right):=H\left(X_1, \ldots, X_n\right)-H\left(X_1, \ldots, X_n \mid Y_1, \ldots, Y_m\right) .

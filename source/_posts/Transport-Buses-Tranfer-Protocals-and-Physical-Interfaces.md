@@ -3,7 +3,7 @@ title: Transport Buses, Tranfer Protocals and Physical Interfaces
 date: 2023-04-13 15:42:47
 tags:
   - Hardware
-categories: Electronic Engineering
+categories: Electrical Engineering
 ---
 
 

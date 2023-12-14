@@ -1,11 +1,9 @@
 ---
 title: World Models
 tags:
-  - RL
-  - SSL
+  - Machine Learning
 categories:
-  - - Research
-  - - Machine Learning
+  - Research
 mathjax: true
 date: 2023-11-18 22:55:25
 ---
@@ -28,6 +26,7 @@ Ref:
 传统的RL方法中, agent需要在真实世界中训练, 其训练效果受到真实世界的限制. World model的作用就是让agent可以在在world model中训练, 不需要接触真实世界.
 
 * [*Recurrent World Models Facilitate Policy Evolution*](https://worldmodels.github.io/) presents a very simple and compact world model architecture(VAE + RNN). It indicates that training the agent entirely in the "dream"(world model) shows equal performance as traing in real world.
+  * [Training doc](https://blog.otoro.net//2018/06/09/world-models-experiments/)
 * [*Mastering Diverse Domains through World Models*](https://danijar.com/project/dreamerv3/), aka *Dreamer V3* extends the favorable **generility** and **scalibality** features of world model. 
   * generility: continuous and discrete actions, visual and low-dimensional inputs, 2D and 3D worlds, different data budgets, reward frequencies, and reward scales.
   * scalibality: It generates world model using **fixed hyperparameters**, making it easy to transfer between different domains.

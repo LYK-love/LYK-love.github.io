@@ -65,6 +65,11 @@ To emphasize the ubiquity of $e^{j \hat{\omega}}$, in $\eqref{eq_frequency respo
   \Re\left\{H\left(e^{j \hat{\omega}}\right)\right\}+j \Im\left\{H\left(e^{j \hat{\omega}}\right)\right\} \label{eq_Polar-form} .
   \end{align}
   $$
+  where:
+  
+  * $\left|H\left(e^{j \hat{\omega}}\right)\right|$: the magnitute of $H\left(e^{j \hat{\omega}}\right)$.
+  * $\angle H\left(e^{j \hat{\omega}}\right)$: the angle or **phase** of $H\left(e^{j \hat{\omega}}\right)$.
+  * For instance, if $H\left(e^{j \hat{\omega}}\right) = 3 e^{-j \pi / 3}$, then the magnitude is $\left|H\left(e^{j \hat{\omega}}\right)\right|$ = 3, the angle is $\angle H\left(e^{j \hat{\omega}}\right) = - \pi / 3$.
   
 * Ideas:
 
@@ -195,6 +200,21 @@ If the input signal consists of <u>the sum of many complex exponential signals</
 
 
 
+## Cosine in, Cosine out
+
+**Theorem**: For every cosine input signal, the system still outputs cosine signals.
+
+That is, for input like
+$$
+x[n]=\sum_{k=0}^M b_k x[n-k] =\sum_{k=0}^M b_k \cos(w_k n + \varphi_k) ,
+$$
+the output is
+$$
+y[n]=\sum_{k=0}^M |H\left(e^{j \hat{\omega}_k}\right)| b_k \cos(w_k n + \varphi_k + \angle H\left(e^{j \hat{\omega}_k}\right)).
+$$
+
+***
+
 As an example, suppose that the input to an LTI system is a cosine wave with a specific normalized frequency $\hat{\omega}_1$ plus a DC level,
 $$
 \begin{equation} \label{eq2.1.1}
@@ -242,8 +262,6 @@ Then we use $\eqref{eq_Cartesian form}$ to express $H\left(e^{j \hat{\omega}_1}\
    \end{equation}
    $$
    
-
-
 
 ## Example: Cosine Input
 
@@ -578,7 +596,9 @@ y[n] & =4+2 \cos (0.3 \pi n-\pi / 4)-4-2 \cos (0.3 \pi(n-1)-\pi / 4) \\
 \end{aligned}
 $$
 
-From this result, we see that the first-difference system removes the constant value and leaves two cosine signals of the same frequency, which could be combined by phasor addition. However, the solution using the frequency-response function is simpler. Since the first-difference system has frequency response
+The solution using the frequency-response function is simple. 
+
+Since the first-difference system has frequency response
 $$
 H\left(e^{j \hat{\omega}}\right)=2 \sin (\hat{\omega} / 2) e^{j(\pi / 2-\hat{\omega} / 2)}
 $$
@@ -602,7 +622,7 @@ y[n] & =(0.908)(2) \cos (0.3 \pi n-\pi / 4+0.35 \pi) \\
 \end{aligned}
 $$
 
-A Simple Lowpass Filter
+
 
 ## A Simple Lowpass Filter
 
@@ -621,7 +641,15 @@ $$
 \angle H\left(e^{j \hat{\omega}}\right)=-\hat{\omega}
 $$
 
-These functions are plotted in Fig. 6-4 for $-\pi<\hat{\omega} \leq \pi$. The phase response (Fig. 6-4(b)) is linear (a straight line) with a slope of -1 , so we know that the system introduces a delay of one sample. The magnitude response (Fig. 6-4(a)) shows that the system tends to favor the low frequencies (close to $\hat{\omega}=0$ ) with high gain, while it tends to suppress high frequencies (close to $\hat{\omega}=\pi$ ). In this case, there is a gradual decrease in gain from $\hat{\omega}=0$ to $\hat{\omega}=\pi$, so that the midrange frequencies receive more gain than the high frequencies, but less than the low frequencies. Filters with magnitude responses that suppress the high frequencies of the input are called lowpass filters.
+These functions are plotted in Fig. 6-4 for $-\pi<\hat{\omega} \leq \pi$. 
+
+The phase response (Fig. 6-4(b)) is **linear** (a straight line) with a slope of -1 , so we know that the system introduces a <u>delay</u> of one sample. 
+
+The magnitude response (Fig. 6-4(a)) shows that the system tends to favor the low frequencies (close to $\hat{\omega}=0$ ) with high gain, while it tends to suppress high frequencies (close to $\hat{\omega}=\pi$ ).
+
+
+
+Filters with magnitude responses that suppress the high frequencies of the input are called **lowpass filters**.
 
 ## Example: Lowpass Filter
 

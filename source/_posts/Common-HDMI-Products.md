@@ -3,7 +3,7 @@ title: Common HDMI Products
 tags:
   - Hardware
   - Camera
-categories: Electronic Engineering
+categories: Electrical Engineering
 date: 2023-04-13 14:53:20
 ---
 

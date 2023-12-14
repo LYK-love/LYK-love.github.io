@@ -333,13 +333,24 @@ How to generate (binary) Huffman Code:
 
 1. Find 2 symbols with the smallest probability and then merge them to create a new “node” and treat it as a new symbol.
 2. Then merge the next 2 symbols with the smallest probability to create a new “node”. 3. Repeat steps 1 and 2 until there is only 1 symbol left.
-3. At the end of this process, we obtain a binary tree. The paths traversed from the root to the leaves are the prefix codes. 
+3. At the end of this process, we obtain a binary tree. The left branch of the Hoffman tree is given the bit value 0 and the right branch is given the bit value 1. The Hoffman encoding of each character is formed by **taking the path from the root node to each leaf node**.
 
 Recall that this is a prefix code since we only assign the source symbols to the leaf nodes. Also note that the Huffman code is not necessarily unique since it depends on the order of the merge operations
 
-Note: here
 
-> Aside: (Source arity nomenclature) binary (2 symbols), ternary (3 symbols), quaternary (4 symbols), quinary (5 symbols), senary (6 symbols), septenary (7 symbols), octal (8 symbols), nonary (9 symbols), dec- imal (10 symbols) ...
+
+> Aside: (Source arity nomenclature):
+>
+> 1. binary (2 symbols), 
+> 2. ternary (3 symbols), 
+> 3. quaternary (4 symbols), 
+> 4. quinary (5 symbols), 
+> 5. senary (6 symbols), 
+> 6. septenary (7 symbols), 
+> 7. octal (8 symbols), 
+> 8. nonary (9 symbols), 
+> 9. dec- imal (10 symbols) 
+> 10. ...
 
 ## Example
 

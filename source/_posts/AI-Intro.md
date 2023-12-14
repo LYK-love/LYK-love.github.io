@@ -1,20 +1,14 @@
 ---
 title: AI Intro 
-tags: AI
-categories: Machine Learning
+tags: Machine Learning
+categories: Computer Science
 mathjax: true
 date: 2023-02-08 01:27:25
 ---
 
-Outline:
+Source:
 
-* What is AI
-* What will we learn
-* Agent
-
-Ref: 
-
-*Artificial Intelligence A Modern Approach*
+1. *Artificial Intelligence A Modern Approach*
 
 <!--more-->
 

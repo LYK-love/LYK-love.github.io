@@ -48,7 +48,7 @@ Most of our attention will be on the typical sequences. Any property that is pro
 
    * Since the source symbols are memoryless here. $X^n$ is an **iid** stochastic process. It's also denoted as $\left\{X_i\right\}$ in some literatures.
 
-4. Probability: The probability assigned to a source sequence $X^n$ is given by $P\left(X^n\right)=\prod_{i=1}^n P_{\mathcal{X}}\left(X_i\right)$. Since we implicitly evaluate the probabilities over the alphabet $\mathcal{X}$, we may also omit $\mathcal{X}$ amd write
+4. Probability of $X^n$ where $X_i$ are i.i.d. : The probability assigned to a source sequence $X^n$ is given by $P\left(X^n\right)=\prod_{i=1}^n P_{\mathcal{X}}\left(X_i\right)$. Since we implicitly evaluate the probabilities over the alphabet $\mathcal{X}$, we may also omit $\mathcal{X}$ amd write
    $$
    \begin{equation} \label{eq1}
    P\left(X^n\right)=\prod_{i=1}^n P\left(X_i\right) .
@@ -68,7 +68,7 @@ $$
 
 **Let $A_\epsilon^{(n)}$ denote the " $\epsilon$-typical set", that is the set of all source sequences $X^n$ that are $\epsilon$-typical.** 
 
-即: $X^n \in A_\epsilon^{(n)}$ <==> $X^n$ is $\epsilon$-typical set <==> $\left|-\frac{1}{n} \log P\left(X^n\right)-H(X)\right| \leq \epsilon$.
+即: $X^n \in A_\epsilon^{(n)}$ <==> $X^n$ is an $\epsilon$-typical set <==> $\left|-\frac{1}{n} \log P\left(X^n\right)-H(X)\right| \leq \epsilon$.
 
 
 
@@ -123,7 +123,7 @@ From $\eqref{eq2.3}$ we can say that every $\epsilon$-typical set has probabilit
 
 ## Proof
 
-1. Note that $X^n \in A_\epsilon^{(n)}$ <==>  $X^n$ is $\epsilon$-typical set <==> $\left|-\frac{1}{n} \log P\left(X^n\right)-H(X)\right| \leq \epsilon$. So we have 
+1. Note that $X^n \in A_\epsilon^{(n)}$ <==>  $X^n$ is an $\epsilon$-typical set <==> $\left|-\frac{1}{n} \log P\left(X^n\right)-H(X)\right| \leq \epsilon$. So we have 
    $$
    P\left(X^n \in A_\epsilon^{(n)}\right) = 
    P\left(\left|-\frac{1}{n} \log P\left(X^n\right)-H(X)\right| \leq \epsilon\right)
@@ -131,7 +131,7 @@ From $\eqref{eq2.3}$ we can say that every $\epsilon$-typical set has probabilit
 
 2. Also, we know that $P\left(X^n\right)=\prod_{i=1}^n P\left(X_i\right)$. Then the right term can be reformed to 
    $$
-   P\left(\left|-\frac{1}{n} \log \left[\prod_{i=1}^n P\left(X_i\right)\right]-H(X)\right| \leq \epsilon\right)
+   P\left(\left|-\frac{1}{n} \log \left[\prod_{i=1}^n P\left(X_i\right)\right]-H(X)\right| \leq \epsilon\right) .
    $$
    By $\eqref{eq1}$, it then can be reformed to 
    $$
@@ -148,7 +148,7 @@ From $\eqref{eq2.3}$ we can say that every $\epsilon$-typical set has probabilit
    $$
    Here we just treat $\log \frac{1}{P\left(X_i\right)}$ as iid r.v, then apply the LLN.
 
-   We also know that $H(X) \triangleq E\left(\log \frac{1}{P(X)}\right)$, so
+   Recalling that by the definition of entrypy,  $H(X) \triangleq E\left(\log \frac{1}{P(X)}\right)$, so
    $$
    P\left(\left|\frac{1}{n} \sum_{i=1}^n \log \frac{1}{P\left(X_i\right)}- H(X)\right| \leq \epsilon\right) \stackrel{n \rightarrow \infty}{\longrightarrow} 1 .
    $$

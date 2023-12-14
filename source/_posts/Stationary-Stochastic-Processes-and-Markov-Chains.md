@@ -61,6 +61,13 @@ for all $x_1, x_2, \ldots, x_n, x_{n+1} \in \mathcal{X}$.
 
 We can denote them as $X_1 \rightarrow X_2 \rightarrow \cdots \rightarrow X_n$.
 
+* Note: If there're only two r.v. s, say $X_1$ and $X_2$. They must form a Markov chain $X_1 \rightarrow X_2 $, or $X_2 \rightarrow X_1$ since Markov chain is invertable([->Proof]()). Because
+  $$
+  P(X_1|X_2,{\text{there's no more}X_i}) = P(X_1|X_2)
+  $$
+
+
+
 ## PMF of a Markov Chain
 
 The joint probability mass function of the random variables can be written as
@@ -135,6 +142,8 @@ $$
 
 - $X \rightarrow Y \rightarrow Z$ implies that $Z \rightarrow Y \rightarrow X$. Thus, the condition is sometimes written $X \leftrightarrow Y \leftrightarrow Z$.
 - If $Z=f(Y)$, then $X \rightarrow Y \rightarrow Z$.
+
+
 
 ## Conditionally Independence
 

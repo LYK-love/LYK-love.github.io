@@ -1,10 +1,9 @@
 ---
 title: Tree of Thoughts
 tags:
-  - LLM
+  - Machine Learning
 categories: 
 - [Research]
-- [Machine Learning]
 mathjax: true
 date: 2023-11-18 22:42:27
 ---
