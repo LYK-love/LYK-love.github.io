@@ -6,6 +6,11 @@ mathjax: true
 date: 2023-12-12 08:48:01
 ---
 
+Source:
+
+1. James McClellan, Ronald Schafer & Mark Yoder. (2015). Discrete Fourier Transform. *DSP First* (2nd ed., pp. 281-338). Pearson.
+
+<!--more-->
 
 # Intro
 
