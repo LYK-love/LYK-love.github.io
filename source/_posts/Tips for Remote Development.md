@@ -18,23 +18,23 @@ Here're two plans.
 
 1. You can put your project in local. Then using pycharm to develop it **with a remote python interpreter**, instead of a local interpreter.
 
-   ![image-20231214183937713](/Users/lyk/Library/Application Support/typora-user-images/image-20231214183937713.png)
+   ![Figure1.1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Software%20Engineering/Tips%20for%20Remote%20Development/Figure%201.1.png)
 
    As you can see, the interpreter is at a remote server.
 
 2. Then you'll see a connection in In "Tools" -> "Deployment" -> "Configuration".
 
-   ![image-20231214184459295](/Users/lyk/Library/Application Support/typora-user-images/image-20231214184459295.png)
+   ![Figure1.2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Software%20Engineering/Tips%20for%20Remote%20Development/Figure1.2.png)
 
-   ![image-20231214184239981](/Users/lyk/Library/Application Support/typora-user-images/image-20231214184239981.png) 
+   ![Figure1.3](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Software%20Engineering/Tips%20for%20Remote%20Development/Figure1.3.png) 
 
 3. In In "Tools" -> "Deployment" -> "Configuration" --> "Mapping", config a project mapping. So that your remote server will have a copy of your local project, and every local change will be synced to the remote server.
 
-   ![image-20231214184354796](/Users/lyk/Library/Application Support/typora-user-images/image-20231214184354796.png)
+   ![Figure1.4](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Software%20Engineering/Tips%20for%20Remote%20Development/Figure1.4.png)
 
 4. In "Tools" -> "Deployment" -> "Options", select a way to sync your file:
 
-   ![image-20231214184616850](/Users/lyk/Library/Application Support/typora-user-images/image-20231214184616850.png)
+   ![Figure1.5](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Software%20Engineering/Tips%20for%20Remote%20Development/Figure1.5.png)
 
 
 
@@ -75,7 +75,7 @@ A common inverse proxy tool is [ngork](https://dashboard.ngrok.com/get-started/s
 
 3. Now in the [Endpoints page](https://dashboard.ngrok.com/cloud-edge/endpoints) of Ngork, you can see the server is listed as an "endpoint":
 
-   ![image-20231214155218814](/Users/lyk/Library/Application Support/typora-user-images/image-20231214155218814.png)
+   ![Ngork Endpoints page](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Software%20Engineering/Tips%20for%20Remote%20Development/Ngork%20Endpoints%20page.png)
 
    The endpint is identified as
 
