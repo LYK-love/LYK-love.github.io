@@ -1,5 +1,5 @@
 ---
-title: Electrical Engineering Learning Checklist
+title: Electrical Engineering Checklist
 tags: Digital Signal Processing
 categories: Electrical Engineering
 date: 2023-12-14 00:06:33

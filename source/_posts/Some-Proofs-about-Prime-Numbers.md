@@ -3,7 +3,7 @@ title: Some Proofs about Prime Numbers
 tags:
   - Number Theory
 categories:
-  - [Mathematics]
+  - Mathematics
 mathjax: true
 date: 2023-09-03 23:42:44
 ---

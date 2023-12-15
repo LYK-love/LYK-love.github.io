@@ -1,7 +1,7 @@
 ---
 title: FIR Filters
 tags: Digital Signal Processing
-categoeirs: Electronic Engineering
+categories: Electronic Engineering
 mathjax: true
 date: 2023-11-23 15:49:32
 ---

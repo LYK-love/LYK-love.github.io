@@ -1,5 +1,5 @@
 ---
-ptitle: Terminal
+title: Terminal
 tags:
   - Linux
   - Terminal
@@ -240,6 +240,8 @@ sudo apt install zsh
 chsh -s /bin/zsh
 ```
 
+再重启shell即可.
+
 ## Shell Switch
 
 检查当前可用的shell:
@@ -293,6 +295,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 
 
+对于国内用户:
+
 可能遇到报错: Failed to connect to raw.githubusercontent.com port 443 after 7 ms: Couldn't connect to server.
 
 这是因为域名被墙了导致的. 可以设置代理再重新下载:
@@ -304,8 +308,6 @@ export https_proxy=http://127.0.0.1:7890
 (`7890`换成你用的VPN对https代理所用的实际端口)
 
 
-
-对于国内用户, 可以:
 
 1. 从gitee下载oh-my-zsh的安装脚本:
 

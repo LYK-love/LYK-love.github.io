@@ -1,5 +1,5 @@
 ---
-title: ML Learning Checklist
+title: ML Checklist
 tags: Machine Learning
 categories: Computer Science
 mathjax: true
@@ -7,7 +7,7 @@ date: 2023-12-13 23:48:55
 ---
 
 
-Resources for Machine Learning, Deep Learning, Reinforcement Learning, etc.
+Resources for learning ML(Machine Learning), DL(Deep Learning), RL(Reinforcement Learning), etc.
 
 <!--more-->
 
