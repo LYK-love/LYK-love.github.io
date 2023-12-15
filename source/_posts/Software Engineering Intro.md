@@ -1,10 +1,10 @@
 ---
-title: Software Engineering Intro
-tags: Software Engineering
 categories: Computer Science
 date: 2021-06-27 22:42:08
+tags:
+- Software Engineering Methodology
+title: Software Engineering Intro
 ---
-
 
 # 软件
 
@@ -147,4 +147,3 @@ date: 2021-06-27 22:42:08
   * 负责软件移交与维护任务。他们可以是其他开发⼈员的⼀部分，也可以是独⽴的⼈员。
 * ⽂档编写⼈员：
   * 专⻔负责写作软件开发各种⽂档的⼈员。他们的存在是为了充分利⽤部分宝贵的⼈⼒资源（例如需求⼯程师和软件体系结构师），让这些⼈⼒资源从 繁杂的⽂档化⼯作中解放出来。
-

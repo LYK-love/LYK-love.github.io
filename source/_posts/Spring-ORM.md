@@ -1,10 +1,10 @@
 ---
-title: Spring ORM
-tags: Spring
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-03-21 23:12:27
+tags: Spring
+title: Spring ORM
 ---
-
 
 Outline:
 

@@ -1,12 +1,12 @@
 ---
-title: Tmux
-tags:
-  - Linux
-  - Terminal
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-09-13 14:58:13
+tags:
+- Linux
+- Terminal
+title: Tmux
 ---
-
 
 Outline:
 
@@ -122,4 +122,3 @@ For further reading, [here](https://www.hamvocke.com/blog/a-quick-and-easy-guide
     ```shell
     tmux rename-session -t 0 database
     ```
-

@@ -1,12 +1,12 @@
 ---
-title: Java Toolkit
-tags:
-  - Linux
-  - Java
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-09-13 15:13:52
+tags:
+- Linux
+- Java
+title: Java Toolkit
 ---
-
 
 Outline:
 
@@ -217,4 +217,3 @@ maven配置文件位置： `～/.m2/settings.xml`
             <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
         </mirror>
 ```
-

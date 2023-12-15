@@ -1,11 +1,10 @@
 ---
-title: Tips for Building Frontend Projects
-tags: Frontend
-categories: 
-  - [Toolkit]
+categories:
+- Software Engineering
 date: 2022-07-30 17:23:43
+tags: Frontend
+title: Tips for Building Frontend Projects
 ---
-
 
 Outline:
 

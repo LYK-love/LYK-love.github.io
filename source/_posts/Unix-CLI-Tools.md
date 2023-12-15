@@ -1,12 +1,12 @@
 ---
-title: Unix CLI Tools
-tags:
-  - Linux
-  - Shell
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-09-13 14:57:44
+tags:
+- Linux
+- Shell
+title: Unix CLI Tools
 ---
-
 
 一些常用的命令行工具，和它们的现代替代
 

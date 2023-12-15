@@ -1,11 +1,10 @@
 ---
-title: Software Development Procedure Model
-tags: Software Engineering
 categories: Computer Science
 date: 2021-06-28 15:45:40
+tags:
+- Software Engineering Methodology
+title: Software Development Procedure Model
 ---
-
-
 
 Outline:
 
@@ -68,6 +67,3 @@ Outline:
 # 原型模型
 
 # 螺旋模型
-
-
-

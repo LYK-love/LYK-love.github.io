@@ -1,12 +1,10 @@
 ---
-title: awk
-tags: awk
-categories: Language
+categories:
+- Software Engineering
 date: 2022-02-08 18:13:53
+tags: awk
+title: awk
 ---
-
-
-
 
 `awk` is a an **interpreted** programming language that is good at **processing text streams**
 

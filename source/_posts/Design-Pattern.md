@@ -1,11 +1,10 @@
 ---
-title: Design Pattern
-tags: Software Engineering
 categories: Computer Science
 date: 2022-03-15 12:00:00
+tags:
+- Software Engineering Methodology
+title: Design Pattern
 ---
-
-
 
 Outline:
 
@@ -1960,4 +1959,3 @@ public class ConcreteClass extends AbstractClass
 * 好莱坞原则(Hollywood Principle)： 子类不显式调用父类的方法，而是通过覆盖父类的方法来实现某些具体的业务逻辑，**父类控制对子类的调用**
 
 * 在模板方法模式中，好莱坞原则体现在:通过父类来调用子类， 子类不需要调用父类。 将某些步骤的实现写在子类中，由父类来控制整个过程
-

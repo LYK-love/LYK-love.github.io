@@ -1,11 +1,11 @@
 ---
-title: MYSQL Basic
-tags: Database
-categories: Technology
-mathjax: true
+categories:
+- Software Engineering
 date: 2022-04-09 16:45:48
+mathjax: true
+tags: Database
+title: MYSQL Basic
 ---
-
 
 Outline:
 
@@ -517,6 +517,3 @@ Mysql的临时表一般是Memoey表
 2. 先将表导出（`mysqldump`），然后修改sql文件的CREATE TABLE语句的存储引擎选项，还要修改表名（因为同一个数据库不允许重名的表）
 
 3. 创建一个新的存储引擎的表，然后用INSERT...SELECT来导入数据
-
-
-

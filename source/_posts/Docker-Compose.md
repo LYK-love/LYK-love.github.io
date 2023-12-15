@@ -1,10 +1,10 @@
 ---
-title: Docker Compose
-tags: Docker
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-02-15 15:11:52
+tags: Docker
+title: Docker Compose
 ---
-
 
 Outline:
 

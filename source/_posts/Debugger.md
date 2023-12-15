@@ -1,12 +1,10 @@
 ---
-title: Debugger
-tags: Compilers
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-05-05 03:40:59
+tags: Compilers
+title: Debugger
 ---
-
-
-
 
 Outline:
 

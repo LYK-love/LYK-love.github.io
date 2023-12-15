@@ -1,8 +1,9 @@
 ---
-title: Shell Basic
-tags: shell
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-07-15 12:00:00
+tags: shell
+title: Shell Basic
 ---
 
 Outline:

@@ -1,8 +1,9 @@
 ---
-title: C++ 命名空间
-categories: "Language"
-tags: "C++"
+categories:
+- Software Engineering
 date: 2021-06-19 12:00:00
+tags: C++
+title: C++ 命名空间
 ---
 
 Outline:
@@ -92,4 +93,3 @@ Outline:
 # 类、命名空间与作用域
 
 # 重载与命名空间
-

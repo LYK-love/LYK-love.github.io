@@ -1,8 +1,9 @@
 ---
-title: MySQL Data Manipulation
-tags: Database
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-04-09 12:00:00
+tags: Database
+title: MySQL Data Manipulation
 ---
 
 Outline:

@@ -1,10 +1,10 @@
 ---
-title: Docker Basic
-tags: Docker
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-02-13 16:08:27
+tags: Docker
+title: Docker Basic
 ---
-
 
 Outline:
 

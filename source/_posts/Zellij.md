@@ -1,13 +1,12 @@
 ---
-title: Zellij
-tags:
-  - Linux
-  - Terminal
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2023-11-02 21:20:52
+tags:
+- Linux
+- Terminal
+title: Zellij
 ---
-
-
 
 [Zellij](https://zellij.dev/) is a new Rust-based terminal multiplexer. It's aimed to replace [tmux](https://lyk-love.cn/2022/09/13/tmux/).
 
@@ -77,6 +76,3 @@ themes {
 //
 theme "gruvbox-light"
 ```
-
-
-

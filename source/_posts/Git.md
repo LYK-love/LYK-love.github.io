@@ -1,11 +1,10 @@
 ---
-title: Git
-tag: Git
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2021-04-14 12:00:00
+tag: Git
+title: Git
 ---
-
-
 
 全面介绍了Git的原理和使用
 

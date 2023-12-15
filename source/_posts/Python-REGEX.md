@@ -1,10 +1,10 @@
 ---
-title: Python REGEX
-tags: Python
-categories: Language
+categories:
+- Software Engineering
 date: 2022-08-26 00:43:35
+tags: Python
+title: Python REGEX
 ---
-
 
 Outline:
 
@@ -256,6 +256,3 @@ r'\d+(?:.\d+)+' #正确写法，?:即声明这不是一个group
 ```
 
 编译后生成Regular Expression对象，由于该对象自己包含了正则表达式，所以调用对应的方法时不用给出正则字符串。
-
-
-

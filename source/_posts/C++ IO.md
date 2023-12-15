@@ -1,8 +1,9 @@
 ---
-title: C++ I/O
-categories: "Language"
-tags: "C++"
+categories:
+- Software Engineering
 date: 2021-06-18 12:00:00
+tags: C++
+title: C++ I/O
 ---
 
 Outline：
@@ -278,4 +279,3 @@ using namespace std;  // 直接使用 cin、coutusing std::cin;  // 直接使用
   •工具
 
   •http://cpp.sh/
-

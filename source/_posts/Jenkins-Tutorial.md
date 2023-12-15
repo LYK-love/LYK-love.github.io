@@ -1,12 +1,10 @@
 ---
-title: Jenkins Tutorial
-tags: CICD
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-05-26 22:48:57
+tags: CICD
+title: Jenkins Tutorial
 ---
-
-
-
 
 Outline:
 

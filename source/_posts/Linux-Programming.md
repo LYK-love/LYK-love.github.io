@@ -1,10 +1,10 @@
 ---
-title: Linux Programming
-tags: Linux
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-05-05 03:43:30
+tags: Linux
+title: Linux Programming
 ---
-
 
 Outline：
 
@@ -1097,6 +1097,3 @@ cmd参数的取值：
 #include <sys/file.h>
 int lockf(int fd, int cmd, off_t len)
 ```
-
-
-

@@ -1,10 +1,11 @@
 ---
-title: Learn about I-20
-tags:
-  - Study Abroad
-  - International
-categories: Affairs
+categories:
+- Life Affairs
 date: 2023-07-18 01:12:22
+tags:
+- Study Abroad
+- International
+title: Learn about I-20
 ---
 
 Everything about I-20 form, which is essentional for U.S. visa application.
@@ -275,4 +276,3 @@ You need to update your I-20 using iGlobal if:
 2. You change your major
 3. You change degree level
 4. You want to work off campus
-

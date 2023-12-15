@@ -1,8 +1,9 @@
 ---
-title: Shell Script Language
-tags: shell
-categories: Language
+categories:
+- Software Engineering
 date: 2022-03-17 17:06:52
+tags: shell
+title: Shell Script Language
 ---
 
 The  basic grammer of shell script.
@@ -924,4 +925,3 @@ Your shell has some *built-in* commands that are executed directly by the shell 
 $ type echo
 echo is a shell builtin
 ```
-

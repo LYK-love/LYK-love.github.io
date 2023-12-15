@@ -1,10 +1,10 @@
 ---
-title: React Basic
-tags: Frontend
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-08-22 18:50:01
+tags: Frontend
+title: React Basic
 ---
-
 
 Outline:
 
@@ -975,4 +975,3 @@ const Button = (props) => {
 ```jsx
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
 ```
-

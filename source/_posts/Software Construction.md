@@ -1,8 +1,9 @@
 ---
-title: Software Construction
-tags: Software Engineering
 categories: Computer Science
 date: 2021-06-17 15:14:00
+tags:
+- Software Engineering Methodology
+title: Software Construction
 ---
 
 Outline:
@@ -379,6 +380,3 @@ Java Exception and Error：
 2. Software’s Essential Tensions
 
 ## Some of the Worst Construction Ideas of 1990s and 2000s
-
-
-

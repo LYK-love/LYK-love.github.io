@@ -1,12 +1,10 @@
 ---
-title: My Programming Principles
-tags: Software Engineering
 categories: Computer Science
 date: 2022-08-14 15:47:42
+tags:
+- Software Engineering Methodology
+title: My Programming Principles
 ---
-
-
-
 
 Outline:
 
@@ -161,4 +159,4 @@ C/CPP代码是我见过的最丑陋最离谱的代码:
 
    B: You want to talk about ugly? Look at JavaScript!
 
-4. 
+4.

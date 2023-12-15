@@ -1,8 +1,9 @@
 ---
-title: Latex Quick Note
-categories: Toolkit
-mathjax: true
+categories:
+- Software Engineering
 date: 2021-07-23 15:39:08
+mathjax: true
+title: Latex Quick Note
 ---
 
 Latex grammer.
@@ -286,8 +287,3 @@ $$
 || `\nexists` $\nexists$​ | `\exist \exist$​      | `\because`  $\therefore$​   | `\impliedby`  $\impliedby$​​ ||
 | `\wedge` $\wedge$ | `\vee` $\vee$  | `\to`  $\to$               | `\gets`  $\gets$           |
 | `\iff`  $\iff$        | `\ni`  $\ni$         | `\not\ni`  $\not\ni$       | `\neg`  $\neg$             |
-
-
-
-
-

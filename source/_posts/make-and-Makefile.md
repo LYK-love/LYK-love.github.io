@@ -1,10 +1,10 @@
 ---
-title: make and Makefile
-tags: Linux
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-05-05 03:43:04
+tags: Linux
+title: make and Makefile
 ---
-
 
 Outline:
 

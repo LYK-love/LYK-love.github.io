@@ -1,12 +1,11 @@
 ---
-title: Case Study
-tags: 
-- Software Engineering
-- Empirical SE
 categories: Computer Science
 date: 2022-06-24 09:22:32
+tags:
+- Empirical SE
+- Software Engineering Methodology
+title: Case Study
 ---
-
 
 Outline:
 

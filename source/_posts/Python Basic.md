@@ -1,8 +1,9 @@
 ---
-title: Python Basic
-categories: Language
-tags: Python
+categories:
+- Software Engineering
 date: 2022-08-20 12:00:00
+tags: Python
+title: Python Basic
 ---
 
 Outline:
@@ -2137,4 +2138,4 @@ python二维数组可以`res_m = [ rows[j] for j in range( 0, col_nums ) ] `创�
 
 
 
-## 
+##

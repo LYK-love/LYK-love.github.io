@@ -1,10 +1,9 @@
 ---
-title: Tips for Remote Development
-tags: Linux
 categories:
-  - Technology
-
+- Software Engineering
 date: 2023-12-14 15:56:22
+tags: Linux
+title: Tips for Remote Development
 ---
 
 Tutorial about using inversese proxy to connect a server in a private network which your machine don't have access to.

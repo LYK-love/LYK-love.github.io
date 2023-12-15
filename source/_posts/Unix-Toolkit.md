@@ -1,10 +1,10 @@
 ---
-title: Unix Toolkit
-tags: Linux
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-02-19 14:04:37
+tags: Linux
+title: Unix Toolkit
 ---
-
 
 介绍了Unix, Unix Like主机的常用操作
 
@@ -488,6 +488,3 @@ sudo passwd user
 ```shell
 cat /etc/group
 ```
-
-
-

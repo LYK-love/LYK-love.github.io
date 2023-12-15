@@ -1,12 +1,11 @@
 ---
-title: Hexo
-tags:
-  - Hexo
 categories:
-  - - Toolkit
+- Software Engineering
 date: 2023-05-04 21:29:03
+tags:
+- Hexo
+title: Hexo
 ---
-
 
 本文介绍如何构建并配置Hexo站点.
 
@@ -624,4 +623,3 @@ Now you have installed NexT theme and enabled it. The following steps will help 
 * 极其罕见的Bug: Hexo和Next分别更新, 结果Latex不能显示, hexo g巨慢, 页面闪烁, back2top小箭头图表消失等等等等...
 
   由于JS项目的复杂性, 依赖版本问题几乎很难解决, 因此**遇到这种Bug就不要仔细研究了, 直接重装Hexo和Next吧.**
-

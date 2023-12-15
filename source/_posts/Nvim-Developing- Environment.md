@@ -1,13 +1,12 @@
 ---
-title: Nvim Developing Environment
-tags: 
+categories:
+- Software Engineering
+date: 2022-08-17 22:52:46
+tags:
 - Linux
 - Editor
-categories: Toolkit
-date: 2022-08-17 22:52:46
-
+title: Nvim Developing Environment
 ---
-
 
 Outline:
 
@@ -522,4 +521,4 @@ Fira COde Nerd Font Mono
 NVcheatsheet
 
 1. `<leader>ch` to access that
-2. 
+2.

@@ -1,10 +1,10 @@
 ---
-title: Docker Swarm
-tags: Docker
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-03-24 23:44:59
+tags: Docker
+title: Docker Swarm
 ---
-
 
 Outline:
 

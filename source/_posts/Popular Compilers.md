@@ -1,12 +1,10 @@
 ---
-title: Popular Compilers
-tags: Compilers
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-05-05 03:41:07
+tags: Compilers
+title: Popular Compilers
 ---
-
-
-
 
 Outline:
 
@@ -362,6 +360,3 @@ MinGW: Minimalist GNU For Windows. Window平台的编译器, 事实上它不只�
  # MSVC
 
 * MSVC: 微软开发的WIndows native的编译器和运行时, MSVC只能编译出WIndows平台的应用
-
-
-

@@ -1,10 +1,10 @@
 ---
-title: HTML Basic
-tags: Frontend
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-08-22 19:02:39
+tags: Frontend
+title: HTML Basic
 ---
-
 
 Outline:
 
@@ -372,4 +372,3 @@ To create a class; write a period (.) character, followed by a class name. Then,
 </body>
 </html>
 ```
-

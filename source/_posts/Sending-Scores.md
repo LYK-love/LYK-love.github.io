@@ -1,14 +1,10 @@
 ---
-title: Sending Scores
-tags: Study Abroad
-categories: 
-- [Affairs]
-- [Life]
+categories:
+- Life Affairs
 date: 2023-02-12 20:31:46
+tags: Study Abroad
+title: Sending Scores
 ---
-
-
-
 
 TOEFL, GRE, IELTS的送分流程.
 

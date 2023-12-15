@@ -1,13 +1,13 @@
 ---
-title: Cloud Native Toolkit
-tags:
-  - Linux
-  - Docker
-  - K8s
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-09-13 15:10:42
+tags:
+- Linux
+- Docker
+- K8s
+title: Cloud Native Toolkit
 ---
-
 
 Outline:
 
@@ -348,8 +348,3 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documen
 ```
 kubectl get nodes
 ```
-
-
-
-
-

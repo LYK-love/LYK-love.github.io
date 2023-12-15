@@ -1,10 +1,10 @@
 ---
-title: Python Module
-tags: Python
-categories: Language
+categories:
+- Software Engineering
 date: 2022-08-24 21:50:32
+tags: Python
+title: Python Module
 ---
-
 
 Outline:
 
@@ -198,4 +198,4 @@ ImportError: No module named mymodule
 
  [argparse模块使用教程](https://blog.csdn.net/edc3001/article/details/113788716)
 
-# 
+#

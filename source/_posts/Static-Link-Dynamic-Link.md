@@ -1,10 +1,10 @@
 ---
-title: Static Link && Dynamic Link
-tags: Linux
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-05-05 01:18:34
+tags: Linux
+title: Static Link && Dynamic Link
 ---
-
 
 Outline:
 
@@ -205,4 +205,3 @@ clean:
    1. `gcc -c test.c -o test.o`
    2. `gcc test.o -o test -WI -Bdynamic -lh`:-WI -Bdynamic表示链接动态库，-lh中-l表示链接，h是库名即/usr/lib下的libh.so
 6. 运行./test得到结果
-

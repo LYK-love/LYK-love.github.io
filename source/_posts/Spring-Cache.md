@@ -1,8 +1,9 @@
 ---
-title: Spring Cache
+categories:
+- Software Engineering
 date: 2022-03-21 21:40:40
 tags: Spring
-categories: Technology
+title: Spring Cache
 ---
 
 Outline:

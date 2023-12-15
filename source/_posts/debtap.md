@@ -1,9 +1,9 @@
 ---
-title: debtap
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-02-10 06:02:24
+title: debtap
 ---
-
 
 A tool to traverse deb package.
 
@@ -43,8 +43,3 @@ ref: [here](https://www.jianshu.com/p/900dc8a0ecff)
 * 安装转换好的本地包
 
   `sudo yay -U xxx.tar.xz`
-
-
-
-
-

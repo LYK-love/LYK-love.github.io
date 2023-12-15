@@ -1,10 +1,11 @@
 ---
-title: Learn About Visa
-tags:
-  - Study Abroad
-  - International
-categories: Affairs
+categories:
+- Life Affairs
 date: 2023-07-18 01:27:25
+tags:
+- Study Abroad
+- International
+title: Learn About Visa
 ---
 
 Everything about U.S. F1 visa, such as its application, interview and its function.

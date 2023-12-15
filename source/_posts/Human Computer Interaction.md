@@ -1,10 +1,10 @@
 ---
-title: Human Computer Interaction
-tags: Software Engineering
 categories: Computer Science
 date: 2021-06-28 15:25:38
+tags:
+- Software Engineering Methodology
+title: Human Computer Interaction
 ---
-
 
 Outline
 

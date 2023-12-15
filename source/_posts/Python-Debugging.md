@@ -1,10 +1,10 @@
 ---
-title: Python Debugging
-tags: Python
-categories: Language
+categories:
+- Software Engineering
 date: 2022-08-26 00:49:57
+tags: Python
+title: Python Debugging
 ---
-
 
 Outline: 
 
@@ -178,4 +178,3 @@ ZeroDivisionError: division by zero
 ```
 
 这个方式比直接启动pdb单步调试效率要高很多，但也高不到哪去。
-

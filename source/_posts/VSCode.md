@@ -1,12 +1,12 @@
 ---
-title: VSCode
-tags:
-  - Linux
-  - Editor
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-09-13 15:43:12
+tags:
+- Linux
+- Editor
+title: VSCode
 ---
-
 
 Outline:
 

@@ -1,10 +1,10 @@
 ---
-title: Software Requirement Basic
-tags: Software Engineering
 categories: Computer Science
 date: 2021-06-28 00:05:48
+tags:
+- Software Engineering Methodology
+title: Software Requirement Basic
 ---
-
 
 Outline:
 

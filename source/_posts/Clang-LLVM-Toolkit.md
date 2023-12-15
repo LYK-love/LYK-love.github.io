@@ -1,12 +1,12 @@
 ---
-title: Clang/LLVM Toolkit
-tags:
-  - Linux
-  - Compiler
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-09-13 15:16:26
+tags:
+- Linux
+- Compiler
+title: Clang/LLVM Toolkit
 ---
-
 
 Outline:
 
@@ -76,5 +76,3 @@ OSX自带了LLVM, 但是是苹果版的, 和开源版本不太一样, 我们希�
    ```sh
    llvm-dis --version
    ```
-
-   

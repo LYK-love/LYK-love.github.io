@@ -1,8 +1,9 @@
 ---
-title: C++拷贝控制
-tags: C++
-categories: Language
+categories:
+- Software Engineering
 date: 2021-06-20 12:00:00
+tags: C++
+title: C++拷贝控制
 ---
 
 Outline:
@@ -65,4 +66,3 @@ public:
     
 };
 ```
-

@@ -1,14 +1,10 @@
 ---
-title: GRE Hometest Experience
-tags: Study Abroad
-categories: 
-- [Affairs]
-- [Life]
+categories:
+- Life Affairs
 date: 2023-02-12 21:36:56
+tags: Study Abroad
+title: GRE Hometest Experience
 ---
-
-
-
 
 分享一下GRE hometest的经验.  
 

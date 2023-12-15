@@ -1,8 +1,9 @@
 ---
-title: C++面向对象-Part3
-tags: C++
-categories: Language
+categories:
+- Software Engineering
 date: 2021-06-17 15:45:06
+tags: C++
+title: C++面向对象-Part3
 ---
 
 Outline:
@@ -1075,4 +1076,3 @@ template class vector<T>
     
 }
 ```
-

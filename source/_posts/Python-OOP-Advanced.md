@@ -1,10 +1,10 @@
 ---
-title: Python OOP Advanced
-tags: Python
-categories: Language
+categories:
+- Software Engineering
 date: 2022-08-24 21:39:06
+tags: Python
+title: Python OOP Advanced
 ---
-
 
 Outline:
 

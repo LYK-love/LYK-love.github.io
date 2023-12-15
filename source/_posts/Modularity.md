@@ -1,8 +1,9 @@
 ---
-title: Modularity
-tags: Software Engineering
 categories: Computer Science
 date: 2021-06-27 11:14:38
+tags:
+- Software Engineering Methodology
+title: Modularity
 ---
 
 Outline:

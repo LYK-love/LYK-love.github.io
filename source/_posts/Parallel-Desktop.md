@@ -1,12 +1,10 @@
 ---
-title: Parallel Desktop
-tags: Linux
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2023-04-02 20:36:12
+tags: Linux
+title: Parallel Desktop
 ---
-
-
-
 
 Outline:
 

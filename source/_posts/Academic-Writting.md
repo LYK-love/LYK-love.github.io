@@ -1,10 +1,10 @@
 ---
-title: Academic Writting
-tags: Adacemic
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2023-08-20 03:18:45
+tags: Adacemic
+title: Academic Writting
 ---
-
 
 Academic Writting skills.
 

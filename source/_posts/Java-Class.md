@@ -1,12 +1,10 @@
 ---
-title: Java Class
-tags: Java
-categories: Language
+categories:
+- Software Engineering
 date: 2022-02-23 21:37:07
+tags: Java
+title: Java Class
 ---
-
-
-
 
 Outline
 

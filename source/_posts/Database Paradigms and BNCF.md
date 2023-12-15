@@ -1,8 +1,9 @@
 ---
-title: Database Paradigms and BNCF
-tags: Database
-categories: Technology
+categories:
+- Software Engineering
 date: 2021-05-14 18:37:20
+tags: Database
+title: Database Paradigms and BNCF
 ---
 
 Outline:

@@ -1,10 +1,10 @@
 ---
-title: Javascript Basic
-tags: JS
-categories: Language
+categories:
+- Software Engineering
 date: 2022-08-22 18:51:59
+tags: JS
+title: Javascript Basic
 ---
-
 
 Outline:
 
@@ -332,4 +332,3 @@ const newClicks = {
 ```
 
 由于JS对象支持重复声明属性, 并且后面的属性会覆盖前面同名的属性, 这样做实际上就保留了`left`属性, 只更改`right`属性
-

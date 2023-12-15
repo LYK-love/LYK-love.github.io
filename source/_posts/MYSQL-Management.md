@@ -1,11 +1,10 @@
 ---
-title: MYSQL Management
-tags: Database
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-04-09 16:44:41
-
+tags: Database
+title: MYSQL Management
 ---
-
 
 Outline:
 

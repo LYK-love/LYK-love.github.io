@@ -1,8 +1,9 @@
 ---
-title: C++结构化
-categories: "Language"
-tags: "C++"
+categories:
+- Software Engineering
 date: 2021-06-21 12:00:00
+tags: C++
+title: C++结构化
 ---
 
 Outline:

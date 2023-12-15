@@ -1,12 +1,11 @@
 ---
-title: Empirical Software Engineering
-tags: 
-- Software Engineering
-- Empirical SE
 categories: Computer Science
 date: 2022-06-24 10:46:24
+tags:
+- Empirical SE
+- Software Engineering Methodology
+title: Empirical Software Engineering
 ---
-
 
 Outline:
 
@@ -111,4 +110,3 @@ to what extent the data and the analysis are dependent on the specific researche
 
 * Inter-observer (inter-rater)
   * the reliability of surveys that involve a (group) of trained person completing a survey instrument based on their own observations
-

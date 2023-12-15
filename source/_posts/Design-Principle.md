@@ -1,10 +1,10 @@
 ---
-title: Design Principle
-tags: Software Engineering
 categories: Computer Science
 date: 2022-06-12 01:07:46
+tags:
+- Software Engineering Methodology
+title: Design Principle
 ---
-
 
 Outline：
 

@@ -1,10 +1,10 @@
 ---
-title: Hard Link && Symbol Link
-tags: Linux
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-05-05 02:07:49
+tags: Linux
+title: Hard Link && Symbol Link
 ---
-
 
 Outline:
 
@@ -131,4 +131,3 @@ int readlink(const char *path, char *buf, size_t bufsiz);
 ```
 
 * Return: the count of characters placed in the buffer if success; -1 if failure
-

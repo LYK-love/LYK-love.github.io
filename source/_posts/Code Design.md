@@ -1,11 +1,10 @@
 ---
-title: Code Design
-tags: Software Engineering
 categories: Computer Science
 date: 2021-06-17 15:41:09
+tags:
+- Software Engineering Methodology
+title: Code Design
 ---
-
-
 
 Outline:
 
@@ -158,4 +157,3 @@ Outline:
 * 其中, `n`为一个类的方法数量，`Ci`是第`i`个方法的代码复杂度。
 
 # 问题代码
-

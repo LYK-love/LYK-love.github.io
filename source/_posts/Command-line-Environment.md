@@ -1,11 +1,9 @@
 ---
-title: Command-line Environment
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-02-10 17:30:37
+title: Command-line Environment
 ---
-
-
-
 
 Outline:
 
@@ -365,4 +363,3 @@ There are many ways to copy files over ssh:
   Host *.mit.edu
       User foobaz
   ```
-

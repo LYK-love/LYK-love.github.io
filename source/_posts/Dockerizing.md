@@ -1,10 +1,10 @@
 ---
-title: Dockerizing
-tags: Docker
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-03-19 01:04:45
+tags: Docker
+title: Dockerizing
 ---
-
 
 Outline:
 

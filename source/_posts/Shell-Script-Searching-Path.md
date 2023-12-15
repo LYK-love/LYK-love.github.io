@@ -1,11 +1,11 @@
 ---
-title: Shell Script Searching Path
+categories:
+- Software Engineering
 date: 2023-04-23 21:48:25
 tags:
 - shell
 - Linux
-categories: 
-- Toolkit
+title: Shell Script Searching Path
 ---
 
 Outline:

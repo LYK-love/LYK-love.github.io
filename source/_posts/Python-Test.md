@@ -1,10 +1,10 @@
 ---
-title: Python Test
-tags: Python
-categories: Language
+categories:
+- Software Engineering
 date: 2022-08-26 00:44:51
+tags: Python
+title: Python Test
 ---
-
 
 Outline:
 
@@ -291,8 +291,3 @@ Exception raised:
 ```
 
 注意到最后3行代码。当模块正常导入时，doctest不会被执行。只有在命令行直接运行时，才执行doctest。所以，不必担心doctest会在非测试环境下执行.
-
-
-
-
-

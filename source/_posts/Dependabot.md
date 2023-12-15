@@ -1,10 +1,10 @@
 ---
-title: Dependabot
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-06-26 16:56:12
-tags:
+tags: null
+title: Dependabot
 ---
-
 
 Outline：
 
@@ -103,6 +103,3 @@ updates:
     schedule:
       interval: "weekly"
 ```
-
-
-

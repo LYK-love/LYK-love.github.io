@@ -1,7 +1,8 @@
 ---
-title: Data Wrangling
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-02-08 18:14:27
+title: Data Wrangling
 ---
 
 Some tools for data wrangling
@@ -206,7 +207,3 @@ ssh myserver journalctl
   ```shell
   rustup toolchain list | grep nightly | grep -vE "nightly-x86" | sed 's/-x86.*//' | xargs rustup toolchain uninstall
   ```
-
-  
-
- 

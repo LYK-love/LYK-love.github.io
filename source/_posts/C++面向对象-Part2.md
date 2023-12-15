@@ -1,11 +1,10 @@
 ---
-title: C++面向对象 Part2
-tags: C++
-categories: Language
+categories:
+- Software Engineering
 date: 2021-05-26 19:04:52
+tags: C++
+title: C++面向对象 Part2
 ---
-
-
 
 Outline:
 

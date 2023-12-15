@@ -1,14 +1,10 @@
 ---
-title: TOEFL Hometest Experience
-tags: Study Abroad
-categories: 
-- [Affairs]
-- [Life]
+categories:
+- Life Affairs
 date: 2023-02-12 16:51:51
+tags: Study Abroad
+title: TOEFL Hometest Experience
 ---
-
-
-
 
 分享一下TOEFL hometest的经验.  
 

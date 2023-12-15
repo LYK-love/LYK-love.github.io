@@ -1,11 +1,11 @@
 ---
-title: Shell Script
+categories:
+- Software Engineering
+date: 2023-04-23 20:53:12
 tags:
 - shell
 - Linux
-categories: 
-- Language
-date: 2023-04-23 20:53:12
+title: Shell Script
 ---
 
 Outline:

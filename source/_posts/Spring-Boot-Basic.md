@@ -1,10 +1,10 @@
 ---
-title: Spring Boot Intro
-tags: Spring
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-04-13 20:38:17
+tags: Spring
+title: Spring Boot Intro
 ---
-
 
 Outline:
 

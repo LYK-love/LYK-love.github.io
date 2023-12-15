@@ -1,13 +1,10 @@
 ---
-title: C++ 泛型算法
-categories: Language
-tags: C++
+categories:
+- Software Engineering
 date: 2021-06-20 12:00:00
+tags: C++
+title: C++ 泛型算法
 ---
-
-
-
-
 
 Outline：
 
@@ -420,4 +417,3 @@ remove_copy_if( v1.begin(), v1.end(), back_inserter(v2),
 # 特定容器算法
 
 `list`和`forward_list`定义了几个成员函数形式的算法，对于这类容器，应当优先使用使用成员函数版本的算法而不是通用算法
-

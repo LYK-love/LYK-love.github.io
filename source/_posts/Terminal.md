@@ -1,12 +1,12 @@
 ---
-title: Terminal
-tags:
-  - Linux
-  - Terminal
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-09-13 14:58:22
+tags:
+- Linux
+- Terminal
+title: Terminal
 ---
-
 
 Outline:
 
@@ -723,6 +723,3 @@ If you are using iTerm2 or Termux, `p10k configure` can **install the recommende
 ## Gruv
 
 This theme is copied from [reddit](https://www.reddit.com/r/unixporn/comments/o6j9hj/yabaimacos_eat_breath_sleep_gruvbox/). It only applies to mac. And for terminal emulaters specifically, it applies to iTerm2.
-
-
-

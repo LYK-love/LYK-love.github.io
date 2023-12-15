@@ -1,10 +1,10 @@
 ---
-title: Hexo Next
-categories: 
-- [Toolkit]
+categories:
+- Software Engineering
+date: 2022-03-27 02:28:03
 tags:
 - Hexo
-date: 2022-03-27 02:28:03
+title: Hexo Next
 ---
 
 在[之前的文章](https://lyk-love.cn/2023/05/05/Hexo/)中, 我介绍了如何使用Hexo来构建静态站点. Hexo有很多主题, 其中我认为最好看最好用的是Hexo Next theme. 本文介绍如何使用和配置Next theme, 以及如何对Hexo和Next进行多主机同步.

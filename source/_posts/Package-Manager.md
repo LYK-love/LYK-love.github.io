@@ -1,10 +1,10 @@
 ---
-title: Package Manager
-tags: Linux
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2022-09-13 14:58:06
+tags: Linux
+title: Package Manager
 ---
-
 
 Outline:
 
@@ -365,6 +365,3 @@ npm config set registry https://registry.npm.taobao.org
 ```shell
 npm config get registry
 ```
-
-
-

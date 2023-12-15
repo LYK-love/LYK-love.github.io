@@ -1,8 +1,9 @@
 ---
-title: Docker Network
-tags: Docker
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-03-23 05:39:44
+tags: Docker
+title: Docker Network
 ---
 
 Outline:
@@ -592,6 +593,3 @@ nginx
 * 箭头展示了访问Node1的5000端口的浏览，通过Ingress网络，被路由到了Node2的正在运行的服务副本上
 
 可以看到，外部流量可能访问任意一个Swarm节点，但是最终都会被路由到运行服务副本的节点
-
-
-

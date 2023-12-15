@@ -1,12 +1,12 @@
 ---
-title: Learn about Bank Cards
-tags:
-  - Study Abroad
-  - Everyday Money
-categories: Affairs
+categories:
+- Life Affairs
 date: 2023-09-12 22:05:32
+tags:
+- Study Abroad
+- Everyday Money
+title: Learn about Bank Cards
 ---
-
 
 Types of bank cards. How to use them. And some special notes.
 

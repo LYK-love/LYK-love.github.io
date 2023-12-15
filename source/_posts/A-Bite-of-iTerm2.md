@@ -1,11 +1,11 @@
 ---
-title: A Bite of iTerm2
-tags:
-  - Terminal
-categories: Toolkit
+categories:
+- Software Engineering
 date: 2023-11-02 21:30:32
+tags:
+- Terminal
+title: A Bite of iTerm2
 ---
-
 
 Operations on iTerm2.
 

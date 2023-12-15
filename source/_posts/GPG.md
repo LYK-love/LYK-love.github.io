@@ -1,10 +1,10 @@
 ---
-title: GPG
-categories: Toolkit
-tags: GPG
+categories:
+- Software Engineering
 date: 2022-02-10 14:57:00
+tags: GPG
+title: GPG
 ---
-
 
 useful encryption tool
 

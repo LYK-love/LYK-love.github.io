@@ -1,10 +1,10 @@
 ---
-title: Docker Stack
-tags: Docker
-categories: Technology
+categories:
+- Software Engineering
 date: 2022-03-25 04:48:35
+tags: Docker
+title: Docker Stack
 ---
-
 
 Outline:
 
@@ -225,4 +225,3 @@ Docker Stack首先会检查并创建`networks`,  因为服务依赖于网络
 * ` envirenment`: 向容器中注入环境变量, 一般都将它们以密钥形式传递
 * `deploy`: 定义部署约束, 比如节点ID, 节点名称, 节点角色, 还有更新约束等待
   * 更新约束就是`docker service uodate `的那些参数, `replicas`之类
-

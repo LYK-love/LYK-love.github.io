@@ -1,10 +1,10 @@
 ---
-title: Junit
-tags: Java
-categories: Technology
+categories:
+- Software Engineering
 date: 2023-08-14 22:04:16
+tags: Java
+title: Junit
 ---
-
 
 How to use  [Junit5](https://junit.org/junit5/docs/current/user-guide), the java testing framework.
 
@@ -116,5 +116,3 @@ Version: Junit5.
 * `@BeforeAll`: 在每个<u>test class</u>运行前都会执行一次`@BeforAll`方法.  (每个测试类只运行1次)
 
   * 在Junit4中, @BeforeEach and @BeforeAll的名字分别是@Before and @BeforeClass.
-
-    

@@ -1,8 +1,9 @@
 ---
-title: Love, Death and Robots
-tags: Movie
-categories: Art
+categories:
+- Liberal Arts
 date: 2021-08-12 12:00:00
+tags: Movie
+title: Love, Death and Robots
 ---
 
 Sorted by episode

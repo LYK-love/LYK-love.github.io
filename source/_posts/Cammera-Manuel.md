@@ -1,8 +1,9 @@
 ---
-title: Cammera Manuel
-tags: Camera
-categories: Other Hobbies
+categories:
+- Potpourri
 date: 2023-04-13 14:51:42
+tags: Camera
+title: Cammera Manuel
 ---
 
 For Fuji XA-7

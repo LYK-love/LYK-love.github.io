@@ -1,8 +1,9 @@
 ---
-title: Database Candidate Key
-categories: Technology
-tags: Database
+categories:
+- Software Engineering
 date: 2021-05-14 14:53:56
+tags: Database
+title: Database Candidate Key
 ---
 
 Outline:

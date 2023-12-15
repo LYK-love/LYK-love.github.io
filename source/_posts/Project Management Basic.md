@@ -1,8 +1,9 @@
 ---
-title: Project Management Basic
-tags: Software Engineering
 categories: Computer Science
 date: 2021-06-27 23:26:27
+tags:
+- Software Engineering Methodology
+title: Project Management Basic
 ---
 
 Outline:
