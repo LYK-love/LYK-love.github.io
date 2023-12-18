@@ -1,17 +1,24 @@
 ---
 title: z-Transforms
 date: 2023-12-11 23:14:59
-tags:
+tags: Digital Signal Processing
+categoeirs: Electronic Engineering
+mathjax: true
 ---
 
+Source:
 
+1. James McClellan, Ronald Schafer & Mark Yoder. (2015). z-Transforms. DSP First (2nd ed., pp. 347-387). Pearson.
 
+<!--more-->
+
+# $z$-Transfrom
 
 FIR convolution is equivalent to polynomial multiplication. 
 
 In fact, common algebraic operations, such as multiplying, dividing, and factoring polynomials, can be interpreted as combining or decomposing LTI systems.
 
-# $z$-Transfrom
+
 
 A finite-length signal $x[n]$ consists of a set of signal values $\{x[0], x[1], \ldots, x[L-1]\}$ that can be represented by the relation
 $$

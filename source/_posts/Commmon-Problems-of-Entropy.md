@@ -7,7 +7,7 @@ mathjax: true
 date: 2023-12-10 11:48:10
 ---
 
-
+Common problems of Shannon entropy in information theory.
 
 <!--more-->
 

@@ -211,6 +211,14 @@ conda env list
 
 
 
+指定channel:
+
+```sh
+conda install -c <channel> <library>
+```
+
+
+
 Create a new environment
 
 ```

@@ -5,6 +5,12 @@ categoeirs: Electronic Engineering
 mathjax: true
 ---
 
+Source:
+
+1. James McClellan, Ronald Schafer & Mark Yoder. (2015). Sampling and Aliasing. DSP First (2nd ed., pp. 102-135). Pearson.
+
+<!--more-->
+
 # Intro
 
 This chapter is concerned with the conversion of signals between the analog (continuous-time) domain and the digital (discrete-time) domain, aka AD and DC.

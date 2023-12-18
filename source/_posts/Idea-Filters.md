@@ -1,10 +1,16 @@
 ---
 title: Idea Filters
 date: 2023-12-11 23:24:22
-tags:
+tags: Digital Signal Processing
+categoeirs: Electronic Engineering
+mathjax: true
 ---
 
+Source:
 
+James McClellan, Ronald Schafer & Mark Yoder. (2015). IIR Filters. DSP First (2nd ed., pp. 394-457). Pearson.
+
+<!--more-->
 
 
 # Ideal Lowpass Filter
