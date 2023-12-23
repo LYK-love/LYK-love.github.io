@@ -20,6 +20,7 @@ Resources for learning ML(Machine Learning), DL(Deep Learning), RL(Reinforcement
 
 # ML
 
+* [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html)
 * [Deep Reinforcement Learning, UC Berkeley, CS285](https://www.youtube.com/watch?v=JHrlF10v2Og&list=PL_iWQOsE6TfX7MaC6C3HcdOf1g337dlC9Stanford) 
 * [C230, Deep Learning 2018, by Andrew Ng](https://www.youtube.com/watch?v=PySo_6S4ZAg&list=PLoROMvodv4rOABXSygHTsbvUz4G_YQhOb)
 * [Stanford Convolutional Neural Networks](https://www.youtube.com/watch?v=vT1JzLTH4G4&list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv)

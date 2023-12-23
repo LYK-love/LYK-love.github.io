@@ -73,6 +73,10 @@ A common inverse proxy tool is [ngork](https://dashboard.ngrok.com/get-started/s
 
 2. In the server, start ngork and listen to port `22`.
 
+   ```sh
+   ngrok tcp 22
+   ```
+
 3. Now in the [Endpoints page](https://dashboard.ngrok.com/cloud-edge/endpoints) of Ngork, you can see the server is listed as an "endpoint":
 
    ![Ngork Endpoints page](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Software%20Engineering/Tips%20for%20Remote%20Development/Ngork%20Endpoints%20page.png)

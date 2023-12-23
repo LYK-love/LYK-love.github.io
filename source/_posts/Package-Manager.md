@@ -122,9 +122,7 @@ brew安装的软件位置千奇百怪, 但都会在`/opt/homebrew/opt`留下软�
 
   
 
-# For Programing Languages
-
-## conda
+# conda
 
 推荐`miniconda`.
 
@@ -155,7 +153,7 @@ After installing, initialize your newly-installed Miniconda. The following comma
 ~/miniconda3/bin/conda init zsh        
 ```
 
-### 换源
+## Switch source
 
 If you're in China, you need to switch your conda source to a mirror.  Take the example from NJU Mirror, [具体指导](https://mirrors.nju.edu.cn/help/anaconda).(其实nju源就是从[tuna](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)搬运的, 直接用tuna也可以)
 
@@ -191,7 +189,7 @@ If you're in China, you need to switch your conda source to a mirror.  Take the 
 
 4. 运行 `conda create -n myenv numpy` 测试一下吧
 
-### commands
+## Commands
 
 Display Conda environment information:
 
@@ -267,17 +265,13 @@ remove the environment:
 conda env remove --name [project-env]
 ```
 
-
-
-
-
-## pip3
+# pip
 
 pip是python的一个包管理工具，python2:使用`pip`, python3使用`pip3`
 
 * ( Python3下使用`pip` 默认用的是`pip3` )
 
-### 安装
+## Install
 
 ```shell
 yay -S pip3
@@ -301,7 +295,7 @@ pip3 --version
 
 
 
-### 换源
+## Switch source
 
 在 pip 命令中使用 **-i** 参数来指定镜像地址
 
@@ -335,6 +329,50 @@ trusted-host = https://mirrors.aliyun.com
 ```python
 pip3 config list  
 ```
+
+## Commands
+
+### from a git repository
+
+pip install a [package](https://lyk-love.cn/2022/08/24/python-module/) from a git repository
+
+```
+pip install "Package" @ git+"URL of the repository"
+```
+
+e.g., If github repo `https://github.com/AndrejOrsula/dreamerv3` has following arch:
+
+```
+.
+├── dreamerv3
+│   ├── <.....>
+│   ├── __init__.py
+├── example.py
+├── LICENSE
+├── MANIFEST.in
+├── README.md
+├── requirements.txt
+├── scores
+├── setup.py
+└── test.py
+
+```
+
+Then this repo has a module `dreamerv3`. It can be downloaded by:
+
+```
+pip install --no-cache-dir "dreamerv3 @ git+https://github.com/AndrejOrsula/dreamerv3.git"
+```
+
+### Don't use cache
+
+```
+pip install --no-cache-dir <package-name]>
+```
+
+It ensures that the package is always downloaded directly from the repository.
+
+
 
 ## npm
 
@@ -373,3 +411,13 @@ npm config set registry https://registry.npm.taobao.org
 ```shell
 npm config get registry
 ```
+
+
+
+
+
+# Dreamerv3-torch
+Pytorch implementation of [Mastering Diverse Domains through World Models](https://arxiv.org/abs/2301.04104v1). DreamerV3 is a scalable algorithm that outperforms previous approaches across various domains with fixed hyperparameters.
+
+- 
+- 

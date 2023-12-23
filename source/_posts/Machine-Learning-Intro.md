@@ -17,34 +17,6 @@ Outline
 
 # Key Components
 
-## Data
-
-> In order to work with data usefully, we typically need to come up with a suitable **numerical representation.** 
-
-* **Each example (or *data point*, *data instance*, *sample*) typically consists of a set of attributes called *features* (sometimes called *covariates* or *inputs*),** based on which the model must make its predictions. 
-
-  * In supervised learning problems, our goal is to predict the value of a special attribute, called the ***label*** (or *target*), that is not part of the model’s input.
-
-  > E.g., If we were working with image data, each example might consist of an individual photograph (the features) and a number indicating the category to which the photograph belongs (the label). The photograph would be represented numerically as three grids of numerical values representing the brightness of red, green, and blue light at each pixel location. For example, a 200×200 color photograph would consist of 200×200×3=120000 numerical values.
-
-* 定长向量(*fixed-length* vector):  样本的特征数量被称为维度(*dimensionality*). dimensionality固定的样本被称为定长的.
-
-* 不定长向量(*varying-length* vector): 样本的*dimensionality*不固定. 例如图片和文字.
-
-  * 以图片为例, 具有不同分辨率和形状的图片自然就具有不同的维度. 要可以对图片进行裁切(cropping), 将其裁切为一个标准格式来将其转换为fixed-length* vectors, 但这也会损失被裁切掉的信息.
-  * 以文字为例, 对于某个电影的评论可能很简短(“it stinks!”), 可能连篇累牍.
-  * 深度学习相比其他传统方法的一个优势就是它很擅长处理*varying-length* vectors.
-
-* 数据的质量: We need the *right* data. 这包括了标签的正确性, 特征的完备性和样本的完备性和伦理等.
-
-  * Imagine applying a skin cancer recognition system in the wild that had never seen black skin before.
-
-  * 例如, 如果某个诊断皮肤癌的系统从未见过黑人, 那么由于黑人在数据中没有被表示过, 即样本不完备, 可能形成误诊.
-
-  * 再例如, ML模型可能无意中捕捉到历史上的不公正现象, 并将其自动化. 假设一个招聘系统学习其历史数据, 而该公司素来有歧视女性员工的传统, 该系统很可能会学习“选雇佣男性”这一倾向.
-
-    
-
 ## Models
 
 机器学习中的"model"就是一个函数, 将输入的数据映射成一个"预测结果".
@@ -71,11 +43,6 @@ In machine learning, and optimization more generally, we call these . By convent
 
 * 优化过程: During optimization, we think of the loss as a function of the model’s parameters, and treat the training dataset as a constant. We learn the best values of our model’s parameters by minimizing the loss incurred on a set consisting of some number of examples collected for training. 
 
-* 数据集划分: Doing well on the training data does not guarantee that we will do well on unseen data.  So we will typically want to <u>split the available data into two partitions</u>: 
-
-  * the ***training dataset*** (or *training set*), for learning model parameters.
-  * the ***test dataset*** (or *test set*), which is held out for evaluation.
-
   想象一个学生参与考试, 该学生此前复习(training)了一些习题(训练集). 在考试(evaluation)时, 他对于复习过的习题可能会表现优异, 然而对于没见过的习题(测试集)的表现并不能保证.
 
 * 过拟合(overfitting): When a model performs well on the training set but fails to generalize to unseen data, we say that it is *overfitting* to the training data.
@@ -93,45 +60,6 @@ Popular optimization algorithms for deep learning are based on an approach calle
 
 
 ## Data
-
-
-
-令$D = \{ x_1,x_2,..,x_m \}$表示包含m个示例的数据集, 每个example(or *data point*, *data instance*, *sample*)由$d$个属性描述, 则每个example被表示为$d$维样本空间中的一个向量$x_i=\{ x_{i1}, x_{i2}, \dots, x_{id} \}$, $x_i \in \chi$, 其中$x_{ij}$是样本$x_i$在第j个属性的取值
-
-![data set](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Artificial%20Intelligence/%E6%95%B0%E6%8D%AE%E9%9B%86.png)
-
-
-
-* Each ***example*** typically consists of a set of attributes called **features** (sometimes called *covariates* or *inputs*), based on which the model must make its predictions.
-
-* Label/Target: example的一个属性, 表示该样本所属的分类. 
-
-* Example(or *data point*, *data instance*, *sample*): Each feature–label pair is called an example.
-
-* 
-
-* 用$(x_i,y_i)$表示第i个样例，其中$y_i \in \gamma$是示例$x_i$的标记， $\gamma $ 是所有标记的集合，也就是输出空间
-
-  * 上图的每条record就是一个示例(instance）或样本(sample)
-
-  * In supervised learning problems, our goal is to predict the value of a special attribute, called the *label* (or *target*), that is not part of the model’s input.
-
-  
-
-* **属性空间**(attribute value),**样本空间**(sample  space),**输入空间**: 属性张成的空间，记为$\chi$
-
-* **标记空间**, **输出空间**: label张成的空间，记为 $\gamma $ 
-
-* 如果把属性作为坐标轴, 每个示例都对应特征空间的一个点, 称为**特征向量**(feature  vector), 属性个数就是样本维度
-
-* 
-  * 如果把标记看作对象本身的一部分，那么示例也可以看作样本
-  
-* 训练集: 一组训练样例
-
-* 测试集: 一组测试样例
-
-
 
 # Key Terminologies
 
