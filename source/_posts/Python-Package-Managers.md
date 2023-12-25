@@ -1,5 +1,5 @@
 ---
-title: Pip and Conda
+title: Python Package Managers
 tags: Python
 categories:
   - Software Engineering
@@ -12,6 +12,14 @@ Source:
 * [miniconda](https://docs.conda.io/projects/miniconda/en/latest/index.html#miniconda)
 
 <!--more-->
+
+# Python
+
+Install Python3 on Debian/Ubuntu:
+
+```python
+sudo apt install python3
+```
 
 # Conda
 
