@@ -17,9 +17,7 @@ ref: [MIT lesson](https://missing.csail.mit.edu/2020/command-line/), [tmux tutor
 
 <!--more-->
 
-
-
-## 控制终端(controlling terminal)
+# controlling terminal
 
 **控制终端是进程的一个属性。**通过 `fork` 系统调用创建的子进程会从父进程那里继承控制终端。这样，session 中的所有进程都从 session 领头进程那里继承控制终端。Session 的领头进程称为终端的控制进程(controlling process)。简单点说就是：**一个 session 只能与一个终端关联，这个终端被称为 session 的控制终端(controlling terminal)。**同时只能由 session 的领头进程来建立或者改变终端与 session 的联系。我们可以通过 ps 命令查看进程的控制终端：
 
@@ -97,6 +95,8 @@ I got a SIGINT, but I am not stopping
 
   * `[工作号] 进程号`
 
+  * 在使用nohup后退出session重连, 使用jobs是看不到之前的进程的, 这是因为当本次终端退出后，后台作业变成孤儿进程，孤儿进程由系统父进程接管。当再次连接终端时，原作业与当前终端，不存在关系父子关系，故看不到进程。但是原作业会在系统中一致运行，直到完成或被停止。
+  
   * 得到job的PID：
     * `grep`
   * To refer to the last backgrounded job you can use the `$!` special parameter.
@@ -106,7 +106,7 @@ I got a SIGINT, but I am not stopping
   如果在终端上出现如下信息：
 
   `[1]+ Done find / -name install.log`
-
+  
   则证明后台的这个命令已经完成了。命令如果有执行结果，则也会显示到操作终端上。其中，[1] 是这个命令的工作号，"+"代表这个命令是最近一个被放入后台的
 
 

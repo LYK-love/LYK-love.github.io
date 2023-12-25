@@ -47,6 +47,11 @@ Others:
 * Online textbook: [Deep Dive DL](http://d2l.ai/chapter_preface/index.html)
 * Paper reading: [Mu Li 's video](https://www.youtube.com/@mu_li/videos)
 
+## NLP
+
+* [NLP Course | For You](https://lena-voita.github.io/nlp_course/seq2seq_and_attention.html)
+* [LSTM](https://weberna.github.io/blog/2017/11/15/LSTM-Vanishing-Gradients.html#fn:4)
+
 # RL
 
 * Textbook: [*Mathmatical Foundation of Reinforcement Learning*](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning)
