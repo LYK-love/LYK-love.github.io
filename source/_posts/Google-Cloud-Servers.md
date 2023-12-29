@@ -1,5 +1,5 @@
 ---
-title: Google Cloud Server
+title: Google Cloud Servers
 tags: Linux
 categories: Software Engineering
 date: 2023-12-25 00:24:54
@@ -26,6 +26,10 @@ If you're an education account, i.e., your email account ends with `.edu`, then 
 So, I got 400 USD credits. 
 
 Now I'll show you how to rent a GPU server on GCloud and config it.
+
+
+
+[-->Control Panel for Google Cloud Instances](https://console.cloud.google.com/compute).
 
 # Rent A Server
 
@@ -163,3 +167,14 @@ You can also refer to [Pytorch GPU Setup Guide](https://lyk-love.cn/2023/12/22/p
    Verify the installation. See [Verifying the GPU driver install](https://cloud.google.com/compute/docs/gpus/install-drivers-gpu#verify-driver-install).
 
 3. This should be OK. There's no need to reboot your system.
+
+# Assign a Static IP
+
+By default, the instance will have a new enternal IP each time it starts. For convinence, you can reserve (aka, buy) a static external IP and attach to the instance.
+
+1. [Reserve a new static external IP address](https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address#reserve_new_static)
+2. [Change or assign an external IP address to an existing VM](https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address#IP_assign)
+
+# Others
+
+* [Add disk storage of VM](https://cloud.google.com/compute/docs/disks/resize-persistent-disk).

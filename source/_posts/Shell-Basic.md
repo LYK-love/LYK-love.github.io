@@ -95,6 +95,45 @@ Session 中的每个进程组被称为一个 **job**，有一个 job 会成为 s
 
 Session 的意义在于多个工作(job)在一个终端中运行，其中的一个为前台 job，它直接接收该终端的输入并把结果输出到该终端。其它的 job 则在后台运行。
 
+# Shell Switch
+
+检查当前可用的shell:
+
+```shell
+cat /etc/shells
+```
+
+
+
+
+查看当前使用的shell:
+
+```shell
+echo $SHELL
+```
+
+
+
+set one shell  as default for your user:
+
+```shell
+chsh -s full-path-to-shell
+```
+
+
+
+在Parallels的Ubuntu虚拟机中, `chsh -s /bin/zsh`无法切换shell到zsh, 原因未知. 只能手动设置:
+
+edit `~/.bashrc`, 在最后一行加上:
+
+```shell
+bash -c zsh
+```
+
+重启shell即可.
+
+
+
 # Shell and Syscall
 
 由于系统调用`fork()`和`exec()`的分离，程序可以在`fork()`之后，`exec()`之前运行代码，方便了shell的工作
