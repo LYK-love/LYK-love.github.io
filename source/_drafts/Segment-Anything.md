@@ -15,11 +15,15 @@ Source:
 
 # Arch
 
-![Segment Anything Model (SAM) overview](/Users/lyk/Library/Application Support/typora-user-images/image-20231227231529419.png)
+![Segment Anything Model (SAM) overview](/Users/lyk/Pictures/HexoPics/Machine Learning/Segment Anything/Segment Anything Model (SAM) overview.png)
 
 A heavyweight image encoder outputs an image embedding that can then be efficiently queried by a variety of input prompts to produce object masks at amortized real-time speed. For ambiguous prompts corresponding to more than one object, SAM can output multiple valid masks and associated confidence scores.
 
+## Image Encoder
 
+![image-20231229191214584](/Users/lyk/Library/Application Support/typora-user-images/image-20231229191214584.png)
+
+![image-20231229191421015](/Users/lyk/Library/Application Support/typora-user-images/image-20231229191421015.png)
 
 ## Prompt Encoder
 
@@ -34,15 +38,22 @@ A heavyweight image encoder outputs an image embedding that can then be efficien
 * **Prompt encoder**: we consider two sets of prompts:
   1. *sparse* (points, boxes, text)
   2. *dense* (masks)
-* For points:  point is represented as the sum of a positional encoding of the point’s location and one of two learned embeddings that in- dicate if the point is either in the foreground or background.
+* For points:  point is represented as the sum of a positional encoding of the point’s location and one of two learned embeddings that indicate if the point is either in the foreground or background.
 * For boxes: A box is represented by an embedding pair: 
   1. the positional encoding of its <u>top-left corner</u> summed with a learned embedding representing “top-left corner” and
   2. the same structure but using a learned embedding indicating “<u>bottom- right corne</u>r”. 
+* For text: CLIP
 * For masks: 
   1. A mask is downscaled.
   2. If the mask is not specified, a  “no mask” is added to the image embedding.
 
 ## Mask Decoder
+
+> Mask decoder. The mask decoder efficiently maps the im- age embedding, prompt embeddings, and an output token to a mask. This design, inspired by [14, 20], employs a modification of a **Transformer** decoder block [103] followed by a dynamic mask prediction head. 
+>
+> Our modified decoder block uses **prompt self-attention** and **cross-attention in two directions (prompt-to-image embedding and vice-versa)** to update *all* embeddings. After running two blocks, we up-sample the image embedding and an MLP maps the output token to a dynamic linear classifier, which then computes the mask foreground probability at each image location.
+
+![image-20231229192342894](/Users/lyk/Library/Application Support/typora-user-images/image-20231229192342894.png)
 
 The prompt decoder and mask decoder are both fast so that they can be used within browsers.
 
@@ -50,9 +61,7 @@ The prompt decoder and mask decoder are both fast so that they can be used withi
 
 
 
-A two-layer decoder updates both the image embedding and prompt tokens via cross-attention. Then the image embed- ding is upscaled, from which the updated output tokens are used to dynamically predict masks. (Not illustrated for fig- ure clarity: At every attention layer, positional encodings are added to the image embedding, and the entire original prompt token (including position encoding) is re-added to the token queries and keys.)
-
-
+A two-layer decoder updates both the image embedding and prompt tokens via cross-attention. Then the image embed- ding is upscaled, from which the updated output tokens are used to dynamically predict masks. (Not illustrated for figure clarity: At every attention layer, positional encodings are added to the image embedding, and the entire original prompt token (including position encoding) is re-added to the token queries and keys.)
 
 
 
@@ -62,7 +71,11 @@ A two-layer decoder updates both the image embedding and prompt tokens via cross
 
 IoU (Intersection over Union)
 
-![image-20231228011404831](/Users/lyk/Library/Application Support/typora-user-images/image-20231228011404831.png)
+![image-20231229193218108](/Users/lyk/Library/Application Support/typora-user-images/image-20231229193218108.png)
+
+![img](https://assets-global.website-files.com/5d7b77b063a9066d83e1209c/647a0e1b55ad60f00d6e0604_IoU%20comparative%20performance.webp)
+
+[-->Image source](https://www.v7labs.com/blog/intersection-over-union-guide)
 
 ## Losses and training
 
