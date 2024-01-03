@@ -1,65 +1,61 @@
 ---
+title: The Shell Program
 categories:
 - Software Engineering
+tags: 
+- Shell
+- Linux
 date: 2022-07-15 12:00:00
-tags: shell
-title: Shell Basic
 ---
 
-Outline:
+Source:
 
-* Shell Basic
-* Shell and Syscall
-* User Environment
-* Linux Shell
-* Windows Shell
+1. Machtelt Garrels. *[Chapter 1. Chapter 1. Bash and Bash scripts](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_01_01.html)*.
+2. 蔡德明. *[第十一认识与学习Bash. 鸟哥的Linux私房菜](http://cn.linux.vbird.org/linux_basic/0320bash_1.php)*.
 
 <!--more-->
 
-# Shell Basic
+# The concept of shell
 
-Shell语言的文档详见拙著[Shell Script Language](https://lyk-love.cn/2022/03/18/Shell-Script-Language/#Env-virable), 本文只介绍Shell程序的基本概念
+In a high level,  "shell" program can refer to any program that lays between kernel mode and user mode. 
 
+* The user interface program, **shell** or **GUI**, is the <u>lowest level of user-mode software</u>, and allows the user to start other programs --- 拙著 *OS Introduction* 
 
+In this chapter we focus on the UNIX shell programs although Microsoft Windows OS has its shells such as Powershell.
 
-抽象的说，Shell泛指所有提供**用户和操作系统的接口**的程序，位于用户态的最底层。 可分为文本界面的命令行程序( Command LIne, aka CLI )和图形界面程序( Graphic User Interface, aka GUI )。 一般来说，“Shell”指的都是CLI
+The UNIX shell program is a interpreter, and the shell script executed by that program is interpreted. Thus, shell language is a interpreted language. 
 
-*  The user interface program, **shell** or **GUI**, is the <u>lowest level of user-mode software</u>, and allows the user to start other programs --- 拙著 *OS Introduction* 
+In this case, different implementations of shell will create different dialects. But we don't need to worry about them since they're mainly the same.
 
-从实现上讲，Shell程序就是一个**解释器**，它接受的语言就被称为Shell语言( *Shell Script*)。 用户将Shell语言输入给Shell， 后者执行命令。 
+## Shell types
 
-* 注意，不同的Shell实现，也会形成一些自己的方言。不过一般不用考虑那么多，只要了解其中最标准的子集即可
+* **sh** or Bourne Shell: the original shell still used on UNIX systems and in UNIX-related environments.  This is the  basic shell, a small program with few features.  While this is not the  standard shell, it is still available on every Linux system for  compatibility with UNIX programs.
 
+  
 
+* **bash** or Bourne Again shell: the standard GNU shell, intuitive and flexible.  Probably most advisable for beginning  users while being at the same time a powerful tool for the advanced and  professional user.  On Linux, **bash** is the standard shell for common users.  This shell is a so-called *superset* of the Bourne shell, a set of add-ons and plug-ins.  This means that the Bourne Again shell is compatible with the Bourne shell: commands that work in **sh**, also work in **bash**.  However, the reverse is not always the case.  All examples and exercises in this book use **bash**.
 
-Linux中有多种shell，默认使用的是Bash
+* **Zsh**: a modern shell with many fancy features. It's installed by OSX by default.
 
-## shell categories
-
-| shell名称  | 描述                                                         | 位置            |
-| ---------- | ------------------------------------------------------------ | --------------- |
-| ash        | 一个小的shell，但与bash完全兼容                              | /bin/ash        |
-| ash.static | 一个不依靠软件库的ash版本                                    | /bin/ash.static |
-| bin        | ash的一个符号链接                                            | /bin/ash        |
-| bash       | “Bourne Again Shell”。由GNU开发，保持了对 sh shell 的(大部分)兼容性，是各种 Linux 发行版默认配置的 shell | /bin/bash       |
-| sh         | Bourne shell，是 UNIX 上的标准 shell                         | /bin/sh         |
-| ksh        | Korn Shell                                                   | /bin/ksh        |
-| csh        | C shell,  该shell的语法有点类似C语言                         | /bin/csh        |
-| tcsh       | csh 的增强版，加入了命令补全功能，提供了更加强大的语法支持   | /bin/tcsh       |
-|            |                                                              |                 |
+* Other unpopular shells: **csh** or C shell,  **tcsh** or TENEX C shell, **ksh** or the Korn shell.
 
 * 在现代的 Linux 上，sh 已经被 bash 代替。 sh在Linux中是bash的一个符号链接； 在mac中是一个独立的程序
 
-* 当前 Linux 系统可用的 Shell 都记录在`/etc/shells`文件中：
+* The file `/etc/shells` gives an overview of known shells on a Linux system:
 
   ```shell
   ❯ cat /etc/shells
-  # /etc/shells: valid login shells
   /bin/sh
   /bin/bash
   /usr/bin/bash
   /bin/rbash
   /usr/bin/rbash
+  ```
+  
+* Your default shell is set in the `/etc/passwd` file, like this line for user *lyk*:
+
+  ```txt
+  lyk:x:1000:1000:lyk,,,:/home/lyk:/bin/zsh
   ```
 
 ## Shell Session
@@ -95,9 +91,9 @@ Session 中的每个进程组被称为一个 **job**，有一个 job 会成为 s
 
 Session 的意义在于多个工作(job)在一个终端中运行，其中的一个为前台 job，它直接接收该终端的输入并把结果输出到该终端。其它的 job 则在后台运行。
 
-# Shell Switch
+# Hot to switch shell 
 
-检查当前可用的shell:
+Check availabe shells in the sysyem:
 
 ```shell
 cat /etc/shells
@@ -106,7 +102,7 @@ cat /etc/shells
 
 
 
-查看当前使用的shell:
+Current shell:
 
 ```shell
 echo $SHELL
@@ -117,22 +113,8 @@ echo $SHELL
 set one shell  as default for your user:
 
 ```shell
-chsh -s full-path-to-shell
+chsh -s <full-path-to-shell>
 ```
-
-
-
-在Parallels的Ubuntu虚拟机中, `chsh -s /bin/zsh`无法切换shell到zsh, 原因未知. 只能手动设置:
-
-edit `~/.bashrc`, 在最后一行加上:
-
-```shell
-bash -c zsh
-```
-
-重启shell即可.
-
-
 
 # Shell and Syscall
 
@@ -209,14 +191,6 @@ session 与终端的关系：
 * 如果 session 关联的是 **tty**1-6，tty 则不会被销毁。因为该终端设备是在系统初始化的时候创建的，并不是依赖该会话建立的，所以当 session 退出，tty 仍然存在。只是 init 系统在 session 结束后，会重启 getty 来监听这个 tty
 
 
-
-# User Environment
-
-.bash_profile, .bash_logout, .bashrc files
-
-* .bash_profile: 用户**登录时**被读取，其中包含的命令被bash执行
-*  .bashrc: **启动一个新的shell时**读取并执行 
-*  .bash_logout: 登录退出时读取执行
 
 # Linux shell
 
@@ -376,84 +350,3 @@ command --parameter1 --parameter2
 command -abcd --parameter1 --parameter2
 ```
 
-# Windows shell
-
-windows中：命令和文件名(包括文件类型)不区分大小写. 即 cd 和 CD 一样， dir 和 DIR 一样。 Desktop 和 desktop 一样, *.pdf  和 *.PDF 一样
-
-TAB键： 自动补完。 不区分大小写
-
-`cd` ： change directory 改变目录
-
- `cd .. ` : go back to upper directory 回到上一级目录， 注意cd 和 .. 中间也可以没有空格
-
- `cd ../..` :  回到上两级目录
-
- `cd \` : 回到根目录
-
- `exit`: 退出
-
-
-
- `dir` ： list the contents of current directory 浏览当前目录（结果按字母顺序排序）.  文件有<DIR>代表它也是个目录
-
-`dir Desktop\SE` 查看SE的内容， 不会改变当前目录
-
- `dir Desktop\SE\*.pdf`   遍历并列出SE中以.pdf结尾的文件
-
-注意文件名是区分空格的，所以`dir Desktop \SE` 或 `dir Desktop\ SE`  找不到东西
-
-` dir /a `: show hidden directories as well 注意dir 和 /a 中间也可以没有空格
-
- `cls`： clear your screen
-
- `↑`键 ：access your command history
-
-` /?` : to access help and options menu
-
- `mkdir`   制作目录
-
- `rmdir` 删除一个空的目录
-
- `rmdir *** /s` 删除一个有内容的目录
-
-`Home`键： bring u to  to the beginning of the command
-
-`End`键：反之
-
-`Ctrl+left` : 一次左移一个词
-
-——————————————————————————————————
-
--  `echo not sweet > apple.txt`  向 apple.txt中添加not sweet（这会覆盖txt的原内容）
--  如果不想覆盖，只想append， 那就用`echo not sweet >> apple.txt` 
--  `Desktop\test> dir > apple.txt`    向apple.txt中添加test的目录
-
--  总之 `Desktop\test> *** > apple.txt` 星号部分是向apple.txt中添加的内容，可以是文字，可以是命令， 说到命令，当然·`ttrib`也可以，`cls`也可以。不过把cls append进去很蠢，啥都不会发生。
-
-—————————————————————————————————
-
- 
-
- `type 文件名` ： 在CMD中打印该文件的内容
-
- `remove 被移动的 移动到的` ： 顾名思义，当然，连空文件和空目录也会移动
-
- `rename 原名 新名字` ： 注意文件类型也在名字里，所以一个 XX.txt如果更名为YY(不带.txt)，那么XX会从一个文本文档变成一个文件夹
-
-—————————————————————————————————
-
-` copy` 要被复制的 复制到的 ： 文件复制  
-
- `xcopy`: 也是复制，但比copy更好（功能更多） 。 xcopy默认只会复制source中的文件，而不包括目录（copy也是如此）。 通过/S 可以让xcopy复制目录和子目录，不包括空目录。， 但copy没有/S的功能，也就是说copy无法复制目录。
-
- 
-
-要打开应用程序，要么转到对应的目录，然后 `start ** .exe`, 要么直接用双引号括住绝对路径
-
-` C:\Users\color 0B`   数字是背景颜色，字母是foreground or text
-
- `wmic logicaldisk get name` : see all the available command drives
-
-` tree`关键字： 以树状列出目录及其内部目录…
-
-D: 转到D盘根路径

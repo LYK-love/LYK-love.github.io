@@ -461,19 +461,6 @@ https://github.com/folke/lazy.nvim
 
 
 
- let b = 3;
-    let sum = a + b;
-    let product = a * b;
-    let difference = a - b;
-    let quotient = a / b;
-    let remainder = a % b;
-
-
-
-ln -s /Users/lyk/Projects/MyOfficialProjects/dotfiles/wezterm-dracula_theme/dracula.toml $HOME/.config/wezterm/colors/dracula.toml
-
-
-
 
 
 ```
@@ -512,13 +499,3 @@ ln -s /Users/lyk/Projects/MyOfficialProjects/dotfiles/wezterm-dracula_theme/drac
 
 
 
-Fira COde Nerd Font Mono
-
-![image-20230625223428192](/Users/lyk/Library/Application Support/typora-user-images/image-20230625223428192.png)
-
-# NvChad
-
-NVcheatsheet
-
-1. `<leader>ch` to access that
-2.

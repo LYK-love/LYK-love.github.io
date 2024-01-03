@@ -1,18 +1,16 @@
 ---
+title: Shell Search Path
 categories:
 - Software Engineering
-date: 2023-04-23 21:48:25
 tags:
-- shell
+- Shell
 - Linux
-title: Shell Script Searching Path
+date: 2023-04-23 21:48:25
 ---
 
-Outline:
+Source:
 
-* Shell Script Searching Path
-* Append path to `PATH`
-* Bad Practices
+* Ian! D. Allen. *[Week05 Shell Search Path. CST8207](https://teaching.idallen.com/cst8207/19w/notes/400_search_path.html)*.
 
 <!--more-->
 
@@ -36,6 +34,14 @@ Shell will **find and execute** command. The searching sequence of command name 
 * Command not found == not found in `PATH`. 这只是意味着在`PATH`中找不到该command name. 可以将该command的路径添加到`PATH`来让shell能搜索到它.
 * 可以看到, 如果一个command name是路径, 那么在step1就找到了, 不会尝试后面的步骤. **一个command name被视作路径名 iff 该command name带有slash( `/` )**. 
   * 对于当前目录下的文件`file`, 它的路径名是`./file`, 而不是`file`. 后者不会让Shell将其视作路径.
+  
+* Builtin commands: Your shell has some *built-in* commands that are executed directly by the shell itself and not looked up in `PATH`, e.g. `echo`, `cd`, `umask`, `pwd`, `history`
+  
+  ```text
+  $ type echo
+  echo is a shell builtin
+  ```
+  
 
 # Append path to `PATH`
 

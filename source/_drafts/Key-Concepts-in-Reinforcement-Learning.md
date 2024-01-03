@@ -9,22 +9,57 @@ mathjax: true
 
 # Markov decision processes
 
-Through the literature, you’re likely to  run into the standard mathematical formalism for this setting: **Markov Decision Processes** (MDPs).
+This section presents the basic RL concepts in a more formal way under the framework of Markov decision processes (MDPs).
 
-An MDP is a 5-tuple, $\left\langle S, A, R, P, \rho_0\right\rangle$, where
+An MDP is a general framework for describing stochastic dynamical systems. The key ingredients of an MDP are listed below.
 
-1. State space $S$ is the set of all valid states,
-2. Action space $A$ is the set of all valid actions,
+## Sets
 
-  * Different space can have different actions. So we further define action space $\mathcal{A}(s)$: a set of actions, each action space is associated with each state $s \in \mathcal{S}$.
+Sets:
 
-3. Reward function $R: S \times A \times S \rightarrow \mathbb{R}$, with $r_t=R\left(s_t, a_t, s_{t+1}\right)$.
-   * Reward set $\mathcal{R}(s, a)$: a set of rewards, each reward set is associated with each state-action pair $(s, a)$.
+- State space: the set of all states, denoted as $\mathcal{S}$.
+- Action space: a set of actions, denoted as $\mathcal{A}(s)$, associated with each state $s \in \mathcal{S}$.
+- **Reward set**: a set of rewards, denoted as $\mathcal{R}(s, a)$, associated with each state-action pair $(s, a)$.
 
-4. State Transition probability function $P: S \times A \rightarrow \mathcal{P}(S)$ is the transition probability function, with $P\left(s^{\prime} \mid s, a\right)$ being the probability of transitioning into state $s^{\prime}$ if you start in state $s$ and take action $a$.
-   * It holds that $\sum_{s^{\prime} \in \mathcal{S}} P\left(s^{\prime} \mid s, a\right)=1$ for any $(s, a)$.
 
-5. The starting state distribution $\rho_0$.
+
+The state, action, reward at time index $t$ are denoted as $s_t, a_t, r_t$ separately.
+
+The reward depends on the sate and action, but <u>not the next state</u>.
+
+## Model
+
+Model:
+
+- **State transition probability**: At state $s$, when taking action $a$, the probability of transitioning to state $s^{\prime}$ is $p\left(s^{\prime} \mid s, a\right)$. It holds that $\sum_{s^{\prime} \in \mathcal{S}} p\left(s^{\prime} \mid s, a\right)=1$ for any $(s, a)$.
+- **Reward probability**: At state $s$, when taking action $a$, the probability of obtaining reward $r$ is $p(r \mid s, a)$. It holds that $\sum_{r \in \mathcal{R}(s, a)} p(r \mid s, a)=1$ for any $(s, a)$.
+
+## Policy
+
+Policy: At state $s$, the probability of choosing action $a$ is $\pi(a \mid s)$. It holds that $\sum_{a \in \mathcal{A}(s)} \pi(a \mid s)=1$ for any $s \in \mathcal{S}$.
+
+A policy can be deterministic or stochastic.
+
+* A **deterministic** policy is usually denoted by $\mu$ :
+  $$
+  a_t=\mu\left(s_t\right) .
+  $$
+
+* A **stochastic** policy is usually denoted by $\pi$ :
+  $$
+  a_t \sim \pi\left(\cdot \mid s_t\right) .
+  $$
+  In this case, at state $s$, the probability of choosing action $a$ is $\pi(a \mid s)$. It holds that $\sum_{a \in \mathcal{A}(s)} \pi(a \mid s)=1$ for any $s \in \mathcal{S}$.
+
+In RL, the policies are often **parameterized**, the parameters are commonly denoted as $\theta$ or ![\phi](https://spinningup.openai.com/en/latest/_images/math/3b22abcadf8773922f8db80011611bad8123a783.svg) and are written as a subscript on the policy symbol:
+
+![a_t &= \mu_{\theta}(s_t) \\ a_t &\sim \pi_{\theta}(\cdot | s_t).](https://spinningup.openai.com/en/latest/_images/math/831f731859658682b2af7e217a76648697c9de46.svg)
+
+
+
+## Markov property
+
+Markov property:
 
 The name Markov Decision Process refers to the fact that the system obeys the [Markov property](), the memoryless property of a stochastic process. 
 
@@ -35,13 +70,11 @@ Mathematically, it means that
    p(s_{t+1} \mid s_t, s_{t-1}, \cdots, s_0)=p(s_{t+1} \mid s_t)
    $$
    
-
 2. The state transition is markovian:
    $$
    p\left(s_{t+1} \mid s_t, a_t, s_{t-1}, a_{t-1}, \ldots, s_0, a_0\right)=p\left(s_{t+1} \mid s_t, a_t\right)
    $$
    
-
 3. The action itself doesn't have markov property, but it's defined to only rely on current state and policy $a_t \sim \pi\left(\cdot \mid s_t\right)$,
    $$
    p(a_{t+1}|s_{t+1}) = p(a_{t+1}|s_{t+1}, s_t, \cdots, s_0) .
@@ -84,73 +117,53 @@ This distinction has some quite-profound consequences for methods in  deep RL. S
 
 A policy is a rule used by an agent to decide what actions to take. 
 
-* A **deterministic** policy is usually denoted by $\mu$ :
-  $$
-  a_t=\mu\left(s_t\right) .
-  $$
-
-* A **stochastic** policy is usually denoted by $\pi$ :
-  $$
-  a_t \sim \pi\left(\cdot \mid s_t\right) .
-  $$
-  In this case, at state $s$, the probability of choosing action $a$ is $\pi(a \mid s)$. It holds that $\sum_{a \in \mathcal{A}(s)} \pi(a \mid s)=1$ for any $s \in \mathcal{S}$.
-
-In deep RL, we deal with **parameterized policies**:  policies whose outputs are computable functions that depend on a set of  parameters (eg the weights and biases of a neural network) which we can  adjust to change the behavior via some optimization algorithm.
-
-We often denote the parameters of such a policy by ![\theta](https://spinningup.openai.com/en/latest/_images/math/ce5edddd490112350f4bd555d9390e0e845f754a.svg) or ![\phi](https://spinningup.openai.com/en/latest/_images/math/3b22abcadf8773922f8db80011611bad8123a783.svg), and then write this as a subscript on the policy symbol to highlight the connection:
-
-![a_t &= \mu_{\theta}(s_t) \\ a_t &\sim \pi_{\theta}(\cdot | s_t).](https://spinningup.openai.com/en/latest/_images/math/831f731859658682b2af7e217a76648697c9de46.svg)
-
 
 
 # Trajectories
 
-A trajectory $\tau$ is a sequence of states and actions in the world,
+![Figure 1.6: Trajectories obtained by following two policies. The trajectories are indicated by red dashed lines.](/Users/lyk/Library/Application Support/typora-user-images/image-20240103140901269.png)
+
+
+
+A **trajectory** $\tau$ is a state-action chain $\tau = (s_1, a_1, s_2, a_2, ...)$.
+
+## Return
+
+For example, given the policy shown in Figure 1.6(a), if the agent can move along a trajectory as follows:
 $$
-\tau = (s_0, a_0, s_1, a_1, ...).
+s_1 \underset{r=0}{\stackrel{a_2}{\longrightarrow}} s_2 \underset{r=0}{\stackrel{a_3}{\longrightarrow}} s_5 \underset{r=0}{\stackrel{a_3}{\longrightarrow}} s_8 \underset{r=1}{\stackrel{a_2}{\longrightarrow}} s_9 .
 $$
 
-
-The very first state of the world, $s_0$, is randomly sampled from the **start-state distribution**, sometimes denoted by $\rho_0$:
+The **return** <u>of this trajectory</u> is defined as the sum of all the rewards collected along the trajectory:
 $$
-s_0 \sim \rho_0(\cdot).
+\text { return }=0+0+0+1=1 .
 $$
-Trajectories are also frequently called **episodes** or **rollouts**.
+Returns are also called total *rewards* or *cumulative rewards*.
 
-# Reward and Return
+**Note**: Sometimes we define the return function (or rewards function) with symbol $R$. Thus, the return of trajectory $\tau$ is
+$$
+R({\tau}).
+$$
+This is different from the return function $G_t$ defined in t
 
-The reward function ![R](https://spinningup.openai.com/en/latest/_images/math/1f9d30d011e9fe548e999c9bfcf3fccfa27ec3ff.svg) is critically important in reinforcement learning. It depends on the  current state of the world, the action just taken, and the next state of the world:
+## Epsisodes
 
-![r_t = R(s_t, a_t, s_{t+1})](https://spinningup.openai.com/en/latest/_images/math/6ed565b0911f12c8ef64d93a617d8bb30380d5d5.svg)
+When interacting with the environment by following a policy, the agent may <u>stop at some terminal states</u>. In this case, the resulting trajectory is <u>finite</u>, and is called an **episode** (or a **trial**, **rollout**).
 
-although frequently this is simplified to just a dependence on the current state, ![r_t = R(s_t)](https://spinningup.openai.com/en/latest/_images/math/4befde40a79499d3655bebda93423e2661036f0d.svg), or state-action pair ![r_t = R(s_t,a_t)](https://spinningup.openai.com/en/latest/_images/math/3a66e4711a16a69ca64bd10d96985363d6e4bc5c.svg).
+However, some tasks may have no terminal states. In this case, the resulting trajectory is <u>infinite</u>.
 
-The goal of the agent is to <u>maximize some notion of cumulative reward over a trajectory</u>, but this actually can mean a few things. We’ll  notate all of these cases with ![R(\tau)](https://spinningup.openai.com/en/latest/_images/math/c2d6738c058406ade40dcf870311db157ed80e0f.svg), and it will either be clear from context which case we mean, or it  won’t matter (because the same equations will apply to all cases).
-
-We can categorize returns by 2 dimensions: 
-
-1. Whether its hozizon is finite.
-2. Whether it's discounted in the future.
-
-## Finite-Horizon undiscounted return
-
-**finite-horizon undiscounted return**, which is just the sum of rewards obtained in a fixed window of steps:
-
-![R(\tau) = \sum_{t=0}^T r_t.](https://spinningup.openai.com/en/latest/_images/math/b2466507811fc9b9cbe2a0a51fd36034e16f2780.svg)
-
-## Infinite-horizon discounted return
-
-**infinite-horizon discounted return**, which is the sum of all rewards *ever* obtained by the agent, but discounted by how far off in the future  they’re obtained. This formulation of reward includes a discount factor ![\gamma \in (0,1)](https://spinningup.openai.com/en/latest/_images/math/7c0000152970a235979a501b70bd05c781a8b1ec.svg):
-
-![R(\tau) = \sum_{t=0}^{\infty} \gamma^t r_t.](https://spinningup.openai.com/en/latest/_images/math/bf49428c66c91a45d7b66a432450ee49a3622348.svg)
-
-Mathematically: an infinite-horizon sum of rewards [may not converge](https://en.wikipedia.org/wiki/Convergent_series) to a finite value, and is hard to deal with in equations. But with a  discount factor and under reasonable conditions, the infinite sum  converges.
+Tasks with episodes are called <u>episodic tasks</u>. Tasks are called <u>continuing tasks</u>.
 
 
 
-> You Should Know
->
-> While the line between these two formulations of return are quite stark in RL formalism, deep RL practice tends to blur the line a fair bit—for instance, we frequently set up algorithms to optimize  the undiscounted return, but use discount factors in estimating **value functions**.
+In fact, we can treat episodic and continuing tasks in a unified mathematical manner by converting episodic tasks to continuing ones. We have two options:
+
+1. First, if we treat the terminal state as a special state, we can specifically design its action space or state transition so that the agent stays in this state forever. Such states are called absorbing states, meaning that the agent never leaves a state once reached.
+2. Second, if we treat the terminal state as a normal state, we can simply set its action space to the same as the other states, and the agent may leave the state and come back again. Since a positive reward of $r=1$ can be obtained every time $s_9$ is reached, the agent will eventually learn to stay at $s_9$ forever to collect more rewards.
+
+In this document, we consider the second scenario where the target state is treated as a normal state whose action space is $\mathcal{A}\left(s_9\right)=\left\{a_1, \ldots, a_5\right\}$.
+
+
 
 # The RL Problem
 

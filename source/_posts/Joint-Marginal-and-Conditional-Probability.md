@@ -26,31 +26,24 @@ Let $A, B$ be two arbitrary statements about [random variables](https://statproo
 
 # Marginal Probility
 
-[-> wiki: Marginal distribution](https://en.wikipedia.org/wiki/Marginal_distribution)
+[-> Definition: Law of marginal probability](https://statproofbook.github.io/D/prob-marg)
 
-**Definition:** Let $A, B$ be two arbitrary statements about [random variables](https://statproofbook.github.io/D/rvar) $X, Y$, 
+**Definition:** 
 
-$P(A)$ is the marginal probability of $A$ given $B$.
+Given a known joint distribution of two discrete random variables, say, $X$ and $Y$, the marginal distribution of either variable $-X$ for example - is the probability distribution of $X$ when the values of $Y$ are not taken into consideration.
 $$
-p(A) = \sum _{j} p(a_i,b_j) = \sum _{j} p(X=x_i,Y=y_j)
+p_X\left(x_i\right)=\sum_j p\left(x_i, y_j\right), \text { and } p_Y\left(y_j\right)=\sum_i p\left(x_i, y_j\right)
 $$
-$p(A)$ is the [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) of $X$ when the values of $Y$ are not taken into consideration. 
-
-This can be calculated by <u>summing the joint probability distribution over all values of $Y$</u>
-
-Naturally, the converse is also true: the marginal distribution can be obtained for $Y$ by summing over the separate values of $X$:
-$$
-p(B) = \sum _{i} p(a_i,b_j)= \sum _{i} p(X=x_i,Y=y_j)
-$$
-
 
 
 
 # Conditional Probability
 
-**Definition:** Let $A, B$ be two events , The conditional probability of $A$ given $B$ is defined to be:
+**Definition:** Let $A, B$ be two events, The conditional probability of $A$ given $B$ is defined to be:
 $$
+\begin{equation} \label{eq_conditional_probability}
 p(A|B) = \frac{p(A,B)}{p(B)}
+\end{equation}
 $$
 where $p(B)$ is the [marginal probability](https://statproofbook.github.io/D/prob-marg) of $B$.
 
@@ -65,6 +58,31 @@ $$
 Since the intersection operation($\cap$) is communicative, we have $p(A,(B,C)) = p(A,B,C)$. So
 $$
 P(A|B,C) = \frac{p(A,B,C)}{p(B,C)}
+$$
+
+# Chain Rules
+
+We can rearrange the formula for conditional probability $\eqref{eq_conditional_probability}$ to get the so-called product rule:
+$$
+P(A, B)=P(A \mid B) P(B)
+$$
+
+We can extend this for three variables:
+$$
+P(A, B, C)=P(A \mid B, C) P(B, C)=P(A \mid B, C) P(B \mid C) P(C)
+$$
+and in general to $n$ variables:
+$$
+P(A_1, A_2, \ldots, A_n)=P(A_1 \mid A_2, \ldots, A_n) P(A_2 \mid A_3, \ldots, A_n) P(A_{n-1} \mid A_n) P(A_n)
+$$
+
+In general we refer to this as the chain rule.
+
+
+
+Note: for $P(A,B|C)$, we have
+$$
+P(A,B|C) = P( \ (A|C) | (B|C ) \ ).P(B|C) = P(A|B,C).P(B|C)
 $$
 
 

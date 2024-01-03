@@ -21,6 +21,8 @@ Offical docs:
 2. https://zsh.sourceforge.io/Guide/zshguide.html
 
 
+
+
 1. Install zsh:
 
    ```shell
@@ -69,7 +71,7 @@ Offical docs:
 
 ## Details
 
-The Oh-my-zsh itself will be installed at dir `$HOME/.oh-my-zsh`, everytime you start `zsh`, it'll start Oh-my-zsh. You can view it in the `~/.zshrc` file:
+The Oh-my-zsh itself will be installed at dir `$HOME/.oh-my-zsh`, everytime you start `zsh`,  `zsh` will start Oh-my-zsh. You can view this logic in the `~/.zshrc` file:
 
 ```shell
  # Path to your oh-my-zsh installation. This includes your downloaded plugins.

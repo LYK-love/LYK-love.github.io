@@ -178,3 +178,16 @@ By default, the instance will have a new enternal IP each time it starts. For co
 # Others
 
 * [Add disk storage of VM](https://cloud.google.com/compute/docs/disks/resize-persistent-disk).
+
+# What is OSLogin
+
+https://cloud.google.com/compute/docs/oslogin
+
+So, with OSLogin, a weird thing happens. My username after ssh is `lykuni_ucdavis_edu`:
+
+```
+$ whoami
+lykuni_ucdavis_edu
+```
+
+However, I can't search this account name in the `/etc/passwd`!

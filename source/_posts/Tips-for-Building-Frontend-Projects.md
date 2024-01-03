@@ -503,19 +503,41 @@ node自带了npm，所以安装node后就默认安装了对应版本的npm
 
 ## Config
 
+Note: If `npm install` extremely slow, there's highly possible sth wrong with your config file.
+
+
+
 npm获取配置的方式，优先级由高到低：
 
 * 命令行参数： 以设置代理为例：--proxy http://server:port即将proxy的值设为http://server:port。
 
 * 环境变量：以npm_config_为前缀的环境变量将会被认为是npm的配置属性。以设置proxy为例可以加入这样的环境变量npm_config_proxy=http://server:port。
 
-* 用户配置文件：可以通过npm config get userconfig查看文件路径。
+* Get the user config file:
 
-* 全局配置文件：可以通过npm config get globalconfig查看文件路径。
+  ```sh
+  npm config get userconfig
+  ```
+
+* Get the glocal config file:
+
+  ```sh
+  npm config get globalconfig
+  ```
 
 * 内置配置文件：安装npm的目录下的npmrc文件。
 
 * 默认配置： npm本身有默认配置参数，如果以上都没设置，则npm会使用默认配置参数。
+
+* Reset configs of npm:
+
+  ```sh
+  npm cache clean --force
+  rm -f ./.npmrc
+  npm config set key default
+  ```
+
+  
 
 
 

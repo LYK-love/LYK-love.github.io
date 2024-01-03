@@ -30,11 +30,9 @@ Some differences between shell functions and scripts that you should keep in min
 - Functions are executed **in the current shell environment**( 可以简单理解为， function的所在路径是当前路径 ) whereas scripts execute in their own process. Thus, functions can modify environment variables, e.g. change your current directory, whereas scripts can’t. Scripts will be passed by value environment variables that have been exported using [`export`](https://www.man7.org/linux/man-pages/man1/export.1p.html)
 - As with any programming language, functions are a powerful construct to achieve modularity, code reuse, and clarity of shell code. Often shell scripts will include their own function definitions.
 
-## Shell Style
+## Shell Programming Style
 
 https://google.github.io/styleguide/shellguide.html
-
-
 
 # Shebang
 
@@ -225,10 +223,6 @@ cat << EOF
     in Cape Town.
 EOF
 ```
-
-# Commen Shell Scripts
-
-* `:`： 空命令
 
 
 
