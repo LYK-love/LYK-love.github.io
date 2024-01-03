@@ -18,9 +18,9 @@ Source:
 
 # Bellman equation: the matrix-vector form
 
-Consider the [Bellman equation]():
+Consider the [Bellman equation](https://lyk-love.cn/2024/01/03/bellman-equation/):
 $$
-\begin{equation} \label{eq_Bellman_equation}
+\begin{equation} \label{eq_Bellman_eq}
 v_\pi(s)=\sum_a \pi(a \mid s)\left[\sum_r p(r \mid s, a) r+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) v_\pi\left(s^{\prime}\right)\right]
 \end{equation}
 $$
@@ -29,7 +29,7 @@ It's an elementsise form. That means there are $|\mathcal{S}|$ equations like th
 
 
 
-Rewrite $\eqref{eq_Bellman_equation}$ as
+Rewrite $\eqref{eq_Bellman_eq}$ as
 $$
 v_\pi(s)=r_\pi(s)+\gamma \sum_{s^{\prime}} p_\pi\left(s^{\prime} \mid s\right) v_\pi\left(s^{\prime}\right)
 $$
@@ -87,7 +87,7 @@ $$
 
 
 
-![Figure 2.4: An example for demonstrating the Bellman equation. The policy in this example is deter- ministic.](/Users/lyk/Library/Application Support/typora-user-images/image-20240103133959731.png)
+![Figure 2.4: An example for demonstrating the Bellman equation. The policy in this example is deter- ministic.](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Bellman%20Equation/Figure%202_4.png)
 
 
 
@@ -118,7 +118,7 @@ $$
 
 ## For stochastic policy
 
-![Figure 2.5: An example for demonstrating the Bellman equation. The policy in this example is stochastic.](/Users/lyk/Library/Application Support/typora-user-images/image-20240103134129310.png)
+![Figure 2.5: An example for demonstrating the Bellman equation. The policy in this example is stochastic.](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Bellman%20Equation/Figure%202_5.png)
 
 For this specific example:
 $$
@@ -146,11 +146,10 @@ v_\pi\left(s_4\right)
 $$
 
 
-- 
 
 # Solution of the matrix-vector form
 
-Recalling the  Bellman equation in matrix-vector form $\eqref{eq_Bellman_equation_matrix}$,
+Recalling the  Bellman equation in matrix-vector form $\eqref{eq_Bellman_equation_matrix-vector_form}$,
 
 We can convert it to two forms:
 

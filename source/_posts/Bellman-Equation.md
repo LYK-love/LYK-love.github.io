@@ -11,7 +11,7 @@ date: 2024-01-03 13:35:01
 
 Source:
 
-1. [*Shiyu Zhao. *[Chapter 2: State Values and Bellman Equation. Mathematical Foundations of Reinforcement Learning](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning)*.*](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning)
+1. [Shiyu Zhao. *Chapter 2: State Values and Bellman Equation. Mathematical Foundations of Reinforcement Learning*](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning).
 2. [--> Youtube: Bellman Equation: Derivation](https://youtu.be/Su9PPdoxvtQ?si=JdeBKeeZ9PEBKDVH)
 
 <!--more-->
@@ -56,13 +56,38 @@ Next calculate the two terms of the last line, respectively.
 First, calculate the first term $\mathbb{E}\left[R_{t+1} \mid S_t=s\right]$ :
 $$
 \begin{aligned}
-\mathbb{E}\left[R_{t+1} \mid S_t=s\right] & =\sum_a \pi(a \mid s) \mathbb{E}\left[R_{t+1} \mid S_t=s, A_t=a\right] \\
-& =\sum_a \pi(a \mid s) \sum_r p(r \mid s, a) r
+\mathbb{E}\left[R_{t+1} \mid S_t=s\right] & =\sum_{a \in \mathcal A(s)} \pi(a \mid s) \mathbb{E}\left[R_{t+1} \mid S_t=s, A_t=a\right] \\
+& =\sum_{a \in \mathcal A(s)} \pi(a \mid s) \sum_r p(r \mid s, a) r .
 \end{aligned}
 $$
 
-Note that
-- This is the mean of immediate rewards
+This is the mean of immediate rewards.
+
+Explanation: Given event $R_{t+1} = r, S_t = s, A_t = a$, 
+
+first, use the formula for marginal probability, we have
+$$
+p(r_{t+1} | s) = \sum_{a \in \mathcal A(s)} p(r_{t+1}, a| s).
+$$
+Next, due to [the chain rule of probability](https://lyk-love.cn/2023/10/14/Joint-Marginal-and-Conditional-Probability/#chain-rules), we obtain
+$$
+p(r, a| s) = p(r | a, s). p(a|s)
+$$
+And in RL context, $p(s|s)$ is often written as $\pi(a|s)$.
+
+Therefore,
+$$
+p(r | s) = \sum_{a \in \mathcal A(s)} \pi(a|s) . p(r | a, s)
+$$
+Now consider the definition of expectation:
+$$
+\mathbb{E}\left[R_{t+1} \mid S_t=s\right] \triangleq \sum_r p(r | s) r.
+$$
+Replace $p(r | s)$ with $\sum_{a \in \mathcal A(s)} \pi(a|s) . p(r | a, s)$, we get
+$$
+\mathbb{E}\left[R_{t+1} \mid S_t\right] = \sum_{a \in \mathcal A(s)} \pi(a \mid s) \sum_r p(r \mid s, a) r.
+$$
+
 
 ## Second term: the mean of future rewards
 
@@ -78,7 +103,7 @@ $$
 
 Note that
 - This is the mean of future rewards
-- $\mathbb{E}\left[G_{t+1} \mid S_t=s, S_{t+1}=s^{\prime}\right]=\mathbb{E}\left[G_{t+1} \mid S_{t+1}=s^{\prime}\right]$ due to the memoryless Markov property.
+- $\mathbb{E}\left[G_{t+1} \mid S_t=s, S_{t+1}=s^{\prime}\right]=\mathbb{E}\left[G_{t+1} \mid S_{t+1}=s^{\prime}\right]$ due to the memoryless Markov property. (TODO)
 
 ## Result formula
 
@@ -105,7 +130,7 @@ Highlights:
 
 ## For deterministic policy
 
-![Figure 2.4: An example for demonstrating the Bellman equation. The policy in this example is deter- ministic.](/Users/lyk/Library/Application Support/typora-user-images/image-20240103131942992.png)
+![Figure 2.4: An example for demonstrating the Bellman equation. The policy in this example is deterministic.](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Bellman%20Equation/Figure%202_4.png)
 
 Consider the first example shown in Figure 2.4, where the policy is deterministic. We next write out the Bellman equation and then solve the state values from it.
 
@@ -146,7 +171,7 @@ $$
 
 ## For stochastic policy
 
-![Figure 2.5: An example for demonstrating the Bellman equation. The policy in this example is stochastic.](/Users/lyk/Library/Application Support/typora-user-images/image-20240103134129310.png)
+![Figure 2.5: An example for demonstrating the Bellman equation. The policy in this example is stochastic.](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Bellman%20Equation/Figure%202_5.png)
 
 Consider the second example shown in Figure 2.5, where the policy is stochastic. We next write out the Bellman equation and then solve the state values from it.
 
