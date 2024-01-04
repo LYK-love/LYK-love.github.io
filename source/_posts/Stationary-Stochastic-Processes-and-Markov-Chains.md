@@ -81,29 +81,25 @@ let's prove this expression with mathematical induction:
 
 1. **Base Case (n = 2):** 
    $$
-   \begin{equation} \label{eq1.1}
-   p(x_1,x_2)=p(x_1)p(x_2∣x_1)p(x_1,x_2)=p(x_1)p(x_2∣x_1) 
-   \end {equation}
+   p(x_1,x_2)=p(x_1)p(x_2∣x_1)p(x_1,x_2)=p(x_1)p(x_2∣x_1) .
    $$
-
+   
 2. **Inductive Step:** Assume the expression holds for $n=k$: 
    $$
-   \begin{equation} \label{eq1.2}
-   p(x_1,x_2,…,xk) = p(x_1)p(x_2∣x_1)p(x_3∣x_2)⋯p(x_k∣x_{k−1})
-   \end{equation}
+   p(x_1,x_2,…,xk) = p(x_1)p(x_2∣x_1)p(x_3∣x_2)⋯p(x_k∣x_{k−1}) .
    $$
-
+   
 3. Now, consider $n=k+1$:
    $$
-   \begin{align}
+   \begin{aligned}
    p(x_1,x_2,…,x_{k+1}) 
-   & = p(x_1,x_2,\cdots,x_k) p(x_{k+1}∣x_1,x_2,\cdots,x_k) \label{eq1.3.1} \\
-   & = p(x_1,x_2,\cdots,x_k) p(x_{k+1}∣x_k) \label{eq1.3.2} \\
-   & = p(x_1) p(x_2∣x_1)p(x_3∣x_2)⋯p(x_k∣x_{k−1}) \label{eq1.3.3}
-   \end{align}
+   & = p(x_1,x_2,\cdots,x_k) p(x_{k+1}∣x_1,x_2,\cdots,x_k) \\
+   & = p(x_1,x_2,\cdots,x_k) p(x_{k+1}∣x_k) \\
+   & = p(x_1) p(x_2∣x_1)p(x_3∣x_2)⋯p(x_k∣x_{k−1})
+   \end{aligned}
    $$
-   * In $\eqref{eq1.3.2}$ we apply $p(x_{k+1}∣x_1,x_2,\cdots,x_k) = p(x_{k+1}∣x_k)$, which is the preperty of a Markov chain.
-   * In $\eqref{eq1.3.3}$ we apply our assumtion in the aductive step.
+   * In the second line we apply $p(x_{k+1}∣x_1,x_2,\cdots,x_k) = p(x_{k+1}∣x_k)$, which is the preperty of a Markov chain.
+   * In third line we apply our assumtion in the aductive step.
 
 4. This expression matches the assumed expression for $n=k$. Therefore, by mathematical induction, the expression holds for all $n$.
 
@@ -209,10 +205,10 @@ which means  $\eqref{eq_markov_3}$.
 
 By the chain rule, we can expand mutual information in two different ways:
 $$
-\begin{align} 
+\begin{aligned} 
 I(X ; Y, Z) & =I(X ; Z)+I(X ; Y \mid Z) \label{eq_2.119} \\
 & =I(X ; Y)+I(X ; Z \mid Y) \label{eq_2.120} .
-\end{align}
+\end{aligned}
 $$
 
 
@@ -238,7 +234,17 @@ $$
 I(X ; Y \mid Z) \leq I(X ; Y) .
 $$
 
-Thus, the dependence of $X$ and $Y$ is decreased (or remains unchanged) by the observation of a "downstream" random variable $Z$. Note that it is also possible that $I(X ; Y \mid Z)>I(X ; Y)$ when $X, Y$, and $Z$ do not form a Markov chain. For example, let $X$ and $Y$ be independent fair binary random variables, and let $Z=X+Y$. Then $I(X ; Y)=0$, but $I(X ; Y \mid Z)=$ $H(X \mid Z)-H(X \mid Y, Z)=H(X \mid Z)=P(Z=1) H(X \mid Z=1)=\frac{1}{2}$ bit.
+Thus, the dependence of $X$ and $Y$ is decreased (or remains unchanged) by the observation of a "downstream" random variable $Z$. Note that it is also possible that $I(X ; Y \mid Z)>I(X ; Y)$ when $X, Y$, and $Z$ do not form a Markov chain. For example, let $X$ and $Y$ be independent fair binary random variables, and let $Z=X+Y$. Then $I(X ; Y)=0$, but
+$$
+\begin{aligned}
+I(X ; Y \mid Z)
+&= H(X \mid Z)-H(X \mid Y, Z) \\
+&= H(X \mid Z) \\
+&= P(Z=1) H(X \mid Z=1) \\
+&= \frac{1}{2}
+\end{aligned}
+$$
+bit.
 
 
 
@@ -263,7 +269,7 @@ If the finite-state Markov chain is irreducible and aperiodic, the stationary di
 
 We consider an example of two-state Markov chain, which we call Mickey Mouse Markov Chain [MMMC], in order to understand basic properties of Markov chains.
 
-![image-20231111195856090](/Users/lyk/Library/Application Support/typora-user-images/image-20231111195856090.png)
+![Mickey Mouse Markov Chain](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Information%20Theory/Stationary%20Stochastic%20Processes%20and%20Markov%20Chains/Mickey%20Mouse%20Markov%20Chain.png)
 
 The probability transition matrix of MMMC is:
 $$
