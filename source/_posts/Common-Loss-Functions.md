@@ -15,6 +15,18 @@ date: 2024-01-03 22:00:24
 
 <!--more-->
 
+# Notations
+
+TO make the context clear, in this article, we make the following regulations:
+
+* The size of the dataset, i.e., the number of the datapoints, is denoted as $N$.
+* The ground truth label value of the $i^{\text{th}}$ datapoint is $y_i$.
+* The predicted value of the $i^{\text{th}}$ datapoint output by the model is $p_i$.
+* When the task is a classification task, the ground truth value is often a label, i.e., $y_i \in \{0,1\}, \forall i$.
+* When the task is a classification task, the number of classes is $C$. In addition, the ground truth label value and the prediction value of $c^{\text{th}}$ class of the $i^{\text{th}}$ datapoint is $y_{c}, p_{c}$.
+
+
+
 # Cross Entropy
 
 [--> Youtube: Cross Entropy](https://www.youtube.com/watch?v=6ArSys5qHAU)
@@ -23,13 +35,15 @@ date: 2024-01-03 22:00:24
 
 Cross-entropy loss (often abbreviated as CE), or log loss, measures the performance of a <u>classification</u> model whose output is a probability value between 0 and 1 (usually produced by a [softmax function]()).
 
-Suppose there're $N$ classes ( $N \ge 2$), given a data point with true label value $y_c$, the predicted probability, i.e., the output of softmax function is , is $p_c$. Then its cross entropy is 
+For the $i^{\text{th}}$ datapoint, the cross entropy is
 $$
--\sum_{c=1}^N y_c \log \left(p_c\right)
+-\sum_{c=1}^C y_{c} \log \left(p_{c}\right) .
 $$
-When $N=2$, it's a binary classification cross-entropy can be calculated as:
+
+
+When $N=2$, the cross-entropy can be calculated as:
 $$
--(y \log (p)+(1-y) \log (1-p))
+-[y \log (p)+(1-y) \log (1-p)]
 $$
 
 Note: since in classification tasks one data point typocically has only one crorect class. i.e., $y_c \in \{0,0, \cdots, 1, 0, \cdots \}$, suppose the index of the true class of the input data point is $t$, we obtain
@@ -93,3 +107,65 @@ $$
 
 * Setting $\gamma>0$ reduces the relative loss for well-classified examples $\left(p_t>.5\right)$, putting more focus on hard, misclassified examples. Here there is tunable focusing parameter $\gamma \geq 0$.
 * One typical use case is in object detection tasks. An image may contain 5 onjects whereas the the number of bounding boxes can be millions. Thus there're enormous <u>negative</u> datapoints. The model can easily learn to judge all data points to be false to achieve a high traing performance.
+
+# Dice Loss
+
+[--> Source](https://medium.com/mlearning-ai/understanding-evaluation-metrics-in-medical-image-segmentation-d289a373a3f)
+
+Dice Loss was originally designed for **binary classification** problems, particularly in the context of binary segmentation where you're often distinguishing between the foreground and the background.
+
+## Dice Coefficient
+
+It's derived from Dice Coefficient, which is a statistic used to gauge the similarity of two samples.
+
+![img](https://miro.medium.com/v2/resize:fit:1400/1*tSqwQ9tvLmeO9raDqg3i-w.png)For the $i^{\text{th}}$ datapoint, the Dice Coefficient is
+$$
+\mathrm{Dice}=\frac{2 \times \sum_i \left(p_i \times y_i\right)}{\sum_i p_i+\sum_i y_i} .
+$$
+
+```python
+def dice_coef(groundtruth_mask, pred_mask):
+    intersect = np.sum(pred_mask*groundtruth_mask)
+    total_sum = np.sum(pred_mask) + np.sum(groundtruth_mask)
+    dice = np.mean(2*intersect/total_sum)
+    return round(dice, 3) #round up to 3 decimal places
+```
+
+
+
+## Dice Loss
+
+The Dice Loss is
+$$
+\mathrm{DL} = 1 - \mathrm{Dice} .
+$$
+
+```python
+def dice_loss(groundtruth_mask, pred_mask):
+	return 1 - dice_coef(groundtruth_mask, pred_mask)
+```
+
+
+
+# IoU
+
+[--> Source](https://medium.com/mlearning-ai/understanding-evaluation-metrics-in-medical-image-segmentation-d289a373a3f)
+
+![img](https://miro.medium.com/v2/resize:fit:1400/1*YYvTr7sBgbDNHrnVG2upqQ.png)
+
+**Jaccard index**, also known as **Intersection over Union (IoU)**, is the area of the intersection over union of the predicted segmentation and the ground truth
+$$
+\mathrm{I o U}=\frac{T P}{T P+F P+F N}
+$$
+
+
+
+
+```python
+def iou(groundtruth_mask, pred_mask):
+    intersect = np.sum(pred_mask*groundtruth_mask)
+    union = np.sum(pred_mask) + np.sum(groundtruth_mask) - intersect
+    iou = np.mean(intersect/union)
+    return round(iou, 3)
+```
+

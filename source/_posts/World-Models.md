@@ -232,6 +232,14 @@ the world model, the critic, and the actor—that are trained concurrently from 
 
 
 
+> DreamerV2 achieves comparable or higher performance on most games except for **Video Pinball**. We hypothesize that the reconstruction loss of the world model does not encourage learning a meaningful latent representation because the most important object in the game, the ball, occupies only a single pixel.
+
+![image-20240104155156602](/Users/lyk/Library/Application Support/typora-user-images/image-20240104155156602.png)
+
+DreamerV3:
+
+![image-20240104155344061](/Users/lyk/Library/Application Support/typora-user-images/image-20240104155344061.png)
+
 # Gato
 
 ![image-20231117210859998](/Users/lyk/Library/Application Support/typora-user-images/image-20231117210859998.png)
