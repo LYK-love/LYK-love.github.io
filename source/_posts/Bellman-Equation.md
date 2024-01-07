@@ -16,7 +16,7 @@ Source:
 
 <!--more-->
 
-# Bellman Equation
+# Problem Formula
 
 Given a policy, finding out the corresponding state values is called **policy evaluation**. This is through solving an equation called <u>the Bellman equation</u>.
 
@@ -34,13 +34,26 @@ G_t & =R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\ldots \\
 \end{aligned}
 $$
 
-Recalling that the definition of the state value is
+# State Value
+
+The expectation (or called expected value or mean) of $G_t$ is defined as the **state-value function** or simply **state value**:
 $$
-\begin{equation} \label{eq_state_value_function}
-v_\pi(s)  =\mathbb{E}\left[G_t \mid S_t=s\right]
+\begin{equation} \label{eq_def_of_state_value}
+v_\pi(s)=\mathbb{E}\left[G_t \mid S_t=s\right]
 \end{equation}
 $$
-Substitute $G(t) = R_{t+1}+\gamma G_{t+1}$ into $\eqref{eq_state_value_function}$:
+
+Remarks:
+
+- It is a function of $s$. It is a conditional expectation with the condition that the state starts from $s$.
+- It is based on the policy $\pi$. For a different policy, the state value may be different.
+- It represents the "value" of a state. If the state value is greater, then the policy is better because greater cumulative rewards can be obtained.
+  Q: What is the relationship between return and state value?
+  A: The state value is the mean of all possible returns that can be obtained starting from a state. If everything - $\pi(a \mid s), p(r \mid s, a), p\left(s^{\prime} \mid s, a\right)$ - is deterministic, then state value is the same as return.
+
+# Bellman Equation
+
+Recalling the definition of the state value $\eqref{eq_def_of_state_value}$, we substitute $G(t) = R_{t+1}+\gamma G_{t+1}$ into it:
 $$
 \begin{aligned} \label{eq_derivation_of_state_value_function}
 v_\pi(s) & =\mathbb{E}\left[G_t \mid S_t=s\right] \\
@@ -49,7 +62,7 @@ v_\pi(s) & =\mathbb{E}\left[G_t \mid S_t=s\right] \\
 \end{aligned}
 $$
 
-Next calculate the two terms of the last line, respectively.
+Next we calculate the two terms of the last line, respectively.
 
 ## First term: the mean of immediate rewards
 
@@ -63,13 +76,40 @@ $$
 
 This is the mean of immediate rewards.
 
-Explanation: Given event $R_{t+1} = r, S_t = s, A_t = a$, 
+***
 
-first, use the formula for marginal probability, we have
+Given events $R_{t+1} = r, S_t = s, A_t = a$, the deduction is quite simple.
+
+1. From the definition of *conditional expectation*: given event $A$ and  a discrete random variable $X$,  the conditional expectation is
+   $$
+   \mathrm{E}(X \mid A)=\sum x P(X=x \mid A) .
+   $$
+   Thus we obtain:
+   $$
+   \mathbb{E}\left[R_{t+1} \mid S_t=s\right] =\sum_{a \in \mathcal A(s)} \pi(a \mid s) \mathbb{E}\left[R_{t+1} \mid S_t=s, A_t=a\right]
+   $$
+
+2. From the definition of expecctation, $\mathbb{E}\left[R_{t+1} \mid S_t=s, A_t=a\right] = p(r \mid s, a) r$, leading to
+   $$
+   \sum_{a \in \mathcal A(s)} \pi(a \mid s) \mathbb{E}\left[R_{t+1} \mid S_t=s, A_t=a\right] = \sum_{a \in \mathcal A(s)} \pi(a \mid s) \sum_r p(r \mid s, a) r
+   $$
+   Q.E.D.
+
+***
+
+A more verbose version of deduction is:
+
+First, consider the definition of expectation:
 $$
-p(r_{t+1} | s) = \sum_{a \in \mathcal A(s)} p(r_{t+1}, a| s).
+\begin{equation} \label{eq_def_of_expectation}
+\mathbb{E}\left[R_{t+1} \mid S_t=s\right] \triangleq \sum_r p(r | s) r.
+\end{equation}
 $$
-Next, due to [the chain rule of probability](https://lyk-love.cn/2023/10/14/Joint-Marginal-and-Conditional-Probability/#chain-rules), we obtain
+Look at use the formula for marginal probability,
+$$
+p(r | s) = \sum_{a \in \mathcal A(s)} p(r, a| s).
+$$
+Due to [the chain rule of probability](https://lyk-love.cn/2023/10/14/Joint-Marginal-and-Conditional-Probability/#chain-rules), we obtain
 $$
 p(r, a| s) = p(r | a, s). p(a|s)
 $$
@@ -79,15 +119,19 @@ Therefore,
 $$
 p(r | s) = \sum_{a \in \mathcal A(s)} \pi(a|s) . p(r | a, s)
 $$
-Now consider the definition of expectation:
+
+
+Replace $p(r | s)$ in $\eqref{eq_def_of_expectation}$ with $\sum_{a \in \mathcal A(s)} \pi(a|s) . p(r | a, s)$, we get
 $$
-\mathbb{E}\left[R_{t+1} \mid S_t=s\right] \triangleq \sum_r p(r | s) r.
-$$
-Replace $p(r | s)$ with $\sum_{a \in \mathcal A(s)} \pi(a|s) . p(r | a, s)$, we get
-$$
-\mathbb{E}\left[R_{t+1} \mid S_t\right] = \sum_{a \in \mathcal A(s)} \pi(a \mid s) \sum_r p(r \mid s, a) r.
+\begin{aligned}
+\mathbb{E}\left[R_{t+1} \mid S_t\right] 
+&= \sum_r \sum_{a \in \mathcal A(s)} \pi(a \mid s)  p(r \mid s, a) r \\
+&= \sum_{a \in \mathcal A(s)} \pi(a \mid s) \sum_r p(r \mid s, a) r \\
+& \triangleq \sum_{a \in \mathcal A(s)} \pi(a \mid s) \mathbb{E}\left[R_{t+1} \mid S_t=s, A_t=a\right] \\
+\end{aligned}
 $$
 
+Q.E.D.
 
 ## Second term: the mean of future rewards
 
@@ -117,8 +161,6 @@ $$
 & =\sum_a \pi(a \mid s)\left[\sum_r p(r \mid s, a) r+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) v_\pi\left(s^{\prime}\right)\right], \quad \forall s \in \mathcal{S} \label{eq_Bellman_equation} .
 \end{align}
 $$
-
-Highlights:
 
 - The above equation is called the **Bellman equation**, which characterizes the relationship among the state-value functions of different states.
 - It consists of two terms: 
@@ -211,6 +253,7 @@ $$
 & v_\pi\left(s_1\right)=-0.5+9=8.5 .
 \end{aligned}
 $$
+
 
 
 [^1]: In this article we only deal with discounted return witout the loss of generality since we can simply trate undiscounted return as discounted-return's special case when $\gamma = 1$.
