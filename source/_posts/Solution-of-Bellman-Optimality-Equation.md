@@ -15,7 +15,7 @@ date: 2024-01-07 21:55:21
 
 # Maximize on the right-hand side of BOE
 
-Here we talk about how to solve [BOE](). Remember we need to deal with the matrix-vector form since that is what we're faced with, but since each row in the matrix is actually a vector of the elementwise form, we start with the element form.
+Here we talk about how to solve [BOE](https://lyk-love.cn/2024/01/07/bellman-optimality-equation/). Remember we need to deal with the matrix-vector form since that is what we're faced with, but since each row in the matrix is actually a vector of the elementwise form, we start with the element form.
 
 In fact, we can turn the problem into "solve the optimal $\pi$ on the right-hand side". Let's look at one example first:
 
@@ -152,7 +152,7 @@ For any equation that has the form of $x=f(x)$, if $f$ is a contraction mapping,
 - Uniqueness: The fixed point $x^*$ is unique.
 - Algorithm: Consider a sequence $\left\{x_k\right\}$ where $x_{k+1}=f\left(x_k\right)$, then $x_k \rightarrow x^*$ as $k \rightarrow \infty$. Moreover, the convergence rate is exponentially fast.
 
-[-> See the proof]()
+[-> See the proof](https://lyk-love.cn/2024/01/07/solution-of-bellman-optimality-equation/#proof-of-the-contraction-mapping-theorem)
 
 # Contraction property of BOE
 
@@ -164,9 +164,9 @@ $$
 $$
 where $\gamma \in(0,1)$ is the discount rate, and $\|\cdot\|_{\infty}$ is the maximum norm, which is the maximum absolute value of the elements of a vector.
 
-[-> See the proof]()
+[-> See the proof](https://lyk-love.cn/2024/01/07/solution-of-bellman-optimality-equation/#proof-of-the-contraction-property-of-boe)
 
-# Solution to the BOE
+# Solution of the BOE
 
 Due to the contraction property of BOE, the matrix-vector form can be solved by computing following equation iteratively
 $$
@@ -211,7 +211,7 @@ $$
 
 Example: Manually solve the BOE.
 
-![image-20240107205709595](/Users/lyk/Library/Application Support/typora-user-images/image-20240107205709595.png)
+![Example](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Solution%20of%20Bellman%20Optimality%20Equation/Solution%20of%20Bellman%20Optimality%20Equation.png)
 
 * Actions: $a_{\ell}, a_0, a_r$ represent go left, stay unchanged, and go right.
 * Reward: entering the target area: +1 ; try to go out of boundary -1.
@@ -277,7 +277,9 @@ The policy is the same as the previous one, which is already optimal. v-value: $
 
 
 
-$k=2,3, \ldots$, iterate until the q-value doesn't change too much.
+$k=2,3, \ldots$, iterate until the produced q-value doesn't change too much.
+
+
 
 
 # BOE: Optimality
@@ -301,7 +303,7 @@ Therefore, $\pi^*$ is a policy and $v^*=v_{\pi^*}$ is the corresponding state va
 
 
 
-Now  we prove $$\pi^*$$ is the optilmal policy:
+Now  we prove $\pi^*$ is the optilmal policy:
 
 **Theorem (Policy Optimality)**:
 
@@ -309,17 +311,15 @@ Suppose that $v^*$ is the unique solution to $v=\max _\pi\left(r_\pi+\gamma P_\p
 $$
 v^* \geq v_\pi, \quad \forall \pi
 $$
-[-> See the proof]()
+[-> See the proof](https://lyk-love.cn/2024/01/07/solution-of-bellman-optimality-equation/#proof-of-theorem-policy-optimality)
 
 ## What does $\pi^\star$ look like?
 
-Theorem (Greedy Optimal Policy)
-
-For any $s \in \mathcal{S}$, the deterministic greedy policy
+For any $s \in \mathcal{S}$, the deterministic **greedy** policy
 $$
 \pi^*(a \mid s)= \begin{cases}1 & a=a^*(s) \\ 0 & a \neq a^*(s)\end{cases}
 $$
-is an optimal policy solving the BOE. Here,
+is an **optimal policy** solving the BOE. Here,
 $$
 a^*(s)=\arg \max _a q^*(a, s)
 $$
@@ -344,7 +344,7 @@ where $\gamma \in(0,1)$ is the discount rate and $\mathbf{1}=[1, \ldots, 1]^T$.
 
 Consequently, the optimal policy derived from $v^{\prime}$ is **invariant** to the affine transformation of the reward values.
 
-[-> See the proof]()
+[-> See the proof](https://lyk-love.cn/2024/01/07/solution-of-bellman-optimality-equation/#proof-of-theorem-optimal-policy-invariance)
 
 # Appendix
 

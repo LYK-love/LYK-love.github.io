@@ -52,9 +52,13 @@ $$
 
 Here, $\pi(s)$ denotes a policy for state $s$, and $\Pi(s)$ is the set of all possible policies for $s$.
 
+
+
 Remarks:
-- $p(r \mid s, a), p\left(s^{\prime} \mid s, a\right)$ are known.
-- $v(s), v\left(s^{\prime}\right)$ are unknown and to be calculated.
+
+$p(r \mid s, a), p\left(s^{\prime} \mid s, a\right)$ are known.
+
+$v(s), v\left(s^{\prime}\right)$ are unknown and to be calculated.
 
 # BOE (matrix-vector form)
 
