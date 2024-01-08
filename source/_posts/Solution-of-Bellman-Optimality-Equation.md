@@ -8,25 +8,28 @@ mathjax: true
 date: 2024-01-07 21:55:21
 ---
 
+1. [Shiyu Zhao. *Chapter 3: Optimal State Values and Bellman Optimality Equation*](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning).
+2. [--> Youtube: Bellman Optimality Equation](https://youtu.be/4BMkS8V0Q-w?si=7_-Sqm_VxdqfBQSs)
+
+<!--more-->
 
 # Maximize on the right-hand side of BOE
 
-Recalling from [BOE]()
+Recalling from [BOE](https://lyk-love.cn/2024/01/07/bellman-optimality-equation/), for every $s \in \mathcal{S}$,
 
 BOE: elementwise form
 $$
-v(s)=\max _\pi \sum_a \pi(a \mid s)\left(\sum_r p(r \mid s, a) r+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) v\left(s^{\prime}\right)\right), \quad \forall s \in \mathcal{S}
+v(s)=\max _{\pi(s) \in \Pi(s)} \sum_{a \in \mathcal{A}} \pi(a \mid s) q(s, a)
 $$
 
 BOE: matrix-vector form
 $$
-v=\max _\pi\left(r_\pi+\gamma P_\pi v\right)
+v=\max _{\pi \in \Pi}\left(r_\pi+\gamma P_\pi v\right)
 $$
 
+Next we'll talk about how to solve BOE. As you'll see in the last, you'll start solving the matrix-vector form, during which you'll solve every elementwise form one at a time.
 
-
-
-**How to solve BOE?**
+## For elementwise form
 
 First, let's look at an example:
 
@@ -43,13 +46,15 @@ First, let's look at an example:
 
 
 
-Inpired from it, to solve $pi$ we can first fix $v'(s)$:
+Inpired from it, to solve $\pi$, we can first fix $v'(s)$:
 $$
 \begin{aligned}
 v(s) & =\max _\pi \sum_a \pi(a \mid s)\left(\sum_r p(r \mid s, a) r+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) v\left(s^{\prime}\right)\right), \quad \forall s \in \mathcal{S} \\
 & =\max _\pi \sum_a \pi(a \mid s) q(s, a)
 \end{aligned}
 $$
+
+
 
 To calculate $v(s) = \max _\pi \sum_a \pi(a \mid s) q(s, a)$, let's see another example:
 
@@ -68,7 +73,9 @@ To calculate $v(s) = \max _\pi \sum_a \pi(a \mid s) q(s, a)$, let's see another 
 
 Inspired by the above example, considering that $\sum_a \pi(a \mid s)=1$, we have
 $$
-\max _\pi \sum_a \pi(a \mid s) q(s, a)=\max _{a \in \mathcal{A}(s)} q(s, a)
+\begin{equation} \label{eq_elementwise_form_right}
+v(s) = \max _\pi \sum_a \pi(a \mid s) q(s, a)=\max _{a \in \mathcal{A}(s)} q(s, a)
+\end{equation}
 $$
 where the optimality is achieved when
 $$
@@ -76,28 +83,33 @@ $$
 $$
 where $a^*=\arg \max _a q(s, a)$.
 
-# Rewrite as $v = f(v)$
+With the elementwise form $\eqref{eq_elementwise_form_right}$, we can further express the right-hand side of the matrix-vector form.
 
-The BOE (matrix-vector form) is $v=\max _\pi\left(r_\pi+\gamma P_\pi v\right)$. Since the optimal value of $\pi$ is determined by $v$, the right-hand side is a function of $v$, denoted as
+## For matrix-vector form
+
+Since the optimal value of $\pi$ is determined by $v$, the right-hand side of BOE (matrix-vector form) is a function of $v$, denoted as
 $$
-f(v) \doteq \max _{\pi \in \Pi}\left(r_\pi+\gamma P_\pi v\right) .
+f(v) \triangleq \max _{\pi}\left(r_\pi+\gamma P_\pi v\right) .
 $$
 
-Then, the BOE can be expressed in a concise form as
+Then, the BOE (matrix-vector form) can be expressed in a concise form as
 $$
+\begin{equation} \label{eq_matrix_vector_form_right}
 v=f(v) .
+\end{equation}
 $$
-where
+where 
 $$
-[f(v)]_s=\max _\pi \sum_a \pi(a \mid s) q(s, a), \quad s \in \mathcal{S}
+[f(v)]_s=\max _\pi \sum_a \pi(a \mid s) q(s, a) = \max _{a \in \mathcal{A}(s)} q(s, a), \quad s \in \mathcal{S} .
 $$
-The subscript $s$ means the part corresponding to state $s$.
 
 # Contraction mapping theorem
 
+Since the BOE can be expressed as a nonlinear equation v = f(v), we next introduce the *contraction mapping theorem* to analyze it. 
+
 ## Concepts: Fixed point and Contraction mapping
 
-Fixed point: $x \in X$ is a fixed point of $f: X \rightarrow X$ if
+**Fixed point**: $x \in X$ is a fixed point of $f: X \rightarrow X$ if
 $$
 f(x)=x
 $$
@@ -145,34 +157,11 @@ For any equation that has the form of $x=f(x)$, if $f$ is a contraction mapping,
 
 [-> See the proof]()
 
-### Example1
-
-Examples:
-
-$x=0.5 x$, where $f(x)=0.5 x$ and $x \in \mathbb{R}$
-$x^*=0$ is the unique fixed point. It can be solved iteratively by
-$$
-x_{k+1}=0.5 x_k
-$$
-### Example2
-
-$x=A x$, where $f(x)=A x$ and $x \in \mathbb{R}^n, A \in \mathbb{R}^{n \times n}$ and $\|A\|<1$ $x^*=0$ is the unique fixed point. It can be solved iteratively by
-$$
-x_{k+1}=A x_k
-$$
-
 # Contraction property of BOE
-
-Let's come back to the Bellman optimality equation:
-$$
-v=f(v)=\max _\pi\left(r_\pi+\gamma P_\pi v\right)
-$$
-
-
 
 **Theorem (Contraction Property)**:
 
-$f(v)$ is a contraction mapping satisfying
+$f(v)$ in $\eqref{eq_matrix_vector_form_right}$ is a contraction mapping satisfying
 $$
 \left\|f\left(v_1\right)-f\left(v_2\right)\right\| \leq \gamma\left\|v_1-v_2\right\|
 $$
@@ -180,44 +169,46 @@ where $\gamma \in(0,1)$ is the discount rate, and $\|\cdot\|_{\infty}$ is the ma
 
 [-> See the proof]()
 
-# Solve the BOE
+Note: the proof is only for the matrix-vector form. I don't know how to prove for the elementwise form. **//TODO**
+
+# Solution to the BOE
 
 The iterative algorithm:
 
-Matrix-vector form:
+Due to the contraction property of BOE, the matrix-vector form can be solved by computing following equation iteratively
 $$
-v_{k+1}=f\left(v_k\right)=\max _\pi\left(r_\pi+\gamma P_\pi v_k\right)
+\begin{equation} \label{eq_solution_for_elementwise_form}
+v_{k+1}=f\left(v_k\right)=\max _\pi\left(r_\pi+\gamma P_\pi v_k\right) .
+\end{equation}
 $$
 
-Elementwise form:
+At every iteration, for each state, **what we face is actually the elementwise form**:
+
 $$
 \begin{aligned}
 v_{k+1}(s) & =\max _\pi \sum_a \pi(a \mid s)\left(\sum_r p(r \mid s, a) r+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) v_k\left(s^{\prime}\right)\right) \\
 & =\max _\pi \sum_a \pi(a \mid s) q_k(s, a) \\
-& =\max _a q_k(s, a)
+& =\max _a q_k(s, a) .
 \end{aligned}
 $$
 
 
-
-
-Procedure summary:
-- For any $s$, current estimated value $v_k(s)$
+Procedure summary (**value iteration algorithm**):
+- For every $s$, estimate(randomly select) current state value as $v_k(s)$
 - For any $a \in \mathcal{A}(s)$, calculate
 $$
 q_k(s, a)=\sum_r p(r \mid s, a) r+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) v_k\left(s^{\prime}\right)
 $$
-- Calculate the greedy policy $\pi_{k+1}$ for $s$ as
-$$
-\pi_{k+1}(a \mid s)=\left\{\begin{array}{cc}
-1 & a=a_k^*(s) \\
-0 & a \neq a_k^*(s)
-\end{array}\right.
-$$
-where $a_k^*(s)=\arg \max _a q_k(s, a)$.
-- Calculate $v_{k+1}(s)=\max _a q_k(s, a)$
+- Calculate the greedy policy $\pi_{k+1}$ for every $s$ as
+  $$
+  \pi_{k+1}(a \mid s)=\left\{\begin{array}{cc}
+  1 & a=a_k^*(s) \\
+  0 & a \neq a_k^*(s)
+  \end{array}\right.
+  $$
+  where $a_k^*(s)=\arg \max _a q_k(s, a)$.
 
-The above algorithm is actually the value iteration algorithm as discussed in the next lecture.
+- Calculate $v_{k+1}(s)=\max _a q_k(s, a)$
 
 ## Example
 
@@ -252,11 +243,11 @@ v-value: select $v_0\left(s_1\right)=v_0\left(s_2\right)=v_0\left(s_3\right)=0$
 
 q-value (using the previous table):
 
-| -     | $a_{\ell}$ | $a_0$ | $a_r$ |
-| ----- | ---------- | ----- | ----- |
-| $s_1$ | -1         | 0     | 1     |
-| $s_2$ | 0          | 1     | 0     |
-| $s_3$ | 1          | 0     | -1    |
+| q-value table | $a_{\ell}$ | $a_0$ | $a_r$ |
+| ------------- | ---------- | ----- | ----- |
+| $s_1$         | -1         | 0     | 1     |
+| $s_2$         | 0          | 1     | 0     |
+| $s_3$         | 1          | 0     | -1    |
 
 Greedy policy (select the greatest q-value)
 $$
@@ -271,11 +262,12 @@ $$
 $k=1$:
 
 With $v_1(s)$ calculated in the last step, q-value:
-| -     | $a_{\ell}$ | $a_0$ | $a_r$ |
-| ----- | ---------- | ----- | ----- |
-| $s_1$ | -0.1       | 0.9   | 1.9   |
-| $s_2$ | 0.9        | 1.9   | 0.9   |
-| $s_3$ | 1.9        | 0.9   | -0.1  |
+
+| q-value table | $a_{\ell}$ | $a_0$ | $a_r$ |
+| ------------- | ---------- | ----- | ----- |
+| $s_1$         | -0.1       | 0.9   | 1.9   |
+| $s_2$         | 0.9        | 1.9   | 0.9   |
+| $s_3$         | 1.9        | 0.9   | -0.1  |
 
 Greedy policy (select the greatest q-value):
 $$
@@ -285,11 +277,10 @@ $$
 
 
 The policy is the same as the previous one, which is already optimal. v-value: $v_2(s)=\ldots$
-$$
-k=2,3, \ldots
-$$
 
 
+
+$k=2,3, \ldots$, iterate until the q-value doesn't change too much.
 
 
 # BOE: Optimality
@@ -322,6 +313,27 @@ $$
 v^* \geq v_\pi, \quad \forall \pi
 $$
 [-> See the proof]()
+
+## What does $\pi^\star$ look like?
+
+Theorem (Greedy Optimal Policy)
+
+For any $s \in \mathcal{S}$, the deterministic greedy policy
+$$
+\pi^*(a \mid s)= \begin{cases}1 & a=a^*(s) \\ 0 & a \neq a^*(s)\end{cases}
+$$
+is an optimal policy solving the BOE. Here,
+$$
+a^*(s)=\arg \max _a q^*(a, s)
+$$
+where $q^*(s, a):=\sum_r p(r \mid s, a) r+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) v^*\left(s^{\prime}\right)$.
+
+Proof: Due to
+$$
+\pi^*(s)=\arg \max _{\pi \in \Pi} \sum_{a \in \mathcal{A}} \pi(a \mid s) \underbrace{\left(\sum_{r \in \mathcal{R}} p(r \mid s, a) r+\gamma \sum_{s^{\prime} \in \mathcal{S}} p\left(s^{\prime} \mid s, a\right) v^*\left(s^{\prime}\right)\right)}_{q^*(s, a)}, \quad s \in \mathcal{S} .
+$$
+
+It is clear that $\sum_{a \in \mathcal{A}} \pi(a \mid s) q^*(s, a)$ is maximized if $\pi(s)$ selects the action with the greatest $q^*(s, a)$.
 
 # Appendix
 

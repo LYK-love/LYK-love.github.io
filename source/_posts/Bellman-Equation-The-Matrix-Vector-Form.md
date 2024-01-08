@@ -51,9 +51,12 @@ v_\pi=r_\pi+\gamma P_\pi v_\pi
 \end{equation}
 $$
 where
-- $v_\pi=\left[v_\pi\left(s_1\right), \ldots, v_\pi\left(s_n\right)\right]^T \in \mathbb{R}^n$
-- $r_\pi=\left[r_\pi\left(s_1\right), \ldots, r_\pi\left(s_n\right)\right]^T \in \mathbb{R}^n$
-- $P_\pi \in \mathbb{R}^{n \times n}$, where $\left[P_\pi\right]_{i j}=p_\pi\left(s_j \mid s_i\right)$, is the state transition matrix
+
+$v_\pi=\left[v_\pi\left(s_1\right), \ldots, v_\pi\left(s_n\right)\right]^T \in \mathbb{R}^n$,
+
+$r_\pi=\left[r_\pi\left(s_1\right), \ldots, r_\pi\left(s_n\right)\right]^T \in \mathbb{R}^n$,
+
+$P_\pi \in \mathbb{R}^{n \times n}$, where $\left[P_\pi\right]_{i j}=p_\pi\left(s_j \mid s_i\right)$, is the state transition matrix.
 
 # Examples
 
