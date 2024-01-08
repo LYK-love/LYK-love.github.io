@@ -15,61 +15,42 @@ date: 2024-01-07 21:55:21
 
 # Maximize on the right-hand side of BOE
 
-Recalling from [BOE](https://lyk-love.cn/2024/01/07/bellman-optimality-equation/), for every $s \in \mathcal{S}$,
+Here we talk about how to solve [BOE](). Remember we need to deal with the matrix-vector form since that is what we're faced with, but since each row in the matrix is actually a vector of the elementwise form, we start with the element form.
 
-BOE: elementwise form
+In fact, we can turn the problem into "solve the optimal $\pi$ on the right-hand side". Let's look at one example first:
+
+***
+
+**Example** 3.1. Consider two unknown variables $x, y \in \mathbb{R}$ that satisfy
 $$
-v(s)=\max _{\pi(s) \in \Pi(s)} \sum_{a \in \mathcal{A}} \pi(a \mid s) q(s, a)
-$$
-
-BOE: matrix-vector form
-$$
-v=\max _{\pi \in \Pi}\left(r_\pi+\gamma P_\pi v\right)
-$$
-
-Next we'll talk about how to solve BOE. As you'll see in the last, you'll start solving the matrix-vector form, during which you'll solve every elementwise form one at a time.
-
-## For elementwise form
-
-First, let's look at an example:
-
-> Example (How to solve two unknowns from one equation)
->
-> Consider two variables $x, a \in \mathbb{R}$. Suppose they satisfy
-> $$
-> x=\max _a\left(2 x-1-a^2\right) .
-> $$
->
-> This equation has two unknowns. To solve them, first consider the right hand side. 
->
-> **Regardless the value of $x$**, $\max _a\left(2 x-1-a^2\right)=2 x-1$ where the maximization is achieved when $a=0$. Second, when $a=0$, the equation becomes $x=2 x-1$, which leads to $x=1$. Therefore, $a=0$ and $x=1$ are the solution of the equation.
-
-
-
-Inpired from it, to solve $\pi$, we can first fix $v'(s)$:
-$$
-\begin{aligned}
-v(s) & =\max _\pi \sum_a \pi(a \mid s)\left(\sum_r p(r \mid s, a) r+\gamma \sum_{s^{\prime}} p\left(s^{\prime} \mid s, a\right) v\left(s^{\prime}\right)\right), \quad \forall s \in \mathcal{S} \\
-& =\max _\pi \sum_a \pi(a \mid s) q(s, a)
-\end{aligned}
+x=\max _{y \in \mathbb{R}}\left(2 x-1-y^2\right) .
 $$
 
+The first step is to solve $y$ on the right-hand side of the equation. Regardless of the value of $x$, we always have $\max _y\left(2 x-1-y^2\right)=2 x-1$, where the maximum is achieved when $y=0$. The second step is to solve $x$. When $y=0$, the equation becomes $x=2 x-1$, which leads to $x=1$. Therefore, $y=0$ and $x=1$ are the solutions of the equation.
 
+***
 
-To calculate $v(s) = \max _\pi \sum_a \pi(a \mid s) q(s, a)$, let's see another example:
+We now turn to the maximization problem on the right-hand side of the BOE. The (elementwise) BOE can be written as
+$$
+v(s)=\max _{\pi(s) \in \Pi(s)} \sum_{a \in \mathcal{A}} \pi(a \mid s) q(s, a), \quad s \in \mathcal{S} .
+$$
 
-> Example (How to solve $\max _\pi \sum_a \pi(a \mid s) q(s, a)$ )
-> Suppose $q_1, q_2, q_3 \in \mathbb{R}$ are given. Find $c_1^*, c_2^*, c_3^*$ solving
-> $$
-> \max _{c_1, c_2, c_3} c_1 q_1+c_2 q_2+c_3 q_3
-> $$
-> where $c_1+c_2+c_3=1$ and $c_1, c_2, c_3 \geq 0$.
-> Without loss of generality, suppose $q_3 \geq q_1, q_2$. Then, the optimal solution is $c_3^*=1$ and $c_1^*=c_2^*=0$. That is because for any $c_1, c_2, c_3$
-> $$
-> q_3=\left(c_1+c_2+c_3\right) q_3=c_1 q_3+c_2 q_3+c_3 q_3 \geq c_1 q_1+c_2 q_2+c_3 q_3
-> $$
+Inspired by Example 3.1, we can first solve the optimal $\pi$ on the right-hand side. How to do that? The following example demonstrates its basic idea.
 
+***
 
+**Example** 3.2. Given $q_1, q_2, q_3 \in \mathbb{R}$, we would like to find the optimal values of $c_1, c_2, c_3$ to maximize
+$$
+\sum_{i=1}^3 c_i q_i=c_1 q_1+c_2 q_2+c_3 q_3,
+$$
+where $c_1+c_2+c_3=1$ and $c_1, c_2, c_3 \geq 0$.
+Without loss of generality, suppose that $q_3 \geq q_1, q_2$. Then, the optimal solution is $c_3^*=1$ and $c_1^*=c_2^*=0$. This is because
+$$
+q_3=\left(c_1+c_2+c_3\right) q_3=c_1 q_3+c_2 q_3+c_3 q_3 \geq c_1 q_1+c_2 q_2+c_3 q_3
+$$
+for any $c_1, c_2, c_3$.
+
+***
 
 Inspired by the above example, considering that $\sum_a \pi(a \mid s)=1$, we have
 $$
@@ -83,29 +64,45 @@ $$
 $$
 where $a^*=\arg \max _a q(s, a)$.
 
-With the elementwise form $\eqref{eq_elementwise_form_right}$, we can further express the right-hand side of the matrix-vector form.
 
-## For matrix-vector form
+
+Now that we know the solution of BOE is to maximize the right-hand side, and we know how to do it as well --- just select the action with the largest action value. But **we don't know action value** or state value at this time, so this method doesn't work. 
+
+In fact, the solution of BOE derives from the *contraction mapping theorem* (see later) on the matrix-vector form. That's an iterative method
+
+So why we introduce $\eqref{eq_elementwise_form_right}$ here? The reason at during every iteration, for every state $s$, **the action value will already have been known**, so we can use $\eqref{eq_elementwise_form_right}$ to get the maximized right-hand side, which is the **maximized** $v(s)$!
+
+
+
+# Matrix-vector form of the BOE
+
+To leverage the *contraction mapping theorem*, we'll express the matrix-vector form as $v = f(v)$.
+
+
 
 Since the optimal value of $\pi$ is determined by $v$, the right-hand side of BOE (matrix-vector form) is a function of $v$, denoted as
 $$
+\begin{equation} \label{eq_right_hand_side}
 f(v) \triangleq \max _{\pi}\left(r_\pi+\gamma P_\pi v\right) .
-$$
-
-Then, the BOE (matrix-vector form) can be expressed in a concise form as
-$$
-\begin{equation} \label{eq_matrix_vector_form_right}
-v=f(v) .
 \end{equation}
 $$
-where 
+
+where $v \in \mathbb{R}^{|\mathcal{S}|}$ and $\max _\pi$ is **performed in an elementwise manner**. The structures of $r_\pi$ and $P_\pi$ are the same as those in the matrix-vector form of the normal Bellman equation:
 $$
-[f(v)]_s=\max _\pi \sum_a \pi(a \mid s) q(s, a) = \max _{a \in \mathcal{A}(s)} q(s, a), \quad s \in \mathcal{S} .
+\left[r_\pi\right]_s \doteq \sum_{a \in \mathcal{A}} \pi(a \mid s) \sum_{r \in \mathcal{R}} p(r \mid s, a) r, \quad\left[P_\pi\right]_{s, s^{\prime}}=p\left(s^{\prime} \mid s\right) \doteq \sum_{a \in \mathcal{A}} \pi(a \mid s) p\left(s^{\prime} \mid s, a\right) .
 $$
+
+Then, the BOE can be expressed in a concise form as
+$$
+v=f(v)
+$$
+
+
+Every row $[f(v)]_s$ is the elementwise form of $s$.
 
 # Contraction mapping theorem
 
-Since the BOE can be expressed as a nonlinear equation v = f(v), we next introduce the *contraction mapping theorem* to analyze it. 
+Now that the matrix-vector form is expressed as a nonlinear equation $v = f(v)$, we next introduce the *contraction mapping theorem* to analyze it. 
 
 ## Concepts: Fixed point and Contraction mapping
 
@@ -161,7 +158,7 @@ For any equation that has the form of $x=f(x)$, if $f$ is a contraction mapping,
 
 **Theorem (Contraction Property)**:
 
-$f(v)$ in $\eqref{eq_matrix_vector_form_right}$ is a contraction mapping satisfying
+$f(v)$ in $\eqref{eq_right_hand_side}$ is a contraction mapping satisfying
 $$
 \left\|f\left(v_1\right)-f\left(v_2\right)\right\| \leq \gamma\left\|v_1-v_2\right\|
 $$
@@ -169,11 +166,7 @@ where $\gamma \in(0,1)$ is the discount rate, and $\|\cdot\|_{\infty}$ is the ma
 
 [-> See the proof]()
 
-Note: the proof is only for the matrix-vector form. I don't know how to prove for the elementwise form. **//TODO**
-
 # Solution to the BOE
-
-The iterative algorithm:
 
 Due to the contraction property of BOE, the matrix-vector form can be solved by computing following equation iteratively
 $$
@@ -192,8 +185,12 @@ v_{k+1}(s) & =\max _\pi \sum_a \pi(a \mid s)\left(\sum_r p(r \mid s, a) r+\gamma
 \end{aligned}
 $$
 
+As you can see,  $\eqref{eq_elementwise_form_right}$ is leveraged here. (**But I don't know why can I do it. There's no proof about the contraction property of elementwise form, only one for the matrix-vector form**)
+
+
 
 Procedure summary (**value iteration algorithm**):
+
 - For every $s$, estimate(randomly select) current state value as $v_k(s)$
 - For any $a \in \mathcal{A}(s)$, calculate
 $$
@@ -335,6 +332,20 @@ $$
 
 It is clear that $\sum_{a \in \mathcal{A}} \pi(a \mid s) q^*(s, a)$ is maximized if $\pi(s)$ selects the action with the greatest $q^*(s, a)$.
 
+# Theorem: Optimal policy invariance
+
+Theorem (Optimal policy invariance):
+
+Consider a Markov decision process with $v^* \in \mathbb{R}^{|\mathcal{S}|}$ as the optimal state value satisfying $v^*=\max _{\pi \in \Pi}\left(r_\pi+\gamma P_\pi v^*\right)$. If every reward $r \in \mathcal{R}$ is changed by an affine transformation to $\alpha r+\beta$, where $\alpha, \beta \in \mathbb{R}$ and $\alpha>0$, then the corresponding optimal state value $v^{\prime}$ is also an affine transformation of $v^*$ :
+$$
+v^{\prime}=\alpha v^*+\frac{\beta}{1-\gamma} \mathbf{1}
+$$
+where $\gamma \in(0,1)$ is the discount rate and $\mathbf{1}=[1, \ldots, 1]^T$.
+
+Consequently, the optimal policy derived from $v^{\prime}$ is **invariant** to the affine transformation of the reward values.
+
+[-> See the proof]()
+
 # Appendix
 
 ## Proof of the contraction mapping theorem
@@ -467,7 +478,7 @@ which concludes the proof of the contraction property of $f(v)$.
 
 Q.E.D.
 
-## Proof: **Theorem (Policy Optimality)**
+## Proof of Theorem: Policy Optimality
 
 For any policy $\pi$, it holds that
 $$
@@ -494,3 +505,39 @@ $$
 v^*-v_\pi \geq \lim _{n \rightarrow \infty} \gamma^n P_\pi^n\left(v^*-v_\pi\right)=0
 $$
 where the last equality is true because $\gamma<1$ and $P_\pi^n$ is a nonnegative matrix with all its elements less than or equal to 1 (because $P_\pi^n \mathbf{1}=\mathbf{1}$ ). Therefore, $v^* \geq v_\pi$ for any $\pi$.
+
+## Proof of Theorem: Optimal policy invariance
+
+For any policy $\pi$, define $r_\pi=\left[\ldots, r_\pi(s), \ldots\right]^T$ where
+$$
+r_\pi(s)=\sum_{a \in \mathcal{A}} \pi(a \mid s) \sum_{r \in \mathcal{R}} p(r \mid s, a) r, \quad s \in \mathcal{S} .
+$$
+
+If $r \rightarrow \alpha r+\beta$, then $r_\pi(s) \rightarrow \alpha r_\pi(s)+\beta$ and hence $r_\pi \rightarrow \alpha r_\pi+\beta \mathbf{1}$, where $\mathbf{1}=$ $[1, \ldots, 1]^T$. In this case, the BOE becomes
+$$
+\begin{equation} \label{eq_reward_changed_BOE}
+v^{\prime}=\max _{\pi \in \Pi}\left(\alpha r_\pi+\beta \mathbf{1}+\gamma P_\pi v^{\prime}\right)
+\end{equation}
+$$
+where $v'$ is the new state value after the change of rewards.
+
+
+
+We next solve the new BOE in $\eqref{eq_reward_changed_BOE}$ by showing that $v^{\prime}=\alpha v^*+c \mathbf{1}$ with $c=\beta /(1-\gamma)$ is a solution of $\eqref{eq_reward_changed_BOE}$. In particular, substituting $v^{\prime}=\alpha v^*+c \mathbf{1}$ into $\eqref{eq_reward_changed_BOE}$ gives
+$$
+\alpha v^*+c \mathbf{1}=\max _{\pi \in \Pi}\left(\alpha r_\pi+\beta \mathbf{1}+\gamma P_\pi\left(\alpha v^*+c \mathbf{1}\right)\right)=\max _{\pi \in \Pi}\left(\alpha r_\pi+\beta \mathbf{1}+\alpha \gamma P_\pi v^*+c \gamma \mathbf{1}\right)
+$$
+where the last equality is due to the fact that $P_\pi \mathbf{1}=\mathbf{1}$. The above equation can be reorganized as
+$$
+\alpha v^*=\max _{\pi \in \Pi}\left(\alpha r_\pi+\alpha \gamma P_\pi v^*\right)+\beta \mathbf{1}+c \gamma \mathbf{1}-c \mathbf{1}
+$$
+which is equivalent to
+$$
+\beta \mathbf{1}+c \gamma \mathbf{1}-c \mathbf{1}=0
+$$
+
+Since $c=\beta /(1-\gamma)$, the above equation is valid and hence $v^{\prime}=\alpha v^*+c \mathbf{1}$ is the solution of $\eqref{eq_reward_changed_BOE}$. Since $\eqref{eq_reward_changed_BOE}$ is the BOE, $v^{\prime}$ is also the unique solution. 
+
+Finally, since $v^{\prime}$ is an affine transformation of $v^*$, the relative relationships between the action values remain the same. 
+
+Hence, the greedy optimal policy derived from $v^{\prime}$ is the same as that from $v^*: \arg \max _{\pi \in \Pi}\left(r_\pi+\gamma P_\pi v^{\prime}\right)$ is the same as $\arg \max _\pi\left(r_\pi+\gamma P_\pi v^*\right)$.

@@ -59,13 +59,14 @@ Remarks:
 # BOE (matrix-vector form)
 
 The BOE refers to a set of equations defined for all states. If we combine these equations, we can obtain a concise matrix-vector form, which will be extensively used in this chapter.
+
 The matrix-vector form of the BOE is
 $$
 v=\max _{\pi \in \Pi}\left(r_\pi+\gamma P_\pi v\right)
 $$
 where $v \in \mathbb{R}^{|\mathcal{S}|}$ and $\max _\pi$ is performed in an elementwise manner. The structures of $r_\pi$ and $P_\pi$ are the same as those in the matrix-vector form of the normal Bellman equation:
 $$
-\left[r_\pi\right]_s \doteq \sum_{a \in \mathcal{A}} \pi(a \mid s) \sum_{r \in \mathcal{R}} p(r \mid s, a) r, \quad\left[P_\pi\right]_{s, s^{\prime}}=p\left(s^{\prime} \mid s\right) \doteq \sum_{a \in \mathcal{A}} \pi(a \mid s) p\left(s^{\prime} \mid s, a\right) .
+\left[r_\pi\right]_s \triangleq \sum_{a \in \mathcal{A}} \pi(a \mid s) \sum_{r \in \mathcal{R}} p(r \mid s, a) r, \quad\left[P_\pi\right]_{s, s^{\prime}}=p\left(s^{\prime} \mid s\right) \triangleq \sum_{a \in \mathcal{A}} \pi(a \mid s) p\left(s^{\prime} \mid s, a\right) .
 $$
 
 Since the optimal value of $\pi$ is determined by $v$, the right-hand side of (3.2) is a function of $v$, denoted as
