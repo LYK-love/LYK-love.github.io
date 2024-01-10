@@ -89,14 +89,6 @@ For method 2, you should
    sudo apt install neovim
    ```
 
-4. If you want to uninstall Neovim simply run.
-
-   ```sh
-   sudo apt remove neovim
-   ```
-
-
-
 ## NvChad
 
 [--> NvChad Installation Doc](https://nvchad.com/docs/quickstart/install)
@@ -155,6 +147,19 @@ If you want the SSH server to start automatically when your system boots, use:
 sudo systemctl enable ssh
 ```
 
+## Cargo
+
+
+
+## Zellij
+
+```sh
+cargo install --locked zellij
+```
+
+
+
+
 
 ## Others
 
@@ -186,11 +191,13 @@ In this section we use my dotfiles to config:
 2. Oh-my-zsh
 3. powerlevel10k
 4. NvChad
+5. Zellij
 
 For forther customization, please refer to:
 
 1. [My zsh doc](https://lyk-love.cn/2023/12/28/zsh/?highlight=zsh)
 2. [My NvChad doc](https://lyk-love.cn/2024/01/09/nvchad/)
+3. [My Zellij doc](https://lyk-love.cn/2023/11/02/zellij/)
 
 
 
@@ -217,7 +224,7 @@ For forther customization, please refer to:
    git submodule update --init --recursive
    ```
 
-3. Source the zsh config file in my dotfiles, in order to enable some env variables.
+2. Source the zsh config file in my dotfiles, in order to enable some env variables.
 
    ```sh
    source ~/dotfiles/zsh/.zshrc
@@ -234,25 +241,30 @@ For forther customization, please refer to:
    
    > echo $NVIM_CUSTOM_HOME
    /home/lyk/dotfiles/nvchad_custom
+   
+   > echo $ZELLIJ_CONFIG_FILE
+   /home/lyk/dotfiles/zellij/config.kdl
    ```
 
-4. Remove original config files, if any, in your computer.
+3. Remove original config files, if any, in your computer.
 
    ```sh
    rm ~/.zshrc # zsh
    rm -rf ~/.config/nvim/lua/custom # NvChad
    ```
 
-5. Now **set the config files** as the cooresponding ones in my dotfiles:
+4. Now **set the config files** as the cooresponding ones in my dotfiles:
 
    ```sh
    ln -s $ZSH_DOT_FILE_HOME/.zshrc ~/.zshrc # zsh
    ln -s  $NVIM_CUSTOM_HOME/ ~/.config/nvim/lua/custom # NvChad
+   mkdir ~/.config/zellij # Zellij
+   ln -s $ZELLIJ_CONFIG_FILE ~/.config/zellij/
    ```
 
-   After that, zsh and nvchad should be correctly configured. Zsh plugins are enabled as well.
+   After that, zsh, nvchad and Zellij should be correctly configured. Zsh plugins are enabled as well.
 
-6. Now we enable a **theme** for zsh. Since we've installed `powerlevel10k` before, we now start it's config:
+5. Now we enable a **theme** for zsh. Since we've installed `powerlevel10k` before, we now start it's config:
 
    ```sh
    p10k configure
@@ -302,7 +314,7 @@ Or you can copy your ssh public key `id_rsa.pub` of your local machine to `~/.ss
 
 # Set up conda
 
-[->Install Miniconda](https://docs.conda.io/projects/miniconda/en/latest/index.html#quick-command-line-install)
+[--> Install Miniconda](https://docs.conda.io/projects/miniconda/en/latest/index.html#quick-command-line-install)
 
 For Linux:
 

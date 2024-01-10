@@ -1,22 +1,49 @@
 ---
+title: Unix Package Managers
 categories:
 - Software Engineering
-date: 2022-09-13 14:58:06
 tags: Linux
-title: Package Manager
+date: 2022-09-13 14:58:06
 ---
 
 Outline:
 
-* For Linux
-* For OSX
-* For Languages
+* APT（Advanced Package Tool)
+* pacman
 
 <!--more-->
 
-# For Linux
+# apt
 
-## apt
+APT（Advanced Package Tool)
+
+Note: you may have seen `sudo apt-get install package-name`, `apt-get` is a more complex and low level command line tool compared to `apt`. It's only advantage is its stability. Basically, `apt` is more preferrable and we can use `apt` all the time.
+
+
+
+In Ubuntu, the information about software packages is stored in remote repositories.
+
+* Update the local package index. Downloads the latest list of available packages from its configured software sources.
+
+  ```
+  sudo apt update
+  ```
+
+  Note: This command does not install or upgrade any packages; it only updates the information about what packages and versions are available.
+
+* Upgrade installed packages on your system:
+
+  ```sh
+  sudo apt upgrade
+  ```
+
+  When you run this command, APT (Advanced Package Tool) looks at the latest package information obtained via `apt update` and upgrades those packages installed on your system to their latest versions. This can include updates to various applications and system components. `apt upgrade` will not remove any packages or install any that are not already installed.
+
+
+
+
+
+
 
 更新软件源
 
@@ -33,9 +60,7 @@ apt-get upgrade
 apt list --installed 
 ```
 
-
-
-## pacman
+# pacman
 
 同步存储库数据库，并且更新系统的所有软件包，但不包括不在软件库中的“本地安装的”包：
 
@@ -47,11 +72,7 @@ pacman -Syu
 - `y` 代表更新本地存储库
 - `u` 代表系统更新
 
-
-
-# For OSX
-
-## brew
+# brew
 
 brew安装的软件位置千奇百怪, 但都会在`/opt/homebrew/opt`留下软链接
 
@@ -121,55 +142,3 @@ brew安装的软件位置千奇百怪, 但都会在`/opt/homebrew/opt`留下软�
   ```
 
   
-
-
-
-
-
-## npm
-
-### 换源
-
-国内优秀npm镜像：
-
-淘宝npm镜像
-
-- 搜索地址：[http://npm.taobao.org/](https://link.jianshu.com?t=http://npm.taobao.org/)
-- registry地址：[http://registry.npm.taobao.org/](https://link.jianshu.com?t=http://registry.npm.taobao.org/)
-
-cnpmjs镜像
-
-- 搜索地址：[http://cnpmjs.org/](https://link.jianshu.com?t=http://cnpmjs.org/)
-- registry地址：[http://r.cnpmjs.org/](https://link.jianshu.com?t=http://r.cnpmjs.org/)
-
-
-
- 1.临时使用
-
-```python
-npm install express --registry https://registry.npm.taobao.org
-```
-
-
-
-2.持久使用
-
-```python
-npm config set registry https://registry.npm.taobao.org
-```
-
-配置后可通过下面方式来验证是否成功:
-
-```shell
-npm config get registry
-```
-
-
-
-
-
-# Dreamerv3-torch
-Pytorch implementation of [Mastering Diverse Domains through World Models](https://arxiv.org/abs/2301.04104v1). DreamerV3 is a scalable algorithm that outperforms previous approaches across various domains with fixed hyperparameters.
-
-- 
-- 

@@ -1,9 +1,9 @@
 ---
+title: Tips for Building Frontend Projects
 categories:
 - Software Engineering
+tags: Javascript
 date: 2022-07-30 17:23:43
-tags: Frontend
-title: Tips for Building Frontend Projects
 ---
 
 Outline:
@@ -25,8 +25,6 @@ Outline:
 
 
 # node
-
-
 
 ## node生态的基本工具
 
