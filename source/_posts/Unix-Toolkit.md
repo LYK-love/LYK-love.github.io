@@ -16,23 +16,21 @@ OS可以是各种LINUX发行版和Mac OSX，因此你可以看到各种包管理
 
 ## 配置ssh免密登陆
 
-主机上生成 ssh key：
+Ensure that `openssh-server` is installed and started on the server.
 
-```
+
+
+Generate ssh key on the server：
+
+```sh
 ssh-keygen -t rsa
 ```
 
 * 腾讯云的服务器不会默认生成ssh key， 所以也不会有`~/.ssh`文件夹， 其他主机也无法通过ssh连接（`ssh-copy-id`）也不行。 因此腾讯云服务器需要先生成ssh key，才能使用
 
-* (这种情况很罕见)如果主机没有安装ssh，需要先安装`openssh-server`:
 
-  ```shell
-  apt install openssh-server
-  ```
 
-  
-
-查看`~/.ssh`:
+Look at `~/.ssh`:
 
 ```ssh
 ❯ ls -l ~/.ssh
@@ -42,7 +40,6 @@ total 20
 -rw-r--r-- 1 lyk lyk  571  2月  9 17:18 id_rsa.pub
 -rw------- 1 lyk lyk 3926  2月 19 12:58 known_hosts
 -rw------- 1 lyk lyk 3182  2月 19 12:41 known_hosts.old
-
 ```
 
 * authorized_keys: 存放远程免密登录的公钥,主要通过这个文件记录多台机器的公钥。(没有则手动创建该文件)
@@ -60,7 +57,7 @@ total 20
 
 服务器上配置ssh免密登陆：
 
-* 将本地 id_rsa.pub 文件的内容拷贝至远程服务器的 ~/.ssh/authorized_keys
+* 将本地 `id_rsa.pub` 文件的内容拷贝至远程服务器的 ~/.ssh/authorized_keys
   * 如果服务器没有`~/.ssh`，则需要自己创建
 * 也可以`ssh-copy-id user@host `
 

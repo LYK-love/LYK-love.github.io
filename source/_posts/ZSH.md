@@ -22,52 +22,11 @@ Offical docs:
 
 
 
-
-1. Install zsh:
-
-   ```shell
-   sudo apt install zsh
-   ```
-
-   By default, zsh will use  `~/.zshrc` as config file. 
-
-2. Switch your shell to zsh:
-
-   ```
-   chsh -s /bin/zsh
-   ```
-
-3. Install and config [Oh-my-zsh]()
+Install zsh: []
 
 # Oh-my-zsh
 
-1. Install it via [-->repo](https://github.com/ohmyzsh/ohmyzsh#basic-installation):
 
-   ```sh
-   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-   ```
-
-2. Create some environment variables for convience:
-
-   ```sh
-   # In `~/.zshrc`
-   
-   # Path to my dotfiles of zsh:
-   export ZSH_DOT_FILE_HOME="$DOT_FILE_HOME/zsh"
-   Path to my dotfiles of zsh:
-   export ZSH_DOT_FILE_HOME="$DOT_FILE_HOME/zsh"
-   ```
-
-3. Next, replace the `~/.zshrc` with the one in our dotfile:
-
-   ```sh
-   rm ~/.zshrc
-   ln -s $ZSH_DOT_FILE_HOME/.zshrc ~/.zshrc
-   ```
-
-
-
-* Uninstall: If you want to uninstall `oh-my-zsh`, just run `uninstall_oh_my_zsh` from the command-line. It will remove itself and revert your previous `bash` or `zsh` configuration. ([-->Source](https://github.com/ohmyzsh/ohmyzsh#uninstalling-oh-my-zsh))
 
 ## Details
 

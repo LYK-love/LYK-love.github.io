@@ -14,19 +14,29 @@ Source:
 
 # How to install
 
-1. Set environment variable in `~/.zshrc` for convience:
+[--> NvChad Installation Doc](https://nvchad.com/docs/quickstart/install)
+
+Note: This part aims to teach you how to install and config NvChad. I've already made a config and saved it as a dotfile. If you want to use my my off-the-shelf configuration, i.e., my dotfile, you can see my doc []()
+
+
+
+1. Install NvChad
+
+   ```sh
+   git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+   ```
+
+2. Set environment variable in `~/.zshrc` for convience:
 
    ```sh
    export NVIM_CUSTOM_HOME="$DOT_FILE_HOME/nvchad_custom"
    ```
 
-2. Install NvChad. Detete its default custom file. Use a symbol link, which is to my custom file in the dotfile, to replace it.
+3. Install NvChad. Detete its default custom file. Use a symbol link, which is to my custom file in the dotfile, to replace it.
 
    ```sh
    ln -s  $NVIM_CUSTOM_HOME/ ~/.config/nvim/lua/custom
    ```
-
-   
 
 # Components
 

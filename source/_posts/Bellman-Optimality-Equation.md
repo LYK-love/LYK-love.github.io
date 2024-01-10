@@ -8,7 +8,7 @@ mathjax: true
 date: 2024-01-07 21:55:21
 ---
 
-1. [Shiyu Zhao. *Chapter 3: Optimal State Values and Bellman Optimality Equation*](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning).
+1. [Shiyu Zhao. *Chapter 3: Bellman Optimality Equation. Mathematical Foundations of Reinforcement Learning*](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning).
 2. [--> Youtube: Bellman Optimality Equation](https://youtu.be/_QbIzluF8YI?si=9izFpm0dn82yp2yS)
 3. [--> Youtube: How to Solve Bellman Optimality Equation](https://youtu.be/4BMkS8V0Q-w?si=7_-Sqm_VxdqfBQSs)
 
