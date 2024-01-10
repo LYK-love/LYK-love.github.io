@@ -275,6 +275,45 @@ Not a recommended way but one can create a Linux user by directly modifying `/et
 cat /etc/passwd | tail -1
 ```
 
+## Grant `sudo` Permisson to a Linux User
+
+1. Add user
+
+   ```sh
+   sudo adduser <username>
+   ```
+
+2. Give the new user `sudo` permission:
+
+   ```sh
+   sudo usermod -a -G adm username
+   sudo usermod -a -G sudo username
+   ```
+
+
+
+Alternatively, you can edit  `/etc/sudoers` to achieve it.
+
+1. Add the write permisson to `/etc/sudoers`:
+
+   ```sh
+   chmod u+w /etc/sudoers
+   ```
+
+2. Edit `/etc/sudoers`, below the line of `root ALL=(ALL) ALL`, add
+
+   ```
+   lyk ALL=(ALL) ALL
+   ```
+
+3. Finnaly, delete the write permisson to `/etc/sudoers`:
+
+   ```sh
+   chmod u-w /etc/sudoers
+   ```
+
+
+
 ## Assign Password to a Linux user
 
 Using `passwd` command we can assign passwords to Linux user.

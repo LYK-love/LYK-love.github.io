@@ -16,56 +16,6 @@ OS可以是各种LINUX发行版和Mac OSX，因此你可以看到各种包管理
 
 # User Config
 
-## 配置用户
-
-详见后文 *用户操作*
-
-
-
-添加用户：
-
-```
-sudo adduser [username]
-```
-
-
-
-
-
-
-
-## 赋予新用户sudo权限
-
-用adduser创建后的新用户是不能使用sudo的，因为还没有赋予相关root权限，执行以下代码赋予权限
-
-```shell
-sudo usermod -a -G adm username
-sudo usermod -a -G sudo username
-```
-
-
-或者将用户加到sudoers文件中:
-
-
-
-```shell
-#添加sudo文件的写权限,命令是:
-chmod u+w /etc/sudoers
-#编辑sudoers文件
-vim /etc/sudoers
-#在 root ALL=(ALL) ALL,下面添加lyk ALL=(ALL) ALL 
-lyk ALL=(ALL) ALL
-
-#最后删除sudo文件的写权限
-chmod u-w /etc/sudoers
-```
-
-
-
-
-
-
-
 #   Disk Config
 
 `fdisk`：查看磁盘信息
@@ -353,38 +303,3 @@ date
 lsb_release -a
 ```
 
-## 用户操作
-
-### 创建新用户
-
-```shell
-sudo adduser [username]
-```
-
-
-
-### 切换用户
-
-```shell
-sudo su [username]
-```
-
-### 修改用户密码
-
-```shell
-sudo passwd user
-```
-
-### 删除用户
-
-`sudo userdel username`: 仅仅删除用户，不删除用户的home目录文件
-
-* `-r`: 删除用户的home目录文件
-
-当需要删除用户时可以使用以下指令
-
-### 查看用户组
-
-```shell
-cat /etc/group
-```

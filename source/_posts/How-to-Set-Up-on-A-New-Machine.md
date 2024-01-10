@@ -9,9 +9,7 @@ categories: Software Engineering
 
 How to set up configs on a brand new machine (typically a ubuntu server).
 
-My dotfiles: `https://github.com/LYK-love/dotfiles/`
-
-* It's a private repo so other people can't clone it.
+My dotfiles: `https://github.com/LYK-love/dotfiles-for-servers`
 
 <!--more-->
 
@@ -182,10 +180,24 @@ Unix tools:
 
 # Set up terminal on a new machine
 
+In this section we use my dotfiles to config:
+
+1. zsh
+2. Oh-my-zsh
+3. powerlevel10k
+4. NvChad
+
+For forther customization, please refer to:
+
+1. [My zsh doc](https://lyk-love.cn/2023/12/28/zsh/?highlight=zsh)
+2. [My NvChad doc](https://lyk-love.cn/2024/01/09/nvchad/)
+
+
+
 1. Clone my dotfiles
 
    ```sh
-   git clone --recurse-submodules git@github.com:LYK-love/dotfiles.git
+   git clone --recurse-submodules git@github.com:LYK-love/dotfiles-for-servers.git ~/dotfiles
    ```
 
    parameter `--recurse-submodules` is because my NvChad dotfile, which is a distinct public repo, is added as a git submodule:
@@ -205,16 +217,10 @@ Unix tools:
    git submodule update --init --recursive
    ```
 
-2. There're 2 branches on it. `mac` is for my macbook, `ubuntu` os for my ubuntu servers. For servers, I'll use the `ubuntu` branch.
-
-   ```sh
-   git switch ubuntu
-   ```
-
 3. Source the zsh config file in my dotfiles, in order to enable some env variables.
 
    ```sh
-   source <my dotfile folder>/zsh/.zshrc
+   source ~/dotfiles/zsh/.zshrc
    ```
 
    Now you can check some env variables I set:
@@ -252,7 +258,6 @@ Unix tools:
    p10k configure
    ```
 
-   
 
 # Set up SSH
 
@@ -294,10 +299,45 @@ Or you can copy your ssh public key `id_rsa.pub` of your local machine to `~/.ss
 
    Copy the content of `id_rsa.pub`, i.e., the public key of this user, to the Github.
 
-   
 
-   
+# Set up conda
 
-   
+[->Install Miniconda](https://docs.conda.io/projects/miniconda/en/latest/index.html#quick-command-line-install)
 
-   
+For Linux:
+
+These four commands quickly and quietly install the latest 64-bit  version of the installer and then clean up after themselves. To install a different version or architecture of Miniconda for Linux, change the  name of the `.sh` installer in the `wget` command.
+
+```sh
+mkdir -p ~/miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+rm -rf ~/miniconda3/miniconda.sh
+```
+
+After installing, initialize your newly-installed Miniconda. The following commands initialize for bash and zsh shells:
+
+```sh
+~/miniconda3/bin/conda init bash
+~/miniconda3/bin/conda init zsh
+```
+
+# Add another user
+
+[--> Linux Users and Groups](https://lyk-love.cn/2023/12/29/linux-users-and-groups/?highlight=shadow)
+
+
+
+1. Add user
+
+   ```sh
+   sudo adduser <username>
+   ```
+
+2. Give the new user `sudo` permission:
+
+   ```sh
+   sudo usermod -a -G adm username
+   sudo usermod -a -G sudo username
+   ```
+
