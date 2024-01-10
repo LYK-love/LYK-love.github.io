@@ -1,8 +1,12 @@
 ---
 title: NvChad
 tags:
+  - Linux
+  - Vim
+categories:
+  - Software Engineering
+date: 2024-01-09 19:01:26
 ---
-
 
 
 Source:
@@ -12,11 +16,13 @@ Source:
 3. [Dreams of Code's NvChad playlist](https://www.youtube.com/playlist?list=PL05iK6gnYad1sb4iQyqsim_Jc_peZdNXf)
 4. [BrunoKrugel's Github repo](https://github.com/BrunoKrugel/dotfiles)
 
+Note: This article will only focus on **NvChad** itself. If you want to simply copy my computer configs (ALL OF THEM), you can refer to [*How to Set Up on A New Machine*](https://lyk-love.cn/2024/01/09/how-to-set-up-on-a-new-machine/).
+
+<!--more-->
+
 # How to install
 
 [--> NvChad Installation Doc](https://nvchad.com/docs/quickstart/install)
-
-Note: This part aims to teach you how to install and config NvChad. I've already made a config and saved it as a dotfile. If you want to use my my off-the-shelf configuration, i.e., my dotfile, you can see my doc []()
 
 
 

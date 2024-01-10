@@ -1,11 +1,11 @@
 ---
+title: Nvim Developing Environment
 categories:
 - Software Engineering
-date: 2022-08-17 22:52:46
 tags:
 - Linux
-- Editor
-title: Nvim Developing Environment
+- Vim
+date: 2022-08-17 22:52:46
 ---
 
 Outline:
