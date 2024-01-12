@@ -143,3 +143,28 @@ Hopefully, that will resolve some issues for you. Happy hacking!
 
 
 [JAX: pip installation: GPU (CUDA, installed locally, harder)](https://jax.readthedocs.io/en/latest/installation.html)
+
+# Common Problems
+
+Error:
+
+```
+NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running.
+```
+
+
+
+Solution:
+
+1. Remove current cuda driver:
+
+   ```
+   # First of all, we need to remove all of the previous dependencies
+   sudo apt-get purge nvidia-*
+   sudo apt-get update
+   sudo apt-get autoremove
+   ```
+
+2. Reinstall it
+
+3. Rleboot

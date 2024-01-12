@@ -71,10 +71,10 @@ X11 Forwarding just forwards the requests to the X server. Thus it'll not show t
 
 [-->Install tigetvnc on Ubuntu](https://www.cyberciti.biz/faq/install-and-configure-tigervnc-server-on-ubuntu-18-04/)
 
-Edit `/etc/vnc.conf`, add 
+
 
 ```shell
-$localhost = "no";
+vncserver -kill :1
 ```
 
 
@@ -84,6 +84,12 @@ Make sure you the port is available (not blocked by the firewall).
 
 
 * Listen to port 5901.
+
+
+
+https://bytexd.com/how-to-install-configure-vnc-server-on-ubuntu/
+
+不知道为什么, 有的机器上不支持gnome
 
 # TightVNC (not support GLX)
 

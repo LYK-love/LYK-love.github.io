@@ -149,15 +149,35 @@ sudo systemctl enable ssh
 
 ## Cargo
 
+[--> Installation of Rust](https://lyk-love.cn/2024/01/09/rust-tools/#install)
 
+1. Run the command to download the `rustup` tool and install the latest stable version of Rust:
+
+   ```bash
+   curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
+   ```
+
+   Next, run the following command to add the Rust toolchain directory to the PATH environment variable:
+
+   ```bash
+   source $HOME/.cargo/env
+   ```
+
+2. Verify the Rust installation by requesting the version:
+
+   ```bash
+   rustc --version
+   ```
+
+3. If you don't have a `gcc`, please install one.
+
+Now rust and corresponding tools (rustup, cargo) have been installed
 
 ## Zellij
 
 ```sh
 cargo install --locked zellij
 ```
-
-
 
 
 

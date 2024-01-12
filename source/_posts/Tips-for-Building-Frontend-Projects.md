@@ -8,15 +8,19 @@ date: 2022-07-30 17:23:43
 
 Outline:
 
-* Intro
-* node
+* nodejs
 * npm
+* nvm
 * yarn
 * ...
 
 <!--more-->
 
 # Intro
+
+For the installation of nodejs, npm and nvm, please refer to [my Javascript tools doc](https://lyk-love.cn/2024/01/09/javascript-tools/).
+
+
 
 前端包管理工具有npm和yarn,后者是npm的进化版，推荐用yarn
 
@@ -332,47 +336,6 @@ require('find');
   nvm ls
   ```
 
-  
-
-  
-
-### Installation
-
-以下只演示[macOS上的NVM安装过程](https://tecadmin.net/install-nvm-macos-with-homebrew/#:~:text=%20How%20To%20Install%20NVM%20on%20macOS%20with,ready%20for%20the%20installation.%20Update%20the...%20More%20)， 对于Linux，nvm只要一行命令就可以安装了
-
-1.  Remove existing Node Versions
-
-   ```shell
-   brew uninstall --ignore-dependencies node 
-   brew uninstall --force node 
-   ```
-
-2. Install NVM on macOS
-
-   ```shell
-   brew update 
-   brew install nvm 
-   ```
-
-3. Next, create a directory for NVM at home.
-
-   ```shell
-   mkdir ~/.nvm 
-   ```
-
-4. 编辑配置文件(这里我用的是`~/.zshrc`)
-
-   ```shell
-   nvim ~/.zshrc
-   ```
-
-5. 使编辑生效:
-
-   ```shell
-   source ~/.zshrc
-   ```
-
-   
 
 ## node Installation
 
@@ -415,10 +378,6 @@ nvm ls
 | npm update --save            | yarn upgrade         | 更新项目依赖                                       |
 
 
-
-## npm Installation
-
-node自带了npm，所以安装node后就默认安装了对应版本的npm
 
 ## Problems
 

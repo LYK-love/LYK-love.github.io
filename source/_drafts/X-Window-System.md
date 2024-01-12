@@ -5,7 +5,11 @@ tags:
 
 * https://edoras.sdsu.edu/doc/debian/ch-X.html
 
+[X Window 配置介绍](http://cn.linux.vbird.org/linux_basic/0590xwindow_1.php)
 
+https://uit.stanford.edu/service/sharedcomputing/moreX
+
+https://edoras.sdsu.edu/doc/debian/ch-X.html
 
 # X11 Forwarding
 
@@ -93,3 +97,43 @@ X11 forwarding allows you to run graphical applications on a remote Unix/Linux s
 - **Prefer `-Y` for Trusted Connections**: If you trust the remote server and need fewer restrictions, `-Y` can provide a smoother experience but be aware of the potential security implications.
 
 By following these steps, you should be able to set up and use X11 forwarding to run remote graphical applications on your local machine. This can be particularly useful for running software that's only available on Unix/Linux servers or for using resources that aren't available on your local machine.
+
+# Display
+
+The DISPLAY variable is used by X11 to identify your display (and keyboard and mouse). Usually it'll be :0 on a desktop PC, referring to the primary monitor, etc.
+
+If you're using SSH with X forwarding (ssh -X otherhost), then it'll be set to something like localhost:10.0. This tells X applications to send their output, and receive their input from the TCP port 127.0.0.1:6010, which SSH will forward back to your original host.
+
+And, yes, back in the day, when "thin client" computing meant an X terminal, it was common to have several hundred displays connected to the same host.
+
+
+
+You are unlikely to get the straight VNC method to work in this specific  environment. Using x11vnc or TigerVNC for OpenGL support in this manner  only works (in my experience) when connecting to the :0 display session, which you are unlikely to have access to if the server is a shared  machine on a campus network.
+
+[VirtualGL](https://www.virtualgl.org/) is another option that does work (in my experience) for normal VNC  sessions. The drawback is that it does not provide OpenGL support for  the entire session but rather individual applications that you run. You  must start the application with the "vglrun" command. Although, it seems like this would suit your case fine.
+
+Note, you may need help from your sysadmin to install and configure  VirtualGL. And this all assumes the host machine has OpenGL capability  at all, either a software implementation via Mesa or an actual GPU.
+
+
+
+
+
+I'm using [x11vnc](http://www.karlrunge.com/x11vnc/) to gain remote access to whatever the monitor is displaying. x11vnc  talks to the local X11 server and copies the framebuffer from the server to the client via vnc. Since the local X11 server renders everything  with hardware acceleration, I get hardware accelerated OpenGL over VNC,  even with all the cool desktop effects. This is how I start x11vnc:
+
+```
+x11vnc -rfbauth ~/.vnc/passwd  -display :0 -forever -bg -repeat -nowf -o ~/.vnc/x11vnc.log
+```
+
+I think almost any vnc viewer works, but I'd recommend turbovnc or tigervnc. I tried VirtualGL first, and it works fine, but not for the whole desktop, only for individual OpenGL applications.
+
+It is even possible to change resolution on the display/vnc using xrandr. E.g. like this:
+
+```
+xrandr -q (to see available modes and outputs)
+xrandr --output DVI-I-0 --mode "1024x768" (change mode on DVI output)
+```
+
+(It is possible to add new resolutions if the available modes aren't enough, but that's outside the scope here.)
+
+So now I have a fully OpenGL hardware accelerated and resizable VNC session. 
+
