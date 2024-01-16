@@ -11,7 +11,9 @@ Source:
 1. [ECS201A Homepage](https://jlpteaching.github.io/comparch/)
 2. [ECS201A Projects(gem5)](https://jlpteaching.github.io/comparch/modules/gem5/assignment0/)
 
-All the experiments rely on the same python env and a software called `gem5`. To set up for the experiments, you must:
+All the experiments rely on the same python env and a software called `gem5`.  
+
+The professor has offered us github codespaces to develop,upon which  you don't need to worry about the setup. However, if you prefer to develop on your local machine, to set up for the experiments you must:
 
 1. Install and config gem5 on your system.
 2. Clone the assignment repo and config it.
@@ -44,8 +46,16 @@ It's highly recommended to use Ubuntu20.04 or 22.04.
 3. Make sure your **system python version** is larger than 3.6. In the  root of the gem5 directory, run:
 
    ```sh
+   scons build/{ISA}/gem5.{variant} -j {cpus}
+   ```
+
+   For instance, if your target ISA is `X86` and you want to leverage your 4-core CPU to compile, the command is:
+
+   ```sh
    scons build/X86/gem5.opt -j 4
    ```
+
+   If the target ISA is `RISCV`, then the command is `scons build/RISCV/gem5.opt -j 4`.
 
    Wait for a long time until the compilation ends.
 
@@ -65,11 +75,16 @@ It's highly recommended to use Ubuntu20.04 or 22.04.
    Error: Can't find a working Python installation
    ```
 
-4. Add gem5 to your systems `PATH`:
+4. Now you can call gem5 with: `<path of gym5 repo>/build/{ISA}/gem5.{variant}`. For convience, you can add gem5 to your systems `PATH`:
 
-   ```
+   ```sh
    # In your `~/.zshrc` or `~/.bashrc`
+   # Path to built gem5:
+   # Syntax: "<path to gym>/build/{ISA}/gem5.{variant}". Note: Change the path according your need. E.g., for RISCV ISA as your target, the command is 
+   # "$GEM5_HOME/build/RISCV/gem5.opt"
    
+   export GEM5_HOME="$HOME/gem5"
+   alias gem5="$GEM5_HOME/build/X86/gem5.opt"
    ```
 
 ## Config your project
@@ -91,7 +106,7 @@ It's highly recommended to use Ubuntu20.04 or 22.04.
    pip install -r requirements.txt
    ```
 
-3. One problem is that in the code, many scripts rely on `gem5` python package, e.g., in `components/boards.py`:
+3. One problem is that, in the code, many scripts rely on `gem5` python package, e.g., in `components/boards.py`:
 
    ```python
    from gem5.simulate.simulator import Simulator
@@ -114,3 +129,32 @@ scons build/{ISA}/gem5.{variant} -j {cpus}
 ```
 
 where `{ISA}` is the target (guest) Instruction Set Architecture, and `{variant}` specifies the compilation settings. For most intents and purposes `opt` is a good target for compilation. The `-j` flag is optional and allows for parallelization of compilation with `{cpus}` specifying the number of threads. A single-threaded compilation from scratch can take up to 2 hours on some systems. We therefore strongly advise allocating more threads if possible.
+
+# Commands
+
+By default `gem5` outputs to standard out `stdout` and standard error `stderr` . To dump these info to a file, you can:
+
+```sh
+gem5 -r run.py
+```
+
+This is what you will see in your terminal after running the command above.
+
+```
+Redirecting stdout and stderr to m5out/simout
+```
+
+Now, if you look at `m5out`, you will see that there is a new file name `simout`. Let’s print the content of that file and compare to our previous output in [Invoking gem5](https://jlpteaching.github.io/comparch/modules/gem5/assignment0/#invoking-gem5). To do that, run the following command in your terminal.
+
+You separate `stdout` and `stderr` into two files. 
+
+```sh
+gem5 -re run.py
+```
+
+After running the command above, this is what you will see in your terminal.
+
+```
+Redirecting stdout to m5out/simout
+Redirecting stderr to m5out/simerr
+```

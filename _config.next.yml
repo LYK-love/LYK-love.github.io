@@ -371,9 +371,9 @@ codeblock:
     # dark: stackoverflow-dark
     light: a11y-light
     dark: a11y-dark
-  prism:
-    light: prism
-    dark: prism-dark
+  # prism:
+  #   light: prism
+  #   dark: prism-dark
   # Add copy button on codeblock
   copy_button:
     enable: false

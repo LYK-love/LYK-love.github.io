@@ -18,7 +18,7 @@ Source:
 
 We split an image into **fixed-size patches**, linearly embed each of them, add position embeddings, and feed the resulting sequence of vectors to a standard Transformer encoder.
 
- In order to perform classification, we use the standard approach of adding an extra learnable “classification token” to the sequence. 
+In order to perform classification, we use the standard approach of adding an extra learnable “classification token” `[CLS]` to the sequence. 
 
 
 

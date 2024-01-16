@@ -406,6 +406,23 @@ The following examples are rendered by `mathjax` engine.
 {% endnote %}
 ```
 
+
+
+Add a video:
+
+```
+{% video url %}
+```
+
+Examples:
+
+```
+{% video https://example.com/sample.mp4 %}
+{% video /path/to/your/video.mp4 %}
+```
+
+
+
 # Anchor
 
 在 `<hexo>/themes/next/source/css/_common/components/post/post-body.styl`有如下代码:
