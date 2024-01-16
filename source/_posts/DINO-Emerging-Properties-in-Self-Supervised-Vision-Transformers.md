@@ -11,14 +11,14 @@ date: 2024-01-16 01:27:31
 
 Source:
 
-1. [*Emerging Properties in Self-Supervised Vision Transformers*](https://arxiv.org/abs/2104.14294)
+1. [*Emerging Properties in Self-Supervised Vision Transformers* (DINO)](https://arxiv.org/abs/2104.14294)
 1. [PyTorch implementation and pretrained models for DINO](https://github.com/facebookresearch/dino)
 
 <!--more-->
 
 # Introduction
 
-DINO(shorts for self-**di**stillation with ***no*** *labels*) is a self-supervised pretraining method for visual models like [Vision Transformer (ViT)]()[^1] and CNN[^2], while it mainly focus on ViT.
+DINO(shorts for self-**di**stillation with ***no*** *labels*) is a self-supervised pretraining method for visual models like [Vision Transformer (ViT)](https://arxiv.org/abs/2010.11929)[^1] and CNN[^2], while it mainly focus on ViT.
 
 It's trained on ImageNet witout any labels.
 
@@ -74,9 +74,11 @@ Figure 2 illustrates DINO in the case of one single pair of views $\left(x_1, x_
 
 We obtain that:
 
-1. Each network outputs a $K$ dimensional feature that is normalized with a temperature softmax over the feature dimension. ([Details below]())
+1. Each network outputs a $K$ dimensional feature that is normalized with a temperature softmax over the feature dimension.
 2. The output of the teacher network is centered with a mean computed over the batch. 
-3. Their similarity is then measured with a cross-entropy loss. ([Details below]())
+3. Their similarity is then measured with a cross-entropy loss.
+
+**Note**: For now you may be confused with terminologies such as EMA, temperature softmax, etc. I'll explain them [in the further section](https://lyk-love.cn/2024/01/16/dino-emerging-properties-in-self-supervised-vision-transformers/#training).
 
 
 
@@ -135,7 +137,7 @@ A similar formula holds for $P_t$ with temperature $\tau_t$.
 
 
 
-The loss dunction is [cross-entropy loss](). In Knowledge distillation methods, the teacher network $g_{\theta_t}$ is given, we train the parameters $\theta_s$ of the student network:
+The loss dunction is [cross-entropy loss](https://lyk-love.cn/2024/01/03/common-loss-functions/#cross-entropy). In Knowledge distillation methods, the teacher network $g_{\theta_t}$ is given, we train the parameters $\theta_s$ of the student network:
 $$
 \begin{equation} \label{eq_2}
 \min _{\theta_s} H\left(P_t(x), P_s(x)\right),
@@ -232,5 +234,5 @@ So they adopted a new protocol, where they evaluated the quality of features wit
 
 
 
-[^1]: In this paper, the authors adopted various types of ViTs, like ViT-S/16, ViT-B/16, ViT-S/8, ViT-B/8. ViT-B is exactly ViT-Based presented in the ViT paper, while [ViT-S](https://arxiv.org/abs/2010.11929) is the model presented in [DeiT paper](https://arxiv.org/abs/2012.12877).
-[^2]: In this paper the adopted CNN is ResNet.
+[^1]: The authors adopted various types of ViTs, like ViT-S/16, ViT-B/16, ViT-S/8, ViT-B/8. ViT-B is exactly ViT-Based presented in the ViT paper, while [ViT-S](https://arxiv.org/abs/2010.11929) is the model presented in [DeiT paper](https://arxiv.org/abs/2012.12877).
+[^2]: The adopted CNN is ResNet.

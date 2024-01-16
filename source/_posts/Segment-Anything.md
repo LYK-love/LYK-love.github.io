@@ -10,8 +10,8 @@ date: 2024-01-05 16:00:03
 
 Source:
 
-* [Masked Autoencoders (MAE)]()
-* [Vision Transformer (ViT)]()
+* [Masked Autoencoders (MAE)](https://arxiv.org/pdf/2111.06377.pdf)
+* [Vision Transformer (ViT)](https://arxiv.org/abs/2010.11929)
 * [Segment Anything blog](https://ai.meta.com/blog/segment-anything-foundation-model-image-segmentation/)
 * [Youtube video: Segment Anything - Model explanation with code](https://youtu.be/eYhvJR4zFUM?si=Sxd0iDZc6jxksUYv)
   * [-->Slides](https://github.com/hkproj/segment-anything-slides)
