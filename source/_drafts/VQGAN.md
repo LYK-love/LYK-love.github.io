@@ -28,7 +28,7 @@ VAE: continuous latent space ---> VQVAE: **discrete** latent space
 
 Unlike VAEs with continuous latent spaces, VQVAEs use a discrete space  by having a codebook containing a large number of continuous vectors.  The VQVAE encoding process maps an image to a continuous space then for  each spatial location changes each vector to the closest one in the  codebook.
 
-# VAVAE
+# VQVAE
 
 
 

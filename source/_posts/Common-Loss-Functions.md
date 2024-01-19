@@ -53,7 +53,6 @@ $$
 
 
 
-
 ## Example
 
 For example, consider following neural network, there're three data points "Setosa", "Virginica" and "Versicolor", each is a 2-D vector. The number of classes is $N = 3$ since softmax outputs 3 values.
@@ -89,6 +88,14 @@ $$
 The graph above shows the range of possible loss values given a true  observation (isDog = 1). As the predicted probability approaches 1, log  loss slowly decreases. As the predicted probability decreases, however, **the log loss increases rapidly**. 
 
 Log loss **heavily penalizes those predictions that are confident and wrong**.
+
+## Problems
+
+The main problem of cross entropy is that, even when the prediction is correct, i.e., `y_predicted == y_true`, the cross entropy isn't symmetric.
+
+![A Problem of Cross Entropy](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Common%20Loss%20Functions/A%20Problem%20of%20Cross%20Entropy.png)
+
+From this figure, if `y_predicted == y_true == 0.2`, their CE is `0.3218...`. If `y_predicted == y_true == 0.8`, their CE is `0.178514`. They're not equal!
 
 # Focal Loss
 

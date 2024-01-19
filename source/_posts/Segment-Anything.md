@@ -18,7 +18,7 @@ Source:
 
 <!--more-->
 
-# Arch
+# Architecture
 
 ![Segment Anything Model (SAM) overview](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Research/Segment%20Anything/Segment%20Anything%20Model%20%28SAM%29%20overview.png)
 

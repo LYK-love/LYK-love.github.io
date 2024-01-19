@@ -21,20 +21,14 @@ Resources for learning ML(Machine Learning), DL(Deep Learning), RL(Reinforcement
 # ML
 
 * [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html)
-* [Deep Reinforcement Learning, UC Berkeley, CS285](https://www.youtube.com/watch?v=JHrlF10v2Og&list=PL_iWQOsE6TfX7MaC6C3HcdOf1g337dlC9Stanford) 
+* [Deep Reinforcement Learning, UC Berkeley, CS285](https://www.youtube.com/playlist?list=PL_iWQOsE6TfVYGEGiAOMaOzzv41Jfm_Ps) 
 * [C230, Deep Learning 2018, by Andrew Ng](https://www.youtube.com/watch?v=PySo_6S4ZAg&list=PLoROMvodv4rOABXSygHTsbvUz4G_YQhOb)
-* [Stanford Convolutional Neural Networks](https://www.youtube.com/watch?v=vT1JzLTH4G4&list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv)
 * [Stanford 231n, 2017](https://www.youtube.com/playlist?list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk)
-
 * [Convex Optimization I, Stanford, EE364A](https://see.stanford.edu/Course/EE364A/85)
 * [Advanced Probability, CMU, 36-752](https://www.stat.cmu.edu/~arinaldo/Teaching/36752/S18/schedule.html)
 * [Stochastic Calculus and Stochastic Control, Princeton, ACM 217](https://web.math.princeton.edu/~rvan/acm217/acm217.html)
 * [Theoretical Foundations of Reinforcement Learning, University of Alberta, CMPUT 605](https://rltheory.github.io/pages/about/)
 * [Efficient AI](https://www.youtube.com/watch?v=C-4F7o8nr0E)
-* [Stanford C230, Deep Learning 2018, by Andrew Ng](https://www.youtube.com/watch?v=PySo_6S4ZAg&list=PLoROMvodv4rOABXSygHTsbvUz4G_YQhOb)
-* [Stanford Convolutional Neural Networks](https://www.youtube.com/watch?v=vT1JzLTH4G4&list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv)
-* [Stanford 231n, 2017](https://www.youtube.com/playlist?list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk)
-* [Introduction to Deep Learning, MIT Open Course](http://introtodeeplearning.com/https://www.youtube.com/watch?v=QDX-1M5Nj7s)
 
 
 
@@ -51,6 +45,12 @@ Others:
 
 * [NLP Course | For You](https://lena-voita.github.io/nlp_course/seq2seq_and_attention.html)
 * [LSTM](https://weberna.github.io/blog/2017/11/15/LSTM-Vanishing-Gradients.html#fn:4)
+
+## Probabilistic Graphical Models
+
+* [Stanford CS228](https://ermongroup.github.io/cs228-notes/)
+* [Youtube: CMU 10-708](https://www.youtube.com/playlist?list=PLoZgVqqHOumTqxIhcdcpOAJOOimrRCGZn)
+* [CMU 10-708 Notes](https://www.cs.cmu.edu/~epxing/Class/10708-20/project.html)
 
 # RL
 
