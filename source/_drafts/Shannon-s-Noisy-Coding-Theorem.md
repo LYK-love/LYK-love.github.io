@@ -108,7 +108,7 @@ Hence, using all these inequalities, conclude that
 $$
 I\left(W, Y^n\right) \leq \sum_{i=1}^n\left[H\left(Y_i\right)-H\left(Y_i \mid X_i\right)\right]=\sum_{i=1}^n I\left(X_i ; Y_i\right) \leq n C .
 $$
- 
+
 
 由于之前证明了$C^{(I)} \le C$, 所以现在第二个不等号成立( $I(X_i | Y_i) \le C$ ).
 
@@ -135,7 +135,5 @@ Examples of practical codes include block codes such as Hamming code, Reed-Mulle
 
 
 
-[^2]: Each codeword is independent of the other and also of the randomness introduced by the channel.
-[^3]: From step 1 in the algorithm, $X^n(2)$ is identically distributed to $X^n(i)$, for any $i$. From step 1 and $2, X^n(i)$ is independent of $Y^n(j)$, for any, $i \neq j$. Hence, $\left(X^n(i), Y^n(1)\right)$ is identically distributed to $\left(X^n(2), Y^n(1)\right)$, for any $i \neq 1$.
 [^4]: For $n^*\left(\frac{1}{2}^m\right)=n_m$, choose the code induced by the codebooks $\arg \min _{\mathcal{C}}\left\{p_e^{\left(n_m\right)}(\mathcal{C})\right\}$. For $n_m<n<n_{m+1}$ keep the same code as the one selected for $n_m$. This sequence of codes is such that the rates of the codes are $R+\frac{1}{n}$ and $p_e^{(n)} \rightarrow 0$.
 

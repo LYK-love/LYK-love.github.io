@@ -30,31 +30,42 @@ The notations of this article is exactly the same as these in [](). For the mult
 
 # Multivariate Gaussian distributions
 
-In statistics, a multivariate normal (or Gaussian) distribution is a generalization of the [one-dimensional (univariate) normal distribution]() to higher dimensions. 
+![Figure 1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Multivariate-Gaussian-Distributions/Figure%201.png)
 
-We use $X \sim \mathcal{N}({\mu}, {\Sigma})$ to denote that a $n$-dimensional random vector $X = \left[X_1, \ldots, X_n\right]^{\mathrm{T}}$ follows the multivariate Gaussian distribution with mean=$\mu$ and standard deviation=$\Sigma$.
+> Figure 1: The figure on the left shows a univariate Gaussian density for a single variable X. The figure on the right shows a multivariate Gaussian density over two variables X1 and X2.
 
 
 
-The PDF for $X$ is:
+The multivariate normal distribution of a $k$-dimensional random vector $X = \left[X_1, \ldots, X_n\right]^{\mathrm{T}}$ can be written in the following notation:
+$$
+X \sim \mathcal{N}({\mu}, {\Sigma})
+$$
+or to make it explicitly known that $X$ is $k$-dimensional,
+$$
+X \sim \mathcal{N}_k({\mu}, {\Sigma})
+$$
+with $n$-dimensional mean vector
+$$
+{\mu}=\mathrm{E}[{X}]=\left(\mathrm{E}\left[X_1\right], \mathrm{E}\left[X_2\right], \ldots, \mathrm{E}\left[X_k\right]\right)^{\mathrm{T}},
+$$
+and $n \times n$ [covariance matrix]() $\Sigma \in \mathbf{S}_{++}^n$[^2]
+$$
+\Sigma_{i, j}=\mathrm{E}\left[\left(X_i-\mu_i\right)\left(X_j-\mu_j\right)\right]=\operatorname{Cov}\left[X_i, X_j\right]
+$$
+such that $1 \leq i \leq k$ and $1 \leq j \leq k$. The inverse of the covariance matrix is called the precision matrix, denoted by $\boldsymbol{Q}=\boldsymbol{\Sigma}^{-1}$.
+
+
+
+The PDF is:
 $$
 f_X(x; {\mu}, {\Sigma}) 
 = 
 \frac{1}{(2 \pi)^{n / 2}|\Sigma|^{1 / 2}} \exp \left(-\frac{1}{2}(x-\mu)^T \Sigma^{-1}(x-\mu)\right)
 $$
 
-By definition,
 
-1. $\mu$ is the $n$-dimensional mean vector
-   $$
-   {\mu}=\mathrm{E}[{X}]=\left(\mathrm{E}\left[X_1\right], \mathrm{E}\left[X_2\right], \ldots, \mathrm{E}\left[X_k\right]\right)^{\mathrm{T}},
-   $$
+where $\exp$ denotes the exponential function.
 
-2. $\sigma^2$ is the [covariance matrix]() $\Sigma \in \mathbf{S}_{++}^n$[^2]
-   $$
-   \Sigma_{i, j}=\mathrm{E}\left[\left(X_i-\mu_i\right)\left(X_j-\mu_j\right)\right]=\operatorname{Cov}\left[X_i, X_j\right]
-   $$
-   such that $1 \leq i \leq k$ and $1 \leq j \leq k$. The inverse of the covariance matrix is called the precision matrix, denoted by $\boldsymbol{Q}=\boldsymbol{\Sigma}^{-1}$.
 
 
 We also obtain that:
@@ -114,19 +125,9 @@ From the above proposition it follows that $\Sigma$ must be <u>symmetric positiv
 # What if all elements are independent?
 
 If all the elements $X_i$ in $X$ is independent to others, then the parameters ($\mu$ and $\Sigma$) of the PDF of $X$ are:
-$$
-\begin{aligned}
-&\mu = [\mu_1, \mu_2, \cdots, \mu_n]^T ,
-\\
 
-&\Sigma = \left[\begin{array}{cccc}
-{\sigma_1^2} & 0 & \cdots & 0 \\
-0 & {\sigma_2^2} & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & {\sigma_d^2}
-\end{array}\right] .
-\end{aligned}
-$$
+![image-20240120034652375](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034652375.png)
+
 You can see that the covariance matrix $\Sigma$ is a diagonal matrix.
 
 Let's prove it.
@@ -150,172 +151,44 @@ $$
 f_{X_i}(x_i)=\frac{1}{\sigma_i \sqrt{2 \pi}} e^{-\frac{1}{2}\left(\frac{x_i-\mu_i}{\sigma_i}\right)^2}
 $$
 Therefore, we obtain:
-$$
-\begin{aligned}
-f_{X}(X) =
-f_{X_1}(x_1) \cdot f_{X_2}(x_2)  \cdots  f_{X_n}(x_n) 
-& = 
-\frac{1}{\sigma_1 \sqrt{2 \pi}} e^{-\frac{1}{2}\left(\frac{x_1-\mu_1}{\sigma_1}\right)^2}
-\cdot
-\frac{1}{\sigma_2 \sqrt{2 \pi}} e^{-\frac{1}{2}\left(\frac{x_2-\mu_2}{\sigma_2}\right)^2}
-\cdots
-\frac{1}{\sigma_n \sqrt{2 \pi}} e^{-\frac{1}{2}\left(\frac{x_n-\mu_n}{\sigma_n}\right)^2}
-\\
-& = 
-\frac{1}{{(2 \pi)}^{n/2} \sigma_1 \sigma_2 \cdots \sigma_n } 
-\exp(
--\frac{1}{2} 
-[(\frac{x_1-\mu_1}{\sigma_1})^2 + (\frac{x_2-\mu_2}{\sigma_2})^2 + \cdots + (\frac{x_n-\mu_n}{\sigma_n})^2]
-)
 
-\end{aligned}
-$$
+![image-20240120034732130](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034732130.png)
 
+sss
 
-The basic idea of our proof is to leverage the fact that the denifition of PDF of $X$
-$$
-f_X(x)
-= 
-\frac{1}{(2 \pi)^{n / 2}|\Sigma|^{1 / 2}} \exp \left(-\frac{1}{2}(x-\mu)^T \Sigma^{-1}(x-\mu)\right)
-$$
-equals to the joint probalility of all the independent elements of $X$,
-$$
-\begin{aligned}
-f_{X_1}(x_1) \cdot f_{X_2}(x_2)  \cdots  f_{X_n}(x_n) 
-= 
-\frac{1}{{(2 \pi)}^{n/2} \sigma_1 \sigma_2 \cdots \sigma_n } 
-\exp(
--\frac{1}{2} 
-[(\frac{x_1-\mu_1}{\sigma_1})^2 + (\frac{x_2-\mu_2}{\sigma_2})^2 + \cdots + (\frac{x_n-\mu_n}{\sigma_n})^2]
-)
-
-\end{aligned}
-$$
-to construct the $\mu$ and $\Sigma$, which are what we want.
+The basic idea of our proof is to leverage the fact that this equation equals to the denifition of PDF of $X$ (described before) to construct the $\mu$ and $\Sigma$, which are what we want.
 
 ## Proof: Step2
 
 Consider matrix
-$$
-\left[\begin{array}{cccc}
-{\sigma_1^2} & 0 & \cdots & 0 \\
-0 & {\sigma_2^2} & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & {\sigma_d^2}
-\end{array}\right] ,
-$$
+
+![image-20240120034510739](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034510739.png)
+
 it has two properties:
 
 First, 
-$$
-\left|
-\begin{array}{cccc}
-{\sigma_1^2} & 0 & \cdots & 0 \\
-0 & {\sigma_2^2} & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & {\sigma_d^2}
-\end{array} 
-\right| 
-^{1/2}
 
-= \sigma_1 \sigma_2 \cdots \sigma_n .
-$$
+![image-20240120034526192](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034526192.png)
+
 Second, 
-$$
-\left(\frac{x_1-\mu_1}{\sigma_1}\right)^2+\left(\frac{x_2-\mu_2}{\sigma_2}\right)^2+\cdots+\left(\frac{x_d-\mu_1}{\sigma_d}\right)^2 
 
-=
-\left[x_1-\mu_1, x_2-\mu_2, \cdots, x_d-\mu_d\right]
-
-\left[\begin{array}{cccc}
-\frac{1}{\sigma_1^2} & 0 & \cdots & 0 \\
-0 & \frac{1}{\sigma_2^2} & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & \frac{1}{\sigma_d^2}
-\end{array}\right]
-
-\left[\begin{array}{c}
-x_1-\mu_1 \\
-x_2-\mu_2 \\
-\vdots \\
-x_d-\mu_d
-\end{array}\right]
-.
-$$
+![image-20240120034544642](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034544642.png)
 
 
 Thus,
-$$
-f_{X}(X) 
-=
-\cdots
-=
-\frac{1}{
-{(2 \pi)}^{n/2} 
-\left|
-\begin{array}{cccc}
-{\sigma_1^2} & 0 & \cdots & 0 \\
-0 & {\sigma_2^2} & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & {\sigma_d^2}
-\end{array} 
-\right| 
-^{1/2}
-} 
 
-\exp(
--\frac{1}{2} 
-[
-\left[x_1-\mu_1, x_2-\mu_2, \cdots, x_n-\mu_n\right]
-
-\left[\begin{array}{cccc}
-\frac{1}{\sigma_1^2} & 0 & \cdots & 0 \\
-0 & \frac{1}{\sigma_2^2} & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & \frac{1}{\sigma_d^2}
-\end{array}\right]
-
-\left[\begin{array}{c}
-x_1-\mu_1 \\
-x_2-\mu_2 \\
-\vdots \\
-x_d-\mu_d
-\end{array}\right]]
-) .
-$$
+![image-20240120034621224](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034621224.png)
 
 
 Compare this equation and the PDF of $f_X(x)$, we can consctrct our parameters as
-$$
-\begin{aligned}
-&\mu = [\mu_1, \mu_2, \cdots, \mu_n]^T ,
-\\
 
-&\Sigma = \left[\begin{array}{cccc}
-{\sigma_1^2} & 0 & \cdots & 0 \\
-0 & {\sigma_2^2} & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & {\sigma_d^2}
-\end{array}\right] .
-\end{aligned}
-$$
+![image-20240120034635026](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034635026.png)
 
 ## Other gains
 
 One useful ovservation drawn from this section is that if $Z \sim \mathcal{N}(0, I)$, then $Z$ can be thought of as a collection of $n$ independent standard normal random variables (i.e., $Z_i \sim \mathcal{N}(0,1)$), because
-$$
-\begin{aligned}
-& \mu = O ,
-\\
 
-& \Sigma = \left[\begin{array}{cccc}
-{1} & 0 & \cdots & 0 \\
-0 & {1} & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & {1}
-\end{array}\right] .
-\end{aligned}
-$$
+![image-20240120034643972](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034643972.png)
 
 
 # Isocontours
@@ -372,6 +245,8 @@ $$
 Equation $\eqref{ellipse}$ **is the equation of an axis-aligned ellipse**, with center $\left(\mu_1, \mu_2\right)$, where the $x_1$ axis has length $2 r_1$ and the $x_2$ axis has length $2 r_2$.
 ## Length of axes
 
+![Figure 2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Multivariate-Gaussian-Distributions/Figure%202.png)
+
 To get a better understanding of how the shape of the level curves vary as a function of the variances of the multivariate Gaussian distribution, suppose that we are interested in
 
 
@@ -393,15 +268,17 @@ From this, it follows that the axis length needed to reach a fraction 1/e of the
 
 # Linear Linear transformation interpretation
 
-Theorem: Let $X \sim \mathcal{N}(\mu, \Sigma)$ for some $\mu \in \mathbf{R}^n$ and $\Sigma \in \mathbf{S}_{++}^n$. Then, there exists a matrix $B \in \mathbf{R}^{n \times n}$ such that if we define $Z=B^{-1}(X-\mu)$, then $Z \sim \mathcal{N}(0, I)$.
+**Theorem**: Let $X \sim \mathcal{N}(\mu, \Sigma)$ for some $\mu \in \mathbf{R}^n$ and $\Sigma \in \mathbf{S}_{++}^n$. Then, there exists a matrix $B \in \mathbf{R}^{n \times n}$ such that if we define $Z=B^{-1}(X-\mu)$, then $Z \sim \mathcal{N}(0, I)$.
 
 
 
-Proof:
+**Proof**:
 
 1. As before said, if $Z \sim \mathcal{N}(0, I)$, then it can be thought of as a collection of $n$ independent standard normal random variables (i.e., $Z_i \sim \mathcal{N}(0,1)$ ). 
 2. Furthermore, if $Z=B^{-1}(X-\mu)$ then $X=B Z+\mu$ follows from simple algebra. 
 3. Consequently, the theorem states that any random variable $X$ with a multivariate Gaussian distribution can be interpreted as the result of applying a linear transformation $(X=$ $B Z+\mu)$ to some collection of $n$ independent standard normal random variables $(Z)$.
+
+
 
 
 
@@ -414,8 +291,8 @@ $$
 A \in \mathbf{R}^{n \times n}: A=A^T
 \ \text{and} \quad 
 x^T A x>0 
-\quad \text{for \ all} \ 
-x \in \mathbf{R}^n \ \text{such \ that} \ x \neq 0
+\quad \text{for  all} \ 
+x \in \mathbf{R}^n \ \text{such  that} \ x \neq 0
 \} .
 $$
 

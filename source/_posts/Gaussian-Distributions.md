@@ -53,7 +53,7 @@ In statistics, a **normal distribution** or **Gaussian distribution** is a type 
 
 We use $X \sim \mathcal N\left(\mu, \sigma^2\right)$ to denote that a real-valued random variable $X$ follows the Gaussian distribution[^1] with mean=$\mu$ and standard deviation=$\sigma$.
 
-The PMF for $X$ is:
+The PDF for $X$ is:
 
 
 $$
@@ -84,7 +84,7 @@ Notice the $x$ in the exponent of the PDF function. When $x$ is equal to the mea
 
 ## Explanation
 
-![different_univariate_gaussian distributions](/Users/lyk/Documents/cache/different_univariate_gaussian distributions.png)
+![Figure 1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Gaussian%20Distributions/Figure%201.png)
 
 $\sigma$ describes the spread of the data points around the mean.
 
@@ -104,7 +104,7 @@ def calculate_univariate_gaussian_distribution(x, mu, sigma):
 
 # Standard Normal
 
-![standard_univariate_gaussian distribution](/Users/lyk/Documents/cache/univariate_gaussian distribution.png)
+![Figure 2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Gaussian%20Distributions/Figure%202.png)
 
 A normal distribution $\mathcal{N}(\mu,\sigma^2)$ is **standard** if $\mu = 0$ and $\sigma^2 = 1$.
 
@@ -125,7 +125,7 @@ $$
 
 ## Projection to Standard Normal
 
-Given a normal random variable $X \sim N\left(\mu, \sigma^2\right)$. We can transform $X$ linearly into standard normal $Z$.
+Given a normal random variable $X \sim \mathcal N\left(\mu, \sigma^2\right)$. We can transform $X$ linearly into standard normal $Z$.
 $$
 \begin{align}
 Z 
