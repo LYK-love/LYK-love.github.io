@@ -4,7 +4,9 @@ tags:
   - Statistics
 categories: Mathematics
 mathjax: true
+date: 2024-01-20 02:37:11
 ---
+
 
 Source:
 
@@ -16,7 +18,7 @@ Source:
 
 In this article we'll use followinng notations interchangeably.
 
-* The PDF[^1] $f_X(x)$ is often denoted as $p_X(x), $ $f_X\left(x ; \mu, \sigma^2\right)$ or $p_X\left(x ; \mu, \sigma^2\right)$. We sometimes also omit the subscript $X$ so that we'll write things like $f(x:\mu,\sigma^2)$.
+* The PDF[^1] $f_X(x)$ is often denoted as $p_X(x), $ $f_X\left(x ; \mu, \sigma^2\right)$ or $p_X\left(x ; \mu, \sigma^2\right)$. We sometimes also omit the subscript $X$ so that we can write things like $f(x:\mu,\sigma^2)$.
 
 * A normal distribution is also called a Gaussian distribution.
 

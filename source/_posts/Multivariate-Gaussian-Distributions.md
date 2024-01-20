@@ -7,18 +7,26 @@ mathjax: true
 date: 2024-01-18 22:34:32
 ---
 
-
 Source:
 
-//
+1. [The Multivariate Gaussian Distribution](https://cs229.stanford.edu/section/gaussians.pdf)
 
 <!--more-->
 
 # Notations
 
-The not
+The notations of this article is exactly the same as these in [](). For the multi variate case, we add additional rules:
 
+1. The multivariate normal distribution of a $n$-dimensional random vector $X = \left[X_1, \ldots, X_n\right]^{\mathrm{T}}$ can be written in the following notation:
+   $$
+   X \sim \mathcal{N}({\mu}, {\Sigma})
+   $$
+   or to make it explicitly known that $X$ is $k$-dimensional,
+   $$
+   X \sim \mathcal{N}_k({\mu}, {\Sigma})
+   $$
 
+2. The PDF[^1] $f_X(x)$ is often denoted as $p_X(x), $ $f_X\left(x ; \mu, \sigma^2\right)$ or $p_X\left(x ; \mu, \sigma^2\right)$ where $X = \left[X_1, \ldots, X_n\right]^{\mathrm{T}}$. We sometimes also omit the subscript $X$ so that we can write things like $f(x:\mu,\sigma^2)$.
 
 # Multivariate Gaussian distributions
 
@@ -34,7 +42,7 @@ with $n$-dimensional mean vector
 $$
 {\mu}=\mathrm{E}[{X}]=\left(\mathrm{E}\left[X_1\right], \mathrm{E}\left[X_2\right], \ldots, \mathrm{E}\left[X_k\right]\right)^{\mathrm{T}},
 $$
-and $n \times n$ [covariance matrix]() $\Sigma \in \mathbf{S}_{++}^n$[^1]
+and $n \times n$ [covariance matrix]() $\Sigma \in \mathbf{S}_{++}^n$[^2]
 $$
 \Sigma_{i, j}=\mathrm{E}\left[\left(X_i-\mu_i\right)\left(X_j-\mu_j\right)\right]=\operatorname{Cov}\left[X_i, X_j\right]
 $$
@@ -42,7 +50,7 @@ such that $1 \leq i \leq k$ and $1 \leq j \leq k$. The inverse of the covariance
 
 
 
-The PMF is:
+The PDF is:
 $$
 f_X(x; {\mu}, {\Sigma}) 
 = 
@@ -110,7 +118,7 @@ From the above proposition it follows that $\Sigma$ must be <u>symmetric positiv
 
 # What if all elements are independent?
 
-If all the elements $X_i$ in $X$ is independent to others, then the parameters ($\mu$ and $\Sigma$) of the PMF of $X$ are:
+If all the elements $X_i$ in $X$ is independent to others, then the parameters ($\mu$ and $\Sigma$) of the PDF of $X$ are:
 $$
 \begin{aligned}
 &\mu = [\mu_1, \mu_2, \cdots, \mu_n]^T ,
@@ -134,7 +142,7 @@ Recalling that for independent random variables $X_1,X_2, \cdots, X_n$, their jo
 $$
 f_{X_1, X_2, \cdots, X_n}(x_1,x_2,\cdots, x_n) = f_{X_1}(x_1) \cdot f_{X_2}(x_2)  \cdots  f_{X_n}(x_n)
 $$
- So, the PMF of normal variable $X = \left[X_1, \ldots, X_n\right]^{\mathrm{T}}$ can be represented as:
+ So, the PDF of normal variable $X = \left[X_1, \ldots, X_n\right]^{\mathrm{T}}$ can be represented as:
 $$
 \begin{align}
 f_{X}(X) 
@@ -142,7 +150,7 @@ f_{X}(X)
 & =  f_{X_1}(x_1) \cdot f_{X_2}(x_2)  \cdots  f_{X_n}(x_n) . \nonumber
 \end{align}
 $$
-Recalling that for any [univariate normal variable]() $X_i$ ($i \in \{1,2,\cdots,n\}$), its PMF is:
+Recalling that for any [univariate normal variable]() $X_i$ ($i \in \{1,2,\cdots,n\}$), its PDF is:
 $$
 f_{X_i}(x_i)=\frac{1}{\sigma_i \sqrt{2 \pi}} e^{-\frac{1}{2}\left(\frac{x_i-\mu_i}{\sigma_i}\right)^2}
 $$
@@ -169,7 +177,7 @@ f_{X_1}(x_1) \cdot f_{X_2}(x_2)  \cdots  f_{X_n}(x_n)
 $$
 
 
-The basic idea of our proof is to leverage the fact that the denifition of PMF of $X$
+The basic idea of our proof is to leverage the fact that the denifition of PDF of $X$
 $$
 f_X(x)
 = 
@@ -282,7 +290,7 @@ x_d-\mu_d
 $$
 
 
-Compare this equation and the PMF of $f_X(x)$, we can consctrct our parameters as
+Compare this equation and the PDF of $f_X(x)$, we can consctrct our parameters as
 $$
 \begin{aligned}
 &\mu = [\mu_1, \mu_2, \cdots, \mu_n]^T ,
@@ -339,7 +347,7 @@ x_2
 \end{array}\right]
 $$
 
-The PMF is
+The PDF is
 $$
 f(x ; \mu, \Sigma)=\frac{1}{2 \pi \sigma_1 \sigma_2} \exp \left(-\frac{1}{2 \sigma_1^2}\left(x_1-\mu_1\right)^2-\frac{1}{2 \sigma_2^2}\left(x_2-\mu_2\right)^2\right) .
 $$
@@ -402,7 +410,8 @@ Proof:
 
 
 
-[^1]: Recall from the section notes on linear algebra that $\mathbf{S}_{++}^n$ is the space of symmetric positive definite $n \times n$ matrices, defined as
+[^1]: Probability density function
+[^2]: Recall from the section notes on linear algebra that $\mathbf{S}_{++}^n$ is the space of symmetric positive definite $n \times n$ matrices, defined as
 
 $$
 \mathbf{S}_{++}^n =
