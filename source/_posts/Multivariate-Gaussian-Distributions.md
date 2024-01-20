@@ -15,7 +15,7 @@ Source:
 
 # Notations
 
-The notations of this article is exactly the same as these in [](). For the multi variate case, we add additional rules:
+The notations of this article is exactly the same as these in [Univariate Gaussian Distributions](https://lyk-love.cn/2024/01/20/univariate-gaussian-distributions/). For the multi variate case, we add additional rules:
 
 1. The multivariate normal distribution of a $n$-dimensional random vector $X = \left[X_1, \ldots, X_n\right]^{\mathrm{T}}$ can be written in the following notation:
    $$
@@ -126,7 +126,7 @@ From the above proposition it follows that $\Sigma$ must be <u>symmetric positiv
 
 If all the elements $X_i$ in $X$ is independent to others, then the parameters ($\mu$ and $\Sigma$) of the PDF of $X$ are:
 
-![image-20240120034652375](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034652375.png)
+![Figure: diagonal matrix ](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Multivariate-Gaussian-Distributions/Figure-%20diagonal%20matrix.png)
 
 You can see that the covariance matrix $\Sigma$ is a diagonal matrix.
 
@@ -162,33 +162,37 @@ The basic idea of our proof is to leverage the fact that this equation equals to
 
 Consider matrix
 
-![image-20240120034510739](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034510739.png)
+![Figure: diagonal matrix](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Multivariate-Gaussian-Distributions/Figure-%20substitute%20the%20matrix%20into%20equation.png)
+
+
+
+
 
 it has two properties:
 
 First, 
 
-![image-20240120034526192](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034526192.png)
+![Figure: square of diagonal matrix](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Multivariate-Gaussian-Distributions/Figure-%20square%20of%20diagonal%20matrix.png)
 
 Second, 
 
-![image-20240120034544642](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034544642.png)
+![Figure: substitute the matrix into equation](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Multivariate-Gaussian-Distributions/Figure-%20substitute%20the%20matrix%20into%20equation.png)
 
 
 Thus,
 
-![image-20240120034621224](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034621224.png)
+![Figure: unroll the equation](/Users/lyk/Pictures/HexoPics/Statistics/Multivariate-Gaussian-Distributions/Figure- unroll the equation.png)
 
 
 Compare this equation and the PDF of $f_X(x)$, we can consctrct our parameters as
 
-![image-20240120034635026](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034635026.png)
+![Figure: diagonal matrix ](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Multivariate-Gaussian-Distributions/Figure-%20diagonal%20matrix.png)
 
 ## Other gains
 
 One useful ovservation drawn from this section is that if $Z \sim \mathcal{N}(0, I)$, then $Z$ can be thought of as a collection of $n$ independent standard normal random variables (i.e., $Z_i \sim \mathcal{N}(0,1)$), because
 
-![image-20240120034643972](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034643972.png)
+![Figure: diagonal unit matrix ](/Users/lyk/Pictures/HexoPics/Statistics/Multivariate-Gaussian-Distributions/Figure- diagonal unit matrix.png)
 
 
 # Isocontours

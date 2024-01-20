@@ -1,5 +1,5 @@
 ---
-title: Gaussian Distributions
+title: Univariate Gaussian Distributions
 tags:
   - Statistics
 categories: Mathematics
@@ -10,7 +10,7 @@ date: 2024-01-20 02:37:11
 
 Source:
 
-1. [The Multivariate Gaussian Distribution](https://cs229.stanford.edu/section/gaussians.pdf)
+1. [The Normal/Gaussian Random Variable](https://web.stanford.edu/class/archive/cs/cs109/cs109.1218/files/student_drive/4.3.pdf)
 
 <!--more-->
 
@@ -51,7 +51,7 @@ In this article we'll use followinng notations interchangeably.
 
 In statistics, a **normal distribution** or **Gaussian distribution** is a type of <u>continuous probability distribution for a real-valued random variable</u>. 
 
-We use $X \sim \mathcal N\left(\mu, \sigma^2\right)$ to denote that a real-valued random variable $X$ follows the Gaussian distribution[^1] with mean=$\mu$ and standard deviation=$\sigma$.
+We use $X \sim \mathcal N\left(\mu, \sigma^2\right)$ to denote that a real-valued random variable $X$ follows the Gaussian distribution with mean=$\mu$ and standard deviation=$\sigma$.
 
 The PDF for $X$ is:
 
@@ -88,7 +88,7 @@ Notice the $x$ in the exponent of the PDF function. When $x$ is equal to the mea
 
 $\sigma$ describes the spread of the data points around the mean.
 
-$\sigma$ defines the central location of the Gaussian distribution.
+$\mu$ defines the central location of the Gaussian distribution.
 
 ## Code
 
@@ -114,42 +114,42 @@ Z \sim \mathcal{N}(0,1) .
 $$
 $Z$ is called the stanard normal.
 
-## Linear Transform
+# Closure properties of the normal distribution
 
-Given random variables $X$, $Y$. Suppose $X \sim N\left(\mu, \sigma^2\right)$ and $Y=a X+b$, i.e., $Y$ is a linear transform of $X$.
-
-Then $Y$ also follows Gaussian distribution where:
+Recall that in general, if $X$ is any random variable (discrete or continuous) with $\mathbb{E}[X]=\mu$ and $\operatorname{Var}(X)=\sigma^2$, and $a, b \in \mathbb{R}$. Then,
 $$
-Y \sim \mathcal N\left(a \mu+b, a^2 \sigma^2\right)
-$$
-
-## Projection to Standard Normal
-
-Given a normal random variable $X \sim \mathcal N\left(\mu, \sigma^2\right)$. We can transform $X$ linearly into standard normal $Z$.
-$$
-\begin{align}
-Z 
-& =\frac{X-\mu}{\sigma} \label{eq_5_0} \\
-& =\frac{1}{\sigma} X-\frac{\mu}{\sigma} \label{eq_5_1}\\
-& =a X+b \label{eq_5_2}\\
-& \sim \mathcal N\left(a \mu+b, a^2 \sigma^2\right) \label{eq_5_3} \\
-& \sim \mathcal N\left(\frac{\mu}{\sigma}-\frac{\mu}{\sigma}, \frac{\sigma^2}{\sigma^2}\right) \label{eq_5_4} \\
-& \sim \mathcal N(0,1) . \nonumber
-\end{align}
+\begin{aligned}
+& \mathbb{E}[a X+b]=a \mathbb{E}[X]+b=a \mu+b \\
+& \operatorname{Var}(a X+b)=a^2 \operatorname{Var}(X)=a^2 \sigma^2
+\end{aligned}
 $$
 
-Explanation:
+## Closure of the Normal Under Scale and Shift
+If $X \sim \mathcal{N}\left(\mu, \sigma^2\right)$, then $a X+b \sim \mathcal{N}\left(a \mu+b, a^2 \sigma^2\right)$.
+In particular,
+$$
+\frac{X-\mu}{\sigma} \sim \mathcal{N}(0,1)
+$$
 
-$\eqref{eq_5_0}$: Linear transform of $X$. Subtract by $\mu$ and diving by $\sigma$.
+We will prove this theorem [later](https://web.stanford.edu/class/archive/cs/cs109/cs109.1218/files/student_drive/5.6.pdf) using Moment Generating Functions! This is really amazing the mean and variance are no surprise. The fact that scaling and shifting a Normal random variable results in another Normal random variable is very interesting!
 
-$\eqref{eq_5_1}$: Use algebra to rewrite the equation.
+Let $X, Y$ be ANY independent random variables (discrete or continuous) with $\mathbb{E}[X]=\mu_X, \mathbb{E}[Y]=\mu_Y$, $\operatorname{Var}(X)=\sigma_X^2, \operatorname{Var}(Y)=\sigma_Y^2$ and $a, b, c \in \mathbb{R}$. Recall,
+$$
+\begin{gathered}
+\mathbb{E}[a X+b Y+c]=a \mathbb{E}[X]+b \mathbb{E}[Y]+c=a \mu_X+b \mu_Y+c \\
+\operatorname{Var}(a X+b Y+c)=a^2 \operatorname{Var}(X)+b^2 \operatorname{Var}(Y)=a^2 \sigma_X^2+b^2 \sigma_Y^2
+\end{gathered}
+$$
 
-$\eqref{eq_5_2}$: Let $a=\frac{1}{\mu}, b=-\frac{\mu}{\sigma}$
+## Closure of the Normal Under Addition
+If $X \sim \mathcal{N}\left(\mu_X, \sigma_X^2\right)$ and $Y \sim \mathcal{N}\left(\mu_Y, \sigma_Y^2\right)$ (both independent normal random variables), then
+$$
+a X+b Y+c \sim \mathcal{N}\left(a \mu_X+b \mu_Y+c, a^2 \sigma_X^2+b^2 \sigma_Y^2\right)
+$$
 
-$\eqref{eq_5_3}$: The linear transform of a normal variable is another normal variable, proved in [-->last section]().
+Again, this is really amazing. The mean and variance aren't a surprise again, but the fact that adding two independent Normals results in another Normal distribution is not trivial, and we will prove this later as well!
 
-$\eqref{eq_5_4}$: Substituting values in for $a$ and $b$.
 
- 
+
 
 [^1]: Probability density function
