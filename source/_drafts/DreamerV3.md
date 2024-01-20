@@ -1,14 +1,21 @@
 ---
 title: DreamerV3
 tags:
+  - Machine Learning
+categories:
+  - Research
 ---
 
 
 
 Source:
 
-1. [DreamerV2](https://arxiv.org/abs/2010.02193)
-2. [DreamerV3](https://arxiv.org/abs/2301.04104)
+1. [EclecticSheep: Dreamer V1](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html)
+2. [EclecticSheep: Dreamer V2](https://eclecticsheep.ai/2023/07/06/dreamer_v2.html)
+3. [EclecticSheep: Dreamer V3](https://eclecticsheep.ai/2023/08/10/dreamer_v3.html)
+4. RSSM
+5. [DreamerV2](https://arxiv.org/abs/2010.02193)
+6. [DreamerV3](https://arxiv.org/abs/2301.04104)
 
 <!--more-->
 

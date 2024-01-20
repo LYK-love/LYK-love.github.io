@@ -17,22 +17,24 @@ Source:
 
 <!--more-->
 
-# Relative entropy
 
-## Definitions
 
-The *relative entropy* (or Kullback-Leibler divergence, KL divergence) $D(p||q)$ is a "measure" of the distance between the true distribution $p$ and the assumed distribution $q$.
+# Definition
 
-**Definition:** The relative entropy or <u>Kullback-Leibler distance</u> between two probability mass functions $p(x)$ and $q(x)$ is defined as
+The *relative entropy* (or Kullback-Leibler divergence, KL divergence) $D(p||q)$ is a "measure" of the distance between the true distribution $p$ and the assumed distribution $q$. It's defined as:
+
 $$
 \begin{aligned}
 D(p \| q) & =\sum_{x \in \mathcal{X}} p(x) \log \frac{p(x)}{q(x)} \\
 & = \mathbb E _{X \sim p}(\log \frac{p(X)}{q(X)}) .
 \end{aligned}
 $$
-In the above definition, we use the convention that $0 \log \frac{0}{0}=0$ and the convention (based on continuity arguments) that $0 \log \frac{0}{q}=0$ and $p \log \frac{p}{0}=$ $\infty$. Thus, if there is any symbol $x \in \mathcal{X}$ such that $p(x)>0$ and $q(x)=0$, then $D(p \| q)=\infty$.
+In the above definition, we use the convention that:
 
+1. $0 \log \frac{0}{0}=0$ and the convention (based on continuity arguments) that 
+2. $0 \log \frac{0}{q}=0$ and $p \log \frac{p}{0}=$ $\infty$. 
 
+Thus, if there is any symbol $x \in \mathcal{X}$ such that $p(x)>0$ and $q(x)=0$, then $D(p \| q)=\infty$.
 
 ## Notations
 
@@ -98,9 +100,17 @@ The relative entropy between two joint distributions on a pair of random variabl
 
 # For miltivariance Gaussian distributions
 
-Suppose $p=\mathcal{N}\left(\mu_1, \Sigma_1\right)$ and $q=\mathcal{N}\left(\mu_2, \Sigma_2\right)$. Both are [multivariate Gaussians]() of dimension $n$.
+Suppose $p=\mathcal{N}\left(\mu_1, \Sigma_1\right)$ and $q=\mathcal{N}\left(\mu_2, \Sigma_2\right)$. Both are $n$=dimensoin [multivariate Gaussian distributions](https://lyk-love.cn/2024/01/18/multivariate-distributions/#multivariate-gaussian-distributions).
 
-The relative entropy (or KL divergence) is:
+Their relative entropy (or KL divergence) is:
 $$
-\mathrm{KL}\left(p \| q\right)=\frac{1}{2}\left[\log \frac{\left|\Sigma_2\right|}{\left|\Sigma_1\right|}-n+\operatorname{tr}\left\{\Sigma_2^{-1} \Sigma_1\right\}+\left(\mu_2-\mu_1\right)^T \Sigma_2^{-1}\left(\mu_2-\mu_1\right)\right]
+\mathrm{KL}\left(p \| q\right) = 
+\frac{1}{2}
+\left[
+\log \frac{\left|\Sigma_2\right|}{\left|\Sigma_1\right|}
+-
+n+\operatorname{tr}\left\{\Sigma_2^{-1} \Sigma_1\right\}
++
+\left(\mu_2-\mu_1\right)^T \Sigma_2^{-1}\left(\mu_2-\mu_1\right)\right
+]
 $$

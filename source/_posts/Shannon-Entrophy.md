@@ -324,9 +324,3 @@ different values of $X$ may correspond to the same value of $Y(X)$. In that case
 1. The new distribution of $Y$ has lost entropy and so $H(Y) < k \quad \text{bits}$.
 2. Now knowledge of Y no longer determines $X$, and so the conditional entropy $H(X|Y)$
    is no longer zero: $H(X|Y) > 0$.
-
-
-
-
-
-[^8]: This condition is equivalent to requiring that $X_i$ be independent of $\left(X_{i-1}, \ldots, X_1\right)$ for all $i$. The equivalence can be directly proved using the chain rule for joint probabilities, i.e., $P_{X^n}\left(x^n\right)=$ $\prod_{i=1}^n P_{X_i \mid X_1^{i-1}}\left(x_i \mid x_1^{i-1}\right) ;$ it is left as an exercise.
