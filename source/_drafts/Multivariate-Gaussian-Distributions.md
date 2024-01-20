@@ -30,36 +30,31 @@ The notations of this article is exactly the same as these in [](). For the mult
 
 # Multivariate Gaussian distributions
 
-The multivariate normal distribution of a $k$-dimensional random vector $X = \left[X_1, \ldots, X_n\right]^{\mathrm{T}}$ can be written in the following notation:
-$$
-X \sim \mathcal{N}({\mu}, {\Sigma})
-$$
-or to make it explicitly known that $X$ is $k$-dimensional,
-$$
-X \sim \mathcal{N}_k({\mu}, {\Sigma})
-$$
-with $n$-dimensional mean vector
-$$
-{\mu}=\mathrm{E}[{X}]=\left(\mathrm{E}\left[X_1\right], \mathrm{E}\left[X_2\right], \ldots, \mathrm{E}\left[X_k\right]\right)^{\mathrm{T}},
-$$
-and $n \times n$ [covariance matrix]() $\Sigma \in \mathbf{S}_{++}^n$[^2]
-$$
-\Sigma_{i, j}=\mathrm{E}\left[\left(X_i-\mu_i\right)\left(X_j-\mu_j\right)\right]=\operatorname{Cov}\left[X_i, X_j\right]
-$$
-such that $1 \leq i \leq k$ and $1 \leq j \leq k$. The inverse of the covariance matrix is called the precision matrix, denoted by $\boldsymbol{Q}=\boldsymbol{\Sigma}^{-1}$.
+In statistics, a multivariate normal (or Gaussian) distribution is a generalization of the [one-dimensional (univariate) normal distribution]() to higher dimensions. 
+
+We use $X \sim \mathcal{N}({\mu}, {\Sigma})$ to denote that a $n$-dimensional random vector $X = \left[X_1, \ldots, X_n\right]^{\mathrm{T}}$ follows the multivariate Gaussian distribution with mean=$\mu$ and standard deviation=$\Sigma$.
 
 
 
-The PDF is:
+The PDF for $X$ is:
 $$
 f_X(x; {\mu}, {\Sigma}) 
 = 
 \frac{1}{(2 \pi)^{n / 2}|\Sigma|^{1 / 2}} \exp \left(-\frac{1}{2}(x-\mu)^T \Sigma^{-1}(x-\mu)\right)
 $$
 
+By definition,
 
-where $\exp$ denotes the exponential function.
+1. $\mu$ is the $n$-dimensional mean vector
+   $$
+   {\mu}=\mathrm{E}[{X}]=\left(\mathrm{E}\left[X_1\right], \mathrm{E}\left[X_2\right], \ldots, \mathrm{E}\left[X_k\right]\right)^{\mathrm{T}},
+   $$
 
+2. $\sigma^2$ is the [covariance matrix]() $\Sigma \in \mathbf{S}_{++}^n$[^2]
+   $$
+   \Sigma_{i, j}=\mathrm{E}\left[\left(X_i-\mu_i\right)\left(X_j-\mu_j\right)\right]=\operatorname{Cov}\left[X_i, X_j\right]
+   $$
+   such that $1 \leq i \leq k$ and $1 \leq j \leq k$. The inverse of the covariance matrix is called the precision matrix, denoted by $\boldsymbol{Q}=\boldsymbol{\Sigma}^{-1}$.
 
 
 We also obtain that:
@@ -68,7 +63,7 @@ We also obtain that:
 - ${\Sigma}^{-1}$ is the inverse of the covariance matrix.
 - The quardratic term $({x} - {\mu})^\top {\Sigma}^{-1} ({x} - {\mu})$ represents the *Mahalanobis distance* from $X$ to the mean ${\mu}$, squared.
 
-#What is $\Sigma$?
+# What is $\Sigma$?
 
 Lemma: For any random vector $X$ with mean $\mu$ and covariance matrix $\Sigma$,
 $$

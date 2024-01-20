@@ -44,18 +44,20 @@ In this article we'll use followinng notations interchangeably.
   1. standard normal (or Gaussian) $Z$
   2. standard normal (or Gaussian) variable $Z$
   3. standard normal (or Gaussian) random variable $Z$
+  
+* We use $\exp(\cdots)$ to represent the where $\exp$ denotes the exponential function $e^{(\cdots)}$.
 
 # Definition
 
 In statistics, a **normal distribution** or **Gaussian distribution** is a type of <u>continuous probability distribution for a real-valued random variable</u>. 
 
-We use $X \sim N\left(\mu, \sigma^2\right)$ to denote that a real-valued random variable $X$ follows the Gaussian distribution[^1] with mean=$\mu$ and standard deviation=$\sigma$.
+We use $X \sim \mathcal N\left(\mu, \sigma^2\right)$ to denote that a real-valued random variable $X$ follows the Gaussian distribution[^1] with mean=$\mu$ and standard deviation=$\sigma$.
 
 The PMF for $X$ is:
 
 
 $$
-f_X(x)=\frac{1}{\sigma \sqrt{2 \pi}} e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2}
+f_X(x)=\frac{1}{\sigma \sqrt{2 \pi}} \exp({-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2})
 $$
 
 By definition,

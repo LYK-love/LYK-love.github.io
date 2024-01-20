@@ -678,9 +678,11 @@ y[n] & =4 \cdot 4+3 \cdot 3 \cos \left(\frac{\pi}{3} n-\frac{\pi}{3}-\frac{\pi}{
 \end{aligned}
 $$
 
-We can see two features in the output signal $y[n]$. The sinusoid with $\hat{\omega}=7 \pi / 8$ has a very small magnitude because the magnitude response around $\hat{\omega}=\pi$ is relatively small. Also, the linear phase slope of -1 means that the filter introduces a time delay of one sample which is evident in the second and third terms of $y[n]$.
+We can see two features in the output signal $y[n]$. The sinusoid with $\hat{\omega}=7 \pi / 8$ has a very small magnitude because the magnitude response around $\hat{\omega}=\pi$ is relatively small. 
+Also, the linear phase slope of -1 means that the filter introduces a time delay of one sample which is evident in the second and third terms of $y[n]$.
 
-The output of the simple lowpass filter is the time waveform shown in Fig. 6-5(b). Note that the DC component is indicated in both parts of the figure as a gray horizontal line. The output appears to be the sum of a constant level of 16 plus a cosine that has amplitude 9 and seems to be periodic with period 6 . Closer inspection reveals that this is not exactly true because there is a third output component at frequency $\hat{\omega}=7 \pi / 8$, which is just barely visible in Fig. 6-5(b). Its size is about $5 \%$ of the size of the component with frequency $\hat{\omega}=\pi / 3$.
+The output of the simple lowpass filter is the time waveform shown in Fig. 6-5(b). Note that the DC component is indicated in both parts of the figure as a gray horizontal line. The output appears to be the sum of a constant level of 16 plus a cosine that has amplitude 9 and seems to be periodic with period 6. 
+Closer inspection reveals that this is not exactly true because there is a third output component at frequency $\hat{\omega}=7 \pi / 8$, which is just barely visible in Fig. 6-5(b). Its size is about 5% of the size of the component with frequency $\hat{\omega}=\pi / 3$.
 
 
 
@@ -688,6 +690,5 @@ The output of the simple lowpass filter is the time waveform shown in Fig. 6-5(b
 
 [^2]: The gain can be less than or greater than 1 , even though the word suggests greater than.
 
-[^3]: It is assumed that $H\left(e^{j \hat{\omega}}\right)$​ has the conjugate-symmetry property $H\left(e^{-j \hat{\omega}}\right)=H^*\left(e^{j \hat{\omega}}\right)$​, which is always true when the filter coefficients are real. (See Section 6-4.3.)
 [^4]: Remember that $-1=e^{ \pm j \pi}$, so we can add either $+\pi$ or $-\pi$ to the phase for $-\pi<\hat{\omega}<0$. In this case, we add $-\pi$ so that the resulting phase curve remains between $-\pi$ and $+\pi$ radians for all $\hat{\omega}$.
 
