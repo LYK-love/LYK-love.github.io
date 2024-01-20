@@ -154,8 +154,6 @@ Therefore, we obtain:
 
 ![image-20240120034732130](/Users/lyk/Library/Application Support/typora-user-images/image-20240120034732130.png)
 
-sss
-
 The basic idea of our proof is to leverage the fact that this equation equals to the denifition of PDF of $X$ (described before) to construct the $\mu$ and $\Sigma$, which are what we want.
 
 ## Proof: Step2
@@ -168,7 +166,7 @@ Consider matrix
 
 
 
-it has two properties:
+It has two properties:
 
 First, 
 
