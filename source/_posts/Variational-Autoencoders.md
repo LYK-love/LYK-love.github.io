@@ -18,6 +18,7 @@ Source:
 5. [Understanding VQ-VAE (DALL-E Explained Pt. 1)](https://mlberkeley.substack.com/p/vq-vae)
 6. [Youtube: Variational Autoencoder Loss Function](https://youtu.be/ywYuZrLENH0?feature=shared)
 7. [Stanford CS 228: The variational auto-encoder](https://ermongroup.github.io/cs228-notes/extras/vae/)
+8. https://www.cnblogs.com/wolfling/p/16452537.html
 
 <!--more-->
 
@@ -63,6 +64,50 @@ You can see the architecture of VAE in Figure 2.
 1. The encoder generates latent variable $z$ with probability distribution $q\left(z \mid x\right)$, and
 2. The decoder generates reconstructed datapoint $\hat x$ with probability distribution $p\left(\hat x \mid z\right)$.
 3. The encoder and decoder have different parameters. You can write $q\left(z \mid x\right)$ as $q_\theta\left(z \mid x\right)$ and write  $p\left(\hat x \mid z\right)$ as  $p_\gamma\left(\hat x \mid z\right)$ where $\theta$ and $\gamma$ represent the parameters of encoder and decoder. But it's redundant since we don't care about them in this section.
+
+# Tricks
+
+## Assumptions
+
+Latent variable $z = [z_1, z_2, \cdots, z_m]^T$.
+
+In VAE, we assume $q(z \mid x)=\mathcal{N}(\mu, \Sigma)$ where $\mu$ and $\Sigma$ are the mean and the covariance matrix of the latent variable $z$.
+
+Also, we assume that all the elements of $z$ are indeoendent. As a result, $\Sigma$ is a diagonal matrix and every element $z_i$ ($i \in \{1,\cdots,m\}$) has a standard nomal distribution, i.e.,
+$$
+z_i \sim \mathcal N(0,1), i \in \{1,2,\cdots,m\}.
+$$
+
+## Reparameterization
+
+For BP, $Z$ is converted to:
+$$
+z=\mu+\sigma \cdot \boldsymbol{\epsilon}
+$$
+where:
+
+1. $z = [z_1, z_2, \cdots, z_m]^T$.
+2. $\mu = [\mu_1, \mu_2, \cdots, \mu_m]^T$.
+3. $\sigma = [\sigma_1, \sigma, \cdots, \sigma_m]^T$.
+
+## Log var trick
+
+Instead of using a variance vector, $\sigma = [\sigma_1, \sigma, \cdots, \sigma_m]^T$, we use the **log-var vector** to allow for positive and negative values: $\log \left(\sigma^2\right)$
+
+Why can we do this?
+$$
+\begin{aligned}
+\log \left(\sigma^2\right) & =2 \cdot \log (\sigma) \\
+\log \left(\sigma^2\right) / 2 & =\log (\sigma) \\
+\sigma & =e^{\log \left(\sigma^2\right) / 2}
+\end{aligned}
+$$
+
+So, when we sample the points, we can do
+$$
+z=\mu+e^{\log \left(\sigma^2\right) / 2} \cdot \epsilon
+$$
+
 
 # Loss function of VAE
 
@@ -115,7 +160,7 @@ It's physical meaning is obvious: It **ensures latent space is continuous and fo
 
 [Source: Deriving the KL divergence loss for VAEs](https://stats.stackexchange.com/a/370048)
 
-Recalling the [KL divergence for $n$-dimensional Gaussians]() $p_1=\mathcal{N}\left(\mu_1, \Sigma_1\right)$ and $p_2=\mathcal{N}\left(\mu_2, \Sigma_2\right)$() is:
+Recalling the [KL divergence for $n$-dimensional Gaussians]() $p_1=\mathcal{N}\left(\mu_1, \Sigma_1\right)$ and $p_2=\mathcal{N}\left(\mu_2, \Sigma_2\right)$ is:
 $$
 \mathrm{KL}\left(p_1 \| p_2\right) = 
 \frac{1}{2}
@@ -132,7 +177,7 @@ $$
 In the VAE case
 
 1. the encoder distribution is $q(z \mid x)=\mathcal{N}(\mu, \Sigma)$ and 
-2. the latent prior is given by $p(z)=\mathcal{N}(0, I)$.
+2. the (assumed) latent prior is given by $p(z)=\mathcal{N}(0, I)$.
 
 Both are multivariate Gaussians of dimension $n$.
 
@@ -151,3 +196,11 @@ $$
 \end{aligned}
 $$
 where $\mu_1=\mu, \Sigma_1=\Sigma, \mu_2=\overrightarrow{0}, \Sigma_2=I$.
+
+```python
+kl_div = -0.5 * torch.sum(1 + z_log_var 
+                                      - z_mean**2 
+                                      - torch.exp(z_log_var), 
+                                      axis=1) # sum over latent dimension
+```
+

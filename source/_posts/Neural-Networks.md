@@ -1,5 +1,5 @@
 ---
-title: Backpropagation
+title: Neural-Networks
 tags:
   - Machine Learning
 categories: Computer Science
@@ -19,7 +19,7 @@ Source:
 
 # Problem Formulation
 
-Given dataset $(x,y)$ with $n$ data points $(x_1, y_{1}), \dots, (x_n, y_n)$, we can say that the relationship between $x$ and $y$ is function $f$:
+Given a dataset $(x,y)$ with $n$ data points $(x_1, y_{1}), \dots, (x_n, y_n)$, we can say that the relationship between $x$ and $y$ is function $f$:
 $$
 y = f_\text{observed}(x)
 $$
@@ -217,8 +217,6 @@ To get one gradient, we only need to perform **2 + 4 = 6 deriations**!
 Then we **evaluate the value** of the gradient, calculate step sizes, update parameters, repeat, etc.
 
 Note: During BP, the equation of $\frac {\partial y_{\text{blue}}} {\partial b_1}$ needn't to be computed again, but the evaluation of the value of $\frac {\partial y_{\text{blue}}} {\partial b_1}$ should be recomputed, but it's a quick operation since it's numerical.
-
-
 
 # Example
 
@@ -435,3 +433,4 @@ However, this convience only happens in backword propagation. If we use forward 
 
 https://arxiv.org/abs/2212.13345
 
+ 

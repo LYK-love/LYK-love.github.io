@@ -56,6 +56,14 @@ where
 * MEM: memory access
 * WB: write-back
 
+
+
+An in-order pipeline in computer architecture refers to a design where instructions are processed in the strict order they appear in the program. This means that each instruction goes through the stages of the pipeline (like fetch, decode, execute, memory access, and write back) in sequence, and each stage must be completed before the next instruction can enter that stage
+
+
+
+**SIMD Operations**: SIMD stands for Single Instruction,  Multiple Data. This refers to a method used in parallel computing where a single instruction is applied to multiple data points simultaneously.  SIMD units are particularly useful for tasks that involve processing  large blocks of data with the same operation, such as in graphics  processing, scientific simulations, or operations on arrays/matrices.
+
 ## Requirement1: overlapped instructions can't use the the hardware resources at the same time
 
 In order to use pipeline, one requirement is that **the overlap of instructions in the pipeline cannot use the hardware resources at the same time**. Fortunately, the simplicity of a RISC instruction set makes resource evaluation relatively easy. Figure C.2 shows a simplified version of a RISC data path drawn in pipeline fashion.

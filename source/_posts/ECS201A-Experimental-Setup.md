@@ -13,7 +13,9 @@ Source:
 
 All the experiments rely on the same python env and a software called `gem5`.  
 
-The professor has offered us github codespaces to develop,upon which  you don't need to worry about the setup. However, if you prefer to develop on your local machine, to set up for the experiments you must:
+The professor has offered us github codespaces, such as **[classroom assignment-0](https://classroom.github.com/a/Ru771Yj_)**,  to develop,upon which you don't need to worry about the setup. So it's strongly recommended to develop with github codespaces.
+
+However, if you prefer to develop on your local machine, to set up for the experiments you must:
 
 1. Install and config gem5 on your system.
 2. Clone the assignment repo and config it.
