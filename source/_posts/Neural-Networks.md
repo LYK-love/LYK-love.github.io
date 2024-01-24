@@ -26,7 +26,7 @@ This article is a step-by-step explanation of neural networks which are extensiv
 
 In this article we'll use following notations.
 
-* The **gradient** is a vector that contains all the partial derivatives of the multivariate function with respect to each of its variables. If $f(x, y, z, \ldots)$ is a function of several variables, then the gradient of ff would be a vector $\left[\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}, \ldots\right]^T$, where each component is the partial derivative of $f$ with respect to one of its variables.
+* The **gradient** of a multivariate function $f$ is a vector that contains all the partial derivatives of $f$  with respect to each of its variables. Suppose $f = f(x, y, z, \ldots)$, then the gradient would be a vector $\left[\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}, \ldots\right]^T$, where each component is the partial derivative of $f$ with respect to one of its variables.
 
   However, I'll also call **the partial derivative** of a function, denoted as $\frac {\partial f} {\partial w}$, where $f$ is a multivariable function and $w$ is a variable of $f$, **as a gradient**, denoted as $\nabla_w f$.
 
@@ -49,7 +49,6 @@ In this article we'll use following notations.
   * The **(total) gradient** of a node, such as $[\frac {\partial L} {x}, \frac {\partial L} {y}]^T$, is the gradient of the upstream node with respect to all the branches.
   * The **upstream gradient** of a node, such as $\frac {\partial L} {z}$ is the gradient from the upstream node with respect to the one upstream branch.
   * The **local gradient** of a node, such as $[\frac {\partial z} {x}, \frac {\partial z} {y}]^T$, is the gradient of the the node with respect to all the branches.
-  * Sometimes the "gradient" can be a partial derivative when strictly speaking. For example, if 
 
 # Computational Graphs
 
@@ -84,13 +83,17 @@ g=(x+y)z
 $$
 The above equation is represented by the following computational graph.
 
-![Figure 2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%202.png)
+![Figure 2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%202.jpg)
 
 
 
 # Forward pass
 
-Below is a computational graph representing $f(w, x)=\frac{1}{1+e^{-\left(w_0 x_0+w_1 x_1+w_2\right)}}$, where $x = [x_0, x_1]^T$ and $w=[w_0, w_1, w_2]^T$. For illustation, **a dumb node is added** after the original last node to represent the output, denoted as $y$. We have $y = f(w,x)$. The FP has already been done in this figure.
+Below is a computational graph representing $f(w, x)=\frac{1}{1+e^{-\left(w_0 x_0+w_1 x_1+w_2\right)}}$, where $x = [x_0, x_1]^T$ and $w=[w_0, w_1, w_2]^T$. The FP has already been done in this figure.
+
+For illustation, **a dumb node is added** after the original last node to represent the output, denoted as $y$. We have $y = f(w,x)$. 
+
+
 
 ![Figure 3](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%203.png)
 
@@ -106,7 +109,7 @@ Recall that in computational graphs, a node is a function. During backward propa
 
 1. The **upstream gradient** of node $f$: $\frac {\partial L} {z}$.
 2. The **local gradient** of node $f$: $[\frac {\partial z} {x}, \frac {\partial z} {y}]^T$
-3. Therefore, the **(total) gradient** of node $f$: $[\frac {\partial L} {x}, \frac {\partial L} {y}]^T$. 
+3. The **gradient** of node $f$: $[\frac {\partial L} {x}, \frac {\partial L} {y}]^T$. 
 
 From the chain rule of derivatives:
 $$
@@ -123,7 +126,7 @@ Thus, we obtain that:
 
 
 
-![Figure 4](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%204.png)
+<img src="https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%204.png" alt="Figure 4"  />
 
 The advantage of backward pass instead of forward pass is obvious. Take the above figure as an example. 
 
@@ -328,7 +331,7 @@ Before FP, values are initialized and passed according to following principles:
 
 # Backward propagation
 
-Like FP, the forward propagation (FP) process is exactly the backward pass discussed before. However we **not only need to calculate the gradient and evaluate gradient value** as in backward pass, we **also have to updating the parameters $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$ using gradient**.
+Like FP, the forward propagation (FP) process is exactly the backward pass discussed before. However we **not only need to calculate the gradient and evaluate gradient value** as in backward pass, we **also have to update the parameters $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$ using gradient**.
 
 ## Recall: Gradient Descent
 
