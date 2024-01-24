@@ -1,5 +1,5 @@
 ---
-title: Neural-Networks
+title: Neural Networks
 tags:
   - Machine Learning
 categories: Computer Science
@@ -10,42 +10,264 @@ date: 2023-12-08 19:43:54
 
 Source: 
 
-1. [Neural Networks Pt. 2: Backpropagation Main Ideas](https://www.youtube.com/watch?v=IN2XmBhILt4&list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF&index=75)
-2. [Backpropagation Details Pt. 1: Optimizing 3 parameters simultaneously](https://www.youtube.com/watch?v=iyn2zdALii8&t=936s)
-3. [Backpropagation Details Pt. 2: Going bonkers with The Chain Rule](https://www.youtube.com/watch?v=GKZoOHXGcLo&t=643s)
-4. [Forwardpropagation, Backpropagation and Gradient Descent with PyTorch](https://www.deeplearningwizard.com/deep_learning/boosting_models_pytorch/forwardpropagation_backpropagation_gradientdescent/#forwardpropagation-backpropagation-and-gradient-descent-with-pytorch)
+1. [Stanford CS231, Lecture 4](https://youtu.be/d14TUNcbn1k?si=fGVVrRpYIhqbBKBt)
+2. [Neural Networks Pt. 2: Backpropagation Main Ideas](https://www.youtube.com/watch?v=IN2XmBhILt4&list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF&index=75)
+3. [Backpropagation Details Pt. 1: Optimizing 3 parameters simultaneously](https://www.youtube.com/watch?v=iyn2zdALii8&t=936s)
+4. [Backpropagation Details Pt. 2: Going bonkers with The Chain Rule](https://www.youtube.com/watch?v=GKZoOHXGcLo&t=643s)
+5. [Forwardpropagation, Backpropagation and Gradient Descent with PyTorch](https://www.deeplearningwizard.com/deep_learning/boosting_models_pytorch/forwardpropagation_backpropagation_gradientdescent/#forwardpropagation-backpropagation-and-gradient-descent-with-pytorch)
+
+
+
+This article is a step-by-step explanation of neural networks which are extensively used in machine learning. 
 
 <!--more-->
 
-# Problem Formulation
+# Notations
 
-Given a dataset $(x,y)$ with $n$ data points $(x_1, y_{1}), \dots, (x_n, y_n)$, we can say that the relationship between $x$ and $y$ is function $f$:
+In this article we'll use following notations.
+
+* The **gradient** is a vector that contains all the partial derivatives of the multivariate function with respect to each of its variables. If $f(x, y, z, \ldots)$ is a function of several variables, then the gradient of ff would be a vector $\left[\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}, \frac{\partial f}{\partial z}, \ldots\right]^T$, where each component is the partial derivative of $f$ with respect to one of its variables.
+
+  However, I'll also call **the partial derivative** of a function, denoted as $\frac {\partial f} {\partial w}$, where $f$ is a multivariable function and $w$ is a variable of $f$, **as a gradient**, denoted as $\nabla_w f$.
+
+  To sum, **the terms "gradient" and the "derivative" or "partial derivative" are all interchangeable in this article**.
+
+* **We refer gradient to gradient formula**. It's different from the **gradient value**, which is a value of the gradient). 
+  * A gradient formula is a vector of partial derivative formulars.
+  * A gradient value is a vector of partial derivative values. 
+  * A gradient value is **evaluated** from the gradient formula.
+  
+* **NN** is short for a neural networ.
+
+* **FP** is short for foreward propagation.
+
+* **BP** is short for backward propagation.
+
+* In a computational graph, a node B is the "**upstream**" node of node A if there is an edge $A \rightarrow B$.
+
+* In a computational graph, 
+  * The **(total) gradient** of a node, such as $[\frac {\partial L} {x}, \frac {\partial L} {y}]^T$, is the gradient of the upstream node with respect to all the branches.
+  * The **upstream gradient** of a node, such as $\frac {\partial L} {z}$ is the gradient from the upstream node with respect to the one upstream branch.
+  * The **local gradient** of a node, such as $[\frac {\partial z} {x}, \frac {\partial z} {y}]^T$, is the gradient of the the node with respect to all the branches.
+  * Sometimes the "gradient" can be a partial derivative when strictly speaking. For example, if 
+
+# Computational Graphs
+
+A computational graph is a **directed graph** where:
+
+1. An **edge** (or **branch**) represents a function argument (and also data dependency). 
+   * The value of an argument can have whatever type. It can be a scalar, a vector, a matrix or a tensor[^1].
+2. A **node** represents a function, whose arguments are the incoming edges.
+
+Note: In this article, we call 
+
+
+
+In following sections I'll show the **foreward pass and backward pass** of computational graphs. These two operations themselves are meaningless since we didn't set a "goal" for computational graphs and doing them is for nothing. However, you'll see that the ideas of them are used for illustrating the **foreward propagation and backward propagation** used by neural networks.
+
+## Some basic computational graphs
+
+[-->Source](https://www.tutorialspoint.com/python_deep_learning/python_deep_learning_computational_graphs.htm)
+
+Here is a simple mathematical equation:
 $$
-y = f_\text{observed}(x)
+p=x+y
 $$
-where $x \in \{x_i, \cdots, x_n \}$, $y \in \{y_i, \cdots, y_n \}$.
 
+We can draw a computational graph of the above equation as follows.
 
+![Figure 1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%201.png)
 
-We construct a predict function $f_\text{predict}$:
+Let us take another example, slightly more complex. We have the following equation.
 $$
-\hat y = f_\text{predict}(x)
+g=(x+y)z
 $$
-where $x \in \{x_i, \cdots, x_n \}$,  $\hat y \in \{\hat y_{1}, \cdots, \hat y_n \}$. $\hat y$ are predicted values of $x$ (Or $\hat y_i$ is predicted value of $x_i$ )
+The above equation is represented by the following computational graph.
+
+![Figure 2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%202.png)
 
 
 
-Our goal is to get an "**optimal**" predict function such that, given data point $x$, the "difference" betwwen predicted value $\hat y$ and observed value $y$ is minimized.
+# Forward pass
 
-We define the "difference" as **[loss function]()**:
+Below is a computational graph representing $f(w, x)=\frac{1}{1+e^{-\left(w_0 x_0+w_1 x_1+w_2\right)}}$, where $x = [x_0, x_1]^T$ and $w=[w_0, w_1, w_2]^T$. For illustation, **a dumb node is added** after the original last node to represent the output, denoted as $y$. We have $y = f(w,x)$. The FP has already been done in this figure.
+
+![Figure 3](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%203.png)
+
+**Doing forward pass means we are passing the value from variables in forward direction from the left (input) to the right where the output is.**
+
+# Gradient during backward pass
+
+Before discussing the backwark propagation, we must know how the backwark propagation is implemented in computational graphs.
+
+In this section we take $f: (x, y) \rightarrow z$ as an example. The upstream node of node $f$ is denoted as $L$.
+
+Recall that in computational graphs, a node is a function. During backward propagation, we have:
+
+1. The **upstream gradient** of node $f$: $\frac {\partial L} {z}$.
+2. The **local gradient** of node $f$: $[\frac {\partial z} {x}, \frac {\partial z} {y}]^T$
+3. Therefore, the **(total) gradient** of node $f$: $[\frac {\partial L} {x}, \frac {\partial L} {y}]^T$. 
+
+From the chain rule of derivatives:
 $$
-\text{Loss}(y, \hat y) = \cdots
+\begin{aligned}
+& \frac{\partial z}{\partial x}=\frac{\partial L}{\partial z} . \frac{\partial z}{\partial x} \\
+& \frac{\partial z}{\partial y}=\frac{\partial L}{\partial z} . \frac{\partial z}{\partial y} .
+\end{aligned}
 $$
-Note: the loss function is chosen in advance. It's a measurement function of how "optimal" or "close to the truth" our $\hat y$ is.
 
-# Example Neural Network
 
-Given below Neuro Network(NN), it has:
+Thus, we obtain that:
+
+**Gradient  = local gradient  * upstream gradient.**
+
+
+
+![Figure 4](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%204.png)
+
+The advantage of backward pass instead of forward pass is obvious. Take the above figure as an example. 
+
+To get the gradient value of gradient $[\frac {\partial L} {x}, \frac {\partial L} {y}]^T$, we just need to **evaluate** the upstream gradient $\frac{\partial L}{\partial z}$ **once**, and then leverage it to calculate $\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}$.
+
+However, if we use a forward pass to do this, we can't use chain rule to reduce our computation. The detailed reason is [--> here](https://gregorygundersen.com/blog/2018/04/15/backprop/).
+
+# Backward pass
+
+Note that in neural networks, the term "parameters" refer to the weights and biases instead of the input data. 
+
+However, since its just backward pass instead of backward propagation, which is used in NNs, we optimize the input data $x$ in this section. I know it's weird but that's the way they did in [CS231](https://youtu.be/d14TUNcbn1k?si=fGVVrRpYIhqbBKBt).
+
+
+
+Backward pass starts from the output node.
+
+1. The local gradient of the dumb node is $\frac {\partial y} {\partial f} = 1$, which is a constant. 
+2. So the local gradient value is always 1.
+3. There's no upstream gradient for the dumb node. Therefore, we don't need to multiply it.
+4. As a result, the gradient value of this node is 1.
+
+![Figure 5](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%205.png)
+
+Next, we compute the last but one node $1/x$. 
+
+1. The local gradient of this node is $\frac {\partial (1/x)} {\partial x} = -1/x^2$.
+2. Since we evaluate $x=1.37$ here, the local gradient value of this node is -1/(1.37)^2=-0.53. 
+3. Meanwhile, the upstream gradient value is 1. 
+4. As a result, the gradient value of this node is: -0.53 * 1 = -0.53.
+
+
+
+![Figure 6](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%206.png)
+
+Now we move to the node $x+1$. 
+
+1. The gradient equation of this node is $\frac {\partial (x+1)} {\partial x} = 1$, which is a constant. 
+2. So the local gradient value is always 1.
+3. Moreover, the  upstream gradient value is -0.53. 
+4. As a result, the gradient value of this node is: -0.53 * 1 = -0.53.
+
+![Figure 7](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%207.png)
+
+We can keep doing the above process until we get the gradient value of the nodes at the first layer.
+
+![Figure 8](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%208.png)
+
+
+
+## At what abstraction level ?
+
+When we create a computation graph. We can define every node **at whatever computational granuality** we want to. In the previous example most nodes represent basic level computations (+, -, *, /, $\exp()$, ... ). We can also define nodes with high level computation.
+
+For instance, consider the sigmoid function part in previous example. The sigmoid function is:
+$$
+\sigma(x)=\frac{1}{1+e^{-x}} ,
+$$
+and its gradient is:
+$$
+\frac{d \sigma(x)}{d x}=\frac{e^{-x}}{\left(1+e^{-x}\right)^2}=\left(\frac{1+e^{-x}-1}{1+e^{-x}}\right)\left(\frac{1}{1+e^{-x}}\right)=(1-\sigma(x)) \sigma(x) .
+$$
+We can abstract these computations in one node, some people also call it a **gate**.
+
+![Figure 9](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%209.png)
+
+## Patterns in backward propagation
+
+### Add gate
+
+The "add gate" (or "add node" since it's too simple to become a gate) $x+y$ where $x$ and $y$ are its inputs can be seen as a gradient "distributor". 
+
+The reason is that, since $\frac {\partial (x+y)} {\partial x} = \frac {\partial (x+y)} {\partial y} = 1$, the local gradient value of add gate is $[1,1]^T$, so the gradient value flowing to branches of add gate is always: 
+
+1 * (upstream gradient value of add gate) = upstream gradient value of add gate.
+
+You can see that in the following figure. The upstream value is $[2,2]^T$, and the gradient value flowing to its branches is $[2,2]^T$.
+
+
+
+![Figure 10](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2010.png)
+
+### Max gate
+
+The "max gate" $\max(x+y)$ where $x$ and $y$ are its inputs can be seen as a gradient "router". It routes its gradient value to the branch with maximum input value, leaving the upstream gradient value for the other branches be 0.
+
+The reason is that, taking $x$ for example, if $x$ has the maximal assigned value in all branches, then:
+
+1. The gradient is  $\frac {\partial \max(x+y)} {x} = 1$, the local gradient value is always 1.
+2. Next, the partial derivative value value for this branch is 1 * (upstream gradient value) = upstream gradient value.
+3. For any other branches, say $y$, since $\frac {\partial \max(x+y)} {y} = 0$. So the local partial derivative value is always 0. Therefore, the partial derivative value for this branch is always 0.
+
+![Figure 11](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2011.png)
+
+### Mul gate
+
+The "mul gate" ("mul" is short for multiplication) $(x * y)$ where $x$ and $y$ are its inputs can be seen as a gradient "switcher". 
+
+The reason is that, taking $x$ for example: 
+
+1. The partial derivative for branch $x$ is  $\frac {\partial (x * y)} {x} = y$, the local partial derivative value is the assigned value of $y$.
+2. The partial derivative value for this branch = (the the assigned value of $y$) * (upstream partial derivative value)
+
+![Figure 12](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2012.png)
+
+
+
+
+
+# Neural networks: problem Formulation
+
+A **neoral network (NN)** is a function that maps input data to output data. For example, given a dataset with $n$ data points (or samples) $(x_1, y_{1}), \dots, (x_n, y_n)$[^2], the neoral network acts as a function, say $f$, that expressing the "relationship" between  $x$ and $y$:
+$$
+f_\theta: X \rightarrow \hat Y,
+$$
+where 
+
+* $X, Y, \hat Y$ are the sets of all $x_i, y_i, \hat y_i$, $i \in \{1,2,\cdots, n \}$.
+* $\hat y_i$ is the output value of the NN corresponding to input data $x_i$.
+* $y_i$ is the value in the dataset corresponding to data $x_i$.
+* $\theta$ is the set of all parameters[^2] of the NN. The parameters are all weights and biases.
+
+
+
+
+
+The goal of a neural network is to **minimize the value of a [loss function]()** 
+$$
+\text{Loss}(y, \hat y) = \cdots .
+$$
+Since the loss function, the architecture of the NN, and the dataset are all given. What we can do is modifying its parameters $\theta$. The modifying process is called **training** the NN.
+
+
+
+Training composes two processes:
+
+1. **Forward propagation (FP)** is the process of **evaluating (or assigning) the value of mathmatiacl expressions** in the NN (The function $f$ can be decomposed to smaller functions).
+2. **Backwark propagation (BP)** is the process of optimizing the **parameters** of the NN using [Gradient Descent]() **in a backward order**.
+
+Neural networks are a kind of **computational graphs**. The FP and BP process can be explained via computational graphs intuitively in a visual way. So we introduced computational graphs at first.
+
+# Neural networks
+
+Given below neuro network, it has:
 
 * One input layer(1 node), one output layer(1 node).
   * Dataset is $(x,y)$ where $x \in \{x_i, \cdots, x_n \}$, $y \in \{y_i, \cdots, y_n \}$.
@@ -53,10 +275,11 @@ Given below Neuro Network(NN), it has:
 * One hidden layer(2 nodes).
   * Each node on the hidden layer has the same loss function $\text{Act}(x)$.
 * A loss function $\text{Loss}(y, \hat y)$ to evaluate it.
+* An activation function $\text{Act}$.
 
-![Neura Network for BP](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Backpropagation/Neura Network for BP.png)
+![Figure 13](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2013.png)
 
-The NN represents a prediction function $f_\text{predict}$:
+The NN represents a prediction function $f_\text{predict}$. Note that
 $$
 \hat y \triangleq f_\text{predict} \triangleq y_{\text{green}}
 $$
@@ -68,39 +291,57 @@ where
 
 Once the parameters are determined, the prediction function $f_\text{predict}$ is fixed.
 
+Next is the **training** process, during which we leverage forward propagation and backward propagation to optimize parameter set $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$ to minimize the loss function $\text{Loss}(y, \hat y)$. 
+
+This is achieved by converting the neoral network to a computational graph (discussed before) where
+
+1. Every node represents a small computation of the NN. For example, a node can represent an simple operation like "multiply the weight", "add the bias", or complex operation like "compute the activation funcition". You can decompose the activation funcition into many nodes as well, since you freely choose your abstraction level to design your computational graph.
+2. Every edge represents the argument of the function of its connecting node. **Here "arguments" are not just $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$, but also input data $x_i$ and the intermediate results of operations. But during backward propagation we only optimize $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$**. 
+3. As before, we add a dumb node after the original last node $\text{Loss}(\cdots)$.
 
 
-Thus the problem becomes that:
 
-**HOW to select parameters $w_1, w_2, \cdots, b_1,b_2,\cdots$ so that the prediction function $f_\text{predict}$ is optimal?**
+The converted computational graph is:
 
-# Forward Propagation
+![Figure 14](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2014.png)
 
-First, we **initialize the parameters randomly**. In practice, the biases are usually set to $0$ and the weights follow a norm distribution, i.e., $w \sim \text{Norm}(0,1)$.
+The nodes $\text{ActFunc1}, \text{ActFunc2}$ reprensent the same activation $\text{Act}$.
 
-Then we input data points to this NN.
 
-Since parameters are fixed, the predicted values $\hat y$ and all inner-node values, e.g., $y_{\text{blue}}$, $y_{\text{orange}}$, are fixed as well.
 
-# Back Propagation
+The green node in the graph is:
 
-Next, we **optimize these parameters using [Gradient Descent]()** in a backward order, this is called **Back propagation**.
+![Figure 15](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2015.png)
 
-Note: the effect of BP(Back Propagation) equals the **brute force Gradient Descent**. But BP reduces the computationity complexity.
+# Forward propagation
+
+Since we have a computational graph, the forward propagation (FP) process is exactly the forward pass discussed before. 
+
+Before FP, values are initialized and passed according to following principles:
+
+1. First, we **initialize the parameters $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$ randomly**. In practice, the biases are usually set to $0$ and the weights follow a norm distribution, i.e., $w \sim \text{Norm}(0,1)$.
+2. The edges in the first layer are initialized with the value of input data $x_i$ and $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$. 
+
+
+
+1. Then we pass the values from the left (input) to the right where the output is. 
+
+# Backward propagation
+
+Like FP, the forward propagation (FP) process is exactly the backward pass discussed before. However we **not only need to calculate the gradient and evaluate gradient value** as in backward pass, we **also have to updating the parameters $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$ using gradient**.
 
 ## Recall: Gradient Descent
 
 Recalling that the steps of Gradient Descent for optimizing parameters $\theta, \gamma, \cdots$ of function $f(\theta, \gamma, \cdots)$ are:
 
-1. Compute the derivative equations
+1. Calculate the derivative (Gradient) of the function $f(\theta, \gamma, \cdots)$ with respect to parameters $\theta, \gamma, \cdots$.
    $$
    \frac {\partial f} {\partial \theta}, \frac {\partial f} {\partial \gamma}, \cdots .
    $$
-   They're called the **gradient** of function $f(\theta, \gamma, \cdots)$.
-
+   
 2. Randomly choose values for parameters $\theta, \gamma, \cdots$.
 
-3. Plug the parameter values into the deriavatives(ahem, the Gradient).
+3. Plug the parameter values into the deriavatives.
 
 4. Multiply each derivative value with a **learning rate** $\alpha$, this is the **step size** for the parameter
    $$
@@ -111,7 +352,7 @@ Recalling that the steps of Gradient Descent for optimizing parameters $\theta, 
    \end{aligned}
    $$
    
-5. Update gradients
+5. Update deriatives
    $$
    \begin{aligned}
    \theta_\text{new} &= \theta_{\text{old}} + \text{Step Size} = \theta_{\text{old}} + \frac {\partial f} {\partial \theta} \alpha . \\
@@ -127,96 +368,64 @@ Recalling that the steps of Gradient Descent for optimizing parameters $\theta, 
 
 Note: Step2 has already been done in fordward propagation. So in BP we don't need to do it.
 
-## Optimize the last layer
+## The BP process
 
-We first optimize the parameters $b_3, w_3, w_4$ on the last layer.
+In this section we show the process of one iteration of BP.
 
-Note that since input values $\{x_1,\cdots,x_n\}$ and $\{y_{1},\cdots,y_n\}$ are fixed, the predicted values $\{\hat y_{1},\cdots, \hat y_n\}$ are fixed as well.
 
-And we need to change parameters $b_3, w_3, w_4$ here.
 
-So, the loss function $\text{Loss}(y, \hat y)$ can be written as $\text{Loss}(b_3, w_3,w_4)$.
-
-Remember that using [Chain Rule](), the gradient of  $\text{Loss}(b_3, w_3,w_4)$ is 
+First, we need to evaluate the gradient value
 $$
-\begin{aligned}
-\frac {\partial \text{Loss}} {\partial b_3} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial b_3} 
-\\
-\frac {\partial \text{Loss}} {\partial w_3} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial w_3} 
-\\
-\frac {\partial \text{Loss}} {\partial w_4} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial w_4} 
-\end{aligned}
+[\frac {\partial \text{Loss}} {\partial b_3}, \frac {\partial \text{Loss}} {\partial w_3}, \frac {\partial \text{Loss}} {\partial w_4}, \frac {\partial \text{Loss}} {\partial b_1}, \frac {\partial \text{Loss}} {\partial w_1}, \frac {\partial \text{Loss}} {\partial b_2}, \frac {\partial \text{Loss}} {\partial w_2}]^T .
 $$
-Fun fact: **All the deriatives on this layer use the same deriative** $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ !
+(The sequence of elements doesn't matter)
 
-So, we just need to solve the quation:
+1. As before, the gradient value of the dumb node is always 1. So the upstream gradient value for the $\text{Loss}$ nodeis always 1.
 
-1. $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ one time,
-2. $\frac {\partial y_{\text{green}}} {\partial b_3}$, $\frac {\partial y_{\text{green}}} {\partial w_3}$, $\frac {\partial y_{\text{green}}} {\partial w_4}$ each for one time.
+2. The gradient of the node $\text{Loss}$ is
+   $$
+   \frac {\partial \text{Loss}} {\partial y_{\text{green}}} = \frac {\partial \text{Loss}} {\partial y_{\text{green}}} . 1
+   $$
+   The local gradient is
+   $$
+   \frac {\partial \text{Loss}} {\partial y_{\text{green}}} .
+   $$
+   We can evaluate the local gradient since we've already evaluated the values of all the variables included in it during FP.
 
-To get one gradient, we only need to perform **4 derivations**!
+   As a result, we get the gradient value for the $\text{Loss}$ node.
 
-Then we use the gradient to perform *Gradient Descent*. Due to the forward propagation, the parameters values are already computed, thus we can **evaluate the value** of the gradient.
+3. Next, the gradient of the green node $(+)$ is:
+   $$
+   \begin{aligned}
+   \frac {\partial \text{Loss}} {\partial b_3} 
+   &= 
+   \frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
+   \frac {\partial y_{\text{green}}} {\partial b_3} 
+   \\
+   \frac {\partial \text{Loss}} {\partial y_{\text{blue}}} 
+   & = 
+   \frac {\partial \text{Loss}} {\partial y_{\text{green}}} \frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}} 
+   \\
+   \frac {\partial \text{Loss}} {\partial y_{\text{orangee}}} 
+   & = 
+   \frac {\partial \text{Loss}} {\partial y_{\text{green}}} \frac {\partial y_{\text{orange}}} {\partial y_{\text{orange}}} .
+   \end{aligned}
+   $$
+   The local gradient is
+   $$
+   [\frac {\partial y_{\text{green}}} {\partial b_3}, \frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}}, \frac {\partial y_{\text{green}}} {\partial y_{\text{orange}}}]^T .
+   $$
+   We can evaluate the local gradient since we've already evaluated the values of all the variables included in it during FP.
 
-After that we calculate the step sizes, update parameters, and repeat. 
+   The upstream gradient value is evaluated in last step.
 
-When the *Gradient Descent* finishes, the parameters $b_3, w_3, w_4$ are optimized.
+   As a result, we get the gradient value for the green node.
 
-## Optimize the middle layer
-
-Afterwards, we optimize the parameter $b_1, b_2, w_1, w_2$ on the last layer.
-
-The steps are the same. The loss function $\text{Loss}(y, \hat y)$ can now be written as $\text{Loss}(b_1, b_2, w_1,w_2)$.
-
-The gradient of $\text{Loss}(b_1, b_2, w_1,w_2)$ is
-$$
-\begin{aligned}
-\frac {\partial \text{Loss}} {\partial b_1} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}} 
-\frac {\partial y_{\text{blue}}} {\partial b_1} 
-\\
-\frac {\partial \text{Loss}} {\partial w_1} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}} 
-\frac {\partial y_{\text{blue}}} {\partial w_1} 
-\end{aligned}
-$$
-plus
-$$
-\begin{aligned}
-\frac {\partial \text{Loss}} {\partial b_2} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial y_{\text{orange}}} 
-\frac {\partial y_{\text{orange}}} {\partial b_2} 
-\\
-\frac {\partial \text{Loss}} {\partial w_2} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial y_{\text{orange}}} 
-\frac {\partial y_{\text{orange}}} {\partial w_2} .
-\end{aligned}
-$$
+4. Repeating backward util we get the gradient value of the nodes on the first layer.
 
 
-Fun Fact: derivative $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ **has been computed before**! And derivatives $\frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}}$, $\frac {\partial y_{\text{green}}} {\partial y_{\text{orange}}}$ are more or less **shared** here!
 
-So, we just need to compute:
-
-1.  $\frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}}$, $\frac {\partial y_{\text{green}}} {\partial y_{\text{orange}}}$ each for one time.
-2.  $\frac {\partial y_{\text{blue}}} {\partial b_1}$, $\frac {\partial y_{\text{blue}}} {\partial w_1}$, $\frac {\partial y_{\text{orange}}} {\partial b_2}$, $\frac {\partial y_{\text{orange}}} {\partial w_2}$ each for one time.
-3.  We don't need to compute $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$. (Note: This means we don)
-
-To get one gradient, we only need to perform **2 + 4 = 6 deriations**!
-
-Then we **evaluate the value** of the gradient, calculate step sizes, update parameters, repeat, etc.
-
-Note: During BP, the equation of $\frac {\partial y_{\text{blue}}} {\partial b_1}$ needn't to be computed again, but the evaluation of the value of $\frac {\partial y_{\text{blue}}} {\partial b_1}$ should be recomputed, but it's a quick operation since it's numerical.
+Now we have the gradient value of NN, we then multiply each partial derivative value to a learning rate $\alpha$ to form a step size. For every parameter, we substract the step size. Thus we finishing the update of patameters.
 
 # Example
 
@@ -380,57 +589,15 @@ new loss func value b_3: 2.884057087700263
 
 Then repeat the process.
 
-# Conclusion
-
-BP is just a computation technique of Gradient Descent for the NN stucture.
-
-The advantage of BP is to reduce the **computation complexity** of derivation via:
-
-1. Using the chain rule.
-2. Propagating **backward**, not forward.
-
-Consider a NN with $n$ layers: $\{1,\cdots,i-1, i, \cdots,n\}$.
-
-Suppose at layer $i$, BP computes following devivations:
-$$
-\begin{aligned}
-\frac {\partial \text{Loss}} {\partial b_3} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial b_3} 
-\\
-\frac {\partial \text{Loss}} {\partial w_3} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial w_3} 
-\\
-\frac {\partial \text{Loss}} {\partial w_4} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial w_4} 
-\end{aligned}
-$$
-Using BP, due to chain rule, we only need to perform 4 times derivations.
-
-Moreover, note that the equation $\frac {\partial \text{Loss}} {\partial y_{\text{green}}} $ **has been solved in this layer.** (Of cource we need to evaluate its value every time, but it's a numerical operation and it's quick. The derivation operation is expensive)
-
-Suppose at sequent layer $i-1$, BP computes following devivations:
-$$
-\begin{aligned}
-\frac {\partial \text{Loss}} {\partial b_1} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}} 
-\frac {\partial y_{\text{blue}}} {\partial b_1} 
-\\
-\frac {\partial \text{Loss}} {\partial w_1} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}} 
-\frac {\partial y_{\text{blue}}} {\partial w_1} 
-\end{aligned}
-$$
-**We don't need to solve** the equation $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$  **again**!
-
-However, this convience only happens in backword propagation. If we use forward propagation to perform derivation, at layer $i-1$ we don't know $\frac {\partial \text{Loss}} {\partial y_{\text{green}}}$ , so we have to solve it, and at layer $i$ we need to solve it again!
-
 # Future
 
 https://arxiv.org/abs/2212.13345
 
  
+
+
+
+
+
+[^1]: Note that the concept "tensor" appears in machine learning does not equal to the concept in physics or math.
+[^2]: In neural networks, the word "parameters" typically refer to the weights and biases rather than the input data. 

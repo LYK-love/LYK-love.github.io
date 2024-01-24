@@ -16,7 +16,7 @@ Source:
 
 # Notations
 
-In this article we'll use followinng notations interchangeably.
+In this article we'll use following notations interchangeably.
 
 * The PDF[^1] $f_X(x)$ is often denoted as $p_X(x), $ $f_X\left(x ; \mu, \sigma^2\right)$ or $p_X\left(x ; \mu, \sigma^2\right)$. We sometimes also omit the subscript $X$ so that we can write things like $f(x:\mu,\sigma^2)$.
 
