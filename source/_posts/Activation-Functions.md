@@ -121,6 +121,8 @@ If our goal happens to be in the northwest, we can only move in a zig-zagging fa
 
 # Tanh
 
+Machine Learning/Activation Functions/Figure 5.png
+
 ![Figure 5](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%205.png)
 
 $$
@@ -315,13 +317,7 @@ Note: the base of $\log$ here is $e$.
 
 ![Figure 12](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%2012.png)
 
-Outer function derivative ($\log_e$):
-$$
-\begin{aligned}
-& \frac{d}{d u} \log (u)=\frac{1}{u} \\
-& \text { Here, } u=1+e^x .
-\end{aligned}
-$$
+Outer function derivative ($\log_e$): $\frac{d}{d u} \log (u)=\frac{1}{u}$. Here, $u=1+e^x$.
 
 Inner function derivative $\left(1+e^x\right)$ :
 $$
