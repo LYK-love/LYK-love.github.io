@@ -7,6 +7,7 @@ mathjax: true
 date: 2024-01-25 16:08:03
 ---
 
+//NOTE: This article is not finished yet and contains many errors. I am always ready to edit it.
 
 Source:
 
@@ -381,5 +382,3 @@ where $j=\sqrt{-1}$ is the imaginary unit number. Note that (5.2.18) and (5.2.19
 
 
 [^1]: This justifies using identical notations for both $I(\cdot ; \cdot)$ and $D(\cdot \| \cdot)$ as opposed to the discerning notations of $H(\cdot)$ for entropy and $h(\cdot)$ for differential entropy.
-
-# 
