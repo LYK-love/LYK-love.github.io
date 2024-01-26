@@ -18,7 +18,7 @@ Source:
 
 
 
-This article is a step-by-step explanation of neural networks which are extensively used in machine learning. 
+This article is a step-by-step explanation of neural networks which are extensively used in machine learning. It only involves the most basic case where both the input and output of a neuron are **scalars** (1-D tensors). But the idea holds for other dimensions. For higher dimensions, please reter to []()
 
 <!--more-->
 
@@ -89,7 +89,7 @@ The above equation is represented by the following computational graph.
 
 # Forward pass
 
-Below is a computational graph representing $f(w, x)=\frac{1}{1+e^{-\left(w_0 x_0+w_1 x_1+w_2\right)}}$, where $x = [x_0, x_1]^T$ and $w=[w_0, w_1, w_2]^T$. The FP has already been done in this figure.
+Below is a computational graph representing $f(w, x)=\frac{1}{1+e^{-\left(w_0 x_0+w_1 x_1+w_2\right)}}$ where all the parameters are scalar. The FP has already been done in this figure.
 
 For illustation, **a dumb node is added** after the original last node to represent the output, denoted as $y$. We have $y = f(w,x)$. 
 
@@ -233,6 +233,120 @@ The reason is that, taking $x$ for example:
 ![Figure 12](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2012.png)
 
 
+
+## Gradients add at branches
+
+![image-20240124152400923](/Users/lyk/Library/Application Support/typora-user-images/image-20240124152400923.png)
+
+# For vectorized inputs
+
+A vectorized example:
+$$
+f(x, W)=\|W \cdot x\|^2=\sum_{i=1}^n(W \cdot x)_i^2 .
+$$
+![image-20240124152552751](/Users/lyk/Library/Application Support/typora-user-images/image-20240124152552751.png)
+
+Let
+$$
+\begin{aligned}
+& q=W \cdot x=\left(\begin{array}{c}
+W_{1,1} x_1+\cdots+W_{1, n} x_n \\
+\vdots \\
+W_{n, 1} x_1+\cdots+W_{n, n} x_n
+\end{array}\right) \\
+& f(q)=\|q\|^2=q_1^2+\cdots+q_n^2
+\end{aligned}
+$$
+Then
+
+![image-20240124153703728](/Users/lyk/Library/Application Support/typora-user-images/image-20240124153703728.png)
+
+![image-20240124153730305](/Users/lyk/Library/Application Support/typora-user-images/image-20240124153730305.png)
+
+Now we start back pass, the gradient and gradient value of the dumb node is always 1.
+
+Always check: The gradient with respect to a variable should have the same shape as the variable
+
+![image-20240124153749293](/Users/lyk/Library/Application Support/typora-user-images/image-20240124153749293.png)
+
+
+
+We the gradient of $f$ w.r.t. $q_{i}$ is
+$$
+\begin{gathered}
+\frac{\partial f}{\partial q_i}=2 q_i \\
+\nabla_q f=2 q
+\end{gathered}
+$$
+$q_i$ is the element on the $i$-th row of $q$.
+$$
+q=W \cdot x=\left(\begin{array}{c}
+W_{1,1} x_1+\cdots+W_{1, n} x_n \\
+W_{2,1} x_1+\cdots+W_{2, n} x_n \\
+\vdots \\
+W_{n, 1} x_1+\cdots+W_{n, n} x_n
+\end{array}\right) .
+$$
+
+
+
+
+![image-20240124152951702](/Users/lyk/Library/Application Support/typora-user-images/image-20240124152951702.png)
+
+
+
+The gradient of $q_k$ w.r.t. $W_{i,j}$ is
+$$
+\begin{aligned}
+\frac{\partial q_k}{\partial W_{i, j}} & =\mathbf{1}_{k=i} x_j
+\end{aligned}
+$$
+where $\mathbf{1}_{k=i}$ is the indicator function.
+
+
+
+For instance, $\frac{\partial q_1}{\partial W_{1, 1}} =1 .x_1 = x_1$.
+
+Therefore, the gradient of $f$ w.r.t. $W_{i,j}$ is
+$$
+\begin{aligned}
+\frac{\partial f}{\partial W_{i, j}} & =\sum_k \frac{\partial f}{\partial q_k} \frac{\partial q_k}{\partial W_{i, j}} \\
+& =\sum_k\left(2 q_k\right)\left(\mathbf{1}_{k=i} x_j\right) \\
+& =2 q_i x_j
+\end{aligned}
+$$
+
+
+![image-20240124153348965](/Users/lyk/Library/Application Support/typora-user-images/image-20240124153348965.png)
+
+the gradient of $f$ w.r.t. $x_{i}$ is
+$$
+\begin{aligned}
+\frac{\partial q_k}{\partial x_i} & =W_{k, i} \\
+\frac{\partial f}{\partial x_i} & =\sum_k \frac{\partial f}{\partial q_k} \frac{\partial q_k}{\partial x_i} \\
+& =\sum_k 2 q_k W_{k, i}
+\end{aligned}
+$$
+Or 
+$$
+\nabla_x f=2 W^T \cdot q
+$$
+For instance, $\frac{\partial q_2}{\partial x_1} =W_{2, 1}$ sicne $W_{2,1}$ is exactly the coefficient of $x_1$ in the $2$-nd row of $q$:
+$$
+q=W \cdot x=\left(\begin{array}{c}
+W_{1,1} x_1+\cdots+W_{1, n} x_n \\
+W_{2,1} x_1+\cdots+W_{2, n} x_n \\
+\vdots \\
+W_{n, 1} x_1+\cdots+W_{n, n} x_n
+\end{array}\right)
+$$
+
+
+Each row of $W$ selects the "weights" to some cpmponents of $x$.
+
+## Pseudo node
+
+https://github.com/intel/caffe/tree/master/src/caffe/layers
 
 
 

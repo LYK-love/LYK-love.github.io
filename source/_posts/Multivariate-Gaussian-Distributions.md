@@ -28,6 +28,12 @@ The notations of this article is exactly the same as these in [Univariate Gaussi
 
 2. The PDF[^1] $f_X(x)$ is often denoted as $p_X(x), $ $f_X\left(x ; \mu, \sigma^2\right)$ or $p_X\left(x ; \mu, \sigma^2\right)$ where $X = \left[X_1, \ldots, X_n\right]^{\mathrm{T}}$. We sometimes also omit the subscript $X$ so that we can write things like $f(x:\mu,\sigma^2)$.
 
+3. The covariance matrix of $X$ is denoted as $\Sigma$, it also can be written as $\mathbf{K}_X$ in some literature.
+
+4. We use underline to show the importance of some symbols. For instance, $\underline{X}$ to show the importance of $X$.
+
+   
+
 # Multivariate Gaussian distributions
 
 ![Figure 1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Statistics/Multivariate-Gaussian-Distributions/Figure%201.png)
@@ -46,11 +52,15 @@ X \sim \mathcal{N}_k({\mu}, {\Sigma})
 $$
 with $n$-dimensional mean vector
 $$
-{\mu}=\mathrm{E}[{X}]=\left(\mathrm{E}\left[X_1\right], \mathrm{E}\left[X_2\right], \ldots, \mathrm{E}\left[X_k\right]\right)^{\mathrm{T}},
+{\mu} \triangleq \mathrm{E}[{X}] = \left(\mathrm{E}\left[X_1\right], \mathrm{E}\left[X_2\right], \ldots, \mathrm{E}\left[X_k\right]\right)^{\mathrm{T}},
 $$
 and $n \times n$ [covariance matrix]() $\Sigma \in \mathbf{S}_{++}^n$[^2]
 $$
-\Sigma_{i, j}=\mathrm{E}\left[\left(X_i-\mu_i\right)\left(X_j-\mu_j\right)\right]=\operatorname{Cov}\left[X_i, X_j\right]
+\begin{aligned}
+\Sigma_{i, j}
+& \triangleq \mathrm{E}\left[\left(X_i-\mu_i\right)\left(X_j-\mu_j\right)\right] \\
+& = \operatorname{Cov}\left[X_i, X_j\right]
+\end{aligned}
 $$
 such that $1 \leq i \leq k$ and $1 \leq j \leq k$. The inverse of the covariance matrix is called the precision matrix, denoted by $\boldsymbol{Q}=\boldsymbol{\Sigma}^{-1}$.
 
@@ -78,12 +88,39 @@ We also obtain that:
 
 Lemma: For any random vector $X$ with mean $\mu$ and covariance matrix $\Sigma$,
 $$
-\Sigma := E\left[(X-\mu)(X-\mu)^T\right]=E\left[X X^T\right]-\mu \mu^T .
+\begin{aligned}
+\Sigma
+& \triangleq E\left[(X-\mu)(X-\mu)^T\right] \\
+& = E\left[X X^T\right]-\mu \mu^T \\
+& =
+\left[\begin{array}{cccc}
+\operatorname{Cov}\left(X_1, X_1\right) & \operatorname{Cov}\left(X_1, X_2\right) & \cdots & \operatorname{Cov}\left(X_1, X_n\right) \\
+\operatorname{Cov}\left(X_2, X_1\right) & \operatorname{Cov}\left(X_2, X_2\right) & \cdots & \operatorname{Cov}\left(X_2, X_n\right) \\
+\vdots & \vdots & \cdots & \vdots \\
+\operatorname{Cov}\left(X_n, X_1\right) & \operatorname{Cov}\left(X_n, X_2\right) & \cdots & \operatorname{Cov}\left(X_n, X_n\right)
+\end{array}\right] .
+\end{aligned}
 $$
+
+Note that the diagonal components of $\Sigma$ yield the **variance** of the different random variables: $K_{i, i}=\operatorname{Cov}\left(X_i, X_i\right)=\operatorname{Var}\left(X_i\right)=\sigma_{X_i}^2, i=1, \ldots, n$.
 
 In the definition of multivariate Gaussians, we required that the covariance matrix $\Sigma$ be symmetric positive definite (i.e., $\Sigma \in \mathbf{S}_{++}^n$ ). 
 
-Why does this restriction exist? As seen in the following proposition, the covariance matrix of any random vector must always be symmetric positive semidefinite:
+Properties:
+
+1. Note that a covariance matrix $\mathbf{K}$ is always symmetric (i.e., $\mathbf{K}^T=\mathbf{K}$ ) and positive [semi-definite](). But as we require $\mathbf{K}_{\underline{X}}$ to be invertible in the definition of the multivariate Gaussian distribution above, we will hereafter assume that the covariance matrix of Gaussian random vectors is positive-definite (which is equivalent to having all the eigenvalues of $\mathbf{K}_{\underline{X}}$ positive), thus rendering the matrix invertible.
+
+2. If a random vector $\underline{X}=\left(X_1, X_2, \ldots, X_n\right)^T$ has a diagonal covariance matrix $\mathbf{K}_{\underline{X}}$ (i.e., all the off-diagonal components of $\mathbf{K}_{\underline{X}}$ are zero: $K_{i, j}=0$ for all $i \neq j$, $i, j=1, \ldots, n)$, then all its component random variables are uncorrelated but not necessarily independent. However, if $\underline{X}$ is Gaussian and have a diagonal covariance matrix, then all its component random variables are independent from each other.
+
+3. Any linear transformation of a Gaussian random vector yields another Gaussian random vector. Specifically, if $\underline{X} \sim \mathcal{N}_n\left(\underline{\mu}, \mathbf{K}_{\underline{X}}\right)$ is a size- $n$ Gaussian random vector with mean vector $\mu$ and covariance matrix $\mathbf{K}_{\underline{X}}$, and if $\underline{Y}=\mathbf{A}_{m n} \underline{X}$, where $\mathbf{A}_{m n}$ is a given $m \times n$ real-valued matrix, then
+   $$
+   \underline{Y} \sim \mathcal{N}_m\left(\mathbf{A}_{m n} \underline{\mu}, \mathbf{A}_{m n} \mathbf{K}_{\underline{X}} \mathbf{A}_{m n}^T\right)
+   $$
+   is a size- $m$ Gaussian random vector with mean vector $\mathbf{A}_{m n} \underline{\mu}$ and covariance matrix $\mathbf{A}_{m n} \mathbf{K}_{\underline{X}} \mathbf{A}_{m n}^T$.
+   More generally, any affine transformation of a Gaussian random vector yields another Gaussian random vector: if $\underline{X} \sim \mathcal{N}_n\left(\underline{\mu}, \mathbf{K}_{\underline{X}}\right)$ and $\underline{Y}=\mathbf{A}_{m n} \underline{X}+\underline{b}_m$, where $\mathbf{A}_{m n}$ is a $m \times n$ real-valued matrix and $\underline{b}_m$ is a size- $m$ real-valued vector, then
+   $$
+   \underline{Y} \sim \mathcal{N}_m\left(\mathbf{A}_{m n} \underline{\mu}+\underline{b}_m, \mathbf{A}_{m n} \mathbf{K}_{\underline{X}} \mathbf{A}_{m n}^T\right) .
+   $$
 
 #  The covariance matrix
 
@@ -121,6 +158,24 @@ $$
 Then, observe that the quantity inside the brackets is of the form $\sum_i \sum_j x_i x_j z_i z_j=\left(x^T z\right)^2 \geq 0$ (see problem set \#1). Therefore, the quantity inside the expectation is always nonnegative, and hence the expectation itself must be nonnegative. We conclude that $z^T \Sigma z \geq 0$.
 
 From the above proposition it follows that $\Sigma$ must be <u>symmetric positive semidefinite</u> in order for it to be a valid covariance matrix. However, in order for $\Sigma^{-1}$ to exist (as required in the definition of the multivariate Gaussian density), then $\Sigma$ must be **invertible** and hence full rank. Since any full rank symmetric positive semidefinite matrix is necessarily symmetric positive definite, it follows that $\Sigma$ must be **symmetric positive definite**.
+
+
+
+# Observation
+
+In light of the above definition, we make the following remarks.
+
+
+
+${ }^7$ An $n \times n$ real-valued symmetric matrix $\mathbf{K}$ is positive-semidefinite (e.g., cf. [128]) if for every real-valued vector $\underline{x}=\left(x_1, x_2, \ldots, x_n\right)^T$,
+$$
+\underline{x}^T \mathbf{K} \underline{x}=\left(x_1, \ldots, x_n\right) \mathbf{K}\left(\begin{array}{c}
+x_1 \\
+\vdots \\
+x_n
+\end{array}\right) \geq 0,
+$$
+with equality holding only when $x_i=0$ for $i=1,2, \ldots, n$. Furthermore, the matrix is positivedefinite if $\underline{x}^T \mathbf{K} \underline{x}>0$ for all real-valued vectors $\underline{x} \neq \underline{0}$, where $\underline{0}$ is the all-zero vector of size $n$.
 
 # What if all elements are independent?
 
