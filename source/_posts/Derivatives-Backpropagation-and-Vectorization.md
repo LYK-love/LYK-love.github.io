@@ -216,7 +216,7 @@ In this equation the indices $i, j, k$ are vectors of indices, and the terms $\l
 
 In the context of neural networks, a layer $f$ is typically a function of (tensor) inputs $x$ and weights $w$; the (tensor) output of the layer is then $y=f(x, w)$. The layer $f$ is typically embedded in some large neural network with **scalar loss** $L$.
 
-During backpropagation, we assume that we are given $\frac{\partial L}{\partial y}$ (its an [upstram gradient value](https://lyk-love.cn/2023/12/08/neural-networks/) and has been already computed in the upstram neoron) and our goal is to compute $\frac{\partial L}{\partial x}$ and $\frac{\partial L}{\partial w}$. By the chain rule we know that
+During backpropagation, we assume that we are given $\frac{\partial L}{\partial y}$ (it's the [upstram gradient value](https://lyk-love.cn/2023/12/08/neural-networks/) and has been already computed in the upstram neoron) and our goal is to compute $\frac{\partial L}{\partial x}$ and $\frac{\partial L}{\partial w}$. By the chain rule we know that
 $$
 \frac{\partial L}{\partial x}=\frac{\partial L}{\partial y} \frac{\partial y}{\partial x} \quad \frac{\partial L}{\partial w}=\frac{\partial L}{\partial y} \frac{\partial y}{\partial w}
 $$
@@ -226,6 +226,8 @@ Therefore one way to proceed would be to form the (generalized) Jacobians $\frac
 
 
 However, there's a problem with this approach: the Jacobian matrices $\frac{\partial y}{\partial x}$ and $\frac{\partial y}{\partial w}$ are typically far too large to fit in memory.
+
+## Problem: Too large to put in the memory
 
 As a concrete example, let's suppose that: the layer $f$ is a linear layer that takes as input a minibatch of $N$ vectors, each of dimension $D$, and produces a minibatch of $N$ vectors, each of dimension $M$. 
 
@@ -241,14 +243,14 @@ In a typical neural network we might have $N=64$ and $M=D=4096$; then $\frac{\pa
 
 However it turns out that for most common neural network layers, we can derive expressions that compute the product $\frac{\partial y}{\partial x} \frac{\partial L}{\partial y}$ **without explicitly forming the Jacobian $\frac{\partial y}{\partial x}$**. Even better, we can typically derive this expression **without even computing an explicit expression for the Jacobian $\frac{\partial y}{\partial x}$**; in many cases we can work out a small case on paper and then infer the general formula.
 
-
+## Solution
 
 Let's see how this works out for the case of the linear layer $f(x, w)=x w$. Set $N=1, D=2, M=3$. Then we can explicitly write
 $$
 \begin{align}
 y & =\left(\begin{array}{lll}
 y_{1,1} & y_{1,2} & y_{1,3}
-\end{array}\right)=x w \nonumber \\
+\end{array}\right)=x w \label{eq_3} \\
 & =\left(\begin{array}{ll}
 x_{1,1} & x_{1,2}
 \end{array}\right)\left(\begin{array}{lll}
@@ -258,12 +260,12 @@ w_{2,1} & w_{2,2} & w_{2,3}
 & =\left(\begin{array}{l}
 x_{1,1} w_{1,1}+x_{1,2} w_{2,1} \nonumber \\
 x_{1,1} w_{1,2}+x_{1,2} w_{2,2} \nonumber \\
-x_{1,1} w_{1,3}+x_{1,2} w_{2,3}
-\end{array}\right)^T \label{eq_3}
+x_{1,1} w_{1,3}+x_{1,2} w_{2,3} \nonumber
+\end{array}\right)^T 
 \end{align}
 $$
 
-During backpropagation we assume that we have access to $\frac{\partial L}{\partial y}$ (it's the upstream gradient) which technically has shape $(1) \times(N \times M)$; however for notational convenience we will instead think of it as a matrix of shape $N \times M$. Then we can write
+During backpropagation we assume that we have access to $\frac{\partial L}{\partial y}$ (it's the upstream gradient value) which technically has shape $(1) \times(N \times M)$; however for notational convenience we will instead think of it as a matrix of shape $N \times M$. Then we can write
 $$
 \frac{\partial L}{\partial y}=\left(\begin{array}{lll}
 d y_{1,1} & d y_{1,2} & d y_{1,3}
@@ -291,9 +293,11 @@ $$
 \end{aligned}
 $$
 
+Since we already know $\frac{\partial L}{\partial y}$, we just have to compute $\frac{\partial y}{\partial x_{1,1}}, \frac{\partial y}{\partial x_{1,2}}$.
 
 
-Viewing these derivatives as generalized matrices, $\frac{\partial L}{\partial y}$ has shape $(1) \times(N \times M)$ and $\frac{\partial y}{\partial x_{1,1}}$ has shape $(N \times M) \times(1)$; their product $\frac{\partial L}{\partial x_{1,1}}$ then has shape $(1) \times(1)$. If we instead view $\frac{\partial L}{\partial y}$ and $\frac{\partial y}{\partial x_{1,1}}$ as matrices of shape $N \times M$, then their generalized matrix product is simply the dot product $\frac{\partial L}{\partial y} \cdot \frac{\partial y}{\partial x_{1,1}}$.
+
+If we view $\frac{\partial L}{\partial y}$ and $\frac{\partial y}{\partial x_{1,1}}$ as matrices of shape $N \times M$, then their generalized matrix product is simply the dot product $\frac{\partial L}{\partial y} \cdot \frac{\partial y}{\partial x_{1,1}}$.
 Now we compute
 $$
 \begin{aligned}
@@ -334,4 +338,4 @@ $$
 
 This final result $\frac{\partial L}{\partial x}=\frac{\partial L}{\partial y} x^T$ is very interesting because it allows us to efficiently compute $\frac{\partial L}{\partial x}$ **without explicitly forming the Jacobian $\frac{\partial y}{\partial x}$**. We have only derived this formula for the specific case of $N=1, D=2, M=3$ but it in fact holds in general.
 
-By a similar thought process we can derive a similar expression for $\frac{\partial L}{\partial w}$ without explicitly forming the Jacobian $\frac{\partial y}{\partial w}$. You should try and work through this as an exercise.
+By a similar thought process we can derive a similar expression for $\frac{\partial L}{\partial w}$ without explicitly forming the Jacobian $\frac{\partial y}{\partial w}$.

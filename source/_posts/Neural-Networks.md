@@ -18,7 +18,7 @@ Source:
 
 
 
-This article is a step-by-step explanation of neural networks which are extensively used in machine learning. It only involves the most basic case where both the input and output of a neuron are **scalars** (1-D tensors). But the idea holds for other dimensions. For higher dimensions, please reter to []()
+This article is a step-by-step explanation of neural networks which are extensively used in machine learning. It only involves the most basic case where both the input and output of a neuron are **scalars** (1-D tensors). But the idea holds for other dimensions. For higher dimensions, please reter to [Derivatives, Backpropagation, and Vectorization](https://lyk-love.cn/2024/01/25/derivatives-backpropagation-and-vectorization/)
 
 <!--more-->
 
@@ -41,7 +41,7 @@ In this article we'll use following notations.
 
 * **FP** is short for foreward propagation.
 
-* **BP** is short for backward propagation.
+* **BP** is short for backward propagation or **backpropagation**.
 
 * In a computational graph, a node B is the "**upstream**" node of node A if there is an edge $A \rightarrow B$.
 

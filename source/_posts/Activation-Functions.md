@@ -2,8 +2,16 @@
 title: Activation Functions
 date: 2024-01-25 21:33:03
 tags:
+  - Machine Learning
+categories: Mathmatics
+mathjax: true
 ---
 
+Source:
+
+1. [Stanford CS231, Lecture 6](https://youtu.be/wEoyxE0GP2M?si=X_ihQmP3ru0x68Yz)
+
+<!--more-->
 
 # Notations
 
@@ -19,11 +27,9 @@ tags:
 
 
 
-
-
 # Sigmoid
 
-
+![Figure 1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%201.png)
 
 The sigmoid function is often denoted as $\sigma(\cdot)$,
 $$
@@ -39,6 +45,8 @@ Disadvantage:
 2. It kills gradients when saturated. You can see the figure that when $|x|=10$, the gradient is alomost 0.
 
 ## Derivative of sigmoid
+
+![Figure 2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%202.png)
 
 The deraivative of sigmoid is:
 $$
@@ -58,6 +66,7 @@ The range of the deraivative of sigmoid function is (0,0.25].
 
 ```python
 import torch
+
 def sigmoid(x):
     sigmoid.__name__ = "sigmoid(x)"
     return 1 / (1 + torch.exp(-x))
@@ -74,7 +83,7 @@ def sigmoid_derivative(x):
 
 
 
-![image-20240125122750757](/Users/lyk/Library/Application Support/typora-user-images/image-20240125122750757.png)
+![Figure 3](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%203.png)
 
 **Drawback**:
 
@@ -108,10 +117,11 @@ It means:
 
 If our goal happens to be in the northwest, we can only move in a zig-zagging fashion to get there, just like parallel parking in a narrow space. (forgive my drawing)
 
-![enter image description here](https://i.stack.imgur.com/eWcLR.png)
+![Figure 4](https://i.stack.imgur.com/eWcLR.png)
 
 # Tanh
 
+![Figure 5](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%205.png)
 
 $$
 \tanh(x)=\frac{\sinh (x)}{\cosh (x)}=\frac{e^x-e^{-x}}{e^x+e^{-x}}=\frac{e^{2 x}-1}{e^{2 x}+1} = 1 - 2\cdot\frac{1}{e^{2x}+1}
@@ -126,6 +136,8 @@ Disadvantage: It kills gradients when saturated.
 
 ## Derivative of tanh
 
+![Figure 6](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%206.png)
+
 The derivative of the tanh function $\tanh (x) = \left(\frac{e^x-e^{-x}}{e^x+e^{-x}}\right)$ with respect to $x$ is 
 $$
 \frac{d}{d x} \tanh (x)=1-\tanh (x)^2 .
@@ -136,10 +148,7 @@ The range of the tanh function is (0,1].
 
 The derivation is:
 $$
-\begin{aligned}
-\frac{d}{d x} \tanh (x) & =\frac{d}{d x}\left(\frac{e^x-e^{-x}}{e^x+e^{-x}}\right) \\
-
-\end{aligned}
+\frac{d}{d x} \tanh (x) =\frac{d}{d x}\left(\frac{e^x-e^{-x}}{e^x+e^{-x}}\right)
 $$
 
 Applying the quotient rule (where $f(x)=e^x-e^{-x}$ and $g(x)=e^x+e^{-x}$ ), we ge
@@ -175,17 +184,16 @@ $$
 
 ```python
 import torch
+
 def tanh(x):
     tanh.__name__ = "tanh(x)"
     numerator =  torch.exp(2*x) - 1
     denominator = torch.exp(2*x) + 1
     return numerator / denominator
 def tanh_derivative(x):
-    tanh_derivative.__name__ = "first-order derivative of `tanh(x)`"
-    return 1 - torch.tanh(x)**2def tanh_derivative(x):
     '''
-        The first-order derivative of `tanh(x)` with respect to x.
-        '''
+    The first-order derivative of `tanh(x)` with respect to x.
+    '''
     tanh_derivative.__name__ = "first-order derivative of `tanh(x)`"
     return 1 - torch.tanh(x)**2
 ```
@@ -193,6 +201,8 @@ def tanh_derivative(x):
 
 
 # ReLU
+
+![Figure 7](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%207.png)
 
 REctified Linear Unit (ReLU):
 $$
@@ -214,6 +224,8 @@ Disadvantages:
 
 ## Derivative of ReLu
 
+![Figure 8](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%208.png)
+
 The derivative of Relu is:
 
 1. 1 if $x>0$.
@@ -223,10 +235,25 @@ The derivative doesn't exist at $x=0$. However, for convience, we **regulate** t
 
 ## Code
 
+```python
+import torch
+
+def relu(x):
+    relu.__name__ = "relu(x)"
+    return torch.maximum(x, torch.tensor(0.0))
+def relu_derivative(x):
+    '''
+    The first-order derivative of `relu(x)` with respect to x.
+    '''
+    relu_derivative.__name__ = "first-order derivative of `relu(x)`"
+    return torch.where(x > 0, torch.tensor(1.0), torch.tensor(0.0))
+```
+
 
 
 # Parametric ReLU
 
+![Figure 9](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%209.png)
 $$
 f(x)=\max (\alpha x, x)
 $$
@@ -250,6 +277,8 @@ Advantages:
 
 ## Derivative of Parametric ReLU
 
+![Figure 10](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%2010.png)
+
 The derivative of the Leaky ReLU function with respect to $x$ is:
 $$
 \begin{cases}1 & \text { if } x>0 \\ \alpha & \text { if } x \leq 0\end{cases}
@@ -257,13 +286,66 @@ $$
 
 ## Code
 
+```python
+import torch
+
+def parametric_relu(x, alpha=0.01):
+    '''
+    When alpha = 0.01, it becomes a leaky ReLU
+    '''
+    parametric_relu.__name__ = f"parametric_relu(x) with alpha={alpha}"
+    return torch.maximum(x, alpha * x)
+def parametric_relu_derivative(x, alpha=0.01):
+    parametric_relu_derivative.__name__ = f"first-order derivative of `parametric_relu(x)` with alpha={alpha}"
+    return torch.where(x > 0, torch.tensor(1.0), torch.tensor(alpha))
+```
+
 
 
 # Softplus
 
+![Figure 11](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%2011.png)
 $$
 f(x) = \log (1 + e^x)
 $$
+
+Note: the base of $\log$ here is $e$.
+
+## Derivative of softplus
+
+![Figure 12](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%2012.png)
+
+Outer function derivative ($\log_e$):
+$$
+\begin{aligned}
+& \frac{d}{d u} \log (u)=\frac{1}{u} \\
+& \text { Here, } u=1+e^x .
+\end{aligned}
+$$
+
+Inner function derivative $\left(1+e^x\right)$ :
+$$
+\frac{d}{d x}\left(1+e^x\right)=e^x
+$$
+
+Applying the chain rule:
+$$
+\frac{d}{d x} \log \left(1+e^x\right)=\frac{1}{1+e^x} \cdot e^x = \frac{e^x}{1+e^x}
+$$
+
+## Code
+
+```python
+def softplus(x):
+    softplus.__name__ = "softplus(x)"
+    return torch.log(1 + torch.exp(x))
+
+def softplus_derivative(x):
+    '''
+    The first-order derivative of `softplus(x)` with respect to x.
+    '''
+    return 1 / (1 + torch.exp(-x))
+```
 
 
 
@@ -271,13 +353,14 @@ $$
 
 Image from [Thomas's article](https://towardsdatascience.com/derivative-of-the-softmax-function-and-the-categorical-cross-entropy-loss-ffceefc081d1)
 
-![img](https://miro.medium.com/v2/resize:fit:1400/1*gctBX5YHUUpBEK3MWD6r3Q.png)
+![Figure 13](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Activation%20Functions/Figure%2013.png)
 
-The softmax dunction for a vector $x = [x_1, x_2, c\dots, x_n]^T$ is $f: \mathbb{R}^{n \times 1} \rightarrow \mathbb{R}^{n \times 1}$:
+The softmax function for a vector $x = [x_1, x_2, c\dots, x_n]^T$ is $f: \mathbb{R}^{n \times 1} \rightarrow \mathbb{R}^{n \times 1}$:
 $$
 f\left(x_i\right)=\frac{e^{x_i}}{\sum_{j=1}^N e^{x_j}}
 $$
 
+The output is a $n$-dimensional vector where every element is positive and the total elements sum up to 1.
 
 ## Derivative of softmax
 
@@ -348,7 +431,6 @@ def softmax(x):
 def softmax_derivative(x):
     '''
     The first-order derivative of `softmax(x)` with respect to x.
-    Suppose the input `x` is a 1-D tensor with length n, the output is a n * n Jacobian matrix.
     '''
     softmax_derivative.__name__ = f"first-order derivative of `softmax(x)`"
 
