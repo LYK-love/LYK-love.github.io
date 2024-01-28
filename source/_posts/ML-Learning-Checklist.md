@@ -21,16 +21,38 @@ Resources for learning ML(Machine Learning), DL(Deep Learning), RL(Reinforcement
 # ML
 
 * [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html)
+
 * [Deep Reinforcement Learning, UC Berkeley, CS285](https://www.youtube.com/playlist?list=PL_iWQOsE6TfVYGEGiAOMaOzzv41Jfm_Ps) 
+
 * [C230, Deep Learning 2018, by Andrew Ng](https://www.youtube.com/watch?v=PySo_6S4ZAg&list=PLoROMvodv4rOABXSygHTsbvUz4G_YQhOb)
+
 * [Stanford 231n, 2017](https://www.youtube.com/playlist?list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk)
+
 * [Convex Optimization I, Stanford, EE364A](https://see.stanford.edu/Course/EE364A/85)
+
 * [Advanced Probability, CMU, 36-752](https://www.stat.cmu.edu/~arinaldo/Teaching/36752/S18/schedule.html)
+
 * [Stochastic Calculus and Stochastic Control, Princeton, ACM 217](https://web.math.princeton.edu/~rvan/acm217/acm217.html)
+
 * [Theoretical Foundations of Reinforcement Learning, University of Alberta, CMPUT 605](https://rltheory.github.io/pages/about/)
+
 * [Efficient AI](https://www.youtube.com/watch?v=C-4F7o8nr0E)
 
+* Stanford CS 224R: Deep Reinforcement Learning
 
+* [Stanford CS238 Decision Making under Uncertainty](https://aa228.stanford.edu/)
+
+* CS221: Artificial Intelligence: Principles and Techniques
+
+* CS 224W: Machine Learning with Graphs
+
+* CS 246W: Mining Massive Datasets
+
+* CS 228: PGM
+
+* CS237b: http://web.stanford.edu/class/cs237b/
+
+  
 
 Others:
 

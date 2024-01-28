@@ -1,5 +1,0 @@
-user: Java tutorial
-user: efsfsd
-user: gpt?
-user: cscs
-user: gpt

@@ -97,7 +97,7 @@ Procedure summary:
 
 $v_k(s) \rightarrow q_k(s, a) \rightarrow$ greedy policy $\pi_{k+1}(a \mid s) \rightarrow$ new value $v_{k+1}=\max _a q_k(s, a)$
 
-![Algorithm 4.1: Value iteration algorithm](/Users/lyk/Library/Application Support/typora-user-images/image-20240108112752491.png)
+![Algorithm 4.1: Value iteration algorithm](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/Algorithm%204.1-%20Value%20iteration%20algorithm.png)
 
 ## Example
 
@@ -105,18 +105,18 @@ We next present an example to illustrate the step-by-step implementation of the 
 
 
 
-![Figure 4.2: An example for demonstrating the implementation of the value iteration algorithm.](/Users/lyk/Library/Application Support/typora-user-images/image-20240108101033803.png)The target area is $s_4$. The reward settings are $r_{\text {boundary }}=r_{\text {forbidden }}=-1$ and $r_{\text {target }}=1$. The discount rate is $\gamma=0.9$.
+![Figure 4.2: An example for demonstrating the implementation of the value iteration algorithm.](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/Figure%204.2-%20An%20example%20for%20demonstrating%20the%20implementation%20of%20the%20value%20iteration%20algorithm.png)The target area is $s_4$. The reward settings are $r_{\text {boundary }}=r_{\text {forbidden }}=-1$ and $r_{\text {target }}=1$. The discount rate is $\gamma=0.9$.
 
 The q-table is:
 
-![Table 4.1: The expression of q(s, a) for the example as shown in Figure 4.2.](/Users/lyk/Library/Application Support/typora-user-images/image-20240108101329784.png)
+![Table 4.1: The expression of q(s, a) for the example as shown in Figure 4.2.](/Users/lyk/Pictures/HexoPics/Machine Learning/Value Iteration and Policy Iteration/Table 4.1- The expression of q(s, a) for the example as shown in Figure 4_2.png)
 
 
 
 ### k=0
 
 $k=0$ : let $v_0\left(s_1\right)=v_0\left(s_2\right)=v_0\left(s_3\right)=v_0\left(s_4\right)=0$
-![image-20240108101603836](/Users/lyk/Library/Application Support/typora-user-images/image-20240108101603836.png)
+![case: k=0](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/case_k%3D1.png)
 
 Step 1: Policy update:
 $$
@@ -135,7 +135,7 @@ $$
 
 $k=1$ : since $v_1\left(s_1\right)=0, v_1\left(s_2\right)=1, v_1\left(s_3\right)=1, v_1\left(s_4\right)=1$, we have
 
-![image-20240108101727957](/Users/lyk/Library/Application Support/typora-user-images/image-20240108101727957.png)
+![case: k=1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/case_k%3D0.png)
 
 Step 1: Policy update:
 $$
@@ -159,30 +159,25 @@ $k=2,3, \ldots$ Stop when $\left\|v_k-v_{k+1}\right\|$ is smaller than a predefi
 
 Policy iteration is an iterative algorithm. Each iteration has two steps.
 
-Given a random initial policy $\pi_0$,
+Given a random initial policy $\pi_0$, in each olicy iteration we do
 
-**Step 1**: policy evaluation (PE)
-This step is to calculate the state value of $\pi_k$ :
-$$
-\begin{equation} \label{eq_policy_evaluation}
-v_{\pi_k}=r_{\pi_k}+\gamma P_{\pi_k} v_{\pi_k}
-\end{equation}
-$$
+1. **policy evaluation (PE)**:
+   $$
+   \begin{equation} \label{eq_policy_evaluation}
+   v_{\pi_k}=r_{\pi_k}+\gamma P_{\pi_k} v_{\pi_k}
+   \end{equation}
+   $$
+   Note: **$v_{\pi_k}$ is a state value function**.
 
-Note: **$v_{\pi_k}$ is a state value function**.
-
-
-
-**Step 2**: policy improvement (PI)
-$$
-\pi_{k+1}=\arg \max _\pi\left(r_\pi+\gamma P_\pi v_{\pi_k}\right)
-$$
-
-The maximization is componentwise!
+2. **policy improvement (PI)**:
+   $$
+   \pi_{k+1}=\arg \max _\pi\left(r_\pi+\gamma P_\pi v_{\pi_k}\right)
+   $$
+   The maximization is componentwise.
 
 
 
-The algorithm leads to a sequence
+The policy iteration algorithm leads to a sequence
 $$
 \pi_0 \stackrel{P E}{\longrightarrow} v_{\pi_0} \stackrel{P I}{\longrightarrow} \pi_1 \stackrel{P E}{\longrightarrow} v_{\pi_1} \stackrel{P I}{\longrightarrow} \pi_2 \stackrel{P E}{\longrightarrow} v_{\pi_2} \stackrel{P I}{\longrightarrow} \ldots \nonumber
 $$
@@ -350,13 +345,13 @@ $$
 
 ### Algorithm
 
-![Algorithm 4.2: Policy iteration algorithm](/Users/lyk/Library/Application Support/typora-user-images/image-20240108112837625.png)
+![Algorithm 4.2: Policy iteration algorithm.](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/Algorithm%204.2-%20Policy%20iteration%20algorithm.png)
 
 ## Example
 
 
 
-![Figure 4.3: An example for illustrating the implementation of the policy iteration algorithm.](/Users/lyk/Library/Application Support/typora-user-images/image-20240108105721522.png)
+![Figure 4.3: An example for illustrating the implementation of the policy iteration algorithm.](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/Figure%204.3-%20An%20example%20for%20illustrating%20the%20implementation%20of%20the%20policy%20iteration%20algorithm.png)
 
 * The reward setting is $r_{\text {boundary }}=-1$ and $r_{\text {target }}=1$. The discount ate is $\gamma=0.9$.
 * Actions: $a_{\ell}, a_0, a_r$ represent go left, stay unchanged, and go right.
@@ -431,18 +426,22 @@ This policy is optimal after one iteration! In your programming, should continue
 
 Settin $r_{\text {boundary }}=-1, r_{\text {forbidden }}=-10$, and $r_{\text {target }}=$ 1. The discount rate is $\gamma=0.9$. The policy iteration algorithm can converge to the optimal policy (Figure 4.4(h)) when starting from a random initial policy (Figure 4.4(a)).
 
-![image-20240108110505621](/Users/lyk/Library/Application Support/typora-user-images/image-20240108110505621.png)
+![Figure 4.4](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/Figure%204_4.png)
 
 # Truncated policy iteration
 
 The above steps of the two algorithms can be illustrated as
 
-![image-20240108111120515](/Users/lyk/Library/Application Support/typora-user-images/image-20240108111120515.png)
+Policy iteration: $\pi_0 \xrightarrow{P E} v_{\pi_0} \xrightarrow{P I} \pi_1 \xrightarrow{P E} v_{\pi_1} \xrightarrow{P I} \pi_2 \xrightarrow{P E} v_{\pi_2} \xrightarrow{P I} \ldots$.
+
+Value iteration: $\quad v_0 \xrightarrow{P U} \pi_1^{\prime} \xrightarrow{V U} v_1 \xrightarrow{P U} \pi_2^{\prime} \xrightarrow{V U} v_2 \xrightarrow{P U} \ldots$
+
+
 
 It can be seen that the procedures of the two algorithms are very similar.
 We examine their value steps more closely to see the difference between the two algorithms. In particular, let both algorithms start from the same initial condition: $v_0=v_{\pi_0}$. 
 
-![Table 4.6: A comparison between the implementation steps of policy iteration and value iteration.](/Users/lyk/Library/Application Support/typora-user-images/image-20240108112536508.png)
+![Table 4.6: A comparison between the implementation steps of policy iteration and value iteration.](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/Table%204.6-%20A%20comparison%20between%20the%20implementation%20steps%20of%20policy%20iteration%20and%20value%20iteration.png)
 
 The procedures of the two algorithms are listed in Table 4.6. 
 
@@ -451,7 +450,7 @@ The procedures of the two algorithms are listed in Table 4.6.
 
 If we explicitly write out the iterative process for solving $v_{\pi_1}=r_{\pi_1}+\gamma P_{\pi_1} v_{\pi_1}$ in the fourth step, everything becomes clear. By letting $v_{\pi_1}^{(0)}=v_0$, we have
 
-![image-20240108112636749](/Users/lyk/Library/Application Support/typora-user-images/image-20240108112636749.png)
+![Comparisons](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/Comparisons.png)
 
 The following observations can be obtained from the above process.
 
@@ -467,7 +466,7 @@ It should be noted that, although the above comparison is illustrative, it is ba
 
 In a nutshell, the truncated policy iteration algorithm is **the same as the policy iteration algorithm except that it merely runs a finite number of iterations in the policy evaluation step.** 
 
-![Algorithm 4.3: Truncated policy iteration algorithm](/Users/lyk/Library/Application Support/typora-user-images/image-20240108112710668.png)
+![Algorithm 4.3: Truncated policy iteration algorithm.](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/Algorithm%204.3-%20Truncated%20policy%20iteration%20algorithm.pn)
 
 
 
@@ -506,5 +505,5 @@ There's no proof of truncated policy iteration can produce the optimal policy...
 
 ## Relationships between the three algorithms
 
-![Figure 4.5: An illustration of the relationships between the value iteration, policy iteration, and truncated policy iteration algorithms.](/Users/lyk/Library/Application Support/typora-user-images/image-20240108112102926.png)
+![Figure 4.5: An illustration of the relationships between the value iteration, policy iteration, and truncated policy iteration algorithms.](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/Figure%204.5-%20An%20illustration%20of%20the%20relationships%20between%20the%20value%20iteration%2C%20policy%20iteration%2C%20and%20truncated%20policy%20iteration%20algorithms.png)
 

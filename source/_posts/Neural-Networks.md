@@ -11,10 +11,17 @@ date: 2023-12-08 19:43:54
 Source: 
 
 1. [Stanford CS231, Lecture 4](https://youtu.be/d14TUNcbn1k?si=fGVVrRpYIhqbBKBt)
-2. [Neural Networks Pt. 2: Backpropagation Main Ideas](https://www.youtube.com/watch?v=IN2XmBhILt4&list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF&index=75)
-3. [Backpropagation Details Pt. 1: Optimizing 3 parameters simultaneously](https://www.youtube.com/watch?v=iyn2zdALii8&t=936s)
-4. [Backpropagation Details Pt. 2: Going bonkers with The Chain Rule](https://www.youtube.com/watch?v=GKZoOHXGcLo&t=643s)
-5. [Forwardpropagation, Backpropagation and Gradient Descent with PyTorch](https://www.deeplearningwizard.com/deep_learning/boosting_models_pytorch/forwardpropagation_backpropagation_gradientdescent/#forwardpropagation-backpropagation-and-gradient-descent-with-pytorch)
+
+2. [Calculus on Computational Graphs: Backpropagation](http://colah.github.io/posts/2015-08-Backprop/)
+
+3. [StatQuest's Neural Networks videos](https://www.youtube.com/watch?v=IN2XmBhILt4&list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF&index=75)
+
+7. [Efficient backprop](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf). You need do download it via
+
+   ```sh
+   wget http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf
+   ```
+
 
 
 
