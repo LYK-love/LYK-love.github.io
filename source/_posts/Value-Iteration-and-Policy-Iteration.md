@@ -189,7 +189,7 @@ $\eqref{eq_policy_evaluation}$ is a Bellman equation. We've learned [there're tw
 
 **Closed-form solution**:
 $$
-v_{\pi_k}=\left(I-\gamma P_{\pi_k}\right)^{-1} r_{\pi_k} \nonumber
+v_{\pi_k}=\left(I-\gamma P_{\pi_k}\right)^{-1} r_{\pi_k} .
 $$
 
 **Iterative solution**:
@@ -199,7 +199,7 @@ v_{\pi_k}^{(j+1)}=r_{\pi_k}+\gamma P_{\pi_k} v_{\pi_k}^{(j)}, \quad j=0,1,2, \ld
 \end{equation}
 $$
 
-where $v_{\pi_k}^{(j)}$ denotes the $j$ th estimate of $v_{\pi_k}$. Starting from any initial guess $v_{\pi_k}^{(0)}$, it is ensured that $v_{\pi_k}^{(j)} \rightarrow v_{\pi_k}$ as $j \rightarrow \infty$ ([-->See the proof](https://lyk-love.cn/2024/01/03/bellman-equation-the-matrix-vector-form/#proof-the-iterative-solution)).
+where $v_{\pi_k}^{(j)}$ denotes the $j$ th estimate of $v_{\pi_k}$. Starting from **any initial guess** $v_{\pi_k}^{(0)}$, it is ensured that $v_{\pi_k}^{(j)} \rightarrow v_{\pi_k}$ as $j \rightarrow \infty$ ([-->See the proof](https://lyk-love.cn/2024/01/03/bellman-equation-the-matrix-vector-form/#proof-the-iterative-solution)).
 
 
 
@@ -361,7 +361,7 @@ $$
 
 Iteration $k=0$ : 
 
-Step 1: policy evaluation
+**Step 1**: policy evaluation
 $\pi_0$ is selected as the policy in Figure (a). The Bellman equation is
 $$
 \begin{aligned}
@@ -371,33 +371,35 @@ $$
 $$
 
 
-Solve the equations directly:
+Since the quation is simple, it can be manually solved that
 $$
 v_{\pi_0}\left(s_1\right)=-10, \quad v_{\pi_0}\left(s_2\right)=-9 .
 $$
 
-
-Solve the equations iteratively. Select the initial guess as
+In practice, the equation can be solved by the iterative algorithm in $\eqref{eq_iterative_solution}$. For example, select the initial state values as $v_{\pi_0}^{(0)}\left(s_1\right)=v_{\pi_0}^{(0)}\left(s_2\right)=0$. It follows from $\eqref{eq_policy_evaluation}$ that:
 $$
-\begin{aligned}
-& v_{\pi_0}^{(0)}\left(s_1\right)=v_{\pi_0}^{(0)}\left(s_2\right)=0: \\
-&\left\{\begin{array}{l}
+\begin{gathered}
+\left\{\begin{array}{c}
 v_{\pi_0}^{(1)}\left(s_1\right)=-1+\gamma v_{\pi_0}^{(0)}\left(s_1\right)=-1, \\
-v_{\pi_0}^{(1)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(0)}\left(s_1\right)=0,
+v_{\pi_0}^{(1)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(0)}\left(s_1\right)=0
 \end{array}\right. \\
-&\left\{\begin{array}{l}
-v_{\pi_0}^{(2)}\left(s_1\right)=-1+\gamma v_{\pi_0}^{(1)}\left(s_1\right)=-1.9, \\
-v_{\pi_0}^{(2)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(1)}\left(s_1\right)=-0.9,
+\left\{\begin{array}{c}
+v_{\pi_0}^{(2)}\left(s_1\right)=-1+\gamma v_{\pi_0}^{(1)}\left(s_1\right)=-1.9 \\
+v_{\pi_0}^{(2)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(1)}\left(s_1\right)=-0.9
 \end{array}\right. \\
-&\left\{\begin{array}{l}
+\left\{\begin{array}{c}
 v_{\pi_0}^{(3)}\left(s_1\right)=-1+\gamma v_{\pi_0}^{(2)}\left(s_1\right)=-2.71, \\
-v_{\pi_0}^{(3)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(2)}\left(s_1\right)=-1.71,
+v_{\pi_0}^{(3)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(2)}\left(s_1\right)=-1.71, \\
+\vdots
 \end{array}\right.
-\end{aligned} \nonumber
+\end{gathered}
 $$
 
+With more iterations, we can see the trend: $v_{\pi_0}^{(j)}\left(s_1\right) \rightarrow v_{\pi_0}\left(s_1\right)=-10$ and $v_{\pi_0}^{(j)}\left(s_2\right) \rightarrow$ $v_{\pi_0}\left(s_2\right)=-9$ as $j$ increases.
 
-Step 2: policy improvement
+
+
+**Step 2**: policy improvement
 
 The expression of $q_{\pi_k}(s, a)$ :
 
@@ -408,7 +410,9 @@ The expression of $q_{\pi_k}(s, a)$ :
 
 
 
-Substituting $v_{\pi_0}\left(s_1\right)=-10, v_{\pi_0}\left(s_2\right)=-9$ and $\gamma=0.9$ gives
+Substituting $v_{\pi_0}\left(s_1\right)=-10, v_{\pi_0}\left(s_2\right)=-9$ and $\gamma=0.9$ obtained in the previous policy evaluation
+
+step into the above table yields:
 
 | $q_{\pi_0}(s, a)$ | $a_{\ell}$ | $a_0$ | $a_r$ |
 | ----------------- | ---------- | ----- | ----- |
@@ -424,7 +428,7 @@ This policy is optimal after one iteration! In your programming, should continue
 
 ## A more complicated example
 
-Settin $r_{\text {boundary }}=-1, r_{\text {forbidden }}=-10$, and $r_{\text {target }}=$ 1. The discount rate is $\gamma=0.9$. The policy iteration algorithm can converge to the optimal policy (Figure 4.4(h)) when starting from a random initial policy (Figure 4.4(a)).
+Setting $r_{\text {boundary }}=-1, r_{\text {forbidden }}=-10$, and $r_{\text {target }}=$ 1. The discount rate is $\gamma=0.9$. The policy iteration algorithm can converge to the optimal policy (Figure 4.4(h)) when starting from a random initial policy (Figure 4.4(a)).
 
 ![Figure 4.4](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Value%20Iteration%20and%20Policy%20Iteration/Figure%204_4.png)
 
