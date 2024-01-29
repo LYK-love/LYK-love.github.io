@@ -39,3 +39,19 @@ ssh -f -N -q -L localPort:localhost:remotePort username@remoteHost
 
 Now you can visit `http://localhost:8080`, the ssh will route the network traffic to `x.x.x.x:8080`, then forwarding it to the 8080 port of the server locally.
 
+# Management
+
+Look at all ssh processes:
+
+```sh
+ps aux | grep ssh
+```
+
+
+
+Kill all ssh preocesses:
+
+```sh
+killall ssh
+```
+

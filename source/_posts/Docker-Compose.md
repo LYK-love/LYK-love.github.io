@@ -21,22 +21,6 @@ Outline:
 
 # Background
 
-* Docker Compose  前身是  Fig
-
-* 目前为止，Docker Compose依然需要在docker主机上进行外部安装
-
-  ```shell
-  apt  install docker-compose
-  ```
-
-   检查安装是否成功：
-
-  ```shell
-  docker-compose --version
-  ```
-
-  
-
 * 单引擎模式部署workflow：
   1. 编写定义多容器应用的YAML文件（称为Compose文件）
   2. 将其交给`docker-compose`  命令， 
@@ -49,7 +33,24 @@ Docker Compose是Docker Stack的<u>简化版</u>. 能够在Docker节点上以单
 * 真正的多服务应用中, 服务是若干容器的集合, 作为一个整体进行统一管理. 例如Docker Stack
 * Docker Compose中的一个服务就只有一个容器,因此是"简化版多服务应用"
 
+# Installation
 
+See [Install the Compose plugin](https://docs.docker.com/compose/install/linux/)
+
+1. First, you need to [install docker](https://lyk-love.cn/2022/02/13/docker-basic/#installation).
+
+2. Update the package index, and install the latest version of Docker Compose. For Ubuntu and Debian, run:
+
+   ```sh
+    sudo apt-get update
+    sudo apt-get install docker-compose-plugin
+   ```
+
+3. Verify that Docker Compose is installed correctly by checking the version.
+
+   ```sh
+    docker compose version
+   ```
 
 # Basic Idea
 

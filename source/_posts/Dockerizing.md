@@ -284,13 +284,13 @@ denied: requested access to the resource is denied
 
    
 
-2. 为当前镜像重新打一个标签（ 与当前dockerhub id相符）：
+2. Tag your Docker image with your Docker Hub  username and the repository name you want to use. For example, if your  username is `username` and your image name is `myimage`, you might tag it like this:
 
    ```shell
-   docker image tag <current-tag> <new-tag>
+   docker image tag <image name> <username>:<new tag>
    ```
 
-   
+   * `image name`: name of the docker image, composed of `REPOSITORY` and `TAG`.
 
 3. push镜像（以新标签标识的镜像）：
 
