@@ -109,7 +109,7 @@ $$
 
 For each state-action pair, we need to roll out $N$ episodes to estimate the action value. However, since it's a deterministic policy, we only need to rollout 1 step.
 
-For space limitation, we only illustrate for $s_1$:
+For space limitation, we only illustrate for the part of action value for $s_1$ in the first iteration.
 
 ## Step 1: policy evaluation
 

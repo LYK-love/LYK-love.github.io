@@ -46,68 +46,201 @@ Docker采用CS模式， 分为Client ， Engine， Index三部分， docker serv
 
 docker内置组件都可以替换为第三方组件，“ Batteries  included but removable”
 
-## 开放容器计划
+## The Open Container Initiative
 
 The Open Container Initiative, OCI:    旨在管理容器标准的委员会， 目前已发布两项规范
 
 1. 镜像规范
 2. 容器运行时规范
 
-## Docker安装
+## Installation
 
-建议所有的云服务器都按如下流程走一遍
+See [Install Docker Engine](https://docs.docker.com/engine/install/)
 
-1. ``sudo apt install docker`
+Take Ubuntu as an example, 
 
-
-
-2. 最好使用非root用户来使用Docker,此时需要添加非root用户到本地Docker Unix组：`sudo usermod -aG docker [user_name]`
-   * 如果当前登陆用户就是要添加进组的用户的话，需要重新登陆才能生效
-     * 这意味着，如果该登陆用户是个jenkins登陆用户，则需要在jenkins上断连再重新连接
-   
-3. 确认安装结果：
+1. Before isntallation, to avoid conficts,  run the following command to uninstall all conflicting packages:
 
    ```shell
-   root@lykRemote:~# docker --version
-   Docker version 20.10.12, build e91ed57
-   root@lykRemote:~# docker system info
-   Client:
-    Context:    default
-    Debug Mode: false
-   <Snip>
+   for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do sudo apt-get remove $pkg; done
+   ```
+
+   `apt-get` might report that you have none of these packages installed.
+
+1. Set up Docker's `apt` repository.
+
+   ```bash
+   # Add Docker's official GPG key:
+   sudo apt-get update
+   sudo apt-get install ca-certificates curl
+   sudo install -m 0755 -d /etc/apt/keyrings
+   sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+   sudo chmod a+r /etc/apt/keyrings/docker.asc
    
-   Server:
-    Containers: 1
-     Running: 1
-     Paused: 0
-     Stopped: 0
-    Images: 9
-    Server Version: 20.10.12
-   <Snip>
+   # Add the repository to Apt sources:
+   echo \
+     "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+     $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+     sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   sudo apt-get update
    ```
 
-4. 设置docker开机启动：
+2. Install the Docker packages.
 
-   `systemctl enable docker`
-
-   * 可能遇到
-
-     `Failed to enable unit: Unit file /etc/systemd/system/docker.service is masked`，
-
-     此时需要：
-
-     `systemctl unmask docker`
-
-5. docker启动和关闭：
-
-   ```shell
-   systemctl start docker
+   ```sh
+   sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
    ```
 
+3. Verify that the Docker Engine installation is successful by running the `hello-world` image.
+
+   ```console
+    sudo docker run hello-world
+   ```
+
+   This command downloads a test image and runs it in a container. When the container runs, it prints a confirmation message and exits.
 
 
 
-## Docker升级
+
+
+## Post-installation steps for Docker Engine
+
+See:
+
+1. [Linux post-installation steps for Docker Engine](https://docs.docker.com/engine/install/linux-postinstall/)
+2. [How To Install and Use Docker on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
+
+### Add user to docker group
+
+The Docker daemon binds to a Unix socket, not a TCP port. By default it's the `root` user that owns the Unix socket, and other users can only access it using `sudo`. The Docker daemon always runs as the `root` user.
+
+If you don't want to preface the `docker` command with `sudo`, create a Unix group called `docker` and add users to it. When the Docker daemon starts, it creates a Unix socket accessible by members of the `docker` group. 
+
+To create the `docker` group and add your user:
+
+1. Create the `docker` group.
+
+   ```console
+    sudo groupadd docker
+   ```
+
+2. Add your user to the `docker` group.
+
+   ```sh
+    sudo usermod -aG docker $USER
+   ```
+
+3. Log out and log back in so that your group membership is re-evaluated.
+
+   You can also run the following command to activate the changes to groups:
+
+   ```sh
+    newgrp docker
+   ```
+
+4. Confirm that your user is now added to the **docker** group by typing:
+
+   ```bash
+   groups
+   lyk sudo docker
+   ```
+
+5. Verify that you can run `docker` commands without `sudo`.
+
+   ```sh
+   docker run hello-world
+   ```
+
+6. If you need to add a user to the `docker` group that you’re not logged in as, declare that username explicitly using:
+
+   ```bash
+   sudo usermod -aG docker username
+   ```
+
+### Set to auto-start
+
+By default, docker daemon is not set to auto-start, you can verify that by:
+
+```sh
+systemctl is-enabled docker
+```
+
+You can set that by:
+
+```sh
+systemctl enable docker
+```
+
+You may encounter: `Failed to enable unit: Unit file /etc/systemd/system/docker.service is masked.` To solve this, `systemctl unmask docker`.
+
+
+
+## Docekr service
+
+After installation, the docker daemon should have started, and the process enabled to start on boot. Check that it’s running:
+
+```bash
+sudo systemctl status docker
+```
+
+The output should be similar to the following, showing that the service is active and running:
+
+```
+Output● docker.service - Docker Application Container Engine
+     Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+     Active: active (running) since Tue 2020-05-19 17:00:41 UTC; 17s ago
+TriggeredBy: ● docker.socket
+       Docs: https://docs.docker.com
+   Main PID: 24321 (dockerd)
+      Tasks: 8
+     Memory: 46.4M
+     CGroup: /system.slice/docker.service
+             └─24321 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+```
+
+
+
+
+
+Start docker daemon:
+
+```sh
+systemctl start docker
+```
+
+## Uninstall docker
+
+See [How to completely uninstall docker](https://askubuntu.com/questions/935569/how-to-completely-uninstall-docker)
+
+
+
+To completely uninstall Docker:
+
+1. To identify what installed package you have:
+
+   ```sh
+   dpkg -l | grep -i docker
+   ```
+
+2. Remove installed packages:
+
+   ```sh
+   sudo apt-get purge -y docker-engine docker docker.io docker-ce docker-ce-cli docker-compose-plugin
+   sudo apt-get autoremove -y --purge docker-engine docker docker.io docker-ce docker-compose-plugin
+   ```
+
+3. The above commands will not remove images, containers, volumes, or  user created configuration files on your host. If you wish to delete all images, containers, and volumes run the following commands:
+
+   ```sh
+   sudo rm -rf /var/lib/docker /etc/docker
+   sudo rm /etc/apparmor.d/docker
+   sudo groupdel docker
+   sudo rm -rf /var/run/docker.sock
+   ```
+
+   
+
+## Upgrade docker
 
 1. 卸载当前Docker：
 
@@ -123,7 +256,7 @@ The Open Container Initiative, OCI:    旨在管理容器标准的委员会， �
 
 2. 安装新版本Docker：同上
 
-## Docker配置
+## Config
 
 查看docker配置文件位置：
 

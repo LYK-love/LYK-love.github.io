@@ -167,13 +167,13 @@ Given a random initial policy $\pi_0$, in each olicy iteration we do
    v_{\pi_k}=r_{\pi_k}+\gamma P_{\pi_k} v_{\pi_k}
    \end{equation}
    $$
-   Note: **$v_{\pi_k}$ is a state value function**.
+   Note: **$v_{\pi_k}$ is a state value function**. So we need to get the state values for **all states**, not for one specific state, in PE.
 
 2. **policy improvement (PI)**:
    $$
    \pi_{k+1}=\arg \max _\pi\left(r_\pi+\gamma P_\pi v_{\pi_k}\right)
    $$
-   The maximization is componentwise.
+   The *maximization* is componentwise.
 
 
 
@@ -378,21 +378,24 @@ $$
 
 In practice, the equation can be solved by the iterative algorithm in $\eqref{eq_iterative_solution}$. For example, select the initial state values as $v_{\pi_0}^{(0)}\left(s_1\right)=v_{\pi_0}^{(0)}\left(s_2\right)=0$. It follows from $\eqref{eq_policy_evaluation}$ that:
 $$
-\begin{gathered}
-\left\{\begin{array}{c}
+\begin{aligned}
+& \left\{\begin{array}{l}
 v_{\pi_0}^{(1)}\left(s_1\right)=-1+\gamma v_{\pi_0}^{(0)}\left(s_1\right)=-1, \\
-v_{\pi_0}^{(1)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(0)}\left(s_1\right)=0
+v_{\pi_0}^{(1)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(0)}\left(s_1\right)=0,
 \end{array}\right. \\
-\left\{\begin{array}{c}
-v_{\pi_0}^{(2)}\left(s_1\right)=-1+\gamma v_{\pi_0}^{(1)}\left(s_1\right)=-1.9 \\
-v_{\pi_0}^{(2)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(1)}\left(s_1\right)=-0.9
+& \left\{\begin{array}{l}
+v_{\pi_0}^{(2)}\left(s_1\right)=-1+\gamma v_{\pi_0}^{(1)}\left(s_1\right)=-1.9, \\
+v_{\pi_0}^{(2)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(1)}\left(s_1\right)=-0.9,
 \end{array}\right. \\
-\left\{\begin{array}{c}
+& \left\{\begin{array}{l}
 v_{\pi_0}^{(3)}\left(s_1\right)=-1+\gamma v_{\pi_0}^{(2)}\left(s_1\right)=-2.71, \\
-v_{\pi_0}^{(3)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(2)}\left(s_1\right)=-1.71, \\
-\vdots
-\end{array}\right.
-\end{gathered}
+v_{\pi_0}^{(3)}\left(s_2\right)=0+\gamma v_{\pi_0}^{(2)}\left(s_1\right)=-1.71,
+\end{array}\right. \\
+
+&\cdots
+
+
+\end{aligned}
 $$
 
 With more iterations, we can see the trend: $v_{\pi_0}^{(j)}\left(s_1\right) \rightarrow v_{\pi_0}\left(s_1\right)=-10$ and $v_{\pi_0}^{(j)}\left(s_2\right) \rightarrow$ $v_{\pi_0}\left(s_2\right)=-9$ as $j$ increases.
