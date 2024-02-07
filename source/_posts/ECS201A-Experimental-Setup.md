@@ -160,3 +160,12 @@ After running the command above, this is what you will see in your terminal.
 Redirecting stdout to m5out/simout
 Redirecting stderr to m5out/simerr
 ```
+
+
+
+Redirecting output: `--outdir=<outpout_folder>`
+
+# Appendix
+
+* [Syllabus](https://jlpteaching.github.io/comparch/syllabus/#tests)
+* [Past lecture videos](https://video.ucdavis.edu/playlist/details/1_r742jxna)

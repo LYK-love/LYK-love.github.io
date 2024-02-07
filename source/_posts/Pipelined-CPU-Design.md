@@ -1,8 +1,10 @@
 ---
-title: Pipelined CPU Design 
-categories: Computer Science
+title: Pipelined CPU Design
 tags: Computer Architecture
+categories: Computer Science
+date: 2024-02-06 21:36:50
 ---
+
 
 Source:
 
@@ -11,18 +13,7 @@ Source:
 
 <!--more-->
 
-# Organizing Processing into Stages
 
-Canonically, we have the following five steps to complete an instruction:
-
-1. **Fetch** the instruction: get the instruction data (machine code) from memory.
-2. **Decode** the instruction: figure out what we should do and read the data from the register file.
-3. **Execute** the instruction: use the arithmetic/logic unit (ALU) to compute a result, the effective address, or direction of the branch.
-4. **Memory**: if the instruction needs to access memory, do it.
-5. **Writeback** the instruction: (if required) write the result of the instruction to the register file.
-6. *PC update.* The PC is set to the address of the next instruction. ??
-
-The processor loops indefinitely, performing these stages. Ideally, **each step is finished in one clock cycle**.
 
 # What is pipelining ?
 
@@ -36,7 +27,43 @@ Because all stages proceed at the same time, the length of a processor cycle is 
 
 Pipelining increases the processor instruction *throughput*—the number of instructions completed per unit of time—but it alsp increases the *latency* due to overhead in the control of the pipeline. 
 
+# Organizing Processing into Stages
 
+Canonically, we have the following five steps to complete an instruction:
+
+1. **Fetch** the instruction: In this stage, the processor retrieves the next instruction to be  executed from memory. The program counter (PC) keeps track of the  current instruction address, and after fetching, the PC is updated to  point to the next instruction.
+2. **Decode** the instruction: figure out what we should do and read the data from the register file.
+3. **Execute** the instruction: use the arithmetic/logic unit (ALU) to compute a result, the effective address, or direction of the branch.
+4. **Memory**: For instructions that involve data memory access (load and store  instructions), this stage is used to **read from or write to memory**. Load  instructions read data from the calculated memory address into a  register, while store instructions write data from a register to the  calculated memory address.
+5. **Writeback** the instruction: (if required) write the result of the instruction to the register file. For arithmetic and logical instructions, this typically involves writing the result into a destination register. For load instructions, the data fetched from memory is written into a destination register.
+
+The processor loops indefinitely, performing these stages. Ideally, **each step is finished in one clock cycle**.
+
+(This five-stage model applies to most RISC ISAs, including RISC-V. For some CISC ISAs, they may use a simpler four-stage model.)
+
+# Single cycle CPU design
+
+In single cycle CPU design, for every instruction, the 5 stages should be executed sequentially.
+
+Since the CPU cycle time can't be changed after the CPU is produced, we must make it larger enough so that every single instruction can be executed in it.
+
+Therefore, the design of the CPU cycle time is limited by the [latency]() of the longest instructions. 
+
+# Pipelined CPU design
+
+* The cycle time of a pipelined CPU design is the latency of its critical stage (the stage with the longest latency).
+* Theoretically the maximum CPI of a single-issue pipelined CPU design is 1. 
+* However, pipelined CPU design introduces **hazards**.
+
+## Hazard
+
+Hazard is a dependency that causes the pipelines to stall.
+
+1. Data dependency: Dependency between two instructions occurs when source of a younger instruction is the destination of an older instruction. 
+   * Solution: Forwarding the value from the older instruction to the younger instruction can hide or help thehazard.
+2. Control dependency: Dependency caused by waiting for the decision and target address of the branch instruction.
+   * Solution: Branch prediction.
+3. Structure dependency: Dependency caused by multiple instructions having conflicts in resources.
 
 # The Classic Five-Stage Pipeline for a RISC Processor
 
@@ -46,7 +73,7 @@ Figure C.1 is the typical way of pipelining. Although each instruction takes 5 c
 
 
 
-![Figure C.1](/Users/lyk/Library/Application Support/typora-user-images/image-20240116221016640.png)
+![Figure 1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Computer%20Architecture/Pipelined%20CPU%20Design/Figure%201.png)
 
 where
 
@@ -68,7 +95,7 @@ An in-order pipeline in computer architecture refers to a design where instructi
 
 In order to use pipeline, one requirement is that **the overlap of instructions in the pipeline cannot use the hardware resources at the same time**. Fortunately, the simplicity of a RISC instruction set makes resource evaluation relatively easy. Figure C.2 shows a simplified version of a RISC data path drawn in pipeline fashion.
 
-![image-20240116221136569](/Users/lyk/Library/Application Support/typora-user-images/image-20240116221136569.png)
+![Figure 2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Computer%20Architecture/Pipelined%20CPU%20Design/Figure%202.png)
 
 where:
 
@@ -86,9 +113,9 @@ Another requirement is that **instructions in different stages of the pipeline c
 
 To achieve this separation, we introduce **pipeline registers** <u>between successive stages of the pipeline</u>, so that at the end of a clock cycle all the results from a given stage are stored into a register that is used as the input to the next stage on the next clock cycle.
 
-Figure C.3 shows the pipeline drawn with these pipeline registers.
+Figure 3 shows the pipeline drawn with these pipeline registers.
 
-![Figure C.3](/Users/lyk/Library/Application Support/typora-user-images/image-20240116221957062.png)
+![Figure 3](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Computer%20Architecture/Pipelined%20CPU%20Design/Figure%203.png)
 
 # Limitations of Pipelining
 
@@ -104,10 +131,10 @@ In order to gurantee all stages can be finished in one clock cycle, **the clock 
 
 
 
-![Figure 4.36](/Users/lyk/Library/Application Support/typora-user-images/image-20240116222333186.png)
+![Figure 4](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Computer%20Architecture/Pipelined%20CPU%20Design/Figure%204.png)
 
 ## Diminishing Returns of Deep Pipelining
 
 Figure 4.37 illustrates another limitation of pipelining. In this example, we have divided the computation into six stages, each requiring 50 ps. Inserting a pipeline register between each pair of stages yields a six-stage pipeline. The minimum clock period for this system is 50 + 20 = 70 picoseconds. But the delay due to register updating becomes a limiting factor.
 
-![image-20240116222726544](/Users/lyk/Library/Application Support/typora-user-images/image-20240116222726544.png)
+![Figure 5](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Computer%20Architecture/Pipelined%20CPU%20Design/Figure%205.png)

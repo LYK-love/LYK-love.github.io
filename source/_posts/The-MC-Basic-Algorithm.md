@@ -179,9 +179,9 @@ We have proved that starting from **any initial guess** $v_{\pi_k}^{(0)}$, it is
 
 ***
 
-I think in MC Basic, if the episode length is too short, it algo won't congerge. Its convergence comes from the policy iteration algorithm. But if the episode length is too short, each action value won't be correct, and we don't have any procudures to fix it. 
+In my opinion, in MC Basic, if the episode length is too short, the algorithm won't congerge. Its convergence comes from the policy iteration algorithm. But if the episode length is too short, each action value won't be correct, and the premise of the reasoning falls apart.
 
-//TODO IDK!
+//TODO So how should we know the right length? Isn't MC Basic too fragile?
 
 
 

@@ -13,9 +13,10 @@ Source:
 1. [EclecticSheep: Dreamer V1](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html)
 2. [EclecticSheep: Dreamer V2](https://eclecticsheep.ai/2023/07/06/dreamer_v2.html)
 3. [EclecticSheep: Dreamer V3](https://eclecticsheep.ai/2023/08/10/dreamer_v3.html)
-4. RSSM
-5. [DreamerV2](https://arxiv.org/abs/2010.02193)
-6. [DreamerV3](https://arxiv.org/abs/2301.04104)
+4. [EclecticSheep: a2c algorithm](https://eclecticsheep.ai/2023/12/14/intro-rl.html)
+5. RSSM
+6. [DreamerV2](https://arxiv.org/abs/2010.02193)
+7. [DreamerV3](https://arxiv.org/abs/2301.04104)
 
 <!--more-->
 
@@ -192,6 +193,40 @@ $$
 $$
 
 The last detail to report is that the symlog prediction is used in the decoder, the reward model and the critic. Moreover, the inputs of the MLP encoder (the one that encodes observations in vector form) are squashed with the symlog function (Figure 2).
+
+# Behavior learning
+
+After completing the dynamic learning phase, the next step is to learn  the actor and critic using the learned world model. The objective is to  use the world model to imagine the consequences of actions. 
+
+1. The first step: The first latent state $s_t$ is computed **from the  representation model, and continues for a certain number of imagination  steps (horizon).** 
+2. After that, during the following steps, the imagined trajectory is denoted as $\hat s_t$ and is computed by the **transition model** because the environment observations are not available during imagination. Additionally, imagining in the  latent space is faster and more cost-effective than doing so in the  image space, making the transition model more convenient.
+
+During each step, the agent takes an action selected by the actor in [Figure 3](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html#fig-actor), which is based on  the current latent state ($z_0$ or $z_t$ where $t > 0$). Then the agent computes the next latent state using the world model.
+
+![Figure 3: How the actor works. It selects the action from the lantent state (recurrent and stochastic state).](https://eclecticsheep.ai/assets/images/dreamer_v1/actor.png)
+
+
+
+To sum up, the process of imagining trajectories, as shown in the [Figure 4](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html#fig-imagine), involves the recurrent and transition models of the RSSM, and the actor.
+
+![Figure 4: Imagination phase. The actor, the recurrent and the transition models iteratively perform the imagination steps. The actor comptes the next actions, then the recurrent model encodes this information in the  recurrent state. Finally the transition model predicts the stochastic  state.](https://eclecticsheep.ai/assets/images/dreamer_v1/imagination.png)
+
+
+
+All the latent states computed in the previous phase (dynamic learning)  serve as starting points for fully imagined trajectories. Consequently,  the latent states are reshaped to consider each computed latent state  independently. A *for loop* is necessary for behavior learning,  as trajectories are imagined one step at a time. The actor selects an  action based on the last imagined state, and the new imagined latent  state is computed.
+ From the imagined trajectories, the critic ([Figure 5](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html#fig-critic)), reward model, and continue model predict values, rewards, and continue  probabilities, respectively. These predicted quantities are used to  compute the lambda values (TD()), which serve as target values for actor and critic losses.
+
+![Figure 5: How the critic works. It estimates the state value from the lantent state (recurrent and stochastic state).](https://eclecticsheep.ai/assets/images/dreamer_v1/critic.png)
+
+An important consideration is the composition of the imagined trajectories. The starting latent state computed by the representation model (from the recurrent state and embedded observations) must be excluded from the trajectory because it is not consistent with the rest of the trajectory. This was one of the initial challenges faced during the implementation of Dreamer, and without this adjustment, the agent would not converge.
+
+When computing the lambda values, the last element in the trajectory is "lost" because the next value is needed to calculate the $\operatorname{TD}(\lambda)$, but the last imagined state does not have a next value. Moreover, according to the DreamerV1 paper, the lambda targets are weighted by the cumulative product of predicted discount factors $(\gamma)$, estimated by the continue model. This weighting downweights terms based on the likelihood of the imagined trajectory ending. This crucial detail, necessary for convergence. These weighted lambda targets are used in the actor loss as part of the update process. Instead, the critic predicts the distribution of the values $\left(q_v\right)$ without the last element of the imagined trajectory and then it is compared with the lambda values. The actor and critic losses are computed as follows:
+$$
+\begin{gathered}
+\text { policy loss }=-\boldsymbol{\gamma} \cdot \mathbf{T D}(\boldsymbol{\lambda}) \\
+\text { value loss }=-\boldsymbol{\gamma} \cdot \ln q_v(\mathbf{T D}(\boldsymbol{\lambda}))
+\end{gathered}
+$$
 
 # Others
 

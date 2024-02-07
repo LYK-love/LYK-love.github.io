@@ -3,25 +3,9 @@ title: Parallel Architectures
 tags:
 ---
 
-# Amdahl's Law
+Source: *Computer Organization and Design* 
 
-Amdahl's Law is a principle used in computer architecture and parallel computing to predict the theoretical maximum speedup for a program when only part of the program can be parallelized. It is named after computer scientist Gene Amdahl, who presented the concept in 1967.
-
-Amdahl's Law can be stated as follows:
-$$
-\text{Speedup}=\frac {1} {(1−P)+\frac{P}{N}}
-$$
-
-
-
-
-Where:
-
-- **Speedup**: The theoretical maximum speedup of the execution of the whole task.
-- **P**: **The proportion of the execution time that the task can be parallelized** (i.e., the part of the task that can benefit from parallel execution). This is a value between 0 and 1, where 0 means no part of the task can be parallelized and 1 means the entire task can be parallelized.
-- **N**: The number of processors.
-
-This law highlights a key limitation in parallel computing: if a part of a task cannot be parallelized and must be executed serially, this part limits the overall speedup that can be achieved by adding more processors. Even with an infinite number of processors, the speedup will be limited by the serial fraction of the task.
+<!--more-->
 
 # Region of Interest
 
