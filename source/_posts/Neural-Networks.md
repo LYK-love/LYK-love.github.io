@@ -123,7 +123,7 @@ xs
 plt.plot(xs,ys)
 ```
 
-![Figure 1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 1.png)
+![Figure 1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%201.png)
 
 The derivative equation of function $f$ w.r.t. variable $x$ is
 $$
@@ -243,7 +243,7 @@ draw_dot(e)
 
 The visualized computational graph is:
 
-![FIgure 2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 2.png)
+![Figure 2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%202.png)
 
 
 
@@ -292,13 +292,12 @@ since `a=2.0, f=-2.0`, $\frac {\partial L} {\partial b}|_{b=-3.0} = -4.0$.
 
 ## The idea of backpropagation
 
-We now know that given a function $L$ and a variable $x$, we can calculate the gradient via equation $\eqref{derivative}$. However, a more efficient way is to leverage the [chain rule](https://lyk-love.cn/2024/01/25/derivatives-backpropagation-and-vectorization/#chain-rule) in Calculous
+We now know that given a function $L$ and a variable $x$, we can calculate the gradient via equation $\eqref{derivative}$. However, a more efficient way is to leverage the [chain rule](https://lyk-love.cn/2024/01/25/derivatives-backpropagation-and-vectorization/#chain-rule) in Calculous:
 $$
 \frac{d z}{d x}=\frac{d z}{d y} \cdot \frac{d y}{d x} .
 $$
-The intuition here is that, given a function $L(x,y,z) = (x+y) z$, let $u = x+y$, then this function transforms to $L(u,z) = uz$. 
+The intuition here is that, given a function $L(x,y,z) = (x+y) z$, let $u = x+y$, then this function transforms to $L(u,z) = uz$, for computing the gradient of $x,z$, we can calculate $\frac{df}{d u} = z$ first, then leverage the chain rule to calculate
 
-For computing the gradient of $x,z$, we can calculate $\frac{df}{d u} = z$ first, then leverage the chain rule to calculate
 $$
 \begin{align}
 \frac{d L}{d x}=\frac{d L}{d u} \cdot \frac{d u}{d x} \label{chain_rule}\\
@@ -315,11 +314,11 @@ In summary:
 2. The **local gradient** of node $x$ or $y$: $[\frac {\partial u} {x}, \frac {\partial u} {y}]^T$
 3. The **gradient** of node $x$ or $y$: $[\frac {\partial L} {x}, \frac {\partial L} {y}]^T$. 
 
-In order to leverage chain rule, we must do dorivation of the computational graph is a backward manner. In other words, we mush calculate $\frac{d L}{d u}$ before calculate $\frac{d u}{d x}$ and $\frac{d u}{d y}$. 
+In order to leverage chain rule, we must do derivation of the computational graph **in a backward manner**. In other words, we must calculate $\frac{d L}{d u}$ before calculating $\frac{d u}{d x}$ and $\frac{d u}{d y}$. 
 
 In this sense, the derivation process is called **back(ward) propagation**. 
 
-* A detailed reason of using back propagation is [--> here](https://gregorygundersen.com/blog/2018/04/15/backprop/).
+* A detailed illustration is [--> here](https://gregorygundersen.com/blog/2018/04/15/backprop/).
 
 
 
@@ -430,19 +429,17 @@ draw_dot(e)
 
 
 
-
-
-In this section we defined the `_backward` method for operations `__add__` and `__mul__`. It can be implied that we can define the  `_backward` method for whatever operation we want to compute it's gradient as long as it's feasible, i.e., the operation itself is **first-order differentiable**.
+In this section, we defined the `_backward` method for operations `__add__` and `__mul__`. It can be implied that we can define the  `_backward` method for whatever operation we want to compute it's gradient as long as it's feasible, i.e., the operation itself is **first-order differentiable**.
 
 However, we must call the `_backward` method for each node manually in some fixed order, we can't back propagate `c` before back propagate `e`. Is there any way to automate this process so that we can do back propagation only once and calculate the gradient for the whole graph?
 
 ## Backpropagate through the whole graph
 
-The solution is simple, we just need to:
+The solution is simple:
 
-1. Sort all the nodes in the computational graph in a topological order. 
-2. From the last node to the first node in the computational graph, call their `_backward` method seperately.
-3. Remember that the last node itself must set its gradient to 1.0.
+1. Remember that the last node itself must set its gradient to 1.0.
+2. Sort all the nodes in the computational graph in a topological order. 
+3. From the last node to the first node in the computational graph, call their `_backward` method seperately.
 
 Here's the code:
 
@@ -468,7 +465,7 @@ class Value:
 
 
 
-Now, with this `backward` method, we don't need to call `_backward` anymore! For any computational graph, we can call `backward` to it's last node to do back propagation:
+We can call this `backward` method to the last node of any computational graph without the heavy manual work.
 
 ```python
 a = Value(7, label='a')
@@ -751,7 +748,7 @@ $$
 x / y = x \cdot y^{-1} .
 $$
 
-```
+```python
 def __truediv__(self, other): # self / other
         return self * other**-1
 ```
@@ -761,7 +758,7 @@ def __truediv__(self, other): # self / other
 As before, tanh is
 
 ```python
-#     def tanh(self):
+     def tanh(self):
         x = self.data
         t = (math.exp(2*x) - 1)/(math.exp(2*x) + 1)
         out = Value(t, (self, ), 'tanh')
