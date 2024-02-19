@@ -15,6 +15,7 @@ Resources for EE(Electrical Engineering) learning, including signal processingm 
 * [ECE 4703 B Term, 2020](https://schaumont.dyn.wpi.edu/ece4703b20/index.html)
 * [EEE 5502: Foundations of Digital Signal Processing](EEE 5502: Foundations of Digital Signal Processing)
 * [Signals and Systems](https://eng.libretexts.org/Bookshelves/Electrical_Engineering/Signal_Processing_and_Modeling/Signals_and_Systems_(Baraniuk_et_al.)/12%3A_Z-Transform_and_Discrete_Time_System_Design/12.04%3A_Inverse_Z-Transform)
+* [Kalman Filter](https://thekalmanfilter.com/kalman-filter-explained-simply/)
 
 
 

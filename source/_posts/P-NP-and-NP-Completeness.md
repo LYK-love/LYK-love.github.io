@@ -55,7 +55,9 @@ E.g., the decision version of the network flow problem: "Given a network $G$ and
 Furthermore, $X$ should have length polynomial in size of $I$ (since we are really only giving $V$ time polynomial in the size of the instance, not the combined size of the instance and solution).
 
 The second input $X$ to the verifier $V$ is often called a witness. E.g., for 3-coloring, the witness that an answer is YES is the coloring. For factoring, the witness that $N$ has a factor between 2 and $k$ is a factor. For the Traveling Salesman Problem: "Given a weighted graph $G$ and an integer $k$, does $G$ have a tour that visits all the vertices and has total length at most $k$ ?" the witness is the tour. All these problems belong to NP. Of course, any problem in $\mathbf{P}$ is also in $\mathbf{N P}$, since $V$ could just ignore $X$ and directly solve $I$. So, $\mathbf{P} \subseteq \mathbf{N P}$.
+
 A huge open question in complexity theory is whether $\mathbf{P}=\mathbf{N P}$. It would be quite strange if they were equal since that would mean that any problem for which a solution can be easily verified also has the property that a solution can be easily found. So most people believe $\mathbf{P} \neq \mathbf{N P}$. But, it's very hard to prove that a fast algorithm for something does not exist. So, it's still an open problem.
+
 Loosely speaking, NP-complete problems are the "hardest" problems in NP, if you can solve them in polynomial time then you can solve any other problem in NP in polynomial time. Formally,
 
 # NP-complete
@@ -66,6 +68,12 @@ Definition: Problem $Q$ is **NP-complete** if:
 2. For any other problem $Q^{\prime}$ in $\mathbf{N P}, Q^{\prime} \leq_p Q$ using Karp reductions.
 
 So if $Q$ is NP-complete and you could solve $Q$ in polynomial time, you could solve any problem in NP in polynomial time. If $Q$ just satisfies part (2) of the definition, then it's called **NP-hard**.
+
+
+
+A common application of reductions is in proving NP-completeness. If $A$ is a known NP-complete problem and $A \leq B$ (i.e., $A$ can be polynomially reduced to $B$ ), and $B$ is in NP, then $B$ is also NP-complete, indicating $B$ is at least as hard as some of the hardest problems in NP.
+
+
 
 
 

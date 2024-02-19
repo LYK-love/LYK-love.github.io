@@ -10,13 +10,16 @@ date: 2023-12-08 19:43:54
 
 Source: 
 
-1. [Stanford CS231, Lecture 4](https://youtu.be/d14TUNcbn1k?si=fGVVrRpYIhqbBKBt)
+1. [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0&feature=youtu.be)
+2. [Stanford CS231N, Lecture 4](https://youtu.be/d14TUNcbn1k?si=fGVVrRpYIhqbBKBt)
 
-2. [Calculus on Computational Graphs: Backpropagation](http://colah.github.io/posts/2015-08-Backprop/)
 
-3. [StatQuest's Neural Networks videos](https://www.youtube.com/watch?v=IN2XmBhILt4&list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF&index=75)
 
-7. [Efficient backprop](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf). You need do download it via
+Other useful resources:
+
+1. [StatQuest's Neural Networks videos](https://www.youtube.com/watch?v=IN2XmBhILt4&list=PLblh5JKOoLUICTaGLRoHQDuF_7q2GfuJF&index=75)
+
+2. [Efficient backprop](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf). You need do download it via
 
    ```sh
    wget http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf
@@ -24,8 +27,12 @@ Source:
 
 
 
+The python script and jupyter notebook used in this article can be found at [here](https://github.com/LYK-love/Machine-Learning-Basic).
 
-This article is a step-by-step explanation of neural networks which are extensively used in machine learning. It only involves the most basic case where both the input and output of a neuron are **scalars** (1-D tensors). But the idea holds for other dimensions. For higher dimensions, please reter to [Derivatives, Backpropagation, and Vectorization](https://lyk-love.cn/2024/01/25/derivatives-backpropagation-and-vectorization/)
+
+
+
+This article is a step-by-step explanation of neural networks which are extensively used in machine learning. It only involves the most basic case where the input of a neuron is a vector (1-D tensor)and output of a neuron is a scalar (0-D tensor). But the idea holds for higher, please reter to [Derivatives, Backpropagation, and Vectorization](https://lyk-love.cn/2024/01/25/derivatives-backpropagation-and-vectorization/) for details.
 
 <!--more-->
 
@@ -44,322 +51,41 @@ In this article we'll use following notations.
   * A gradient value is a vector of partial derivative values. 
   * A gradient value is **evaluated** from the gradient formula.
   
-* **NN** is short for a neural networ.
+* **NN** is short for a neural network.
 
-* **FP** is short for foreward propagation.
+* **FP** is short for forward pass, or foreward propagation.
 
-* **BP** is short for backward propagation or **backpropagation**.
+* **BP** is short for backward pass, backward propagation or **backpropagation**.
 
-* In a computational graph, a node B is the "**upstream**" node of node A if there is an edge $A \rightarrow B$.
+# Article organization
 
-* In a computational graph, 
-  * The **(total) gradient** of a node, such as $[\frac {\partial L} {x}, \frac {\partial L} {y}]^T$, is the gradient of the upstream node with respect to all the branches.
-  * The **upstream gradient** of a node, such as $\frac {\partial L} {z}$ is the gradient from the upstream node with respect to the one upstream branch.
-  * The **local gradient** of a node, such as $[\frac {\partial z} {x}, \frac {\partial z} {y}]^T$, is the gradient of the the node with respect to all the branches.
+The math model of neural network is **computational graph**, every operation of NN, including FP, BP and other fancy operations (like stop gradient in PyTorch) can be intuitively implemented and visualized on computational graph.
 
-# Computational Graphs
+Thus, in this article, we take a view of **computational graph** to understand neural network. The organization is as follows:
 
-A computational graph is a **directed graph** where:
+1. To prepare, we first introduce the basic concepts of gradient.
 
-1. An **edge** (or **branch**) represents a function argument (and also data dependency). 
-   * The value of an argument can have whatever type. It can be a scalar, a vector, a matrix or a tensor[^1].
-2. A **node** represents a function, whose arguments are the incoming edges.
+2. We start from defining the `Value` class, a `Value` object is represent a single node in computational graph. Our implementation is highly similar to **PyTorch's** `Tensor` class.
 
-Note: In this article, we call 
+3. Next, we illustrate the idea of **back propagation** and how to back propagate through the total graph.
 
+4. In addition, since back propagation depends on concrete computation operations, we then introduce how to define each operation and let it support BP.
 
+5. Now we know the idea of **back propagation** and support it in `Value` class. We use the later to build the components of neural networls, i.e.,
 
-In following sections I'll show the **foreward pass and backward pass** of computational graphs. These two operations themselves are meaningless since we didn't set a "goal" for computational graphs and doing them is for nothing. However, you'll see that the ideas of them are used for illustrating the **foreward propagation and backward propagation** used by neural networks.
+   1. We build a neoron first.
+   2. Then we use neuron to build a linear layer.
+   3. At last, we organize layers to form a multilayer perceptron (MLP).
 
-## Some basic computational graphs
+6. Finally, we know FP, BP, how a NN is organized. We then show how to **train** this NN. We also orgainze our NN in a more modular way: letting all components inherit from a `Module` class.
 
-[-->Source](https://www.tutorialspoint.com/python_deep_learning/python_deep_learning_computational_graphs.htm)
 
-Here is a simple mathematical equation:
-$$
-p=x+y
-$$
 
-We can draw a computational graph of the above equation as follows.
+# Basic concepts
 
-![Figure 1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%201.png)
+## Neural networks
 
-Let us take another example, slightly more complex. We have the following equation.
-$$
-g=(x+y)z
-$$
-The above equation is represented by the following computational graph.
-
-![Figure 2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%202.jpg)
-
-
-
-# Forward pass
-
-Below is a computational graph representing $f(w, x)=\frac{1}{1+e^{-\left(w_0 x_0+w_1 x_1+w_2\right)}}$ where all the parameters are scalar. The FP has already been done in this figure.
-
-For illustation, **a dumb node is added** after the original last node to represent the output, denoted as $y$. We have $y = f(w,x)$. 
-
-
-
-![Figure 3](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%203.png)
-
-**Doing forward pass means we are passing the value from variables in forward direction from the left (input) to the right where the output is.**
-
-# Gradient during backward pass
-
-Before discussing the backwark propagation, we must know how the backwark propagation is implemented in computational graphs.
-
-In this section we take $f: (x, y) \rightarrow z$ as an example. The upstream node of node $f$ is denoted as $L$.
-
-Recall that in computational graphs, a node is a function. During backward propagation, we have:
-
-1. The **upstream gradient** of node $f$: $\frac {\partial L} {z}$.
-2. The **local gradient** of node $f$: $[\frac {\partial z} {x}, \frac {\partial z} {y}]^T$
-3. The **gradient** of node $f$: $[\frac {\partial L} {x}, \frac {\partial L} {y}]^T$. 
-
-From the chain rule of derivatives:
-$$
-\begin{aligned}
-& \frac{\partial z}{\partial x}=\frac{\partial L}{\partial z} . \frac{\partial z}{\partial x} \\
-& \frac{\partial z}{\partial y}=\frac{\partial L}{\partial z} . \frac{\partial z}{\partial y} .
-\end{aligned}
-$$
-
-
-Thus, we obtain that:
-
-**Gradient  = local gradient  * upstream gradient.**
-
-
-
-<img src="https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%204.png" alt="Figure 4"  />
-
-The advantage of backward pass instead of forward pass is obvious. Take the above figure as an example. 
-
-To get the gradient value of gradient $[\frac {\partial L} {x}, \frac {\partial L} {y}]^T$, we just need to **evaluate** the upstream gradient $\frac{\partial L}{\partial z}$ **once**, and then leverage it to calculate $\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}$.
-
-However, if we use a forward pass to do this, we can't use chain rule to reduce our computation. The detailed reason is [--> here](https://gregorygundersen.com/blog/2018/04/15/backprop/).
-
-# Backward pass
-
-Note that in neural networks, the term "parameters" refer to the weights and biases instead of the input data. 
-
-However, since its just backward pass instead of backward propagation, which is used in NNs, we optimize the input data $x$ in this section. I know it's weird but that's the way they did in [CS231](https://youtu.be/d14TUNcbn1k?si=fGVVrRpYIhqbBKBt).
-
-
-
-Backward pass starts from the output node.
-
-1. The local gradient of the dumb node is $\frac {\partial y} {\partial f} = 1$, which is a constant. 
-2. So the local gradient value is always 1.
-3. There's no upstream gradient for the dumb node. Therefore, we don't need to multiply it.
-4. As a result, the gradient value of this node is 1.
-
-![Figure 5](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%205.png)
-
-Next, we compute the last but one node $1/x$. 
-
-1. The local gradient of this node is $\frac {\partial (1/x)} {\partial x} = -1/x^2$.
-2. Since we evaluate $x=1.37$ here, the local gradient value of this node is -1/(1.37)^2=-0.53. 
-3. Meanwhile, the upstream gradient value is 1. 
-4. As a result, the gradient value of this node is: -0.53 * 1 = -0.53.
-
-
-
-![Figure 6](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%206.png)
-
-Now we move to the node $x+1$. 
-
-1. The gradient equation of this node is $\frac {\partial (x+1)} {\partial x} = 1$, which is a constant. 
-2. So the local gradient value is always 1.
-3. Moreover, the  upstream gradient value is -0.53. 
-4. As a result, the gradient value of this node is: -0.53 * 1 = -0.53.
-
-![Figure 7](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%207.png)
-
-We can keep doing the above process until we get the gradient value of the nodes at the first layer.
-
-![Figure 8](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%208.png)
-
-
-
-## At what abstraction level ?
-
-When we create a computation graph. We can define every node **at whatever computational granuality** we want to. In the previous example most nodes represent basic level computations (+, -, *, /, $\exp()$, ... ). We can also define nodes with high level computation.
-
-For instance, consider the sigmoid function part in previous example. The sigmoid function is:
-$$
-\sigma(x)=\frac{1}{1+e^{-x}} ,
-$$
-and its gradient is:
-$$
-\frac{d \sigma(x)}{d x}=\frac{e^{-x}}{\left(1+e^{-x}\right)^2}=\left(\frac{1+e^{-x}-1}{1+e^{-x}}\right)\left(\frac{1}{1+e^{-x}}\right)=(1-\sigma(x)) \sigma(x) .
-$$
-We can abstract these computations in one node, some people also call it a **gate**.
-
-![Figure 9](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%209.png)
-
-## Patterns in backward propagation
-
-### Add gate
-
-The "add gate" (or "add node" since it's too simple to become a gate) $x+y$ where $x$ and $y$ are its inputs can be seen as a gradient "distributor". 
-
-The reason is that, since $\frac {\partial (x+y)} {\partial x} = \frac {\partial (x+y)} {\partial y} = 1$, the local gradient value of add gate is $[1,1]^T$, so the gradient value flowing to branches of add gate is always: 
-
-1 * (upstream gradient value of add gate) = upstream gradient value of add gate.
-
-You can see that in the following figure. The upstream value is $[2,2]^T$, and the gradient value flowing to its branches is $[2,2]^T$.
-
-
-
-![Figure 10](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2010.png)
-
-### Max gate
-
-The "max gate" $\max(x+y)$ where $x$ and $y$ are its inputs can be seen as a gradient "router". It routes its gradient value to the branch with maximum input value, leaving the upstream gradient value for the other branches be 0.
-
-The reason is that, taking $x$ for example, if $x$ has the maximal assigned value in all branches, then:
-
-1. The gradient is  $\frac {\partial \max(x+y)} {x} = 1$, the local gradient value is always 1.
-2. Next, the partial derivative value value for this branch is 1 * (upstream gradient value) = upstream gradient value.
-3. For any other branches, say $y$, since $\frac {\partial \max(x+y)} {y} = 0$. So the local partial derivative value is always 0. Therefore, the partial derivative value for this branch is always 0.
-
-![Figure 11](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2011.png)
-
-### Mul gate
-
-The "mul gate" ("mul" is short for multiplication) $(x * y)$ where $x$ and $y$ are its inputs can be seen as a gradient "switcher". 
-
-The reason is that, taking $x$ for example: 
-
-1. The partial derivative for branch $x$ is  $\frac {\partial (x * y)} {x} = y$, the local partial derivative value is the assigned value of $y$.
-2. The partial derivative value for this branch = (the the assigned value of $y$) * (upstream partial derivative value)
-
-![Figure 12](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2012.png)
-
-
-
-## Gradients add at branches
-
-![image-20240124152400923](/Users/lyk/Library/Application Support/typora-user-images/image-20240124152400923.png)
-
-# For vectorized inputs
-
-A vectorized example:
-$$
-f(x, W)=\|W \cdot x\|^2=\sum_{i=1}^n(W \cdot x)_i^2 .
-$$
-![image-20240124152552751](/Users/lyk/Library/Application Support/typora-user-images/image-20240124152552751.png)
-
-Let
-$$
-\begin{aligned}
-& q=W \cdot x=\left(\begin{array}{c}
-W_{1,1} x_1+\cdots+W_{1, n} x_n \\
-\vdots \\
-W_{n, 1} x_1+\cdots+W_{n, n} x_n
-\end{array}\right) \\
-& f(q)=\|q\|^2=q_1^2+\cdots+q_n^2
-\end{aligned}
-$$
-Then
-
-![image-20240124153703728](/Users/lyk/Library/Application Support/typora-user-images/image-20240124153703728.png)
-
-![image-20240124153730305](/Users/lyk/Library/Application Support/typora-user-images/image-20240124153730305.png)
-
-Now we start back pass, the gradient and gradient value of the dumb node is always 1.
-
-Always check: The gradient with respect to a variable should have the same shape as the variable
-
-![image-20240124153749293](/Users/lyk/Library/Application Support/typora-user-images/image-20240124153749293.png)
-
-
-
-We the gradient of $f$ w.r.t. $q_{i}$ is
-$$
-\begin{gathered}
-\frac{\partial f}{\partial q_i}=2 q_i \\
-\nabla_q f=2 q
-\end{gathered}
-$$
-$q_i$ is the element on the $i$-th row of $q$.
-$$
-q=W \cdot x=\left(\begin{array}{c}
-W_{1,1} x_1+\cdots+W_{1, n} x_n \\
-W_{2,1} x_1+\cdots+W_{2, n} x_n \\
-\vdots \\
-W_{n, 1} x_1+\cdots+W_{n, n} x_n
-\end{array}\right) .
-$$
-
-
-
-
-![image-20240124152951702](/Users/lyk/Library/Application Support/typora-user-images/image-20240124152951702.png)
-
-
-
-The gradient of $q_k$ w.r.t. $W_{i,j}$ is
-$$
-\begin{aligned}
-\frac{\partial q_k}{\partial W_{i, j}} & =\mathbf{1}_{k=i} x_j
-\end{aligned}
-$$
-where $\mathbf{1}_{k=i}$ is the indicator function.
-
-
-
-For instance, $\frac{\partial q_1}{\partial W_{1, 1}} =1 .x_1 = x_1$.
-
-Therefore, the gradient of $f$ w.r.t. $W_{i,j}$ is
-$$
-\begin{aligned}
-\frac{\partial f}{\partial W_{i, j}} & =\sum_k \frac{\partial f}{\partial q_k} \frac{\partial q_k}{\partial W_{i, j}} \\
-& =\sum_k\left(2 q_k\right)\left(\mathbf{1}_{k=i} x_j\right) \\
-& =2 q_i x_j
-\end{aligned}
-$$
-
-
-![image-20240124153348965](/Users/lyk/Library/Application Support/typora-user-images/image-20240124153348965.png)
-
-the gradient of $f$ w.r.t. $x_{i}$ is
-$$
-\begin{aligned}
-\frac{\partial q_k}{\partial x_i} & =W_{k, i} \\
-\frac{\partial f}{\partial x_i} & =\sum_k \frac{\partial f}{\partial q_k} \frac{\partial q_k}{\partial x_i} \\
-& =\sum_k 2 q_k W_{k, i}
-\end{aligned}
-$$
-Or 
-$$
-\nabla_x f=2 W^T \cdot q
-$$
-For instance, $\frac{\partial q_2}{\partial x_1} =W_{2, 1}$ sicne $W_{2,1}$ is exactly the coefficient of $x_1$ in the $2$-nd row of $q$:
-$$
-q=W \cdot x=\left(\begin{array}{c}
-W_{1,1} x_1+\cdots+W_{1, n} x_n \\
-W_{2,1} x_1+\cdots+W_{2, n} x_n \\
-\vdots \\
-W_{n, 1} x_1+\cdots+W_{n, n} x_n
-\end{array}\right)
-$$
-
-
-Each row of $W$ selects the "weights" to some cpmponents of $x$.
-
-## Pseudo node
-
-https://github.com/intel/caffe/tree/master/src/caffe/layers
-
-
-
-# Neural networks: problem Formulation
-
-A **neoral network (NN)** is a function that maps input data to output data. For example, given a dataset with $n$ data points (or samples) $(x_1, y_{1}), \dots, (x_n, y_n)$[^2], the neoral network acts as a function, say $f$, that expressing the "relationship" between  $x$ and $y$:
+A **neoral network (NN)** is a function that maps input data to output data. For example, given a dataset with $n$ data points (or samples) $(x_1, y_{1}), \dots, (x_n, y_n)$, the neural network acts as a function, say $f$, that expressing the "relationship" between  $x$ and $y$:
 $$
 f_\theta: X \rightarrow \hat Y,
 $$
@@ -368,360 +94,956 @@ where
 * $X, Y, \hat Y$ are the sets of all $x_i, y_i, \hat y_i$, $i \in \{1,2,\cdots, n \}$.
 * $\hat y_i$ is the output value of the NN corresponding to input data $x_i$.
 * $y_i$ is the value in the dataset corresponding to data $x_i$.
-* $\theta$ is the set of all parameters[^2] of the NN. The parameters are all weights and biases.
+* $\theta$ is the set of all parameters of the NN. The parameters are all weights and biases.
 
-
-
-
+## Loss function
 
 The goal of a neural network is to **minimize the value of a [loss function]()** 
 $$
 \text{Loss}(y, \hat y) = \cdots .
 $$
-Since the loss function, the architecture of the NN, and the dataset are all given. What we can do is modifying its parameters $\theta$. The modifying process is called **training** the NN.
+Since the loss function, the architecture of the NN, and the dataset are all given. What we can do is modifying (or **optimizing**) its parameters $\theta$. The **optimization** process is called **training** the NN.
 
+## Derivative
 
-
-Training composes two processes:
-
-1. **Forward propagation (FP)** is the process of **evaluating (or assigning) the value of mathmatiacl expressions** in the NN (The function $f$ can be decomposed to smaller functions).
-2. **Backwark propagation (BP)** is the process of optimizing the **parameters** of the NN using [Gradient Descent]() **in a backward order**.
-
-Neural networks are a kind of **computational graphs**. The FP and BP process can be explained via computational graphs intuitively in a visual way. So we introduced computational graphs at first.
-
-# Neural networks
-
-Given below neuro network, it has:
-
-* One input layer(1 node), one output layer(1 node).
-  * Dataset is $(x,y)$ where $x \in \{x_i, \cdots, x_n \}$, $y \in \{y_i, \cdots, y_n \}$.
-  * The NN outputs $\hat y$.
-* One hidden layer(2 nodes).
-  * Each node on the hidden layer has the same loss function $\text{Act}(x)$.
-* A loss function $\text{Loss}(y, \hat y)$ to evaluate it.
-* An activation function $\text{Act}$.
-
-![Figure 13](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2013.png)
-
-The NN represents a prediction function $f_\text{predict}$. Note that
-$$
-\hat y \triangleq f_\text{predict} \triangleq y_{\text{green}}
-$$
-where
-
-* $y_{\text{green}} = w_3 y_{\text{blue}} + w_4 y_{\text{orange}} + b_3$. 
-* $y_{\text{blue}} =\text{Act}(w_1 x + b_1)$
-* $y_{\text{orange}} = \text{Act} (w_2 x + b_2)$
-
-Once the parameters are determined, the prediction function $f_\text{predict}$ is fixed.
-
-Next is the **training** process, during which we leverage forward propagation and backward propagation to optimize parameter set $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$ to minimize the loss function $\text{Loss}(y, \hat y)$. 
-
-This is achieved by converting the neoral network to a computational graph (discussed before) where
-
-1. Every node represents a small computation of the NN. For example, a node can represent an simple operation like "multiply the weight", "add the bias", or complex operation like "compute the activation funcition". You can decompose the activation funcition into many nodes as well, since you freely choose your abstraction level to design your computational graph.
-2. Every edge represents the argument of the function of its connecting node. **Here "arguments" are not just $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$, but also input data $x_i$ and the intermediate results of operations. But during backward propagation we only optimize $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$**. 
-3. As before, we add a dumb node after the original last node $\text{Loss}(\cdots)$.
-
-
-
-The converted computational graph is:
-
-![Figure 14](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2014.png)
-
-The nodes $\text{ActFunc1}, \text{ActFunc2}$ reprensent the same activation $\text{Act}$.
-
-
-
-The green node in the graph is:
-
-![Figure 15](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2015.png)
-
-# Forward propagation
-
-Since we have a computational graph, the forward propagation (FP) process is exactly the forward pass discussed before. 
-
-Before FP, values are initialized and passed according to following principles:
-
-1. First, we **initialize the parameters $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$ randomly**. In practice, the biases are usually set to $0$ and the weights follow a norm distribution, i.e., $w \sim \text{Norm}(0,1)$.
-2. The edges in the first layer are initialized with the value of input data $x_i$ and $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$. 
-
-
-
-1. Then we pass the values from the left (input) to the right where the output is. 
-
-# Backward propagation
-
-Like FP, the forward propagation (FP) process is exactly the backward pass discussed before. However we **not only need to calculate the gradient and evaluate gradient value** as in backward pass, we **also have to update the parameters $\theta = \{w_1, w_2, \cdots, b_1,b_2,\cdots\}$ using gradient**.
-
-## Recall: Gradient Descent
-
-Recalling that the steps of Gradient Descent for optimizing parameters $\theta, \gamma, \cdots$ of function $f(\theta, \gamma, \cdots)$ are:
-
-1. Calculate the derivative (Gradient) of the function $f(\theta, \gamma, \cdots)$ with respect to parameters $\theta, \gamma, \cdots$.
-   $$
-   \frac {\partial f} {\partial \theta}, \frac {\partial f} {\partial \gamma}, \cdots .
-   $$
-   
-2. Randomly choose values for parameters $\theta, \gamma, \cdots$.
-
-3. Plug the parameter values into the deriavatives.
-
-4. Multiply each derivative value with a **learning rate** $\alpha$, this is the **step size** for the parameter
-   $$
-   \begin{aligned}
-   \text{StepSize}(\theta) &= \frac {\partial f} {\partial \theta} \alpha . \\
-   \text{StepSize}(\gamma) &= \frac {\partial f} {\partial \gamma} \alpha . \\
-   &\cdots
-   \end{aligned}
-   $$
-   
-5. Update deriatives
-   $$
-   \begin{aligned}
-   \theta_\text{new} &= \theta_{\text{old}} + \text{Step Size} = \theta_{\text{old}} + \frac {\partial f} {\partial \theta} \alpha . \\
-   \gamma_\text{new} &= \gamma_{\text{old}} + \text{Step Size} = \gamma_{\text{old}} + \frac {\partial f} {\partial \gamma} \alpha . \\
-   &\cdots
-   \end{aligned}
-   $$
-   
-6. Repeat steps 3-5 until:
-
-   1. Max iteration step number.
-   2. Or the change of function value $f(\theta, \gamma, \cdots)$ is very small.
-
-Note: Step2 has already been done in fordward propagation. So in BP we don't need to do it.
-
-## The BP process
-
-In this section we show the process of one iteration of BP.
-
-
-
-First, we need to evaluate the gradient value
-$$
-[\frac {\partial \text{Loss}} {\partial b_3}, \frac {\partial \text{Loss}} {\partial w_3}, \frac {\partial \text{Loss}} {\partial w_4}, \frac {\partial \text{Loss}} {\partial b_1}, \frac {\partial \text{Loss}} {\partial w_1}, \frac {\partial \text{Loss}} {\partial b_2}, \frac {\partial \text{Loss}} {\partial w_2}]^T .
-$$
-(The sequence of elements doesn't matter)
-
-1. As before, the gradient value of the dumb node is always 1. So the upstream gradient value for the $\text{Loss}$ nodeis always 1.
-
-2. The gradient of the node $\text{Loss}$ is
-   $$
-   \frac {\partial \text{Loss}} {\partial y_{\text{green}}} = \frac {\partial \text{Loss}} {\partial y_{\text{green}}} . 1
-   $$
-   The local gradient is
-   $$
-   \frac {\partial \text{Loss}} {\partial y_{\text{green}}} .
-   $$
-   We can evaluate the local gradient since we've already evaluated the values of all the variables included in it during FP.
-
-   As a result, we get the gradient value for the $\text{Loss}$ node.
-
-3. Next, the gradient of the green node $(+)$ is:
-   $$
-   \begin{aligned}
-   \frac {\partial \text{Loss}} {\partial b_3} 
-   &= 
-   \frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-   \frac {\partial y_{\text{green}}} {\partial b_3} 
-   \\
-   \frac {\partial \text{Loss}} {\partial y_{\text{blue}}} 
-   & = 
-   \frac {\partial \text{Loss}} {\partial y_{\text{green}}} \frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}} 
-   \\
-   \frac {\partial \text{Loss}} {\partial y_{\text{orangee}}} 
-   & = 
-   \frac {\partial \text{Loss}} {\partial y_{\text{green}}} \frac {\partial y_{\text{orange}}} {\partial y_{\text{orange}}} .
-   \end{aligned}
-   $$
-   The local gradient is
-   $$
-   [\frac {\partial y_{\text{green}}} {\partial b_3}, \frac {\partial y_{\text{green}}} {\partial y_{\text{blue}}}, \frac {\partial y_{\text{green}}} {\partial y_{\text{orange}}}]^T .
-   $$
-   We can evaluate the local gradient since we've already evaluated the values of all the variables included in it during FP.
-
-   The upstream gradient value is evaluated in last step.
-
-   As a result, we get the gradient value for the green node.
-
-4. Repeating backward util we get the gradient value of the nodes on the first layer.
-
-
-
-Now we have the gradient value of NN, we then multiply each partial derivative value to a learning rate $\alpha$ to form a step size. For every parameter, we substract the step size. Thus we finishing the update of patameters.
-
-# Example
-
-## Initialization
-
-Given:
-
-1. Loss function (called: softplus) $\text{Loss}(y, \hat y) = \sum_i^{n} (y - \hat y)^2$.
-2. Activation function (called: sum of squared residuals) $\text{Act}(x) = \log (1 + e^x)$.
-3. Learning rate $\alpha = 0.001$, which is used in Gradient Descent
+Given a function $f(x) = 3x^2 - 4x + 5$,
 
 ```python
-def softplus(x, beta=1.0):
-    return (1.0 / beta) * np.log(1 + np.exp(beta * x))
-
-
-def sum_of_squared_residuals(y_true_labels, y_pred_labels):
-    assert len(y_true_labels) == len(y_pred_labels), "Input lists must have the same length"
-    residuals = [true - pred for true, pred in zip(y_true_labels, y_pred_labels)]
-    sum_squared_residuals = sum(residual ** 2 for residual in residuals)
-
-    return sum_squared_residuals
-def learning_rate():
-    return 0.01
-def activation_func(x):
-    return softplus(x)
-def loss_func(y_true, y_pred):
-    return sum_of_squared_residuals(y_true, y_pred)
+def f(x):
+    return 3*(x**2) - 4*x + 5
 ```
 
-with observed $n$-data points($n=3$):
+It has plot:
 
 ```python
-x = [0.1, 0.53, 0.82]
-y = [1.2, 3.2, 1.1]
-xy_pairs = list(zip(x, y))
+xs = np.arange(-5,5, 0.25)
+ys = f(xs)
+
+xs
+plt.plot(xs,ys)
 ```
 
+![Figure 1](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 1.png)
 
-and uninitialized parameters:
-
-```
-w_1, w_2, w_3, w_4, b_1, b_2, b_3 
-```
-
-How to perform BP to optimize the last layer parameters $b_3, w_3,w_4$?
-
-## Forward Paragapagion
-
-Solution:
-
-First we randomly initialize parameters:
-
-```python
-    np.random.seed(42)
-
-    w_1 = np.random.normal(0, 1)
-    w_2 = np.random.normal(0, 1)
-    w_3 = np.random.normal(0, 1)
-    w_4 = np.random.normal(0, 1)
-
-    b_1 = 0
-    b_2 = 0
-    b_3 = 0
-```
-
-
-
-Second, we perfrom forward parapagation. 
-
-Becasue:
-
-* $y_{\text{green}} = w_3 y_{\text{blue}} + w_4 y_{\text{orange}} + b_3$. 
-* $y_{\text{blue}} =\text{Act}(w_1 x + b_1)$
-* $y_{\text{orange}} = \text{Act} (w_2 x + b_2)$,
-
-we compute $y_{\text{blue}}, y_{\text{orange}}, y_{\text{green}}$ value for each input $x_i$:
-
-```python
-y_blue_values = y_blue(x,w_1,b_1)
-y_orange_values = y_orange(x,w_1,b_1)
-y_hat = y_green(y_blue_values, y_orange_values, w_3, w_4, b_3)
-print(f"y_blue: {y_blue_values}")
-print(f"y_orange: {y_orange_values}")
-print(f"y_green: {y_hat}")
-### Outputs
-# y_blue: [0.718291262698181, 0.8334146592824242, 0.9173954367325202]
-# y_orange: [0.718291262698181, 0.8334146592824242, 0.9173954367325202]
-# y_green: [1.559208056553835, 1.8091085311575739, 1.9914071495536403]
-```
-
-## Back Propagation
-
-Then we perform back propagation, take optimizing $b_3$ for example,
-
-The derivative is
+The derivative equation of function $f$ w.r.t. variable $x$ is
 $$
-\frac {\partial \text{Loss}} {\partial b_3} = 
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}} 
-\frac {\partial y_{\text{green}}} {\partial b_3}
+\begin{equation} \label{derivative}
+f^\prime(x) = \frac {\partial f} {\partial x}=\lim _{h \rightarrow 0} \frac{f(x+h)-f(x)}{h} .
+\end{equation}
 $$
-Since the loss function is determined:
+In this example, the derivative equation of $f(x)$ w.r.t. variable $x$ is $6x-4$. When $x=2/3$, the derivative becomes $0$. 
+
+The physical meaning of $\frac {\partial f} {\partial x}$ is that "when $x$ changes a little bit, how much will $f$ change".
+
+You can test it:
+
+```python
+hs = np.arange(0.0001,0.0, -0.00001)
+x = 2/3
+for h in hs:
+    val = (f(x+h) - f(x)) / h
+    print (f"h={h}, value={val}")
+```
+
+The output is:
+
+```
+h=0.0001, value=0.0002999999981767587
+h=9e-05, value=0.0002699999976682774
+h=8e-05, value=0.00023999999765322852
+h=7.000000000000001e-05, value=0.0002099999983430832
+h=6.000000000000001e-05, value=0.0001800000000902931
+h=5.000000000000001e-05, value=0.00014999999464748723
+h=4.000000000000001e-05, value=0.000119999987724384
+h=3.000000000000001e-05, value=8.99999926436597e-05
+h=2.0000000000000012e-05, value=5.9999982759961734e-05
+h=1.0000000000000013e-05, value=3.0000002482211093e-05
+```
+
+As $h$ decreases, the value approaches $0$, which is the derivative value $f^\prime(2/3) = 0$.
+
+## Help functions
+
+For better understanding, we use these functions to visualize our computational graph:
+
+```python
+def trace(root):
+  # builds a set of all nodes and edges in a graph
+  nodes, edges = set(), set()
+  
+  # USE DFS to get all the nodes and edges
+  def build(v):
+    if v not in nodes:
+      nodes.add(v)
+      for child in v._prev:
+        edges.add((child, v))
+        build(child)
+  build(root)
+  return nodes, edges
+
+def draw_dot(root):
+  dot = Digraph(format='svg', graph_attr={'rankdir': 'LR'}) # LR = left to right
+  
+  nodes, edges = trace(root)
+  for n in nodes:
+    uid = str(id(n))
+    # for any value in the graph, create a rectangular ('record') node for it
+    dot.node(name = uid, label = "{ %s | data %.4f | grad %.4f }" % (n.label, n.data, n.grad), shape='record')
+    if n._op:
+      # if this value is a result of some operation, create an op node for it
+      dot.node(name = uid + n._op, label = n._op)
+      # and connect the op node to the node.
+      dot.edge(uid + n._op, uid)
+
+  for n1, n2 in edges:
+    # connect n1 to the op node of n2, instead of n2.
+    # For example, we have edge (a,e) in edges, rather than draw edge (a,e) in the graph, we instead draw edge (a,*), '*' is the op node of e.
+    dot.edge(str(id(n1)), str(id(n2)) + n2._op)
+
+  return dot
+```
+
+# Value class
+
+Now we implement a basic `Value` class which shares the most fundamental features of `Tensor` in PyTorch.
+
+```python
+class Value:
+    def __init__(self, data, _children=(), _op='', label=''):
+        self.data = data
+        self.grad = 0.0
+        self._prev = set(_children)
+        self._op = _op
+        self.label = label
+    def __repr__(self):
+        return f"Value(data={self.data})"
+
+    def __add__(self, other):
+        other = other if isinstance(other, Value) else Value(other) # Wrap the other operand to be `Value`
+        out = Value(self.data + other.data, (self, other), '+')
+        return out
+
+    def __mul__(self, other):
+        other = other if isinstance(other, Value) else Value(other) # Wrap the other operand to be `Value`
+        out = Value(self.data * other.data, (self, other), '*')        
+        return out
+     pass
+```
+
+Each `Value` object is a node in the computational graph. If it's computed via an operation, such as `__add__`, `__mul__`, `__neg__`, `__true_div__` (not defined yet), it should set it's the operand(s) generating it as its predessor(s). This predecessorr relationship is implemented by the `self._prev` in each `Value` object.
+
+```sh
+a = Value(3, label='a')
+b = Value(-2, label='b')
+c = Value(1, label='c')
+d = a+b; d.label='d'
+e = c * d; e.label='e'
+draw_dot(e)
+```
+
+The visualized computational graph is:
+
+![FIgure 2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 2.png)
+
+
+
+For now we haven't implement the gradient computation yet, so in the previous graph each node doesn't have a gradient value. Let's see how gradient calculation is implemented in the computational graph.
+
+## Gradient of each node
+
+Now let's see the gradient value of each variable. We define a function $L = (ab+c)f$, and compute its gradient value with respect to variable `a`, `b`, `c`, etc.
+
+```python
+def lol():
+  
+  h = 0.001
+  
+  a = Value(2.0, label='a')
+  b = Value(-3.0, label='b')
+  c = Value(10.0, label='c')
+  e = a*b; e.label = 'e'
+  d = e + c; d.label = 'd'
+  f = Value(-2.0, label='f')
+  L = d * f; L.label = 'L'
+  L1 = L.data
+  
+  a = Value(2.0, label='a')
+  b = Value(-3.0, label='b')
+  b.data += h
+  c = Value(10.0, label='c')
+  e = a*b; e.label = 'e'
+  d = e + c; d.label = 'd'
+  f = Value(-2.0, label='f')
+  L = d * f; L.label = 'L'
+  L2 = L.data
+  
+  print((L2 - L1)/h)
+  
+lol()
+```
+
+We set `h=0.001`. When we add `h` to `b`, the value of `(L2 - L1)/h` is `-3.99999999...`. If we continue to decrease `h`, we'll find that the value approaches `4.0`, which is exactly the gradient value
 $$
-\text{Loss}(y, \hat y) = \sum_i^{n} (y - \hat y)^2 ,
+\frac {\partial L} {\partial b}|_{b=-3.0} = af,
 $$
-we get following drivatives
+since `a=2.0, f=-2.0`, $\frac {\partial L} {\partial b}|_{b=-3.0} = -4.0$.
+
+# Backpropagation
+
+## The idea of backpropagation
+
+We now know that given a function $L$ and a variable $x$, we can calculate the gradient via equation $\eqref{derivative}$. However, a more efficient way is to leverage the [chain rule](https://lyk-love.cn/2024/01/25/derivatives-backpropagation-and-vectorization/#chain-rule) in Calculous
 $$
-\frac {\partial \text{Loss}} {\partial y_{\text{green}}}  = \sum_{i=1} ^ n -2 (y -  y_{\text{green}})^2 
-\\
-\frac {\partial y_{\text{green}}} {\partial b_3} = 1 .
+\frac{d z}{d x}=\frac{d z}{d y} \cdot \frac{d y}{d x} .
+$$
+The intuition here is that, given a function $L(x,y,z) = (x+y) z$, let $u = x+y$, then this function transforms to $L(u,z) = uz$. 
+
+For computing the gradient of $x,z$, we can calculate $\frac{df}{d u} = z$ first, then leverage the chain rule to calculate
+$$
+\begin{align}
+\frac{d L}{d x}=\frac{d L}{d u} \cdot \frac{d u}{d x} \label{chain_rule}\\
+\frac{d L}{d y}=\frac{d L}{d u} \cdot \frac{d u}{d y} \nonumber .
+\end{align}
+$$
+The gradient that have been already computed, i.e., $\frac{d L}{d u}$ in equation $\eqref{chain_rule}$, is called the **upstream gradient** of node `x` or `y`, since it's to be multiplied with the **local gradient** $\frac{d u}{d x}$ or $\frac{d u}{d y}$.
+
+The **gradient** of `x` or `y` is **local gradient  * upstream gradient**.
+
+In summary:
+
+1. The **upstream gradient** of node $x$ or $y$: $\frac{d L}{d u}$.
+2. The **local gradient** of node $x$ or $y$: $[\frac {\partial u} {x}, \frac {\partial u} {y}]^T$
+3. The **gradient** of node $x$ or $y$: $[\frac {\partial L} {x}, \frac {\partial L} {y}]^T$. 
+
+In order to leverage chain rule, we must do dorivation of the computational graph is a backward manner. In other words, we mush calculate $\frac{d L}{d u}$ before calculate $\frac{d u}{d x}$ and $\frac{d u}{d y}$. 
+
+In this sense, the derivation process is called **back(ward) propagation**. 
+
+* A detailed reason of using back propagation is [--> here](https://gregorygundersen.com/blog/2018/04/15/backprop/).
+
+
+
+One thing to notify is that the derivative of a variable with respect to itself is 1, i.e., for variable $y$,
+$$
+\frac{d}{d y} y=1 .
+$$
+Take the `e` node in the [previous section]() as an example, we have function $L = (a+b)c$ and variable $e = (a+b)c$, thus $\frac {\partial L} {\partial e} = \frac {\partial e} {\partial e} = 1$.
+
+
+
+So we set the last node of the computational graph to have gradient=1.0 (you can think it as local gradient=1.0 and there's no upstream gradient).
+
+
+
+We implement this in python by:
+
+1. Add `grad` attribute to `Value` object.
+2. For each computation operation, such as add, multiplication, division (not defined yet), etc, we implement the back propagate process as `_backward` method.
+
+```python
+class Value:
+    def __init__(self, data, _children=(), _op='', label=''):
+        self.data = data
+        self.grad = 0.0
+        self._backward = lambda: None
+        self._prev = set(_children)
+        self._op = _op
+        self.label = label
+    def __repr__(self):
+        return f"Value(data={self.data})"
+
+    def __add__(self, other):
+        other = other if isinstance(other, Value) else Value(other) # Wrap the other operand to be `Value`
+        out = Value(self.data + other.data, (self, other), '+')
+
+        def _backward():
+            self.grad += 1.0 * out.grad
+            other.grad += 1.0 * out.grad
+        out._backward = _backward
+        return out
+
+    def __mul__(self, other):
+        other = other if isinstance(other, Value) else Value(other) # Wrap the other operand to be `Value`
+        out = Value(self.data * other.data, (self, other), '*')
+
+        def _backward():
+            self.grad += other.data * out.grad
+            other.grad += self.data * out.grad
+        out._backward = _backward
+
+        return out
+    pass
+```
+
+Each operation node Recall that in computational graphs, a node is a function. During backward propagation, w
+
+corresponds to a "local gradient", that 
+
+For instance, the multiplication operation $L=ab$ has gradient $\frac {\partial L} {\partial a}= b, \frac {\partial L} {\partial b}= a$, so the
+
+```python
+a = Value(3, label='a')
+b = Value(-2, label='b')
+c = Value(1, label='c')
+d = a+b; d.label='d'
+e = c * d; e.label='e'
+draw_dot(e)
+```
+
+![Figure 3](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 3.png)
+
+We backpropagate through node `e`:
+
+```python
+e.grad = 1.0 # The last node should have gradient = 1.0
+e._backward()
+draw_dot(e)
+```
+
+![Figure 4](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 4.png)
+
+The gradient of node `d` is `1.0`, which equals to the value of node `c`; the gradient of node `c` is `1.0`, which equals to the value of node `d`. 
+
+
+
+Moreover, the addition operation $L=a+b$ has gradient $\frac {\partial L} {\partial a}= 1, \frac {\partial L} {\partial b}= 1$, so that we backpropagate through node `d`
+
+```python
+d._backward()
+draw_dot(e)
+```
+
+![Figure 5](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 5.png)
+
+
+
+To back progapate the whole computational graph, we need to call `backward()` for each node (if we can) mannually.
+
+```python
+e.backward()
+d.backward()
+c.backward() # We can ommit this since d c / d c = 1, where d is the partial derivation symbol.
+a.backward() # We can ommit this since d a / d a = 1, where d is the partial derivation symbol.
+b.backward() # We can ommit this since d a / d a = 1, where d is the partial derivation symbol.
+draw_dot(e)
+```
+
+
+
+
+
+In this section we defined the `_backward` method for operations `__add__` and `__mul__`. It can be implied that we can define the  `_backward` method for whatever operation we want to compute it's gradient as long as it's feasible, i.e., the operation itself is **first-order differentiable**.
+
+However, we must call the `_backward` method for each node manually in some fixed order, we can't back propagate `c` before back propagate `e`. Is there any way to automate this process so that we can do back propagation only once and calculate the gradient for the whole graph?
+
+## Backpropagate through the whole graph
+
+The solution is simple, we just need to:
+
+1. Sort all the nodes in the computational graph in a topological order. 
+2. From the last node to the first node in the computational graph, call their `_backward` method seperately.
+3. Remember that the last node itself must set its gradient to 1.0.
+
+Here's the code:
+
+```python
+class Value:
+  pass
+
+	def backward(self):
+        topo = []
+        visited = set()
+        def build_topo(v):
+            if v not in visited:
+                visited.add(v)
+                for child in v._prev:
+                    build_topo(child)
+                topo.append(v)
+        build_topo(self)
+
+        self.grad = 1.0
+        for node in reversed(topo):
+            node._backward()
+```
+
+
+
+Now, with this `backward` method, we don't need to call `_backward` anymore! For any computational graph, we can call `backward` to it's last node to do back propagation:
+
+```python
+a = Value(7, label='a')
+b = Value(-2, label='b')
+c = Value(1, label='c')
+d = a+b; d.label='d'
+e = c * d; e.label='e'
+f = e + a; f.label="f"
+draw_dot(f)
+```
+
+![Figure 6](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 6.png)
+
+```python
+f.grad = 1.0 
+f.backward()
+draw_dot(f)
+```
+
+![Figure 7](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 7.png)
+
+# Operations to be back propagated
+
+Now we define more commonly used operations and add `_backward` support to them. 
+
+## Operations can be set on arbitary abstraction level
+
+Note that the operation can be set at arbitary abstraction level.
+
+For example, for [tanh function](https://lyk-love.cn/2024/01/25/activation-functions/#tanh):
+$$
+\begin{aligned}
+\tanh (x)=\frac{e^{2 x}-1}{e^{2 x}+1}
+\end{aligned}
+$$
+with derivative
+$$
+\frac{d}{d x} \tanh (x)=1-\tanh (x)^2 =1-\frac{\left(e^x-e^{-x}\right)^2}{\left(e^x+e^{-x}\right)^2} .
+$$
+We can either define tanh outside of `Value` class, and define operations divisiontogether with exponent.
+
+
+
+### Low level
+
+We can build tahh from low level through defining exp, addition and other low level operations. We don't have to define tanh in the `Value` class.
+
+```python
+class Value:
+    pass
+
+    def __add__(self, other):
+        other = other if isinstance(other, Value) else Value(other) # Wrap the other operand to be `Value`
+        out = Value(self.data + other.data, (self, other), '+')
+
+        def _backward():
+            self.grad += 1.0 * out.grad
+            other.grad += 1.0 * out.grad
+        out._backward = _backward
+        return out
+
+    def __mul__(self, other):
+        other = other if isinstance(other, Value) else Value(other) # Wrap the other operand to be `Value`
+        out = Value(self.data * other.data, (self, other), '*')
+
+        def _backward():
+            self.grad += other.data * out.grad
+            other.grad += self.data * out.grad
+        out._backward = _backward
+
+        return out
+    def __pow__(self, other):
+        assert isinstance(other, (int, float)), "only supporting int/float powers for now"
+        out = Value(self.data**other, (self,), f'**{other}')
+
+        def _backward():
+            self.grad += other * (self.data ** (other - 1)) * out.grad
+        out._backward = _backward
+
+        return out
+
+    def __truediv__(self, other): # self / other
+        return self * other**-1
+
+    def exp(self):
+        x = self.data
+        out = Value(math.exp(x), (self, ), 'exp')
+
+        def _backward():
+            self.grad += out.data * out.grad # NOTE: in the video I incorrectly used = instead of +=. Fixed here.
+        out._backward = _backward
+
+        return out
+```
+
+Create the graph:
+
+```python
+def tanh(x):
+    out = ((x*2).exp() - 1) / ((x*2).exp() + 1)
+    return out
+
+x =  Value(2.0, label='x')
+o = tanh(x)
+draw_dot(o)
+```
+
+![Figure 8](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 8.png)
+
+Start back propagation:
+
+```python
+o.grad = 1.0
+o.backward()
+draw_dot(o)
+```
+
+![Figure 9](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 9.png)
+
+### High livel
+
+We can define the `_backward` for tanh instead:
+
+```python
+class Value:
+    pass
+    
+    def tanh(self):
+        x = self.data
+        t = (math.exp(2*x) - 1)/(math.exp(2*x) + 1)
+        out = Value(t, (self, ), 'tanh')
+
+        def _backward():
+            local_grad = (1 - t**2)
+            self.grad += local_grad * out.grad
+        out._backward = _backward
+        return out
+```
+
+Cteate the graph:
+
+```python
+x =  Value(2.0, label='x')
+o = x.tanh()
+draw_dot(o)
+```
+
+![Figure 10](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 10.png)
+
+
+
+Start back propagation:
+
+```python
+o.grad = 1.0
+o.backward()
+draw_dot(o)
+```
+
+![Figure 11](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 11.png)
+
+## Operation zoo
+
+### Addition
+
+$$
+\begin{aligned}
+\frac{d}{d x}\left(x+y\right) = 1 \\
+\frac{d}{d y}\left(x+y\right) = 1
+\end{aligned}
 $$
 
 ```python
-def derivative1(y, y_green_values):
-	return -2 * sum_of_squared_residuals(y, y_green_values)
+    def __add__(self, other):
+        other = other if isinstance(other, Value) else Value(other) # Wrap the other operand to be `Value`
+        out = Value(self.data + other.data, (self, other), '+')
 
-
-def derivative2():
-	return 1
+        def _backward():
+            self.grad += 1.0 * out.grad
+            other.grad += 1.0 * out.grad
+        out._backward = _backward
+        return out
+    def __radd__(self, other): # other + self
+        return self + other
 ```
 
-Then we **plug** the values into the deriavatives to evalute the deriavatives:
+### Multiplication
+
+$$
+\begin{aligned}
+\frac{d}{d x}\left(xy\right) = y \\
+\frac{d}{d y}\left(xy\right) = x
+\end{aligned}
+$$
+
+
 
 ```python
-derivative1_value = derivative1(y, y_hat) # plug the value
-derivative2_value = derivative2()
-derivative_value = derivative1_value * derivative2_value
-print(f"derivative1_value: {derivative1_value}")
-print(f"derivative2_value: {derivative2_value}")
-print(f"derivative_value: {derivative_value}")
-##### output
-derivative1_value: -5.716432424534343
-derivative2_value: 1
-derivative_value: -5.716432424534343
+    def __mul__(self, other):
+        other = other if isinstance(other, Value) else Value(other) # Wrap the other operand to be `Value`
+        out = Value(self.data * other.data, (self, other), '*')
+
+        def _backward():
+            self.grad += other.data * out.grad
+            other.grad += self.data * out.grad
+        out._backward = _backward
+    def __rmul__(self, other): # other * self
+        return self * other        
 ```
 
+### Negation
 
-
-Then we calculate the step size, update the parameter $b_3$:
+We achieve negation through multiplication:
+$$
+-x = x \cdot (-1) .
+$$
 
 ```python
-step_size_for_b_3 = derivative_value * learning_rate()
-new_b_3 = b_3 + step_size_for_b_3
-print(f"step size: {derivative_value}")
-print(f"updated b_3: {new_b_3}")
-##### output
-step size: -5.716432424534343
-updated b_3: -0.05716432424534343
+    def __neg__(self): # -self
+        return self * -1
 ```
 
+### Substraction
 
-
-New loss func value:
+We achieve substraction through addition and negation:
+$$
+x - y = x  + (-y)
+$$
 
 ```python
-new_loss_func_value = loss_func(y, y_green(y_blue_values, y_orange_values, w_3, w_4, new_b_3))
-print(f"new loss func value b_3: {new_loss_func_value}")
-##### output
-new loss func value b_3: 2.884057087700263
+    def __sub__(self, other): # self - other
+        return self + (-other)
 ```
 
-Then repeat the process.
-
-# Future
-
-https://arxiv.org/abs/2212.13345
-
- 
 
 
+### Exponential function
+
+$$
+\frac{d}{d x}\left(e^x\right) = e^x .
+$$
+
+So the local graddient is just the data of the output.
+
+```python
+def exp(self):
+        x = self.data
+        out = Value(math.exp(x), (self, ), 'exp')
+
+        def _backward():
+            local_gradient = out.data
+            self.grad += local_gradient * out.grad
+        out._backward = _backward
+```
+
+### Power
+
+$$
+\frac{d}{d x} \left(x^n\right) = n x^{n-1} .
+$$
 
 
 
-[^1]: Note that the concept "tensor" appears in machine learning does not equal to the concept in physics or math.
-[^2]: In neural networks, the word "parameters" typically refer to the weights and biases rather than the input data. 
+```python
+    def __pow__(self, other):
+        assert isinstance(other, (int, float)), "only supporting int/float powers for now"
+        out = Value(self.data**other, (self,), f'**{other}')
+
+        def _backward():
+            self.grad += other * (self.data ** (other - 1)) * out.grad
+        out._backward = _backward
+
+        return out
+```
+
+### Division
+
+We achieve division through power:
+$$
+x / y = x \cdot y^{-1} .
+$$
+
+```
+def __truediv__(self, other): # self / other
+        return self * other**-1
+```
+
+### tanh
+
+As before, tanh is
+
+```python
+#     def tanh(self):
+        x = self.data
+        t = (math.exp(2*x) - 1)/(math.exp(2*x) + 1)
+        out = Value(t, (self, ), 'tanh')
+
+        def _backward():
+            local_grad = (1 - t**2)
+            self.grad += local_grad * out.grad
+        out._backward = _backward
+```
+
+
+
+### Relu
+
+The derivative of relu at x=0 is set to 0.
+
+```python
+    def relu(self):
+        out = Value(0 if self.data < 0 else self.data, (self,), 'ReLU')
+
+        def _backward():
+            local_grad = 1 if out.data > 0 else 0
+            self.grad += (out.data > 0) * out.grad
+        out._backward = _backward
+
+        return out
+```
+
+
+
+# Neuron
+
+![Neuron](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Neuron.png)
+
+[--> Image source](https://towardsdatascience.com/the-basics-of-neural-networks-neural-network-series-part-1-4419e343b2b)
+
+
+
+Now we know backpaopagation, it's time to investigate Neural networks. In this section, we are going to implement a single neuron conducting computation 
+$$
+\hat y = g(\sum_{i=1}^{n} w_i x_i + b)
+$$
+where the input is a vector $x$ with length $n$, the output is a scalar $y$, the <u>activation function</u> is denoted as $g$, the parameters can be solit into two parts:
+
+1. A weight vector $w$, should have length $n$ as well.
+2. A bias $b$, which is a scaler.
+
+
+
+We also implement the `parameters` method to get all the $n+1$ parameters of this neuron, i.e., the $n$  weights and one bias.
+
+```python
+class Neuron():
+  
+  def __init__(self, nin):
+      '''
+      nin: the dimension of input data point, which is a vector.
+      
+      Here we initialize the weights and thr bias via a uniform distribution. In practice it's up to you to choose the initialization method, sometimes a normal distribution is better, sometimes we set them to be all zero, there are also more complicated methods such as [Xavier](https://cs230.stanford.edu/section/4/).
+      '''
+      self.w = [Value(random.uniform(-1,1)) for _ in range(nin)]
+      self.b = Value(random.uniform(-1,1))
+      
+  def __call__(self, x):
+      '''
+      w * x + b, where "*" is dot product
+      Then apply tanh as the activation function.
+      The output is a scalar.
+      '''
+      act = sum(w_i * x_i for w_i, x_i in zip(self.w, x)) + self.b
+      out = act.tanh()
+      return out
+  
+  def parameters(self):
+    return self.w + [self.b]
+```
+
+The compututational graph of a neuron is like:
+
+```python
+x = [2.0, 3.0, -1.0]
+n = Neuron(len(x))
+o = n(x)
+draw_dot(o)
+```
+
+![Figure 12](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure%2012.png)
+
+We can backpropagate it:
+
+```python
+o.backward()
+draw_dot(o)
+```
+
+![Figure 13](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 13.png)
+
+# Layer
+
+In the same way, we define a layer (or **linear layer** since every neuron performs linear transformation):
+
+```python
+class Layer():
+  
+  def __init__(self, nin, nout):
+      '''
+      nin: the dimension of input data point, which is a vector.
+      nout: the dimension of the output, which equals to the number of the neurons in the layer since each neuron outputs a scalar as one element of the output vector.
+      '''
+      self.neurons = [Neuron(nin) for _ in range(nout)]
+  
+  def __call__(self, x):
+    outs = [n(x) for n in self.neurons]
+    return outs[0] if len(outs) == 1 else outs # If the output is a vector with length=1, then we output its scalar version instead.
+  
+  def parameters(self):
+    return [p for neuron in self.neurons for p in neuron.parameters()]
+```
+
+# Multilayer perceptron
+
+Despite it's fancy name, a multilayer perceptron (MLP) is just a combination of linear layers, it'sorganized in at least three layers:
+
+* Input Layer
+* Hidden Layer(s)
+* Output Layer
+
+Below is a simple MLP with one input layer (dimension=3), two hidden layers (dimension=4 for each), one output layer (dimension=1):
+
+![MLP](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/MLP.png)
+
+```python
+class MLP():
+  
+  def __init__(self, nin, nouts):
+    '''
+    nin: the dimension of input data point, which is a vector.
+    nouts: the list of the `nout` of each layer.
+    '''
+    
+    # sz: the size of the MLP.
+    # For example, if input vector has dimension=3, we have 3 layers with dimension=4,4,1 separately, then 
+    # total size of the MLP is [3,4,4,1], i.e., we add a first layer with size (3,4).
+    sz = [nin] + nouts 
+    self.layers = [Layer(sz[i], sz[i+1]) for i in range(len(nouts))]
+  
+  def __call__(self, x):
+    for layer in self.layers:
+      x = layer(x)
+    return x
+  
+  def parameters(self):
+    return [p for layer in self.layers for p in layer.parameters()]
+```
+
+
+
+Now we create the computational graph for MLP:
+
+```python
+x = [2.0, 3.0, -1.0]
+n = MLP(3, [4, 4, 1])
+o = n(x)
+draw_dot(o)
+```
+
+
+
+Note that the graph has already been very huge:
+
+![Figure 14](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 14.png)
+
+As before, we can easily back propagate it:
+
+```python
+o.backward()
+draw_dot(o)
+```
+
+![Figure 15](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 15.png)
+
+One glimpse into it:
+
+![Figure 16](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 16.png)
+
+
+
+# Training process
+
+```python
+def train(n, episodes=20, learning_rate=-0.1):
+    '''
+    n: the neural network
+    episodes: the times of the training
+    learning_rate: the step size of each gradient descent step
+    '''
+    for k in range(episodes):
+
+        # forward pass
+        ypred = [n(x) for x in xs]
+        loss = sum((yout - ygt) ** 2 for ygt, yout in zip(ys, ypred))  # The loss function is simply the MSE loss.
+
+        # backward pass
+        # n.zero_grad()
+        for p in n.parameters():
+            p.grad = 0.0
+        loss.backward()
+
+        # update
+        for p in n.parameters():
+            p.data += -learning_rate * p.grad
+
+        print(k, loss.data)
+```
+
+During each training iteration, we do forward pass and backward pass, then use the gradient to update the parameters. 
+
+```python
+if __name__ == '__main__':
+    xs = [
+        [2.0, 3.0, -1.0],
+        [3.0, -1.0, 0.5],
+        [0.5, 1.0, 1.0],
+        [1.0, 1.0, -1.0],
+    ]
+    ys = [1.0, -1.0, -1.0, 1.0]
+
+    n = MLP(3, [4, 4, 1])
+    train(n)
+```
+
+Output:
+
+```
+0 3.0023652813181076
+1 7.829656796657114
+2 7.873495186948614
+3 7.898971556682395
+4 7.915750651920874
+5 7.927679560403236
+6 7.93661348136074
+7 7.943562957166411
+8 7.949127470610182
+9 7.9536859717913115
+10 7.957490110712908
+11 7.960713728194046
+12 7.963480863718541
+13 7.965882448401477
+14 7.967986690055242
+15 7.969845771638371
+16 7.9715003073212936
+17 7.972982387122015
+18 7.9743177063547
+19 7.975527086007134
+```
+
+
+
+We must flash the gradients before doing BP. Otherwise the gradients in each iteration will accumulate. This can be implemented as a function `zero_grad`, which is what PyTorch did.
+
+# Module
+
+At last, to be more compatible with PyTorch, we organize our NN, let all componnets (`Neuron`, `Layer` and `MLP`) inherit a base `Module` class:
+
+```python
+class Module:
+    def zero_grad(self):
+        for p in self.parameters():
+            p.grad = 0
+
+    def parameters(self):
+        return []
+      
+class Value:
+  pass
+class Neuron(Module):
+  pass
+class Layer(Module):
+  pass
+class MLP(Module):
+  pass
+```
+
+
+

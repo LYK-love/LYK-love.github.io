@@ -19,24 +19,48 @@ Source:
 
 > CUDA is a programming model and computing toolkit developed by NVIDIA.  It enables you to perform compute-intensive operations faster by  parallelizing tasks across GPUs. CUDA is the dominant API used for deep  learning although other options are available, such as OpenCL. PyTorch  provides support for CUDA in the `torch.cuda` library. 
 
-## Locally
+
+
+**Note: While this section introduces two ways to install CUDA. If you simply want to run CUDA code, you don't need to install CUDA**. In fact, PyTorch has a built-in CUDA runtime (See the next section.) so that you can just install PyTorch(CUDA version) and you can run CUDA code! 
+
+* Note: Only CUDA runtime is included by PyTorch. The toolchain, such as `nvcc`, is not included.
+
+## Install locally (recommended)
 
 1. Using [this website](https://developer.nvidia.com/cuda-downloads) to get the installation command.
 
-2. Reboot the machine.
-
-3. Add `PATH` variables:
+2. Check if CUDA driver is running:
 
    ```sh
-   export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
-   export LD_LIBRARY_PATH=/usr/local/cuda-12.3/lib64\
-                            ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+   nvidia-smi
    ```
 
+For instance, the installation instructions for x86_64 Ubuntu22.04 is:
 
+1. Base Installer:
 
+   ```
+   wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+   sudo dpkg -i cuda-keyring_1.1-1_all.deb
+   sudo apt-get update
+   sudo apt-get -y install cuda-toolkit-12-3
+   ```
 
-## Via conda
+2. Driver Installer (the legacy kernel module flavor):
+
+   ```
+   sudo apt-get install -y cuda-drivers
+   ```
+
+   You can install To install the open kernel module flavor rather than the legacy one using:
+
+   ```
+   sudo apt-get install -y nvidia-kernel-open-545sudo apt-get install -y cuda-drivers-545
+   ```
+
+After installation, there's no need to reboot.
+
+## Install via conda
 
 You can install CUDA and its toolchain(like `nvcc`) [via conda](https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/index.html?highlight=conda#conda-overview):
 
@@ -44,13 +68,9 @@ You can install CUDA and its toolchain(like `nvcc`) [via conda](https://docs.nvi
 conda install cuda -c nvidia
 ```
 
-This is more recommended than using other package managers like `apt` or `pacman`, since CUDA installed by conda is **local to the conda environment**.
+CUDA installed by conda is **local to the conda environment**.
 
 
-
-However, you don't need to install CUDA to run CUDA code. In fact, PyTorch has a built-in CUDA runtime so that you can just install PyTorch(CUDA version) and you can run CUDA code!
-
-* Note: Only CUDA runtime is included by PyTorch. The toolchain, such as `nvcc`, is not included.
 
 # Pytorch(CUDA version)
 
@@ -62,7 +82,7 @@ conda install torch
 
 
 
-To install a GPU compiled version, you need to:
+To install a **GPU** compiled version, you need to:
 
 1. Go to the [Pytorch website](https://pytorch.org/get-started/locally/)
 
@@ -95,6 +115,18 @@ CUDA has both a <u>driver API</u> and a <u>runtime API</u>, and their API versio
   ```
 
 The original commands from the Pytorch website, i.e., CUDA11.8, CUDA12.1, works just fine for most cases. Just double check with the command above if you’re  running into issues.
+
+# Monitor CUDA
+
+```sh
+watch -n 1 nvidia-smi
+```
+
+or
+
+[nvitop](https://github.com/XuehaiPan/nvitop?tab=readme-ov-file)
+
+
 
 # Check if CUDA is avaiable
 
@@ -152,6 +184,8 @@ Error:
 NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running.
 ```
 
+This happens often after the update of the kernel.
+
 
 
 Solution:
@@ -160,11 +194,11 @@ Solution:
 
    ```
    # First of all, we need to remove all of the previous dependencies
+   sudo apt-get remove --purge '^nvidia-.*'
    sudo apt-get purge nvidia-*
    sudo apt-get update
    sudo apt-get autoremove
    ```
 
-2. Reinstall it
+2. Reinstall CUDA.
 
-3. Rleboot

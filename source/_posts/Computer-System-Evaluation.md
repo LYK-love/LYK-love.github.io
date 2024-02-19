@@ -14,7 +14,9 @@ Source:
 
 # Current Computing
 
-Moore’s Law:The number of transistor on a chip doubles every period of time (2, 1.5, or 2.5 years).
+## Moore’s Law
+
+Moore’s Law: The number of transistor on a chip doubles every period of time (2, 1.5, or 2.5 years).
 
 * It is enabled by Dennard Scaling.
 
@@ -25,7 +27,7 @@ Moore’s Law:The number of transistor on a chip doubles every period of time (2
 
 The energy consumption in CMOS devices primarily occurs during the  switching of transistors from one state to another (from ON to OFF or  vice versa).
 
-Total Power Comsumption = Dynamic Power Consumption + Static Power Consumption
+**Total Power Comsumption = Dynamic Power Consumption + Static Power Consumption**
 
 ### Dynamic Power Consumption
 
@@ -77,6 +79,41 @@ How to reduce power consumption?
 
 
 
+```python
+def total_power_consumption(voltage, frequency, capacitive_load, leakage_current, alpha=1.0, name=None, description=None):
+    """
+    Calculate the total power consumption of a system based on dynamic and static power components.
+
+    Parameters:
+    - voltage (float): Operating voltage in Volts.
+    - frequency (float): Clock frequency in Hz.
+    - capacitive_load (float): Capacitive load in Farads.
+    - static_power (float): Static power consumption in Watts.
+    - alpha (float, optional): Activity factor, defaults to 1.0 if not specified.
+    - name (str, optional): Name of the system or component.
+    - description (str, optional): Description of the system or component.
+
+    Returns:
+    - float: Total power consumption in Watts.
+    """
+    # Calculate dynamic power
+    dynamic_power = alpha * capacitive_load * (voltage ** 2) * frequency
+    static_power = leakage_current * voltage
+
+    # Calculate total power
+    total_power = dynamic_power + static_power
+
+    # Optionally print the name and description if they are provided
+    if name or description:
+        print(f"Calculating power for: {name if name else 'Unnamed System'}")
+        if description:
+            print(f"Description: {description}")
+
+    return total_power
+```
+
+
+
 # Performance
 
 Performance: latency and throughput
@@ -89,24 +126,56 @@ Performance: latency and throughput
 
 
 ## Iron Law
+
+The performance of a processor is the time it takes to execute a program: $\frac{\text { Time }}{\text { Program }}$. This can be further broken down into three factors: ${ }^{4]}$
 $$
-\text{CPU iime} = \text{the number of instructions} \times \text{cycle per instruction} \times \text{time per cycle}
+\frac{\text { Time }}{\text { Program }} = 
+\frac{\text { Instructions }}{\text { Program }} 
+\times 
+\frac{\text { ClockCycles }}{\text { Instruction }} 
+\times 
+\frac{\text { Time }}{\text { ClockCycles }}
+$$
+We have following dependencies:
+
+1. the number of instructions depends on **architecture**.
+2. the number of cycles per instruction (**CPI**) depends on **micro-architecture**.
+3. time per cycle depends on **technology**.
+
+
+
+Meanwhile, the *frequency* of the processor is 
+$$
+\text { frequency } = \frac{\text { ClockCycles }}{\text { Time }}
 $$
 
-= architecture * micro-architecture * technology
 
+```python
+# Given data
+cycles = 949429232883
+time_seconds = 313.053
 
+# Calculate the frequency in Hz
+frequency_hz = cycles / time_seconds
 
-
+# Convert frequency from Hz to GHz
+frequency_ghz = frequency_hz / (10**9)
+frequency_ghz
+```
 
 
 
 ## Amdahl's Law
 *"the overall performance improvement gained by optimizing a single part of a system is limited by the fraction of time that the improved part is actually used."*
 
+$$
+\text{Speedup} =
+\frac {\text { Old Time }} {\text {New Time}}
+=
+\frac{\text { New IPC } \times \text { New Frequency }}{\text { Old IPC } \times \text { Old Frequency }}
+$$
+where IPS refers to Instructions Per Cycle, which is 1/CPI.
 
-
-Speedup = old time $/$ new time
 
 
 $$
@@ -115,4 +184,14 @@ $$
 where
 - $S_{\text {latency }}$ is the theoretical speedup of the execution of the whole task;
 - $s$ is the speedup of the part of the task that benefits from improved system resources;
-- $p$ is the proportion of execution time that the part benefiting from improved resources originally occupied.
+- $p$ is the proportion of execution time that could be parallelized.
+
+
+
+For example, I've run a few SPEC workloads on these two systems: The AMD Epyc and Intel i7.
+
+|            | AMD Epyc | Intel i7 |
+| ---------- | -------- | -------- |
+| gcc        | 274.3s   | 180.0s   |
+| mcf        | 301.1s   | 186.3s   |
+| libquantum | 313.1s   | 230.4s   |

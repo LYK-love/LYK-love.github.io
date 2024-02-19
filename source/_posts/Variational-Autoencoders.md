@@ -19,6 +19,8 @@ Source:
 6. [Youtube: Variational Autoencoder Loss Function](https://youtu.be/ywYuZrLENH0?feature=shared)
 7. [Stanford CS 228: The variational auto-encoder](https://ermongroup.github.io/cs228-notes/extras/vae/)
 8. https://www.cnblogs.com/wolfling/p/16452537.html
+9. [Stanford CS 231N, Lecture 13,Generative Models](https://youtu.be/5WoItGTWV54?si=51wK-p1pcv2mJPeo)
+   * [--> Slides](http://cs231n.stanford.edu/slides/2017/cs231n_2017_lecture13.pdf)
 
 <!--more-->
 
@@ -55,6 +57,15 @@ Note: some people use Binary Symmetric Entropy (BCE) as the reconstruction loss.
 
 # Variational auto-encoder
 
+Data likelihood is intractable (the integral symbol): $\quad p_\theta(x)=\int p_\theta(z) p_\theta(x \mid z) d z$
+Posterior density also intractable (the $p_\theta(x)$): $p_\theta(z \mid x)=p_\theta(x \mid z) p_\theta(z) / p_\theta(x)$
+
+
+
+Solution: In addition to decoder network modeling $p_\theta(x \mid z)$, define additional encoder network $q_\phi(z \mid x)$ that approximates $p_\theta(z \mid x)$
+
+Will see that this allows us to derive a lower bound on the data likelihood that is tractable, which we can optimize
+
 ![img](https://miro.medium.com/v2/resize:fit:2000/1*ejNnusxYrn1NRDZf4Kg2lw@2x.png)
 
 The variational auto-encoder (VAE) works exactly as autoencoder except that ...
@@ -73,7 +84,7 @@ Latent variable $z = [z_1, z_2, \cdots, z_m]^T$.
 
 In VAE, we assume $q(z \mid x)=\mathcal{N}(\mu, \Sigma)$ where $\mu$ and $\Sigma$ are the mean and the covariance matrix of the latent variable $z$.
 
-Also, we assume that all the elements of $z$ are indeoendent. As a result, $\Sigma$ is a diagonal matrix and every element $z_i$ ($i \in \{1,\cdots,m\}$) has a standard nomal distribution, i.e.,
+Also, we assume that all the elements of $z$ are independent. As a result, $\Sigma$ is a diagonal matrix and every element $z_i$ ($i \in \{1,\cdots,m\}$) has a standard nomal distribution, i.e.,
 $$
 z_i \sim \mathcal N(0,1), i \in \{1,2,\cdots,m\}.
 $$
@@ -115,11 +126,46 @@ $$
 
 ## ELBO
 
-The loss function of VAE is called **Evidence Lower BOund (ELBO)** loss:
+$$
+\begin{aligned}
+\log p_\theta\left(x^{(i)}\right)
+& =\mathbf{E}_{z \sim q_\phi\left(z \mid x^{(i)}\right)}\left[\log p_\theta\left(x^{(i)}\right)\right]
+& =\mathbf{E}_z\left[\log \frac{p_\theta\left(x^{(i)} \mid z\right) p_\theta(z)}{p_\theta\left(z \mid x^{(i)}\right)}\right]  \\
+& =\mathbf{E}_z\left[\log \frac{p_\theta\left(x^{(i)} \mid z\right) p_\theta(z)}{p_\theta\left(z \mid x^{(i)}\right)} \frac{q_\phi\left(z \mid x^{(i)}\right)}{q_\phi\left(z \mid x^{(i)}\right)}\right] \quad \text { (Multiply by constant) } \\
+& =\mathbf{E}_z\left[\log p_\theta\left(x^{(i)} \mid z\right)\right]-\mathbf{E}_z\left[\log \frac{q_\phi\left(z \mid x^{(i)}\right)}{p_\theta(z)}\right]+\mathbf{E}_z\left[\log \frac{q_\phi\left(z \mid x^{(i)}\right)}{p_\theta\left(z \mid x^{(i)}\right)}\right]  \\
+& =\mathbf{E}_z\left[\log p_\theta\left(x^{(i)} \mid z\right)\right]-D_{K L}\left(q_\phi\left(z \mid x^{(i)}\right) \| p_\theta(z)\right)+D_{K L}\left(q_\phi\left(z \mid x^{(i)}\right) \| p_\theta\left(z \mid x^{(i)}\right)\right)
+\end{aligned}
+$$
+The 1st line is because $\left(p_\theta\left(x^{(i)}\right)\right.$ Does not depend on $z$.
+
+The 2nd line is because the Bayes's rule.
+
+The 3rd line is multiplying by constant 1.
+
+The 4th line is because the property of logarithms.
+
+The 5th line is composed of two terms:
+
+1. For $$\mathbf{E}_z\left[\log p_\theta\left(x^{(i)} \mid z\right)\right]-D_{K L}\left(q_\phi\left(z \mid x^{(i)}\right) \| p_\theta(z)\right)$$, we denote it as $\mathcal{L}\left(x^{(i)}, \theta, \phi\right)$:
+   $$
+   
+   $$
+   
+2. For the right term $D_{K L}\left(q_\phi\left(z \mid x^{(i)}\right) \| p_\theta\left(z \mid x^{(i)}\right)\right)$, we can not derivateb it. But due to the property of KL divergence, we know it's >= 0.
+
+3. As a result, we have $\log p_\theta\left(x^{(i)}\right) \geq \mathcal{L}\left(x^{(i)}, \theta, \phi\right)$
+
+4. We call $\mathcal{L}\left(x^{(i)}, \theta, \phi\right)$ the **Evidence Lower BOund (ELBO)** and use it as our loss function, instead of the original $\log p_\theta\left(x^{(i)}\right)$,
+
+
 $$
 \mathrm{ELBO \ loss} = \mathrm{Reconstruction \ Loss} + \mathrm{KL \ divergence} .
 $$
 As you can see, the ELBO loss is simply the formarly discussed recontruction loss plus a [KL divergence](https://lyk-love.cn/2024/01/18/relative-entropy-or-kl-divergence/).
+
+
+
+
 
 ## Reconstruction loss
 

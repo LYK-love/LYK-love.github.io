@@ -37,7 +37,7 @@ Below are my favourite docker images. To use them, [install docker]() and [docke
   docker run -d --restart=unless-stopped -p 8001:8000 ihmily/image-matting:0.0.3
   ```
   
-* Image gallary: 
+* [photoview](https://github.com/photoview/photoview): 
 
   ```sh
   git clone git@github.com:LYK-love/photoview.git
@@ -56,8 +56,65 @@ Below are my favourite docker images. To use them, [install docker]() and [docke
   ```
   
   The docker image is [-->here](https://hub.docker.com/r/billchurch/webssh2).
+  
+* [Docspell](https://docspell.org/?ref=noted.lol#get-started):
 
+  1. Clone the repo:
+  
+     ```sh
+     git clone https://github.com/eikek/docspell
+     cd docspell/docker/docker-compose
+     ```
+  
+  2. Edit `docker-compose.yml`, change `7880:7880` to `8004:7880`.
+  
+  3. Run `docker compose up`:
+  
+     ```sh
+     docker compose up -d
+     ```
+  
+* [logseq](https://demo.logseq.com/#/):
 
+  ```sh
+  docker pull ghcr.io/logseq/logseq-webapp:latest
+  docker run -d --restart=unless-stopped -p 127.0.0.1:8005:80 ghcr.io/logseq/logseq-webapp:latest
+  ```
+  
+  See the [Logseq Docker Web App Guide](https://github.com/logseq/logseq/blob/master/docs/docker-web-app-guide.md#logseq-docker-web-app-guide)
+  
+* [mediacms](https://github.com/mediacms-io/mediacms):
+
+  1. Clone the repo:
+
+     ```sh
+     git clone https://github.com/mediacms-io/mediacms
+     cd mediacms
+     ```
+
+  2. Edit `docker-compose.yml`, change `80:80` to `8006:80`, and set your user account. For example:
+
+     ```yaml
+     ADMIN_USER: 'lyk'
+     ADMIN_EMAIL: 'lyk@localhost'
+     ADMIN_PASSWORD: 'lyk123'
+     ```
+
+  3. Run `docker compose up`:
+
+     ```sh
+     docker compose up -d
+     ```
+  
+  See the [mediacms Docker Web App Guide](https://github.com/mediacms-io/mediacms/blob/main/docs/admins_docs.md#3-docker-installation)
+  
+* [ollama]():
+
+  ```
+  docker run -d --gpus=all -v ollama:/root/.ollama -p 8007:11434 --name ollama ollama/ollama
+  ```
+  
+  
 
 # How to use
 
@@ -78,6 +135,12 @@ Take myself as an example, I run these containers on my remote server (Ubuntu22.
      ```
 
      to visit it.
+
+5. dockspell, listening to port `8004` on remote server.
+
+6. logseq, listening to port `8005` on remote server.
+
+7. mediacms, listening to port `8006` on remote server.
 
 
 
@@ -125,5 +188,18 @@ http://localhost:<port>/ssh/host/<hostname>
 
 ![webssh2](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Docker/Useful%20Self-Hosted%20Docker%20Images/webssh2.png)
 
+## dockspell
+
+![image-20240214171703749](/Users/lyk/Library/Application Support/typora-user-images/image-20240214171703749.png)
 
 
+
+## logseq
+
+
+
+## mediacms
+
+![image-20240214171517793](/Users/lyk/Library/Application Support/typora-user-images/image-20240214171517793.png)
+
+![image-20240214171525804](/Users/lyk/Library/Application Support/typora-user-images/image-20240214171525804.png)

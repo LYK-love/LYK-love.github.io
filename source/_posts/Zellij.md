@@ -112,6 +112,12 @@ date: 2023-11-02 21:20:52
   zellij attach
   ```
 
+* Attach to the session with the given name:
+
+  ```shell
+  zellij attach <session-name>
+  ```
+
 * Attach to given seesion:
 
   ```sh

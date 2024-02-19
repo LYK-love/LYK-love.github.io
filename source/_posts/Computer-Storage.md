@@ -26,11 +26,11 @@ Outline:
 
 - 地址：单元的唯一标识符（采用二进制）
 - 地址空间：可唯一标识的单元总数
-- 寻址能力：存储在每个单元中的信息的位数•大多数存储器是字节寻址的，而执行科学计算的计算机通常是64位寻址的
+- 寻址能力：存储在每个单元中的信息的位数•大多数存储器是**字节**寻址的，而执行科学计算的计算机通常是64位寻址的
 
 
 
-![image-20230812005129873](/Users/lyk/Library/Application Support/typora-user-images/image-20230812005129873.png)
+![Computer Architecture](/Users/lyk/Pictures/HexoPics/Computer Architecture/Computer Storage/Computer Architecture.png)
 
 
 

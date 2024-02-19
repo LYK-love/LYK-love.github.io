@@ -32,14 +32,23 @@ Pipelining increases the processor instruction *throughput*—the number of inst
 Canonically, we have the following five steps to complete an instruction:
 
 1. **Fetch** the instruction: In this stage, the processor retrieves the next instruction to be  executed from memory. The program counter (PC) keeps track of the  current instruction address, and after fetching, the PC is updated to  point to the next instruction.
-2. **Decode** the instruction: figure out what we should do and read the data from the register file.
-3. **Execute** the instruction: use the arithmetic/logic unit (ALU) to compute a result, the effective address, or direction of the branch.
-4. **Memory**: For instructions that involve data memory access (load and store  instructions), this stage is used to **read from or write to memory**. Load  instructions read data from the calculated memory address into a  register, while store instructions write data from a register to the  calculated memory address.
-5. **Writeback** the instruction: (if required) write the result of the instruction to the register file. For arithmetic and logical instructions, this typically involves writing the result into a destination register. For load instructions, the data fetched from memory is written into a destination register.
+2. **Decode** the instruction: figure out what we should do and **read the data from the register file**. During this stage the bits from the instruction specify which registers need to be read (or written to).
+3. **Execute** the instruction: use the arithmetic/logic unit (**ALU**) to compute a result, the effective address, or direction of the branch.
+4. **Memory**: For instructions that involve data memory access (only **load and store** instructions), this stage is used to **read from or write to memory**. Load  instructions read data from the calculated memory address into a  register, while store instructions write data from a register to the  calculated memory address.
+5. **Writeback** the instruction: (if required) write the result of the instruction **to the register file**. For arithmetic and logical instructions, this typically involves writing the result into a destination register. For load instructions, the data fetched from memory is written into a destination register.
 
 The processor loops indefinitely, performing these stages. Ideally, **each step is finished in one clock cycle**.
 
+The execution of single instruction is atomic.
+
+
+
 (This five-stage model applies to most RISC ISAs, including RISC-V. For some CISC ISAs, they may use a simpler four-stage model.)
+
+## Components
+
+- **Data Path**: This is the part of the processor that performs operations on data, such as arithmetic operations, logic operations, and data transport. The data path includes components like the ALU (Arithmetic Logic Unit), registers, and buses that are used to move data between these components. The data path is shared by all instructions, as it provides the hardware necessary for executing the various operations specified by these instructions. Regardless of the instruction being executed, it will utilize some portion of the data path to perform its required data manipulation or calculation.
+- **Control Path**: This is responsible for controlling the operation of the processor and the data path based on the instruction being executed. It generates control signals that activate or deactivate various parts of the data path and other components of the processor to carry out the specific instruction. The control path selects subsets of components to use for each instruction by decoding the instruction to understand what operation needs to be performed and then generating the appropriate control signals to orchestrate that operation. Different instructions may require different components of the data path to be activated, and it is the control path's job to ensure that the correct sequence of actions is taken for each instruction.
 
 # Single cycle CPU design
 
@@ -63,7 +72,11 @@ Hazard is a dependency that causes the pipelines to stall.
    * Solution: Forwarding the value from the older instruction to the younger instruction can hide or help thehazard.
 2. Control dependency: Dependency caused by waiting for the decision and target address of the branch instruction.
    * Solution: Branch prediction.
-3. Structure dependency: Dependency caused by multiple instructions having conflicts in resources.
+   
+   * In the five-stage pipeline model used in basic CPU architecture, control hazards (also known as branch hazards) become apparent in the Decode (ID) stage. This is when the processor decodes the instruction and realizes that it is a branch instruction, which could potentially alter the control flow based on its condition.
+   
+     However, **the decision to stall** the pipeline due to a control hazard typically occurs after the branch condition is evaluated, which happens in the Execute (EX) stage for most simple pipelines. It's **in the EX stage that the processor can determine whether the branch will be taken or not** and what the target address of the branch will be if it is taken.
+3. Structure dependency: Dependency caused by multiple instructions having conflicts in resources, such as the usage of a memory access port for both load and store instructions.
 
 # The Classic Five-Stage Pipeline for a RISC Processor
 

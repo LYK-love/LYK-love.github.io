@@ -17,9 +17,9 @@ Source:
 
 # Instruction set architectures
 
-Instruction set architectures (ISA) is a contract between hardware and software.
+Instruction set architectures (ISA) is a contract between **hardware** and **software**.
 
-* Instruction format specifies: virtual memory, number of registers, size of registers, exception, and etc.
+* Instruction format specifies: instruction format, virtual memory, number of registers, size of registers, exception, and etc.
 
 # Features of ISAs
 
@@ -117,12 +117,16 @@ The registers that are preserved across a procedure call are labeled "Callee" sa
 
 All instructions are 32 bits long.
 
+All registers are referenced by 5 bits.
+
 Types:
 
 1. The R format is for integer register-to-register operations, such as ADD, SUB, and so on. 
 2. The I format is for loads and immediate operations, such as LD and ADDI. 
 3. The B format is for branches and 
+   * The immediate is disrupted, so it will be decoded when the CPU executes  in the future. After decoding, the CPU needs to restore the disrupted  immediate in order. For example, when the CPU gets a B-type instruction, the immediate in it is scrambled, and the CPU needs to arrange the  immediate in the order of 12-1 to restore the immediate.
 4. the J format is for jumps and link. 
+   * The immediate of J-type is **signed** and also disrupted. That means that the CPU must  first put the immediate numbers together to restore the original  immediate numbers when decoding.
 5. The S format is for stores. Having a separate format for stores allows the three register specifiers (rd, rs1, rs2) to always be in the same location in all formats. 
 6. The U format is for the wide immediate instructions (LUI, AUIPC).
 
@@ -165,6 +169,10 @@ This table includes R64I and RVM:
 | `ecall`                                       | Make a request to the supporting execution environment, which is usually an OS |
 | `ebreak`                                      | Debuggers used to cause control to be transferred back to a debugging environment |
 | `fence, fence.i`                              | Synchronize threads to guarantee ordering of memory accesses; synchronize instructions and data for stores to instruction memory |
+
+* **JAL (Jump and Link):**: The "jal" instruction also performs an unconditional jump like "j," but it additionally stores the return address in a register..
+
+  It allows a subroutine to jump to a target address and then return back  to the original caller by using the stored return address.
 
 # Floating point insturction types
 

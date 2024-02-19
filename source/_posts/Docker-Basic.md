@@ -165,6 +165,8 @@ By default, docker daemon is not set to auto-start, you can verify that by:
 systemctl is-enabled docker
 ```
 
+
+
 You can set that by:
 
 ```sh
@@ -732,6 +734,16 @@ docker container run [options] <image> <app>
 
  ` <Ctrl PQ>`： detach容器
 
+
+
+### Attach bash to the running container
+
+```sh
+docker container exec -it <container> bash
+```
+
+* `exec`在容器中创建了新的bash，输入`ps`可看到两个bash进程。 这意味着在当前shell输入`exit`并不会导致容器终止，因为主进程还在运行中
+
 ### 启动已停止运行的容器
 
 启动处于停止（`Exited`）状态的容器：
@@ -750,8 +762,6 @@ docker container restart <container>
 
 
 
-----
-
 ### 在容器中启动新进程
 
 在运行的容器中启动新进程：
@@ -760,10 +770,9 @@ docker container restart <container>
 docker  container exec [options] <container> <app>
 ```
 
-* `docker container exec -it <container> bash`: 将终端重新连接到容器
-  * `exec`在容器中创建了新的bash，输入`ps`可看到两个bash进程。 这意味着在当前shell输入`exit`并不会导致容器终止，因为主进程还在运行中
 
-----
+
+
 
 ### 列出容器
 

@@ -1,7 +1,7 @@
 ---
 title: Rust Tools
 tags: Rust
-categories: Sotftware Engineering
+categories: Software Engineering
 date: 2024-01-09 20:56:42
 ---
 

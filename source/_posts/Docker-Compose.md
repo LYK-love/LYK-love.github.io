@@ -23,7 +23,7 @@ Outline:
 
 * 单引擎模式部署workflow：
   1. 编写定义多容器应用的YAML文件（称为Compose文件）
-  2. 将其交给`docker-compose`  命令， 
+  2. 将其交给`docker compose`  命令， 
   3. 该工具会基于docker api完成应用的部署（ 即与docker daemon通信 ）
 
 
@@ -43,7 +43,7 @@ See [Install the Compose plugin](https://docs.docker.com/compose/install/linux/)
 
    ```sh
     sudo apt-get update
-    sudo apt-get install docker-compose-plugin
+    sudo apt-get install docker compose-plugin
    ```
 
 3. Verify that Docker Compose is installed correctly by checking the version.
@@ -58,29 +58,29 @@ See [Install the Compose plugin](https://docs.docker.com/compose/install/linux/)
 
 
 
-* `docker-compose`构建应用时也会利用构建缓存，对于已有的镜像、网络、卷，不会再重新创建
+* `docker compose`构建应用时也会利用构建缓存，对于已有的镜像、网络、卷，不会再重新创建
 
 
 
-* `docker-compose`的命令和`docker comtainer`大同小异， 所谓的应用就是若干容器， 容器就有运行、停止和关闭三种状态。“关闭”指的是容器资源也被删除
+* `docker compose`的命令和`docker comtainer`大同小异， 所谓的应用就是若干容器， 容器就有运行、停止和关闭三种状态。“关闭”指的是容器资源也被删除
 
 * 由于docker卷的生命周期是与相应的容器完全解耦的。 因此关闭Compose应用，卷不会被删除
 * 同样，镜像也不会被删除
 
 
 
-* `docker-compose`会将项目名称和Compose文件中定义的服务名称连起来，作为新构建的镜像的名称， 而容器名称是镜像名称+数字后缀，因为`docker-compose`允许扩容
+* `docker compose`会将项目名称和Compose文件中定义的服务名称连起来，作为新构建的镜像的名称， 而容器名称是镜像名称+数字后缀，因为`docker compose`允许扩容
 
 # Commands
 
 ## 启动Compose应用
 
 ```shell
-docker-compose up [ -f [compose_file_name] ]   -d
+docker compose up [ -f [compose_file_name] ]   -d
 ```
 
-* `-f`: 指定Compose文件，默认情况下， 其名为docker-compose.yml 或docker-compose.yaml
-  *  `docker-compose up`会查找Compose文件，基于此构建镜像、网络和卷，并启动容器
+* `-f`: 指定Compose文件，默认情况下， 其名为docker compose.yml 或docker compose.yaml
+  *  `docker compose up`会查找Compose文件，基于此构建镜像、网络和卷，并启动容器
 * `-d`: daemon模式，在后台启用应用
   * 也可以使用` &`， 但是这样不会重定向输入输出流
 
@@ -89,7 +89,7 @@ docker-compose up [ -f [compose_file_name] ]   -d
 ## 列出Compose应用：
 
 ```shell
-docker-copmpose ps
+docker-compose ps
 ```
 
  该命令作用和` docker container ls`  差不多
@@ -101,19 +101,17 @@ docker-copmpose ps
   停止Compose应用, 并删除资源（类似`docker container rm  -f`）：
 
 ```shell
-docker-compose down
+docker compose down
 ```
 
-*  该命令会停止并关闭容器，删除网络（卷和镜像不会被删除）
-
-
+*  该命令会停止并关闭容器，删除网络（卷和**镜像不会被删除**）
 
 
 
 停止Compose应用,不删除资源：
 
 ```shell
-docker-compose stop
+docker compose stop
 ```
 
 相当于` docker compose stop`
@@ -125,7 +123,7 @@ docker-compose stop
 对于停止的Compose应用,删除其资源：
 
 ```shell
-docker-compose rm
+docker compose rm
 ```
 
 类似` docker compose rm`， 会删除容器和网络
@@ -139,7 +137,7 @@ docker-compose rm
 对于停止的Compose应用,重新启动：
 
 ```shell
-docker-compose restart
+docker compose restart
 ```
 
 类似` docker compose restart`
@@ -151,7 +149,7 @@ docker-compose restart
 查看Compose应用运行情况：
 
 ```shell
-docker-compose top
+docker compose top
 ```
 
 # Compose文件示例
@@ -170,17 +168,17 @@ docker-compose top
 
 ```shell
 ❯ ls
-app.py  docker-compose.yml  Dockerfile  README.md  requirements.txt
+app.py  docker compose.yml  Dockerfile  README.md  requirements.txt
 ```
 
 * `app.py`: 应用程序代码
 
 ## 文件格式
 
-查看示例的`docker-compose.yml`:
+查看示例的`docker compose.yml`:
 
 ```yaml
-❯ cat ./docker-compose.yml
+❯ cat ./docker compose.yml
 version: "3.5"
 services:
   web-fe:
@@ -219,7 +217,7 @@ volumes:
 
 二级key：
 
-* `services`  部分定义两个二级`key`，docker-compose会将每个服务部署为一个容器，并使用key作为容器名字的一部分，在二级key中有如下指令：
+* `services`  部分定义两个二级`key`，docker compose会将每个服务部署为一个容器，并使用key作为容器名字的一部分，在二级key中有如下指令：
   *  `build： [file_path]`：指定Dockerfile的所在目录，该Dockerfile会被用于创建镜像，进而启动容器。 如果已经存在镜像了，可以使用`image <image>`
   * `image: <image>`: 指定Docker基于镜像启动容器
   * `command: [executable]`: 指定Docker容器中运行的主程序
@@ -279,7 +277,7 @@ local     counter-app_counter-vol
 
 # 热部署
 
-由于主机的卷被挂载到容器上，对主机上卷的改动就是对容器的卷的改动。 `docker-compose`可以做到热部署，就是说可以直接在主机的卷上进行修改，容器就会产生相应的改变，不需要重新部署
+由于主机的卷被挂载到容器上，对主机上卷的改动就是对容器的卷的改动。 `docker compose`可以做到热部署，就是说可以直接在主机的卷上进行修改，容器就会产生相应的改变，不需要重新部署
 
 
 
