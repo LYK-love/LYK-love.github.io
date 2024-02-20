@@ -108,13 +108,12 @@ Below are my favourite docker images. To use them, [install docker]() and [docke
   
   See the [mediacms Docker Web App Guide](https://github.com/mediacms-io/mediacms/blob/main/docs/admins_docs.md#3-docker-installation)
   
-* [ollama]():
+* [BionicGPT]():
 
-  ```
-  docker run -d --gpus=all -v ollama:/root/.ollama -p 8007:11434 --name ollama ollama/ollama
-  ```
+  1. Install Ollama first and pull a llama image.
+  2. 
   
-  
+* 
 
 # How to use
 

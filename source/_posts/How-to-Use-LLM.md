@@ -1,16 +1,19 @@
 ---
 title: How to Use LLM
-tags:
+date: 2024-02-20 00:09:54
+categories:
+- Software Engineering
+tags: Machine Learning
 ---
 
-Source:
+How to use LLMs (Large Language Models), including how to host them, how to add a frontend to them and others.
+
+<!--more-->
+
+# Ollama
 
 * [Ollama](https://ollama.com/)
 * [Ollama github repo](https://github.com/ollama/ollama?tab=readme-ov-file)
-
-This article intruce how to use modern 
-
-# Ollama
 
 ## Installation
 
@@ -88,7 +91,7 @@ You need to reboot the computer.
 FInally, you can run the container:
 
 ```sh
-docker run -d --gpus=all -v ollama:/root/.ollama -p 8007:11434 --name ollama ollama/ollama
+docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
 ```
 
 ## Run the model
@@ -204,6 +207,31 @@ Hello! It's your friend Mario.
 
 For more examples, see the [examples](https://github.com/ollama/ollama/blob/main/examples) directory. For more information on working with a Modelfile, see the [Modelfile](https://github.com/ollama/ollama/blob/main/docs/modelfile.md) documentation.
 
+# Open-webui
+
+* [Github: open-webui](https://github.com/open-webui/open-webui)
+* [Open WebUI Community](https://openwebui.com/)
+
+Ollama works at terminal, we can install a frontend for it. We choose open-webui since its fast and has no bug.
+
+
+
+![Open WebUI Demo](https://github.com/open-webui/open-webui/raw/main/demo.gif)
+
+## Installation
+
+1. Install Ollama, by default it listens to port 11434.
+
+2. Run
+
+   ```sh
+   docker run -d --network=host -v open-webui:/app/backend/data -e OLLAMA_API_BASE_URL=http://127.0.0.1:11434/api --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+   ```
+
+   Source: [Open WebUI: Server Connection Error](https://github.com/open-webui/open-webui/blob/main/TROUBLESHOOTING.md)
+
+3. Then visit http://localhost:8080
+
 # BionicGPT
 
 [BionicGPT](https://bionic-gpt.com/)
@@ -211,3 +239,20 @@ For more examples, see the [examples](https://github.com/ollama/ollama/blob/main
 [BionicGPT github repo](https://github.com/bionic-gpt/bionic-gpt)
 
 [Install BionicGPT via `docker compose`](https://bionic-gpt.com/docs/running-locally/gpu-setup-ollama/)
+
+The easiest way to get running with BionicGPT is with our `docker-compose.yml` file. You'll need [Docker](https://docs.docker.com/engine/install/) installed on your machine.
+
+```sh
+mkdir BionicGPT
+cd BionicGPT
+curl -O https://raw.githubusercontent.com/bionic-gpt/bionic-gpt/main/docker-compose/docker-compose.yml
+docker compose up -d
+```
+
+You must have access to ports `7800` and `7810`.
+
+## Run the User Interface
+
+You can then access the front end from `http://localhost:7800` and you'll be redirected to a registration screen.
+
+The first user to register with **BionicGPT** will become the system administrator.
