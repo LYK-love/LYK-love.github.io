@@ -34,6 +34,13 @@ Besides, there're some impementations for DreamerV2 and DreamerV1.
 * [adityabingi's Dreamerv1 & v2 codebase](https://github.com/adityabingi/Dreamer)
 * [EasyDreamer: A Simplified Version of the DreamerV1 Algorithm with Pytorch](https://github.com/kc-ml2/SimpleDreamer?tab=readme-ov-file)
 
+
+
+There're also some explanations of the code:
+
+1. [some code notes](https://docs.google.com/document/d/179Nqo1dc9ZExB1-71Tj4iFt2Dq-uWH-6k6w1e2rkwBM/edit) from a [Reddit user](https://www.reddit.com/r/reinforcementlearning/comments/1azgrc4/comment/ks1hipp/?utm_source=share&utm_medium=web2x&context=3)
+2. [implementations of the tricks in cleanRL, applied to PPO.](https://github.com/RyanNavillus/PPO-v3/blob/main/ppo_v3/ppo_envpool_tricks.py): This obviously doesn't include any of the world model architecture or loss functions,  just the new tricks introduced by DreamerV3
+
 ## sheeprl
 
 Installation:
