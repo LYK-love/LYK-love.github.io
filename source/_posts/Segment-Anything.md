@@ -13,7 +13,7 @@ Source:
 * [Masked Autoencoders (MAE)](https://arxiv.org/pdf/2111.06377.pdf)
 * [Vision Transformer (ViT)](https://arxiv.org/abs/2010.11929)
 * [Segment Anything blog](https://ai.meta.com/blog/segment-anything-foundation-model-image-segmentation/)
-* [SAM github repo](https://github.com/facebookresearch/segment-anything)
+* [Github: SAM](https://github.com/facebookresearch/segment-anything)
 * [Youtube video: Segment Anything - Model explanation with code](https://youtu.be/eYhvJR4zFUM?si=Sxd0iDZc6jxksUYv)
   * [-->Slides](https://github.com/hkproj/segment-anything-slides)
 

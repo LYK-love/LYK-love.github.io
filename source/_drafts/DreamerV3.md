@@ -10,13 +10,22 @@ categories:
 
 Source:
 
-1. [EclecticSheep: Dreamer V1](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html)
-2. [EclecticSheep: Dreamer V2](https://eclecticsheep.ai/2023/07/06/dreamer_v2.html)
-3. [EclecticSheep: Dreamer V3](https://eclecticsheep.ai/2023/08/10/dreamer_v3.html)
-4. [EclecticSheep: a2c algorithm](https://eclecticsheep.ai/2023/12/14/intro-rl.html)
-5. RSSM
-6. [DreamerV2](https://arxiv.org/abs/2010.02193)
-7. [DreamerV3](https://arxiv.org/abs/2301.04104)
+1. Papers:
+
+   1. [RSSM](https://arxiv.org/pdf/1811.04551.pdf)
+
+   1. [DreamerV1](https://arxiv.org/abs/1912.01603)
+   2. [DreamerV2](https://arxiv.org/abs/2010.02193)
+   3. [DreamerV3](https://arxiv.org/abs/2301.04104)
+
+2. Blogs:
+
+   1. [EclecticSheep: Dreamer V1](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html)
+   2. [EclecticSheep: Dreamer V2](https://eclecticsheep.ai/2023/07/06/dreamer_v2.html)
+   3. [EclecticSheep: Dreamer V3](https://eclecticsheep.ai/2023/08/10/dreamer_v3.html)
+   4. [EclecticSheep: a2c algorithm](https://eclecticsheep.ai/2023/12/14/intro-rl.html)
+
+3. 
 
 <!--more-->
 
@@ -335,27 +344,32 @@ The last detail to report is that the symlog prediction is used in the decoder, 
 
 After completing the dynamic learning phase, the next step is to learn  the actor and critic using the learned world model. The objective is to  use the world model to imagine the consequences of actions. 
 
-1. The first step: The first latent state $s_t$ is computed **from the  representation model, and continues for a certain number of imagination  steps (horizon).** 
+1. The first step: The first latent state $s_t$ is computed **from the representation model, and continues for a certain number of imagination  steps (horizon).** 
 2. After that, during the following steps, the imagined trajectory is denoted as $\hat s_t$ and is computed by the **transition model** because the environment observations are not available during imagination. Additionally, imagining in the  latent space is faster and more cost-effective than doing so in the  image space, making the transition model more convenient.
 
-During each step, the agent takes an action selected by the actor in [Figure 3](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html#fig-actor), which is based on  the current latent state ($z_0$ or $z_t$ where $t > 0$). Then the agent computes the next latent state using the world model.
+During each step, the agent takes an action selected by the actor in [Figure 3](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html#fig-actor), which is based on **the current latent state** ($z_0$ or $z_t$ where $t > 0$, predicted by the transition model) and the recurrent state. Then the agent computes the next latent state using the world model.
 
-![Figure 3: How the actor works. It selects the action from the lantent state (recurrent and stochastic state).](https://eclecticsheep.ai/assets/images/dreamer_v1/actor.png)
+<img src="https://eclecticsheep.ai/assets/images/dreamer_v1/actor.png" alt="Figure 3: How the actor works. It selects the action from the lantent state (recurrent and stochastic state)." style="zoom: 50%;" />
 
 
 
 To sum up, the process of imagining trajectories, as shown in the [Figure 4](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html#fig-imagine), involves the recurrent and transition models of the RSSM, and the actor.
 
-![Figure 4: Imagination phase. The actor, the recurrent and the transition models iteratively perform the imagination steps. The actor comptes the next actions, then the recurrent model encodes this information in the  recurrent state. Finally the transition model predicts the stochastic  state.](https://eclecticsheep.ai/assets/images/dreamer_v1/imagination.png)
+<img src="https://eclecticsheep.ai/assets/images/dreamer_v1/imagination.png" alt="Figure 4: Imagination phase. The actor, the recurrent and the transition models iteratively perform the imagination steps. The actor comptes the next actions, then the recurrent model encodes this information in the  recurrent state. Finally the transition model predicts the stochastic  state." style="zoom:50%;" />
 
 
 
-All the latent states computed in the previous phase (dynamic learning)  serve as starting points for fully imagined trajectories. Consequently,  the latent states are reshaped to consider each computed latent state  independently. A *for loop* is necessary for behavior learning,  as trajectories are imagined one step at a time. The actor selects an  action based on the last imagined state, and the new imagined latent  state is computed.
- From the imagined trajectories, the critic ([Figure 5](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html#fig-critic)), reward model, and continue model predict values, rewards, and continue  probabilities, respectively. These predicted quantities are used to  compute the lambda values (TD()), which serve as target values for actor and critic losses.
+All the latent states computed in the previous phase (dynamic learning) serve as starting points for fully imagined trajectories. Consequently, the latent states are reshaped to consider each computed latent state  independently. A *for loop* is necessary for behavior learning, as trajectories are imagined one step at a time. 
 
-![Figure 5: How the critic works. It estimates the state value from the lantent state (recurrent and stochastic state).](https://eclecticsheep.ai/assets/images/dreamer_v1/critic.png)
+
+
+From the imagined trajectories, the **critic** ([Figure 5](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html#fig-critic)), reward model, and continue model predict values, rewards, and continue  probabilities, respectively. These predicted quantities are used to  compute the lambda values (TD()), which serve as target values for actor and critic losses.
+
+<img src="https://eclecticsheep.ai/assets/images/dreamer_v1/critic.png" alt="Figure 5: How the critic works. It estimates the state value from the lantent state (recurrent and stochastic state)." style="zoom:50%;" />
 
 An important consideration is the composition of the imagined trajectories. The starting latent state computed by the representation model (from the recurrent state and embedded observations) must be excluded from the trajectory because it is not consistent with the rest of the trajectory. This was one of the initial challenges faced during the implementation of Dreamer, and without this adjustment, the agent would not converge.
+
+
 
 When computing the lambda values, the last element in the trajectory is "lost" because the next value is needed to calculate the $\operatorname{TD}(\lambda)$, but the last imagined state does not have a next value. Moreover, according to the DreamerV1 paper, the lambda targets are weighted by the cumulative product of predicted discount factors $(\gamma)$, estimated by the continue model. This weighting downweights terms based on the likelihood of the imagined trajectory ending. This crucial detail, necessary for convergence. These weighted lambda targets are used in the actor loss as part of the update process. Instead, the critic predicts the distribution of the values $\left(q_v\right)$ without the last element of the imagined trajectory and then it is compared with the lambda values. The actor and critic losses are computed as follows:
 $$
@@ -365,7 +379,120 @@ $$
 \end{gathered}
 $$
 
+## Actor
+
+The actor () of Dreamer supports both continuous and discrete control. 
+
+For  continuous actions, it:
+
+1. First, the actor outputs the mean and standard deviation (?) of the actions. 
+
+2. The mean is scaled by a factor of 5, and the standard deviation is processed using a [SoftPlus](https://pytorch.org/docs/stable/generated/torch.nn.Softplus.html) function to ensure non-negative values. 
+
+3. The formulas for calculating  the mean and standard deviation are
+   $$
+   \begin{gathered}
+   \mu_a=5 \cdot \tanh \left(\mu_\phi / 5\right) \\ 
+   \sigma_a=\operatorname{softplus}\left(\sigma_\phi+\chi\right)+5
+   \end{gathered}
+   $$
+   Where $\chi=\ln e^{5-1}$ is the raw init std value and $\mu_\phi$ and $\sigma_\phi$ are the mean and standard deviation computed by the actor.
+
+   
+
+   
+
+   The standard deviation is  increased by a *raw init std* value and then transformed using  SoftPlus, with a minimum amount of standard deviation added to the  result. The resulting normal distribution is transformed using a  hyperbolic tangent (tanh) function, and the Independent distribution is  used to set the correct event shape. The mean and standard deviation for the discrete control are computed as follows:
+
+4. At last, it outputs the distribution of rhe actions as $\mathcal N(\mu_\phi, \sigma ^ 2 _\phi)$.
+
+
+
+For discrete actions, no transformations are applied to the  model output, which serves as the logits of a one-hot categorical  distribution.
+
+
+
+```python
+out: Tensor = self.model(state)
+        pre_dist: List[Tensor] = [head(out) for head in self.mlp_heads]
+        if self.is_continuous:
+            # # For continuous actions, it outputs the mean and standard deviation of the actions.
+            mean, std = torch.chunk(pre_dist[0], 2, -1)
+            if self.distribution == "tanh_normal":
+
+                
+                # The mean is scaled by a factor of 5, and the standard deviation is processed using a SoftPlus function to ensure non-negative values.
+                mean = 5 * torch.tanh(mean / 5)
+                std = F.softplus(std + self.init_std) + self.min_std
+
+                actions_dist = Normal(mean, std)
+                actions_dist = Independent(
+                    TransformedDistribution(
+                        actions_dist, TanhTransform(), validate_args=self.distribution_cfg.validate_args
+                    ),
+                    1,
+                    validate_args=self.distribution_cfg.validate_args,
+                )
+            elif self.distribution == "normal":
+                actions_dist = Normal(mean, std, validate_args=self.distribution_cfg.validate_args)
+                actions_dist = Independent(actions_dist, 1, validate_args=self.distribution_cfg.validate_args)
+            elif self.distribution == "trunc_normal":
+                std = 2 * torch.sigmoid((std + self.init_std) / 2) + self.min_std
+                dist = TruncatedNormal(torch.tanh(mean), std, -1, 1, validate_args=self.distribution_cfg.validate_args)
+                actions_dist = Independent(dist, 1, validate_args=self.distribution_cfg.validate_args)
+            if is_training:
+                actions = actions_dist.rsample()
+            else:
+                sample = actions_dist.sample((100,))
+                log_prob = actions_dist.log_prob(sample)
+                actions = sample[log_prob.argmax(0)].view(1, 1, -1)
+            actions = [actions]
+            actions_dist = [actions_dist]
+        else:
+            actions_dist: List[Distribution] = []
+            actions: List[Tensor] = []
+            for logits in pre_dist:
+                actions_dist.append(
+                    OneHotCategoricalStraightThroughValidateArgs(
+                        logits=self._uniform_mix(logits), validate_args=self.distribution_cfg.validate_args
+                    )
+                )
+                if is_training:
+                    actions.append(actions_dist[-1].rsample())
+                else:
+                    actions.append(actions_dist[-1].mode)
+        return tuple(actions), tuple(actions_dist)
+```
+
+
+
 # Others
+
+## Training
+
+In this phase the agent learns a latent representation of the  environment from **a batch of sequences**, The key component of the world  model is the RSSM.
+
+In Dreamer V1, we have
+
+```yaml
+  per_rank_batch_size: 50
+  per_rank_sequence_length: 50
+```
+
+
+
+In DreamerV3, we have:
+
+```yaml
+  per_rank_batch_size: 16
+  per_rank_sequence_length: 64
+```
+
+
+
+## Hyperparameters
+
+
 
 The used activation function is the [SiLU](https://pytorch.org/docs/stable/generated/torch.nn.SiLU.html).
 

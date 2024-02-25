@@ -92,6 +92,79 @@ tuple也是一种list，唯一区别是tuple不可变。因此，tuple也可以�
 'ACEG'
 ```
 
+### Star or Asterisk operator ( * )
+
+https://www.geeksforgeeks.org/python-star-or-asterisk-operator/
+
+
+
+```python
+arr = ['sunday', 'monday', 'tuesday', 'wednesday']
+ 
+# without using asterisk
+print(' '.join(map(str,arr))) 
+ 
+# using asterisk
+print (*arr)
+```
+
+```
+sunday monday tuesday wednesday
+sunday monday tuesday wednesday
+```
+
+
+
+
+
+**Passing a  Function Using with an arbitrary number of keyword arguments**
+Here a double asterisk( ** ) is also used as ***kwargs*, the double asterisks allow passing keyword arguments. This special  symbol is used to pass a keyword arguments and variable-length argument  lists. It has many uses, one such example is illustrated below
+
+```python
+# using asterisk
+def addition(*args):
+  return sum(args)
+ 
+print(addition(5, 10, 20, 6))
+```
+
+
+
+**Passing a  Function Using with an arbitrary number of keyword arguments**
+Here a double asterisk( ** ) is also used as ***kwargs*, the double asterisks allow passing keyword arguments. This special  symbol is used to pass a keyword arguments and variable-length argument  lists. It has many uses, one such example is illustrated below
+
+```python
+# using asterisk
+def food(**kwargs):
+for items in kwargs:
+	print(f"{kwargs[items]} is a {items}")
+	
+	
+food(fruit = 'cherry', vegetable = 'potato', boy = 'srikrishna')
+```
+
+
+
+```python
+# using asterisk
+def food(**kwargs):
+  for items in kwargs:
+    print(f"{kwargs[items]} is a {items}")
+     
+     
+dict = {'fruit' : 'cherry', 'vegetable' : 'potato', 'boy' : 'srikrishna'}
+# using asterisk
+food(**dict)
+```
+
+```
+cherry is a fruit
+potato is a vegetable
+srikrishna is a boy
+```
+
+
+
 ## Control Flow
 
 Python中, **空字符串**, 空容器, 数字0都被判断为False.
@@ -200,13 +273,40 @@ def num_max(num1, num2):
     return max_num
 ```
 
+## lambda
+
+The basic syntax of a lambda function is:
+
+```python
+lambda arguments: expression
+```
+
+- **`lambda`**: This is the keyword that indicates the start of a lambda expression.
+- **`arguments`**: The arguments to the function, separated by commas. These are optional; a lambda function can have zero arguments.
+- **`expression`**: A single expression which is executed and its value is returned when the lambda function is called. This expression can use the arguments in any way.
 
 
-# Data Types
+
+Example:
+
+```
+sorted(b.items(), key=lambda kv: -kv[1])
+```
+
+is used to sort the items of a dictionary `b` by their values in descending order. Let's break down this expression to understand its components and how it works:
+
+1. **`b.items()`**: This method returns a view object that displays a list of a dictionary's key-value tuple pairs. For example, if `b = {'one': 1, 'two': 2}`, then `b.items()` returns `[('one', 1), ('two', 2)]`.
+2. **`sorted()`**: This is a built-in Python function that returns a new sorted list from the elements of any iterable (like lists, dictionaries, tuples). The `sorted()` function by default sorts in ascending order.
+3. **`key=lambda kv: -kv[1]`**: This part specifies a function to be used as the key for sorting. The `lambda` function takes an argument `kv` (representing each key-value tuple from the dictionary) and returns `-kv[1]`, which is the negative value of the tuple's second element (the value in the key-value pair of the dictionary). The reason for returning the negative value is to sort the items in descending order based on the dictionary values.
+   - `kv`: A tuple representing a key-value pair from the dictionary.
+   - `kv[1]`: The value part of the pair. Since Python's `sorted()` function sorts in ascending order by default, using `-kv[1]` as the key inverts the sorting order to descending.
+
+# Types
 
 Python3 中有六个标准的数据类型：
 
 - Number（数字）
+  * In Python, floating-point numbers are implemented using **double precision (64-bit)** by default.
 - String（字符串）, Python中没有字符类型
 - List（列表）
 - Tuple（元组）
@@ -375,13 +475,15 @@ Python3 Number类型的子类型有: int, float, bool, complex( 复数 )
 
 ## Dictionary
 
+**`b.items()`**: This method returns a view object that displays <u>a list of a dictionary's key-value tuple pairs</u>. For example, if `b = {'one': 1, 'two': 2}`, then `b.items()` returns `[('one', 1), ('two', 2)]`.
+
 
 
 # Function
 
 ## Define Fuction 
 
-```
+```python
 def my_abs(x):
 	if x>= 0:
 		return x

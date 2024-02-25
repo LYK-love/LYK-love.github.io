@@ -24,6 +24,12 @@ Each of these values is called an *element* of the tensor.
 
 # Data Manipulation
 
+## Tensor
+
+In PyTorch, tensors default to a 32-bit precision (float32) when you  create them with floating-point data, unless specified otherwise.
+
+
+
 ## Create a tensor
 
 * Create a vector of <u>evenly spaced</u> values, starting at 0 (included) and ending at `n` (not included). By default, the interval size is 1.
@@ -60,7 +66,7 @@ Each of these values is called an *element* of the tensor.
 
 * Create an all-zero or all-one tensor:
 
-  ```
+  ```python
   torch.zeros((2, 3, 4))
   torch.ones((2, 3, 4))
   ```
