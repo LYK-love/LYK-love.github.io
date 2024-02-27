@@ -9,6 +9,8 @@ date: 2024-02-06 21:31:26
 
 Source:
 
+1. [UWashington: CSE471, Lecture04](https://courses.cs.washington.edu/courses/cse471/07sp/lectures/Lecture4.pdf)
+1. [UCSD: CSE240A, Lecture13](https://cseweb.ucsd.edu/classes/fa14/cse240A-a/pdf/07/CSE240A-MBT-L13-ReorderBuffer.ppt.pdf)
 1. John L. Hennessy & David A. Patterson. (2019). *Chapter 3. Instruction-Level Parallelism and Its Exploitation. Computer Architecture: A Quantitative Approach* (6th ed., pp. 168-266). Elsevier Inc.
 
 <!--more-->
@@ -41,8 +43,6 @@ In out-of-order processor you can only execute instructions out of order, you st
 
 1. Must commit instructions in order to make sure that exceptions/interrupts happen precisely for the right instruction.
 2. Must issue in order to determine their dependencies. 
-
-
 
 # A new ISA type: VLIW
 
@@ -94,22 +94,66 @@ Incorrect Predictions:
 - **Output Dependency (Write after Write - WAW)**: An instruction cannot execute if it writes to a register that is set to be written by a previous instruction that has not yet executed.
 - **Anti-dependency (Write after Read - WAR)**: An instruction cannot execute if it writes to a register that is read by a previous instruction that has not yet executed.
 
+# Reorder Buffer
+
+Source: 
+
+1. [The Reorder Buffer (ROB) and the Dispatch Stage](https://docs.boom-core.org/en/latest/sections/reorder-buffer.html)
+
+
+
+The **Reorder Buffer (ROB)** tracks the state of all inflight instructions in the pipeline. The role of the ROB is to provide the illusion to the programmer that his program executes in-order. 
+
+After instructions are *decoded* and *renamed*, they are then *dispatched* to the ROB and the **Issue Queue** and marked as *busy*. As instructions finish execution, they inform the ROB and are marked *not busy*. 
+
+Once the “head” of the ROB is no longer busy, the instruction is *committed*, and it’s architectural state now visible. If an exception occurs and the excepting instruction is at the head of the ROB, the pipeline is flushed and no architectural changes that occurred after the excepting instruction are made visible. The ROB then redirects the PC to the appropriate exception handler.
+
+
+
+* Use of a reorder buffer: Reorder buffer = circular queue with head and tail pointers
+* At issue (renaming time), an instruction is assigned an entry at the tail
+  of the reorder buffer (ROB) which becomes the name of (or a pointer
+  to) the result register.
+  * Recall that instructions are issued in program order, thus the ROB stores
+    instructions in program order
+* At end of functional-unit computation, value is put in the instruction
+  reorder buffer’s position
+* When the instruction reaches the head of the buffer, its value is stored
+  in the logical or physical (other reorder buffer entry) register.
+* Need of a mapping table between logical registers and ROB entries
+
+## Example
+
+![image-20240226194317754](/Users/lyk/Library/Application Support/typora-user-images/image-20240226194317754.png)
+
+Assume reorder buffer is initially at position 6 and has more than 8 slots.
+
+The *mapping table* indicates the correspondence between ROB entries and logical registers.
+
 # Register renaming
 
-With register renaming, a technique used in out-of-order execution to  eliminate false dependencies (WAR and WAW hazards), instructions that do not have true dependencies (**RAW** hazards) on the currently executing  instructions or each other can potentially be executed simultaneously,  assuming there are enough execution units and buses.
+[Source: The Rename Stage](https://docs.boom-core.org/en/latest/sections/rename-stage.html)
+
+*Renaming* is a technique to rename the *ISA* (or *logical*) register specifiers in an instruction by mapping them to a new space of *physical* registers. The goal to *register renaming* is to break the false dependencies (**WAR and WAW** hazards) between instructions, leaving only the <u>true dependences</u> (**RAW** hazards). 
+
+* Register renaming does not get rid of RAW dependencies
+  * Still need for forwarding or for indicating whether a register has
+    received its value
+* Register renaming gets rid of WAW and WAR
+  dependencies
 
 
 
-- Register renaming **ensures that the read operation accesses the correct version of the data** by assigning the read and write operations to different physical registers.
-- This allows the read instruction to operate on the data value that was present before the write instruction, maintaining correct program semantics.
+Typically, a **Physical Register File**, containing many more registers than the ISA dictates, holds both the committed architectural register state and speculative register state. The **Rename Map Table** s contain the information needed to recover the committed state.
 
-### Implementation of Register Renaming
+## Implementation of Register Renaming
 
 1. **Mapping Table**: A mapping table is used to associate architectural registers (the registers specified by the instruction set architecture) with physical registers. This table is updated with new mappings as instructions are issued.
 2. **Free List**: A list of free physical registers is maintained. When an instruction is decoded, and it needs to write to a register, a free physical register is allocated from this list.
 3. **Physical Register File**: A larger physical register file is used to hold the values of both architectural and temporary registers. The physical register file has more registers than the architectural register file to support concurrent execution of instructions.
 4. **Reorder Buffer**: The reorder buffer tracks the original program order of instructions to ensure that they can be committed (made permanent) in the correct order. This is essential for handling exceptions and maintaining correct program behavior.
-5. 
+
+
 
 Consider two instructions:
 

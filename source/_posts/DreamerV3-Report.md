@@ -127,13 +127,13 @@ fabric.precision=16-mixed
 
 DreamerV3 has multiple sizes of models, see the table from the [the Appendices: B in the paper](https://arxiv.org/pdf/2301.04104.pdf):
 
-| Dimension           | XS                             | S    | M    | L    | XL   |
-| ------------------- | ------------------------------ | ---- | ---- | ---- | ---- |
-| GRU recurrent units | 256 & 512 & 1024 & 2048 & 4096 | 512  | 1024 | 2048 | 4096 |
-| CNN multiplier      | 24                             | 32   | 48   | 64   | 96   |
-| Dense hidden units  | 256                            | 512  | 640  | 768  | 1024 |
-| MLP layers          | 1                              | 2    | 3    | 4    | 5    |
-| Parameters          | 8M                             | 18M  | 37M  | 77M  | 200M |
+| Dimension           | XS   | S    | M    | L    | XL   |
+| ------------------- | ---- | ---- | ---- | ---- | ---- |
+| GRU recurrent units | 256  | 512  | 1024 | 2048 | 4096 |
+| CNN multiplier      | 24   | 32   | 48   | 64   | 96   |
+| Dense hidden units  | 256  | 512  | 640  | 768  | 1024 |
+| MLP layers          | 1    | 2    | 3    | 4    | 5    |
+| Parameters          | 8M   | 18M  | 37M  | 77M  | 200M |
 
 Table B.1: Model sizes. The encoder consists of stride 2 convolutions of doubling depth until resolution $4 \times 4$ followed by flattening. The decoder starts with a dense layer, followed by reshaping to $4 \times 4 \times C$ and then inverts the encoder architecture. The dynamics are implemented as RSSM with vectors of categorical representations, consisting of a GRU and dense layers.
 

@@ -8,9 +8,23 @@ date: 2024-02-06 20:03:07
 
 Source:
 
+1. [UWashington: CSE378, Lecture13](https://courses.cs.washington.edu/courses/cse378/09wi/lectures/lec13.pdf)
 1. John L. Hennessy & David A. Patterson. (2019). *Chapter 1. Fundamentals of Quantitative Design and Analysis. Computer Architecture: A Quantitative Approach* (6th ed.). Elsevier Inc.
 
 <!--more-->
+
+# Clock cycle time
+
+<img src="https://lyk-love.oss-cn-shanghai.aliyuncs.com/Computer%20Architecture/Computer%20System%20Evaluation/Cover.png" alt="image-20240226185036452" style="zoom:25%;" />
+
+* One "cycle" is the minimum time it takes the CPU to do any work[^1].
+  * The clock cycle time or clock period is just the length of a cycle.
+  * The clock rate, or frequency, is the reciprocal of the cycle time.
+* Generally, a higher frequency is better. Some examples illustrate some typical frequencies.
+  * A 500MHz processor has a cycle time of 2ns.
+  * A 2GHz (2000MHz) CPU has a cycle time of just 0.5ns (500ps).
+
+
 
 # Current Computing
 
@@ -123,7 +137,39 @@ Performance: latency and throughput
 * Throughput: Number of works/operations done in a fixed period of time.
   * For example, the CPI is the throughput.
 
+## CPI
 
+The average of Cycles Per Instruction in a given process (CPI) is defined by
+$$
+\mathrm{CPI}=\sum_{i=1}^n \mathrm{CPI}_i \times \mathrm{F}_i \quad \text { where } \mathrm{F}_i=\frac{\mathrm{I}_i}{\text { Instruction Count }}
+$$
+
+$F_i=$: Fraction of instructions of type $i$.
+
+
+
+For example, for the multi-cycle MIPS:
+
+Load: 5 cycles
+Store: 4 cycles
+R-type: 4 cycles 
+Branch: 3 cycles
+Jump: 3 cycles
+
+
+
+If a program has
+
+50% R-type instructions
+10% load instructions
+20% store instructions
+8%  branch instructions
+2%  jump instructions
+
+then what is the CPI?
+$$
+\mathrm{CPI}=(4 \times 50+5 \times 10+4 \times 20+3 \times 8+3 \times 2) / 100=3.6
+$$
 
 ## Iron Law
 
@@ -195,3 +241,5 @@ For example, I've run a few SPEC workloads on these two systems: The AMD Epyc an
 | gcc        | 274.3s   | 180.0s   |
 | mcf        | 301.1s   | 186.3s   |
 | libquantum | 313.1s   | 230.4s   |
+
+[^1]: In pipelined CPU design, because all stages proceed at the same time, the length of a processor cycle is determined by the time required for the slowest pipe stage.

@@ -25,9 +25,140 @@ Source:
    3. [EclecticSheep: Dreamer V3](https://eclecticsheep.ai/2023/08/10/dreamer_v3.html)
    4. [EclecticSheep: a2c algorithm](https://eclecticsheep.ai/2023/12/14/intro-rl.html)
 
-3. 
-
 <!--more-->
+
+# DreamerV3
+
+It's highly recommended to follow this reading sequence to fully understand DreamerV3:
+
+1. [RSSM](https://arxiv.org/pdf/1811.04551.pdf)
+
+2. [DreamerV1](https://arxiv.org/abs/1912.01603)
+3. [DreamerV2](https://arxiv.org/abs/2010.02193)
+4. [DreamerV3](https://arxiv.org/abs/2301.04104)
+
+The reason is that, the later paper assumes you are already familiar with the knowledge from the previous papers, and therefore, it **omits those descriptions**. This leads to a situation where those who have not read the previous works cannot understand the subsequent ones. If you have not read RSSM, DreamerV1,  and DreamerV2, then reading DreamerV3 would be very confusing.
+
+# RSSM
+
+![image-20240225121511259](/Users/lyk/Library/Application Support/typora-user-images/image-20240225121511259.png)
+
+See "Figure 2: Latent dynamics model designs" from [DreamerV2](https://arxiv.org/abs/2010.02193).
+
+In this example, the model observes the first two time steps and predicts the third. 
+
+<u>Circles</u> represent **stochastic** variables and <u>squares</u> **deterministic** variables. 
+
+Solid lines denote the generative process and dashed lines the inference model. 
+
+* (a) Transitions in a recurrent neural network are <u>purely deterministic</u>. This prevents the model from capturing multiple futures and makes it easy for the planner to exploit inaccuracies. 
+* (b) Transitions in a state-space model are purely stochastic. This makes it <u>difficult to remember information</u> over multiple time steps. 
+* (c) The author uses RSSM to **split the state into stochastic and deterministic parts**, allowing the model to robustly learn to predict multiple futures.
+
+# Algorithm
+
+The training alrotithm of DreamerV1 proposed in the [paper](https://arxiv.org/abs/1912.01603) is:
+
+![image-20240225122007862](/Users/lyk/Library/Application Support/typora-user-images/image-20240225122007862.png)
+
+Baically, all three papers (DreamerV1, V2, V3) follows this algorithm. The only modification is in DreamerV3, where it changes a little bit "Behavior learning" process by removing the vlue model $v_\psi\left(s_t\right)$.
+
+There're 4 stages in this algorithm:
+
+1. Experience collection
+2. Dynamic learning. This is the process of traing the world model.
+3. Behavior learning. This is the process of training the agent's policy with the help of world model.
+   * The world model is **fixed** while learning behaviors.
+4. Environment iteraction: Basically, this process is used to use the learned policy to **collect more data** to add to the dataset.
+
+As you may think, the most important stages are "Dynamic learning" and "Behavior learning".
+
+## Experience collection
+
+Experience collection: The world model is trained from the agent's **growing**  dataset of past experience that contains sequences of **images $x_{1: T}$, actions $a_{1: T}$, rewards $r_{1: T}$, and discount factors $\gamma_{1: T}$ (or continuation flags $c_{1: T}$)**.
+
+* What does a growing dataset mean? 
+
+  Since the agent may not initially visit all parts of the environment, we need to **iteratively collect new experience and refine the dynamics model**. We do so by planning with the partially trained model, as shown in Algorithm 1. Starting from a small amount of $S$ seed episodes collected under random actions, we train the model and **add one additional episode to the data set every $C$ update steps.** 
+
+  When collecting episodes for the data set, we **add small Gaussian exploration noise to the action**. To reduce the planning horizon and provide a clearer learning signal to the model, we repeat each action $R$ times, as common in reinforcement learning (Mnih et al., 2015; 2016).
+
+## Dynamic learning
+
+![image-20240225123812315](/Users/lyk/Library/Application Support/typora-user-images/image-20240225123812315.png)
+
+Figure 2: World Model Learning. The training sequence of images $x_t$ is encoded using the CNN. The RSSM uses a sequence of deterministic recurrent states $h_t$. At each step, it computes a posterior stochastic state $z_t$ that incorporates information about the current image $x_t$, as well as a prior stochastic state $\hat{z}_t$ that tries to predict the posterior without access to the current image. 
+
+
+
+Note that starting from DreamerV2, the stochastic state is a vector of multiple **categorical**, instead of continuous, variables.
+
+
+
+The learned prior is used for imagination, as shown in Figure 3. 
+
+The KL loss both trains the prior and regularizes how much information the posterior incorporates from the image. The regularization increases robustness to novel inputs. It also encourages reusing existing information from past steps to predict rewards and reconstruct images, thus learning long-term dependencies.
+
+
+
+The <u>concatenation</u> of $h_t$ and $z_t$ forms the model state (or **latent state**) from which we predict rewards $r_t$ and episode continuation flags $c_t \in\{0,1\}$ and reconstruct the inputs to ensure informative representations:
+
+
+$$
+\operatorname{RSSM} 
+\begin{cases}
+\text { Sequence model: } & h_t=f_\phi\left(h_{t-1}, z_{t-1}, a_{t-1}\right) \\ \text { Encoder: } & z_t \sim q_\phi\left(z_t \mid h_t, x_t\right) 
+\\ 
+\text { Dynamics predictor: } & \hat{z}_t \sim p_\phi\left(\hat{z}_t \mid h_t\right) 
+\end{cases}
+\\ 
+\text { Reward predictor: } & \hat{r}_t \sim p_\phi\left(\hat{r}_t \mid h_t, z_t\right) 
+\\ 
+\text { Continue predictor: } & \hat{c}_t \sim p_\phi\left(\hat{c}_t \mid h_t, z_t\right) 
+\\ 
+\text { Decoder: } & \hat{x}_t \sim p_\phi\left(\hat{x}_t \mid h_t, z_t\right)
+$$
+
+
+
+
+## Behavior learning
+
+![image-20240225124214149](/Users/lyk/Library/Application Support/typora-user-images/image-20240225124214149.png)
+
+As you can see from the figure, during the behavior learning process we don't use the decoder, only encoder is used.
+
+Figure 3: Actor Critic Learning. The world model learned in Figure 2 is used for learning a policy from trajectories imagined in the compact latent space. 
+
+**The trajectories start from posterior states computed during model training and predict forward by sampling actions from the actor network.** The critic network predicts the expected sum of future rewards for each state. The critic uses temporal difference learning on the imagined rewards. The actor is trained to maximize the critic prediction, via reinforce gradients, straight-through gradients of the world model, or a combination of them.
+
+# Loss
+
+![image-20240225124413062](/Users/lyk/Library/Application Support/typora-user-images/image-20240225124413062.png)
+
+Figure 3: Training process of DreamerV3. The world model encodes sensory inputs into a discrete representation $z_t$ that is predicted by a sequence model with recurrent state $h_t$ given actions $a_t$. The inputs are reconstructed as learning signal to shape the representations. The actor and critic learn from trajectories of abstract representations predicted by the world model.
+
+
+
+The DreamerV3 algorithm consists of 3 neural networks—the world model, the critic, and the actor—that are trained concurrently from replayed experience without sharing gradients, as shown in Figure 3.
+
+
+
+* The **prediction loss** trains <u>the decoder and reward predictor</u> via the symlog loss and the continue predictor via binary classification loss. 
+
+* The **dynamics loss** trains the <u>sequence model</u> to predict the next representation by minimizing the KL divergence between the predictor $p_\phi\left(z_t \mid h_t\right)$ and the next stochastic representation $q_\phi\left(z_t \mid h_t, x_t\right)$. 
+
+* The **representation loss** trains the <u>representations</u> to become more predictable if the dynamics cannot predict their distribution, allowing us to use a factorized dynamics predictor for fast sampling when training the actor critic. The two losses differ in the stop-gradient operator $\operatorname{sg}(\cdot)$ and their loss scale. 
+
+  To avoid a degenerate solution where the dynamics are trivial to predict but contain not enough information about the inputs, we employ free bits $^{28}$ by clipping the dynamics and representation losses below the value of 1 nat $\approx 1.44$ bits. This disables them while they are already minimized well to focus the world model on its prediction loss:
+
+$$
+\begin{aligned}
+\mathcal{L}_{\text {pred }}(\phi) & \doteq-\ln p_\phi\left(x_t \mid z_t, h_t\right)-\ln p_\phi\left(r_t \mid z_t, h_t\right)-\ln p_\phi\left(c_t \mid z_t, h_t\right) \\
+\mathcal{L}_{\text {dyn }}(\phi) & \doteq \max \left(1, \operatorname{KL}\left[\operatorname{sg}\left(q_\phi\left(z_t \mid h_t, x_t\right)\right) \| p_\phi\left(z_t \mid h_t\right)\right]\right) \\
+\mathcal{L}_{\text {rep }}(\phi) & \doteq \max \left(1, \operatorname{KL}\left[\quad q_\phi\left(z_t \mid h_t, x_t\right) \| \operatorname{sg}\left(p_\phi\left(z_t \mid h_t\right)\right)\right]\right)
+\end{aligned}
+$$
 
 # World model
 

@@ -878,6 +878,19 @@ class Layer():
     return [p for neuron in self.neurons for p in neuron.parameters()]
 ```
 
+
+
+Basically, each neuron (only its weights part) is like a colum vector in the matrix. For example, a layer with 200 neurons, each neuron takes a 30-D input looks like:
+
+```python
+# Pseudo code of a linear layer
+# A layer of 200 neurons
+W1 = torch.randn((30, 200), generator=g)
+b1 = torch.randn(200, generator=g)
+```
+
+
+
 # Multilayer perceptron
 
 Despite it's fancy name, a multilayer perceptron (MLP) is just a combination of linear layers, it'sorganized in at least three layers:
@@ -943,6 +956,23 @@ draw_dot(o)
 One glimpse into it:
 
 ![Figure 16](https://lyk-love.oss-cn-shanghai.aliyuncs.com/Machine%20Learning/Neural%20Networks/Figure 16.png)
+
+
+
+Pseudo code for a MLP:
+
+```python
+# Here we define a MLP with two layers. The MLP takes a 30-D input and produces a 27-D output.
+
+# A layer of 200 neurons
+W1 = torch.randn((30, 200), generator=g)
+b1 = torch.randn(200, generator=g)
+
+# A layer of 27 neurons.
+W2 = torch.randn((200, 27), generator=g)
+b2 = torch.randn(27, generator=g)
+parameters = [C, W1, b1, W2, b2]
+```
 
 
 
