@@ -19,11 +19,11 @@ The full code used in this article can be found [here](https://github.com/LYK-lo
 
 # Note: The local gradient
 
-The gradient of a variable has the same shape with the variable itself. For instance, if `y` has shape [32,1], `y.grad` must have shape [32,1].
+The gradient of a variable has the same shape with the variable itself. For instance, if `y` has shape [32,1], then `y.grad` has shape [32,1].
 
-However, in PyTorch a variable can be broadcasted to another shape, and it's the latter one actually participates the computation. In this sense, the so-called "local gradient" of the variable is actually the local gradient of the broadcasted one, and has the same shape with the broadcasted one.
+However, in PyTorch a variable can be broadcasted to another shape, and it's the latter one that actually participates the computation. In this sense, the so-called "local gradient" of the variable is actually the local gradient of the broadcasted one, and has the same shape with the broadcasted one.
 
-In this article, when I refer to "**local gradient**" of a variable, I refer to **the local gradient of the broadcasted one**, and it always **has the same shape with the broadcasted one**. One can say that t<u>he local gradient of a variable doesn't have to have the same shape with it</u>. This shouldn't be confusing.
+In this article, when I refer to "**local gradient**" of a variable, I refer to **the local gradient of the broadcasted one**, and it always **has the same shape with the broadcasted one**. One can say that t<u>he local gradient of a variable doesn't have to be the same shape as it</u>. This shouldn't be confusing.
 
 After we get the local gradient (for the broadcasted one), we multiply it with the upstream gradient, **the result will have the shape as the broadcasted one**.
 
@@ -37,7 +37,7 @@ f = x - y
 
 where 
 
-* `f`: torch.Size([32, 27])
+* `f.shape`: torch.Size([32, 27])
 * `x.shape`: torch.Size([32, 27])
 * `y.shape`: torch.Size([32, 1])
 
@@ -49,7 +49,7 @@ f = x - y_broadcasted # [32,27], [32,27] --> [32,27]
 
 So the "local gradient" of `y` is in fact the local gradient of `y_broadcasted`, whose shape is **[32,27]**.
 
-We then multiply it with the upstream gradient, i.e., the gradient of `f` with shape [32,27], to get the gradient of `y` (or `y_broadcasted`).
+We then multiply it with the upstream gradient, i.e., the gradient of `f` with shape [32,27], to get the local gradient of `y` (or `y_broadcasted`).
 
 After that, we have a gradient with shape [32,27]:
 
@@ -65,7 +65,9 @@ Since `y` is broadcasted into `y_broadcasted`. We squeeze it to get the gradient
 gradient = gradient.sum(1, keepdims=True)
 ```
 
+# Notations
 
+* In my code, variable name `d{x}` means the gradident (aka grad) of variable x.
 
 # Exercise 1 
 
@@ -876,6 +878,49 @@ for k in range(Xb.shape[0]):
     ix = Xb[k,j]
     dC[ix] += demb[k,j]
 ```
+
+## Put everything together
+
+```python
+dloss = 1
+dlogprobs = torch.zeros_like(logprobs)
+dlogprobs[range(n), Yb] = - 1.0 / n # f(x) = ln x, df / dx = 1/x
+dprobs = (1.0 / probs) * dlogprobs
+dcounts_sum_inv = (counts * dprobs).sum(1, keepdim=True) # counts_sum_inv.shape = [31,1], we nned to keep the shape
+dcounts_sum = -1 * (counts_sum ** (-2)) * dcounts_sum_inv
+dcounts = counts_sum_inv * dprobs # [32,1] * [32*27] (broadcasting) => [32,27] * [32*27] 
+dcounts += torch.ones_like(counts) * dcounts_sum
+dnorm_logits = counts * dcounts # norm_logits: [32,27]. counts == norm_logits.exp()
+dlogit_maxes = ((-1  * torch.ones_like(logit_maxes) ) * dnorm_logits ).sum(1, keepdim=True) # dnorm_logits: [32,27]
+dlogits = torch.ones_like(norm_logits) * dnorm_logits
+dlogits += F.one_hot(logits.max(1).indices, num_classes=logits.shape[1]) * dlogit_maxes # logits.max(1).indices extracts the tensor of indices of the maximum logit values along dimension 1 (across the 27 classes for each example).
+dh = dlogits @ W2.T # [32, 27] * [27,64] ==> [32,64]
+dW2 = h.T @ dlogits # [64, 32] * [32,27] ==> [64,27]
+db2 = dlogits.sum(0, keepdim=False) # [32,27]. Since b2 has shape [27], we need to use `keepdim=False` to squeeze [27,1] to be [27]
+dhpreact = (1 - h**2) * dh # d tanh(x) / d x = 1 - tanh(x)**2. Every tensor here has shape [32,64].
+dbngain = (dhpreact * bnraw).sum(0, keepdim=True)
+dbnbias = dhpreact.sum(0, keepdim=True) # Since bnbias has shape [27,1], we should use `keepdim=True` to keep the shape.
+dbnraw = bngain * dhpreact # bngain (shape=[1, 64]) is broadcasted to have shape [32,64], then multiply with dhpreact(shape=[32,64])
+dbnvar_inv = (bndiff * dbnraw).sum(0, keepdim=True)
+dbnvar = -0.5 * ((bnvar + 1e-5) ** -1.5) * dbnvar_inv
+dbndiff2 = torch.ones_like(bndiff2) * (1/(n-1)) * dbnvar
+dbndiff = bnvar_inv * dbnraw
+dbndiff += 2 * bndiff * dbndiff2
+dbnmeani = -dbndiff.sum(0, keepdim=True)
+dhprebn = 1.0 * dbndiff.clone()
+dhprebn += 1/n * dbnmeani
+dembcat = dhprebn @ W1.T
+dW1 = embcat.T @ dhprebn
+db1 = dhprebn.sum(0, keepdim=False)
+demb = dembcat.view(emb.shape)
+dC = torch.zeros_like(C) # Can't understand
+for k in range(Xb.shape[0]):
+  for j in range(Xb.shape[1]):
+    ix = Xb[k,j]
+    dC[ix] += demb[k,j]
+```
+
+
 
 # Exercise 2
 
