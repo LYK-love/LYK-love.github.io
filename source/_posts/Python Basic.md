@@ -479,6 +479,29 @@ Python3 Number类型的子类型有: int, float, bool, complex( 复数 )
 
 
 
+The `update()` method inserts the specified items to the dictionary.
+
+The specified items can be a dictionary, or an iterable object with key value  pairs.
+
+```
+dictionary.update(iterable) 
+```
+
+
+
+```python
+car = {
+  "brand": "Ford",
+  "model": "Mustang",
+  "year": 1964
+}
+
+car.update({"color": "White"}) # add an item
+car.update({"brand": "BMW"}) # change an item's value
+```
+
+
+
 # Function
 
 ## Define Fuction 

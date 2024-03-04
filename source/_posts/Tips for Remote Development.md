@@ -44,6 +44,49 @@ Here're two plans.
 
 It's also simple. You can try it.
 
+## Plan 3
+
+Use vscode since it supports [remote development](https://code.visualstudio.com/docs/remote/ssh#_remember-hosts-and-advanced-settings)
+
+
+
+Change font: modify the `settings.json` file
+
+```json
+{
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono",
+   "workbench.colorTheme": "Gruvbox Dark Hard",
+   "editor.fontLigatures": true,
+   "editor.fontFamily": "'FiraCode Nerd Font Mono', Menlo, Monaco, 'Courier New', monospace"
+}
+```
+
+
+
+[Change color theme](https://code.visualstudio.com/docs/getstarted/themes):
+
+1. Go to [Gruvbox Theme](https://vscodethemes.com/e/jdinhlife.gruvbox/gruvbox-dark-medium)
+2. To install it, you need to:
+   1. In VS Code, open the Color Theme picker with **File** > **Preferences** (**Code** > **Preferences or \**Code\** > \**Settings\** on macOS)**  > **Theme** > **Color Theme**.
+   2. You can also use the keyboard shortcut ⌘K ⌘T to display the picker.
+   3. Use the cursor keys to preview the colors of the theme.
+   4. Select the theme you want and press Enter.
+
+
+
+
+
+Debug:
+
+1. Step: F10
+
+2. Step into: F11. 
+
+   [disable Mac's F11 behavior](https://github.com/microsoft/vscode/issues/5102):
+
+   1. Go to System Preferences -> Keyboard -> Shortcuts
+   2. Uncheck the "Show Desktop    F11" option
+
 # How to connect a remote Server in a private network
 
 If the server is in a public network, i.e., has a public IP, then you can just use `ssh` to connect it.

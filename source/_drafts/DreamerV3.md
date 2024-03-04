@@ -27,6 +27,29 @@ Source:
 
 <!--more-->
 
+```
+python dreamerv3/train.py --logdir ./logdir/$(date "+%Y%m%d-%H%M%S") --configs atari --batch_size 16 --run.train_ratio 32
+```
+
+```
+8d5quole
+```
+
+
+
+# Notations
+
+In this article, we follow these notations:
+
+1. The stochastic state of Dreamer(V1,V2,V3) is denoted as $s_t$ or $z_t$ interchangeably.
+2. $\hat s_t$ or $\hat z_t$ represents the stochastic state predicted by the transition model.
+3. By default, $s_t$ or $z_t$ represents the stochastic state predicted by the representation model.
+4. The latent state of Dreamer(V1,V2,V3) is the <u>concatenation</u> of $h_t$ and $z_t$.
+5. The representation model and the transition model both compute the (**normal**) distribution of the stochastic state.
+   * representation model: $p$, prior
+   * transition model: $q$, posterior
+   * the stochastic states are sampled through the corresponding distributions
+
 # DreamerV3
 
 It's highly recommended to follow this reading sequence to fully understand DreamerV3:
@@ -91,17 +114,11 @@ Figure 2: World Model Learning. The training sequence of images $x_t$ is encoded
 
 
 
-Note that starting from DreamerV2, the stochastic state is a vector of multiple **categorical**, instead of continuous, variables.
+The <u>concatenation</u> of $h_t$ and $z_t$ forms the model state (or **latent state**) from which we:
 
-
-
-The learned prior is used for imagination, as shown in Figure 3. 
-
-The KL loss both trains the prior and regularizes how much information the posterior incorporates from the image. The regularization increases robustness to novel inputs. It also encourages reusing existing information from past steps to predict rewards and reconstruct images, thus learning long-term dependencies.
-
-
-
-The <u>concatenation</u> of $h_t$ and $z_t$ forms the model state (or **latent state**) from which we predict rewards $r_t$ and episode continuation flags $c_t \in\{0,1\}$ and reconstruct the inputs to ensure informative representations:
+1. predict rewards $r_t$
+2. predict episode continuation flags $c_t \in\{0,1\}$
+3. use decoder to get the reconstructed image $\hat x$
 
 
 $$
@@ -119,6 +136,16 @@ $$
 \text { Decoder: } & \hat{x}_t \sim p_\phi\left(\hat{x}_t \mid h_t, z_t\right)
 $$
 
+We use $p$ for distributions that generate samples in the real environment and $q$ for their approximations that enable latent imagination.
+
+* Note that starting from DreamerV2, the stochastic state is a vector of multiple **categorical**, instead of continuous, variables.
+* The learned prior is used for imagination, as shown in Figure 3. 
+* The KL loss both trains the prior and regularizes how much information the posterior incorporates from the image. The regularization increases robustness to novel inputs. It also encourages reusing existing information from past steps to predict rewards and reconstruct images, thus learning long-term dependencies.
+
+
+
+
+
 
 
 
@@ -130,9 +157,55 @@ As you can see from the figure, during the behavior learning process we don't us
 
 Figure 3: Actor Critic Learning. The world model learned in Figure 2 is used for learning a policy from trajectories imagined in the compact latent space. 
 
-**The trajectories start from posterior states computed during model training and predict forward by sampling actions from the actor network.** The critic network predicts the expected sum of future rewards for each state. The critic uses temporal difference learning on the imagined rewards. The actor is trained to maximize the critic prediction, via reinforce gradients, straight-through gradients of the world model, or a combination of them.
+**The <u>trajectories start from posterior states computed during model training (representation model)</u> and predict forward by sampling actions from the actor network.** The critic network predicts the expected sum of future rewards for each state. The critic uses temporal difference learning on the imagined rewards. The actor is trained to maximize the critic prediction, via reinforce gradients, straight-through gradients of the world model, or a combination of them.
+
+```
+```
+
+
 
 # Loss
+
+## DreamerV1 dynamic loss
+
+```python
+				# posterior_dist is "ground truth"
+        kl_divergence_loss = torch.mean(
+            torch.distributions.kl.kl_divergence(posterior_dist, prior_dist)
+        )
+        
+        # Here we also used a "free nats" trick to truncate the very low loss.
+        # This trick is not in DreamerV1, but in V3.
+        kl_divergence_loss = torch.max(
+            torch.tensor(self.config.free_nats).to(self.device), kl_divergence_loss
+        )
+        model_loss = (
+            self.config.kl_divergence_scale * kl_divergence_loss
+            - reconstruction_observation_loss.mean()
+            - reward_loss.mean()
+        )
+        if self.config.use_continue_flag:
+            model_loss += continue_loss.mean()
+```
+
+The dynamic loss / reconstruction loss / world model loss:
+
+
+$$
+\text { rec loss }=\mathrm{KL}(p \| q)-\ln q_o(o)-\ln q_r(r)+\operatorname{BCE}(\hat{d},(1-d) * \gamma)
+$$
+
+Where:
+
+* $p$ and $q$ are the posterior and prior, respectively.
+* $q_o$: the normal distribution predicted by the observation model (We takes their mean)
+* $q_r$: the normal distribution predicted by the reward model (We takes their mean)
+* $q_c$: the logits of the Bernoulli distribution predicted by the continue model (We takes their mean)
+* $\hat{d} \sim q_c$, and $d$ are the dones received by the environment.
+
+## DreamerV3 loss
+
+
 
 ![image-20240225124413062](/Users/lyk/Library/Application Support/typora-user-images/image-20240225124413062.png)
 
@@ -144,9 +217,14 @@ The DreamerV3 algorithm consists of 3 neural networks—the world model, the cri
 
 
 
+The world model parameters $\phi$ are optimized end-to-end to minimize the prediction loss $\mathcal{L}_{\text {pred }}$, the dynamics loss $\mathcal{L}_{\text {dyn }}$, and the representation loss $\mathcal{L}_{\text {rep }}$ with corresponding loss weights $\beta_{\text {pred }}=1, \beta_{\text {dyn }}=0.5, \beta_{\text {rep }}=0.1$ :
+$$
+\mathcal{L}(\phi) \doteq \mathrm{E}_{q_\phi}\left[\sum_{t=1}^T\left(\beta_{\text {pred }} \mathcal{L}_{\text {pred }}(\phi)+\beta_{\text {dyn }} \mathcal{L}_{\text {dyn }}(\phi)+\beta_{\text {rep }} \mathcal{L}_{\text {rep }}(\phi)\right)\right]
+$$
+
 * The **prediction loss** trains <u>the decoder and reward predictor</u> via the symlog loss and the continue predictor via binary classification loss. 
 
-* The **dynamics loss** trains the <u>sequence model</u> to predict the next representation by minimizing the KL divergence between the predictor $p_\phi\left(z_t \mid h_t\right)$ and the next stochastic representation $q_\phi\left(z_t \mid h_t, x_t\right)$. 
+* The **dynamics loss** trains the <u>sequence model</u> to predict the next representation by minimizing the KL divergence between the prior $p_\phi\left(z_t \mid h_t\right)$ and the posterior n $q_\phi\left(z_t \mid h_t, x_t\right)$. 
 
 * The **representation loss** trains the <u>representations</u> to become more predictable if the dynamics cannot predict their distribution, allowing us to use a factorized dynamics predictor for fast sampling when training the actor critic. The two losses differ in the stop-gradient operator $\operatorname{sg}(\cdot)$ and their loss scale. 
 
@@ -214,48 +292,53 @@ cnn_stages = int(np.log2(cfg.env.screen_size) - np.log2(4))
   <img src="https://eclecticsheep.ai/assets/images/dreamer_v1/representation_model.png" alt="The representation model" width="30%" />
   <img src="https://eclecticsheep.ai/assets/images/dreamer_v1/transition_model.png" alt="The transition model" width="20%" />
 </p>
+The recurrent model tries to encode the consequences of the performed action
+$$
+a_{t-1}, s_{t-1}, h_{t-1} \rightarrow h_{t}
+$$
+In the implementation, $s_{t-1}, a_{t-1}$ are concatenated together.
 
-1. The recurrent model tries to encode the consequences of the performed action, so what is happening. 
-   $$
-   a_{t-1}, s_{t-1}, h_{t-1} \rightarrow h_{t}
-   $$
-   Note: In the implementation, $s_{t-1}, a_{t-1}$ are concatenated together.
 
-   
-   
-2. The representation model uses recurrent state and the observation (encoded by the  encoder) to compute the distribution of the stochastic state, called the **posterior**.
-   $$
-   h_{t}, o_{t} \rightarrow s_{t}
-   $$
-   Note: In the implementation, $h_t, o_t$ are concatenated together:
 
-   ```python
-       def _representation(self, recurrent_state: Tensor, embedded_obs: Tensor) -> Tuple[Tuple[Tensor, Tensor], Tensor]:
-           """Compute the distribution of the posterior state.
-   
-           Args:
-               recurrent_state (Tensor): the recurrent state of the recurrent model, i.e.,
-                   what is called h or deterministic state in
-                   [https://arxiv.org/abs/1811.04551](https://arxiv.org/abs/1811.04551).
-               embedded_obs (Tensor): the embedded real observations provided by the environment.
-   
-           Returns:
-               posterior_mean_std (Tensor, Tensor): the mean and the standard deviation
-               of the distribution of the posterior state.
-               posterior (Tensor): the sampled posterior.
-           """
-           posterior_mean_std, posterior = compute_stochastic_state(
-               self.representation_model(torch.cat((recurrent_state, embedded_obs), -1)), # Concatenating all the features for every datapoint
-               event_shape=1,
-               min_std=self.min_std,
-               validate_args=self.distribution_cfg.validate_args,
-           )
-           return posterior_mean_std, posterior
-   ```
+The representation model and the transition model both compute the distribution of the stochastic state ( $p$ and , respectively)
 
-   
 
-3. The transition model only uses the recurrent state to compute the distribution of the stochastic state, called the **prior**
+
+The representation model uses recurrent state and the observation (encoded by the  encoder) to compute the <u>distribution</u> of the stochastic state, called the **posterior**.
+$$
+h_{t}, o_{t} \rightarrow s_{t}
+$$
+Note: In the implementation, $h_t, o_t$ are concatenated together:
+
+```yaml
+transition_model : 
+                hidden_size : 200
+                num_layers : 2
+                activation : ELU
+                min_std : 0.1
+
+            representation_model:
+                hidden_size : 200
+                num_layers : 2
+                activation : ELU
+                min_std : 0.1
+```
+
+```python
+def forward(self, embedded_observation, deterministic):
+
+        x = self.network(torch.cat((embedded_observation, deterministic), 1)) # contatenation
+        posterior_dist = create_normal_dist(x, min_std=self.config.min_std)
+        posterior = posterior_dist.rsample()
+        return posterior_dist, posterior
+```
+
+
+
+
+
+
+1. The transition model only uses the recurrent state to compute the distribution of the stochastic state, called the **prior**
    $$
    h_{t} \rightarrow \hat s_{t}
    $$
@@ -484,6 +567,10 @@ During each step, the agent takes an action selected by the actor in [Figure 3](
 
 
 
+
+
+
+
 To sum up, the process of imagining trajectories, as shown in the [Figure 4](https://eclecticsheep.ai/2023/06/16/dreamer_v1.html#fig-imagine), involves the recurrent and transition models of the RSSM, and the actor.
 
 <img src="https://eclecticsheep.ai/assets/images/dreamer_v1/imagination.png" alt="Figure 4: Imagination phase. The actor, the recurrent and the transition models iteratively perform the imagination steps. The actor comptes the next actions, then the recurrent model encodes this information in the  recurrent state. Finally the transition model predicts the stochastic  state." style="zoom:50%;" />
@@ -516,7 +603,7 @@ The actor () of Dreamer supports both continuous and discrete control.
 
 For  continuous actions, it:
 
-1. First, the actor outputs the mean and standard deviation (?) of the actions. 
+1. First, the actor outputs the mean and standard deviation of the actions. 
 
 2. The mean is scaled by a factor of 5, and the standard deviation is processed using a [SoftPlus](https://pytorch.org/docs/stable/generated/torch.nn.Softplus.html) function to ensure non-negative values. 
 
@@ -527,14 +614,18 @@ For  continuous actions, it:
    \sigma_a=\operatorname{softplus}\left(\sigma_\phi+\chi\right)+5
    \end{gathered}
    $$
-   Where $\chi=\ln e^{5-1}$ is the raw init std value and $\mu_\phi$ and $\sigma_\phi$ are the mean and standard deviation computed by the actor.
+   Where $\chi=\ln e^{5-1}$ is the <u>raw init std value</u> and $\mu_\phi$ and $\sigma_\phi$ are the mean and standard deviation computed by the actor.
 
+   ```python
+   mean = mean / mean_scale
+   if activation:
+   	man = activation(mean)
+   mean = mean_scale * mean # 5 * tanh (\mu / 5)
+   std = F.softplus(std + init_std) + min_std
+   ```
    
-
    
-
-   The standard deviation is  increased by a *raw init std* value and then transformed using  SoftPlus, with a minimum amount of standard deviation added to the  result. The resulting normal distribution is transformed using a  hyperbolic tangent (tanh) function, and the Independent distribution is  used to set the correct event shape. The mean and standard deviation for the discrete control are computed as follows:
-
+   
 4. At last, it outputs the distribution of rhe actions as $\mathcal N(\mu_\phi, \sigma ^ 2 _\phi)$.
 
 
@@ -599,7 +690,25 @@ out: Tensor = self.model(state)
 
 # Others
 
-## Training
+
+
+
+
+## Hyperparameters
+
+
+
+The used activation function is the [SiLU](https://pytorch.org/docs/stable/generated/torch.nn.SiLU.html).
+
+ Moreover, all the models use the [LayerNorm](https://pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html?highlight=layernorm#torch.nn.LayerNorm) on the last dimension, except for the convolutional layers that apply the *layer norm* only on the channels dimension. 
+
+The last detail is the presence of the bias in the models, in particular, all the layers followed by a *LayerNorm* are instantiated without the bias.
+
+We used the same weight initialization of the models: all the models are initialized with a [xavier normal](https://pytorch.org/docs/stable/nn.init.html?highlight=xavier+normal+init#torch.nn.init.xavier_normal_) initialization [[4\]](https://eclecticsheep.ai/2023/08/10/dreamer_v3.html#ref-4), except for the heads of the actor, the last layer of the transition,  representation, continue and encoder models that are initialized with a [xavier uniform](https://eclecticsheep.ai/2023/08/10/dreamer_v3.html) initialization [[4\]](https://eclecticsheep.ai/2023/08/10/dreamer_v3.html#ref-4) and the last layer of the critic and the reward model that are initialized with all zeros (to speed up the convergence).
+
+### Batch size
+
+"We draw batches of 50 sequences of length 50 to train the world model, value model, and action model models using Adam" --- [DreamerV1](https://arxiv.org/abs/1912.01603)
 
 In this phase the agent learns a latent representation of the  environment from **a batch of sequences**, The key component of the world  model is the RSSM.
 
@@ -618,22 +727,6 @@ In DreamerV3, we have:
   per_rank_batch_size: 16
   per_rank_sequence_length: 64
 ```
-
-
-
-## Hyperparameters
-
-
-
-The used activation function is the [SiLU](https://pytorch.org/docs/stable/generated/torch.nn.SiLU.html).
-
- Moreover, all the models use the [LayerNorm](https://pytorch.org/docs/stable/generated/torch.nn.LayerNorm.html?highlight=layernorm#torch.nn.LayerNorm) on the last dimension, except for the convolutional layers that apply the *layer norm* only on the channels dimension. 
-
-The last detail is the presence of the bias in the models, in particular, all the layers followed by a *LayerNorm* are instantiated without the bias.
-
-We used the same weight initialization of the models: all the models are initialized with a [xavier normal](https://pytorch.org/docs/stable/nn.init.html?highlight=xavier+normal+init#torch.nn.init.xavier_normal_) initialization [[4\]](https://eclecticsheep.ai/2023/08/10/dreamer_v3.html#ref-4), except for the heads of the actor, the last layer of the transition,  representation, continue and encoder models that are initialized with a [xavier uniform](https://eclecticsheep.ai/2023/08/10/dreamer_v3.html) initialization [[4\]](https://eclecticsheep.ai/2023/08/10/dreamer_v3.html#ref-4) and the last layer of the critic and the reward model that are initialized with all zeros (to speed up the convergence).
-
-
 
 
 

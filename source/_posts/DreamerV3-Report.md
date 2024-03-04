@@ -105,6 +105,20 @@ This should print out the names of ROMs as it imports them.  The ROMs will be co
 
 Here I introduce my commands for running the codebase of **sheeprl**.
 
+
+
+For Hafners'
+
+```
+python dreamerv3/train.py --logdir ./logdir --configs atari --batch_size 16 --run.train_ratio 32
+```
+
+```
+python dreamerv3/train.py --logdir ./logdir --configs atari_jamesbond --batch_size 16 --run.train_ratio 32
+```
+
+
+
 ## Tricks
 
 ### Multi-GPU

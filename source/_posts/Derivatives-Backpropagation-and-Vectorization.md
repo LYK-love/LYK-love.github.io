@@ -14,6 +14,8 @@ Source:
 2. [Wikipedia: chain rule](https://en.wikipedia.org/wiki/Chain_rule)
 3. [Wikipedia: quptient rule](https://en.wikipedia.org/wiki/Quotient_rule)
 
+It's recommended to compute the back propagation **manually** to get a deeper understanding. Read [this article]() 
+
 <!--more-->
 
 # Tensors
@@ -22,10 +24,10 @@ Source:
 
 In machine learning,
 
-1. a 0-D tensor is a scalar, 
-2. a 1-D tensor is a vector, 
-3. a 2-D tensor is a matrix,
-4. a 3-D and higher dimensional tensor is just called "tensor".
+1. a 0-axis tensor is a scalar, 
+2. a 1-axis tensor is a vector, 
+3. a 2-axis tensor is a matrix,
+4. a 3-axis and higher dimensional tensor is just called "tensor".
 
 # Chain rule
 
@@ -211,6 +213,8 @@ $$
 $$
 
 In this equation the indices $i, j, k$ are vectors of indices, and the terms $\left(\frac{\partial z}{\partial y}\right)_{i \text {, }}$ and $\left(\frac{\partial y}{\partial x}\right)_{:, j}$ are the $i$ th "row" of $\frac{\partial z}{\partial y}$ and the $j$ th "column" of $\frac{\partial y}{\partial x}$ respectively.
+
+
 
 # Backward Propagation with Tensors
 

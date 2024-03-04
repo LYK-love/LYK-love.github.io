@@ -11,6 +11,8 @@ Source:
 1. [GCloud](https://console.cloud.google.com/compute)
 2. [GCloud: Install GPU drivers](https://cloud.google.com/compute/docs/gpus/install-drivers-gpu#ubuntu-pro-and-lts)
 
+**Note: I find Google Cloud too be over complicated and the billing is insane. So I do not recommend using it.**
+
 <!--more-->
 
 # Intro
@@ -191,3 +193,7 @@ lykuni_ucdavis_edu
 ```
 
 However, I can't search this account name in the `/etc/passwd`!
+
+# Billing account
+
+[Close your billing account](https://cloud.google.com/billing/docs/how-to/close-or-reopen-billing-account?hl=en#close_a_billing_account) and [remove your payment method](https://support.google.com/a/answer/1229446?hl=en)

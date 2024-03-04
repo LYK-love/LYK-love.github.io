@@ -29,6 +29,10 @@ D(p \| q) & =\sum_{x \in \mathcal{X}} p(x) \log \frac{p(x)}{q(x)} \\
 & = \mathbb E _{X \sim p}(\log \frac{p(X)}{q(X)}) .
 \end{aligned}
 $$
+A simple [interpretation](https://en.wikipedia.org/wiki/Kullback–Leibler_divergence#Interpretations) of the KL divergence of $p$ from $q$ is the [expected](https://en.wikipedia.org/wiki/Expected_value) excess [surprise](https://en.wikipedia.org/wiki/Surprisal) from using $q$ as a model when the actual distribution is $p$.
+
+
+
 In the above definition, we use the convention that:
 
 1. $0 \log \frac{0}{0}=0$ and the convention (based on continuity arguments) that 

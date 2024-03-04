@@ -41,16 +41,42 @@ So, if we had an algorithm for $B$, and a function $f$ with the above properties
 
 # P
 
-**P is the set of decision problems solvable in polynomial time.**
+Definition: **P = the set of decision problems solvable in polynomial time.** 
+
+* This is often paraphrased as <u>tractable</u> decision problems
 
 E.g., the decision version of the network flow problem: "Given a network $G$ and a flow value $k$, does there exist a flow $\geq k$ ?" belongs to P.
 
 # NP
 
+Informal definition of **NP**: A decision problem is in **NP** if, whenever the answer for an instance is “yes”, there is a simple proof of this fact.
+
+• “simple proof”: checkable in polynomial time
+ • asymmetric: there’s not necessarily a simple proof if answer is “no”
+
+
+
 **NP** is the set of decision problems that **have polynomial-time verifiers**. Specificially, problem $Q$ is in NP if there is a polynomial-time algorithm $V(I, X)$ such that:
 
 - If $I$ is a YES-instance, then there exists $X$ such that $V(I, X)=Y E S$.
-- If $I$ is a $N O$-instance, then for all $X, V(I, X)=N O$.
+- If $I$ is a NO-instance, then for all $X, V(I, X)=N O$.
+
+
+
+Let $A \subseteq\{0,1\}^*$ be a decision problem. Then $A \in$ NP if and only if there is a decision problem $A_V \in \mathbf{P}$ and a polynomial $q$ such that, for all $x \in\{0,1\}^*$,
+$$
+x \in A \Leftrightarrow\left(\exists w \in\{0,1\}^{\leq q(|x|)}\right) \quad(x, w) \in A_{\vee}
+$$
+- $x$ : instance
+- $w$ : witness (a.k.a., "proof", "certificate")
+- $A_{\mathrm{v}}$ : polynomial-time verification problem
+
+If $n=|x|$, then $n+q(n)$ is length of instance for $A_V$.
+Since $q$ is a polynomial, the running time of the algorithm for $A_v$, which is polynomial in $n+q(n)$ by definition, is also polynomial in $n$.
+
+
+
+
 
 Furthermore, $X$ should have length polynomial in size of $I$ (since we are really only giving $V$ time polynomial in the size of the instance, not the combined size of the instance and solution).
 
@@ -68,6 +94,18 @@ Definition: Problem $Q$ is **NP-complete** if:
 2. For any other problem $Q^{\prime}$ in $\mathbf{N P}, Q^{\prime} \leq_p Q$ using Karp reductions.
 
 So if $Q$ is NP-complete and you could solve $Q$ in polynomial time, you could solve any problem in NP in polynomial time. If $Q$ just satisfies part (2) of the definition, then it's called **NP-hard**.
+
+
+
+If there is an **NP**-complete problem in **P**, then **P**=**NP** (i.e., all **NP** problems are also in **P**).
+
+We don’t think either of these is true; so the contrapositive statement is more informative:
+
+If **P**≠**NP**, then no **NP**-complete problem is in **P**.
+
+Taking **P**≠**NP** as a *scientific hypothesis*, if a problem is shown to be **NP**-complete, this is evidence that it is intractable.
+
+<img src="/Users/lyk/Library/Application Support/typora-user-images/image-20240227144304512.png" alt="image-20240227144304512" style="zoom:25%;" />
 
 
 

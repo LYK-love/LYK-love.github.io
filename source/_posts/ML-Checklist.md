@@ -25,10 +25,23 @@ Resources for essential topics of Machine Learning and Deep learning, including 
 * [Large Language Model Course](https://github.com/mlabonne/llm-course?tab=readme-ov-file)
 * Online textbook: [Deep Dive DL](http://d2l.ai/chapter_preface/index.html)
 
+
+
+[Yes you should understand backprop](https://karpathy.medium.com/yes-you-should-understand-backprop-e2f06eab496b)
+
+https://colab.research.google.com/drive/1WV2oi2fh9XXyldh02wupFQX0wh5ZC-z-?usp=sharing
+
+[Bessel's Correction](https://mathcenter.oxford.emory.edu/site/math117/besselCorrection/)
+
+https://docs.python.org/3/library/copy.html
+
+
+
 # Must learn
 
 * [Neural Networks: Zero to Hero](https://karpathy.ai/zero-to-hero.html)
 * [Stanford 231n, 2017: Convolutional Neural Networks](https://www.youtube.com/playlist?list=PLC1qU-LWwrF64f4QKQT-Vg5Wr4qEE1Zxk)
+* [Cousera: Deep Learning Specialization](https://www.coursera.org/specializations/deep-learning)
 * [Stanford 224n: NLP](https://www.youtube.com/playlist?list=PLoROMvodv4rOSH4v6133s9LFPRHjEmbmJ)
 * [C230, Deep Learning 2018, by Andrew Ng](https://www.youtube.com/watch?v=PySo_6S4ZAg&list=PLoROMvodv4rOABXSygHTsbvUz4G_YQhOb)
 * [Practical Deep Learning (Transformer and Difussion Model)](https://course.fast.ai/)
@@ -74,6 +87,10 @@ Resources for essential topics of Machine Learning and Deep learning, including 
 
 
 * [CS237b: Algebraic Error Correcting Codes ](http://web.stanford.edu/class/cs237b/)
+
+# Math
+
+* [Cousera: Matrix algebra for engineers](https://www.coursera.org/learn/matrix-algebra-engineers)
 
 # NLP
 
