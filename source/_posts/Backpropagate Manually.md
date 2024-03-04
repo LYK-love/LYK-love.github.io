@@ -133,7 +133,7 @@ dlogprobs[range(n), Yb] = - 1.0 / n * 1 # 1 is the remote gradient from `loss`
 
 Explanation:
 
-Say `m=3, n=2`, and we choose a random `Yb` so thant the code equals to this formula:
+Say `n=3, logprobs.shape[1]=2`, and we choose a random `Yb` so thant the code equals to this formula:
 $$
 \begin{aligned}
 & f\left(\left[\begin{array}{ll}
@@ -159,7 +159,7 @@ x_{12} \\
 x_{21} \\
 x_{31}
 \end{array}\right]\right) \\
-= & \frac{1}{3}\left(x_{12}, x_{21}, x_{31}\right)
+= & \frac{1}{3}\left(x_{12} + x_{21} + x_{31}\right)
 \end{aligned}
 $$
 where 
