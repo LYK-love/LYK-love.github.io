@@ -13,7 +13,7 @@ How to back propagate through a neural network **manually**, i.e., without calli
 
 This article is inspired by Adjrej Karpathy's video [Building makemore Part 4: Becoming a Backprop Ninja](https://www.youtube.com/watch?v=q8SA3rM6ckI&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ&index=5&t=5798s).
 
-The full code used in this article can be seen [here](https://github.com/LYK-love/Machine-Learning-Basic/blob/main/makemore/makemore_part4_from_scratch.ipynb).
+The full code used in this article can be found [here](https://github.com/LYK-love/Machine-Learning-Basic/blob/main/makemore/makemore_part4_from_scratch.ipynb).
 
 <!--more-->
 
