@@ -14,7 +14,7 @@ Source:
 2. [Wikipedia: chain rule](https://en.wikipedia.org/wiki/Chain_rule)
 3. [Wikipedia: quptient rule](https://en.wikipedia.org/wiki/Quotient_rule)
 
-It's recommended to compute the back propagation **manually** to get a deeper understanding. Read [this article]() 
+It's recommended to compute the back propagation **manually** to get a deeper understanding. Read [this article](https://lyk-love.cn/2024/03/04/backpropagate%20manually/) if you are interested.
 
 <!--more-->
 
