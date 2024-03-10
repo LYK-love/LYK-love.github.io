@@ -43,7 +43,9 @@ def mse(y_true, y_predicted):
     print("Mean Squared Error between y and \hat y:", mse.item())
 ```
 
+# Cross Entropy
 
+See [*Cross Entropy Loss*]().
 
 # Focal Loss
 
@@ -51,7 +53,7 @@ def mse(y_true, y_predicted):
 
 A **Focal Loss** function addresses (extreme) **class imbalance** during  training in tasks like object detection. Focal loss applies a modulating term to the cross entropy loss in order to focus learning on hard  misclassified examples. 
 
-Formally, the Focal Loss adds a factor $\left(1-\hat y_t\right)^\gamma$ to the standard cross entropy criterion.
+Formally, the Focal Loss adds a factor $\left(1-\hat y_t\right)^\gamma$ to the standard [cross entropy]() criterion.
 $$
 \mathrm{FL}\left(\hat y_t\right)=-\left(1- \hat y_t\right)^\gamma \log \left( \hat y_t\right)
 $$

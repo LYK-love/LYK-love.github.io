@@ -4,7 +4,9 @@ tags:
   - Machine Learning
 categories: Computer Science
 mathjax: true
+date: 2024-03-04 23:52:07
 ---
+
 
 
 
@@ -924,4 +926,94 @@ for k in range(Xb.shape[0]):
 
 # Exercise 2
 
-To be done ...
+Now we backprop through cross entropy in one time.
+
+Recalling that the code of cross entropy is
+
+```python
+# cross entropy loss (same as F.cross_entropy(logits, Yb))
+
+# First, we normalize the logits
+logit_maxes = logits.max(1, keepdim=True).values
+norm_logits = logits - logit_maxes # subtract max for numerical stability
+
+# Then, we apply Softmax to the logits to get probabilities
+counts = norm_logits.exp()
+counts_sum = counts.sum(1, keepdims=True)
+counts_sum_inv = counts_sum**-1 # if I use (1.0 / counts_sum) instead then I can't get backprop to be bit exact...
+probs = counts * counts_sum_inv
+
+# Last, we calculate the cross entropy loss for the probs.
+# Note that after we get the cross entropy loss for each sample, we compute their mean since the final loss should be a scalar.
+logprobs = probs.log()
+loss = -logprobs[range(n), Yb].mean()
+```
+
+We now compute it in one line:
+
+```python
+loss_fast = F.cross_entropy(logits, Yb)
+```
+
+Meanwhile, we do backprop all in one time to get the gradient of `logits`. For logit $z_i$, its gradient is
+$$
+\frac{\partial L}{\partial z_i}= \begin{cases}\operatorname{softmax}\left(z_i\right)-1, & i=t \\ \operatorname{softmax}\left(z_i\right), & i \neq t\end{cases}
+$$
+The mathmatical explanation is [->here](https://lyk-love.cn/2024/03/09/cross-entropy-loss/)
+
+We have:
+
+```python
+# For each sample, its `logits` is a 27-D vector for 27 classes.
+# Suppose the index of the truth class of a sample is `t`. The index of one logit in the logits of a sample  is `i`, the logit is `z_i`, the gradient of logit z_i :
+# 1. if i != t, softmax(z_i).
+# 2. if i == t, softmax(z_i) - 1.
+
+#  Apply softmax to each of thr 27 classes, i.e., along the axis = 1, to get the 27 `logit`s of this sample.
+dlogits = F.softmax(logits, 1) 
+dlogits[range(n), Yb] -= 1 # For the truth class t, it's  softmax(z_i) - 1.
+dlogits /= n
+```
+
+# Exercise 3
+
+Now we backprop through batch normalization in one time.
+
+Recalling that the code of batch normalization is
+
+```python
+# BatchNorm layer
+bnmeani = 1/n*hprebn.sum(0, keepdim=True)
+bndiff = hprebn - bnmeani
+bndiff2 = bndiff**2
+bnvar = 1/(n-1)*(bndiff2).sum(0, keepdim=True) # note: Bessel's correction (dividing by n-1, not n)
+bnvar_inv = (bnvar + 1e-5)**-0.5
+bnraw = bndiff * bnvar_inv
+hpreact = bngain * bnraw + bnbias
+```
+
+We now compute it in one line:
+
+```python
+hpreact_fast = bngain * (hprebn - hprebn.mean(0, keepdim=True)) / torch.sqrt(hprebn.var(0, keepdim=True, unbiased=True) + 1e-5) + bnbias
+```
+
+
+
+Meanwhile, we do backprop all in one time to get the gradient of `hprebn`. For input sample $x_i$, its gradient is
+$$
+\begin{aligned}
+\frac{\partial L}{\partial x_i} 
+
+& = \cdots \\
+& =\frac{\gamma\left(\sigma^2+\varepsilon\right)^{-\frac{1}{2}}}{N}\left(N  \frac{\partial L}{\partial y_i}-\sum_{j=1}^N \frac{\partial L}{\partial y_j}-\frac{N}{N-1} \hat{x}_i \sum_{j=1}^N \frac{\partial L}{\partial y_j} \hat{x}_j\right ).
+\end{aligned}
+$$
+The mathmatical explanation is [->here](https://lyk-love.cn/2024/03/09/batch-normalization/)
+
+We have:
+
+```python
+dhprebn = bngain*bnvar_inv/n * (n*dhpreact - dhpreact.sum(0) - n/(n-1)*bnraw*(dhpreact*bnraw).sum(0))
+```
+
