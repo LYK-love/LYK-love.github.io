@@ -33,6 +33,33 @@ Tested on Ubuntu22.04 X86_64 with `python=3.9`.
 
 This does not include dependencies for all families of environments. According to your requirement, you may need to install dependencies for one family like `pip install "gymnasium[atari]"` or use `pip install "gymnasium[all]"`.
 
+# Customize
+
+
+
+[Make your own custom environment](https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/)
+
+https://gymnasium.farama.org/environments/box2d/car_racing/
+
+
+
+https://gymnasium.farama.org/_modules/gymnasium/utils/play/
+
+
+
+Flappybird
+
+[]()
+
+```python
+conda create -n flappy_bird python==3.11 # Must be this version
+pip install flappy-bird-env
+pip install gymnasium\[other\]
+python -m flappy_bird_env
+```
+
+
+
 # Scripts
 
 ## Box2D

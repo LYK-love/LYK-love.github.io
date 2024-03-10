@@ -114,7 +114,17 @@ python dreamerv3/train.py --logdir ./logdir --configs atari --batch_size 16 --ru
 ```
 
 ```
-python dreamerv3/train.py --logdir ./logdir --configs atari_jamesbond --batch_size 16 --run.train_ratio 32
+python dreamerv3/train.py \
+  --logdir ~/logdir/$(date "+%Y%m%d-%H%M%S") \
+  --configs custom --batch_size 16 --run.train_ratio 32
+```
+
+
+
+```
+python dreamerv3/train.py \
+  --logdir ./logdir/$(date "+%Y%m%d-%H%M%S") \
+  --configs custom --batch_size 16 --run.train_ratio 32
 ```
 
 
@@ -291,7 +301,45 @@ Riverraid:
 python sheeprl.py exp=dreamer_v3 env=atari env.id=RiverraidNoFrameskip algo.cnn_keys.encoder=\[rgb\] algo=dreamer_v3_M fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=2 fabric.precision=16-mixed algo.learning_starts=1024
 ```
 
+# Custom envs
+
+```
+pip install matplotlib
+```
+
+
+
 # Errors
+
+render backend:
+
+https://github.com/google-deepmind/dm_control/issues/123
+
+Try to [use osmesa](https://github.com/Eclectic-Sheep/sheeprl/blob/main/howto/learn_in_dmc.md)
+
+
+
+MuJoCo/DMC supports three different OpenGL rendering backends: EGL (headless), GLFW (windowed), and OSMesa (headless). For each of them, you need to install some packages:
+
+- GLFW: `sudo apt-get install libglfw3 libglew2.2`
+- EGL: `sudo apt-get install libglew2.2`
+- OSMesa: `sudo apt-get install libgl1-mesa-glx libosmesa6` In order to use one of these rendering backends, you need to set the `MUJOCO_GL` environment variable to `"glfw"`, `"egl"`, `"osmesa"`, respectively.
+
+
+
+Note
+
+The `libglew2.2` could have a different name, based on your OS (e.g., `libglew2.2` is for Ubuntu 22.04.2 LTS).
+
+It could be necessary to install also the `PyOpenGL-accelerate` package with the `pip install PyOpenGL-accelerate` command and the `mesalib` package with the `conda install conda-forge::mesalib` command.
+
+For more information: https://github.com/deepmind/dm_control and https://mujoco.readthedocs.io/en/stable/programming/index.html#using-opengl.
+
+
+
+***
+
+
 
 If you interrupt the running command, you might get 
 

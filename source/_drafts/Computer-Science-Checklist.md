@@ -5,6 +5,10 @@ tags:
 
 
 
+# General
+
+* [Learn XX in YY minutes](https://learnxinyminutes.com/)
+
 # Computer architecture
 
 * [GPU Survival Toolkit for the AI age: The bare minimum every developer must know](https://journal.hexmos.com/gpu-survival-toolkit/)

@@ -73,6 +73,22 @@ Debug:
    1. Go to System Preferences -> Keyboard -> Shortcuts
    2. Uncheck the "Show Desktop    F11" option
 
+
+
+## Run
+
+Open User setting json file:
+
+```json
+"code-runner.executorMap": {
+        # ...
+        "python": "$pythonPath -u",
+        # ...
+}
+```
+
+
+
 # Dev
 
 * [Using Clang in Visual Studio Code](https://code.visualstudio.com/docs/cpp/config-clang-mac)
@@ -107,7 +123,6 @@ You can ensure VS Code uses Black by default for all your Python files by settin
 # Remote development
 
 VS Code supports [remote development](https://code.visualstudio.com/docs/remote/ssh#_remember-hosts-and-advanced-settings).
-
 
 
 

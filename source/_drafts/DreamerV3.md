@@ -750,7 +750,9 @@ $$
 
 Because 5.5 is closer to bucket 5 than bucket 7.5.
 
+## Train ratio
 
+The training ratio is the **ratio of replayed steps to environment steps**. The model sizes are detailed in Table B.1. Higher training ratios result in substantially improved data-efficiency. 
 
 
 

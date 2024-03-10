@@ -51,20 +51,25 @@ def mse(y_true, y_predicted):
 
 Cross-entropy loss (often abbreviated as CE), or log loss, measures the performance of a <u>classification</u> model whose output is a probability value between 0 and 1 (usually produced by a [softmax function]()).
 
-For the $i^{\text{th}}$ datapoint, the cross entropy is
-$$
--\sum_{c=1}^C y_{c} \log \left(\hat y_{c}\right) .
-$$
 
 
-When $N=2$, the cross-entropy can be calculated as:
+The cross entropy loss $L$ of a sample is
 $$
--[y \log (\hat y)+(1-y) \log (1- \hat y)] .
+L = -\sum_{i=1}^C y_{i} \log \left(\hat y_{i}\right) .
 $$
 
-Note: since in classification tasks one data point typocically has only one crorect class. i.e., $y_c \in \{0,0, \cdots, 1, 0, \cdots \}$, suppose the index of the true class of the input data point is $t$, we obtain
+where $\hat{y}_i$ is the predicted probability for class $i$, usually obtained by applying the softmax function to the logit of $i$, denoted as $z_i$:
 $$
-\mathrm{CE}\left(\hat y_t\right)=- 1. \log (\hat y_t) = - \log (\hat y_t)
+\hat y_i = \text{softmax}(z_i) .
+$$
+
+The softmax function for a logit $z_i$ is given by:
+$$
+\text{softmax}(z_i) = \hat{y}_i=\frac{e^{z_i}}{\sum_{j=1}^C e^{z_j}} .
+$$
+Note that, $L$ is only related to $\hat y_t$:
+$$
+\hat{y}_t=\frac{e^{z_t}}{\sum_{j=1}^C e^{z_j}} .
 $$
 
 
@@ -93,6 +98,68 @@ def calculate_cross_entropy(y_true, y_predicted):
     return cross_entropy
 ```
 
+
+
+## Gradient of cross entropy
+
+For classification tasks where there is only **one true class** for a sample, i.e., $y_c \in \{0,0, \cdots, 1, 0, \cdots \}$, suppose the index of the true class of the input data point is $t$, we obtain
+$$
+L=- (0 + \cdots + 0+1 \cdot \log (\hat y_t) + 0 + \cdots+0) = - \log (\hat y_t)
+$$
+
+Every $\hat{y}_i$ ($i \in \{1, \cdots, C\}$) is the predicted probability for class $c$, usually obtained by applying the softmax function to the logits.
+
+
+
+What is the gradient (more strictly, the derivation) of the cross-entropy loss w.r.t. a logit $z_k$ ?
+
+
+
+To get the gradient, we need to differentiate the loss $L$ with respect to $z_i$:
+
+
+
+Using the expression for $L$ and $\hat{y}_i$, we get:
+$$
+\frac{\partial L}{\partial z_i}=\frac{\partial L}{\partial \hat{y}_t} \cdot \frac{\partial \hat{y}_t}{\partial z_i}
+$$
+
+Given $L=-\log \left(\hat{y}_t\right)$, we have:
+$$
+\frac{\partial L}{\partial \hat{y}_t}=-\frac{1}{\hat{y}_t}
+$$
+
+For $\frac{\partial \hat{y}_t}{\partial z_k}$, there are two cases to consider:
+
+1. When $i=t$, the derivative of the softmax function w.r.t. $z_k$ is:
+   $$
+   \frac{\partial \hat{y}_t}{\partial z_i}=\frac{e^{z_i} \sum_{j=1}^C e^{z_j}-e^{z_i} e^{z_i}}{\left(\sum_{j=1}^C e^{z_j}\right)^2}=\frac{e^{z_i}}{\sum_{j=1}^C e^{z_j}}\left(1-\frac{e^{z_i}}{\sum_{j=1}^C e^{z_j}}\right)=\hat{y}_t\left(1-\hat{y}_t\right) .
+   $$
+
+2. When $i \neq t$, the derivative of the softmax function w.r.t. $z_k$ is:
+   $$
+   \frac{\partial \hat{y}_t}{\partial z_i}=\frac{ e^{z_i} (0- e^{z_k})}{\left(\sum_{j=1}^C e^{z_j}\right)^2}=-\frac{e^{z_i}}{\sum_{j=1}^C e^{z_j}} \cdot \frac{e^{z_i}}{\sum_{j=1}^C e^{z_j}}=-\hat{y}_t \hat{y}_i .
+   $$
+
+
+
+Putting it all together, the gradient of the loss w.r.t. $z_k$ is:
+
+1. If $i=t$ (for the true class):
+   $$
+   \frac{\partial L}{\partial z_k}=\hat{y}_i-1 \triangleq \text{softmax}(z_i) - 1 .
+   $$
+
+2. If $i=t$ (for the other classes):
+   $$
+   \frac{\partial L}{\partial z_k}=\hat{y}_i \triangleq \text{softmax}(z_i) .
+   $$
+   
+
+To conclude:
+$$
+\frac{\partial L}{\partial z_i}= \begin{cases}\operatorname{softmax}\left(z_i\right)-1, & i=t \\ \operatorname{softmax}\left(z_i\right), & i \neq t\end{cases}
+$$
 
 
 ## Example
@@ -244,4 +311,6 @@ def iou(groundtruth_mask, pred_mask):
     iou = np.mean(intersect/union)
     return round(iou, 3)
 ```
+
+# CE loss
 
