@@ -3,11 +3,11 @@ title: About
 date: 2021-05-10 13:09:49
 ---
 
-# Yukuan Lu(陆昱宽). 
+# Yukuan Lu (陆昱宽). 
 
-Hi, I'm Yukuan Lu(陆昱宽). 
+Hi, I'm Yukuan Lu (陆昱宽). 
 
-I am currently a first year Master student at the [ECE deaprtment of UCDavis](https://ece.ucdavis.edu/). I obtained my Bachelor's degree in Software Engineering from Nanjing University(南京大学).
+I am currently a first year Master student at the [ECE deaprtment of UCDavis](https://ece.ucdavis.edu/). I obtained my Bachelor's degree in Software Engineering from Nanjing University (南京大学).
 
 At UCDavis, I am doing research with [Prof.Yubei Chen](https://yubeichen.com/) on self-supervised learning. I'm happy to talk about any research topics about machine learning.
 
@@ -20,7 +20,7 @@ NOTE: Recently I'm focusing on World Models, especially Hafner's DreamerV3. Basi
 
 # Misc
 
-* I'm crazy about Zhuangzi(庄子) philosophy.
+* I'm crazy about Zhuangzi (庄子) philosophy.
 * I like playing acoustic guitar and bodybuilding.
 
 

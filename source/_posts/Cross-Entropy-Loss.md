@@ -79,7 +79,7 @@ Putting it all together, the gradient of the loss w.r.t. $z_k$ is:
    \frac{\partial L}{\partial z_k}=\hat{y}_i-1 \triangleq \text{softmax}(z_i) - 1 .
    $$
 
-2. If $i=t$ (for the other classes):
+2. If $i \neq t$ (for the other classes):
    $$
    \frac{\partial L}{\partial z_k}=\hat{y}_i \triangleq \text{softmax}(z_i) .
    $$

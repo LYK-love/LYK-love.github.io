@@ -10,7 +10,7 @@ date: 2024-03-10 18:57:07
 
 Sources:
 
-* TPUv1: [In-Datacenter Performance Analysis of a Tensor Processing Unit](https://arxiv.org/pdf/1704.04760.pdf). 2017.
+* TPU v1: [In-Datacenter Performance Analysis of a Tensor Processing Unit](https://arxiv.org/pdf/1704.04760.pdf). 2017.
 * TPU v2, v3: [A Domain Specific Supercomputer for Training Deep Neural Networks](https://dl.acm.org/doi/pdf/10.1145/3360307).
 * [AI Chips: Google TPU](https://jonathan-hui.medium.com/ai-chips-tpu-3fa0b2451a2d)
 * [HotChips 2019 Tutorial Cloud TPU: Codesigning Architecture and Infrastructure](https://old.hotchips.org/hc31/HC31_T3_Cloud_TPU_Codesign.pdf)

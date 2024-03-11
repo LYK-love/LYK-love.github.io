@@ -8,6 +8,7 @@ tags:
 # General
 
 * [Learn XX in YY minutes](https://learnxinyminutes.com/)
+* [CS110: Principles of Computer Systems](https://web.stanford.edu/class/archive/cs/cs110/cs110.1204/)
 
 # Computer architecture
 
