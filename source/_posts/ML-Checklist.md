@@ -1,6 +1,8 @@
 ---
 title: ML Checklist
-tags: Machine Learning
+tags: 
+- Machine Learning
+- Checklist
 categories: Computer Science
 mathjax: true
 date: 2023-12-13 23:48:55

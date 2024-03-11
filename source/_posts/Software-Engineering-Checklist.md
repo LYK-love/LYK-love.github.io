@@ -1,6 +1,6 @@
 ---
 title: Software Engineering Checklist
-tags: Machine Learning
+tags: Checklist
 categories: Software Engineering
 date: 2024-02-18 00:50:54
 ---
