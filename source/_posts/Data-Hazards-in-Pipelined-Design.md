@@ -17,7 +17,7 @@ Note: the assembly code in this article can be MIPS or RISCV. This shouldn't be 
 # MIPS:
 add $t0, $t1, $t2  # add values in $t1 and $t2, the result is stored in $t0
 
-#RISC-V
+# RISC-V
 add t0, t1, t2 # add values in t1 and t2, the result is stored in t0
 ```
 
