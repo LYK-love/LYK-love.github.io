@@ -12,7 +12,7 @@ Outline:
 * Programming Language
 * Testing
 * Infrasturcture
-* Open Source Dev
+* Open Sources Dev
 
 <!--more-->
 

@@ -7,7 +7,7 @@ date: 2023-11-23 15:49:32
 ---
 
 
-Source: 
+Sources: 
 
 1. James McClellan, Ronald Schafer & Mark Yoder. (2015). FIR Filters. *DSP First* (2nd ed., pp. 147-193). Pearson.
 

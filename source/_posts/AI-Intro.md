@@ -6,7 +6,7 @@ mathjax: true
 date: 2023-02-08 01:27:25
 ---
 
-Source:
+Sources:
 
 1. *Artificial Intelligence A Modern Approach*
 

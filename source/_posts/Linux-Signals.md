@@ -9,7 +9,7 @@ date: 2023-12-29 05:35:12
 ---
 
 
-Source:
+Sources:
 
 1. [Kill Command in Linux](https://linuxize.com/post/kill-command-in-linux/).
 2. Machtelt Garrels. *[Chapter 12. Catching signals. Bash Guide for Beginners](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_12_01.html)*.

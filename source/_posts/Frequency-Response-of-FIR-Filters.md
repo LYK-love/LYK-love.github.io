@@ -7,7 +7,7 @@ date: 2023-11-22 21:16:18
 ---
 
 
-Source: 
+Sources: 
 
 1. James McClellan, Ronald Schafer & Mark Yoder. (2015). Sinusoids. *DSP First* (2nd ed., pp. 9-40). Pearson.
 

@@ -7,7 +7,7 @@ date: 2024-02-06 21:31:26
 ---
 
 
-Source:
+Sources:
 
 1. [UWashington: CSE471, Lecture04](https://courses.cs.washington.edu/courses/cse471/07sp/lectures/Lecture4.pdf)
 1. [UCSD: CSE240A, Lecture13](https://cseweb.ucsd.edu/classes/fa14/cse240A-a/pdf/07/CSE240A-MBT-L13-ReorderBuffer.ppt.pdf)

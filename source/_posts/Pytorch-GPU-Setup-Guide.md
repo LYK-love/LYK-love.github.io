@@ -9,7 +9,7 @@ date: 2023-12-22 22:48:51
 ---
 
 
-Source:
+Sources:
 
 1. [Pytorch GPU Setup Guide](https://mct-master.github.io/machine-learning/2023/04/25/olivegr-pytorch-gpu.html)
 

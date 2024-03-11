@@ -9,7 +9,7 @@ date: 2024-01-03 13:35:01
 ---
 
 
-Source:
+Sources:
 
 1. [Shiyu Zhao. *Chapter 2: State Values and Bellman Equation. Mathematical Foundations of Reinforcement Learning*](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning).
 2. [--> Youtube: Bellman Equation: Derivation](https://youtu.be/Su9PPdoxvtQ?si=JdeBKeeZ9PEBKDVH)

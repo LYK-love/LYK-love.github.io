@@ -6,7 +6,7 @@ date: 2023-12-25 00:24:54
 ---
 
 
-Source:
+Sources:
 
 1. [GCloud](https://console.cloud.google.com/compute)
 2. [GCloud: Install GPU drivers](https://cloud.google.com/compute/docs/gpus/install-drivers-gpu#ubuntu-pro-and-lts)

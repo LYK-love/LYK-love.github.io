@@ -9,7 +9,7 @@ date: 2023-10-15 03:57:29
 ---
 
 
-Source:
+Sources:
 
 1. *Elements of Information Theory*
 2. [EE 376A: Information Theory](https://web.stanford.edu/class/ee376a/) - Stanford University

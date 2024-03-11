@@ -8,7 +8,7 @@ date: 2024-03-09 23:35:13
 ---
 
 
-Source:
+Sources:
 
 * Adjrej Karpathy's video [Building makemore Part 4: Becoming a Backprop Ninja](https://www.youtube.com/watch?v=q8SA3rM6ckI&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ&index=5&t=5798s).
 * Paper: *[Batch Normalization: Accelerating Deep Network Training by

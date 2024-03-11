@@ -6,7 +6,7 @@ tags: Python
 date: 2022-08-20 12:00:00
 ---
 
-Source:
+Sources:
 
 1. [廖雪峰的教程](https://www.liaoxuefeng.com/wiki/1016959663602400)
 

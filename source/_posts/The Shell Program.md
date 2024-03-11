@@ -8,7 +8,7 @@ tags:
 date: 2022-07-15 12:00:00
 ---
 
-Source:
+Sources:
 
 1. Machtelt Garrels. *[Chapter 1. Chapter 1. Bash and Bash scripts](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_01_01.html)*.
 2. 蔡德明. *[第十一认识与学习Bash. 鸟哥的Linux私房菜](http://cn.linux.vbird.org/linux_basic/0320bash_1.php)*.

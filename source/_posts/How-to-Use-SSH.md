@@ -8,7 +8,7 @@ date: 2024-01-28 17:07:51
 ---
 
 
-Source:
+Sources:
 
 1. [SSH Essentials: Working with SSH Servers, Clients, and Keys](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
 

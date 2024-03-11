@@ -6,7 +6,7 @@ mathjax: true
 date: 2023-12-12 08:52:02
 ---
 
-Source:
+Sources:
 
 1. James McClellan, Ronald Schafer & Mark Yoder. (2015). Discrete Time Fourier Transform. DSP First (2nd ed., pp. 239-274). Pearson.
 

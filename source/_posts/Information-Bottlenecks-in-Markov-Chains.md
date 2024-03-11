@@ -8,7 +8,7 @@ date: 2024-01-25 16:07:38
 ---
 
 
-Source:
+Sources:
 
 1. Thomas M. Cover & Joy A. Thomas. (2006). *Chapter 8. Differential Entropy. Elements of Information Theory* (2nd ed., pp. 243-255). Wiley-Interscience.
 2. Fady Alajaji & Po-Ning Chen. (2018). *Chapter 5. Differential Entropy and Gaussian Channels. An Introduction to Single-User Information Theory* (1st ed., pp. 165-218). Springer.

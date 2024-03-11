@@ -9,7 +9,7 @@ date: 2024-01-03 14:00:23
 ---
 
 
-Source:
+Sources:
 
 1. Shiyu Zhao. *[Chapter 2: State Values and Bellman Equation. Mathematical Foundations of Reinforcement Learning](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning)*.
 2. [--> Youtube: Bellman Equation: Matrix-Vector form](https://youtu.be/NlRS7KYWBWw?si=mVayVYut44p1NQn_)

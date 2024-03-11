@@ -6,7 +6,7 @@ categoeirs: Electronic Engineering
 mathjax: true
 ---
 
-Source:
+Sources:
 
 1. James McClellan, Ronald Schafer & Mark Yoder. (2015). z-Transforms. DSP First (2nd ed., pp. 347-387). Pearson.
 

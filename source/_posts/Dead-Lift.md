@@ -36,6 +36,12 @@ Outline:
 
 * 站距: 与髋同宽
 
+
+
+![image-20240310114131027](/Users/lyk/Library/Application Support/typora-user-images/image-20240310114131027.png)
+
+Source: [How to deadlift more fast](https://www.youtube.com/watch?v=7QvLeenYsf0)
+
 ## 握姿
 
 * 握姿有三种:
@@ -53,6 +59,8 @@ Outline:
 * 握距: 在和髋关节同宽的双腿外侧
 
 ## Two Steps
+
+使用背阔肌(lats)
 
 硬拉分为两阶段, 第一阶段是从地面到膝盖高度, 此时完全是**腿部训练**; 第二阶段是从膝盖到最高点, 此时才是练背.
 

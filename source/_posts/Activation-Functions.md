@@ -7,7 +7,7 @@ categories: Mathmatics
 mathjax: true
 ---
 
-Source:
+Sources:
 
 1. [Stanford CS231, Lecture 6](https://youtu.be/wEoyxE0GP2M?si=X_ihQmP3ru0x68Yz)
 

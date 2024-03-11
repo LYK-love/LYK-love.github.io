@@ -9,7 +9,7 @@ date: 2023-12-17 17:05:11
 
 Decorators are a significant part of Python. In simple words: they are functions which take other functions as inputs and output their modified versions.
 
-Source:
+Sources:
 
 1. [Python Tips: Decorators](https://book.pythontips.com/en/latest/decorators.html#decorators)
 

@@ -9,7 +9,7 @@ date: 2024-01-19 00:14:34
 ---
 
 
-Source:
+Sources:
 
 1. [*Auto-Encoding Variational Bayes* (VAE)](https://arxiv.org/abs/1312.6114)
 2. [*Early Visual Concept Learning with Unsupervised Deep Learning*](https://arxiv.org/abs/1606.05579)

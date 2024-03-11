@@ -11,7 +11,7 @@ date: 2021-08-11 14:42:00
 
 Outline:
 
-* Single-source shortest paths( SSSP )
+* Single-Sources shortest paths( SSSP )
 
   * Dijkstra algorithm by example
   * Priority queue-based implementation

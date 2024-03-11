@@ -11,7 +11,7 @@ date: 2023-11-04 02:04:16
 
 结构主义(Constructivism)数学是一种数学哲学. 它折射出的是对于数学本质的思考以及对现有的以公理化集合论为基础的严谨但不适应人类直觉的数学体系的不满.
 
-[->Source: Intuitive mathematics - Marianne Freiberger](https://plus.maths.org/content/intuitionism)
+[->Sources: Intuitive mathematics - Marianne Freiberger](https://plus.maths.org/content/intuitionism)
 
 <!--more-->
 

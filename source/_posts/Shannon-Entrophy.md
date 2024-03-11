@@ -8,7 +8,7 @@ mathjax: true
 date: 2023-10-15 02:23:22
 ---
 
-Source:
+Sources:
 
 1. *Elements of Information Theory*
 2. *An Introduction to Single-User Information Theory*

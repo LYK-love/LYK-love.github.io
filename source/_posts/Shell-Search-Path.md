@@ -8,7 +8,7 @@ tags:
 date: 2023-04-23 21:48:25
 ---
 
-Source:
+Sources:
 
 * Ian! D. Allen. *[Week05 Shell Search Path. CST8207](https://teaching.idallen.com/cst8207/19w/notes/400_search_path.html)*.
 

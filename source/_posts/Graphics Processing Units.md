@@ -1,5 +1,5 @@
 ---
-title: GPU
+title: Graphics Processing Units
 tags: Hardware
 categories: Computer Science
 date: 2022-07-31 22:02:07
@@ -18,8 +18,11 @@ Outline:
 
 [很详细的介绍显卡的文章](https://zhuanlan.zhihu.com/p/156083352)
 
-* **显卡**( Video card、Display card、Graphics card ): 由 GPU, 电路板( PCB ), 显存, 金手指, 供电 & 显示接口以及散热等构成
-  * 因为显卡最重要的就是GPU, 我们也可以把二者混为一谈. 比如后文提到的集显和核显, 其实就是两块纯的GPU,  为了方便我们还是说成显卡.
+* Video card (or Display card, **Graphics card**) is composed of:
+  1. **GPU (Graphics Processing Unit)**
+  2. **Video Memory (VRAM)**
+  3. Cooling System, Power Connectors, Output Connectors. PCB (Printed Circuit Board), BIOS/UEFI (Firmware).
+*  Since GPU is the most important of a Graphics card, we may use these two terminologies interchangeably.
 
 ![Graphic Card Arch](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/Hardware/GPU/Graphic%20Card%20Arch.png)
 

@@ -8,7 +8,7 @@ date: 2024-01-05 16:00:03
 ---
 
 
-Source:
+Sources:
 
 * [Masked Autoencoders (MAE)](https://arxiv.org/pdf/2111.06377.pdf)
 * [Vision Transformer (ViT)](https://arxiv.org/abs/2010.11929)

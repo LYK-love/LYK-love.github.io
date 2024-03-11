@@ -9,7 +9,7 @@ date: 2024-01-09 19:01:26
 ---
 
 
-Source:
+Sources:
 
 1. [NvChad](https://nvchad.com/docs/quickstart/install)
 2. [NvChad --- Rocky Linux](https://docs.rockylinux.org/books/nvchad/nvchad_ui/using_nvchad/)

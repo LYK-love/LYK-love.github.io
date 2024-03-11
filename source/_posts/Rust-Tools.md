@@ -6,7 +6,7 @@ date: 2024-01-09 20:56:42
 ---
 
 
-Source:
+Sources:
 
 1. [--> How To Install Rust on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/install-rust-on-ubuntu-linux)
 

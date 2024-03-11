@@ -1,5 +1,5 @@
 ---
-title: CPU
+title: Central Processing Units
 tags: Hardware
 categories: Computer Science
 date: 2022-09-08 00:41:56
@@ -15,9 +15,9 @@ Outline:
 
 # Basic Concepts
 
-## CPU( Package )
+## CPU (Package)
 
-* CPU:( Central Processing Unit): 中央处理单元. CPU是一个很模糊的概念, 它一般指的是“CPU package”
+* CPU:(Central Processing Unit): 中央处理单元. CPU是一个很模糊的概念, 它一般指的是“CPU package”
 
   * 一个CPU可以有多个物理核. 如果开启了超线程, 一个物理核可以分成n个逻辑核, n为超线程的数量
   * 举例来说, AMD的桌面级CPU[Ryzen™ 5 5600G](https://www.amd.com/zh-hans/products/apu/amd-ryzen-5-5600g)是6核12线程, 这意味着它有6个物理核, 通过超线程最大可以达到12个逻辑核

@@ -8,7 +8,7 @@ date: 2023-12-29 05:12:30
 ---
 
 
-Source:
+Sources:
 
 * [A complete guide to Manage Users and Groups on Linux!](https://blog.learncodeonline.in/a-complete-guide-to-manage-users-and-groups-on-linux)
 * 蔡德明. *[第十四章 Linux账号管理与权限配置. 鸟哥的Linux私房菜](http://cn.linux.vbird.org/linux_basic/0410accountmanager_1.php)*.

@@ -6,7 +6,7 @@ date: 2024-01-11 21:59:13
 ---
 
 
-Source:
+Sources:
 
 1. [ECS201A Homepage](https://jlpteaching.github.io/comparch/)
 2. [ECS201A Projects(gem5)](https://jlpteaching.github.io/comparch/modules/gem5/assignment0/)

@@ -9,7 +9,7 @@ date: 2024-01-27 17:10:23
 ---
 
 
-Source:
+Sources:
 
 1. [Shiyu Zhao. *Chapter 5: Monte Carlo Methods. Mathematical Foundations of Reinforcement Learning*](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning).
 

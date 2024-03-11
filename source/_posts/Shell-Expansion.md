@@ -8,7 +8,7 @@ categories:
   - Software Engineering
 ---
 
-Source:
+Sources:
 
 1. Machtelt Garrels. *[Chapter 3. The Bash environment. Bash Guide for Beginners](https://tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_04.html)*.
 

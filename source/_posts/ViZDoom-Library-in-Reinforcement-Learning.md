@@ -8,7 +8,7 @@ date: 2024-02-11 21:59:16
 ---
 
 
-Source:
+Sources:
 
 1. [--> Documentation](https://vizdoom.farama.org/api/python/doomGame/#)
 2. [--> Turorial](https://vizdoom.cs.put.edu.pl/tutorial)

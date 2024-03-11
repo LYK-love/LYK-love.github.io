@@ -7,7 +7,7 @@ date: 2023-12-24 22:16:11
 ---
 
 
-Source:
+Sources:
 
 * [miniconda](https://docs.conda.io/projects/miniconda/en/latest/index.html#miniconda)
 

@@ -8,7 +8,7 @@ date: 2023-12-08 19:43:54
 ---
 
 
-Source: 
+Sources: 
 
 1. [The spelled-out intro to neural networks and backpropagation: building micrograd](https://www.youtube.com/watch?v=VMj-3S1tku0&feature=youtu.be)
 2. [Stanford CS231N, Lecture 4](https://youtu.be/d14TUNcbn1k?si=fGVVrRpYIhqbBKBt)

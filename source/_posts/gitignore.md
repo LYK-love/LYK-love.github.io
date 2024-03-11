@@ -6,7 +6,7 @@ date: 2023-12-25 01:19:39
 ---
 
 
-Source: 
+Sources: 
 
 * [Github: Ignoring files](https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files)
 

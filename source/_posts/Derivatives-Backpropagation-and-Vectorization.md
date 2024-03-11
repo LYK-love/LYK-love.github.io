@@ -8,7 +8,7 @@ date: 2024-01-25 21:30:05
 ---
 
 
-Source:
+Sources:
 
 1. [Derivatives, Backpropagation, and Vectorization](http://cs231n.stanford.edu/handouts/derivatives.pdf)
 2. [Wikipedia: chain rule](https://en.wikipedia.org/wiki/Chain_rule)

@@ -6,7 +6,7 @@ mathjax: true
 date: 2024-02-06 20:03:07
 ---
 
-Source:
+Sources:
 
 1. [UWashington: CSE378, Lecture13](https://courses.cs.washington.edu/courses/cse378/09wi/lectures/lec13.pdf)
 1. John L. Hennessy & David A. Patterson. (2019). *Chapter 1. Fundamentals of Quantitative Design and Analysis. Computer Architecture: A Quantitative Approach* (6th ed.). Elsevier Inc.

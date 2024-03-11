@@ -7,7 +7,7 @@ mathjax: true
 date: 2023-11-10 23:21:13
 ---
 
-Source:
+Sources:
 
 1. [EE 376A: Information Theory. Winter 2018. Lecture 4.](https://web.stanford.edu/class/ee376a/files/2017-18/lecture_4.pdf) - Stanford University
 2. [EE 376A: Information Theory. Winter 2017. Lecture 4.](https://tselab.stanford.edu/mirror/ee376a_winter1617/Lecture_4.pdf) - Stanford University

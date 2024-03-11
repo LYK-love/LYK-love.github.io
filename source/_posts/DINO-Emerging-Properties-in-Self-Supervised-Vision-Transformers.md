@@ -9,7 +9,7 @@ date: 2024-01-16 01:27:31
 ---
 
 
-Source:
+Sources:
 
 1. [*Emerging Properties in Self-Supervised Vision Transformers* (DINO)](https://arxiv.org/abs/2104.14294)
 1. [PyTorch implementation and pretrained models for DINO](https://github.com/facebookresearch/dino)

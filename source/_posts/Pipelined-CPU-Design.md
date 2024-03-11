@@ -7,7 +7,7 @@ date: 2024-02-06 21:36:50
 ---
 
 
-Source:
+Sources:
 
 1. [UWashington: CSE378, Lecture09](https://courses.cs.washington.edu/courses/cse378/09wi/lectures/lec09.pdf)
 2. [UWashington: CSE378, Lecture10](https://courses.cs.washington.edu/courses/cse378/09wi/lectures/lec10.pdf)

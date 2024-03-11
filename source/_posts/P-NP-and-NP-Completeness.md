@@ -7,7 +7,7 @@ date: 2024-02-02 00:24:37
 ---
 
 
-Source:
+Sources:
 
 1. [CMU CS651: P, NP, and NP-Completeness](https://www.cs.cmu.edu/~avrim/451/lectures/lect1102.pdf)
 

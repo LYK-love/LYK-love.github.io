@@ -8,7 +8,7 @@ date: 2024-01-20 02:37:11
 ---
 
 
-Source:
+Sources:
 
 1. [The Normal/Gaussian Random Variable](https://web.stanford.edu/class/archive/cs/cs109/cs109.1218/files/student_drive/4.3.pdf)
 

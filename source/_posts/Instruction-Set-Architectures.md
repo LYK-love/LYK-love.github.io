@@ -7,7 +7,7 @@ date: 2024-02-06 21:31:48
 ---
 
 
-Source:
+Sources:
 
 1. John L. Hennessy & David A. Patterson. (2019). *Chapter 2. Memory Hierarchy Design. Computer Architecture: A Quantitative Approach* (6th ed., pp. 78-148). Elsevier Inc.
 2. [RISC-V instruction format](https://jlpteaching.github.io/comparch/img/riscv-instr.pdf)

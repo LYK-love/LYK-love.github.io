@@ -7,7 +7,7 @@ date: 2024-01-09 20:56:20
 ---
 
 
-Source:
+Sources:
 
 1. [How To Install Node.js on Ubuntu 20.04](https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubuntu-20-04)
 

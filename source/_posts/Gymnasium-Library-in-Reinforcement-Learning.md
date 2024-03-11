@@ -8,14 +8,14 @@ date: 2024-02-11 22:08:47
 ---
 
 
-Source:
+Sources:
 
 1. [--> Gymnasium github repo](https://github.com/Farama-Foundation/Gymnasium)
 2. [--> Documentation](https://gymnasium.farama.org/)
 
 Gymnasium is the successsor of the famous [OpenAI Gym](https://github.com/openai/gym) library. It's highly recommended to move to gymnasium since gym is not being maintained.
 
-Gymnasium is maintained by the Farama Foundation, an open-source nonprofit foundation.
+Gymnasium is maintained by the Farama Foundation, an open-Sources nonprofit foundation.
 
 <!--more-->
 

@@ -10,7 +10,7 @@ date: 2024-01-18 22:23:18
 ---
 
 
-Source:
+Sources:
 
 1. *Elements of Information Theory*
 2. *An Introduction to Single-User Information Theory*

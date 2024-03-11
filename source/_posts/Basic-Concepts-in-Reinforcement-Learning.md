@@ -9,7 +9,7 @@ date: 2024-01-03 15:15:23
 ---
 
 
-Source:
+Sources:
 
 1. Shiyu Zhao. *[Chapter 1: Basic Concepts. Mathematical Foundations of Reinforcement Learning](https://github.com/MathFoundationRL/Book-Mathmatical-Foundation-of-Reinforcement-Learning)*.
 2. [OpenAI Spinning Up](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html#)

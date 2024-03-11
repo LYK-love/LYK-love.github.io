@@ -7,7 +7,7 @@ mathjax: true
 date: 2024-01-18 22:34:32
 ---
 
-Source:
+Sources:
 
 1. [The Multivariate Gaussian Distribution](https://cs229.stanford.edu/section/gaussians.pdf)
 

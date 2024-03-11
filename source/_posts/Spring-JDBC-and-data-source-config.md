@@ -3,7 +3,7 @@ categories:
 - Software Engineering
 date: 2022-03-21 23:38:49
 tags: Spring
-title: Spring JDBC and data source config
+title: Spring JDBC and data Sources config
 ---
 
 Outline:

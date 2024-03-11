@@ -10,7 +10,7 @@ date: 2023-12-22 22:46:52
 
 The concepts of datasets, samples, labels in Machine Learning.
 
-Source:
+Sources:
 
 1. Mu Li et al. *[1. Introduction. Dive into Deep Learning](http://d2l.ai/chapter_introduction/index.html)*.
 
