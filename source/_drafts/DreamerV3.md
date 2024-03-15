@@ -46,9 +46,9 @@ In this article, we follow these notations:
 3. By default, $s_t$ or $z_t$ represents the stochastic state predicted by the representation model.
 4. The latent state of Dreamer(V1,V2,V3) is the <u>concatenation</u> of $h_t$ and $z_t$.
 5. The representation model and the transition model both compute the (**normal**) distribution of the stochastic state.
-   * representation model: $p$, prior
-   * transition model: $q$, posterior
-   * the stochastic states are sampled through the corresponding distributions
+   * representation model: $p$, posterior
+   * transition model: $q$, prior
+   * the stochastic states are sampled through the corresponding distributions.
 
 # DreamerV3
 
@@ -65,8 +65,6 @@ The reason is that, the later paper assumes you are already familiar with the kn
 # RSSM
 
 ![image-20240225121511259](/Users/lyk/Library/Application Support/typora-user-images/image-20240225121511259.png)
-
-See "Figure 2: Latent dynamics model designs" from [DreamerV2](https://arxiv.org/abs/2010.02193).
 
 In this example, the model observes the first two time steps and predicts the third. 
 
@@ -157,14 +155,31 @@ As you can see from the figure, during the behavior learning process we don't us
 
 Figure 3: Actor Critic Learning. The world model learned in Figure 2 is used for learning a policy from trajectories imagined in the compact latent space. 
 
-**The <u>trajectories start from posterior states computed during model training (representation model)</u> and predict forward by sampling actions from the actor network.** The critic network predicts the expected sum of future rewards for each state. The critic uses temporal difference learning on the imagined rewards. The actor is trained to maximize the critic prediction, via reinforce gradients, straight-through gradients of the world model, or a combination of them.
+**The <u>trajectories start from prior states computed during model training (representation model)</u> and predict forward by sampling actions from the actor network.** The critic network predicts the expected sum of future rewards for each state. The critic uses temporal difference learning on the imagined rewards. The actor is trained to maximize the critic prediction, via reinforce gradients, straight-through gradients of the world model, or a combination of them.
 
-```
-```
+
 
 
 
 # Loss
+
+## KL balancing
+
+During the dynamic learning phase, i.e. the one in which the world model is learned, the prior distribution over the latent states, estimated by the transition model, and the posterior one, estimated by the representation model, are learned so to minimize their KL divergence:
+$$
+\begin{aligned}
+\mathrm{KL}(P \| Q) & =\int_{\mathcal{X}} p(x) \log \left(\frac{p(x)}{q(x)}\right) d x \\
+& =\int_{\mathcal{X}} p(x) \log (p(x)) d x-\int_{\mathcal{X}} p(x) \log (q(x)) d x \\
+& =\mathrm{H}(P, Q)-\mathrm{H}(P)
+\end{aligned}
+$$
+where $P, Q, \mathrm{H}(P, Q)$ and $\mathrm{H}(P)$ are the posterior and prior distributions, the cross-entropy between the posterior and the prior and the entropy of the posterior distribution respectively. The KL loss serves two purposes: it trains the prior toward the representations, and it regularizes the representations toward the prior. However, since learning the prior is difficult, we want to avoid regularizing the representations toward a poorly trained prior. To overcome this issue, the divergence between the posterior and the prior is replaced with the following:
+$$
+\alpha \mathrm{KL}(\operatorname{sg}(P) \| Q)+(1-\alpha) \mathrm{KL}(P \| \operatorname{sg}(Q))
+$$
+with $\alpha=0.8$ and sg stands for "stop-gradient" (. $\operatorname{detach}($ ) on a PyTorch tensor). By scaling up the prior cross entropy relative to the posterior entropy, the world model is encouraged to minimize the KL by improving its prior dynamics toward the more informed posteriors, as opposed to reducing the KL by increasing the posterior entropy.
+
+
 
 ## DreamerV1 dynamic loss
 
@@ -244,9 +259,9 @@ The world model of DreamerV3 is composed by five parts.
 
 1. An image **encoder**, that is a fully convolutional neural network, encodes the pixel-based observations provided by the environment.
 2. An **RSSM** (Recurrent State-Space Model) which generates the latent states, and it is composed by three models:
-   1. The **recurrent model**: a linear layer followed by  an ELU activation function and a GRU, that encodes the history of the  episode and computes the recurrent state.
+   1. The **recurrent model**: a linear layer followed by an ELU activation function and a GRU, that encodes the history of the  episode and computes the recurrent state.
    2. The **representation model**: an MLP, that computes the stochastic state from the recurrent state and the actual observations.
-   3. The **transition model**: an MLP, that predicts the  stochastic state given only the recurrent state, it is used to imagine  trajectories in the latent dynamic.
+   3. The **transition model**: an MLP, that predicts the stochastic state given only the recurrent state, it is used to imagine  trajectories in the latent dynamic.
 3. An **observation model (image decoder)** consisting of a linear layer followed by a convolutional neural network with transposed convolutions; this <u>reconstructs</u> the original  observation from the latent state. 
 4. A **reward model** (MLP) predicts the reward for a given latent state. Finally, 
 5. An optional **continue model** (MLP) predicts the *continues* (whether or not the episode continues)
@@ -528,7 +543,6 @@ def uniform_mix(self, logits: Tensor, unimix: float = 0.01) -> Tensor:
         # compute the new logits
         logits = probs_to_logits(probs)
     return logits
-
 ```
 
 #### Symlog predictions
@@ -728,7 +742,7 @@ In DreamerV3, we have:
   per_rank_sequence_length: 64
 ```
 
-
+16 batches, each batch has 64 sequences (a video of len=64)
 
 
 

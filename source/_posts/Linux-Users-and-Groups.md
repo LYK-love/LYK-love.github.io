@@ -251,23 +251,38 @@ groups user1
 
 # User Management
 
-## Create a Linux User
+TL;DR:
 
-**Method 1: Using `useradd` command** ->
-
-```bash
-useradd <user1>
+```
+sudo adduser lyk
+sudo sudo usermod -a -G adm lyk
+sudo usermod -a -G sudo lyk
+su - lyk
 ```
 
-**Method 2: Using `adduser` command** ->
+
+
+## Create a Linux User
+
+Method 1: Using `adduser` command **(Recommended)**
 
 `adduser` is a Perl script which uses `useradd` (which is native to Linux) binary in back-end. It's more interactive and user friendly than it's back-end `useradd`. 
 
 ```bash
-adduser <user2>
+sudo adduser <username>
 ```
 
-**Method 3: By directly modifying `/etc/passwd` file** ->
+
+
+Method 2: Using `useradd` command:
+
+```bash
+sudo useradd <username>
+```
+
+
+
+Method 3: By directly modifying `/etc/passwd` file:
 
 Not a recommended way but one can create a Linux user by directly modifying `/etc/passwd` file and making an entry for new user. In such cases you need to create the `group`, `home directory` etc. individually for that user.
 
@@ -277,18 +292,12 @@ cat /etc/passwd | tail -1
 
 ## Grant `sudo` Permisson to a Linux User
 
-1. Add user
+Give the new user `sudo` permission:
 
-   ```sh
-   sudo adduser <username>
-   ```
-
-2. Give the new user `sudo` permission:
-
-   ```sh
-   sudo usermod -a -G adm username
-   sudo usermod -a -G sudo username
-   ```
+```sh
+sudo usermod -a -G adm <username>
+sudo usermod -a -G sudo <username>
+```
 
 
 
@@ -311,6 +320,12 @@ Alternatively, you can edit  `/etc/sudoers` to achieve it.
    ```sh
    chmod u-w /etc/sudoers
    ```
+
+## Change user
+
+```bash
+su - <username>
+```
 
 
 
@@ -375,7 +390,7 @@ There are two types of groups in Linux.
 * primary group: when you create a user the primary group that  the user belongs to also gets created with the same name as the user.  User must be a member of a primary group and there can be only one  primary group for each member.
 * secondary group: It's always optional. If  you have a requirement create it and add the users to it. A user can be  mart of one or more secondary groups.
 
-### Create a Linux group
+## Create a Linux group
 
 Use `groupadd` command to create a Linux group.
 
@@ -383,7 +398,7 @@ Use `groupadd` command to create a Linux group.
 groupadd secondgroup
 ```
 
-### Add users to a Linux group
+## Add users to a Linux group
 
 We can add users to become part of any other groups.
 
@@ -393,7 +408,7 @@ usermod -G secondgroup sample
 usermod -G secondgroup user1
 ```
 
-### Change Name of a Linux group
+## Change Name of a Linux group
 
 Run following command to change name of a Linux group.
 
@@ -401,7 +416,7 @@ Run following command to change name of a Linux group.
 groupmod -n secondarygroup secondgroup
 ```
 
-### Change GID of a Linux group
+## Change GID of a Linux group
 
 Run following command to change name of a Linux group.
 
@@ -411,7 +426,7 @@ groupmod -g 1007 secondarygroup
 
 The syntax is -> `groupmod -g newgid groupname`
 
-### Remove a User from a Linux group
+## Remove a User from a Linux group
 
 Run the following commands to remove a user from a Linux group.
 
@@ -421,7 +436,7 @@ gpasswd -d user1 lcousersecondary1
 gpasswd -d user4 lcousersecondary1
 ```
 
-### Delete or Remove a Linux group
+## Delete or Remove a Linux group
 
 Run following command to delete a Linux group.
 

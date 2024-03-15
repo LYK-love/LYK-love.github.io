@@ -13,9 +13,59 @@ My dotfiles: `https://github.com/LYK-love/dotfiles-for-servers`
 
 <!--more-->
 
-# Prerequisites
+# Prerequisites: Set up SSH
 
-Install following softwares:
+You need to set up your ssh first.
+
+## Local -> Remote
+
+Now we config the capability of connecting the server from one's local machine.
+
+On your local machine, run:
+
+```sh
+ssh-copy-id user@host
+```
+
+where `user` is your user account name on the remote server, and `host` is the hostname or ip address of the remote server.
+
+
+
+Or you can copy your ssh public key `id_rsa.pub` of your local machine to `~/.ssh/authorized_keys` of the remote server.
+
+## Remote -> Github
+
+1. Generate ssh key on the server：
+
+   ```sh
+   ssh-keygen -t rsa
+   ```
+
+2. Look at `~/.ssh`:
+
+   ```ssh
+   ❯ ls -l ~/.ssh
+   total 20
+   -rw-r--r-- 1 lyk lyk   27  2月 10 15:44 config
+   -rw------- 1 lyk lyk 2602  2月  9 17:18 id_rsa
+   -rw-r--r-- 1 lyk lyk  571  2月  9 17:18 id_rsa.pub
+   -rw------- 1 lyk lyk 3926  2月 19 12:58 known_hosts
+   -rw------- 1 lyk lyk 3182  2月 19 12:41 known_hosts.old
+   ```
+
+   Copy the content of `id_rsa.pub`, i.e., the public key of this user, to the Github.
+
+   The content can be got by
+
+   ```sh
+   cat ~/.ssh/id_rsa.pub
+   ```
+
+   
+
+# Prerequisite: Softwares
+
+Then, you need to install following softwares.
 
 ## zsh
 
@@ -30,27 +80,90 @@ Install following softwares:
 
 2. Switch your shell to zsh:
 
-   ```
+   ```bash
    chsh -s /bin/zsh
    ```
 
-3. Install and config [Oh-my-zsh]()
+3. Now log out and log in back to enable zsh. You will see:
+
+   ```
+   This is the Z Shell configuration function for new users,
+   zsh-newuser-install.
+   You are seeing this message because you have no zsh startup files
+   (the files .zshenv, .zprofile, .zshrc, .zlogin in the directory
+   ~).  This function can help you with a few settings that should
+   make your use of the shell easier.
+   
+   You can:
+   
+   (q)  Quit and do nothing.  The function will be run again next time.
+   
+   (0)  Exit, creating the file ~/.zshrc containing just a comment.
+        That will prevent this function being run again.
+   
+   (1)  Continue to the main menu.
+   
+   (2)  Populate your ~/.zshrc with the configuration recommended
+        by the system administrator and exit (you will need to edit
+        the file by hand, if so desired).
+   ```
+
+   Just type `q`, since we want to use my own zsh config.
+
+   Now you can see
+
+   ```
+   > echo $SHELL
+   /bin/zsh
+   ```
+
+4. Move to [next section](https://lyk-love.cn/2024/01/09/how-to-set-up-on-a-new-machine/#oh-my-zsh) to install and config Oh-my-zsh.
+
+
 
 ## Oh-my-zsh
 
-Install it via [-->repo](https://github.com/ohmyzsh/ohmyzsh#basic-installation):
+**Install** it via [-->repo](https://github.com/ohmyzsh/ohmyzsh#basic-installation):
 
 ```sh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
+* If you want to **uninstall** `oh-my-zsh`, just run `uninstall_oh_my_zsh` from the command-line. It will remove itself and revert your previous `bash` or `zsh` configuration. ([-->Source](https://github.com/ohmyzsh/ohmyzsh#uninstalling-oh-my-zsh))
 
 
-Uninstall: If you want to uninstall `oh-my-zsh`, just run `uninstall_oh_my_zsh` from the command-line. It will remove itself and revert your previous `bash` or `zsh` configuration. ([-->Source](https://github.com/ohmyzsh/ohmyzsh#uninstalling-oh-my-zsh))
 
+Then install Zsh plugins:
 
+* zsh-autosuggestions:
+
+  ```sh
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  ```
 
 ## p10k
+
+The official github repo of p10k is [here](https://github.com/romkatv/powerlevel10k/blob/master/README.md).
+
+
+
+Now we install `p10k`, a theme of Oh-my-zsh.
+
+```bash
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+After installation, you will see an interactive window to configure p10k. Since we will use my own config, and I already have one config file for `p10k`, we can just skip this step.
+
+
+
+You can change the config of `p10k` manually with:
+
+```bash
+p10k configure
+```
+
+
 
 ## neovim
 
@@ -93,15 +206,13 @@ For method 2, you should
 
 [--> NvChad Installation Doc](https://nvchad.com/docs/quickstart/install)
 
-
-
 ```sh
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim
+git clone https://github.com/NvChad/starter ~/.config/nvim && nvim
 ```
 
 
 
-## openssh
+## openssh (if you don't have one)
 
 `openssh-server` is installed by default in many distros, you can check its installation via:
 
@@ -175,21 +286,26 @@ Now rust and corresponding tools (rustup, cargo) have been installed
 
 ## Zellij
 
+You must [install cargo](https://lyk-love.cn/2024/01/09/how-to-set-up-on-a-new-machine/#cargo) first in order to install Zellij.
+
 ```sh
 cargo install --locked zellij
+```
+
+The installation of Zellij is a little bit slow.
+
+## yadm
+
+[yadm](https://yadm.io/docs/overview) is a dotfile manaegr.
+
+```bash
+sudo apt-get update
+sudo apt-get install yadm
 ```
 
 
 
 ## Others
-
-Zsh plugins:
-
-* zsh-autosuggestions:
-
-  ```sh
-  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-  ```
 
 
 
@@ -199,6 +315,12 @@ Unix tools:
 
   ```sh
   sudo apt install ripgrep
+  ```
+
+* [btm](https://github.com/ClementTsang/bottom):
+
+  ```bash
+  cargo install bottom --locked
   ```
 
   
@@ -221,13 +343,25 @@ For forther customization, please refer to:
 
 
 
-1. Clone my dotfiles
+1. Remove original config files, if any, in your computer.
 
    ```sh
-   git clone --recurse-submodules git@github.com:LYK-love/dotfiles-for-servers.git ~/dotfiles
+   rm ~/.zshrc # zsh
+   rm ~/.p10k.zsh
+   rm -rf ~/.config/nvim/lua/custom # NvChad
+   rm -rf ~/.config/zellij
    ```
 
-   parameter `--recurse-submodules` is because my NvChad dotfile, which is a distinct public repo, is added as a git submodule:
+2. Clone my dotfiles
+
+   ```sh
+   yadm clone git@github.com:LYK-love/dotfiles-for-servers.git
+   yadm submodule update --init --recursive
+   ```
+
+   This will clone all the files in the repo to my `$HOME`.
+
+   I use parameter `--recurse-submodules` because my NvChad dotfile, which is a distinct public repo, is added as a git submodule:
 
    ```ini
    # In `.gitmodules`
@@ -236,47 +370,33 @@ For forther customization, please refer to:
    	url = git@github.com:LYK-love/NvChad-custom-file.git
    ```
 
-   A submodule won't be automatically cloned when the parent repo is cloned. You must use `--recurse-submodules` to mannually do it.
-
-   If you already cloned without the parameter, you can alsouse
+3. Source the zsh config file in my dotfiles, in order to enable some env variables.
 
    ```sh
-   git submodule update --init --recursive
-   ```
-
-2. Source the zsh config file in my dotfiles, in order to enable some env variables.
-
-   ```sh
-   source ~/dotfiles/zsh/.zshrc
+   source ~/zsh/.zshrc
    ```
 
    Now you can check some env variables I set:
 
    ```
    > echo $DOT_FILE_HOME
-   /home/lyk/dotfiles
+   /home/lyk/
    
    > echo $ZSH_DOT_FILE_HOME
-   /home/lyk/dotfiles/zsh
+   /home/lyk/zsh
    
    > echo $NVIM_CUSTOM_HOME
-   /home/lyk/dotfiles/nvchad_custom
+   /home/lyk/nvchad_custom
    
    > echo $ZELLIJ_CONFIG_FILE
-   /home/lyk/dotfiles/zellij/config.kdl
-   ```
-
-3. Remove original config files, if any, in your computer.
-
-   ```sh
-   rm ~/.zshrc # zsh
-   rm -rf ~/.config/nvim/lua/custom # NvChad
+   /home/lyk/zellij/config.kdl
    ```
 
 4. Now **set the config files** as the cooresponding ones in my dotfiles:
 
    ```sh
    ln -s $ZSH_DOT_FILE_HOME/.zshrc ~/.zshrc # zsh
+   ln -s $ZSH_DOT_FILE_HOME/.p10k.zsh ~/.p10k.zsh # p10k, the theme of oh-my-zsh.
    ln -s  $NVIM_CUSTOM_HOME/ ~/.config/nvim/lua/custom # NvChad
    mkdir ~/.config/zellij # Zellij
    ln -s $ZELLIJ_CONFIG_FILE ~/.config/zellij/
@@ -284,52 +404,14 @@ For forther customization, please refer to:
 
    After that, zsh, nvchad and Zellij should be correctly configured. Zsh plugins are enabled as well.
 
-5. Now we enable a **theme** for zsh. Since we've installed `powerlevel10k` before, we now start it's config:
+5. To enable the plugins of NvChad, in Nvim, type:
 
-   ```sh
-   p10k configure
+   ```
+   :MasonInstallAll
    ```
 
+   
 
-# Set up SSH
-
-## Local -> Remote
-
-Now we config the capability of connecting the server from one's local machine.
-
-On your local machine, run:
-
-```sh
-ssh-copy-id user@host
-```
-
-where `user` is your user account name on the remote server, and `host` is the hostname or ip address of the remote server.
-
-
-
-Or you can copy your ssh public key `id_rsa.pub` of your local machine to `~/.ssh/authorized_keys` of the remote server.
-
-## Remote -> Github
-
-1. Generate ssh key on the server：
-
-   ```sh
-   ssh-keygen -t rsa
-   ```
-
-2. Look at `~/.ssh`:
-
-   ```ssh
-   ❯ ls -l ~/.ssh
-   total 20
-   -rw-r--r-- 1 lyk lyk   27  2月 10 15:44 config
-   -rw------- 1 lyk lyk 2602  2月  9 17:18 id_rsa
-   -rw-r--r-- 1 lyk lyk  571  2月  9 17:18 id_rsa.pub
-   -rw------- 1 lyk lyk 3926  2月 19 12:58 known_hosts
-   -rw------- 1 lyk lyk 3182  2月 19 12:41 known_hosts.old
-   ```
-
-   Copy the content of `id_rsa.pub`, i.e., the public key of this user, to the Github.
 
 
 # Set up conda
@@ -354,22 +436,37 @@ After installing, initialize your newly-installed Miniconda. The following comma
 ~/miniconda3/bin/conda init zsh
 ```
 
+# Set up CUDA, PyTorch, Jax
+
+See:
+
+* [Pytorch GPU Setup Guide](https://lyk-love.cn/2023/12/22/pytorch-gpu-setup-guide/)
+* [Install Jax](https://github.com/google/jax?tab=readme-ov-file#instructions)
+
 # Add another user
 
 [--> Linux Users and Groups](https://lyk-love.cn/2023/12/29/linux-users-and-groups/?highlight=shadow)
 
-
+Say the new username is `lyk`
 
 1. Add user
 
    ```sh
-   sudo adduser <username>
+   sudo adduser lyk
    ```
 
 2. Give the new user `sudo` permission:
 
    ```sh
-   sudo usermod -a -G adm username
-   sudo usermod -a -G sudo username
+   sudo usermod -a -G adm lyk
+   sudo usermod -a -G sudo lyk
    ```
+
+3. Switch to the new user:
+
+   ```bash
+   su - lyk
+   ```
+
+   
 

@@ -45,35 +45,26 @@ There're also some explanations of the code:
 
 Installation:
 
+Make sure you have `g++` installed.
+
 ```sh
 conda create -n sheeprl python=3.9
 conda activate sheeprl
 
 git clone git@github.com:Eclectic-Sheep/sheeprl.git
 cd sheeprl
+sudo apt install swig
 pip install .
-pip install .\[atari,mujoco,dev,test\]
-pip install gymnasium\[box2d\]
+pip install sheeprl\[atari,box2d,dev,mujoco,test\]
 ```
+
+
 
 ## Hafner's version
 
 Hafner's codebase
 
-Installation:
-
-```sh
-git clone git@github.com:danijar/dreamerv3.git
-cd dreamerv3
-conda create -n DreamerV3JAX python=3.9
-conda activate DreamerV3JAX
-pip install --upgrade "jax[cuda12_pip]" -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
-pip install -r requirements.txt
-pip install wandb
-```
-
-
-To save and see the reports, you need to config wandb.
+See my fork: https://github.com/LYK-love/dreamerv3
 
 ## NM512's version
 
@@ -236,6 +227,16 @@ See gym's [atari game list](https://gymnasium.farama.org/environments/atari/comp
 
 
 Alien:
+
+Single gpu:
+
+```
+python sheeprl.py exp=dreamer_v3 env=atari env.id=AlienNoFrameskip-v4 algo.cnn_keys.encoder=\[rgb\] algo=dreamer_v3_XS fabric.accelerator=gpu fabric.devices=1 fabric.precision=16-mixed algo.learning_starts=1024
+```
+
+
+
+
 
 ```sh
 python sheeprl.py exp=dreamer_v3 env=atari env.id=AlienNoFrameskip-v4 algo.cnn_keys.encoder=\[rgb\] algo=dreamer_v3_XS fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=2 fabric.precision=16-mixed algo.learning_starts=1024
