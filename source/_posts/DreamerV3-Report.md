@@ -54,8 +54,26 @@ conda activate sheeprl
 git clone git@github.com:Eclectic-Sheep/sheeprl.git
 cd sheeprl
 sudo apt install swig
+pip install swig
 pip install .
-pip install sheeprl\[atari,box2d,dev,mujoco,test\]
+pip install .\[atari,box2d,dev,mujoco,test\]
+pip install sheeprl\[crafter\]
+```
+
+
+
+Install osmesa:
+
+```sh
+sudo apt-get install libgl1-mesa-glx libosmesa6
+```
+
+
+
+Set:
+
+```
+export MUJOCO_GL=osmesa
 ```
 
 
@@ -176,6 +194,10 @@ ln -s /home/lyk/Projects/sheeprl/logs $IMAGE_HOME/sheeprl_log
 
 # Scripts
 
+https://github.com/Eclectic-Sheep/sheeprl/blob/main/howto/configs.md
+
+https://github.com/Eclectic-Sheep/sheeprl/tree/main/howto
+
 ## DMC
 
 ## Box2D
@@ -187,6 +209,16 @@ CarRacing
 ```sh
 python sheeprl.py exp=dreamer_v3 env=gym env.id=CarRacing-v2 algo.cnn_keys.encoder=\[rgb\] algo=dreamer_v3_XS fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=2 fabric.precision=16-mixed algo.learning_starts=1024
 ```
+
+
+
+8 GPUS:
+
+```
+python sheeprl.py exp=dreamer_v3 env=gym env.id=CarRacing-v2 algo.cnn_keys.encoder=\[rgb\] algo=dreamer_v3_XS fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=2 fabric.precision=16-mixed algo.learning_starts=1024
+```
+
+
 
 
 
@@ -215,7 +247,19 @@ Eval from checkpoint:
 ```
 export CKPT="/home/lyk/Projects/sheeprl/logs/runs/dreamer_v3/VideoPinballNoFrameskip-v4/2024-02-18_02-56-29_dreamer_v3_VideoPinballNoFrameskip-v4_42/version_0/checkpoint/ckpt_4800000_0.ckpt"
 
-python sheeprl_eval.py checkpoint_path=$CKPT fabric.accelerator=gpu env.capture_video=True
+sheeprl-eval checkpoint_path=$CKPT fabric.accelerator=gpu env.capture_video=True
+```
+
+
+
+Or
+
+```
+seeds=(5 1024 42 1337 8 2)
+
+for seed in "${seeds[@]}"; do
+  sheeprl-eval checkpoint_path=$CKPT fabric.accelerator=gpu env.capture_video=True seed=$seed
+done
 ```
 
 
@@ -226,21 +270,31 @@ See gym's [atari game list](https://gymnasium.farama.org/environments/atari/comp
 
 
 
-Alien:
+### Alien
 
 Single gpu:
 
 ```
-python sheeprl.py exp=dreamer_v3 env=atari env.id=AlienNoFrameskip-v4 algo.cnn_keys.encoder=\[rgb\] algo=dreamer_v3_XS fabric.accelerator=gpu fabric.devices=1 fabric.precision=16-mixed algo.learning_starts=1024
+python sheeprl.py exp=dreamer_v3 env=atari env.id=AlienNoFrameskip-v4 algo.cnn_keys.encoder=\[rgb\] algo.mlp_keys.encoder=\[\]  algo=dreamer_v3_XS fabric.accelerator=gpu fabric.devices=1 fabric.precision=16-mixed algo.learning_starts=1024
 ```
 
 
 
-
+2 gpus:
 
 ```sh
-python sheeprl.py exp=dreamer_v3 env=atari env.id=AlienNoFrameskip-v4 algo.cnn_keys.encoder=\[rgb\] algo=dreamer_v3_XS fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=2 fabric.precision=16-mixed algo.learning_starts=1024
+python sheeprl.py exp=dreamer_v3 env=atari env.id=AlienNoFrameskip-v4 algo.cnn_keys.encoder=\[rgb\] algo.mlp_keys.encoder=\[\]  algo=dreamer_v3_XS fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=8 fabric.precision=16-mixed algo.learning_starts=1024
 ```
+
+
+
+**8 gpus**:
+
+```sh
+python sheeprl.py exp=dreamer_v3 env=atari env.id=AlienNoFrameskip-v4 algo.cnn_keys.encoder=\[rgb\] algo.mlp_keys.encoder=\[\] algo=dreamer_v3_XS fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=8
+```
+
+
 
 For testing videos:
 
@@ -252,7 +306,7 @@ python sheeprl.py exp=dreamer_v3 env=atari env.id=AlienNoFrameskip-v4 algo.cnn_k
 
 
 
-Video pinball:
+### Video pinball
 
 ```sh
 python sheeprl.py exp=dreamer_v3 env=atari env.id=VideoPinballNoFrameskip-v4 algo.cnn_keys.encoder=\[rgb\] algo=dreamer_v3_XS fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=2 fabric.precision=16-mixed algo.learning_starts=1024
@@ -280,11 +334,21 @@ python sheeprl.py exp=dreamer_v3 env=atari env.id=VentureNoFrameskip-v4 algo.cnn
 
 
 
-Star Gunner
+### Star Gunner
 
 ```sh
-python sheeprl.py exp=dreamer_v3 env=atari env.id=StarGunnerNoFrameskip-v4 algo.cnn_keys.encoder=\[rgb\] algo=dreamer_v3_M fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=2 fabric.precision=16-mixed algo.learning_starts=1024
+python sheeprl.py exp=dreamer_v3 env=atari env.id=StarGunnerNoFrameskip-v4 algo.cnn_keys.encoder=\[rgb\] algo.mlp_keys.encoder=\[\] algo=dreamer_v3_M fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=2 fabric.precision=16-mixed algo.learning_starts=1024
 ```
+
+
+
+**8 gpus**:
+
+```sh
+python sheeprl.py exp=dreamer_v3 env=atari env.id=StarGunnerNoFrameskip-v4 algo.cnn_keys.encoder=\[rgb\] algo.mlp_keys.encoder=\[\] algo=dreamer_v3_XS fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=8
+```
+
+
 
 
 
@@ -301,6 +365,28 @@ Riverraid:
 ```sh
 python sheeprl.py exp=dreamer_v3 env=atari env.id=RiverraidNoFrameskip algo.cnn_keys.encoder=\[rgb\] algo=dreamer_v3_M fabric.accelerator=gpu fabric.strategy=ddp fabric.devices=2 fabric.precision=16-mixed algo.learning_starts=1024
 ```
+
+### Boxing
+
+```
+python sheeprl.py exp=dreamer_v3_100k_boxing fabric.strategy=ddp fabric.devices=8 fabric.accelerator=cuda
+```
+
+
+
+## Crafter
+
+```sh
+python sheeprl.py exp=dreamer_v3_XL_crafter fabric.strategy=ddp fabric.devices=8 fabric.accelerator=cuda
+```
+
+## Pacman
+
+```
+python sheeprl.py exp=dreamer_v3_100k_ms_pacman fabric.strategy=ddp fabric.devices=8 fabric.accelerator=cuda
+```
+
+
 
 # Custom envs
 
@@ -375,6 +461,36 @@ pip install gymnasium[box2d]
 
 ***
 
+When install `box2d-py`:
+
+```
+gcc -pthread -B /home/lyk/miniconda3/envs/sheeprl/compiler_compat -Wno-unused-result -Wsign-compare -DNDEBUG -O2 -Wall -fPIC -O2 -isystem /home/lyk/miniconda3/envs/sheeprl/include -I/home/lyk/miniconda3/envs/sheeprl/include -fPIC -O2 -isystem /home/lyk/miniconda3/envs/sheeprl/include -fPIC -I/home/lyk/miniconda3/envs/sheeprl/include/python3.9 -c Box2D/Box2D_wrap.cpp -o build/temp.linux-x86_64-cpython-39/Box2D/Box2D_wrap.o -I. -Wno-unused
+      gcc: fatal error: cannot execute ‘cc1plus’: execvp: No such file or directory
+      compilation terminated.
+      error: command '/usr/bin/gcc' failed with exit code 1
+      [end of output]
+
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+  ERROR: Failed building wheel for box2d
+```
+
+Solution:
+
+This problem can happen if different versions of g++ and gcc are installed. 
+
+```css
+   g++ --version
+   gcc --version
+```
+
+
+
+Reason:
+
+> **Ubuntu 22.04 default GCC version does not match version that built latest default kernel**. On Ubuntu 22.04, the default GNU C compiler version is gcc-11. However, it appears that the latest default kernel version (6.5. 0-14-generic as of writing this question) is built using gcc-12.
+
+***
+
 
 
 ```
@@ -388,6 +504,8 @@ If you get that error, the compiled version of the Python module (the .pyc file)
 ```sh
 find <the error dir> -name '*.pyc' -delete
 ```
+
+
 
 # Training process
 

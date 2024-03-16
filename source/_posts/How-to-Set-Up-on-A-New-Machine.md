@@ -9,7 +9,13 @@ categories: Software Engineering
 
 How to set up configs on a brand new machine (typically a ubuntu server).
 
-My dotfiles: `https://github.com/LYK-love/dotfiles-for-servers`
+For the usage of most of the rust tools, see my [*Unix CLI Tools*](https://lyk-love.cn/2022/09/13/unix-cli-tools).
+
+My dotfiles are save in:
+
+```
+https://github.com/LYK-love/dotfiles-for-servers
+```
 
 <!--more-->
 
@@ -153,7 +159,7 @@ Now we install `p10k`, a theme of Oh-my-zsh.
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 ```
 
-After installation, you will see an interactive window to configure p10k. Since we will use my own config, and I already have one config file for `p10k`, we can just skip this step.
+After installation, you will see an interactive window to configure p10k. Since we will use my own config, and I already have one config file for `p10k`, we can just **skip** this step.
 
 
 
@@ -284,7 +290,7 @@ sudo systemctl enable ssh
 
 Now rust and corresponding tools (rustup, cargo) have been installed
 
-## Zellij
+## zellij
 
 You must [install cargo](https://lyk-love.cn/2024/01/09/how-to-set-up-on-a-new-machine/#cargo) first in order to install Zellij.
 
@@ -303,24 +309,88 @@ sudo apt-get update
 sudo apt-get install yadm
 ```
 
+## zoxide
 
+[zoxide](https://github.com/ajeetdsouza/zoxide?tab=readme-ov-file):
+
+1. Install it.
+
+   ```sh
+   cargo install zoxide --locked
+   ```
+
+2. Remove the completions cache of my zsh:
+
+   ```sh
+   rm ~/.zcompdump*; compinit
+   ```
+
+3. (**You should skip this** since I have already done it.) Then, add this line to `~/.zshrc` file:
+
+   ```sh
+   eval "$(zoxide init zsh)"
+   ```
+
+4. Install [fzf](https://github.com/junegunn/fzf):
+
+   ```sh
+   sudo apt install fzf
+   ```
+
+## atuin
+
+Install it: 
+
+```sh
+cargo install atuin
+```
+
+The config of atuin has already been done in my config files. So you don't need to do anything else now.
 
 ## Others
 
+Useful unix tools:
 
-
-Unix tools:
-
-* rigprep:
+* [rigprep]():
 
   ```sh
-  sudo apt install ripgrep
+  cargo install ripgrep
   ```
 
 * [btm](https://github.com/ClementTsang/bottom):
 
   ```bash
   cargo install bottom --locked
+  ```
+
+* [procs](https://github.com/dalance/procs):
+
+  ```sh
+  cargo install procs
+  ```
+
+* [dua](https://github.com/Byron/dua-cli): Disk Usage Analyzer
+
+  ```sh
+  cargo install dua-cli
+  ```
+
+* [tealdeer](https://github.com/dbrgn/tealdeer):
+
+  ```sh
+  cargo install tealdeer
+  ```
+
+* [hyperfine](https://github.com/sharkdp/hyperfine):
+
+  ```sh
+  cargo install hyperfine
+  ```
+
+* [Tokei](https://github.com/XAMPPRocky/tokei?ref=itsfoss.com):
+
+  ```
+  cargo install tokei
   ```
 
   
@@ -355,6 +425,7 @@ For forther customization, please refer to:
 2. Clone my dotfiles
 
    ```sh
+   cd $HOME
    yadm clone git@github.com:LYK-love/dotfiles-for-servers.git
    yadm submodule update --init --recursive
    ```
@@ -370,11 +441,19 @@ For forther customization, please refer to:
    	url = git@github.com:LYK-love/NvChad-custom-file.git
    ```
 
+   See my dotfiles managed by `yadm`:
+
+   ```sh
+   yadm list -a
+   ```
+
 3. Source the zsh config file in my dotfiles, in order to enable some env variables.
 
    ```sh
    source ~/zsh/.zshrc
    ```
+
+   You will see the config process of `p10k` again. Just quit it since I already have had my own config.
 
    Now you can check some env variables I set:
 
@@ -404,10 +483,20 @@ For forther customization, please refer to:
 
    After that, zsh, nvchad and Zellij should be correctly configured. Zsh plugins are enabled as well.
 
-5. To enable the plugins of NvChad, in Nvim, type:
+   To enable the plugins of NvChad, in Nvim, type:
 
    ```
    :MasonInstallAll
+   ```
+
+5. Set up other CLI tools. 
+
+   For [Atuin](https://github.com/atuinsh/atuin), start the sync server **Offline (no sync)**:
+
+   ```sh
+   bash <(curl https://raw.githubusercontent.com/atuinsh/atuin/main/install.sh)
+               
+   atuin import auto
    ```
 
    

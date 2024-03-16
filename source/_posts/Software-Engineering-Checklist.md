@@ -22,3 +22,13 @@ Resources for essential topics of Software Engineering, including Distributed sy
 # Database
 
 * [CMU Intro to Database Systems (15-445/645 - Fall 2022)](https://www.youtube.com/playlist?app=desktop&list=PLSE8ODhjZXjaKScG3l0nuOiDTTqpfnWFf)
+
+# Security
+
+* [The Reluctant Sysadmin's Guide to Securing a Linux Server](https://pboyd.io/posts/securing-a-linux-vm/)
+
+
+
+# Blogs
+
+https://nat.org/
