@@ -25,12 +25,22 @@ Sources:
 cargo install ripgrep
 ```
 
-## ls --> exa
+## ls --> eza
 
-`exa`是`ls`命令的替代品，可以彩色输出目录内容，更容易辨识:
+[eza](https://github.com/eza-community/eza): A modern replacement for `ls`.
+
+Install:
+
+```sh
+cargo install eza
+```
+
+
+
+Usage:
 
 ```shell
-exa --long --git
+eza --long --git
 ```
 
 * 参数`--git`表示输出文件的 Git 状态。
@@ -43,7 +53,7 @@ exa --long --git
 除了平铺显示，`exa`还支持目录的树状显示。
 
 ```shell
-exa --tree --level=2
+eza --tree --level=2
 ```
 
 ## cd --> zoxide
@@ -321,7 +331,7 @@ $ tokei ./foo, ./bar, ./baz
 
 ​    
 
-## Finding Shell History: Atuin
+## Finding Shell History: atuin
 
 * `history` : 在STDOUT上打印shell命令记录, 可以用 `history | grep find` 进行检索
 * `Ctrl+R` + type a substring you want to match for commands in your history来检索历史命令. This can also be enabled with the UP/DOWN arrows in [zsh](https://github.com/zsh-users/zsh-history-substring-search)

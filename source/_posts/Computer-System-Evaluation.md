@@ -213,33 +213,67 @@ frequency_ghz
 
 ## Amdahl's Law
 *"the overall performance improvement gained by optimizing a single part of a system is limited by the fraction of time that the improved part is actually used."*
-
 $$
-\text{Speedup} =
-\frac {\text { Old Time }} {\text {New Time}}
-=
-\frac{\text { New IPC } \times \text { New Frequency }}{\text { Old IPC } \times \text { Old Frequency }}
+\text { Speedup }_{\text {overall }}=
+
+\frac {\text { Old Time }} {\text {New Time}} =
+
+\frac{1}{(1-P)+\frac{P}{S}}
 $$
-where IPS refers to Instructions Per Cycle, which is 1/CPI.
+where:
+- $P$ is the proportion of the execution time that the improvement affects, and
+- $S$ is the speedup of the improved part (usually equals to the number of the CPU/PGPU cores).
+
+### Example
 
 
 
+Assume that you have a program which has a kernel, or the "main" part of the program, which can be accelerated by a GPU. The kernel makes up 95% of the program's execution time on a CPU system. There are two different GPU systems you could run this code on. System A has 48 GPU cores and provides a speedup of 40x for the kernel compared  to the CPU. System B has 96 GPU cores and provides a speedup of 50x for  the kernel compared to the CPU. What is the overall speedup for the entire program on System B compared  the System A?
+
+Solution:
+
+Given:
+- The kernel makes up $95 \%$ of the program's execution time $(P=0.95)$.
+- System A provides a 40x speedup for the kernel.
+- System B provides a 50x speedup for the kernel.
+
+First, let's calculate the execution time of the program on both systems in terms of the original CPU execution time ( $T_{\mathrm{CPU}}$ ).
+
+System A Speedup
+Speedup $_{\mathrm{A}}=\frac{1}{(1-0.95)+\frac{0.95}{40}}$
+System B Speedup
+Speedup $_B=\frac{1}{(1-0.95)+\frac{0.95}{50}}$
+Let's calculate these:
+
+System A
 $$
-S_{\text {latency }}(s)=\frac{1}{(1-p)+\frac{p}{s}}
+\begin{aligned}
+& \operatorname{Speedup}_A=\frac{1}{0.05+\frac{0.95}{40}} \\
+& \text { Speedup }_A=\frac{1}{0.05+0.02375} \\
+& \text { Speedup }_A=\frac{1}{0.07375} \approx 13.56
+\end{aligned}
 $$
-where
-- $S_{\text {latency }}$ is the theoretical speedup of the execution of the whole task;
-- $s$ is the speedup of the part of the task that benefits from improved system resources;
-- $p$ is the proportion of execution time that could be parallelized.
+
+System B
+$$
+\begin{aligned}
+& \text { Speedup }_B=\frac{1}{0.05+\frac{0.95}{50}} \\
+& \text { Speedup }_B=\frac{1}{0.05+0.019} \\
+& \text { Speedup }_B=\frac{1}{0.069} \approx 14.49
+\end{aligned}
+$$
+
+Now, to find the overall speedup of System B compared to System A, we divide the speedup of System B by the speedup of System A:
+$$
+\begin{aligned}
+& \text { Overall Speedup }=\frac{\text { Speedup }_B}{\text { Speedup }_A} \\
+& \text { Overall Speedup }=\frac{14.49}{13.56} \approx 1.069
+\end{aligned}
+$$
+
+So, the overall speedup for the entire program on System B compared to System A is approximately 1.069.
 
 
 
-For example, I've run a few SPEC workloads on these two systems: The AMD Epyc and Intel i7.
-
-|            | AMD Epyc | Intel i7 |
-| ---------- | -------- | -------- |
-| gcc        | 274.3s   | 180.0s   |
-| mcf        | 301.1s   | 186.3s   |
-| libquantum | 313.1s   | 230.4s   |
 
 [^1]: In pipelined CPU design, because all stages proceed at the same time, the length of a processor cycle is determined by the time required for the slowest pipe stage.

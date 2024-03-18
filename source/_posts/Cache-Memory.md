@@ -94,7 +94,7 @@ In this step, the cache:
 
 ### Line Matching and Word Selection
 
-Now that we have selected some set i in the previous step, the next step is to determine if a copy of the word $w$ is stored in one of the cache lines contained in set $i$. 
+Now that we have selected some set $i$ in the previous step, the next step is to determine if a copy of the word $w$ is stored in one of the cache lines contained in set $i$. 
 
 In a direct-mapped cache, this is easy and fast because <u>there is exactly one line per set.</u> 
 
@@ -120,7 +120,7 @@ A cache with $1 < E < C/B$ is often called an **E-way set associative cache**.
 
 ![Set Selection in Set Associative Caches](/Users/lyk/Library/Application Support/typora-user-images/image-20230220141655020.png)
 
-Set selection is identical to a direct-mapped cache, with the set index bits identi- fying the set. Figure 6.33 summarizes this principle.
+Set selection is identical to a direct-mapped cache, with <u>the set index bits identifying the set</u>. Figure 6.33 summarizes this principle.
 
 ### Line Matching and Word Selection
 
@@ -219,7 +219,7 @@ A *least recently used (LRU)* policy will replace the line that was last accesse
  为保证 Cache 与主存的一致性，往 Cache 写入时同时也要往主存写入 但降低写入速度，容易产生瓶颈
 
 ## 写回
- 在 Cache 中增加一位(脏位)表示是否被修改过，若“脏”，则替换整个块时前将其写回 减少写入操作，但会有不必要的麻烦(如输出时会取得主存中未修改的数据) 策略:输出时候强制修改主存
+在 Cache 中增加一位(脏位)表示是否被修改过，若“脏”，则替换整个块时前将其写回 减少写入操作，但会有不必要的麻烦(如输出时会取得主存中未修改的数据) 策略:输出时候强制修改主存
 
 # Questions
 

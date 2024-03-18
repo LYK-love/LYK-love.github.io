@@ -264,7 +264,7 @@ If you want the SSH server to start automatically when your system boots, use:
 sudo systemctl enable ssh
 ```
 
-## Cargo
+## cargo
 
 [--> Installation of Rust](https://lyk-love.cn/2024/01/09/rust-tools/#install)
 
@@ -336,6 +336,12 @@ sudo apt-get install yadm
    ```sh
    sudo apt install fzf
    ```
+
+## eza
+
+```sh
+cargo install eza
+```
 
 ## atuin
 
