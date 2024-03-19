@@ -73,6 +73,8 @@ Or you can copy your ssh public key `id_rsa.pub` of your local machine to `~/.ss
 
 Then, you need to install following softwares.
 
+
+
 ## zsh
 
 
@@ -395,10 +397,17 @@ Useful unix tools:
 
 * [Tokei](https://github.com/XAMPPRocky/tokei?ref=itsfoss.com):
 
-  ```
+  ```sh
   cargo install tokei
   ```
 
+* `git-lfs` is essential for downloading repos in [Hugginface](https://huggingface.co/).
+
+  ```sh
+  sudo apt-get install git-lfs
+  git-lfs install
+  ```
+  
   
 
 # Set up terminal on a new machine

@@ -54,11 +54,60 @@ For instance, the installation instructions for x86_64 Ubuntu22.04 is:
 
    You can install To install the open kernel module flavor rather than the legacy one using:
 
-   ```
+   ```sh
    sudo apt-get install -y nvidia-kernel-open-545sudo apt-get install -y cuda-drivers-545
    ```
 
-After installation, there's no need to reboot.
+3. [Environment Setup](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#post-installation-actions):
+
+   Add this path to the `PATH` variable:
+
+   ```sh
+   export PATH=/usr/local/cuda-12.4/bin${PATH:+:${PATH}}
+   export LD_LIBRARY_PATH=/usr/local/cuda-12.4/lib64\
+                            ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+   ```
+
+   After that, you can use
+
+   ```sh
+   nvcc -v
+   ```
+
+
+
+### Old cuda
+
+[CUDA Toolkit 12.1 Downloads](https://developer.nvidia.com/cuda-12-1-0-download-archive?target_os=Linux&target_arch=x86_64&Distribution=Ubuntu&target_version=22.04&target_type=deb_network)
+
+
+
+1. Base Installer:
+
+   ```
+   wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.debsudo 
+   dpkg -i cuda-keyring_1.0-1_all.deb
+   sudo apt-get update
+   sudo apt-get -y install cuda-12-1 # select the version you want
+   ```
+
+2. Driver Installer (the legacy kernel module flavor):
+
+   ```sh
+   sudo apt-get install -y cuda-drivers
+   ```
+
+3. [Environment Setup](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/index.html#post-installation-actions):
+
+   Add this path to the `PATH` variable:
+
+   ```sh
+   export PATH=/usr/local/cuda-12.1/bin${PATH:+:${PATH}}
+   export LD_LIBRARY_PATH=/usr/local/cuda-12.1/lib64\
+                            ${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+   ```
+
+   
 
 ## Install via conda
 
