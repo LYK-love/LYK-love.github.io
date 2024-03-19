@@ -21,6 +21,20 @@ Instruction set architectures (ISA) is a contract between **hardware** and **sof
 
 * Instruction format specifies: instruction format, virtual memory, number of registers, size of registers, exception, and etc.
 
+## Architecture, microarchitecture and technology
+
+* Architecture: In Computer Architecture context, the term *architecture* refers to the interface as seen by the programmer. ISA belongs to architecture.
+* Microarchitecture: the hardware implementation of the architecture (specifically, the **ISA**). The study of microarchitecture would include topics like pipelining,  instruction-level parallelism (ILP), out-of-order execution, speculative  execution, branch prediction and caching.
+* Techonology: In Computer Architecture context, the term *technology* refers to transistors and process technology.
+
+
+
+The cache coherence protocol (the implementation of how the caches are kept transparent to the programmer) is part of the <u>microarchitecture</u>. It is primarily implemented in hardware.
+
+
+
+The memory consistency model (the details of how loads and stores are ordered in a program) is part of the <u>architecture</u>.
+
 # Features of ISAs
 
 Nearly all ISAs today are classified as **general-purpose register architectures**, where <u>the operands are either registers or memory locations</u>. The 80x86 has 16 general-purpose registers and 16 that can hold floating-point data, while RISC-V has 32 general-purpose and 32 floating-point registers.

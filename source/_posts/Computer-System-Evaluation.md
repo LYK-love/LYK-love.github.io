@@ -314,13 +314,12 @@ What is the *maximum possible* speedup you can achieve through parallelization?
 
 Solution:
 
-Consider
+Considering
 $$
-\text { Speedup }_{\text {overall }}=
+\text { Speedup }_{\text {overall }}=\frac{1}{(1-P)+\frac{P}{S}} ,
+$$
 
-\frac{1}{(1-P)+\frac{P}{S}} ,
-$$
-if $S \rightarrow + \infty$ ,then $\frac{P}{S} \rightarrow0$, so the maximum speedup is $\frac{1}{(1-P)}$ = 1 / 0.45 = 2.222....
+if $S \rightarrow + \infty$, then $\frac{P}{S} \rightarrow0$, so the maximum speedup is $\frac{1}{(1-P)}$ = 1 / 0.45 = 2.222....
 
 ## Example 3
 

@@ -1,236 +1,15 @@
 ---
-title: OS Virtualization
+title: Memory Virtualization in Operation Systems
 tags: OS Basic
 categories: Computer Science
 mathjax: true
-date: 2022-04-16 22:38:59
 ---
 
+Sources:
 
-Outline:
-
-* CPU虚拟化
-* 内存虚拟化
+1. Remzi H. Arpaci-Dusseau & Andrea C. Arpaci-Dusseau. (2014). *Virtualization. Operating Systems: Three Easy Pieces* (Version 0.8.). Arpaci-Dusseau Books, Inc..
 
 <!--more-->
-
-# CPU Virtualization
-
-## 进程
-
-* **进程是虚拟化的CPU**
-
-* 进程映像包括:
-
-  * 进程控制块( PCB)
-  * 进程程序块
-  * 进程数据块
-  * 内核栈
-    * 在`x86`上，执行`TRAP`时， CPU会将一些寄存器保存到该进程的内核栈上， 从`TRAP`返回将弹出这些值，并恢复`user mode`
-
-* 进程三状态图：
-
-  ![Thread Status](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Thread%20Status.png)
-
-  
-
-* Linux父进程与子进程在终止时没有相互依赖关系。即爹死了儿子也可以活着, 只是其父进程变为`init`进程( init 进程是系统的第一个进程，PID=1)
-
-## 进程API
-
-注意，`fork()`和`exec()`是分离的，这使得程序可以在`fork()`之后，`exec()`之前运行代码，最典型的例子是shell的workflow，参见*Using Shell*
-
-### fork（）
-
-```c
-//5_1.c
-#include<stdio.h>
-#include<stdlib.h>
-#include<unistd.h>
-
-
-int main()
-{
-    printf( "hello world (pid: %d)\n", (int) getpid()  );
-    int rc = fork();
-    if(rc < 0)
-    {
-        fprintf( stderr, "fork failed \n" );
-        exit(1);
-    }
-    else if(rc == 0)
-    {
-        printf("hello, I am child (pid: %d)\n", (int)getpid());
-    }
-    else{
-        printf("hello, I am parent of %d (pid: %d)\n", rc, (int)getpid() );
-    }
-    return 0;
-}
-```
-
-```
-hello world (pid: 5951)
-hello, I am child (pid: 5957)
-hello, I am parent of 5957 (pid: 5951)
-```
-
-* `fork()`创建进程
-
-* 子进程不会从` main()`开始执行，而是从`fork()`处返回，就像它自己调用了`fork()`
-
-* 子进程几乎完全拷贝了父进程，拥有和父进程相同的地址空间，寄存器，PC等，但它从`fork()`获得的返回值不同
-
-* `fork()`返回值：
-
-  * ERRORS： -1
-
-  *  子进程： 0
-
-  * 父进程：  新创建的子进程的PID
-
-    
-
-### wait（）
-
-```c
-//5_2.c
-#include<stdio.h>
-#include<stdlib.h>
-#include<unistd.h>
-#include<sys/wait.h>
-
-int main()
-{
-    printf( "hello world (pid: %d)\n", (int) getpid()  );
-    int rc=fork();
-    if(rc < 0)
-    {
-        fprintf( stderr, "fork failed \n" );
-        exit(1);
-    }
-    else if(rc == 0)
-    {
-        printf("hello, I am child (pid: %d)\n", (int)getpid());
-    }
-    else{
-        int wc = wait(NULL);
-        printf("hello, I am parent of %d (wc: %d) (pid: %d)\n", rc, wc, (int)getpid() );
-    }
-    return 0;
-
-}
-```
-
-```
-hello world (pid: 6747)
-hello, I am child (pid: 6762)
-hello, I am parent of 6762 (wc: 6762) (pid: 6747)
-```
-
-
-
-* `wait()`会在子进程运行结束后才返回
-* 如果父进程先运行，它会马上调用`wait()`
-
-### exec（）
-
-```c
-//5_3.c
-#include<stdio.h>
-#include<stdlib.h>
-#include<unistd.h>
-#include<string.h>
-#include<sys/wait.h>
-
-
-int main()
-{
-    printf( "hello world (pid: %d)\n", (int) getpid()  );
-    int rc = fork();
-    if(rc < 0)
-    {
-        fprintf( stderr, "fork failed \n" );
-        exit(1);
-    }
-    else if(rc == 0)
-    {
-        printf("hello, I am child (pid: %d)\n", (int)getpid());
-        char *myargs[3];
-        myargs[0] = strdup("wc");//program: "wc"(word count)
-        myargs[1] = strdup("5_3.c");//argument: file to count
-        myargs[2] = NULL; // marks end of array
-        execvp( myargs[0], myargs );
-        printf("this shouldn't print put");
-    }
-    else{
-        int wc = wait(NULL);
-        printf("hello, I am parent of %d (wc: %d) (pid: %d)\n", rc, wc, (int)getpid() );
-    }
-    return 0;
-}
-```
-
-
-
-```
-hello world (pid: 7615)
-hello, I am child (pid: 7634)
- 32  98 810 5_3.c
-hello, I am parent of 7634 (wc: 7634) (pid: 7615)
-```
-
-`exec()`:  replaces the current process image with a new process imag. 将当前进程的内容替换为不同的程序（`wc`）
-
-* 对`exec()`的成功调用永远不会返回，因为子进程的内容是新的程序
-* `execvp(const char *file, char *const argv[])`: one of `exec()` family
-  * The initial argument for these functions is the name of a file that is to be executed.
-  * The **char** ***const** **argv[]** argument is an array of pointers to null-terminated strings that represent the argument list available to  the new  program.  The first argument, by convention, should point to the <u>filename associated with the file being executed</u>.  The array of pointers **must** be terminated by a null pointer.( 因此有`arg[2] = NULL` )
-
-## 插叙 Shell
-
-* `fork()`和`exec()`分离, 使得程序可以在`fork()`之后, `exec()`之前运行代码.
-
-## Limited directed execution
-
-OS首先（在启动时）设置`trap table`并开启时钟中断 （都是特权操作），然后仅在受限模式下运行进程。 只在执行特权操作，或者当进程需要切换时，才需要OS干预
-
-### OS重获CPU控制权
-
-如果一个进程在CPU上运行，那么OS无法运行。 因此OS需要重获CPU的控制权
-* 等待系统调用： 进程通过`syscall`主动放弃CPU, 比如`yield`
-* 时钟中断： 时钟设备可以产生中断，产生中断时，当前进程停止，OS中的 interrupt handler运行，此时OS重获CPU控制权
-  * 硬件在发生中断时需要为当前进程保存状态
-
-### context switch
-
-上下文切换（ `context switch`）: OS获得控制权后，需要觉得是否切换进程，如果要切换，那么需要上下文切换
-* OS为当前进程保存状态，并为即将执行的进程恢复状态
-  * "状态": 寄存器，在该进程的内核栈中
-  * 事实上，除了寄存器，cache, TLB和其他硬件的状态也被切换，因此context switch的成本可能非常高昂
-* 本质上是为了确保最后从陷阱返回时，不是返回到之前运行的进程，而是继续执行另一个进程
-
-## 插叙 系统调用
-
-*  我们对系统调用的调用，实际上是对C lib中对应函数的函数调用，这些函数遵循了内核的调用约定（如将参数推到栈，执行`TRAP`，返回控制权等）实现了系统调用。 当然，这些C lib中的函数是汇编写的
-
-
-
-## 插叙 中断
-
-![Interruption](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Interruption.png)
-
-> 在指令执行周期最后增加一个微操作，以响应中断，CPU在完成执行阶段后，如果允许中断，则进入中断阶段
-
-中断处理过程：
-
-1. 保护CPU状态
-2. 分析被中断进程的PSW中断码字段，识别中断源
-3. 分别处理发生的中断事件
-
-## Thread Scheduling
-
-详见*OS Thread Sheduling Algorithm*
 
 #  Memory Virtualization
 
@@ -260,9 +39,9 @@ $$
 * 程序使用的只是virtual address, 因此我们常说的**Address space** 是VAS
 * 一个使用VAS的例子是: 我们编写和编译程序时<u>假定内存从0开始</u>
 
-## Address Space
+# Address Space
 
-### Address Space of Linux process
+## Address Space of Linux process
 
 * `ld`, `ls`等命令实际上会调用`execve( /usr/bin/COMMAND )`
 
@@ -293,7 +72,7 @@ $$
   * `pmap`实际上打印了`/proc/PID/maps`的一部分信息
     * 通过`strace pmap XX`可以看到`pmap`调用了`openat( XX, \proc\PID\maps )`
 
-## Segmaentation
+# Segmantation
 
 在MMU中引入不止一个基址/界限寄存器对，而是给每个逻辑段一对，这可以将每个段独立地载入物理内存。 由于只有已用的内存才在物理内存中分配空间，因此可以容纳巨大的地址空间
 
@@ -330,10 +109,10 @@ int Bound[]; # 段界限寄存器
 int Base[]; # 段基址寄存器
 
 
-//得到段号
+//Get the segment number
 SegmentNum = ( VirtualAddress & SEG_MASK ) >> SEG_SHIFT;
 
-//得到段内偏移
+//Get the offset in the segment
 Offset = VirtualAddress & OFFSET_MASK;
 
 if( Offset >=  Bound[ SegmentNum ]  )
@@ -342,25 +121,27 @@ if( Offset >=  Bound[ SegmentNum ]  )
 }
 else
 {
-  	//得到物理地址
+  	//Get the physical address
+  	//In reality, the segmentation is usually used in conjunction with pageing. So the address will be the virtual address.
     PhysicalAddr = Base[ Segment ] + Offset;
-  	//访问该地址
+  	//Visit this address
     Register = AccessMemory( PhysicalAddr );
 }
 ```
 
+In reality, the segmentation is usually used in conjunction with pageing. So the address got from segmentation is usually the **virtual address**, instead of the physical address. The virtual address is then translated by paging to get the physical address.
 
-
-### 共享
+## Sharing
 
 可以增加几位保护位，来表示段的权限，比如可以将代码段标记为只读， 同样的代码就可以被多个进程共享
 
-## Free Space Management
+# Free Space Management
 
 由于分段会把内存分为不同大小的单元（即不规则的**内存块**），造成外部碎片，因此需要空闲空间管理算法对内存进行管理
 
 * 这里我们只讨论解决外部碎片（即分段）的空闲空间管理算法，假定算法管理的是一块块连续的字节区域（即内存块）
-* 这里只考虑堆中的内存分配，即`malloc`，`free`操作
+
+  这里只考虑堆中的内存分配，即`malloc`，`free`操作
 
 ### 空闲列表
 
