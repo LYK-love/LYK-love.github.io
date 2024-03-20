@@ -14,9 +14,29 @@ Outline:
 
 程序访问的局部性原理：
 
-* 时间局部性：在相对较短的时间周期内，重复访问特定的信息
+* spatial locality：在相对较短的时间周期内，重复访问特定的信息
 
-* 空间局部性：在相对较短的时间周期内，访问相邻位置的数据
+* temporal locality：在相对较短的时间周期内，访问相邻位置的数据
+
+
+
+Given the following address streams, name the kind of locality they exploit:
+
+```
+0x31c4  | 0x31cc  | 0x31d4  | 0x31dc  | 0x31e4
+```
+
+Answer: spatial locality.
+
+```
+0x31c4  | 0x7808  | 0x31c4  | 0x7808  | 0x31c4
+```
+
+Answer: temporal locality.
+
+
+
+Cache works like main memory, so it only sees physical addresses.
 
 # Elements of Cache Design
 
@@ -31,6 +51,10 @@ Outline:
 
 * 组号不会存储在Cache行中, 因为组号是系统默认分配的.
 * 因此Cahce行大小 = 各种标识位 + Tag+ block
+
+The capacity of the data array in a cache can be calculated using the total number of blocks and the size of each block. 
+
+
 
 ## Generic Cache Memory Organization
 
@@ -177,6 +201,74 @@ On power-up, the hardware sets all the valid bits in all the caches to "invalid"
 
 A data cache typically requires two flag bits per cache row entry: a valid bit and also a [dirty bit](http://en.wikipedia.org/wiki/Dirty_bit). The dirty bit indicates whether that block has been unchanged since it was read from main memory -- "clean" -- or whether the processor has written data to that block (and the new value has not yet made it all the way to main memory) -- "dirty".（一个数据缓存行一般需要两个标志位：真实位和脏位。脏位表明缓存块中的数据是否遭到修改并且没有被写入内存）。
 
+# Performance
+
+## AMAT
+
+AMAT (Average Memory Access Time) is a metric used to calculate the average time it takes to access memory, taking into account the hit and miss rates of cache memory. It's given by the formula:
+$$
+\text { AMAT }=\text { Hit Time }+(\text { Miss Rate } \times \text { Miss Penalty })
+$$
+- Hit Time: The time it takes to access the first level of cache (L1), where data is most quickly accessible.
+- Miss Rate: The fraction of memory accesses that are not found in the cache.
+- Miss Penalty: The additional time it takes to retrieve the data from a lower level of cache or main memory after a miss occurs in the initial cache level.
+
+
+
+The formula for AMAT in a two-level cache system can be expressed as:
+$$
+\begin{aligned}
+& \text { AMAT }=\text {L1 Hit Time }+(\text { L1 Miss Rate } \times \text { L1 Miss Penalty }) \\
+& \text { L1 Miss Penalty } = \text {L2 Hit Time }+(\text { L2 Miss Rate } \times \text { L2 Miss Penalty }) \\
+\end{aligned}
+$$
+
+
+Example:
+
+Use the following system characteristics to answer the questions below.
+
+L1 cache latency: 2 cycles
+
+L1 cache hit ratio: 95.0%
+
+Memory latency: 40 cycles
+
+Instruction mix: 40.0% loads and stores
+
+To improve performance you add another level of cache. You have two options:
+
+|           | L2 Cache A | L2 Cache B |
+| --------- | ---------- | ---------- |
+| Hit ratio | 80.0%      | 90.0%      |
+| Latency   | 10 cycles  | 15 cycles  |
+
+What is the *speedup* of **System A over System B**? (If system A is better, then this should be above 1, if system B is better then this should be below 1).
+
+Assume 0 time for instruction fetch (for instance, there is a very good instruction prefetcher) and assume that all instructions other than loads and stores complete with a CPI of 1. Also assume that the two systems are running the same program.
+
+Hint: you need to calculate the CPI for each system.
+
+Answer: 1.0113636363636367
+
+Solution:
+
+```
+>>> AMAT1 = (2 + 0.05 * (10 + 0.2 * 40)) * 0.4 + 0.6
+>>> AMAT2 = (2 + 0.05 * (15 + 0.1 * 40)) * 0.4 + 0.6
+>>> Speedup = AMAT2 / AMAT1
+>>> Speedup
+1.0113636363636367
+>>> AMAT1
+1.7599999999999998
+>>> AMAT2
+1.7800000000000002
+```
+
+
+
+
+
 # Why index with the middle bits?
 
 Cache将物理地址中中间(而不是高位)的几位作为Cache Line的组号, 这是为了提高Cache效率, 使得Cache尽快加载尽可能多的Cache Line
@@ -195,30 +287,35 @@ Cache将物理地址中中间(而不是高位)的几位作为Cache Line的组号
 
 You may be wondering why caches use the middle bits for the set index instead of the high-order bits. There is a good reason why the middle bits are better. Figure 6.31 shows why. If the high-order bits are used as an index, then some contiguous memory blocks will map to the same cache set. For example, in the figure, the first four blocks map to the first cache set, the second four blocks map to the second set, and so on. If a program has good spatial locality and scans the elements of an array sequentially, then the cache can only hold a block-size chunk of the array at any point in time. This is an inefficient use of the cache. Contrast this with middle-bit indexing, where adjacent blocks always map to different cache sets. In this case, the cache can hold an entire C-size chunk of the array, where C is the cache size
 
-# Line Replacement 
+# Line Replacement policies
 
-## FIFO
+Some options:
 
+1. Random
 
+2. FIFO (first-in first-out)
 
-## LFU
+3. LRU (least recently used): replace the line that has been referenced the fewest times over some past time window. 
 
-a *least frequently used (LFU)* policy will replace the line that has been referenced the fewest times over some past time window. 
+   “访问”指的是访问对应内存. 仅仅将block从主存中取出来, 而没有“访问”它. 就不算“访问”.
 
-## LRU
+4. NMRU (not most recently used) = LRU for 2-way set-associative caches.
 
-
-
-A *least recently used (LRU)* policy will replace the line that was last accessed the furthest in the past.
-
-“访问”指的是访问对应内存. 仅仅将block从主存中取出来, 而没有“访问”它. 就不算“访问”.
+   NMRU simply identifies one or more cache lines that are not the most recently used.
 
 # 写操作策略
 
-## 直写
+## Write through
  为保证 Cache 与主存的一致性，往 Cache 写入时同时也要往主存写入 但降低写入速度，容易产生瓶颈
 
-## 写回
+
+
+The benefits of a write-through cache policy include:
+
+- **Less Metadata in the Cache**: Indeed, a write-through policy requires less metadata to be maintained within the cache. Specifically, there's no need to keep track of whether a cache line has been modified or not (i.e., no dirty bit required) because all writes are immediately reflected in the lower-level memory. This simplifies the design and management of the cache.
+- **Easier to Handle Faults in the Cache**: Write-through policies simplify fault recovery and error handling. Since all writes are immediately propagated to the main memory, the system can recover more easily from faults, such as power failures or system crashes, with minimal data loss. The immediate consistency between the cache and the memory ensures that the most recent writes are not lost, simplifying recovery processes.
+
+## Write back
 在 Cache 中增加一位(脏位)表示是否被修改过，若“脏”，则替换整个块时前将其写回 减少写入操作，但会有不必要的麻烦(如输出时会取得主存中未修改的数据) 策略:输出时候强制修改主存
 
 # Questions
@@ -276,3 +373,47 @@ Cache-主存层次，Cache 可以采用直写策略，而在主存-外存(磁盘
 Cache miss概率 = 指令丢失概率 + 数据丢失概率
 
 数据丢失概率 = ( 30% + 10 * 2 ) * 5%
+
+## Question 1
+
+se the following characteristics to answer the questions below.
+
+Block size: 64 B
+
+Total blocks: 65536
+
+Associativity: 16-way Set associative
+
+Address size: 35 bits
+
+Meta data: 3 bits per block
+
+------
+
+Give the following answers in bytes unless otherwise noted.
+
+What is the capacity of the *data* array?  4194304
+
+How many tags are required? 4194304
+
+What is the capacity of the SRAM (including the tags and extra meta data)? 4358144.0
+
+How many *bits* are read on each access to the cache? Assume all ways are accessed in parallel. 8512
+
+
+
+Solution:
+
+1. The capacity of the *data* array = Total blocks \* Block size = 65536 \* 64 B = 4194304 B.
+
+2. Since there are 65536 blocks, each block needs a tag, there are 65536 tags in total.
+
+3. Since Block size = 64 B, the offset takes 6 bits. Meanwhile, there are 65536 blocks and each set has 16 blocks, so there are 65546 / 16 = 4096 sets. Thus, the set number takes 12 bits. Because the address size is 35 bits, the tag size is 35 - 12 - 6 = 17 bits. Each block contains:
+
+   1. 17 bits tag.
+   2. 3 bits meta data.
+   3. 64 B data.
+
+   There are 65536 blocks. So the SRAM size is 65536 \* (64 + 20/8) = 4358144.0
+
+4. Sicne each set has 16 ways (blocks), and accessing each way will read 64 B + 18 b + 3 b = 532 b data, all ways are accessed in parallel, we obtain that total bits read per access is 532 \* 16 = 8512.

@@ -34,6 +34,10 @@ Outline:
 
 
 
+![image-20240319214342263](/Users/lyk/Library/Application Support/typora-user-images/image-20240319214342263.png)
+
+Figure 2.1 The levels in a typical memory hierarchy in a personal mobile device (PMD), such as a cell phone or tablet (A), in a laptop or desktop computer (B), and in a server (C). As we move farther away from the processor, the memory in the level below becomes slower and larger. Note that the time units change by a factor of 109 from pico- seconds to milliseconds in the case of magnetic disks and that the size units change by a factor of 1010 from thou- sands of bytes to tens of terabytes. If we were to add warehouse-sized computers, as opposed to just servers, the capacity scale would increase by three to six orders of magnitude. Solid-state drives (SSDs) composed of Flash are used exclusively in PMDs, and heavily in both laptops and desktops. In many desktops, the primary storage system is SSD, and expansion disks are primarily hard disk drives (HDDs). Likewise, many servers mix SSDs and HDDs.
+
 # The Memory Hierarchy
 
 计算机的存储架构是分层的：
@@ -45,7 +49,13 @@ Outline:
 * main memory: 主存, the work house of memory system, 也被称为RAM.（当然更精确的说法是DRAM）
 * disk: 硬盘，是一种外部存储设备，最慢
 
-越上层速度越快，价格越贵，其容量也就越小
+越上层速度越快，价格越贵，其容量也就越小.
+
+**Why we need memory hierarchy?**
+
+Different memory technologies have different performance characteristics (and other characteristics) 
+
+Memory hierarchy takes advantage of **locality** and **trade-offs in the cost-performance** of memory technologies.
 
 
 
@@ -98,7 +108,7 @@ Disk：称为硬盘，是非易失的外部存储设备。因为早期的硬盘�
 
 * **固态硬盘**（ SSD， Solid State Disk )：
 
-  * SSD**没有物理上的磁头和盘片，也没有扇区和磁道等概念**. SSD的存储原理和机械硬盘不同，它是闪存盘的matrix，用某种控制芯片将多个**NAND FLASH**颗粒整合,
+  * SSD**没有物理上的磁头和盘片，也没有扇区和磁道等概念**. SSD的存储原理和机械硬盘不同，它是**闪存**盘的matrix，用某种控制芯片将多个**NAND FLASH**颗粒整合,
     * Flash属于广义上的ROM( 见下文*ROM* ). 
   * 严格地讲，SSD不算Disk， 不过它在计算机架构中确实承担着Disk的职能( 外部存储设备 )，所以把SSD放入Disk一类
 

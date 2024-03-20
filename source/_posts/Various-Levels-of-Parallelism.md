@@ -1,5 +1,5 @@
 ---
-title: Instruction-Level Parallelism
+title: Various-Levels-of-Parallelism
 tags: Computer Architecture
 categories: Computer Science
 mathjax: true
@@ -15,7 +15,32 @@ Sources:
 
 <!--more-->
 
+# Kinds of parallelism
+
+- Instruction-level parallelism  (ILP): Finding independent instructions on a scalar core. The ability of a processor to execute multiple  instructions simultaneously
+- Data-level parallelism 
+  - Each cell or data location is (mostly) independent 
+  - Matrix multiply 
+- Task-level parallelism: Multiprocess application 
+  - Each task is (mostly) independent 
+  - Example: web server 
+
+# Flynn's taxonomy
+
+Flynn's taxonomy is a classification to categorize computers based on  the number of instruction streams and data streams they can process  simultaneously. Flynn's taxonomy distinguishes four types of computer  architectures:
+
+1. **Single Instruction, Single Data (SISD)**
+2. **Single Instruction, Multiple Data (SIMD)**
+3. **Multiple Instruction, Single Data (MISD)**:
+4. **Multiple Instruction, Multiple Data (MIMD)**
+
+
+
 # Instruction-level parallelism 
+
+ILP refers to the ability of a processor to execute multiple  instructions simultaneously. It focuses on parallel execution within a  single processor core by overlapping the execution of instructions to  improve performance without explicitly programming for parallelism.
+
+
 
 The value of the CPI (cycles per instruction) for a pipelined processor is the sum of the base CPI and all contributions from stalls:
 

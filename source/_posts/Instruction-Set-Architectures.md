@@ -29,7 +29,7 @@ Instruction set architectures (ISA) is a contract between **hardware** and **sof
 
 
 
-The cache coherence protocol (the implementation of how the caches are kept transparent to the programmer) is part of the <u>microarchitecture</u>. It is primarily implemented in hardware.
+The cache coherence protocol (the implementation of how the caches are kept transparent to the programmer), such as MESA, is part of the <u>microarchitecture</u>. It is primarily implemented in hardware.
 
 
 

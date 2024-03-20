@@ -3,7 +3,9 @@ title: Memory Virtualization in Operation Systems
 tags: OS Basic
 categories: Computer Science
 mathjax: true
+date: 2024-03-19 22:38:13
 ---
+
 
 Sources:
 
@@ -15,7 +17,7 @@ Sources:
 
 计算机的physical memory可以被虚拟化virtual memory. 由硬件**MMU**( Memory Management Unit ) 和 OS 共同实现.
 
-虚拟化后,   <u>physical address space(PAS)</u>被映射为<u>virtual address space (VAS)</u>. **程序使用的只是virtual address**, 在底层由MMU和OS将其转换为physical address, 即需要**[address translation](#Address Translation)**:
+虚拟化后, <u>physical address space(PAS)</u>被映射为<u>virtual address space (VAS)</u>. **程序使用的只是virtual address**, 在底层由MMU和OS将其转换为physical address, 即需要**[address translation](#Address Translation)**:
 
 
 $$
@@ -137,13 +139,20 @@ In reality, the segmentation is usually used in conjunction with pageing. So the
 
 # Free Space Management
 
-由于分段会把内存分为不同大小的单元（即不规则的**内存块**），造成外部碎片，因此需要空闲空间管理算法对内存进行管理
+Since segmentation will chop the memory into variable-sized units, it results in the **external fragmentation** problem.
+
+![image-20240319170524861](/Users/lyk/Library/Application Support/typora-user-images/image-20240319170524861.png)
+
+The figure shows an example of this problem. In this case, the total free space available is 20 bytes; unfortunately, it is fragmented into two chunks of size 10 each. As a result, a request for 15 bytes will fail even though there are 20 bytes free.
+
+To solve this, we need some free-space management algorithm to manage the memory.
+
+Assumptions
 
 * 这里我们只讨论解决外部碎片（即分段）的空闲空间管理算法，假定算法管理的是一块块连续的字节区域（即内存块）
+* 这里只考虑堆中的内存分配，即`malloc`，`free`操作
 
-  这里只考虑堆中的内存分配，即`malloc`，`free`操作
-
-### 空闲列表
+## Free list
 
 ```c
 typedef struct node_t
@@ -157,9 +166,21 @@ typedef struct node_t
 
 空闲列表就是一个链表，每个节点都记录了一块没有被分配的空间，假设有下面的 30 字节的堆:
 
+A free list is a linked list where each element describes an unallocated free space. Thus, assume the following 30-byte heap:
+
+![image-20240319170945830](/Users/lyk/Library/Application Support/typora-user-images/image-20240319170945830.png)
+
 ![free list heap](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%20heap.png)
 
+The free list for this heap would have two elements on it. One entry de- scribes the first 10-byte free segment (bytes 0-9), and one entry describes the other free segment (bytes 20-29):
+
+![image-20240319171033802](/Users/lyk/Library/Application Support/typora-user-images/image-20240319171033802.png)
+
+
+
 这个堆对应的空闲列表会有两个元素，一个描述第一个 10 字节的空闲区域(字节 0~9)， 一个描述另一个空闲区域(字节 20~29):
+
+
 
 ![free list 1](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/free%20list%201.png)
 
@@ -250,7 +271,7 @@ head -> next = NULL;
 * 这个堆的起始地址是16KB
 * 假设要`free(16500)`（ 即16384( 16KB ) + 前一块的108 ），也就是图上的`sptr`指针, 则令head指向sptr前的头块，得到sptr（开头的）内存块的信息，然后删除头块和sptr内存块
 
-## Paging
+# Paging
 
 分页将进程的地址空间分割成固定大小的单元，称为page, 并将物理内存也分割成相同的固定大小的单元，称为frame, 每个frame装一个page, 将page和frame编号
 
@@ -327,50 +348,6 @@ else
 	PhysAddr = (PTE.PFN << PFN_SHIFT) | offset
 	Register = AccessMemory(PhysAddr)
 ```
-
-
-
-
-
-
-
-### 段页式
-
-段页式就是将分段和分页结合，给进程的每个逻辑段分配一个页表。 此时段基址寄存器指向的就不是段的物理基址，而是段对应的页表的物理基址
-
-
-
-示例， 假设 32 位虚拟地址空间包含 4KB 页面，并且地址空间分为 4 个段。在这个例子中，我们只使用 3 个段:代码，堆，栈
-
-用地址空间的前两位表示段号。假设 00 是未使用的段，01 是代 码段，10 是堆段，11 是栈段。因此，虚拟地址如下所示:
-
-![segment plus page](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/segment%20plus%20page.png)
-
-当进程正在运行时，每个段的基址寄存器都包含该段的线性页表的物理地址。因此，系统中的每个进程现在都有 3 个与其关联的页表。在上下文切换时，必须更改这些寄存器，以反映新运行进程的页表的位置。
-
-在 TLB 未命中时(假设硬件管理的 TLB，即硬件负责处理 TLB 未命中)，硬件使用分段位(SN)来确定段号（也确定了要用哪个基址和界限寄存器对）。然后硬件将段基址寄存器中的物理地址（就是页表的物理地址）与 VPN 结合起来， 形成页表项(PTE)的地址:
-
-```c
-SN = (VirtualAddress & SEG_MASK) >> SN_SHIFT 
-VPN = (VirtualAddress & VPN_MASK) >> VPN_SHIFT 
-AddressOfPTE = Base[SN] + (VPN * sizeof(PTE))
-```
-
-### 多级页表
-
-多级页表就是把页表本身也分页，每个页就是页表的sublist.对页表页，用页目录( page directory )来管理，页目录的每一项就是页目录项（.page directory entry， PDE ）, 它存储了**虚拟页号 - 页帧号的**映射，以及对应页表页的有效位。 我们只讨论两级页表，更高级的页表可以以此类推
-
-* 注意，这里“虚拟页号 - 页帧号映射“中的页帧号，指的是**页表页的所在的页帧号**。因为页表分页了，每一页自然就是物理内存中的物理帧，PDE就是将虚拟页号转换成页表页的物理帧号，根据虚拟页号来读取页表页。 因此，实际上**PDE是“VPN - 页表页”的映射**
-* “有效位”是面向页表页的，而一个页表页“有效”，指的是该页表页（就是PTE的集合）中至少一个PTE有效。 反之，一个无效的页表页就是所有PTE都无效，该页表页会被分配PDE，但不会再
-* 好处是，假设一个页表有100项，可以每10项一页，分10页， 其中有七页都无效（即70个PTE都为空），按照传统的页表，我依然要分配100项的空间，但是按照多级页表，只需要为三页（30项）分配空间
-
-//TODO
-
-### 反向页表
-
-传统页表是每个进程一个，而反向页表是整个系统一个。每个PTE带有所属进程的标识符。 要搜索反向页表，需要借助散列表等数据结构
-
-\# TODO
 
 ## Address Translation
 
@@ -450,13 +427,15 @@ The main idea is that **the address translation occurs <u>before</u> the cache l
 
 ![Integrating VM with a physically addressed cache.](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Integrating%20VM%20with%20a%20physically%20addressed%20cache.png)
 
-### TLB
+# Paging: Faster Translations (TLBs)
 
-TLB( Translation Lookaside Buffer )就是上面思想的一个实现, 它是种特殊的cache, OS把一部分常用的**PTE**存入TLB. 通过查TLB, 得到
+Using paging as the core mechanism to support virtual memory can lead to <u>high performance overheads</u>. To speed up address translation, we add a **translation-lookaside buffer**, or **TLB** to our system.
 
+A TLB is part of the chip’s **memory-management unit** (**MMU**), and is simply a hardware **cache** of popular virtual-to-physical address translations; thus, a better name would be an **address-translation cache**.
 
+## TLB Basic Algorithm
 
-#### TLB Organization
+## TLB Organization
 
 TLB一般是set associative cache(详见[Cache Memory](https://lyk-love.cn/2022/12/01/Cache-Memory/)). 在TLB视角下, virtual address被划分如下: 
 
@@ -467,7 +446,7 @@ TLB一般是set associative cache(详见[Cache Memory](https://lyk-love.cn/2022/
 * TLB是set associative cache, TLBE(TLB Entry)作为cache line, 里面也不会存储组号. 由于TLBE一般也不会存储标志位, 因此TLBE大小 = Tag大小 + PTE大小
 * TLB 即为快表，快表只是慢表(Page)的小小副本，因此 TLB 命中，必然 Page 也命中，而当 Page 命中，TLB 则未必命中. 
 
-#### Address Translation Using TLB
+## Address Translation Using TLB
 
 使用TLB后, Address Translation过程如下:
 
@@ -510,21 +489,21 @@ else
 		TLB_Insert(VPN, PTE.PFN, PTE.ProtectBits) RetryInstruction()
 ```
 
-##### TLB Hit
+### TLB Hit
 
 ![TLB hit](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20hit.png)
 
-##### TLB Miss
+### TLB Miss
 
 ![TLB miss](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/TLB%20miss.png)
 
-#### Memory Access Using TLB
+## Memory Access Using TLB
 
 采用TLB后, 完整的内存访问过程如下:
 
 ![Memory Access using TLB](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/Memory%20Virtualization/Memory%20Access%20using%20TLB.png)
 
-#### TLB Refresh
+## TLB Refresh
 
 * TLB存放了PTE集合，PTE只对页表有效，页表只对所属的进程有效，因此**TLB只对所属进程有效**. **context switch时，要刷新TLB**
   * 刷新TLB会导致每次上下文切换后，都会有大量TLB miss， 为此，TLB实际上会<u>存储多个进程（即多个页表）的PTE，并增加一个地址空间标识符字段（相当于PID），不同进程的PTE就用地址空间标识符来区分</u>
@@ -533,11 +512,60 @@ else
 
 
 
-## 虚拟内存
+## TLB contents
+
+## TLB Issue: Context Switches
+
+# Paging: Smaller Tables
+
+## Hybrid Approach: Paging and Segments
+
+段页式就是将分段和分页结合，给进程的每个逻辑段分配一个页表。 此时段基址寄存器指向的就不是段的物理基址，而是段对应的页表的物理基址
+
+
+
+示例， 假设 32 位虚拟地址空间包含 4KB 页面，并且地址空间分为 4 个段。在这个例子中，我们只使用 3 个段:代码，堆，栈
+
+用地址空间的前两位表示段号。假设 00 是未使用的段，01 是代 码段，10 是堆段，11 是栈段。因此，虚拟地址如下所示:
+
+![segment plus page](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/segment%20plus%20page.png)
+
+当进程正在运行时，每个段的基址寄存器都包含该段的线性页表的物理地址。因此，系统中的每个进程现在都有 3 个与其关联的页表。在上下文切换时，必须更改这些寄存器，以反映新运行进程的页表的位置。
+
+在 TLB 未命中时(假设硬件管理的 TLB，即硬件负责处理 TLB 未命中)，硬件使用分段位(SN)来确定段号（也确定了要用哪个基址和界限寄存器对）。然后硬件将段基址寄存器中的物理地址（就是页表的物理地址）与 VPN 结合起来， 形成页表项(PTE)的地址:
+
+```c
+SN = (VirtualAddress & SEG_MASK) >> SN_SHIFT 
+VPN = (VirtualAddress & VPN_MASK) >> VPN_SHIFT 
+AddressOfPTE = Base[SN] + (VPN * sizeof(PTE))
+```
+
+## Multi-level Page Tables
+
+多级页表就是把页表本身也分页，每个页就是页表的sublist.对页表页，用页目录( page directory )来管理，页目录的每一项就是页目录项（.page directory entry， PDE ）, 它存储了**虚拟页号 - 页帧号的**映射，以及对应页表页的有效位。 我们只讨论两级页表，更高级的页表可以以此类推
+
+* 注意，这里“虚拟页号 - 页帧号映射“中的页帧号，指的是**页表页的所在的页帧号**。因为页表分页了，每一页自然就是物理内存中的物理帧，PDE就是将虚拟页号转换成页表页的物理帧号，根据虚拟页号来读取页表页。 因此，实际上**PDE是“VPN - 页表页”的映射**
+* “有效位”是面向页表页的，而一个页表页“有效”，指的是该页表页（就是PTE的集合）中至少一个PTE有效。 反之，一个无效的页表页就是所有PTE都无效，该页表页会被分配PDE，但不会再
+* 好处是，假设一个页表有100项，可以每10项一页，分10页， 其中有七页都无效（即70个PTE都为空），按照传统的页表，我依然要分配100项的空间，但是按照多级页表，只需要为三页（30项）分配空间
+* And thus you can see one way to visualize what a multi-level table is doing: it just makes parts of the linear page table disappear (freeing those frames for other uses), and tracks which pages of the page table are allocated with the page directory.
+
+//TODO
+
+The page directory, in a simple two-level table, contains one entry per page of the page table. It consists of a number of **page directory entries** (**PDE**). A PDE (minimally) has a **valid bit** and a **page frame number** (PFN), similar to a PTE.
+
+## Inverted Page Tables
+
+传统页表是每个进程一个，而反向页表是整个系统一个。每个PTE带有所属进程的标识符。 要搜索反向页表，需要借助散列表等数据结构
+
+\# TODO
+
+## Swapping the Page Tables to Disk
+
+# Virtual memory
 
 通过设置交换空间，可以将内存容量（在逻辑上）扩大，用户看到的不是实际内存大小，而是虚拟内存大小
 
-### 交换空间
+## 交换空间
 
 可以在磁盘上分配一块空间用于用于物理页的移入和移出，这称为swap space，当然我们会假设OS以页为单位对swap space读取/写入
 
@@ -545,7 +573,7 @@ else
 
 ![swap space](https://seec2-lyk.oss-cn-shanghai.aliyuncs.com/Hexo/OS/OS%20Basic/OS%20Virtualization/swap%20space.png)
 
-### page fault
+## page fault
 
 页错误实际上不算错误，页错误意思是找到的页不在物理内存中，需要从磁盘中换出来，但这个访问本身对用户来说是合法的。 Anyway，页错误的处理流程是：
 
@@ -562,7 +590,7 @@ RetryInstruction()
 // retry instruction
 ```
 
-### 内核虚拟内存空间
+## 内核虚拟内存空间
 
 **内核虚拟空间是每个用户地址空间的一部分**
 
@@ -572,7 +600,7 @@ RetryInstruction()
 
 * 放在内核虚拟空间的页表不会被切换，这也意味着其寄存器（基址/界限寄存器）不会被刷新
 
-## Questions
+# Questions
 
 > Q: 假设一个分页虚拟存储系统的虚拟地址为 40 位，物理地址为 36 位，页大小为 16KB，按字节编址。 若页表中的有效位、存储保护位、修改位、使用位共占 4 位，磁盘地址不在页表中。则该存储系统 中每个程序的页表大小为多少(单位:MB)?
 >
@@ -600,8 +628,134 @@ COA2015
 
 ![image-20230226013719425](/Users/lyk/Library/Application Support/typora-user-images/image-20230226013719425.png)
 
+# Question 1
+
+Use the following information to answer the questions below.
+
+- The base page size is 4KiB.
+- Each PTE is 32 bits.
+- There are 4 levels in the page table.
+- Every level (chunk) of the page table is the same size as the base page size (like in rv32, rv64, and x86).
+
+**Bits per index**
+
+The number of bits to index each level of the page table: 10.
+
+Solution:
+
+Since the page size is 4KiB, each PTE is 4B (32 bits), there are 4KiB / 4B = 2^10 PTEs in total. So in each level we have 2^10 PTEs to index. As a result, the number of bits to index each level of the page table = 10.
 
 
-## page scheduling
 
-详见*OS Page Sheduling Algorithm*
+**Number of levels**
+
+What is the size of the virtual address space. Give your answer in tebibytes (TiB): 4096.
+
+Solution: 
+
+Since the page size is 4KiB, the offset takes 12 bits in virtual address. Since there are 4 levels and each level takes 10 bits to index. It takes 4 \* 10 = 40 bits to index PTEs. As a result, the total length of virrual address is 12 + 40 = 54, referring to 2^12 = 4096 TiB.
+
+# Question 2
+
+The following table shows a map of a subset of memory. Since I can't show you all 4GiB of memory, I have shown a few addresses and the 4 bytes stored starting at that address.
+
+Some information about this system:
+
+- The page size is 64KiB
+- The physical address size is 32 bits
+- The virtual address size is 26 bits
+- There is a two level page table (each level is the same width)
+- All PTEs are 32 bits.
+- The internal PTEs only contains the address for the next level
+- The leaf PTEs only contain the PPN, not the full address
+
+| Physical address | 4 bytes of data |
+| ---------------- | --------------- |
+| `0xf10de304`     | `0x0cfa18b0`    |
+| `0xd6051c2c`     | `0xc0bf6c00`    |
+| `0xd6051c24`     | `0x8dc35c00`    |
+| `0xd6051c10`     | `0x93f04c00`    |
+| `0xd6051c00`     | `0x74820c00`    |
+| `0xc0bfcf8c`     | `0xba03164c`    |
+| `0xc0bf6c6c`     | `0x000034da`    |
+| `0xb10a846c`     | `0x00003736`    |
+| `0xb10a10a4`     | `0x62f4a7f8`    |
+| `0x93f04c5c`     | `0x000015c8`    |
+| `0x93f030ac`     | `0xf726b0e8`    |
+| `0x8dc35c00`     | `0x00000784`    |
+| `0x8dc2ebc8`     | `0x151764a4`    |
+| `0x8948e304`     | `0x2a0cb1f0`    |
+| `0x74820c34`     | `0x00003375`    |
+| `0x74818ddc`     | `0x137404f8`    |
+| `0x3736e304`     | `0xf2137438`    |
+| `0x34dae304`     | `0x3e751b14`    |
+| `0x3375e304`     | `0x3f927b80`    |
+| `0x2efce304`     | `0xa2913c34`    |
+| `0x15c8e304`     | `0x974b8f44`    |
+| `0x0b5de304`     | `0x299e04d0`    |
+| `0x0784e304`     | `0xbdab3020`    |
+
+The base of the page table (e.g., `satp` or `CR3` register) points to `0xd6051c00`
+
+Given this information, what data is returned when executing the following load?
+
+```
+ld x4, 0(x1)
+```
+
+Assume the *effective address* is `0x0120e304`
+
+Give your answer in hex (e.g,. 0xabcd): `0xbdab3020`.
+
+
+
+Solution:
+
+ First, the *effective address* in binary is:
+
+```
+0000 0001 0010 0000 1110 0011 0000 0100
+```
+
+This is a 32-bit physical address, we use the least 26 bits as the virtual address.
+
+The truncted 26-bit virtual address is:
+
+```
+01 0010 0000 1110 0011 0000 0100
+```
+
+Since page size is 64KiB, the offset in the virtual address takes 16 bits. So the VPN takes 26-10 = 16 bits.
+
+Since there are 2 levels. By tradition we split the 10 bits equally, i.e., 5 bits for PDN, 5 bits for VPN.
+
+So, the PDN is `0x01 001` = 9, the VPN is `0x0 0000` = 0, the offset is `1110 0011 0000 0100` = `0xe304`.
+
+Since all PTEs are 32 bits (4 bytes), the physical address of 9th PD is 4 \* 9 + page table base address =
+
+```
+ 0x24 + 0xd6051c00 =  0xd6051c24
+```
+
+We look up the table, the data at `0xd6051c24` is `0x8dc35c00`.
+
+Since the VPN is 0, the physical address of 9th PTE is 4 \* 0 + inner page table base address = 
+
+```
+0x0 + 0x8dc35c00 = 0x8dc35c00
+```
+
+We look up the table, the data at `0x8dc35c00` is `0x00000784`.
+
+We know that this data is the PFN. Since physical address has 32 bits and the offset has 16 bits, the PFN has 16 bits. Thus, the last 16 bits of `0x00000784` is our PFN. So PDN=`0x0784`.
+
+Combine PDN (`0x0784`) and offset (`0xe304`), we have the final physical address:
+
+```
+0x0784 +(append) 0xe304 = 0x0784e304
+```
+
+We look up the table, the data at `0x0784e304` is `0xbdab3020`.
+
+
+
