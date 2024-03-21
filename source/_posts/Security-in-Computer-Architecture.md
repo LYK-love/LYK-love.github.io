@@ -129,3 +129,9 @@ A side-channel attack is a security exploit that <u>targets the implementation</
 
 
 Countermeasures: **Masking, blinding, and noise injection.** 
+
+```
+torchrun --standalone --nproc_per_node 1 scripts/inference.py configs/opensora/inference/16x512x512.py --ckpt-path $CKPT --prompt-path ./assets/texts/t2v_samples.txt
+
+```
+

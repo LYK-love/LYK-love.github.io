@@ -159,7 +159,7 @@ Line Matching and Word Selection in Set Associative Caches
 
 
 
- **if there is an empty line**, then it would be a good candidate. 
+**if there is an empty line**, then it would be a good candidate. 
 
 But if there are no empty lines in the set, then we must **choose one of the nonempty lines** and hope that the CPU does not reference the replaced line anytime soon.
 

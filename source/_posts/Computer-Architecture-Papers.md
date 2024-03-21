@@ -4,7 +4,14 @@ date: 2024-03-19 22:49:45
 tags:
 ---
 
+Used for ECS 201A final.
+
+<!--more-->
+
+<!--more-->
+
 # An Empirical Guide to the Behavior and Use of Scalable Persistent Memory
+
 DIMM (**Dual In-Line Memory Module**)
 
 Over the past ten years, researchers have been anticipating the arrival of commercially available, scalable **non-volatile main memory (NVMM)** technologies that provide “byte-addressable” storage that survives power outages. With the arrival of Intel’s Optane DC Persistent Memory Module (which we refer to as **Optane DIMMs**),

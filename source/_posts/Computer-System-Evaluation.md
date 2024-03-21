@@ -212,11 +212,7 @@ frequency_ghz
 
 *"the overall performance improvement gained by optimizing a single part of a system is limited by the fraction of time that the improved part is actually used."*
 $$
-\text { Speedup }_{\text {overall }}=
-
-\frac {\text { Old Time }} {\text {New Time}} =
-
-\frac{1}{(1-P)+\frac{P}{S}}
+\text { Speedup }_{\text {overall }}= \frac {\text { Old Time }} {\text {New Time}} = \frac{1}{(1-P)+\frac{P}{S}}
 $$
 where:
 - $P$ is the proportion of the execution time that the improvement affects, and
@@ -256,6 +252,18 @@ $$
 
 
 ## Example 1
+
+There is a program in which 89% can be parallelized.
+
+When you run this program on 4 cores, what is the speedup compared to the serial version?
+
+
+
+Solution:
+
+1/ (0.11 + 0.89/4) = 3.007518796992481
+
+## Example 2
 
 
 
@@ -304,7 +312,7 @@ $$
 
 So, the overall speedup for the entire program on System B compared to System A is approximately 1.069.
 
-## Example 2
+## Example 3
 
 There is a program in which 55% can be parallelized.
 
@@ -321,7 +329,7 @@ $$
 
 if $S \rightarrow + \infty$, then $\frac{P}{S} \rightarrow0$, so the maximum speedup is $\frac{1}{(1-P)}$ = 1 / 0.45 = 2.222....
 
-## Example 3
+## Example 4
 
 Assume you have an application where 75.0% is parallelizable.
 
@@ -362,7 +370,29 @@ we can compute the Power to be 1 \* 1.8^2 * 0.9 = 2.19 \* c.
 
 So the Energy is: 0.83 \* t \* 2.19 \* c = 1.82 \* c \* t.
 
+# Roofline model
 
+- TPU v2 
+  - Roofline 
+    - 128x128 matrix = 16384 * 2 (cores/chip) * .7 (700 MHz) = 22937.6 (note: fp16) 
+    - 700 GB/s 
+    - 1 byte per op: 700 GFLOPS 
+      - 2:1.4, 4:2.8, 8:6, 16:12, 32:24 
+    - FLOPS/W = 23000/280=82.1429 
+- CPU (AMD 7950X) 
+  - 16 cores * 4.2 GHz * 16 (AVX-512) * 2 (FMA) = 2.1 TFLOP/s 
+  - Bandwidth: 80 GB/s 
+  - If 1 byte per op, then 80 GFLOP/s 
+    - 2:160, 4:320, 8:640, 16:1280, 32:2560(2.1) 
+  - Power: ~200W 
+    - FLOPS/W = 2100/200=10.5 
+- GPU H100 
+  - 144 SMs * 128 cores * 1.8 * 2 (FMA) = 60 TFLOP/s 
+  - Bandwidth 3 TB/s 
+  - If 1 byte per op, then 3 TFLOP/s 
+    - 2:6, 4:12, 8:24, 16:48, 32:96 (60) 
+  - Power: 700W 
+    - FLOPS/W = 60000/700=85.7143 
 
 
 [^1]: In pipelined CPU design, because all stages proceed at the same time, the length of a processor cycle is determined by the time required for the slowest pipe stage.
