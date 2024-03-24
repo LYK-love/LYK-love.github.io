@@ -42,7 +42,7 @@ scheme: Mist
 # scheme: Gemini
 
 # Dark Mode
-darkmode: false
+darkmode: False
 
 
 # ---------------------------------------------------------------
@@ -367,16 +367,14 @@ codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
   theme:
-    # light: default
-    # dark: stackoverflow-dark
-    light: a11y-light
-    dark: a11y-dark
+    light: stackoverflow-light
+    dark: stackoverflow-dark
   # prism:
   #   light: prism
   #   dark: prism-dark
   # Add copy button on codeblock
   copy_button:
-    enable: false
+    enable: True
     # Available values: default | flat | mac
     style: flat
   # Fold code block
@@ -437,8 +435,7 @@ font:
   enable: true
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  # 之前用https://fonts.lug.ustc.edu.cn 挂了....
-  # For accessibility in China mainland, I replace it with ustc source
+  # Do not use the USTC source (https://fonts.lug.ustc.edu.cn), it is unstable.
   host: https://fonts.googleapis.com
 
   # Font options:

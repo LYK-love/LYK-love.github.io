@@ -302,7 +302,7 @@ With paging, we have two types of address:
 1. Virtual address := VPN + offset in the page.
 2. Physical address := PFN + offset in the frame.
 
-We resulate that  offset in the page == offset in the frame. Therefore, we only translate VPN to PFN. The address translation is done by a *per-process* data structure, called **page table**, by the operating system. The page table itself is stored in memory. 
+We regulate that  offset in the page == offset in the frame. Therefore, we only translate VPN to PFN. The address translation is done by a *per-process* data structure, called **page table**, by the operating system. The page table itself is stored in memory. 
 
 ![Paging: Introduction](https://lyk-love.oss-cn-shanghai.aliyuncs.com/OS%20Basic/Memory%20Virtualization%20in%20Operating%20Systems/Paging-%20Introduction.png)
 

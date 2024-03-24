@@ -27,13 +27,7 @@ Source:
 
 <!--more-->
 
-```
-python dreamerv3/train.py --logdir ./logdir/$(date "+%Y%m%d-%H%M%S") --configs atari --batch_size 16 --run.train_ratio 32
-```
 
-```
-8d5quole
-```
 
 
 
@@ -112,7 +106,17 @@ Figure 2: World Model Learning. The training sequence of images $x_t$ is encoded
 
 
 
-The <u>concatenation</u> of $h_t$ and $z_t$ forms the model state (or **latent state**) from which we:
+The <u>concatenation</u> of $h_t$ and $z_t$ forms the model state (or **latent state**),
+
+```python
+latent_states = torch.cat((posteriors.view(*posteriors.shape[:-2], -1), recurrent_states), -1)
+```
+
+
+
+
+
+from which we:
 
 1. predict rewards $r_t$
 2. predict episode continuation flags $c_t \in\{0,1\}$
@@ -217,6 +221,49 @@ Where:
 * $q_r$: the normal distribution predicted by the reward model (We takes their mean)
 * $q_c$: the logits of the Bernoulli distribution predicted by the continue model (We takes their mean)
 * $\hat{d} \sim q_c$, and $d$ are the dones received by the environment.
+* The [KL balancing]() (in Modified KL divergence. Bascally it's about clipping and weighting) is applied to the `KL()`.
+* SInce the items on the right are all distris, we have to compute their mean to get the final scalar loss.
+
+
+
+KL(p || q):
+
+```
+kl_loss = dyn_loss + repr_loss
+```
+
+
+
+After that we multiply it with "kl_regularizer", which is 1.
+
+```
+kl_loss = kl_regularizer * kl_loss
+```
+
+
+
+The final loss is:
+
+```
+reconstruction_loss = (kl_regularizer * kl_loss + observation_loss + reward_loss + continue_loss).mean()
+```
+
+
+
+return:
+
+```python
+return (
+        reconstruction_loss,
+        kl.mean(),
+        kl_loss.mean(),
+        reward_loss.mean(),
+        observation_loss.mean(),
+        continue_loss.mean(),
+    )
+```
+
+
 
 ## DreamerV3 loss
 
@@ -243,7 +290,7 @@ $$
 
 * The **representation loss** trains the <u>representations</u> to become more predictable if the dynamics cannot predict their distribution, allowing us to use a factorized dynamics predictor for fast sampling when training the actor critic. The two losses differ in the stop-gradient operator $\operatorname{sg}(\cdot)$ and their loss scale. 
 
-  To avoid a degenerate solution where the dynamics are trivial to predict but contain not enough information about the inputs, we employ free bits $^{28}$ by clipping the dynamics and representation losses below the value of 1 nat $\approx 1.44$ bits. This disables them while they are already minimized well to focus the world model on its prediction loss:
+  To avoid a degenerate solution where the dynamics are trivial to predict but contain not enough information about the inputs, we employ free bits by clipping the dynamics and representation losses below the value of 1 nat $\approx 1.44$ bits. This disables them while they are already minimized well to focus the world model on its prediction loss:
 
 $$
 \begin{aligned}
@@ -513,7 +560,7 @@ To have a good balance between complex and very detailed environments (e.g, 3D e
 
 What is this 1 here?
 
-1 is the free bits used to clip the dynamic and representation losses below of the free bits, necessary to avoid degenerate solutions where the dynamics are trivial to predict, but do not contain enough information about the inputs.
+**1 is the free bits** used to clip the dynamic and representation losses below of the free bits, necessary to avoid degenerate solutions where the dynamics are trivial to predict, but do not contain enough information about the inputs.
 
 
 
@@ -525,7 +572,7 @@ Every latent variable of the environment is a **discrete** state as a mixture of
 
 
 
-Meanwhile, to prevent spikes in the KL loss, the categorical distributions (the one for discrete actions and the one for the posteriors/priors) are parametrized as mixtures of $1 \%$ uniform and $99 \%$ neural network output. This avoid the distributions to become near deterministic. To implement the uniform mix, we applied the uniform mix function to the logits returned by the neural networks.
+Meanwhile, to prevent spikes in the KL loss, the **categorical distributions** (the one for discrete actions and the one for the posteriors/priors) are parametrized as mixtures of $1 \%$ uniform and $99 \%$ neural network output. This avoid the distributions to become near deterministic. To implement the uniform mix, we applied the uniform mix function to the logits returned by the neural networks.
 
 ```python
 import torch
@@ -544,6 +591,8 @@ def uniform_mix(self, logits: Tensor, unimix: float = 0.01) -> Tensor:
         logits = probs_to_logits(probs)
     return logits
 ```
+
+// In sheeprl, I can see only the actor uses this.
 
 #### Symlog predictions
 
@@ -591,7 +640,7 @@ To sum up, the process of imagining trajectories, as shown in the [Figure 4](htt
 
 
 
-All the latent states computed in the previous phase (dynamic learning) serve as starting points for fully imagined trajectories. Consequently, the latent states are reshaped to consider each computed latent state  independently. A *for loop* is necessary for behavior learning, as trajectories are imagined one step at a time. 
+All the latent states computed in the previous phase (dynamic learning) serve as **starting points for fully imagined trajectories.** Consequently, the latent states are reshaped to consider each computed latent state  independently. A *for loop* is necessary for behavior learning, as trajectories are imagined one step at a time. 
 
 
 

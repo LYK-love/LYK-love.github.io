@@ -192,6 +192,36 @@ Map generated videos to my photoview:
 ln -s /home/lyk/Projects/sheeprl/logs $IMAGE_HOME/sheeprl_log
 ```
 
+# Commands for Hafner's
+
+Log: `--run.log_every 3`
+
+```sh
+# Use a 8M steps ckpt.
+export CKPT="logdir/20240317-044409/checkpoint.ckpt" 
+WANDB_MODE=online python dreamerv3/train.py --logdir ./logdir/$(date "+%Y%m%d-%H%M%S") --configs bouncing_ball debug --batch_size 16 --run.train_ratio 32 --run.log_every 3 --run.from_checkpoint $CKPT
+```
+
+
+
+```sh
+WANDB_MODE=online python dreamerv3/train.py --logdir ./logdir/$(date "+%Y%m%d-%H%M%S") --configs bouncing_ball small --batch_size 16 --run.train_ratio 32
+```
+
+
+
+```sh
+WANDB_MODE=online python dreamerv3/train.py --logdir ./logdir/$(date "+%Y%m%d-%H%M%S") --configs grid_world small --batch_size 16 --run.train_ratio 32
+```
+
+
+
+```
+python dreamerv3/train.py --logdir ./logdir/$(date "+%Y%m%d-%H%M%S") --configs grid_world debug --batch_size 16 --run.train_ratio 32
+```
+
+
+
 # Scripts
 
 https://github.com/Eclectic-Sheep/sheeprl/blob/main/howto/configs.md
@@ -421,6 +451,23 @@ The `libglew2.2` could have a different name, based on your OS (e.g., `libglew2.
 It could be necessary to install also the `PyOpenGL-accelerate` package with the `pip install PyOpenGL-accelerate` command and the `mesalib` package with the `conda install conda-forge::mesalib` command.
 
 For more information: https://github.com/deepmind/dm_control and https://mujoco.readthedocs.io/en/stable/programming/index.html#using-opengl.
+
+
+
+***
+
+When using osmesa, you may get:
+
+```
+libGL error: MESA-LOADER: failed to open swrast: /usr/lib/dri/swrast_dri.so: cannot open shared object file: No such file or directory (search paths /usr/lib/x86_64-linux-gnu/dri:\$${ORIGIN}/dri:/usr/lib/dri, suffix _dri)
+```
+
+Solution is copied from [here](https://forum.step.esa.int/t/snap9-error-libegl-warning-mesa-loader-failed-to-open-swrast/36702/4). We can see that we have a `swrast_dri.so` in `/usr/lib/x86_64-linux-gnu/dri/`. So we can just create a symbol link to it:
+
+```sh
+sudo mkdir /usr/lib/dri
+sudo ln -s /usr/lib/x86_64-linux-gnu/dri/swrast_dri.so /usr/lib/dri/swrast_dri.so
+```
 
 
 

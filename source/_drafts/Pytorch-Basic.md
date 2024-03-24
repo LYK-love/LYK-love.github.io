@@ -95,6 +95,17 @@ In PyTorch, tensors default to a 32-bit precision (float32) when you  create the
 
 
 
+* `Tensor.item()` → number
+
+  Returns the value of this tensor as a standard Python number. This only works for tensors with one element. For other cases, see [`tolist()`](https://pytorch.org/docs/stable/generated/torch.Tensor.tolist.html#torch.Tensor.tolist).
+
+  ```
+  x = torch.tensor([1.0])
+  x.item()
+  ```
+
+  
+
 ## Operations
 
 ### unary operators

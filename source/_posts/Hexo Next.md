@@ -760,7 +760,7 @@ My fonts:
 
 
 
-[Fonts Customization](https://theme-next.js.org/docs/theme-settings/miscellaneous.html?highlight=font+settings#Fonts-Customization). 这上面的部分细节过时了, 以我这里写的为准.
+[Fonts Customization](https://theme-next.js.org/docs/theme-settings/miscellaneous.html?highlight=font+settings#Fonts-Customization):
 
 > NexT gives you 5 specific font settings, they are:
 >
@@ -778,21 +778,17 @@ My fonts:
 > Plus each section has a `external` attribute, this controls whether to use the font library CDN.
 > Use this can help you to use fonts installed in system and reduce unnecessary requests.
 
+### English Font
 
+By default, the font of Hexo Next is Microsoft YaHei, I change it to Fira Code:
 
-> 
-
-### Chinese Font
-
-低版本Next的默认字体(`font: false`)很丑, 不知道是什么字体. 新版本的Next的默认字体是Microsoft YaHei, 也可以自己更改. 我在`NexT _config.yml`中配置了Fira Code:
-
-```
+```yaml
 font:
   enable: true
 
   # Uri of fonts host, e.g. https://fonts.googleapis.com (Default).
-  # For accessibility in China mainland, I replace it with ustc source
-  host: https://fonts.lug.ustc.edu.cn
+  # Do not use the USTC source (https://fonts.lug.ustc.edu.cn), it is unstable.
+  host: https://fonts.googleapis.com
 
   # Font options:
   # `external: true` will load this font family from `host` above.
@@ -806,13 +802,11 @@ font:
     size:
 ```
 
+To solve the unstable of [Google Fonts API](https://fonts.google.com/) in some countries, NexT supports custom URL of fonts library by setting `font.host`. 
 
 
-> To solve the unstable of [Google Fonts API](https://fonts.google.com/) in some countries, NexT supports custom URL of fonts library by setting `font.host`. 
 
-为了在中国大陆的访问, 我把 `font.host`换成了ustc源. 设置` external: true`来从把 `font.host`加载font.
-
-### English Font
+### Chinese Font
 
 按[Next中文文档](https://hexo-next.readthedocs.io/zh_CN/latest/next/advanced/%E5%AD%97%E4%BD%93%E8%AE%BE%E7%BD%AE/)的说明, 通过`NexT _config.yml`仅能替换中文字体/英文字体其中一种. Fira Code是英文字体, 要想再配置中文字体, 需要改更改Next的样式文件.
 
@@ -876,13 +870,7 @@ font:
 
 * 代码高亮(Code Highlight theme): 这个网站可以预览所有高亮效果：[传送门](https://theme-next.js.org/highlight/)
 
-  我使用highlight作为高亮引擎, theme使用`a11y-light`
-
-* 我没有设置代码块行号.
-
-* 代码块超过一定高度则折叠.
-
-
+* I use `highlight.js` as the engine, `stackoverflow-light` as the color theme (for light mode).
 
 `NexT _config.yml`:
 
@@ -891,16 +879,14 @@ codeblock:
   # Code Highlight theme
   # All available themes: https://theme-next.js.org/highlight/
   theme:
-    # light: default
-    # dark: stackoverflow-dark
-    light: a11y-light
-    dark: a11y-dark
-  prism:
-    light: prism
-    dark: prism-dark
+    light: stackoverflow-light
+    dark: stackoverflow-dark
+  # prism:
+  #   light: prism
+  #   dark: prism-dark
   # Add copy button on codeblock
   copy_button:
-    enable: false
+    enable: true
     # Available values: default | flat | mac
     style: flat
   # Fold code block

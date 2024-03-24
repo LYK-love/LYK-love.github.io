@@ -1,6 +1,9 @@
 ---
 title: Initiazlization Methods of Neural Networks
 tags:
+  - Machine Learning
+categories: Computer Science
+mathjax: true
 ---
 
 
